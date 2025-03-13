@@ -4,7 +4,7 @@ import { Frame1000004785 } from "../../../../components/Frame1000004785";
 
 export const Container = (): JSX.Element => {
   return (
-    <div className="flex-wrap h-[794px] justify-center gap-[60px_60px] p-10 self-stretch w-full bg-[#f3f3f3] rounded-[20px] flex items-center relative">
+    <div className="h-[794px] justify-center gap-[60px_60px] p-10 self-stretch w-full bg-[#f3f3f3] rounded-[20px] flex items-center relative">
       <div className="flex flex-col h-[600px] items-start justify-center gap-[30px] px-0 py-4 relative flex-1 grow">
         <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
           <div className="flex w-[125px] h-[41px] items-center justify-center gap-2.5 p-2.5 relative bg-[#072f6c] rounded-[30px] border border-solid border-[#a8a8a8]">
