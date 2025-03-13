@@ -30,11 +30,11 @@ export const Component = ({
         dispatch("mouse_enter");
       }}
     >
-      <button
+      <span
         className={`all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[color:var(--semantic-border-alternate)] font-medium leading-6 whitespace-nowrap relative ${buttonClassName}`}
       >
         {text}
-      </button>
+      </span>
     </button>
   );
 };

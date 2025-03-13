@@ -1,112 +1,508 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@layer utilities {
-  /* Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .no-scrollbar::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  input:focus ~ label,
-  input:not(:placeholder-shown) ~ label {
-    @apply -translate-y-2 text-xsmall-regular;
-  }
-
-  input:focus ~ label {
-    @apply left-0;
-  }
-
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  textarea:-webkit-autofill,
-  textarea:-webkit-autofill:hover,
-  textarea:-webkit-autofill:focus,
-  select:-webkit-autofill,
-  select:-webkit-autofill:hover,
-  select:-webkit-autofill:focus {
-    border: 1px solid #212121;
-    -webkit-text-fill-color: #212121;
-    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
-    transition: background-color 5000s ease-in-out 0s;
-  }
-
-  input[type="search"]::-webkit-search-decoration,
-  input[type="search"]::-webkit-search-cancel-button,
-  input[type="search"]::-webkit-search-results-button,
-  input[type="search"]::-webkit-search-results-decoration {
-    -webkit-appearance: none;
+@layer components {
+  .all-\[unset\] {
+    all: unset;
   }
 }
 
-@layer components {
-  .content-container {
-    @apply max-w-[1440px] w-full mx-auto px-6;
-  }
+:root {
+  --1-color-modes-colors-background-bg-primary-solid: var(
+    --primitives-colors-gray-light-mode-950
+  );
+  --1-color-modes-colors-background-bg-secondary: var(
+    --primitives-colors-gray-light-mode-50
+  );
+  --1-color-modes-colors-text-text-white: var(--primitives-colors-base-white);
+  --2-radius-radius-md: 8px;
+  --3-spacing-spacing-lg: var(--primitives-spacing-3-12px);
+  --3-spacing-spacing-md: var(--primitives-spacing-2-8px);
+  --3-spacing-spacing-sm: var(--primitives-spacing-1-5-6px);
+  --backgroundbg-primary: rgba(255, 255, 255, 1);
+  --black: rgba(0, 0, 0, 1);
+  --glow:
+    0px 0px 15.119999885559082px 0px rgba(255, 255, 255, 0.45), 0px 0px 30.239999771118164px 0px rgba(
+      255,
+      255,
+      255,
+      0.45
+    ), 0px 0px 105.83999633789062px 0px rgba(255, 255, 255, 0.45), 0px 0px 211.67999267578125px 0px rgba(
+      255,
+      255,
+      255,
+      0.45
+    ), 0px 0px 250px 0px rgba(255, 255, 255, 0.45), 0px 0px 250px 0px rgba(
+      255,
+      255,
+      255,
+      0.45
+    );
+  --grey: rgba(228, 226, 223, 1);
+  --heading-2-font-family: "Merriweather", Helvetica;
+  --heading-2-font-size: 36px;
+  --heading-2-font-style: normal;
+  --heading-2-font-weight: 700;
+  --heading-2-letter-spacing: 0px;
+  --heading-2-line-height: 139.9999976158142%;
+  --heading-3-font-family: "Merriweather", Helvetica;
+  --heading-3-font-size: 28px;
+  --heading-3-font-style: normal;
+  --heading-3-font-weight: 700;
+  --heading-3-letter-spacing: 0px;
+  --heading-3-line-height: 139.9999976158142%;
+  --heading-desktop-h1-font-family: "Roboto", Helvetica;
+  --heading-desktop-h1-font-size: 56px;
+  --heading-desktop-h1-font-style: normal;
+  --heading-desktop-h1-font-weight: 700;
+  --heading-desktop-h1-letter-spacing: 0px;
+  --heading-desktop-h1-line-height: 120.00000476837158%;
+  --heading-desktop-h2-font-family: "Roboto", Helvetica;
+  --heading-desktop-h2-font-size: 48px;
+  --heading-desktop-h2-font-style: normal;
+  --heading-desktop-h2-font-weight: 700;
+  --heading-desktop-h2-letter-spacing: 0px;
+  --heading-desktop-h2-line-height: 120.00000476837158%;
+  --heading-desktop-h3-font-family: "Roboto", Helvetica;
+  --heading-desktop-h3-font-size: 40px;
+  --heading-desktop-h3-font-style: normal;
+  --heading-desktop-h3-font-weight: 700;
+  --heading-desktop-h3-letter-spacing: 0px;
+  --heading-desktop-h3-line-height: 120.00000476837158%;
+  --heading-desktop-h4-font-family: "Roboto", Helvetica;
+  --heading-desktop-h4-font-size: 32px;
+  --heading-desktop-h4-font-style: normal;
+  --heading-desktop-h4-font-weight: 700;
+  --heading-desktop-h4-letter-spacing: 0px;
+  --heading-desktop-h4-line-height: 129.99999523162842%;
+  --heading-desktop-h5-font-family: "Roboto", Helvetica;
+  --heading-desktop-h5-font-size: 24px;
+  --heading-desktop-h5-font-style: normal;
+  --heading-desktop-h5-font-weight: 700;
+  --heading-desktop-h5-letter-spacing: 0px;
+  --heading-desktop-h5-line-height: 139.9999976158142%;
+  --heading-desktop-h6-font-family: "Roboto", Helvetica;
+  --heading-desktop-h6-font-size: 20px;
+  --heading-desktop-h6-font-style: normal;
+  --heading-desktop-h6-font-weight: 700;
+  --heading-desktop-h6-letter-spacing: 0px;
+  --heading-desktop-h6-line-height: 139.9999976158142%;
+  --heading-desktop-tagline-font-family: "Roboto", Helvetica;
+  --heading-desktop-tagline-font-size: 16px;
+  --heading-desktop-tagline-font-style: normal;
+  --heading-desktop-tagline-font-weight: 600;
+  --heading-desktop-tagline-letter-spacing: 0px;
+  --heading-desktop-tagline-line-height: 150%;
+  --heading-font-family: "Merriweather", Helvetica;
+  --heading-font-size: 56px;
+  --heading-font-style: normal;
+  --heading-font-weight: 700;
+  --heading-letter-spacing: 0px;
+  --heading-line-height: 120.00000476837158%;
+  --heading-mobile-h1-font-family: "Roboto", Helvetica;
+  --heading-mobile-h1-font-size: 40px;
+  --heading-mobile-h1-font-style: normal;
+  --heading-mobile-h1-font-weight: 700;
+  --heading-mobile-h1-letter-spacing: 0px;
+  --heading-mobile-h1-line-height: 120.00000476837158%;
+  --heading-mobile-h2-font-family: "Roboto", Helvetica;
+  --heading-mobile-h2-font-size: 36px;
+  --heading-mobile-h2-font-style: normal;
+  --heading-mobile-h2-font-weight: 700;
+  --heading-mobile-h2-letter-spacing: 0px;
+  --heading-mobile-h2-line-height: 120.00000476837158%;
+  --heading-mobile-h3-font-family: "Roboto", Helvetica;
+  --heading-mobile-h3-font-size: 32px;
+  --heading-mobile-h3-font-style: normal;
+  --heading-mobile-h3-font-weight: 700;
+  --heading-mobile-h3-letter-spacing: 0px;
+  --heading-mobile-h3-line-height: 120.00000476837158%;
+  --heading-mobile-h4-font-family: "Roboto", Helvetica;
+  --heading-mobile-h4-font-size: 24px;
+  --heading-mobile-h4-font-style: normal;
+  --heading-mobile-h4-font-weight: 700;
+  --heading-mobile-h4-letter-spacing: 0px;
+  --heading-mobile-h4-line-height: 139.9999976158142%;
+  --heading-mobile-h5-font-family: "Roboto", Helvetica;
+  --heading-mobile-h5-font-size: 20px;
+  --heading-mobile-h5-font-style: normal;
+  --heading-mobile-h5-font-weight: 700;
+  --heading-mobile-h5-letter-spacing: 0px;
+  --heading-mobile-h5-line-height: 139.9999976158142%;
+  --heading-mobile-h6-font-family: "Roboto", Helvetica;
+  --heading-mobile-h6-font-size: 18px;
+  --heading-mobile-h6-font-style: normal;
+  --heading-mobile-h6-font-weight: 700;
+  --heading-mobile-h6-letter-spacing: 0px;
+  --heading-mobile-h6-line-height: 139.9999976158142%;
+  --large: 0px 8px 8px -4px rgba(0, 0, 0, 0.03), 0px 20px 24px -4px
+    rgba(0, 0, 0, 0.08);
+  --med-16-font-family: "Inter", Helvetica;
+  --med-16-font-size: 16px;
+  --med-16-font-style: normal;
+  --med-16-font-weight: 500;
+  --med-16-letter-spacing: 0px;
+  --med-16-line-height: 110.00000238418579%;
+  --medium: 0px 4px 6px -2px rgba(0, 0, 0, 0.03), 0px 12px 16px -4px
+    rgba(0, 0, 0, 0.08);
+  --primary-relaxure: rgba(7, 47, 108, 1);
+  --primitive-color-brand-black: rgba(0, 0, 0, 1);
+  --primitive-color-brand-white: rgba(255, 255, 255, 1);
+  --primitive-color-neutral-black: rgba(0, 0, 0, 1);
+  --primitive-color-neutral-neutral: rgba(102, 102, 102, 1);
+  --primitive-color-neutral-neutral-dark: rgba(68, 68, 68, 1);
+  --primitive-color-neutral-neutral-darker: rgba(34, 34, 34, 1);
+  --primitive-color-neutral-neutral-darkest: rgba(17, 17, 17, 1);
+  --primitive-color-neutral-neutral-light: rgba(170, 170, 170, 1);
+  --primitive-color-neutral-neutral-lighter: rgba(204, 204, 204, 1);
+  --primitive-color-neutral-neutral-lightest: rgba(238, 238, 238, 1);
+  --primitive-color-neutral-white: rgba(255, 255, 255, 1);
+  --primitive-color-system-error-red: rgba(180, 35, 24, 1);
+  --primitive-color-system-error-red-light: rgba(254, 243, 242, 1);
+  --primitive-color-system-success-green: rgba(2, 122, 72, 1);
+  --primitive-color-system-success-green-light: rgba(236, 253, 243, 1);
+  --primitives-colors-base-white: rgba(255, 255, 255, 1);
+  --primitives-colors-gray-dark-mode-900: rgba(22, 27, 38, 1);
+  --primitives-colors-gray-light-mode-50: rgba(249, 250, 251, 1);
+  --primitives-colors-gray-light-mode-950: rgba(12, 17, 29, 1);
+  --primitives-spacing-1-5-6px: 6px;
+  --primitives-spacing-2-8px: 8px;
+  --primitives-spacing-3-12px: 12px;
+  --relaxure-16-med-font-family: "Montserrat", Helvetica;
+  --relaxure-16-med-font-size: 16px;
+  --relaxure-16-med-font-style: normal;
+  --relaxure-16-med-font-weight: 500;
+  --relaxure-16-med-letter-spacing: 0px;
+  --relaxure-16-med-line-height: 139.9999976158142%;
+  --relaxure-sub-heading-18-font-family: "Montserrat", Helvetica;
+  --relaxure-sub-heading-18-font-size: 18px;
+  --relaxure-sub-heading-18-font-style: normal;
+  --relaxure-sub-heading-18-font-weight: 500;
+  --relaxure-sub-heading-18-letter-spacing: 0px;
+  --relaxure-sub-heading-18-line-height: 150%;
+  --semantic-background-color-alternate: var(--primitive-color-neutral-black);
+  --semantic-background-color-error: var(
+    --primitive-color-system-error-red-light
+  );
+  --semantic-background-color-primary: var(--primitive-color-neutral-white);
+  --semantic-background-color-secondary: var(
+    --primitive-color-neutral-neutral-lightest
+  );
+  --semantic-background-color-success: var(
+    --primitive-color-system-success-green-light
+  );
+  --semantic-background-color-tertiary: var(
+    --primitive-color-neutral-neutral-dark
+  );
+  --semantic-border-alternate: var(--primitive-color-neutral-white);
+  --semantic-border-error: var(--primitive-color-system-error-red);
+  --semantic-border-primary: var(--primitive-color-neutral-black);
+  --semantic-border-secondary: var(--primitive-color-neutral-neutral-light);
+  --semantic-border-success: var(--primitive-color-system-success-green);
+  --semantic-border-tertiary: var(--primitive-color-neutral-neutral-dark);
+  --semantic-link-alternate: var(--primitive-color-neutral-white);
+  --semantic-link-primary: var(--primitive-color-neutral-black);
+  --semantic-link-secondary: var(--primitive-color-neutral-neutral);
+  --semantic-text-alternate: var(--primitive-color-neutral-white);
+  --semantic-text-error: var(--primitive-color-system-error-red);
+  --semantic-text-primary: var(--primitive-color-neutral-black);
+  --semantic-text-secondary: var(--primitive-color-neutral-neutral-light);
+  --semantic-text-success: var(--primitive-color-system-success-green);
+  --shadow-cards-relaxure:
+    0px 16px 35px 0px rgba(0, 0, 0, 0.1), 0px 63px 63px 0px rgba(0, 0, 0, 0.09), 0px 142px 85px 0px rgba(
+      0,
+      0,
+      0,
+      0.05
+    ), 0px 252px 101px 0px rgba(0, 0, 0, 0.01), 0px 394px 110px 0px rgba(
+      0,
+      0,
+      0,
+      0
+    );
+  --shadow-relaxure-button:
+    0px 3px 7px 0px rgba(7, 47, 108, 0.1), 0px 13px 13px 0px rgba(
+      7,
+      47,
+      108,
+      0.09
+    ), 0px 29px 17px 0px rgba(7, 47, 108, 0.05), 0px 51px 20px 0px rgba(
+      7,
+      47,
+      108,
+      0.01
+    ), 0px 80px 22px 0px rgba(7, 47, 108, 0);
+  --shadows-shadow-lg: 0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 12px 16px
+    -4px rgba(16, 24, 40, 0.08);
+  --shadows-shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  --small: 0px 2px 4px -2px rgba(0, 0, 0, 0.06), 0px 4px 8px -2px
+    rgba(0, 0, 0, 0.1);
+  --text-2-strong-font-family: "Inter", Helvetica;
+  --text-2-strong-font-size: 18px;
+  --text-2-strong-font-style: normal;
+  --text-2-strong-font-weight: 700;
+  --text-2-strong-letter-spacing: 0px;
+  --text-2-strong-line-height: 120.00000476837158%;
+  --text-large-bold-font-family: "Roboto", Helvetica;
+  --text-large-bold-font-size: 20px;
+  --text-large-bold-font-style: normal;
+  --text-large-bold-font-weight: 700;
+  --text-large-bold-letter-spacing: 0px;
+  --text-large-bold-line-height: 150%;
+  --text-large-extra-bold-font-family: "Roboto", Helvetica;
+  --text-large-extra-bold-font-size: 20px;
+  --text-large-extra-bold-font-style: normal;
+  --text-large-extra-bold-font-weight: 800;
+  --text-large-extra-bold-letter-spacing: 0px;
+  --text-large-extra-bold-line-height: 150%;
+  --text-large-light-font-family: "Roboto", Helvetica;
+  --text-large-light-font-size: 20px;
+  --text-large-light-font-style: normal;
+  --text-large-light-font-weight: 300;
+  --text-large-light-letter-spacing: 0px;
+  --text-large-light-line-height: 150%;
+  --text-large-link-font-family: "Roboto", Helvetica;
+  --text-large-link-font-size: 20px;
+  --text-large-link-font-style: normal;
+  --text-large-link-font-weight: 400;
+  --text-large-link-letter-spacing: 0px;
+  --text-large-link-line-height: 150%;
+  --text-large-medium-font-family: "Roboto", Helvetica;
+  --text-large-medium-font-size: 20px;
+  --text-large-medium-font-style: normal;
+  --text-large-medium-font-weight: 500;
+  --text-large-medium-letter-spacing: 0px;
+  --text-large-medium-line-height: 150%;
+  --text-large-normal-font-family: "Roboto", Helvetica;
+  --text-large-normal-font-size: 20px;
+  --text-large-normal-font-style: normal;
+  --text-large-normal-font-weight: 400;
+  --text-large-normal-letter-spacing: 0px;
+  --text-large-normal-line-height: 150%;
+  --text-large-semi-bold-font-family: "Roboto", Helvetica;
+  --text-large-semi-bold-font-size: 20px;
+  --text-large-semi-bold-font-style: normal;
+  --text-large-semi-bold-font-weight: 600;
+  --text-large-semi-bold-letter-spacing: 0px;
+  --text-large-semi-bold-line-height: 150%;
+  --text-medium-bold-font-family: "Roboto", Helvetica;
+  --text-medium-bold-font-size: 18px;
+  --text-medium-bold-font-style: normal;
+  --text-medium-bold-font-weight: 700;
+  --text-medium-bold-letter-spacing: 0px;
+  --text-medium-bold-line-height: 150%;
+  --text-medium-extra-bold-font-family: "Roboto", Helvetica;
+  --text-medium-extra-bold-font-size: 18px;
+  --text-medium-extra-bold-font-style: normal;
+  --text-medium-extra-bold-font-weight: 700;
+  --text-medium-extra-bold-letter-spacing: 0px;
+  --text-medium-extra-bold-line-height: 150%;
+  --text-medium-light-font-family: "Roboto", Helvetica;
+  --text-medium-light-font-size: 18px;
+  --text-medium-light-font-style: normal;
+  --text-medium-light-font-weight: 300;
+  --text-medium-light-letter-spacing: 0px;
+  --text-medium-light-line-height: 150%;
+  --text-medium-link-font-family: "Roboto", Helvetica;
+  --text-medium-link-font-size: 18px;
+  --text-medium-link-font-style: normal;
+  --text-medium-link-font-weight: 400;
+  --text-medium-link-letter-spacing: 0px;
+  --text-medium-link-line-height: 150%;
+  --text-medium-medium-font-family: "Roboto", Helvetica;
+  --text-medium-medium-font-size: 18px;
+  --text-medium-medium-font-style: normal;
+  --text-medium-medium-font-weight: 500;
+  --text-medium-medium-letter-spacing: 0px;
+  --text-medium-medium-line-height: 150%;
+  --text-medium-normal-font-family: "Roboto", Helvetica;
+  --text-medium-normal-font-size: 18px;
+  --text-medium-normal-font-style: normal;
+  --text-medium-normal-font-weight: 400;
+  --text-medium-normal-letter-spacing: 0px;
+  --text-medium-normal-line-height: 150%;
+  --text-medium-semi-bold-font-family: "Roboto", Helvetica;
+  --text-medium-semi-bold-font-size: 18px;
+  --text-medium-semi-bold-font-style: normal;
+  --text-medium-semi-bold-font-weight: 600;
+  --text-medium-semi-bold-letter-spacing: 0px;
+  --text-medium-semi-bold-line-height: 150%;
+  --text-regular-bold-font-family: "Roboto", Helvetica;
+  --text-regular-bold-font-size: 16px;
+  --text-regular-bold-font-style: normal;
+  --text-regular-bold-font-weight: 700;
+  --text-regular-bold-letter-spacing: 0px;
+  --text-regular-bold-line-height: 150%;
+  --text-regular-extra-bold-font-family: "Roboto", Helvetica;
+  --text-regular-extra-bold-font-size: 16px;
+  --text-regular-extra-bold-font-style: normal;
+  --text-regular-extra-bold-font-weight: 800;
+  --text-regular-extra-bold-letter-spacing: 0px;
+  --text-regular-extra-bold-line-height: 150%;
+  --text-regular-light-font-family: "Roboto", Helvetica;
+  --text-regular-light-font-size: 16px;
+  --text-regular-light-font-style: normal;
+  --text-regular-light-font-weight: 300;
+  --text-regular-light-letter-spacing: 0px;
+  --text-regular-light-line-height: 150%;
+  --text-regular-link-font-family: "Roboto", Helvetica;
+  --text-regular-link-font-size: 16px;
+  --text-regular-link-font-style: normal;
+  --text-regular-link-font-weight: 400;
+  --text-regular-link-letter-spacing: 0px;
+  --text-regular-link-line-height: 150%;
+  --text-regular-medium-font-family: "Roboto", Helvetica;
+  --text-regular-medium-font-size: 16px;
+  --text-regular-medium-font-style: normal;
+  --text-regular-medium-font-weight: 500;
+  --text-regular-medium-letter-spacing: 0px;
+  --text-regular-medium-line-height: 150%;
+  --text-regular-normal-font-family: "Roboto", Helvetica;
+  --text-regular-normal-font-size: 16px;
+  --text-regular-normal-font-style: normal;
+  --text-regular-normal-font-weight: 400;
+  --text-regular-normal-letter-spacing: 0px;
+  --text-regular-normal-line-height: 150%;
+  --text-regular-semi-bold-font-family: "Roboto", Helvetica;
+  --text-regular-semi-bold-font-size: 16px;
+  --text-regular-semi-bold-font-style: normal;
+  --text-regular-semi-bold-font-weight: 600;
+  --text-regular-semi-bold-letter-spacing: 0px;
+  --text-regular-semi-bold-line-height: 150%;
+  --text-small-bold-font-family: "Roboto", Helvetica;
+  --text-small-bold-font-size: 14px;
+  --text-small-bold-font-style: normal;
+  --text-small-bold-font-weight: 700;
+  --text-small-bold-letter-spacing: 0px;
+  --text-small-bold-line-height: 150%;
+  --text-small-extra-bold-font-family: "Roboto", Helvetica;
+  --text-small-extra-bold-font-size: 14px;
+  --text-small-extra-bold-font-style: normal;
+  --text-small-extra-bold-font-weight: 800;
+  --text-small-extra-bold-letter-spacing: 0px;
+  --text-small-extra-bold-line-height: 150%;
+  --text-small-light-font-family: "Roboto", Helvetica;
+  --text-small-light-font-size: 14px;
+  --text-small-light-font-style: normal;
+  --text-small-light-font-weight: 300;
+  --text-small-light-letter-spacing: 0px;
+  --text-small-light-line-height: 150%;
+  --text-small-link-font-family: "Roboto", Helvetica;
+  --text-small-link-font-size: 14px;
+  --text-small-link-font-style: normal;
+  --text-small-link-font-weight: 400;
+  --text-small-link-letter-spacing: 0px;
+  --text-small-link-line-height: 150%;
+  --text-small-medium-font-family: "Roboto", Helvetica;
+  --text-small-medium-font-size: 14px;
+  --text-small-medium-font-style: normal;
+  --text-small-medium-font-weight: 500;
+  --text-small-medium-letter-spacing: 0px;
+  --text-small-medium-line-height: 150%;
+  --text-small-normal-font-family: "Roboto", Helvetica;
+  --text-small-normal-font-size: 14px;
+  --text-small-normal-font-style: normal;
+  --text-small-normal-font-weight: 400;
+  --text-small-normal-letter-spacing: 0px;
+  --text-small-normal-line-height: 150%;
+  --text-small-semi-bold-font-family: "Roboto", Helvetica;
+  --text-small-semi-bold-font-size: 14px;
+  --text-small-semi-bold-font-style: normal;
+  --text-small-semi-bold-font-weight: 600;
+  --text-small-semi-bold-letter-spacing: 0px;
+  --text-small-semi-bold-line-height: 150%;
+  --text-tiny-bold-font-family: "Roboto", Helvetica;
+  --text-tiny-bold-font-size: 12px;
+  --text-tiny-bold-font-style: normal;
+  --text-tiny-bold-font-weight: 700;
+  --text-tiny-bold-letter-spacing: 0px;
+  --text-tiny-bold-line-height: 150%;
+  --text-tiny-extra-bold-font-family: "Roboto", Helvetica;
+  --text-tiny-extra-bold-font-size: 12px;
+  --text-tiny-extra-bold-font-style: normal;
+  --text-tiny-extra-bold-font-weight: 800;
+  --text-tiny-extra-bold-letter-spacing: 0px;
+  --text-tiny-extra-bold-line-height: 150%;
+  --text-tiny-light-font-family: "Roboto", Helvetica;
+  --text-tiny-light-font-size: 12px;
+  --text-tiny-light-font-style: normal;
+  --text-tiny-light-font-weight: 300;
+  --text-tiny-light-letter-spacing: 0px;
+  --text-tiny-light-line-height: 150%;
+  --text-tiny-link-font-family: "Roboto", Helvetica;
+  --text-tiny-link-font-size: 12px;
+  --text-tiny-link-font-style: normal;
+  --text-tiny-link-font-weight: 400;
+  --text-tiny-link-letter-spacing: 0px;
+  --text-tiny-link-line-height: 150%;
+  --text-tiny-medium-font-family: "Roboto", Helvetica;
+  --text-tiny-medium-font-size: 12px;
+  --text-tiny-medium-font-style: normal;
+  --text-tiny-medium-font-weight: 500;
+  --text-tiny-medium-letter-spacing: 0px;
+  --text-tiny-medium-line-height: 150%;
+  --text-tiny-normal-font-family: "Roboto", Helvetica;
+  --text-tiny-normal-font-size: 12px;
+  --text-tiny-normal-font-style: normal;
+  --text-tiny-normal-font-weight: 400;
+  --text-tiny-normal-letter-spacing: 0px;
+  --text-tiny-normal-line-height: 150%;
+  --text-tiny-semi-bold-font-family: "Roboto", Helvetica;
+  --text-tiny-semi-bold-font-size: 12px;
+  --text-tiny-semi-bold-font-style: normal;
+  --text-tiny-semi-bold-font-weight: 600;
+  --text-tiny-semi-bold-letter-spacing: 0px;
+  --text-tiny-semi-bold-line-height: 150%;
+  --text-xs-semibold-font-family: "Inter", Helvetica;
+  --text-xs-semibold-font-size: 12px;
+  --text-xs-semibold-font-style: normal;
+  --text-xs-semibold-font-weight: 600;
+  --text-xs-semibold-letter-spacing: 0px;
+  --text-xs-semibold-line-height: 18px;
+  --texttxt-primary: rgba(0, 0, 0, 1);
+  --texttxt-secondary: rgba(60, 60, 67, 0.85);
+  --variable-collection-beige-brand: rgba(239, 234, 223, 1);
+  --variable-collection-beige-brand-duplicate: rgba(239, 234, 223, 1);
+  --variable-collection-dark-brown: rgba(77, 77, 77, 1);
+  --variable-collection-dark-green-brand: rgba(45, 51, 44, 1);
+  --variable-collection-dark-green-brand-duplicate: rgba(45, 51, 44, 1);
+  --variable-collection-gray: rgba(179, 176, 199, 1);
+  --variable-collection-grey-1: rgba(246, 247, 249, 1);
+  --white: rgba(255, 255, 255, 1);
+  --xlarge: 0px 24px 48px -12px rgba(0, 0, 0, 0.18);
+  --xsmall: 0px 1px 2px 0px rgba(0, 0, 0, 0.06), 0px 1px 3px 0px
+    rgba(0, 0, 0, 0.1);
+  --xxlarge: 0px 32px 64px -12px rgba(0, 0, 0, 0.14);
+  --xxsmall: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+}
 
-  .contrast-btn {
-    @apply px-4 py-2 border border-black rounded-full hover:bg-black hover:text-white transition-colors duration-200 ease-in;
-  }
+/*
 
-  .text-xsmall-regular {
-    @apply text-[10px] leading-4 font-normal;
-  }
+To enable a theme in your HTML, simply add one of the following data attributes to an HTML element, like so:
 
-  .text-small-regular {
-    @apply text-xs leading-5 font-normal;
-  }
+<body data-1-color-modes-mode="light-mode">
+    <!-- the rest of your content -->
+</body>
 
-  .text-small-semi {
-    @apply text-xs leading-5 font-semibold;
-  }
+You can apply the theme on any DOM node, not just the `body`
 
-  .text-base-regular {
-    @apply text-sm leading-6 font-normal;
-  }
+*/
 
-  .text-base-semi {
-    @apply text-sm leading-6 font-semibold;
-  }
+[data-1-color-modes-mode="light-mode"] {
+  --1-color-modes-colors-background-bg-primary-solid: var(
+    --primitives-colors-gray-light-mode-950
+  );
+  --1-color-modes-colors-background-bg-secondary: var(
+    --primitives-colors-gray-light-mode-50
+  );
+}
 
-  .text-large-regular {
-    @apply text-base leading-6 font-normal;
-  }
-
-  .text-large-semi {
-    @apply text-base leading-6 font-semibold;
-  }
-
-  .text-xl-regular {
-    @apply text-2xl leading-[36px] font-normal;
-  }
-
-  .text-xl-semi {
-    @apply text-2xl leading-[36px] font-semibold;
-  }
-
-  .text-2xl-regular {
-    @apply text-[30px] leading-[48px] font-normal;
-  }
-
-  .text-2xl-semi {
-    @apply text-[30px] leading-[48px] font-semibold;
-  }
-
-  .text-3xl-regular {
-    @apply text-[32px] leading-[44px] font-normal;
-  }
-
-  .text-3xl-semi {
-    @apply text-[32px] leading-[44px] font-semibold;
-  }
+[data-1-color-modes-mode="dark-mode"] {
+  --1-color-modes-colors-background-bg-primary-solid: var(
+    --1-color-modes-colors-background-bg-secondary
+  );
+  --1-color-modes-colors-background-bg-secondary: var(
+    --primitives-colors-gray-dark-mode-900
+  );
 }

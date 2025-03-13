@@ -1,162 +1,131 @@
-const path = require("path")
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class",
-  presets: [require("@medusajs/ui-preset")],
-  content: [
-    "./src/app/**/*.{js,ts,jsx,tsx}",
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
-    "./src/modules/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@medusajs/ui/dist/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      transitionProperty: {
-        width: "width margin",
-        height: "height",
-        bg: "background-color",
-        display: "display opacity",
-        visibility: "visibility",
-        padding: "padding-top padding-right padding-bottom padding-left",
-      },
       colors: {
-        grey: {
-          0: "#FFFFFF",
-          5: "#F9FAFB",
-          10: "#F3F4F6",
-          20: "#E5E7EB",
-          30: "#D1D5DB",
-          40: "#9CA3AF",
-          50: "#6B7280",
-          60: "#4B5563",
-          70: "#374151",
-          80: "#1F2937",
-          90: "#111827",
-        },
-      },
-      borderRadius: {
-        none: "0px",
-        soft: "2px",
-        base: "4px",
-        rounded: "8px",
-        large: "16px",
-        circle: "9999px",
-      },
-      maxWidth: {
-        "8xl": "100rem",
-      },
-      screens: {
-        "2xsmall": "320px",
-        xsmall: "512px",
-        small: "1024px",
-        medium: "1280px",
-        large: "1440px",
-        xlarge: "1680px",
-        "2xlarge": "1920px",
-      },
-      fontSize: {
-        "3xl": "2rem",
+        "1-color-modes-colors-background-bg-secondary":
+          "var(--1-color-modes-colors-background-bg-secondary)",
+        "1-color-modes-colors-text-text-white":
+          "var(--1-color-modes-colors-text-text-white)",
+        "backgroundbg-primary": "var(--backgroundbg-primary)",
+        black: "var(--black)",
+        grey: "var(--grey)",
+        "primary-relaxure": "var(--primary-relaxure)",
+        "primitive-color-brand-black": "var(--primitive-color-brand-black)",
+        "primitive-color-brand-white": "var(--primitive-color-brand-white)",
+        "primitive-color-neutral-neutral-darker":
+          "var(--primitive-color-neutral-neutral-darker)",
+        "primitive-color-neutral-neutral-darkest":
+          "var(--primitive-color-neutral-neutral-darkest)",
+        "primitive-color-neutral-neutral-lighter":
+          "var(--primitive-color-neutral-neutral-lighter)",
+        "primitives-colors-gray-light-mode-50":
+          "var(--primitives-colors-gray-light-mode-50)",
+        "primitives-colors-gray-light-mode-950":
+          "var(--primitives-colors-gray-light-mode-950)",
+        "semantic-background-color-error":
+          "var(--semantic-background-color-error)",
+        "semantic-background-color-secondary":
+          "var(--semantic-background-color-secondary)",
+        "semantic-background-color-success":
+          "var(--semantic-background-color-success)",
+        "semantic-border-tertiary": "var(--semantic-border-tertiary)",
+        "semantic-link-primary": "var(--semantic-link-primary)",
+        "semantic-link-secondary": "var(--semantic-link-secondary)",
+        "semantic-text-alternate": "var(--semantic-text-alternate)",
+        "semantic-text-error": "var(--semantic-text-error)",
+        "semantic-text-secondary": "var(--semantic-text-secondary)",
+        "semantic-text-success": "var(--semantic-text-success)",
+        "texttxt-primary": "var(--texttxt-primary)",
+        "texttxt-secondary": "var(--texttxt-secondary)",
+        "variable-collection-beige-brand":
+          "var(--variable-collection-beige-brand)",
+        "variable-collection-beige-brand-duplicate":
+          "var(--variable-collection-beige-brand-duplicate)",
+        "variable-collection-dark-brown":
+          "var(--variable-collection-dark-brown)",
+        "variable-collection-dark-green-brand":
+          "var(--variable-collection-dark-green-brand)",
+        "variable-collection-dark-green-brand-duplicate":
+          "var(--variable-collection-dark-green-brand-duplicate)",
+        "variable-collection-gray": "var(--variable-collection-gray)",
+        "variable-collection-grey-1": "var(--variable-collection-grey-1)",
+        white: "var(--white)",
       },
       fontFamily: {
-        sans: [
-          "Inter",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Roboto",
-          "Helvetica Neue",
-          "Ubuntu",
-          "sans-serif",
-        ],
+        heading: "var(--heading-font-family)",
+        "heading-2": "var(--heading-2-font-family)",
+        "heading-3": "var(--heading-3-font-family)",
+        "heading-desktop-h1": "var(--heading-desktop-h1-font-family)",
+        "heading-desktop-h2": "var(--heading-desktop-h2-font-family)",
+        "heading-desktop-h3": "var(--heading-desktop-h3-font-family)",
+        "heading-desktop-h4": "var(--heading-desktop-h4-font-family)",
+        "heading-desktop-h5": "var(--heading-desktop-h5-font-family)",
+        "heading-desktop-h6": "var(--heading-desktop-h6-font-family)",
+        "heading-desktop-tagline": "var(--heading-desktop-tagline-font-family)",
+        "heading-mobile-h1": "var(--heading-mobile-h1-font-family)",
+        "heading-mobile-h2": "var(--heading-mobile-h2-font-family)",
+        "heading-mobile-h3": "var(--heading-mobile-h3-font-family)",
+        "heading-mobile-h4": "var(--heading-mobile-h4-font-family)",
+        "heading-mobile-h5": "var(--heading-mobile-h5-font-family)",
+        "heading-mobile-h6": "var(--heading-mobile-h6-font-family)",
+        "med-16": "var(--med-16-font-family)",
+        "relaxure-16-med": "var(--relaxure-16-med-font-family)",
+        "relaxure-sub-heading-18": "var(--relaxure-sub-heading-18-font-family)",
+        "text-2-strong": "var(--text-2-strong-font-family)",
+        "text-large-bold": "var(--text-large-bold-font-family)",
+        "text-large-extra-bold": "var(--text-large-extra-bold-font-family)",
+        "text-large-light": "var(--text-large-light-font-family)",
+        "text-large-link": "var(--text-large-link-font-family)",
+        "text-large-medium": "var(--text-large-medium-font-family)",
+        "text-large-normal": "var(--text-large-normal-font-family)",
+        "text-large-semi-bold": "var(--text-large-semi-bold-font-family)",
+        "text-medium-bold": "var(--text-medium-bold-font-family)",
+        "text-medium-extra-bold": "var(--text-medium-extra-bold-font-family)",
+        "text-medium-light": "var(--text-medium-light-font-family)",
+        "text-medium-link": "var(--text-medium-link-font-family)",
+        "text-medium-medium": "var(--text-medium-medium-font-family)",
+        "text-medium-normal": "var(--text-medium-normal-font-family)",
+        "text-medium-semi-bold": "var(--text-medium-semi-bold-font-family)",
+        "text-regular-bold": "var(--text-regular-bold-font-family)",
+        "text-regular-extra-bold": "var(--text-regular-extra-bold-font-family)",
+        "text-regular-light": "var(--text-regular-light-font-family)",
+        "text-regular-link": "var(--text-regular-link-font-family)",
+        "text-regular-medium": "var(--text-regular-medium-font-family)",
+        "text-regular-normal": "var(--text-regular-normal-font-family)",
+        "text-regular-semi-bold": "var(--text-regular-semi-bold-font-family)",
+        "text-small-bold": "var(--text-small-bold-font-family)",
+        "text-small-extra-bold": "var(--text-small-extra-bold-font-family)",
+        "text-small-light": "var(--text-small-light-font-family)",
+        "text-small-link": "var(--text-small-link-font-family)",
+        "text-small-medium": "var(--text-small-medium-font-family)",
+        "text-small-normal": "var(--text-small-normal-font-family)",
+        "text-small-semi-bold": "var(--text-small-semi-bold-font-family)",
+        "text-tiny-bold": "var(--text-tiny-bold-font-family)",
+        "text-tiny-extra-bold": "var(--text-tiny-extra-bold-font-family)",
+        "text-tiny-light": "var(--text-tiny-light-font-family)",
+        "text-tiny-link": "var(--text-tiny-link-font-family)",
+        "text-tiny-medium": "var(--text-tiny-medium-font-family)",
+        "text-tiny-normal": "var(--text-tiny-normal-font-family)",
+        "text-tiny-semi-bold": "var(--text-tiny-semi-bold-font-family)",
+        "text-xs-semibold": "var(--text-xs-semibold-font-family)",
       },
-      keyframes: {
-        ring: {
-          "0%": { transform: "rotate(0deg)" },
-          "100%": { transform: "rotate(360deg)" },
-        },
-        "fade-in-right": {
-          "0%": {
-            opacity: "0",
-            transform: "translateX(10px)",
-          },
-          "100%": {
-            opacity: "1",
-            transform: "translateX(0)",
-          },
-        },
-        "fade-in-top": {
-          "0%": {
-            opacity: "0",
-            transform: "translateY(-10px)",
-          },
-          "100%": {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
-        },
-        "fade-out-top": {
-          "0%": {
-            height: "100%",
-          },
-          "99%": {
-            height: "0",
-          },
-          "100%": {
-            visibility: "hidden",
-          },
-        },
-        "accordion-slide-up": {
-          "0%": {
-            height: "var(--radix-accordion-content-height)",
-            opacity: "1",
-          },
-          "100%": {
-            height: "0",
-            opacity: "0",
-          },
-        },
-        "accordion-slide-down": {
-          "0%": {
-            "min-height": "0",
-            "max-height": "0",
-            opacity: "0",
-          },
-          "100%": {
-            "min-height": "var(--radix-accordion-content-height)",
-            "max-height": "none",
-            opacity: "1",
-          },
-        },
-        enter: {
-          "0%": { transform: "scale(0.9)", opacity: 0 },
-          "100%": { transform: "scale(1)", opacity: 1 },
-        },
-        leave: {
-          "0%": { transform: "scale(1)", opacity: 1 },
-          "100%": { transform: "scale(0.9)", opacity: 0 },
-        },
-        "slide-in": {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(0)" },
-        },
-      },
-      animation: {
-        ring: "ring 2.2s cubic-bezier(0.5, 0, 0.5, 1) infinite",
-        "fade-in-right":
-          "fade-in-right 0.3s cubic-bezier(0.5, 0, 0.5, 1) forwards",
-        "fade-in-top": "fade-in-top 0.2s cubic-bezier(0.5, 0, 0.5, 1) forwards",
-        "fade-out-top":
-          "fade-out-top 0.2s cubic-bezier(0.5, 0, 0.5, 1) forwards",
-        "accordion-open":
-          "accordion-slide-down 300ms cubic-bezier(0.87, 0, 0.13, 1) forwards",
-        "accordion-close":
-          "accordion-slide-up 300ms cubic-bezier(0.87, 0, 0.13, 1) forwards",
-        enter: "enter 200ms ease-out",
-        "slide-in": "slide-in 1.2s cubic-bezier(.41,.73,.51,1.02)",
-        leave: "leave 150ms ease-in forwards",
+      boxShadow: {
+        glow: "var(--glow)",
+        large: "var(--large)",
+        medium: "var(--medium)",
+        "shadow-cards-relaxure": "var(--shadow-cards-relaxure)",
+        "shadow-relaxure-button": "var(--shadow-relaxure-button)",
+        "shadows-shadow-lg": "var(--shadows-shadow-lg)",
+        "shadows-shadow-xs": "var(--shadows-shadow-xs)",
+        small: "var(--small)",
+        xlarge: "var(--xlarge)",
+        xsmall: "var(--xsmall)",
+        xxlarge: "var(--xxlarge)",
+        xxsmall: "var(--xxsmall)",
       },
     },
   },
-  plugins: [require("tailwindcss-radix")()],
+  plugins: [],
 }
