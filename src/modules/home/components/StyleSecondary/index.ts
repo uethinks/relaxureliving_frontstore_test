@@ -1,0 +1,1 @@
+export { StyleSecondary } from "./StyleSecondary";
