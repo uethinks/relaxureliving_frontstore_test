@@ -1,3 +1,4 @@
+
 "use client"
 
 import PropTypes from "prop-types";
@@ -7,7 +8,7 @@ import { ArrowForwardIos4 } from "../../icons/ArrowForwardIos4";
 import { StyleOutlined } from "../../icons/StyleOutlined";
 import { ArrowForwardIos } from "../ArrowForwardIos";
 import { PropertyDefaultWrapper } from "../PropertyDefaultWrapper";
-
+import { listProductsWithSort } from "@lib/data/products"
 interface Props {
   property1: "variant-2" | "default";
   className: any;
@@ -19,7 +20,7 @@ interface Props {
   rectangle1: string;
 }
 
-export const Frame1000004785 = ({
+export const PergolaSliders = ({
   property1,
   className,
   rectangle = "/img/rectangle-1271-3.svg",
@@ -32,6 +33,7 @@ export const Frame1000004785 = ({
   const [state, dispatch] = useReducer(reducer, {
     property1: property1 || "default",
   });
+
 
   return (
     <div
@@ -199,7 +201,7 @@ function reducer(state: any, action: any) {
   return state;
 }
 
-Frame1000004785.propTypes = {
+PergolaSliders.propTypes = {
   property1: PropTypes.oneOf(["variant-2", "default"]),
   rectangle: PropTypes.string,
   propertyDefaultWrapperRectangle: PropTypes.string,

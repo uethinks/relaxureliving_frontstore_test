@@ -1,8 +1,8 @@
 import React from "react";
 import { Component } from "../../../../components/Component";
-import { Frame1000004785 } from "../../../../components/Frame1000004785";
+import { PergolaSliders } from "../../../../components/PergolaSliders";
 
-export const Container = (): JSX.Element => {
+export const OurPergola = (): JSX.Element => {
   return (
     <div className="h-[794px] justify-center gap-[60px_60px] p-10 self-stretch w-full bg-[#f3f3f3] rounded-[20px] flex items-center relative">
       <div className="flex flex-col h-[600px] items-start justify-center gap-[30px] px-0 py-4 relative flex-1 grow">
@@ -38,7 +38,7 @@ export const Container = (): JSX.Element => {
         />
       </div>
 
-      <Frame1000004785
+      <PergolaSliders
         className="!mt-[-13.00px] !mb-[-13.00px]"
         img="/img/rectangle-1271-4.svg"
         property1="default"

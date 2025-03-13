@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "./sections/Container";
+import { OurPergola } from "./sections/OurPergola";
 import { ContainerWrapper } from "./sections/ContainerWrapper";
 import { Div } from "./sections/Div";
 import { DivWrapper } from "./sections/DivWrapper";
@@ -9,14 +9,14 @@ import { FrameWrapper } from "./sections/FrameWrapper";
 import { Hero } from "./sections/Hero";
 import { NavBarWrapper } from "./sections/NavBarWrapper";
 import { SectionComponentNode } from "./sections/SectionComponentNode";
-
+console.log("OurPergola", OurPergola)
 export const homepage = (): JSX.Element => {
   return (
     <div className="flex flex-col h-[9399px] items-center gap-[120px] px-20 py-0 relative bg-[#ffffff]">
       <div className="absolute w-[1376px] h-[512px] top-[1844px] left-[68px] rounded-3xl" />
 
       <Hero />
-      <Container />
+      <OurPergola />
       <Frame />
       <ContainerWrapper />
       <FrameWrapper />

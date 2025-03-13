@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Frame1000004785 } from ".";
+import { PergolaSliders } from ".";
 
-const meta: Meta<typeof Frame1000004785> = {
-  title: "Components/Frame1000004785",
-  component: Frame1000004785,
+const meta: Meta<typeof PergolaSliders> = {
+  title: "Components/PergolaSliders",
+  component: PergolaSliders,
 
   argTypes: {
     property1: {
@@ -15,7 +15,7 @@ const meta: Meta<typeof Frame1000004785> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Frame1000004785>;
+type Story = StoryObj<typeof PergolaSliders>;
 
 export const Default: Story = {
   args: {
