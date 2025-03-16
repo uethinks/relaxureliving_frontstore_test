@@ -3,8 +3,8 @@ import { IconChevronDown4 } from "../../../../icons/IconChevronDown4";
 
 export const FaqWrapper = (): JSX.Element => {
   return (
-    <div className="flex flex-col w-[1512px] h-[711px] items-center justify-center gap-2.5 relative ml-[-80.00px] mr-[-80.00px] bg-[#f3f3f3]">
-      <div className="flex flex-col w-[1182px] items-center gap-10 px-0 py-10 relative flex-[0_0_auto]">
+    <div className="flex flex-col w-full h-[711px] items-center justify-center gap-2.5 relative ml-[-80.00px] mr-[-80.00px] bg-[#f3f3f3]">
+      <div className="flex flex-col w-full items-center gap-10 px-0 py-10 relative flex-[0_0_auto]">
         <div className="flex flex-col h-[143px] items-start relative self-stretch w-full">
           <div className="flex flex-col items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">

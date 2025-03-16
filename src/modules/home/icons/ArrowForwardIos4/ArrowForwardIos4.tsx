@@ -7,11 +7,13 @@ import React from "react";
 
 interface Props {
   className: any;
+  onClick: () => void;
 }
 
-export const ArrowForwardIos4 = ({ className }: Props): JSX.Element => {
+export const ArrowForwardIos4 = ({ className, onClick }: Props): JSX.Element => {
   return (
     <svg
+      onClick={onClick}
       className={`${className}`}
       fill="none"
       height="24"

@@ -22,3 +22,37 @@ export type StoreFreeShippingPrice = StorePrice & {
   target_remaining: number
   remaining_percentage: number
 }
+// 定义 Image 类型
+export type Image = {
+  name: string;
+  url: string;
+  formats: {
+    large: {
+      url: string;
+    };
+    small: {
+      url: string;
+    };
+  };
+}
+// 定义 HeroProps 类型
+export type HeroProps = {
+  Title: string;
+  Description: string;
+  BackgroundImage: Image;
+  LeftButton: string;
+  RightButton: string;
+}
+export type UsageScenario = {
+  id: number;
+  ScenarioName: string;
+  LargeImage: Image;
+  SmallImage: Image;
+}
+export type OurPergolaProps = {
+  Title: string;
+  SubTitle: string;
+  Description: string;
+  BottomButton: string;
+  UsageScenarios: UsageScenario[];
+}

@@ -134,3 +134,9 @@ export const listProductsWithSort = async ({
     queryParams,
   }
 }
+
+export const getProductsListFromStoreApi = async () => {
+  
+  return await sdk.store.product.list()
+  
+}

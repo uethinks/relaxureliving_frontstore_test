@@ -2,11 +2,11 @@ import React from "react";
 
 export const FrameWrapper = (): JSX.Element => {
   return (
-    <div className="relative w-[1352px] h-[791px]">
-      <div className="flex flex-col w-[1352px] items-center justify-center gap-2.5 p-10 relative">
+    <div className="relative w-4/5 h-[791px]">
+      <div className="flex flex-col w-full items-center justify-center gap-2.5 p-10 relative">
         <div className="flex flex-col h-[711px] items-center justify-center gap-2.5 relative self-stretch w-full bg-[#ffffff]">
-          <div className="flex flex-col w-[1182px] items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="w-[1182px] items-center flex flex-col gap-2.5 relative flex-[0_0_auto]">
+          <div className="flex flex-col w-4/5 items-center justify-center gap-2.5 relative flex-[0_0_auto]">
+            <div className="w-4/5 items-center flex flex-col gap-2.5 relative flex-[0_0_auto]">
               <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
                 <div className="inline-flex h-[41px] items-center justify-center p-2.5 bg-[#072f6c] rounded-[30px] gap-2.5 relative">
                   <div className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#ffffff] text-lg leading-[27px] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium tracking-[0]">

@@ -3,7 +3,7 @@ import { Frame1000004790 } from "../../../../components/Frame1000004790";
 
 export const Div = (): JSX.Element => {
   return (
-    <div className="flex w-[1446px] items-center gap-[98px] px-[47px] py-0 relative flex-[0_0_auto] ml-[-47.00px] mr-[-47.00px]">
+    <div className="flex w-full items-center gap-[98px] px-[47px] py-0 relative flex-[0_0_auto] ml-[-47.00px] mr-[-47.00px]">
       <div className="flex flex-col w-[518px] items-start justify-center gap-[30px] px-0 py-4 relative">
         <div className="items-start self-stretch w-full flex flex-col gap-2.5 relative flex-[0_0_auto]">
           <div className="flex self-stretch w-full flex-col items-start gap-2.5 relative flex-[0_0_auto]">

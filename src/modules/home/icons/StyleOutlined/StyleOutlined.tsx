@@ -10,15 +10,18 @@ interface Props {
   color: string;
   opacity: string;
   className: any;
+  onClick: () => void;
 }
 
 export const StyleOutlined = ({
   color = "black",
   opacity = "unset",
   className,
+  onClick,
 }: Props): JSX.Element => {
   return (
     <svg
+      onClick={onClick} 
       className={`${className}`}
       fill="none"
       height="24"

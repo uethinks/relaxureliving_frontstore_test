@@ -30,7 +30,7 @@ export const Frame1000004776 = ({
 
   return (
     <div
-      className={`w-[1346px] h-[600px] overflow-hidden relative ${className}`}
+      className={`w-full h-[600px] overflow-hidden relative ${className}`}
       onClick={() => {
         dispatch("click");
       }}

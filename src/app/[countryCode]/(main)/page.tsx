@@ -4,7 +4,7 @@ import FeaturedProducts from "@modules/home/components/featured-products"
 import Hero from "@modules/home/components/hero"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
-import { homepage as Homepage } from "@modules/home/homepage/page"
+import { Homepage as Homepage } from "@modules/home/homepage/page"
 
 export const metadata: Metadata = {
   title: "Medusa Next.js Starter Template",

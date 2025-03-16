@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, {useEffect, useState} from "react";
 import { OurPergola } from "./sections/OurPergola";
 import { ContainerWrapper } from "./sections/ContainerWrapper";
 import { Div } from "./sections/Div";
@@ -9,14 +10,24 @@ import { FrameWrapper } from "./sections/FrameWrapper";
 import { Hero } from "./sections/Hero";
 import { NavBarWrapper } from "./sections/NavBarWrapper";
 import { SectionComponentNode } from "./sections/SectionComponentNode";
-console.log("OurPergola", OurPergola)
-export const homepage = (): JSX.Element => {
+import { getHomePage } from "@lib/cms/strapiCmsApi"
+import { HeroProps, OurPergolaProps } from "types/global";
+export const Homepage = (): JSX.Element => {
+  const [hero, setHero] = useState<HeroProps | null>(null);
+  const [pergola, setPergola] = useState<OurPergolaProps | null>(null);
+  useEffect(() => {
+    getHomePage().then(({data}) => {
+      console.log("getHomePage", data)
+      setHero(data.HomepageHero)
+      setPergola(data.OurPergola)
+    })
+  }, [])
   return (
     <div className="flex flex-col h-[9399px] items-center gap-[120px] px-20 py-0 relative bg-[#ffffff]">
       <div className="absolute w-[1376px] h-[512px] top-[1844px] left-[68px] rounded-3xl" />
 
-      <Hero />
-      <OurPergola />
+      <Hero hero={hero} />
+      <OurPergola pergola={pergola} />
       <Frame />
       <ContainerWrapper />
       <FrameWrapper />

@@ -2,7 +2,7 @@ import React from "react";
 
 export const DivWrapper = (): JSX.Element => {
   return (
-    <div className="flex-col w-[1508px] justify-center gap-5 pt-20 pb-10 px-20 flex-[0_0_auto] ml-[-78.00px] mr-[-78.00px] bg-[#ffffff] rounded-[20px] flex items-center relative">
+    <div className="flex-col w-full justify-center gap-5 pt-20 pb-10 px-20 flex-[0_0_auto] ml-[-78.00px] mr-[-78.00px] bg-[#ffffff] rounded-[20px] flex items-center relative">
       <div className="flex flex-col items-start justify-center gap-[30px] px-0 py-4 relative self-stretch w-full flex-[0_0_auto]">
         <div className="items-start self-stretch w-full flex flex-col gap-2.5 relative flex-[0_0_auto]">
           <div className="flex self-stretch w-full bg-[#ffffff] flex-col items-start gap-2.5 relative flex-[0_0_auto]">
