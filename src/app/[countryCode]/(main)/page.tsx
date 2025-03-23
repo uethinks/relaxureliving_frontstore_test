@@ -29,7 +29,5 @@ export default async function Home(props: {
     return null
   }
 
-  return (
-    <Homepage />
-  )
+  return <Homepage />
 }

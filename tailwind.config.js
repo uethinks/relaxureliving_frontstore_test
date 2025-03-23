@@ -52,6 +52,7 @@ module.exports = {
         "variable-collection-gray": "var(--variable-collection-gray)",
         "variable-collection-grey-1": "var(--variable-collection-grey-1)",
         white: "var(--white)",
+        "black-50": "rgba(0, 0, 0, 0.5)",
       },
       fontFamily: {
         heading: "var(--heading-font-family)",
@@ -124,6 +125,12 @@ module.exports = {
         xsmall: "var(--xsmall)",
         xxlarge: "var(--xxlarge)",
         xxsmall: "var(--xxsmall)",
+      },
+      fontSize: {
+        16: "16px",
+        18: "18px",
+        22: "22px",
+        36: "36px",
       },
     },
   },
