@@ -14,6 +14,18 @@ interface Props {
     quantity: number
   }) => void
   accessories: StoreProduct[]
+  selectedHeaterVariant: {
+    productVarant: StoreProductVariant | null
+    quantity: number
+  }
+  selectedShadesVariant: {
+    productVarant: StoreProductVariant | null
+    quantity: number
+  }
+  selectedGlassdoorVariant: {
+    productVarant: StoreProductVariant | null
+    quantity: number
+  }
 }
 type accessoriesIcons = {
   name: string
@@ -24,6 +36,9 @@ type accessoriesIcons = {
 export const AccesorriesSelector = ({
   onAccessoryChange,
   accessories,
+  selectedHeaterVariant,
+  selectedShadesVariant,
+  selectedGlassdoorVariant,
 }: Props): JSX.Element => {
   const [accessoriesIcons, setAccessoriesIcons] = useState<accessoriesIcons[]>([
     {
@@ -80,7 +95,6 @@ export const AccesorriesSelector = ({
   }
 
   const closePopup = (type: string) => {
-    console.log("closePopup", type)
     if (type === "Heating") {
       setIsOpenHeater(false)
     } else if (type === "Shades") {
@@ -93,46 +107,67 @@ export const AccesorriesSelector = ({
     selectedAccessoryHeater: StoreProductVariant | null,
     selectedAccessoryHeaterQuantity: number
   ) => {
-    console.log(
-      "addAccessoryHeater",
-      selectedAccessoryHeater,
-      selectedAccessoryHeaterQuantity
-    )
     onAccessoryChange({
       type: "Heating",
       productVarant: selectedAccessoryHeater,
       quantity: selectedAccessoryHeaterQuantity,
     })
+    setAccessoriesIcons(
+      accessoriesIcons.map((item) => {
+        if (
+          item.name === "Heating" &&
+          (selectedAccessoryHeater === null ||
+            selectedAccessoryHeaterQuantity === 0)
+        ) {
+          item.selected = false
+        }
+        return item
+      })
+    )
   }
   const addAccessoryShades = (
     selectedAccessoryShades: StoreProductVariant | null,
     selectedAccessoryShadesQuantity: number
   ) => {
-    console.log(
-      "addAccessoryShades",
-      selectedAccessoryShades,
-      selectedAccessoryShadesQuantity
-    )
     onAccessoryChange({
       type: "Shades",
       productVarant: selectedAccessoryShades,
       quantity: selectedAccessoryShadesQuantity,
     })
+    setAccessoriesIcons(
+      accessoriesIcons.map((item) => {
+        if (
+          item.name === "Shades" &&
+          (selectedAccessoryShades === null ||
+            selectedAccessoryShadesQuantity === 0)
+        ) {
+          item.selected = false
+        }
+        return item
+      })
+    )
   }
   const addAccessoryGlassdoor = (
     selectedAccessoryGlassdoor: StoreProductVariant | null,
     selectedAccessoryGlassdoorQuantity: number
   ) => {
-    console.log(
-      "addAccessoryGlassdoor",
-      selectedAccessoryGlassdoor,
-      selectedAccessoryGlassdoorQuantity
-    )
     onAccessoryChange({
       type: "Glass door",
       productVarant: selectedAccessoryGlassdoor,
       quantity: selectedAccessoryGlassdoorQuantity,
     })
+    setAccessoriesIcons(
+      accessoriesIcons.map((item) => {
+        if (
+          item.name === "Glass door" &&
+          (selectedAccessoryGlassdoor === null ||
+            selectedAccessoryGlassdoorQuantity === 0)
+        ) {
+          item.selected = false
+        }
+        return item
+      })
+    )
   }
 
   return (
@@ -173,6 +208,7 @@ export const AccesorriesSelector = ({
           closePopup={closePopup}
           accessoryHeater={selectedHeater}
           addAccessoryHeater={addAccessoryHeater}
+          selectedHeaterVariant={selectedHeaterVariant}
         />
       )}
       {isOpenShade && (
@@ -180,6 +216,7 @@ export const AccesorriesSelector = ({
           closePopup={closePopup}
           accessoryShades={selectedShade}
           addAccessoryShades={addAccessoryShades}
+          selectedShadesVariant={selectedShadesVariant}
         />
       )}
       {isOpenGlassdoor && (
@@ -187,6 +224,7 @@ export const AccesorriesSelector = ({
           closePopup={closePopup}
           accessoryGlassdoor={selectedGlassdoor}
           addAccessoryGlassdoor={addAccessoryGlassdoor}
+          selectedGlassdoorVariant={selectedGlassdoorVariant}
         />
       )}
     </div>

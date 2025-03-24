@@ -28,11 +28,11 @@ export const ProductItem = ({
 }): JSX.Element => {
   const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
   const [selectedAccessoriesHeater, setSelectedAccessoriesHeater] =
-    useState<accessoryHeaterVirant>()
+    useState<accessoryHeaterVirant>({ productVarant: null, quantity: 0 })
   const [selectedAccessoriesShades, setSelectedAccessoriesShades] =
-    useState<accessoryShadesVariant>()
+    useState<accessoryShadesVariant>({ productVarant: null, quantity: 0 })
   const [selectedAccessoriesGlassdoor, setSelectedAccessoriesGlassdoor] =
-    useState<accessoryGlassdoorVariant>()
+    useState<accessoryGlassdoorVariant>({ productVarant: null, quantity: 0 })
   const [activeTab, setActiveTab] = useState("Description")
 
   const handleVariantChange = (variant: StoreProductVariant | undefined) => {
@@ -48,7 +48,7 @@ export const ProductItem = ({
     productVarant: StoreProductVariant | null
     quantity: number
   }) => {
-    if (type === "Heater") {
+    if (type === "Heating") {
       setSelectedAccessoriesHeater({ productVarant, quantity })
     } else if (type === "Shades") {
       setSelectedAccessoriesShades({ productVarant, quantity })
@@ -121,6 +121,9 @@ export const ProductItem = ({
                 <AccesorriesSelector
                   onAccessoryChange={handleAccessoryToggle}
                   accessories={accessories}
+                  selectedHeaterVariant={selectedAccessoriesHeater}
+                  selectedShadesVariant={selectedAccessoriesShades}
+                  selectedGlassdoorVariant={selectedAccessoriesGlassdoor}
                 />
               </div>
               <BuyNowButton

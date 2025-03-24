@@ -25,9 +25,7 @@ export const PergulaSizeSelector = ({
   const pergolaColors: StoreProductOption | undefined = product.options?.find(
     (option) => option.title === "Color"
   )
-  const pergolaStyles: StoreProductOption | undefined = product.options?.find(
-    (option) => option.title === "Style"
-  )
+
   const defaultSize: StoreProductOptionValue = pergolaSizes?.values?.[0] || {
     id: "",
     value: "",
@@ -36,16 +34,12 @@ export const PergulaSizeSelector = ({
     id: "",
     value: "",
   }
-  const defaultStyle: StoreProductOptionValue = pergolaStyles?.values?.[0] || {
-    id: "",
-    value: "",
-  }
+
   const [selectedSize, setSelectedSize] =
     useState<StoreProductOptionValue>(defaultSize)
   const [selectedColor, setSelectedColor] =
     useState<StoreProductOptionValue>(defaultColor)
-  const [selectedStyle, setSelectedStyle] =
-    useState<StoreProductOptionValue>(defaultStyle)
+
   const getVariant = () => {
     return product.variants?.find((variant) => {
       const matchingSize = variant?.options?.find(
@@ -57,12 +51,7 @@ export const PergulaSizeSelector = ({
           option.option?.title === "Color" &&
           option.value === selectedColor.value
       )
-      const matchingStyle = variant?.options?.find(
-        (option) =>
-          option.option?.title === "Style" &&
-          option.value === selectedStyle.value
-      )
-      return matchingSize && matchingColor && matchingStyle
+      return matchingSize && matchingColor
     })
   }
   const handleSizeClick = (size: StoreProductOptionValue) => {
@@ -73,12 +62,6 @@ export const PergulaSizeSelector = ({
 
   const handleColorClick = (color: StoreProductOptionValue) => {
     setSelectedColor(color)
-    const variant = getVariant()
-    onVariantChange(variant)
-  }
-
-  const handleStyleClick = (style: StoreProductOptionValue) => {
-    setSelectedStyle(style)
     const variant = getVariant()
     onVariantChange(variant)
   }
@@ -125,7 +108,7 @@ export const PergulaSizeSelector = ({
       >
         <div className="inline-flex h-6 items-center gap-2.5 relative">
           <p className="relative w-[327px] h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-18 tracking-[0] leading-6 whitespace-nowrap">
-            What Color do you want for your pergola?
+            What Color would you like to choose?
           </p>
         </div>
 
@@ -148,41 +131,6 @@ export const PergulaSizeSelector = ({
                     }`}
                   >
                     {color.value}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className={`inline-flex flex-col items-start gap-5 relative ${className}`}
-      >
-        <div className="inline-flex h-6 items-center gap-2.5 relative">
-          <p className="relative w-[327px] h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-18 tracking-[0] leading-6 whitespace-nowrap">
-            What Style do you want for your pergola?
-          </p>
-        </div>
-
-        <div className="relative h-12">
-          <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
-            <div className="inline-flex items-center gap-[18px] relative">
-              {pergolaStyles?.values?.map((style) => (
-                <button
-                  key={style.id}
-                  className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer ${
-                    selectedStyle === style ? "bg-[#dce7f8] rounded-[20px]" : ""
-                  }`}
-                  onClick={() => handleStyleClick(style)}
-                >
-                  <div
-                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap ${
-                      selectedStyle === style
-                        ? "text-[#072f6c]"
-                        : "text-[#69727a]"
-                    }`}
-                  >
-                    {style.value}
                   </div>
                 </button>
               ))}

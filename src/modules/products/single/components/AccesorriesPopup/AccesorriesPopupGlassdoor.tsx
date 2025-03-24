@@ -5,6 +5,7 @@ export const AccesorriesPopupGlassdoor = ({
   accessoryGlassdoor,
   closePopup,
   addAccessoryGlassdoor,
+  selectedGlassdoorVariant,
 }: {
   accessoryGlassdoor: StoreProduct | null
   closePopup: (type: string) => void
@@ -12,6 +13,10 @@ export const AccesorriesPopupGlassdoor = ({
     selectedAccessoryGlassdoor: StoreProductVariant | null,
     selectedAccessoryGlassdoorQuantity: number
   ) => void
+  selectedGlassdoorVariant: {
+    productVarant: StoreProductVariant | null
+    quantity: number
+  }
 }): JSX.Element => {
   const closePopupGlassdoor = () => {
     closePopup("Glass door")
@@ -19,16 +24,17 @@ export const AccesorriesPopupGlassdoor = ({
   const productImage = accessoryGlassdoor?.images?.[0].url
   const addAccessoryGlassdoorHandler = () => {
     addAccessoryGlassdoor(
-      selectedGlassdoorVarant,
-      selectedGlassdoorVarantQuantity
+      currentGlassdoorVarant,
+      currentGlassdoorVarantQuantity
     )
     closePopupGlassdoor()
   }
-  const defaultGlassdoorVarant = accessoryGlassdoor?.variants?.[0]
-  const [selectedGlassdoorVarant, setSelectedGlassdoorVarant] =
-    useState<StoreProductVariant | null>(defaultGlassdoorVarant || null)
-  const [selectedGlassdoorVarantQuantity, setSelectedGlassdoorVarantQuantity] =
-    useState(1)
+  const [currentGlassdoorVarant, setCurrentGlassdoorVarant] =
+    useState<StoreProductVariant | null>(
+      selectedGlassdoorVariant.productVarant || null
+    )
+  const [currentGlassdoorVarantQuantity, setCurrentGlassdoorVarantQuantity] =
+    useState(selectedGlassdoorVariant.quantity)
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
@@ -74,9 +80,9 @@ export const AccesorriesPopupGlassdoor = ({
                 </h2>
                 <div className="w-full flex justify-between items-center gap-2">
                   <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                    {selectedGlassdoorVarant?.calculated_price?.currency_code}{" "}
+                    {currentGlassdoorVarant?.calculated_price?.currency_code}{" "}
                     {
-                      selectedGlassdoorVarant?.calculated_price
+                      currentGlassdoorVarant?.calculated_price
                         ?.calculated_amount
                     }
                   </div>
@@ -87,15 +93,15 @@ export const AccesorriesPopupGlassdoor = ({
                           <button
                             key={varant.id}
                             className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer ${
-                              selectedGlassdoorVarant?.id === varant.id
+                              currentGlassdoorVarant?.id === varant.id
                                 ? "bg-[#dce7f8] rounded-[20px]"
                                 : ""
                             }`}
-                            onClick={() => setSelectedGlassdoorVarant(varant)}
+                            onClick={() => setCurrentGlassdoorVarant(varant)}
                           >
                             <div
                               className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap ${
-                                selectedGlassdoorVarant?.id === varant.id
+                                currentGlassdoorVarant?.id === varant.id
                                   ? "text-[#072f6c]"
                                   : "text-[#69727a]"
                               }`}
@@ -127,9 +133,9 @@ export const AccesorriesPopupGlassdoor = ({
                   <div className="flex items-center gap-2">
                     <div className="w-14 h-10 flex items-center justify-center rounded-[10px] border border-solid border-[#a8a8a8]">
                       <input
-                        value={selectedGlassdoorVarantQuantity}
+                        value={currentGlassdoorVarantQuantity}
                         onChange={(e) =>
-                          setSelectedGlassdoorVarantQuantity(
+                          setCurrentGlassdoorVarantQuantity(
                             Number(e.target.value)
                           )
                         }

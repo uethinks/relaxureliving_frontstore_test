@@ -5,6 +5,7 @@ export const AccesorriesPopupShades = ({
   accessoryShades,
   closePopup,
   addAccessoryShades,
+  selectedShadesVariant,
 }: {
   accessoryShades: StoreProduct | null
   closePopup: (type: string) => void
@@ -12,20 +13,25 @@ export const AccesorriesPopupShades = ({
     selectedAccessoryShades: StoreProductVariant | null,
     selectedAccessoryShadesQuantity: number
   ) => void
+  selectedShadesVariant: {
+    productVarant: StoreProductVariant | null
+    quantity: number
+  }
 }): JSX.Element => {
   const closePopupShades = () => {
     closePopup("Shades")
   }
   const productImage = accessoryShades?.images?.[0].url
   const addAccessoryShadesHandler = () => {
-    addAccessoryShades(selectedShadesVarant, selectedShadesVarantQuantity)
+    addAccessoryShades(currentShadesVarant, currentShadesVarantQuantity)
     closePopupShades()
   }
-  const defaultShadesVarant = accessoryShades?.variants?.[0]
-  const [selectedShadesVarant, setSelectedShadesVarant] =
-    useState<StoreProductVariant | null>(defaultShadesVarant || null)
-  const [selectedShadesVarantQuantity, setSelectedShadesVarantQuantity] =
-    useState(1)
+  const [currentShadesVarant, setCurrentShadesVarant] =
+    useState<StoreProductVariant | null>(
+      selectedShadesVariant.productVarant || null
+    )
+  const [currentShadesVarantQuantity, setCurrentShadesVarantQuantity] =
+    useState(selectedShadesVariant.quantity)
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
@@ -70,8 +76,8 @@ export const AccesorriesPopupShades = ({
                   {accessoryShades?.title}
                 </h2>
                 <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                  {selectedShadesVarant?.calculated_price?.currency_code}{" "}
-                  {selectedShadesVarant?.calculated_price?.calculated_amount}
+                  {currentShadesVarant?.calculated_price?.currency_code}{" "}
+                  {currentShadesVarant?.calculated_price?.calculated_amount}
                 </div>
                 <div className="relative h-12">
                   <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
@@ -80,15 +86,15 @@ export const AccesorriesPopupShades = ({
                         <button
                           key={varant.id}
                           className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer ${
-                            selectedShadesVarant?.id === varant.id
+                            currentShadesVarant?.id === varant.id
                               ? "bg-[#dce7f8] rounded-[20px]"
                               : ""
                           }`}
-                          onClick={() => setSelectedShadesVarant(varant)}
+                          onClick={() => setCurrentShadesVarant(varant)}
                         >
                           <div
                             className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap ${
-                              selectedShadesVarant?.id === varant.id
+                              currentShadesVarant?.id === varant.id
                                 ? "text-[#072f6c]"
                                 : "text-[#69727a]"
                             }`}
@@ -119,11 +125,9 @@ export const AccesorriesPopupShades = ({
                   <div className="flex items-center gap-2">
                     <div className="w-14 h-10 flex items-center justify-center rounded-[10px] border border-solid border-[#a8a8a8]">
                       <input
-                        value={selectedShadesVarantQuantity}
+                        value={currentShadesVarantQuantity}
                         onChange={(e) =>
-                          setSelectedShadesVarantQuantity(
-                            Number(e.target.value)
-                          )
+                          setCurrentShadesVarantQuantity(Number(e.target.value))
                         }
                         type="text"
                         className="text-[#69727a] leading-6 font-montserrat font-medium text-base focus:outline-none border-0 text-center w-full"
