@@ -6,6 +6,18 @@ import { ImgContent } from "./components/ImgContent"
 import { AccesorriesSelector } from "./components/AccesorriesSelector"
 import { Advantage } from "./components/Advantage"
 import { StoreProduct, StoreProductVariant } from "@medusajs/types"
+type accessoryHeaterVirant = {
+  productVarant: StoreProductVariant | null
+  quantity: number
+}
+type accessoryShadesVariant = {
+  productVarant: StoreProductVariant | null
+  quantity: number
+}
+type accessoryGlassdoorVariant = {
+  productVarant: StoreProductVariant | null
+  quantity: number
+}
 
 export const ProductItem = ({
   product,
@@ -15,19 +27,34 @@ export const ProductItem = ({
   accessories: StoreProduct[]
 }): JSX.Element => {
   const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
+  const [selectedAccessoriesHeater, setSelectedAccessoriesHeater] =
+    useState<accessoryHeaterVirant>()
+  const [selectedAccessoriesShades, setSelectedAccessoriesShades] =
+    useState<accessoryShadesVariant>()
+  const [selectedAccessoriesGlassdoor, setSelectedAccessoriesGlassdoor] =
+    useState<accessoryGlassdoorVariant>()
   const [activeTab, setActiveTab] = useState("Description")
 
   const handleVariantChange = (variant: StoreProductVariant | undefined) => {
     setSelectedVariant(variant)
   }
 
-  const handleAccessoryToggle = (accessory: string) => {
-    setSelectedAccessories((prev) =>
-      prev.includes(accessory)
-        ? prev.filter((a) => a !== accessory)
-        : [...prev, accessory]
-    )
+  const handleAccessoryToggle = ({
+    type,
+    productVarant,
+    quantity,
+  }: {
+    type: string
+    productVarant: StoreProductVariant | null
+    quantity: number
+  }) => {
+    if (type === "Heater") {
+      setSelectedAccessoriesHeater({ productVarant, quantity })
+    } else if (type === "Shades") {
+      setSelectedAccessoriesShades({ productVarant, quantity })
+    } else if (type === "Glass door") {
+      setSelectedAccessoriesGlassdoor({ productVarant, quantity })
+    }
   }
 
   const tabContent = {
@@ -168,7 +195,31 @@ export const ProductItem = ({
               <div className="relative w-[30px] h-[30px] bg-[url(https://c.animaapp.com/ZNF68wCJ/img/group-4@2x.png)] bg-[100%_100%]" />
 
               <p className="flex-1 mt-[-1.00px] text-[#68717a] relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
-                Selected accessories: {selectedAccessories.join(", ") || "None"}
+                Selected accessories:
+                {Boolean(
+                  selectedAccessoriesShades?.productVarant &&
+                    selectedAccessoriesShades?.quantity
+                ) && (
+                  <span>
+                    {selectedAccessoriesHeater?.productVarant?.title ?? ""}{" "}
+                  </span>
+                )}
+                {Boolean(
+                  selectedAccessoriesShades?.productVarant &&
+                    selectedAccessoriesShades?.quantity
+                ) && (
+                  <span>
+                    {selectedAccessoriesShades?.productVarant?.title ?? ""}{" "}
+                  </span>
+                )}
+                {Boolean(
+                  selectedAccessoriesGlassdoor?.productVarant &&
+                    selectedAccessoriesGlassdoor?.quantity
+                ) && (
+                  <span>
+                    {selectedAccessoriesGlassdoor?.productVarant?.title ?? ""}{" "}
+                  </span>
+                )}
               </p>
             </div>
 

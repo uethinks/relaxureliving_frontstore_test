@@ -14,7 +14,7 @@ export const AccesorriesPopupGlassdoor = ({
   ) => void
 }): JSX.Element => {
   const closePopupGlassdoor = () => {
-    closePopup("glassdoor")
+    closePopup("Glass door")
   }
   const productImage = accessoryGlassdoor?.images?.[0].url
   const addAccessoryGlassdoorHandler = () => {
@@ -22,12 +22,13 @@ export const AccesorriesPopupGlassdoor = ({
       selectedGlassdoorVarant,
       selectedGlassdoorVarantQuantity
     )
+    closePopupGlassdoor()
   }
-
+  const defaultGlassdoorVarant = accessoryGlassdoor?.variants?.[0]
   const [selectedGlassdoorVarant, setSelectedGlassdoorVarant] =
-    useState<StoreProductVariant | null>(null)
+    useState<StoreProductVariant | null>(defaultGlassdoorVarant || null)
   const [selectedGlassdoorVarantQuantity, setSelectedGlassdoorVarantQuantity] =
-    useState(0)
+    useState(1)
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
@@ -69,11 +70,15 @@ export const AccesorriesPopupGlassdoor = ({
 
               <div className="flex flex-col items-start gap-2.5 py-2.5 self-stretch w-full">
                 <h2 className="self-stretch font-merriweather text-[#343a40] text-[28px] font-bold leading-[39.2px]">
-                  Carrier Heating
+                  {accessoryGlassdoor?.title}
                 </h2>
-                <div>
+                <div className="w-full flex justify-between items-center gap-2">
                   <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                    $ 397.00
+                    {selectedGlassdoorVarant?.calculated_price?.currency_code}{" "}
+                    {
+                      selectedGlassdoorVarant?.calculated_price
+                        ?.calculated_amount
+                    }
                   </div>
                   <div className="relative h-12">
                     <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
@@ -109,12 +114,7 @@ export const AccesorriesPopupGlassdoor = ({
                 </div>
 
                 <p className="self-stretch text-[#68717a] leading-[22.4px] font-montserrat text-base font-medium mt-2">
-                  Warm enough and protects all of us well, including kids during
-                  colder climates. During winter where it is minus 0 degree in
-                  the yard, I can keep my jacket off with this pergola oasis.
-                  The heater probably extends the temperature to up to 20
-                  degrees. Such fun while we try to build a snowman! Last year
-                  we kept our X'mas tree under pergola.
+                  {accessoryGlassdoor?.description}
                 </p>
 
                 <div className="flex items-center gap-2 self-stretch w-full mt-4">

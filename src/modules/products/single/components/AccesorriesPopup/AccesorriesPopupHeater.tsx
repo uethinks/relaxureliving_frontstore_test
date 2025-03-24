@@ -1,18 +1,31 @@
-import { StoreProduct } from "@medusajs/types"
+import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { useState } from "react"
 import { AddAccessories } from "./AddAccessories"
 export const AccesorriesPopupHeater = ({
   accessoryHeater,
   closePopup,
+  addAccessoryHeater,
 }: {
   accessoryHeater: StoreProduct | null
   closePopup: (type: string) => void
+  addAccessoryHeater: (
+    selectedAccessoryHeater: StoreProductVariant | null,
+    selectedAccessoryHeaterQuantity: number
+  ) => void
 }): JSX.Element => {
-  const [quantity, setQuantity] = useState(1)
   const closePopupHeater = () => {
-    closePopup("heater")
+    closePopup("Heating")
   }
   const productImage = accessoryHeater?.images?.[0].url
+  const addAccessoryHeaterHandler = () => {
+    addAccessoryHeater(selectedHeaterVarant, selectedHeaterVarantQuantity)
+    closePopupHeater()
+  }
+  const defaultHeaterVarant = accessoryHeater?.variants?.[0]
+  const [selectedHeaterVarant, setSelectedHeaterVarant] =
+    useState<StoreProductVariant | null>(defaultHeaterVarant || null)
+  const [selectedHeaterVarantQuantity, setSelectedHeaterVarantQuantity] =
+    useState(1)
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
@@ -54,11 +67,40 @@ export const AccesorriesPopupHeater = ({
 
               <div className="flex flex-col items-start gap-2.5 py-2.5 self-stretch w-full">
                 <h2 className="self-stretch font-merriweather text-[#343a40] text-[28px] font-bold leading-[39.2px]">
-                  Carrier Heating
+                  {accessoryHeater?.title}
                 </h2>
-
-                <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                  $ 397.00
+                <div className="w-full flex justify-between items-center gap-2">
+                  <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
+                    {selectedHeaterVarant?.calculated_price?.currency_code}{" "}
+                    {selectedHeaterVarant?.calculated_price?.calculated_amount}
+                  </div>
+                  <div className="relative h-12">
+                    <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
+                      <div className="inline-flex items-center gap-[18px] relative">
+                        {accessoryHeater?.variants?.map((varant) => (
+                          <button
+                            key={varant.id}
+                            className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer ${
+                              selectedHeaterVarant?.id === varant.id
+                                ? "bg-[#dce7f8] rounded-[20px]"
+                                : ""
+                            }`}
+                            onClick={() => setSelectedHeaterVarant(varant)}
+                          >
+                            <div
+                              className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap ${
+                                selectedHeaterVarant?.id === varant.id
+                                  ? "text-[#072f6c]"
+                                  : "text-[#69727a]"
+                              }`}
+                            >
+                              {varant.title}
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="self-stretch text-[#343a40] text-lg leading-[25.2px] font-montserrat font-medium mt-2">
@@ -66,12 +108,7 @@ export const AccesorriesPopupHeater = ({
                 </div>
 
                 <p className="self-stretch text-[#68717a] leading-[22.4px] font-montserrat text-base font-medium mt-2">
-                  Warm enough and protects all of us well, including kids during
-                  colder climates. During winter where it is minus 0 degree in
-                  the yard, I can keep my jacket off with this pergola oasis.
-                  The heater probably extends the temperature to up to 20
-                  degrees. Such fun while we try to build a snowman! Last year
-                  we kept our X'mas tree under pergola.
+                  {accessoryHeater?.description}
                 </p>
 
                 <div className="flex items-center gap-2 self-stretch w-full mt-4">
@@ -84,8 +121,12 @@ export const AccesorriesPopupHeater = ({
                   <div className="flex items-center gap-2">
                     <div className="w-14 h-10 flex items-center justify-center rounded-[10px] border border-solid border-[#a8a8a8]">
                       <input
-                        value={quantity}
-                        onChange={(e) => setQuantity(Number(e.target.value))}
+                        value={selectedHeaterVarantQuantity}
+                        onChange={(e) =>
+                          setSelectedHeaterVarantQuantity(
+                            Number(e.target.value)
+                          )
+                        }
                         type="text"
                         className="text-[#69727a] leading-6 font-montserrat font-medium text-base focus:outline-none border-0 text-center w-full"
                       ></input>
@@ -112,6 +153,7 @@ export const AccesorriesPopupHeater = ({
                 className="!w-[235px]"
                 property1="primary-button-l"
                 text="Add accesory"
+                addAccessory={addAccessoryHeaterHandler}
               />
             </div>
           </div>
