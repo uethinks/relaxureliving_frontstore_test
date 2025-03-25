@@ -112,10 +112,8 @@ export default async function ProductPage(props: Props) {
   const accessories = await getProductsForAccessory({
     regionId: region.id,
   })
-  console.log("accessories", accessories)
   if (!product) {
     notFound()
   }
-  console.log("ProductPage", product)
   return <ProductItem product={product} accessories={accessories} />
 }

@@ -144,7 +144,8 @@ export async function addToCart({
       {},
       headers
     )
-    .then(async () => {
+    .then(async (res) => {
+      console.log("res", res.cart.items)
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
 

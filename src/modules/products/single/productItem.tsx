@@ -6,6 +6,7 @@ import { ImgContent } from "./components/ImgContent"
 import { AccesorriesSelector } from "./components/AccesorriesSelector"
 import { Advantage } from "./components/Advantage"
 import { StoreProduct, StoreProductVariant } from "@medusajs/types"
+import { addToCart } from "@lib/data/cart"
 type accessoryHeaterVirant = {
   productVarant: StoreProductVariant | null
   quantity: number
@@ -72,6 +73,80 @@ export const ProductItem = ({
     },
   }
 
+  // add the selected variant to the cart
+  const handleBuyNow = async () => {
+    try {
+      const results = await Promise.all([
+        buyPergula(),
+        buyHeater(),
+        buyShades(),
+        buyGlassdoor(),
+      ])
+
+      console.log("All items added to cart:", results)
+
+      // 这里可以添加后续逻辑，比如导航到购物车页面
+      // router.push('/cart');
+    } catch (error) {
+      console.error("Error adding items to cart:", error)
+    }
+  }
+  const buyPergula = async () => {
+    console.log("selectedVariant", selectedVariant)
+    if (!selectedVariant?.id) return null
+
+    return await addToCart({
+      variantId: selectedVariant.id,
+      quantity: 1,
+      countryCode: "us",
+    })
+  }
+
+  const buyHeater = async () => {
+    console.log("selectedAccessoriesHeater", selectedAccessoriesHeater)
+    if (
+      !selectedAccessoriesHeater?.productVarant?.id ||
+      !selectedAccessoriesHeater.quantity
+    )
+      return null
+
+    return await addToCart({
+      variantId: selectedAccessoriesHeater.productVarant.id,
+      quantity: selectedAccessoriesHeater.quantity,
+      countryCode: "us",
+    })
+  }
+
+  const buyShades = async () => {
+    console.log("selectedAccessoriesShades", selectedAccessoriesShades)
+    if (
+      !selectedAccessoriesShades?.productVarant?.id ||
+      !selectedAccessoriesShades.quantity
+    )
+      return null
+
+    return await addToCart({
+      variantId: selectedAccessoriesShades.productVarant.id,
+      quantity: selectedAccessoriesShades.quantity,
+      countryCode: "us",
+    })
+  }
+
+  const buyGlassdoor = async () => {
+    console.log("selectedAccessoriesGlassdoor", selectedAccessoriesGlassdoor)
+    if (
+      !selectedAccessoriesGlassdoor?.productVarant?.id ||
+      !selectedAccessoriesGlassdoor.quantity
+    )
+      return null
+
+    return await addToCart({
+      variantId: selectedAccessoriesGlassdoor.productVarant.id,
+      quantity: selectedAccessoriesGlassdoor.quantity,
+      countryCode: "us",
+    })
+  }
+
   return (
     <div className="bg-[#ffffff] flex flex-row justify-center w-full">
       <div className="bg-[#ffffff] w-[1512px] h-[3533px] relative">
@@ -127,6 +202,7 @@ export const ProductItem = ({
                 />
               </div>
               <BuyNowButton
+                onClick={handleBuyNow}
                 property1="primary-button-l"
                 text="Buy now"
                 className=""
@@ -272,6 +348,7 @@ export const ProductItem = ({
             </div>
 
             <BuyNowButton
+              onClick={handleBuyNow}
               className=""
               property1="primary-button-l"
               text="Contact us"
