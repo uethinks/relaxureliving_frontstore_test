@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 export const DivWrapper = (): JSX.Element => {
   return (
@@ -226,5 +226,5 @@ export const DivWrapper = (): JSX.Element => {
 
       <div className="absolute w-[7px] h-[7px] top-[864px] left-[1402px] bg-[#e9e9e9] rounded-[3.5px] shadow-[inset_0px_1px_4px_#00000033]" />
     </div>
-  );
-};
+  )
+}
