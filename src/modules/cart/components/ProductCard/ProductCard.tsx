@@ -4,8 +4,13 @@ import { useCart } from "@lib/context/cartContext"
 import { StoreCartLineItem } from "@medusajs/types"
 
 export const ProductCard = (): JSX.Element | null => {
-  const { cart, getCart, removeVariant, updateVariantInfo } = useCart()
-
+  const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
+  useEffect(() => {
+    getCart().then((cart) => {
+      console.log("cart", cart)
+      setCart(cart)
+    })
+  }, [])
   let pergolaInCart = cart?.items?.find(
     (item) => item.product_type === "Pergula"
   )

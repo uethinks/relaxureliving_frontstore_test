@@ -23,7 +23,7 @@ type variantInfo = {
 interface CartContextType {
   cart: StoreCart | null
   setCart: (cart: StoreCart | null) => void
-  getCart: () => Promise<void>
+  getCart: () => Promise<StoreCart | null>
   addVariant: (variantInfo: variantInfo) => Promise<void>
   removeVariant: (lineId: string) => Promise<void>
   updateVariantInfo: (params: {
@@ -73,7 +73,9 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const getCart = async () => {
     const cartData = await retrieveCart()
+    console.log("getCart", cartData)
     setCart(cartData)
+    return cartData
   }
 
   const value = useMemo(

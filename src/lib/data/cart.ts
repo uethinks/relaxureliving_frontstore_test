@@ -228,12 +228,13 @@ export async function setShippingMethod({
   const headers = {
     ...(await getAuthHeaders()),
   }
-
-  return sdk.store.cart
+  console.log("addShippingMethod", cartId, shippingMethodId)
+  return await sdk.store.cart
     .addShippingMethod(cartId, { option_id: shippingMethodId }, {}, headers)
-    .then(async () => {
+    .then(async (res) => {
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
+      return res
     })
     .catch(medusaError)
 }
@@ -418,8 +419,8 @@ export async function placeOrder(cartId?: string) {
     removeCartId()
     redirect(`/${countryCode}/order/${cartRes?.order.id}/confirmed`)
   }
-
-  return cartRes.cart
+  console.log("complete", cartRes)
+  return cartRes
 }
 
 /**
@@ -451,7 +452,7 @@ export async function updateRegion(countryCode: string, currentPath: string) {
 }
 
 export async function listCartOptions() {
-  const cartId = await getCartId()
+  const cartId = await getCartId() || ""
   const headers = {
     ...(await getAuthHeaders()),
   }

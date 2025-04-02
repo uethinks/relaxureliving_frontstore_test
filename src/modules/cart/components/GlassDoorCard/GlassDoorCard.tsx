@@ -4,7 +4,14 @@ import { StoreCartLineItem } from "@medusajs/types"
 import React, { useEffect, useState } from "react"
 
 export const GlassDoorCard = (): JSX.Element | null => {
-  const { cart, getCart, removeVariant, updateVariantInfo } = useCart()
+  const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
+  useEffect(() => {
+    getCart().then((cart) => {
+      console.log("cart", cart)
+      setCart(cart)
+    })
+  }, [])
+
   let glassDoorInCart = cart?.items?.find(
     (item) => item.product_title === "Frameless Sliding Glass Door"
   )

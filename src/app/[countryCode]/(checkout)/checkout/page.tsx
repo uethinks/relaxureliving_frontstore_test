@@ -16,6 +16,5 @@ export default async function Checkout() {
   }
 
   const customer = await retrieveCustomer()
-
   return <CheckoutComponent />
 }

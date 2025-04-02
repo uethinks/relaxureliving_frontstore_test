@@ -7,6 +7,7 @@ import { AccesorriesSelector } from "./components/AccesorriesSelector"
 import { Advantage } from "./components/Advantage"
 import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { addToCart } from "@lib/data/cart"
+import { useRouter } from "next/navigation"
 type accessoryHeaterVirant = {
   productVarant: StoreProductVariant | null
   quantity: number
@@ -72,7 +73,7 @@ export const ProductItem = ({
       text: "We offer free shipping on all pergola orders within the continental United States. Delivery typically takes 2-3 weeks from the order date. International shipping is available at an additional cost, with delivery times varying by location.",
     },
   }
-
+  const router = useRouter()
   // add the selected variant to the cart
   const handleBuyNow = async () => {
     try {
@@ -86,7 +87,7 @@ export const ProductItem = ({
       console.log("All items added to cart:", results)
 
       // 这里可以添加后续逻辑，比如导航到购物车页面
-      // router.push('/cart');
+      router.push("/cart")
     } catch (error) {
       console.error("Error adding items to cart:", error)
     }
@@ -179,8 +180,7 @@ export const ProductItem = ({
 
                   <div className="inline-flex items-center justify-center gap-2.5 px-2.5 py-0 relative flex-[0_0_auto]">
                     <div className="w-fit [font-family:'Montserrat',Helvetica] font-semibold text-[22px] leading-[30.8px] whitespace-nowrap relative mt-[-1.00px] text-[#343a40] tracking-[0]">
-                      {selectedVariant?.calculated_price?.currency_code}
-                      {selectedVariant?.calculated_price?.calculated_amount}
+                      ${selectedVariant?.calculated_price?.calculated_amount}
                     </div>
                   </div>
                 </div>

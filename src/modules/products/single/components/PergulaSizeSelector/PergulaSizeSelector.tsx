@@ -26,11 +26,11 @@ export const PergulaSizeSelector = ({
     (option) => option.title === "Color"
   )
 
-  const defaultSize: StoreProductOptionValue = pergolaSizes?.values?.[0] || {
+  const defaultSize: StoreProductOptionValue = {
     id: "",
     value: "",
   }
-  const defaultColor: StoreProductOptionValue = pergolaColors?.values?.[0] || {
+  const defaultColor: StoreProductOptionValue = {
     id: "",
     value: "",
   }

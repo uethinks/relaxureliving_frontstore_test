@@ -1,11 +1,64 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { PaymentFinish } from "./components/paymentFinish"
-
+import { StoreCart } from "@medusajs/types"
+import {
+  updateCart,
+  placeOrder,
+  setShippingMethod,
+  initiatePaymentSession,
+} from "@lib/data/cart"
+import { listCartShippingMethods } from "@lib/data/fulfillment"
+import { listCartPaymentMethods } from "@lib/data/payment"
 export const Checkout = () => {
-  const { cart } = useCart()
+  const { cart, setCart, getCart } = useCart()
   const [isPaymentFinish, setIsPaymentFinish] = useState(false)
+  const [shippingOptions, setShippingOptions] = useState<any[]>([])
+  const [paymentOptions, setPaymentOptions] = useState<any[]>([])
+  useEffect(() => {
+    const fetchShippingOptions = async (cartId: string) => {
+      const options = await listCartShippingMethods(cartId)
+      setShippingOptions(options ?? [])
+    }
+    const fetchPaymentProvider = async (regionId: string) => {
+      const options = await listCartPaymentMethods(regionId)
+      setPaymentOptions(options || [])
+    }
+    getCart().then((cart) => {
+      setCart(cart)
+      fetchShippingOptions(cart?.id ?? "")
+      fetchPaymentProvider(cart?.region_id || "")
+    })
+  }, [])
+
+  const confirmOrder = async () => {
+    const shipping_address = {
+      first_name: cart?.shipping_address?.first_name ?? "",
+      last_name: cart?.shipping_address?.last_name ?? "",
+      address_1: cart?.shipping_address?.address_1 ?? "",
+      city: cart?.shipping_address?.city ?? "",
+      province: cart?.shipping_address?.province ?? "",
+      postal_code: cart?.shipping_address?.postal_code ?? "",
+      phone: cart?.shipping_address?.phone ?? "",
+      country_code: cart?.shipping_address?.country_code ?? "us",
+    }
+    const data = {
+      email: cart?.email,
+      shipping_address: shipping_address,
+    }
+    await updateCart(data)
+    await setShippingMethod({
+      cartId: cart?.id ?? "",
+      shippingMethodId: shippingOptions?.[0]?.id ?? "",
+    })
+    await initiatePaymentSession(cart as StoreCart, {
+      provider_id: paymentOptions[0].id,
+    })
+    const orderRes = await placeOrder(cart?.id ?? "")
+    console.log("placeOrder", orderRes)
+    setIsPaymentFinish(true)
+  }
   return (
     <div className="bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex flex-row justify-center w-full">
       <div className="flex flex-col items-center bg-[#ffffff] w-full lg:w-[90%] 2xl:w-[1512px] relative pt-10">
@@ -69,6 +122,17 @@ export const Checkout = () => {
                 className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[458px] self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
                 placeholder="Email or phone number"
                 type="email"
+                value={cart?.email ?? ""}
+                onChange={(e) => {
+                  setCart(
+                    cart
+                      ? {
+                          ...cart,
+                          email: e.target.value,
+                        }
+                      : null
+                  )
+                }}
               />
             </div>
 
@@ -93,6 +157,23 @@ export const Checkout = () => {
                   </div>
                 </div>
               </div>
+              {/* Shipping Method Selector */}
+              <div className="flex flex-col items-start gap-3 relative w-[488px] self-stretch flex-[0_0_auto]">
+                <div className="border-[#d8dadc] text-[#8d9299] flex flex-col items-center flex-[0_0_auto] px-[14.53px] py-[16.34px] w-full rounded-[9.08px] gap-[9.08px] bg-[#ffffff] border border-solid self-stretch">
+                  <div className="w-full h-[13px] [font-family:'Montserrat',Helvetica] font-normal text-[#8d9299] text-xs tracking-[0] leading-[13.2px]">
+                    Shipping Method
+                  </div>
+                  <div className="w-full flex  items-center gap-2">
+                    {shippingOptions.map((option) => (
+                      <div className="w-1/3" key={option.id}>
+                        {/* <input type="radio" name="shippingMethod" /> */}
+                        <label>{option.name}</label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               {/* Name Inputs */}
               <div className="flex items-center gap-[39px] relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex w-[350px] items-start gap-5 relative">
@@ -100,11 +181,39 @@ export const Checkout = () => {
                     className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[214px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
                     placeholder="First name"
                     type="text"
+                    value={cart?.shipping_address?.first_name ?? ""}
+                    onChange={(e) => {
+                      setCart(
+                        cart
+                          ? ({
+                              ...cart,
+                              shipping_address: {
+                                ...cart.shipping_address,
+                                first_name: e.target.value,
+                              },
+                            } as StoreCart)
+                          : null
+                      )
+                    }}
                   />
                   <input
                     className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[214px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
                     placeholder="Last name"
                     type="text"
+                    value={cart?.shipping_address?.last_name ?? ""}
+                    onChange={(e) => {
+                      setCart(
+                        cart
+                          ? ({
+                              ...cart,
+                              shipping_address: {
+                                ...cart.shipping_address,
+                                last_name: e.target.value,
+                              },
+                            } as StoreCart)
+                          : null
+                      )
+                    }}
                   />
                 </div>
               </div>
@@ -113,6 +222,20 @@ export const Checkout = () => {
                 className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[458px] self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
                 placeholder="Address"
                 type="text"
+                value={cart?.shipping_address?.address_1 ?? ""}
+                onChange={(e) => {
+                  setCart(
+                    cart
+                      ? ({
+                          ...cart,
+                          shipping_address: {
+                            ...cart.shipping_address,
+                            address_1: e.target.value,
+                          },
+                        } as StoreCart)
+                      : null
+                  )
+                }}
               />
               {/* City, State, ZIP Inputs */}
               <div className="inline-flex items-center gap-[31px] relative flex-[0_0_auto]">
@@ -120,16 +243,58 @@ export const Checkout = () => {
                   className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[117px] [font-family:'Montserrat',Helvetica] pl-3.5"
                   placeholder="City"
                   type="text"
+                  value={cart?.shipping_address?.city ?? ""}
+                  onChange={(e) => {
+                    setCart(
+                      cart
+                        ? ({
+                            ...cart,
+                            shipping_address: {
+                              ...cart.shipping_address,
+                              city: e.target.value,
+                            },
+                          } as StoreCart)
+                        : null
+                    )
+                  }}
                 />
                 <input
                   className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[117px] [font-family:'Montserrat',Helvetica] pl-3.5"
                   placeholder="State"
                   type="text"
+                  value={cart?.shipping_address?.province ?? ""}
+                  onChange={(e) => {
+                    setCart(
+                      cart
+                        ? ({
+                            ...cart,
+                            shipping_address: {
+                              ...cart.shipping_address,
+                              province: e.target.value,
+                            },
+                          } as StoreCart)
+                        : null
+                    )
+                  }}
                 />
                 <input
                   className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[117px] [font-family:'Montserrat',Helvetica] pl-3.5"
                   placeholder="ZIP code"
                   type="text"
+                  value={cart?.shipping_address?.postal_code ?? ""}
+                  onChange={(e) => {
+                    setCart(
+                      cart
+                        ? ({
+                            ...cart,
+                            shipping_address: {
+                              ...cart.shipping_address,
+                              postal_code: e.target.value,
+                            },
+                          } as StoreCart)
+                        : null
+                    )
+                  }}
                 />
               </div>
               {/* Phone Input */}
@@ -137,6 +302,20 @@ export const Checkout = () => {
                 className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[458px] self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
                 placeholder="Phone"
                 type="tel"
+                value={cart?.shipping_address?.phone ?? ""}
+                onChange={(e) => {
+                  setCart(
+                    cart
+                      ? ({
+                          ...cart,
+                          shipping_address: {
+                            ...cart.shipping_address,
+                            phone: e.target.value,
+                          },
+                        } as StoreCart)
+                      : null
+                  )
+                }}
               />
             </div>
 
@@ -160,62 +339,6 @@ export const Checkout = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="inline-flex items-start gap-[5.8px] relative flex-[0_0_auto]">
-                      <div className="flex w-[40.69px] h-[32.96px] items-center justify-center gap-[19.35px] relative mt-[-1.00px] mb-[-1.00px] ml-[-1.00px] bg-[#ffffff] rounded-[3.87px] border border-solid border-[#d8dadc]">
-                        <img
-                          className="relative flex-[0_0_auto] h-[23.22px]"
-                          alt="Mage visa"
-                          src="https://c.animaapp.com/m8tqwcaxIEhNf6/img/mage-visa.svg"
-                        />
-                      </div>
-                      <div className="p-2 relative w-[40.69px] h-[32.96px] mt-[-1.00px] mb-[-1.00px] mr-[-1.00px] bg-[#ffffff] rounded-[3.87px] border border-solid border-[#d8dadc]">
-                        <img
-                          className="w-full h-full"
-                          alt="Logos mastercard"
-                          src="https://c.animaapp.com/m8tqwcaxIEhNf6/img/logos-mastercard.svg"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {/* Credit Card Input */}
-                  <div className="flex flex-col items-start gap-3 relative w-[488px] self-stretch flex-[0_0_auto]">
-                    <div className="border-[#d8dadc] flex items-center flex-[0_0_auto] px-[14.53px] py-[16.34px] w-full rounded-[9.08px] gap-[9.08px] bg-[#ffffff] border border-solid self-stretch">
-                      <div className="w-[431px] flex items-start gap-[333px] relative">
-                        <input
-                          placeholder="e.g 1234 5678 9012 3456"
-                          className="focus:outline-none [font-family:'Montserrat',Helvetica] mt-[-1.00px] tracking-[0] text-base text-formash font-normal leading-[normal] relative w-fit"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* Expiry and CVC Inputs */}
-                <div className="flex w-[737px] items-center gap-[39px] relative flex-[0_0_auto]">
-                  <div className="flex w-[350px] items-start gap-5 relative">
-                    <input
-                      className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[214px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
-                      placeholder="MM / YY"
-                      type="text"
-                    />
-                    <input
-                      className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-[214px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
-                      placeholder="CVC"
-                      type="text"
-                    />
-                  </div>
-                </div>
-              </div>
-              {/* PayPal Option */}
-              <div className="flex flex-col w-[741px] h-[130px] items-start justify-center gap-[19.35px] px-[23.22px] py-[27.09px] relative mb-[-2.00px] ml-[-2.00px] mr-[-2.00px] bg-[#ffffff] rounded-[9.67px] overflow-hidden border-2 border-solid border-[#e9eaea]">
-                <div className="inline-flex items-center justify-center gap-[19.35px] relative flex-[0_0_auto]">
-                  <div className="relative w-[30.96px] h-[30.96px] bg-[url(https://c.animaapp.com/m8tqwcaxIEhNf6/img/vector.svg)] bg-[100%_100%]" />
-                  <div className="inline-flex items-center justify-center gap-[112.21px] relative flex-[0_0_auto]">
-                    <div className="inline-flex flex-col items-start gap-[11.61px] relative flex-[0_0_auto]">
-                      <div className="relative w-[77.39px] h-[19.35px] ml-[-0.01px] bg-[url(https://c.animaapp.com/m8tqwcaxIEhNf6/img/combined-shape.svg)] bg-[100%_100%]" />
-                      <p className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-[#8a9398] text-[27.1px] tracking-[0] leading-[normal]">
-                        $ 389.00 / Per month
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -223,7 +346,7 @@ export const Checkout = () => {
             {/* Confirm Payment Button */}
             <div className="flex flex-col items-center justify-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <button
-                onClick={() => setIsPaymentFinish(true)}
+                onClick={confirmOrder}
                 className="all-[unset] box-border w-full flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative bg-[#072f6c] self-stretch flex-[0_0_auto]"
               >
                 <div className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#ffffff] relative font-medium whitespace-nowrap leading-6">
