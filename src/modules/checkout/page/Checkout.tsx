@@ -436,7 +436,6 @@ export const Checkout = () => {
           src="https://c.animaapp.com/m8tqwcaxIEhNf6/img/footer-4-dark.png"
         />
       </div>
-      {isPaymentFinish && <PaymentFinish />}
     </div>
   )
 }

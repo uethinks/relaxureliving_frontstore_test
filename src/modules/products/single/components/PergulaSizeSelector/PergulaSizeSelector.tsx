@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { use, useEffect, useState } from "react"
 import {
   StoreProduct,
   StoreProductOption,
@@ -56,14 +56,19 @@ export const PergulaSizeSelector = ({
   }
   const handleSizeClick = (size: StoreProductOptionValue) => {
     setSelectedSize(size)
+    // const variant = getVariant()
+    // console.log("variant", variant)
+    // onVariantChange(variant)
+  }
+  useEffect(() => {
     const variant = getVariant()
     onVariantChange(variant)
-  }
+  }, [selectedSize, selectedColor])
 
   const handleColorClick = (color: StoreProductOptionValue) => {
     setSelectedColor(color)
-    const variant = getVariant()
-    onVariantChange(variant)
+    // const variant = getVariant()
+    // onVariantChange(variant)
   }
 
   return (

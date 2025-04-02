@@ -80,7 +80,7 @@ export const AccesorriesPopupGlassdoor = ({
                 </h2>
                 <div className="w-full flex justify-between items-center gap-2">
                   <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                    {currentGlassdoorVarant?.calculated_price?.currency_code}{" "}
+                    $
                     {
                       currentGlassdoorVarant?.calculated_price
                         ?.calculated_amount
