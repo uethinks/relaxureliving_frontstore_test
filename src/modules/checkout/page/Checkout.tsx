@@ -1,7 +1,6 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
 import React, { useState, useEffect } from "react"
-import { PaymentFinish } from "./components/paymentFinish"
 import { StoreCart } from "@medusajs/types"
 import {
   updateCart,
@@ -11,9 +10,9 @@ import {
 } from "@lib/data/cart"
 import { listCartShippingMethods } from "@lib/data/fulfillment"
 import { listCartPaymentMethods } from "@lib/data/payment"
+import Link from "next/link"
 export const Checkout = () => {
   const { cart, setCart, getCart } = useCart()
-  const [isPaymentFinish, setIsPaymentFinish] = useState(false)
   const [shippingOptions, setShippingOptions] = useState<any[]>([])
   const [paymentOptions, setPaymentOptions] = useState<any[]>([])
   useEffect(() => {
@@ -55,9 +54,7 @@ export const Checkout = () => {
     await initiatePaymentSession(cart as StoreCart, {
       provider_id: paymentOptions[0].id,
     })
-    const orderRes = await placeOrder(cart?.id ?? "")
-    console.log("placeOrder", orderRes)
-    setIsPaymentFinish(true)
+    await placeOrder(cart?.id ?? "")
   }
   return (
     <div className="bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex flex-row justify-center w-full">
@@ -67,26 +64,34 @@ export const Checkout = () => {
           <div className="relative w-[76.45px] h-12 mt-[-6.50px] mb-[-6.50px] ml-[-1.45px] bg-[url(https://c.animaapp.com/m8tqwcaxIEhNf6/img/logo.svg)] bg-[100%_100%]" />
           <div className="inline-flex items-center gap-[54px] relative flex-[0_0_auto] mt-[-6.50px] mb-[-6.50px]">
             <div className="flex w-[574px] h-11 items-center justify-end gap-10 relative">
-              <div className="flex w-[111px] items-center justify-center gap-2.5 px-0 py-2.5 relative ml-[-50.00px]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
-                  Accesories
+              <Link href="/us#pergola">
+                <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
+                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
+                    Our pergola
+                  </div>
                 </div>
-              </div>
-              <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
-                  Features
+              </Link>
+              <Link href="/us#features">
+                <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
+                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
+                    Features
+                  </div>
                 </div>
-              </div>
-              <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
-                  Our pergola
+              </Link>
+              <Link href="/us#accessories">
+                <div className="flex w-[111px] items-center justify-center gap-2.5 px-0 py-2.5 relative ml-[-50.00px]">
+                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
+                    Accesories
+                  </div>
                 </div>
-              </div>
-              <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
-                  About us
+              </Link>
+              <Link href="/us#about">
+                <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
+                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
+                    About us
+                  </div>
                 </div>
-              </div>
+              </Link>
               <div className="inline-flex h-11 items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
                 <div className="relative w-[30px] h-[30px] mt-[-3.00px] mb-[-3.00px] bg-[url(https://c.animaapp.com/m8tqwcaxIEhNf6/img/vector-1.svg)] bg-[100%_100%]">
                   <div className="relative w-3.5 h-3.5 -top-0.5 left-5 bg-[#f6f6f6] rounded-[7px]">
@@ -95,11 +100,13 @@ export const Checkout = () => {
                 </div>
               </div>
             </div>
-            <button className="all-[unset] box-border w-[200px] flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative bg-[#072f6c]">
-              <div className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#ffffff] relative font-medium whitespace-nowrap leading-6">
-                Contact us
-              </div>
-            </button>
+            <Link href="/us#contact">
+              <button className="all-[unset] box-border w-[200px] flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative bg-[#072f6c]">
+                <div className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#ffffff] relative font-medium whitespace-nowrap leading-6">
+                  Contact us
+                </div>
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -367,21 +374,26 @@ export const Checkout = () => {
             </div>
             {/* Footer Links */}
             <div className="flex items-center justify-center gap-[34px] relative self-stretch w-full flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
-                Refund policy
-              </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
-                Shipping policy
-              </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
-                Privacy policy
-              </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
-                Terms of service
-              </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
-                Cancelation policy
-              </div>
+              <Link href="/us/terms/warranty">
+                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
+                  Warranty
+                </div>
+              </Link>
+              <Link href="/us/terms/refund-policy">
+                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
+                  Refund policy
+                </div>
+              </Link>
+              <Link href="/us/terms/terms-of-service">
+                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
+                  Terms of service
+                </div>
+              </Link>
+              <Link href="/us/terms/privacy-policy">
+                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
+                  Privacy policy
+                </div>
+              </Link>
             </div>
           </div>
           <div className="flex flex-col items-start gap-5 px-2.5">

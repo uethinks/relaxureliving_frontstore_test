@@ -223,3 +223,6 @@ export const getProductByProductId = async ({productId, queryParams}: {productId
 export const getProductByProductType = async ({queryParams}: {queryParams: StoreProductListParams}) => {
   return await sdk.store.product.list(queryParams)
 }
+export const getProductByHandle = async ({region_id, handle}: {region_id: string, handle: string}) => {
+  return await sdk.store.product.list({region_id, handle})
+}

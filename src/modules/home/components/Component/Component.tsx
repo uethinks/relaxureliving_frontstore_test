@@ -9,6 +9,7 @@ interface Props {
   className: any
   buttonClassName: any
   text: string
+  onClick?: () => void
 }
 
 export const Component = ({
@@ -16,15 +17,12 @@ export const Component = ({
   className,
   buttonClassName,
   text = "Get started",
+  onClick,
 }: Props): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, {
     property1: property1 || "primary-button-l",
   })
-  const pergolaProductId = "prod_01JPP0SGBQZSKXS0B9EXN7DTT3"
-  const router = useRouter()
-  const goToPergolaProduct = () => {
-    router.push(`/us/products/${pergolaProductId}`)
-  }
+
   return (
     <button
       className={`all-[unset] box-border w-[200px] flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative ${
@@ -38,7 +36,7 @@ export const Component = ({
       onMouseEnter={() => {
         dispatch("mouse_enter")
       }}
-      onClick={goToPergolaProduct}
+      onClick={onClick}
     >
       <span
         className={`all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[color:var(--semantic-border-alternate)] font-medium leading-6 whitespace-nowrap relative ${buttonClassName}`}

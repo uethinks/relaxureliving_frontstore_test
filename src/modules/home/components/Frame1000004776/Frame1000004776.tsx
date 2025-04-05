@@ -1,17 +1,17 @@
 "use client"
-import PropTypes from "prop-types";
-import React from "react";
-import { useReducer } from "react";
+import PropTypes from "prop-types"
+import React from "react"
+import { useReducer } from "react"
 
 interface Props {
-  property1: "variant-2" | "default";
-  className: any;
-  overlapClassName: any;
-  overlapClassNameOverride: any;
-  frameClassName: any;
-  overlapGroupClassName: any;
-  rectangleClassName: any;
-  rectangle: string;
+  property1: "variant-2" | "default"
+  className: any
+  overlapClassName: any
+  overlapClassNameOverride: any
+  frameClassName: any
+  overlapGroupClassName: any
+  rectangleClassName: any
+  rectangle: string
 }
 
 export const Frame1000004776 = ({
@@ -26,13 +26,14 @@ export const Frame1000004776 = ({
 }: Props): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, {
     property1: property1 || "default",
-  });
+  })
 
   return (
     <div
+      id="features"
       className={`w-full h-[600px] overflow-hidden relative ${className}`}
       onClick={() => {
-        dispatch("click");
+        dispatch("click")
       }}
     >
       {state.property1 === "variant-2" && (
@@ -44,10 +45,22 @@ export const Frame1000004776 = ({
       )}
 
       <div
-        className={`w-[407px] left-0 top-[352px] bg-cover h-[248px] bg-[50%_50%] absolute ${state.property1 === "default" ? "bg-[url(/img/rectangle-1267-2.svg)]" : "bg-[url(/img/rectangle-1268-1.svg)]"} ${state.property1 === "variant-2" ? overlapClassNameOverride : (state.property1 === "default") ? overlapClassName : undefined}`}
+        className={`w-[407px] left-0 top-[352px] bg-cover h-[248px] bg-[50%_50%] absolute ${
+          state.property1 === "default"
+            ? "bg-[url(/img/rectangle-1267-2.svg)]"
+            : "bg-[url(/img/rectangle-1268-1.svg)]"
+        } ${
+          state.property1 === "variant-2"
+            ? overlapClassNameOverride
+            : state.property1 === "default"
+            ? overlapClassName
+            : undefined
+        }`}
       >
         <div
-          className={`w-[132px] flex items-start gap-5 relative ${state.property1 === "default" ? "left-[21px]" : "left-[35px]"} ${state.property1 === "default" ? "top-[31px]" : "top-5"}`}
+          className={`w-[132px] flex items-start gap-5 relative ${
+            state.property1 === "default" ? "left-[21px]" : "left-[35px]"
+          } ${state.property1 === "default" ? "top-[31px]" : "top-5"}`}
         >
           <div className="border border-solid border-[#ffffffad] w-[132px] flex items-center gap-2.5 shadow-[0px_0px_8.91px_#ffffff73,0px_0px_17.82px_#ffffff73,0px_0px_62.37px_#ffffff73,0px_0px_124.74px_#ffffff73,0px_0px_213.84px_#ffffff73,0px_0px_250px_#ffffff73] p-2.5 h-[41px] rounded-[30px] justify-center bg-[#ffffff73] relative">
             <div className="[font-family:'Montserrat',Helvetica] w-[100px] mt-[-4.00px] tracking-[0] text-lg text-[#343a40] font-medium leading-[27px] mb-[-2.00px] relative">
@@ -58,7 +71,17 @@ export const Frame1000004776 = ({
       </div>
 
       <div
-        className={`w-[596px] left-[450px] top-0 bg-cover h-[600px] bg-[50%_50%] absolute ${state.property1 === "variant-2" ? "bg-[url(/img/rectangle-1269-1.svg)]" : "bg-[url(/img/rectangle-1268.svg)]"} ${state.property1 === "default" ? overlapClassNameOverride : (state.property1 === "variant-2") ? overlapGroupClassName : undefined}`}
+        className={`w-[596px] left-[450px] top-0 bg-cover h-[600px] bg-[50%_50%] absolute ${
+          state.property1 === "variant-2"
+            ? "bg-[url(/img/rectangle-1269-1.svg)]"
+            : "bg-[url(/img/rectangle-1268.svg)]"
+        } ${
+          state.property1 === "default"
+            ? overlapClassNameOverride
+            : state.property1 === "variant-2"
+            ? overlapGroupClassName
+            : undefined
+        }`}
       >
         {state.property1 === "default" && (
           <div className="flex w-[512px] h-[116px] items-start gap-4 p-2.5 absolute top-[442px] left-[42px] bg-[#ffffff73] rounded-[20px] border border-solid border-[#ffffffad] backdrop-blur-[29.4px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(29.4px)_brightness(100%)]">
@@ -84,7 +107,11 @@ export const Frame1000004776 = ({
         )}
 
         <div
-          className={`w-[132px] flex items-start gap-5 ${state.property1 === "variant-2" ? "left-[30px]" : "left-[35px]"} ${state.property1 === "variant-2" ? "top-8" : "top-[35px]"} ${state.property1 === "variant-2" ? "relative" : "absolute"}`}
+          className={`w-[132px] flex items-start gap-5 ${
+            state.property1 === "variant-2" ? "left-[30px]" : "left-[35px]"
+          } ${state.property1 === "variant-2" ? "top-8" : "top-[35px]"} ${
+            state.property1 === "variant-2" ? "relative" : "absolute"
+          }`}
         >
           <div className="border border-solid border-[#ffffffad] w-[132px] flex items-center gap-2.5 shadow-[0px_0px_8.91px_#ffffff73,0px_0px_17.82px_#ffffff73,0px_0px_62.37px_#ffffff73,0px_0px_124.74px_#ffffff73,0px_0px_213.84px_#ffffff73,0px_0px_250px_#ffffff73] p-2.5 h-[41px] rounded-[30px] justify-center bg-[#ffffff73] relative">
             <div className="[font-family:'Montserrat',Helvetica] w-[100px] mt-[-4.00px] tracking-[0] text-lg text-[#343a40] relative font-medium mb-[-2.00px] leading-[27px]">
@@ -198,8 +225,8 @@ export const Frame1000004776 = ({
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
 function reducer(state: any, action: any) {
   switch (action) {
@@ -207,13 +234,13 @@ function reducer(state: any, action: any) {
       return {
         ...state,
         property1: "variant-2",
-      };
+      }
   }
 
-  return state;
+  return state
 }
 
 Frame1000004776.propTypes = {
   property1: PropTypes.oneOf(["variant-2", "default"]),
   rectangle: PropTypes.string,
-};
+}

@@ -36,7 +36,7 @@ export const ProductPage = (): JSX.Element => {
         </div>
         <AccessoriesSection />
         <img
-          className="absolute w-[1512px] h-[688px] top-[3198px] left-0"
+          className="w-[1512px] h-[688px] top-[3198px] left-0"
           alt="Footer dark"
           src="https://c.animaapp.com/m8o9g6iofzwjOy/img/footer-4-dark.png"
         />

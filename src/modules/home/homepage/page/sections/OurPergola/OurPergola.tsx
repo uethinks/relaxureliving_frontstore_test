@@ -1,16 +1,25 @@
-import React, {useState} from "react";
-import { Component } from "../../../../components/Component";
-import { PergolaSliders } from "../../../../components/PergolaSliders";
-import { OurPergolaProps, UsageScenario } from "types/global";
+"use client"
+import React, { useState } from "react"
+import { Component } from "../../../../components/Component"
+import { PergolaSliders } from "../../../../components/PergolaSliders"
+import { OurPergolaProps, UsageScenario } from "types/global"
+import Link from "next/link"
 
-export const OurPergola = ({pergola}: {pergola: OurPergolaProps | null}): JSX.Element => {
-  const [selectedScenario, setSelectedScenario] = useState<UsageScenario | null>(null);
+export const OurPergola = ({
+  pergola,
+}: {
+  pergola: OurPergolaProps | null
+}): JSX.Element => {
+  const [selectedScenario, setSelectedScenario] =
+    useState<UsageScenario | null>(null)
   const selectScenario = (scenario: UsageScenario) => {
-    console.log("selectScenario", scenario);
-    setSelectedScenario(scenario);
-  } 
+    setSelectedScenario(scenario)
+  }
   return (
-    <div className="h-[794px] justify-center gap-[60px_60px] p-10 self-stretch w-full bg-[#f3f3f3] rounded-[20px] flex items-center relative">
+    <div
+      id="pergola"
+      className="h-[794px] justify-center gap-[60px_60px] p-10 self-stretch w-full bg-[#f3f3f3] rounded-[20px] flex items-center relative"
+    >
       <div className="flex flex-col h-[600px] items-start justify-center gap-[30px] px-0 py-4 relative flex-1 grow">
         <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
           <div className="flex w-[125px] h-[41px] items-center justify-center gap-2.5 p-2.5 relative bg-[#072f6c] rounded-[30px] border border-solid border-[#a8a8a8]">
@@ -34,27 +43,36 @@ export const OurPergola = ({pergola}: {pergola: OurPergolaProps | null}): JSX.El
           </div>
         </div>
 
-        <Component
-          buttonClassName="!mr-[-8.00px] !ml-[-8.00px]"
-          className="!flex-[0_0_auto]"
-          property1="primary-button-l"
-          text="Choose your pergola"
-        />
+        <Link href="/us/products/pergola">
+          <Component
+            buttonClassName="!mr-[-8.00px] !ml-[-8.00px]"
+            className="!flex-[0_0_auto]"
+            property1="primary-button-l"
+            text="Choose your pergola"
+          />
+        </Link>
       </div>
 
       <PergolaSliders
         usageScenarios={pergola?.UsageScenarios ?? []}
         selectedScenario={selectedScenario}
       />
-      <div className="inline-flex absolute top-[33px] items-start gap-5" style={{ right: "5%" }}>
+      <div
+        className="inline-flex absolute top-[33px] items-start gap-5"
+        style={{ right: "5%" }}
+      >
         {pergola?.UsageScenarios.map((scenario) => (
-          <div onClick={() => selectScenario(scenario)} key={scenario.ScenarioName} className="inline-flex h-[41px] items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto] bg-[#ffffff73] rounded-[30px] border border-solid border-[#ffffffad] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
+          <button
+            onClick={() => selectScenario(scenario)}
+            key={scenario.ScenarioName}
+            className="inline-flex h-[41px] items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto] bg-[#ffffff73] rounded-[30px] border border-solid border-[#ffffffad] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]"
+          >
             <div className="cursor-pointer w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] text-lg leading-[27px] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium tracking-[0]">
               {scenario.ScenarioName}
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

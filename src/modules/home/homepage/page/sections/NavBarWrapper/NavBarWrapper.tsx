@@ -1,5 +1,5 @@
-import React from "react";
-import { Component } from "../../../../components/Component";
+import React from "react"
+import { Component } from "../../../../components/Component"
 
 export const NavBarWrapper = (): JSX.Element => {
   return (
@@ -15,33 +15,44 @@ export const NavBarWrapper = (): JSX.Element => {
           <div className="flex w-[200px] items-center justify-end gap-5 relative">
             <div className="flex items-center justify-end gap-2.5 relative flex-1 grow ml-[-20.00px]">
               <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
-                <div className="relative w-[138px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
+                <a
+                  href="#pergola"
+                  className="relative w-[138px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
+                >
                   Our pergola
-                </div>
+                </a>
               </div>
 
               <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
-                <div className="relative w-[139px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
+                <a
+                  href="#features"
+                  className="relative w-[139px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
+                >
                   Features
-                </div>
+                </a>
               </div>
 
               <div className="flex w-[101px] items-center justify-center gap-2.5 px-0 py-2.5 relative">
-                <div className="relative w-[139px] mt-[-1.00px] ml-[-19.00px] mr-[-19.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
+                <a
+                  href="#accessories"
+                  className="relative w-[139px] mt-[-1.00px] ml-[-19.00px] mr-[-19.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
+                >
                   Accesories
-                </div>
+                </a>
               </div>
             </div>
 
-            <Component
-              className="!mr-[-1.00px]"
-              property1="primary-button-l"
-              text="Contact us"
-              buttonClassName="nav-contact-us"
-            />
+            <a href="#contact">
+              <Component
+                className="!mr-[-1.00px]"
+                property1="primary-button-l"
+                text="Contact us"
+                buttonClassName="nav-contact-us"
+              />
+            </a>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

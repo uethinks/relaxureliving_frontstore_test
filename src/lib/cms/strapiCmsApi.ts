@@ -7,8 +7,13 @@ const homePagePopulate = {
     "populate[OurPergola][populate][UsageScenarios][populate][0]": "LargeImage",
     "populate[OurPergola][populate][UsageScenarios][populate][1]": "SmallImage"
 };
+
 const API_URLS = {
   getHomePage: '/api/home-page',
+  getWarranty: '/api/warranty',
+  getPrivacyPolicy: '/api/privacy-policy',
+  getTermsOfService: '/api/terms-of-service',
+  getRefundPolicy: '/api/refund-policy',
 };
 
 // 获取所有项目
@@ -23,3 +28,32 @@ export const getHomePage = async () => {
     throw error;
   }
 };
+
+// 获取所有条款数据
+export const getAllTerms = async () => {
+  const termsData: Record<string, any> = {};
+  
+  try {
+    // 获取服务条款
+    const termsOfService = await axiosInstance.get(API_URLS.getTermsOfService);
+    termsData['terms-of-service'] = termsOfService.data;
+
+    // 获取隐私政策
+    const privacyPolicy = await axiosInstance.get(API_URLS.getPrivacyPolicy);
+    termsData['privacy-policy'] = privacyPolicy.data;
+    
+    // 获取保修条款
+    const warranty = await axiosInstance.get(API_URLS.getWarranty);
+    termsData['warranty'] = warranty.data;
+
+    // 获取退货政策
+    const refundPolicy = await axiosInstance.get(API_URLS.getRefundPolicy);
+    termsData['refund-policy'] = refundPolicy.data;
+
+    return termsData;
+  } catch (error) {
+    console.error('Error fetching terms:', error);
+    throw error;
+  }
+};
+

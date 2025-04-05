@@ -8,6 +8,7 @@ import { Advantage } from "./components/Advantage"
 import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 type accessoryHeaterVirant = {
   productVarant: StoreProductVariant | null
   quantity: number
@@ -65,11 +66,11 @@ export const ProductItem = ({
       text: "This modern pergola is the perfect blend of sleek design and durability, crafted from premium materials to ensure both style and longevity. Featuring a robust aluminum frame, it is powder-coated for superior resistance to weathering, corrosion, and fading, making it ideal for year-round outdoor use. The elegant, minimalist design is complemented by clean lines and a streamlined structure, adding a touch of sophistication to any garden, patio, or backyard.",
     },
     Assembly: {
-      image: "https://example.com/assembly-image.jpg",
+      image: "https://c.animaapp.com/ZNF68wCJ/img/img@4x.jpg",
       text: "Assembly of this pergola is straightforward and can typically be completed in a few hours. The kit comes with all necessary hardware and detailed instructions. We recommend having at least two people for the assembly process for safety and efficiency.",
     },
     Shipping: {
-      image: "https://example.com/shipping-image.jpg",
+      image: "https://c.animaapp.com/ZNF68wCJ/img/img@4x.jpg",
       text: "We offer free shipping on all pergola orders within the continental United States. Delivery typically takes 2-3 weeks from the order date. International shipping is available at an additional cost, with delivery times varying by location.",
     },
   }
@@ -328,31 +329,36 @@ export const ProductItem = ({
 
           <div className="inline-flex items-center gap-[54px] relative flex-[0_0_auto] mt-[-6.50px] mb-[-6.50px]">
             <div className="flex w-[574px] h-11 items-center justify-end gap-10 relative">
-              <div className="flex w-[111px] items-center justify-center gap-2.5 px-0 py-2.5 relative">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
-                  Accesories
+              <Link href="/us#pergola">
+                <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
+                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
+                    Our pergola
+                  </div>
                 </div>
-              </div>
-
-              <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
-                  Features
+              </Link>
+              <Link href="/us#features">
+                <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
+                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
+                    Features
+                  </div>
                 </div>
-              </div>
-
-              <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
-                  Our pergola
+              </Link>
+              <Link href="/us#accessories">
+                <div className="flex w-[111px] items-center justify-center gap-2.5 px-0 py-2.5 relative">
+                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
+                    Accesories
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
 
-            <BuyNowButton
-              onClick={handleBuyNow}
-              className=""
-              property1="primary-button-l"
-              text="Contact us"
-            />
+            <Link href="/us#contact">
+              <BuyNowButton
+                className=""
+                property1="primary-button-l"
+                text="Contact us"
+              />
+            </Link>
           </div>
         </div>
       </div>

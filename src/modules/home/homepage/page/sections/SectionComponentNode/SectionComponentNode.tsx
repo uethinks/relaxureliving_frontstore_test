@@ -1,8 +1,11 @@
-import React from "react";
+import React from "react"
 
 export const SectionComponentNode = (): JSX.Element => {
   return (
-    <div className="flex w-full justify-center items-center gap-[87px] px-0 py-10 relative flex-[0_0_auto]">
+    <div
+      id="contact"
+      className="flex w-full justify-center items-center gap-[87px] px-0 py-10 relative flex-[0_0_auto]"
+    >
       <div className="flex w-[695px] h-[947px] items-center relative">
         <img
           className="relative flex-1 grow h-[947px] object-cover"
@@ -153,5 +156,5 @@ export const SectionComponentNode = (): JSX.Element => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

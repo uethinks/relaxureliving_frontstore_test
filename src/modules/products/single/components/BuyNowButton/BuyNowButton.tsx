@@ -6,7 +6,7 @@ interface Props {
   property1: "primary-button-hover-l" | "primary-button-l"
   className: any
   text: string
-  onClick: () => void
+  onClick?: () => void
 }
 
 export const BuyNowButton = ({
