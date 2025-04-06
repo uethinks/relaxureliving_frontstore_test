@@ -116,7 +116,7 @@ export default async function TermsPage({ params }: PageProps) {
           <div className="prose max-w-none">
             <BlocksRenderer content={content} />
           </div>
-          <Link href="/us/checkout">
+          <Link href="javascript:history.back()">
             <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
               Agree and continue
             </button>

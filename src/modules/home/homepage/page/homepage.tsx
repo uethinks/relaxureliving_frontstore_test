@@ -1,9 +1,10 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import { OurPergola } from "./sections/OurPergola"
-import { ContainerWrapper } from "./sections/ContainerWrapper"
+import { Accessories } from "./sections/Accessories"
 import { Div } from "./sections/Div"
-import { DivWrapper } from "./sections/DivWrapper"
+import { FooterDark } from "./sections/footer"
+import { OurPromise } from "./sections/OurPromise"
 import { FaqWrapper } from "./sections/FaqWrapper"
 import { Frame } from "./sections/Frame"
 import { FrameWrapper } from "./sections/FrameWrapper"
@@ -71,11 +72,11 @@ export const Homepage = (): JSX.Element => {
       {/* features */}
       <Frame />
       {/* Accessories */}
-      <ContainerWrapper />
+      <Accessories />
       {/* Testimonials */}
       <FrameWrapper />
       {/* Our promise */}
-      <DivWrapper />
+      <OurPromise />
       {/*  Our blog */}
       <Div />
       {/* FAQ */}
@@ -83,11 +84,7 @@ export const Homepage = (): JSX.Element => {
       {/* contact us */}
       {contactUs && <SectionComponentNode contactUs={contactUs} />}
       {/* footer */}
-      <img
-        className="relative w-[1512px] h-[688px] ml-[-80.00px] mr-[-80.00px]"
-        alt="Footer dark"
-        src="/img/footer-4-dark.png"
-      />
+      <FooterDark />
 
       <NavBarWrapper />
     </div>

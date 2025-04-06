@@ -1,0 +1,1 @@
+export { FooterDark } from "./footer";

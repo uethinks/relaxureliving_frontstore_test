@@ -34,8 +34,6 @@ export const SectionComponentNode = ({
           src="/img/unsplash-csk5xpo87li.png"
         />
 
-        <div className="absolute w-[695px] h-[431px] top-56 left-0 rounded-[0px_0px_20px_20px] [background:linear-gradient(180deg,rgb(0,0,0)_0%,rgba(52,58,64,0)_100%)]" />
-
         <div className="w-[567px] items-center justify-center px-0 py-2.5 absolute top-[781px] left-[33px] flex gap-2.5">
           <p className="flex-1 mt-[-1.00px] [font-family:'Merriweather',Helvetica] font-bold text-[#ffffff] text-[32px] leading-[44.8px] relative tracking-[0]">
             {contactUs.DescriptionOnImage}

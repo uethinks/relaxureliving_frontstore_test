@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSecondary } from "../../../../components/StyleSecondary"
 import { HeroProps } from "types/global"
+import Link from "next/link"
 const cmsBaseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 
 export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
@@ -24,11 +25,13 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
           </div>
 
           <div className="inline-flex items-start justify-end gap-5 relative flex-[0_0_auto]">
-            <div className="inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] bg-[#072f6c] rounded-[10px]">
-              <button className="all-[unset] box-border relative w-fit [font-family:'Montserrat',Helvetica] font-normal text-[color:var(--semantic-border-alternate)] text-base tracking-[0] leading-6 whitespace-nowrap">
-                {hero?.LeftButton}
-              </button>
-            </div>
+            <Link href="/us/products/pergola">
+              <div className="inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] bg-[#072f6c] rounded-[10px]">
+                <button className="all-[unset] box-border relative w-fit [font-family:'Montserrat',Helvetica] font-normal text-[color:var(--semantic-border-alternate)] text-base tracking-[0] leading-6 whitespace-nowrap">
+                  {hero?.LeftButton}
+                </button>
+              </div>
+            </Link>
 
             <StyleSecondary
               className="!border-[#ffffff] !rounded-[10px] !mr-[-1.00px] !mt-[-1.00px] !mb-[-1.00px] !flex-[0_0_auto]"
