@@ -37,7 +37,7 @@ export const NavBarWrapper = (): JSX.Element => {
                   href="#accessories"
                   className="relative w-[139px] mt-[-1.00px] ml-[-19.00px] mr-[-19.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
                 >
-                  Accesories
+                  Accessories
                 </a>
               </div>
             </div>

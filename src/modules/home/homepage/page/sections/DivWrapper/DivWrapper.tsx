@@ -50,9 +50,9 @@ export const DivWrapper = (): JSX.Element => {
                   </div>
 
                   <div className="flex h-[63px] items-start self-stretch w-full gap-2.5 relative">
-                    <p className="w-[334px] h-[31px] mt-[-1.00px] text-[#68717a] text-lg leading-[27px] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium tracking-[0]">
+                    <p className="w-full h-[31px] mt-[-1.00px] text-[#68717a] text-lg leading-[27px] relative [font-family:'Montserrat',Helvetica] font-medium tracking-[0]">
                       Not quite but we are genuinely quick at delivering your
-                      pergola to your font d oor
+                      pergola to your font door
                     </p>
                   </div>
                 </div>

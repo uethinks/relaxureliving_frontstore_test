@@ -81,7 +81,7 @@ export const Checkout = () => {
               <Link href="/us#accessories">
                 <div className="flex w-[111px] items-center justify-center gap-2.5 px-0 py-2.5 relative ml-[-50.00px]">
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
-                    Accesories
+                    Accessories
                   </div>
                 </div>
               </Link>

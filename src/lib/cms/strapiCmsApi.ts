@@ -5,7 +5,9 @@ import axiosInstance from '../axiosInstance';
 const homePagePopulate = {
     "populate[HomepageHero][populate][0]": "BackgroundImage",
     "populate[OurPergola][populate][UsageScenarios][populate][0]": "LargeImage",
-    "populate[OurPergola][populate][UsageScenarios][populate][1]": "SmallImage"
+    "populate[OurPergola][populate][UsageScenarios][populate][1]": "SmallImage",
+    "populate[FAQ][populate][homepageFAQ][populate][0]": "question_and_answer",
+    "populate[ContactUs][populate][0]": "Image",
 };
 
 const API_URLS = {
@@ -41,7 +43,7 @@ export const getAllTerms = async () => {
     // 获取隐私政策
     const privacyPolicy = await axiosInstance.get(API_URLS.getPrivacyPolicy);
     termsData['privacy-policy'] = privacyPolicy.data;
-    
+
     // 获取保修条款
     const warranty = await axiosInstance.get(API_URLS.getWarranty);
     termsData['warranty'] = warranty.data;

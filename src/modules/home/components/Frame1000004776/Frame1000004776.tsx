@@ -196,7 +196,7 @@ export const Frame1000004776 = ({
             </div>
 
             <div className="flex-col items-start justify-center px-0 py-2.5 flex gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <p className="w-[484px] mr-[-34.00px] text-[32px] leading-[44.8px] relative mt-[-1.00px] [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] tracking-[0]">
+              <p className="w-full mr-[-34.00px] text-[32px] leading-[44.8px] relative mt-[-1.00px] [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] tracking-[0]">
                 We bring the convenience back in luxury living
               </p>
 
