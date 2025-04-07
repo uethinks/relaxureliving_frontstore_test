@@ -32,12 +32,13 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
                 </button>
               </div>
             </Link>
-
-            <StyleSecondary
-              className="!border-[#ffffff] !rounded-[10px] !mr-[-1.00px] !mt-[-1.00px] !mb-[-1.00px] !flex-[0_0_auto]"
-              divClassName="!text-[#ffffff] !tracking-[0] !text-base ![font-style:unset] !font-normal ![font-family:'Roboto',Helvetica] !leading-6"
-              text={hero?.RightButton ?? ""}
-            />
+            <Link href="#contact">
+              <StyleSecondary
+                className="!border-[#ffffff] !rounded-[10px] !mr-[-1.00px] !mt-[-1.00px] !mb-[-1.00px] !flex-[0_0_auto]"
+                divClassName="!text-[#ffffff] !tracking-[0] !text-base ![font-style:unset] !font-normal ![font-family:'Roboto',Helvetica] !leading-6"
+                text={hero?.RightButton ?? ""}
+              />
+            </Link>
           </div>
         </div>
       </div>
