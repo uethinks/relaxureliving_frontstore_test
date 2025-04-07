@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link"
 export const FooterDark = (): JSX.Element => {
   return (
-    <div className="relative w-[1512px] h-[688px] bg-[#0A142F]">
+    <div className="relative w-full h-[688px] bg-[#0A142F] mt-4">
       <div className="absolute w-[1132px] h-[539px] top-[53px] left-[193px]">
         <div className="absolute w-[323px] top-[47px] left-[402px] opacity-60 [font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] text-center tracking-[2.80px] leading-[normal]">
           RELAXURE
@@ -56,34 +56,34 @@ export const FooterDark = (): JSX.Element => {
           © 2025 Relaxure
         </div>
         <div className="absolute w-[219px] h-[45px] top-[494px] left-[907px]">
-          <div className="absolute w-[47px] h-[45px] top-0 left-0 bg-[url(https://c.animaapp.com/ipQflS1Z/img/oval-copy-1.svg)] bg-cover">
-            <div className="relative w-[14px] h-[14px] top-[16px] left-[17px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/linkedin@2x.png)] bg-cover" />
-          </div>
-          <div className="absolute w-[47px] h-[45px] top-0 left-[57px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/facebook@2x.png)] bg-cover" />
-          <div className="absolute w-[47px] h-[45px] top-0 left-[114px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/oval-copy.svg)] bg-cover">
-            <div className="relative w-[14px] h-[13px] top-[16px] left-[17px]">
-              <div className="relative h-[13px]">
-                <img
-                  className="absolute w-[2px] h-[2px] top-[2px] left-[10px]"
-                  alt="Oval"
-                  src="https://c.animaapp.com/ipQflS1Z/img/oval.svg"
-                />
-                <img
-                  className="absolute w-[7px] h-[6px] top-[3px] left-[3px]"
-                  alt="Shape"
-                  src="https://c.animaapp.com/ipQflS1Z/img/shape-1.svg"
-                />
-                <img
-                  className="absolute w-[14px] h-[13px] top-0 left-0"
-                  alt="Shape"
-                  src="https://c.animaapp.com/ipQflS1Z/img/shape-2.svg"
-                />
+          <Link href="https://www.instagram.com/relaxurepergola/">
+            <div className="absolute w-[47px] h-[45px] top-0 left-[114px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/oval-copy.svg)] bg-cover">
+              <div className="relative w-[14px] h-[13px] top-[16px] left-[17px]">
+                <div className="relative h-[13px]">
+                  <img
+                    className="absolute w-[2px] h-[2px] top-[2px] left-[10px]"
+                    alt="Oval"
+                    src="https://c.animaapp.com/ipQflS1Z/img/oval.svg"
+                  />
+                  <img
+                    className="absolute w-[7px] h-[6px] top-[3px] left-[3px]"
+                    alt="Shape"
+                    src="https://c.animaapp.com/ipQflS1Z/img/shape-1.svg"
+                  />
+                  <img
+                    className="absolute w-[14px] h-[13px] top-0 left-0"
+                    alt="Shape"
+                    src="https://c.animaapp.com/ipQflS1Z/img/shape-2.svg"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="absolute w-[47px] h-[45px] top-0 left-[172px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/twitter@2x.png)] bg-cover">
-            <div className="relative w-[17px] h-[11px] top-[17px] left-[16px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/shape.svg)] bg-cover" />
-          </div>
+          </Link>
+          <Link href="https://www.youtube.com/@Relaxure-m1z">
+            <div className="absolute w-[47px] h-[45px] top-0 left-[172px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/twitter@2x.png)] bg-cover">
+              <div className="relative w-[17px] h-[11px] top-[17px] left-[16px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/shape.svg)] bg-cover" />
+            </div>
+          </Link>
         </div>
       </div>
     </div>

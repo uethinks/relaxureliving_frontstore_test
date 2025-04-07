@@ -66,27 +66,29 @@ export const Homepage = (): JSX.Element => {
     })
   }, [])
   return (
-    <div className="flex flex-col items-center gap-[120px] px-20 py-0 relative bg-[#ffffff]">
-      <Hero hero={hero} />
-      <OurPergola pergola={pergola} />
-      {/* features */}
-      <Frame />
-      {/* Accessories */}
-      <Accessories />
-      {/* Testimonials */}
-      <FrameWrapper />
-      {/* Our promise */}
-      <OurPromise />
-      {/*  Our blog */}
-      <Div />
-      {/* FAQ */}
-      {faq && <FaqWrapper faq={faq} />}
-      {/* contact us */}
-      {contactUs && <SectionComponentNode contactUs={contactUs} />}
-      {/* footer */}
-      <FooterDark />
+    <>
+      <div className="flex flex-col items-center gap-[120px] px-20 py-0 relative bg-[#ffffff]">
+        <Hero hero={hero} />
+        <OurPergola pergola={pergola} />
+        {/* features */}
+        <Frame />
+        {/* Accessories */}
+        <Accessories />
+        {/* Testimonials */}
+        <FrameWrapper />
+        {/* Our promise */}
+        <OurPromise />
+        {/*  Our blog */}
+        <Div />
+        {/* FAQ */}
+        {faq && <FaqWrapper faq={faq} />}
+        {/* contact us */}
+        {contactUs && <SectionComponentNode contactUs={contactUs} />}
+        {/* footer */}
 
-      <NavBarWrapper />
-    </div>
+        <NavBarWrapper />
+      </div>
+      <FooterDark />
+    </>
   )
 }
