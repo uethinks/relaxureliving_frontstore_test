@@ -1,5 +1,5 @@
 "use client"
-import React, { use, useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import {
   StoreProduct,
   StoreProductOption,
@@ -26,11 +26,11 @@ export const PergulaSizeSelector = ({
     (option) => option.title === "Color"
   )
 
-  const defaultSize: StoreProductOptionValue = {
+  const defaultSize: StoreProductOptionValue = pergolaSizes?.values?.[0] || {
     id: "",
     value: "",
   }
-  const defaultColor: StoreProductOptionValue = {
+  const defaultColor: StoreProductOptionValue = pergolaColors?.values?.[0] || {
     id: "",
     value: "",
   }
@@ -40,8 +40,9 @@ export const PergulaSizeSelector = ({
   const [selectedColor, setSelectedColor] =
     useState<StoreProductOptionValue>(defaultColor)
 
-  const getVariant = () => {
+  const getVariant = useCallback(() => {
     return product.variants?.find((variant) => {
+      console.log("variant", variant?.options)
       const matchingSize = variant?.options?.find(
         (option) =>
           option.option?.title === "Size" && option.value === selectedSize.value
@@ -53,7 +54,8 @@ export const PergulaSizeSelector = ({
       )
       return matchingSize && matchingColor
     })
-  }
+  }, [product, selectedSize, selectedColor])
+
   const handleSizeClick = (size: StoreProductOptionValue) => {
     setSelectedSize(size)
     // const variant = getVariant()
@@ -63,6 +65,7 @@ export const PergulaSizeSelector = ({
   useEffect(() => {
     const variant = getVariant()
     onVariantChange(variant)
+    console.log("onVariantChange", variant, selectedSize, selectedColor)
   }, [selectedSize, selectedColor])
 
   const handleColorClick = (color: StoreProductOptionValue) => {

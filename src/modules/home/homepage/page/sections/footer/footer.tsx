@@ -26,9 +26,9 @@ export const FooterDark = (): JSX.Element => {
               Warranty
             </div>
           </Link>
-          <Link href="/us/terms/return-policy">
+          <Link href="/us/terms/refund-policy">
             <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
-              Return policy
+              Refund policy
             </div>
           </Link>
           <Link href="/us/terms/terms-of-service">

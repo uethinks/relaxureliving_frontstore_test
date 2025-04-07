@@ -77,7 +77,13 @@ export const AccesorriesPopupHeater = ({
                 </h2>
                 <div className="w-full flex justify-between items-center gap-2">
                   <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                    ${currentHeaterVarant?.calculated_price?.calculated_amount}
+                    {currentHeaterVarant?.calculated_price?.calculated_amount &&
+                    currentHeaterVarantQuantity
+                      ? "$" +
+                        currentHeaterVarant?.calculated_price
+                          ?.calculated_amount *
+                          currentHeaterVarantQuantity
+                      : ""}
                   </div>
                   <div className="relative h-12">
                     <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
