@@ -69,3 +69,19 @@ export type features = {
   Description: string
   FeaturesSlider: featureSlider[]
 }
+export type AccessoriesSlider = {
+  id: number
+  title: string
+  subtitle: string
+  description: string
+  largeImage: Image
+  smallImage: Image
+}
+export type Accessories = {
+  Title: string
+  Subtitle: string
+  Description: string
+  slider: AccessoriesSlider[]
+  Button: string
+}
+

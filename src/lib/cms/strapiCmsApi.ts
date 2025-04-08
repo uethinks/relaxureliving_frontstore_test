@@ -9,6 +9,8 @@ const homePagePopulate = {
     "populate[FAQ][populate][homepageFAQ][populate][0]": "question_and_answer",
     "populate[ContactUs][populate][0]": "Image",
     "populate[Features][populate][FeaturesSlider][populate][0]": "Image",
+    "populate[Accessories][populate][slider][populate][0]": "largeImage",
+    "populate[Accessories][populate][slider][populate][1]": "smallImage",
 };
 
 const API_URLS = {
