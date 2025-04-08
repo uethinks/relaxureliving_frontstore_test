@@ -83,8 +83,7 @@ export const Features = ({
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              onClick={() => handleGroup1Click(index)}
-              onKeyDown={(e) => e.key === "Enter" && handleGroup1Click(index)}
+              onMouseEnter={() => handleGroup1Click(index)}
             >
               <div className="ms-5 mt-5 inline-flex h-[41px] items-center justify-center gap-2.5 p-2.5 bg-[#ffffff73] rounded-[30px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
                 <div className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
@@ -145,8 +144,7 @@ export const Features = ({
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              onClick={() => handleGroup2Click(index)}
-              onKeyDown={(e) => e.key === "Enter" && handleGroup2Click(index)}
+              onMouseEnter={() => handleGroup2Click(index)}
             >
               <div className="ms-5 mt-5 inline-flex h-[41px] items-center justify-center gap-2.5 p-2.5 bg-[#ffffff73] rounded-[30px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
                 <div className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
