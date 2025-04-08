@@ -6,13 +6,13 @@ import { Div } from "./sections/Div"
 import { FooterDark } from "./sections/footer"
 import { OurPromise } from "./sections/OurPromise"
 import { FaqWrapper } from "./sections/FaqWrapper"
-import { Frame } from "./sections/Frame"
+import { Features } from "./sections/Features"
 import { FrameWrapper } from "./sections/FrameWrapper"
 import { Hero } from "./sections/Hero"
 import { NavBarWrapper } from "./sections/NavBarWrapper"
 import { SectionComponentNode } from "./sections/SectionComponentNode"
 import { getHomePage } from "@lib/cms/strapiCmsApi"
-import { HeroProps, OurPergolaProps } from "types/global"
+import { HeroProps, OurPergolaProps, features } from "types/global"
 
 interface FAQData {
   id: number
@@ -56,6 +56,7 @@ export const Homepage = (): JSX.Element => {
   const [pergola, setPergola] = useState<OurPergolaProps | null>(null)
   const [faq, setFaq] = useState<FAQData | null>(null)
   const [contactUs, setContactUs] = useState<ContactUsProps | null>(null)
+  const [features, setFeatures] = useState<features | null>(null)
   useEffect(() => {
     getHomePage().then(({ data }) => {
       console.log("getHomePage", data)
@@ -63,6 +64,7 @@ export const Homepage = (): JSX.Element => {
       setPergola(data.OurPergola)
       setFaq(data.FAQ)
       setContactUs(data.ContactUs)
+      setFeatures(data.Features)
     })
   }, [])
   return (
@@ -71,7 +73,7 @@ export const Homepage = (): JSX.Element => {
         <Hero hero={hero} />
         <OurPergola pergola={pergola} />
         {/* features */}
-        <Frame />
+        <Features features={features} />
         {/* Accessories */}
         <Accessories />
         {/* Testimonials */}

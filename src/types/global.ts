@@ -56,3 +56,16 @@ export type OurPergolaProps = {
   BottomButton: string;
   UsageScenarios: UsageScenario[];
 }
+export type featureSlider = {
+  Title: string
+  subtitle: string
+  Description: string
+  Image: Image
+}
+
+export type features = {
+  Title: string
+  SubTitle: string
+  Description: string
+  FeaturesSlider: featureSlider[]
+}

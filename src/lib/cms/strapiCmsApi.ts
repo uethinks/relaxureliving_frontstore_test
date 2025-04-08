@@ -8,6 +8,7 @@ const homePagePopulate = {
     "populate[OurPergola][populate][UsageScenarios][populate][1]": "SmallImage",
     "populate[FAQ][populate][homepageFAQ][populate][0]": "question_and_answer",
     "populate[ContactUs][populate][0]": "Image",
+    "populate[Features][populate][FeaturesSlider][populate][0]": "Image",
 };
 
 const API_URLS = {
