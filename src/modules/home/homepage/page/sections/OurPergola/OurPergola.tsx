@@ -61,16 +61,13 @@ export const OurPergola = ({
             <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <div className="flex h-[110px] items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full">
                 <p className="relative flex-1 mt-[-6.00px] mb-[-4.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
-                  Premium Quality, Without the Premium Price
+                  {pergola?.SubTitle}
                 </p>
               </div>
 
               <div className="flex w-full items-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
                 <p className="relative flex-1 mt-[-1.00px] font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
-                  Get commercial-grade durability and smart features at a
-                  fraction of what other premium pergolas cost. Transform your
-                  outdoor space into valuable living area that adds up to 185
-                  more usable days per year while enhancing your property value.
+                  {pergola?.Description}
                 </p>
               </div>
             </div>

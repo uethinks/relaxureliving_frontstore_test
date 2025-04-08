@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react"
 import { OurPergola } from "./sections/OurPergola"
 import { Accessories } from "./sections/Accessories"
-import { Div } from "./sections/Div"
+import { OurBlog } from "./sections/OurBlog"
 import { FooterDark } from "./sections/footer"
 import { OurPromise } from "./sections/OurPromise"
 import { FaqWrapper } from "./sections/FaqWrapper"
@@ -17,6 +17,7 @@ import {
   OurPergolaProps,
   features,
   Accessories as AccessoriesType,
+  HomepageBlog,
 } from "types/global"
 
 interface FAQData {
@@ -63,6 +64,7 @@ export const Homepage = (): JSX.Element => {
   const [contactUs, setContactUs] = useState<ContactUsProps | null>(null)
   const [features, setFeatures] = useState<features | null>(null)
   const [accessories, setAccessories] = useState<AccessoriesType | null>(null)
+  const [homepageBlog, setHomepageBlog] = useState<HomepageBlog | null>(null)
   useEffect(() => {
     getHomePage().then(({ data }) => {
       console.log("getHomePage", data)
@@ -72,6 +74,7 @@ export const Homepage = (): JSX.Element => {
       setContactUs(data.ContactUs)
       setFeatures(data.Features)
       setAccessories(data.Accessories)
+      setHomepageBlog(data.OurBlog)
     })
   }, [])
   return (
@@ -88,7 +91,7 @@ export const Homepage = (): JSX.Element => {
         {/* Our promise */}
         <OurPromise />
         {/*  Our blog */}
-        <Div />
+        <OurBlog homepageBlog={homepageBlog} />
         {/* FAQ */}
         {faq && <FaqWrapper faq={faq} />}
         {/* contact us */}

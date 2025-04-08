@@ -11,6 +11,9 @@ const homePagePopulate = {
     "populate[Features][populate][FeaturesSlider][populate][0]": "Image",
     "populate[Accessories][populate][slider][populate][0]": "largeImage",
     "populate[Accessories][populate][slider][populate][1]": "smallImage",
+    "populate[OurBlog][populate][articles][populate][cover][populate]": "*",
+    "populate[OurBlog][populate][articles][populate][author][populate]": "*",
+    "populate[OurBlog][populate][articles][populate][category][populate]": "*"
 };
 
 const API_URLS = {

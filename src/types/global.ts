@@ -85,3 +85,23 @@ export type Accessories = {
   Button: string
 }
 
+export type Blog = {
+  title: string
+  description: string
+  slug: string
+  cover: Image
+  author: {
+    avatar: Image
+    name: string
+  }
+  category: {
+    name: string
+  }
+}
+export type HomepageBlog = {
+  Title: string
+  Subtitle: string
+  Description: string
+  articles: Blog[]
+} 
+
