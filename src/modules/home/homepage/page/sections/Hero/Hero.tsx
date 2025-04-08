@@ -13,8 +13,8 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
           backgroundImage: `url(${cmsBaseUrl}${hero?.BackgroundImage.url})`,
         }}
       >
-        <div className="flex flex-col w-[1224px] items-start gap-8 relative">
-          <div className="flex flex-col w-[557px] items-start gap-6 relative flex-[0_0_auto]">
+        <div className="flex flex-col w-1/2 items-start gap-8 relative">
+          <div className="flex flex-col items-start gap-6 relative flex-[0_0_auto]">
             <p className="self-stretch mt-[-1.00px] font-heading font-[number:var(--heading-font-weight)] text-[#ffffff] text-[length:var(--heading-font-size)] leading-[var(--heading-line-height)] relative tracking-[var(--heading-letter-spacing)] [font-style:var(--heading-font-style)]">
               {hero?.Title}
             </p>

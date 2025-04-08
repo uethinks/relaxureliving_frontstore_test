@@ -12,7 +12,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en" data-mode="light">
       <body>
         <CartProvider>
-          <main className="relative">{props.children}</main>
+          <main className="w-full relative">
+            <div className="w-full flex flex-col items-center">
+              {props.children}
+            </div>
+          </main>
         </CartProvider>
       </body>
     </html>

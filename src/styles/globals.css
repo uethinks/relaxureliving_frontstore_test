@@ -506,3 +506,29 @@ You can apply the theme on any DOM node, not just the `body`
     --primitives-colors-gray-dark-mode-900
   );
 }
+
+@keyframes progress {
+  from {
+    width: 1%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progress 8s linear forwards;
+}
+
+@keyframes diagonal-movement {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(60px, -60px);
+  }
+}
+
+.animate-diagonal {
+  animation: diagonal-movement 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

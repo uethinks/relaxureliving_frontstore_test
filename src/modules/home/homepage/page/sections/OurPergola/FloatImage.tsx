@@ -19,7 +19,7 @@ export const FloatImage = ({
         } ${property1 === "variant-2" ? "top-[18px]" : "top-[21px]"}`}
       >
         <img
-          className="w-[231px] left-[11px] top-2.5 object-cover h-[191px] absolute"
+          className="w-[231px] left-[11px] top-2.5 object-cover h-[191px] absolute rounded-[20px]"
           alt="Rectangle"
           src={rectangle}
         />
