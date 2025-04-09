@@ -6,7 +6,7 @@ export const NavBarWrapper = (): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <div className="lg:w-[750px] xl:w-[900px] 2xl:w-[1205px] inline-flex flex-col items-start gap-2.5 px-0 py-10 fixed top-0 left-1/2 -translate-x-1/2">
+    <div className="w-full lg:w-[780px] xl:w-[900px] 2xl:w-[1205px] inline-flex flex-col items-start gap-2.5 px-0 py-10 lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2 z-50">
       {/* Desktop Navigation */}
       <div className="hidden lg:flex flex-col w-full h-[79px] items-center justify-center gap-2.5 p-5 relative bg-[#ffffffcc] rounded-[30px] border border-solid border-[#ffffff] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
         <div className="justify-between self-stretch w-full flex-[0_0_auto] mt-[-4.50px] mb-[-4.50px] flex items-center relative">
