@@ -40,13 +40,13 @@ export const OurPergola = ({
     <>
       <div className="flex flex-col w-full items-center gap-2.5 relative">
         <div className="flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-          <p className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+          <p className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
             How Will You Experience Relaxure?
           </p>
         </div>
 
         <div className="justify-center flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-          <p className="relative w-2/5 mt-[-1.00px] font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] text-center tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+          <p className="relative w-full lg:w-2/5 mt-[-1.00px] font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[18px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] text-center tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
             Every homeowner has unique priorities. Discover how Relaxure
             enhances your specific outdoor lifestyle
           </p>
@@ -54,19 +54,19 @@ export const OurPergola = ({
       </div>
       <div
         id="pergola"
-        className="flex flex-wrap w-full h-[817px] items-center justify-center gap-[60px_60px] p-10 relative bg-[#f3f3f3] rounded-[20px]"
+        className="flex flex-wrap w-full items-center justify-center gap-[60px_60px] p-4 lg:p-10 relative bg-[#f3f3f3] rounded-[20px]"
       >
-        <div className="flex w-full items-center gap-[60px] relative mt-[-1.50px] mb-[-1.50px] ml-[-1.00px] mr-[-1.00px]">
-          <div className="flex flex-col w-2/5 h-[600px] items-start justify-center gap-[30px] px-0 py-4 relative">
+        <div className="flex flex-col lg:flex-row w-full items-center gap-[60px] relative mt-[-1.50px] mb-[-1.50px] ml-[-1.00px] mr-[-1.00px]">
+          <div className="flex flex-col w-full lg:w-2/5  lg:h-[650px] items-center lg:items-start justify-center gap-[30px] px-0 py-4 relative">
             <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex h-[110px] items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full">
-                <p className="relative flex-1 mt-[-6.00px] mb-[-4.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+              <div className="flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full">
+                <p className="text-center lg:text-left relative flex-1 mt-[-6.00px] mb-[-4.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] tetx-[18px] lg:text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
                   {pergola?.SubTitle}
                 </p>
               </div>
 
               <div className="flex w-full items-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
-                <p className="relative flex-1 mt-[-1.00px] font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+                <p className="text-center lg:text-left relative flex-1 mt-[-1.00px] font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
                   {pergola?.Description}
                 </p>
               </div>
@@ -83,13 +83,13 @@ export const OurPergola = ({
           {usageScenarios.map((scenario) => (
             <div
               key={scenario.id}
-              className={`relative w-3/5 h-[740px] overflow-hidden ${
+              className={`relative w-full lg:w-3/5 overflow-hidden ${
                 scenario.show ? "block" : "hidden"
               }`}
             >
-              <div className="h-[740px]">
-                <div className="relative h-[708px]">
-                  <div className="relative h-[600px] flex flex-col items-center">
+              <div className="">
+                <div className="relative ">
+                  <div className="relative flex flex-col items-center pb-[50px]">
                     <PropertyDefaultWrapper
                       className="absolute w-4/5 h-1 rounded-sm bg-[#d9d9d9] top-5"
                       progressClass={scenario.show ? "animate-progress" : "w-1"}
@@ -99,15 +99,13 @@ export const OurPergola = ({
                       alt="Rectangle"
                       src={strapiUrl + scenario.LargeImage.formats.large.url}
                     />
+                    <FloatImage
+                      className="!absolute left-[20px] lg:left-[66px] -bottom-[50px] animate-diagonal"
+                      rectangle={
+                        strapiUrl + scenario.SmallImage.formats.small.url
+                      }
+                    />
                   </div>
-
-                  <FloatImage
-                    className="!absolute !left-[66px] !top-[410px] animate-diagonal"
-                    property1="default"
-                    rectangle={
-                      strapiUrl + scenario.SmallImage.formats.small.url
-                    }
-                  />
                 </div>
               </div>
             </div>
