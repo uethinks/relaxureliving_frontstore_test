@@ -29,7 +29,7 @@ export const BoringStuff = ({
 }: Props): JSX.Element => {
   return (
     <div
-      className={`w-[48%] inline-flex items-start gap-[57px] relative ${className}`}
+      className={`w-4/5 lg:w-[48%] inline-flex items-start gap-[57px] relative ${className}`}
     >
       <div className="border border-solid border-[#e8e8ea] w-full flex flex-col items-start gap-2.5 p-5 rounded-[20px] bg-[#ffffff] relative">
         <div className="w-full flex self-stretch flex-col items-center gap-6 flex-[0_0_auto] relative">

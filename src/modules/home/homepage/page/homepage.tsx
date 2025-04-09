@@ -7,10 +7,10 @@ import { FooterDark } from "./sections/footer"
 import { OurPromise } from "./sections/OurPromise"
 import { FaqWrapper } from "./sections/FaqWrapper"
 import { Features } from "./sections/Features"
-import { FrameWrapper } from "./sections/FrameWrapper"
+import { Testimonials } from "./sections/Testimonials"
 import { Hero } from "./sections/Hero"
 import { NavBarWrapper } from "./sections/NavBarWrapper"
-import { SectionComponentNode } from "./sections/SectionComponentNode"
+import { ContactUs } from "./sections/ContactUs"
 import { getHomePage } from "@lib/cms/strapiCmsApi"
 import {
   HeroProps,
@@ -88,7 +88,7 @@ export const Homepage = (): JSX.Element => {
         {/* Accessories */}
         <Accessories accessories={accessories} />
         {/* Testimonials */}
-        <FrameWrapper />
+        <Testimonials />
         {/* Our promise */}
         <OurPromise />
         {/*  Our blog */}
@@ -96,7 +96,7 @@ export const Homepage = (): JSX.Element => {
         {/* FAQ */}
         {faq && <FaqWrapper faq={faq} />}
         {/* contact us */}
-        {contactUs && <SectionComponentNode contactUs={contactUs} />}
+        {contactUs && <ContactUs contactUs={contactUs} />}
         {/* footer */}
       </div>
       <FooterDark />
