@@ -8,14 +8,14 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
   return (
     <div className="flex flex-col h-[983px] items-end gap-2 pt-2.5 pb-10 px-0 relative self-stretch w-full">
       <div
-        className="flex h-[900px] items-center px-16 py-0 relative self-stretch w-full rounded-[20px] overflow-hidden shadow-shadow-cards-relaxure bg-cover bg-[50%_50%]"
+        className="flex h-[900px] items-center px-4 md:px-16 py-0 relative self-stretch w-full rounded-[20px] overflow-hidden shadow-shadow-cards-relaxure bg-cover bg-[50%_50%]"
         style={{
           backgroundImage: `url(${cmsBaseUrl}${hero?.BackgroundImage.url})`,
         }}
       >
-        <div className="flex flex-col w-1/2 items-start gap-8 relative">
+        <div className="flex flex-col w-full md:w-2/3 lg:w-1/2 items-start gap-8 relative">
           <div className="flex flex-col items-start gap-6 relative flex-[0_0_auto]">
-            <p className="self-stretch mt-[-1.00px] font-heading font-[number:var(--heading-font-weight)] text-[#ffffff] text-[length:var(--heading-font-size)] leading-[var(--heading-line-height)] relative tracking-[var(--heading-letter-spacing)] [font-style:var(--heading-font-style)]">
+            <p className="self-stretch mt-[-1.00px] font-heading font-[number:var(--heading-font-weight)] text-[#ffffff] text-[24px] md:text-[length:var(--heading-font-size)] leading-[var(--heading-line-height)] relative tracking-[var(--heading-letter-spacing)] [font-style:var(--heading-font-style)]">
               {hero?.Title}
             </p>
 
@@ -24,7 +24,7 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
             </p>
           </div>
 
-          <div className="inline-flex items-start justify-end gap-5 relative flex-[0_0_auto]">
+          <div className="inline-flex flex-col md:flex-row items-start justify-end gap-5 relative flex-[0_0_auto]">
             <Link href="/us/products/pergola">
               <div className="inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] bg-[#072f6c] rounded-[10px]">
                 <button className="all-[unset] box-border relative w-fit [font-family:'Montserrat',Helvetica] font-normal text-[color:var(--semantic-border-alternate)] text-base tracking-[0] leading-6 whitespace-nowrap">
