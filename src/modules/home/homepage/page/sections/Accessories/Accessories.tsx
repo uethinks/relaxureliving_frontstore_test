@@ -21,9 +21,9 @@ export const Accessories = ({
   return (
     <div
       id="accessories"
-      className="flex w-full h-[785px] items-center justify-center gap-2.5 py-0 relative bg-[#ffffff] rounded-[20px] border border-solid border-transparent"
+      className="flex flex-col-reverse lg:flex-row w-full lg:h-[785px] items-center justify-center gap-2.5 py-0 relative bg-[#ffffff] rounded-[20px] border border-solid border-transparent"
     >
-      <div className="flex w-3/5 justify-center gap-2.5 py-0 relative bg-[#ffffff] rounded-[20px] border border-solid border-transparent">
+      <div className="flex w-full lg:w-3/5 justify-center gap-2.5 py-0 relative bg-[#ffffff] rounded-[20px] border border-solid border-transparent">
         {accessories?.slider?.map((item) => (
           <ImageText
             key={item.id}
@@ -35,11 +35,11 @@ export const Accessories = ({
           />
         ))}
       </div>
-      <div className="flex-col w-2/5 justify-center gap-[30px] px-0 self-stretch flex items-start relative">
-        <div className="inline-flex flex-col h-[788px] items-start justify-center gap-10 px-5 py-0 relative mt-[-89.50px] mb-[-89.50px] mr-[-40.00px]">
-          <div className="inline-flex flex-col items-start gap-[60px] relative flex-[0_0_auto]">
-            <div className="inline-flex flex-col items-start gap-10 relative flex-[0_0_auto]">
-              <div className="flex w-full items-center gap-5 relative flex-[0_0_auto]">
+      <div className="flex-col w-full lg:w-2/5 justify-center gap-[30px] px-0 self-stretch flex lg:items-start items-center  relative">
+        <div className="inline-flex flex-col lg:h-[788px] items-start justify-center gap-10 px-5 py-0 relative">
+          <div className="inline-flex flex-col items-center lg:items-start gap-[60px] relative flex-[0_0_auto]">
+            <div className="inline-flex flex-col items-center lg:items-start gap-10 relative flex-[0_0_auto]">
+              <div className="flex w-full justify-center lg:justify-start items-center gap-5 relative flex-[0_0_auto]">
                 {accessories?.slider?.map((item) => (
                   <button
                     key={item.id}
@@ -52,7 +52,7 @@ export const Accessories = ({
                   >
                     <div className="flex items-center justify-center gap-[13.09px] relative self-stretch w-full flex-[0_0_auto]">
                       <div
-                        className={`relative flex-1 mt-[-1.31px] [font-family:'Montserrat',Helvetica] font-medium text-[22px] text-center tracking-[0] leading-[30.8px] ${
+                        className={`relative flex-1 mt-[-1.31px] [font-family:'Montserrat',Helvetica] font-medium text-[18px] lg:text-[22px] text-center tracking-[0] leading-[30.8px] ${
                           selectedOption?.id === item.id
                             ? "text-[#072f6c]"
                             : "text-[#69727a]"
@@ -66,8 +66,8 @@ export const Accessories = ({
               </div>
 
               <div className="flex flex-col w-full items-end gap-2.5 relative flex-[0_0_auto]">
-                <div className="flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                  <div className="mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] relative flex-1 tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
+                <div className="flex  items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
+                  <div className="text-center lg:text-left mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] relative flex-1 tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
                     {accessories?.Subtitle}
                   </div>
                 </div>
