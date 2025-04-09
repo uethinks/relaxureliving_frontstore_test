@@ -43,7 +43,7 @@ export const Accessories = ({
                 {accessories?.slider?.map((item) => (
                   <button
                     key={item.id}
-                    className={`flex flex-col w-1/3 items-center justify-center gap-[10.47px] p-5 relative rounded-[44px] ${
+                    className={`flex flex-col items-center justify-center gap-[10.47px] p-5 relative rounded-[44px] ${
                       selectedOption?.id === item.id
                         ? "bg-[#ffffff] border border-solid border-[#072f6c] shadow-shadow-cards-relaxure"
                         : "border border-solid border-[#e8e8ea]"

@@ -28,8 +28,10 @@ export const BoringStuff = ({
   star = "https://c.animaapp.com/bEMo3Gov/img/star-1.svg",
 }: Props): JSX.Element => {
   return (
-    <div className={`inline-flex items-start gap-[57px] relative ${className}`}>
-      <div className="border border-solid border-[#e8e8ea] w-[642px] flex flex-col items-start gap-2.5 p-5 rounded-[20px] bg-[#ffffff] relative">
+    <div
+      className={`w-[48%] inline-flex items-start gap-[57px] relative ${className}`}
+    >
+      <div className="border border-solid border-[#e8e8ea] w-full flex flex-col items-start gap-2.5 p-5 rounded-[20px] bg-[#ffffff] relative">
         <div className="w-full flex self-stretch flex-col items-center gap-6 flex-[0_0_auto] relative">
           <div className="w-full flex self-stretch flex-col items-start gap-4 flex-[0_0_auto] justify-center relative">
             <div className="border border-solid border-[#e8e8ea] inline-flex mt-[-1.00px] items-center gap-2.5 ml-[-1.00px] p-2.5 h-[38px] rounded-[20px] justify-center bg-[#ffffff] relative">

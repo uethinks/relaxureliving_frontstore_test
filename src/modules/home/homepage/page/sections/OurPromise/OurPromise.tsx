@@ -3,8 +3,8 @@ import { BoringStuff } from "./BoringStuff/BoringStuff"
 
 export const OurPromise = (): JSX.Element => {
   return (
-    <div className="inline-flex flex-col items-center justify-center gap-5 pt-20 pb-10 px-20 relative rounded-[20px] border border-solid border-transparent">
-      <div className="w-[1352px] justify-center gap-[30px] px-0 py-4 flex flex-col items-center relative flex-[0_0_auto]">
+    <div className="inline-flex flex-col items-center justify-center gap-5 pt-20 pb-10 relative rounded-[20px] border border-solid border-transparent">
+      <div className="w-full justify-center gap-[30px] px-0 py-4 flex flex-col items-center relative flex-[0_0_auto]">
         <div className="flex-col items-center gap-10 flex relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex-col items-start gap-2.5 flex relative self-stretch w-full flex-[0_0_auto]">
             <div className="items-center justify-center gap-2.5 px-0 py-2.5 flex relative self-stretch w-full flex-[0_0_auto]">
@@ -22,7 +22,7 @@ export const OurPromise = (): JSX.Element => {
             </div>
           </div>
 
-          <div className="flex-wrap items-start justify-center gap-[64px_64px] pt-10 pb-0 px-0 flex relative self-stretch w-full flex-[0_0_auto]">
+          <div className="flex-wrap justify-between items-start pt-10 pb-0 px-0 flex relative self-stretch w-full flex-[0_0_auto]">
             <BoringStuff
               className="!flex-[0_0_auto]"
               element="https://c.animaapp.com/bEMo3Gov/img/22-1@2x.png"

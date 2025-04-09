@@ -79,7 +79,7 @@ export const Homepage = (): JSX.Element => {
   }, [])
   return (
     <>
-      <div className="w-full md:w-full lg:w-[90%] 2xl:w-[1512px] flex flex-col items-center gap-[120px] px-20 py-0 relative bg-[#ffffff]">
+      <div className="w-full md:w-full lg:w-[90%] 2xl:w-[1512px] flex flex-col items-center gap-[120px] lg:px-20 px-4 py-0 relative bg-[#ffffff]">
         <Hero hero={hero} />
         <OurPergola pergola={pergola} />
         {/* features */}
