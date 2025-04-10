@@ -176,12 +176,12 @@ export const AccesorriesSelector = ({
         Add Accessories to your pergola
       </p>
 
-      <div className="flex flex-col w-[430px] items-start gap-5 relative flex-[0_0_auto]">
-        <div className="flex w-[430px] items-center gap-[22px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-full items-start gap-5 relative flex-[0_0_auto]">
+        <div className="flex w-full items-center gap-[22px] relative flex-[0_0_auto]">
           {accessoriesIcons.map((accessory) => (
             <button
               key={accessory.name}
-              className={`flex flex-col w-[127px] h-[76px] items-center justify-center gap-2.5 px-0 py-0 relative rounded-[20px] cursor-pointer ${
+              className={`flex flex-col w-1/3 h-[76px] items-center justify-center gap-2.5 px-0 py-0 relative rounded-[20px] cursor-pointer ${
                 accessory.selected ? "bg-[#dce7f8]" : "bg-[#ffffff]"
               }`}
               onClick={() => handleAccessoryClick(accessory)}

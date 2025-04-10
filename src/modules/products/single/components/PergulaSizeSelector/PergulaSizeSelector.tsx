@@ -70,17 +70,16 @@ export const PergulaSizeSelector = ({
 
   const handleColorClick = (color: StoreProductOptionValue) => {
     setSelectedColor(color)
-    // const variant = getVariant()
-    // onVariantChange(variant)
+    console.log("selectedColor", selectedColor)
   }
 
   return (
     <>
       <div
-        className={`inline-flex flex-col items-start gap-5 relative ${className}`}
+        className={`flex flex-col w-full items-start gap-5 relative ${className} mb-4`}
       >
-        <div className="inline-flex h-6 items-center gap-2.5 relative">
-          <p className="relative w-[327px] h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-18 tracking-[0] leading-6 whitespace-nowrap">
+        <div className="flex h-6 items-center gap-2.5 relative">
+          <p className="relative w-full h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-18 tracking-[0] leading-6 whitespace-nowrap">
             What size do you want for your pergola?
           </p>
         </div>
@@ -110,9 +109,23 @@ export const PergulaSizeSelector = ({
             </div>
           </div>
         </div>
+        <div className="flex flex-col w-full items-start gap-5 relative">
+          <div className="flex flex-row items-center gap-2.5 relative">
+            <img src="/img/fits-people.png" alt="Fits People" />
+            <p>Fits 2 people</p>
+          </div>
+          <div className="flex flex-row items-center gap-2.5 relative">
+            <img src="/img/ideal.png" alt="Ideal" />
+            <p>Perfect for morning coffee</p>
+          </div>
+          <div className="flex flex-row items-center gap-2.5 relative">
+            <img src="/img/morning-coffee.png" alt="Morning Coffee" />
+            <p>Ideal for smal patios</p>
+          </div>
+        </div>
       </div>
       <div
-        className={`inline-flex flex-col items-start gap-5 relative ${className}`}
+        className={`inline-flex flex-col items-start gap-2.5 relative ${className}`}
       >
         <div className="inline-flex h-6 items-center gap-2.5 relative">
           <p className="relative w-[327px] h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-18 tracking-[0] leading-6 whitespace-nowrap">
@@ -121,26 +134,27 @@ export const PergulaSizeSelector = ({
         </div>
 
         <div className="relative h-12">
-          <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
+          <div className="flex px-2 h-12">
             <div className="inline-flex items-center gap-[18px] relative">
               {pergolaColors?.values?.map((color) => (
-                <button
+                <div
                   key={color.id}
-                  className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer ${
-                    selectedColor === color ? "bg-[#dce7f8] rounded-[20px]" : ""
-                  }`}
-                  onClick={() => handleColorClick(color)}
+                  className="flex flex-row items-center gap-2.5 relative"
                 >
+                  <button
+                    className={`w-10 h-10 rounded-[20px] cursor-pointer border-2 border-solid ${
+                      color.value == "Dark Grey"
+                        ? "bg-[#7F7F7F]"
+                        : "bg-[#ffffff]"
+                    }  ${selectedColor === color ? "border-[#072F6C]" : ""}`}
+                    onClick={() => handleColorClick(color)}
+                  ></button>
                   <div
-                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap ${
-                      selectedColor === color
-                        ? "text-[#072f6c]"
-                        : "text-[#69727a]"
-                    }`}
+                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
                   >
                     {color.value}
                   </div>
-                </button>
+                </div>
               ))}
             </div>
           </div>
