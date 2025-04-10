@@ -10,6 +10,14 @@ import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
+import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
+import {
+  ImageOnLeft,
+  ImageOnRight,
+  Advantages,
+  AccessoriesCards,
+} from "./components/LandingPage"
+import { Assembly, Description } from "./components/PergolaInformations"
 type accessoryHeaterVirant = {
   productVarant: StoreProductVariant | null
   quantity: number
@@ -153,7 +161,7 @@ export const ProductItem = ({
   return (
     <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full overflow-hidden">
       <NavBarWrapper isFixed={false} />
-      <div className="flex flex-col justify-between items-start bg-[#ffffff] w-full md:w-full lg:w-[90%] 2xl:w-[1512px] relative [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="flex flex-col justify-between items-start bg-[#ffffff] w-full md:w-full lg:w-[90%] 2xl:w-[1512px] relative [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] mb-10 gap-10">
         <div className="flex flex-col w-full lg:w-[65%] items-center gap-5 px-4">
           <div className="flex flex-col items-start gap-6 relative self-stretch w-full flex-[0_0_auto]">
             <div className="relative self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
@@ -192,89 +200,8 @@ export const ProductItem = ({
                   </button>
                 ))}
               </div>
-            </div>
-
-            <img
-              className="w-full h-[600px] object-cover mt-10"
-              alt="Img"
-              src={tabContent[activeTab as keyof typeof tabContent].image}
-            />
-
-            <div className="flex flex-col w-full items-start gap-10">
-              <div className="flex flex-col items-center justify-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                  <p className="flex-1 font-heading-2 font-[number:var(--heading-2-font-weight)] text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] relative mt-[-1.00px] text-[#343a40] tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
-                    {activeTab}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                  <p className="flex-1 mt-[-1.00px] text-[#68717a] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
-                    {tabContent[activeTab as keyof typeof tabContent].text}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-start gap-10 p-5 relative self-stretch w-full flex-[0_0_auto] bg-[#f3f3f3] rounded-[20px]">
-                <div className="flex h-[74px] items-start gap-5 px-0 py-2.5 relative self-stretch w-full">
-                  <img
-                    className="relative w-[30px] h-[30px]"
-                    alt="Frame"
-                    src="https://c.animaapp.com/ZNF68wCJ/img/frame-1000004741.svg"
-                  />
-
-                  <p className="flex-1 mt-[-1.00px] text-[#68717a] relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
-                    This {selectedVariant?.title} pergola offers a spacious
-                    design, ideal for outdoor areas.
-                  </p>
-                </div>
-
-                <div className="flex h-[74px] items-start gap-5 px-0 py-2.5 relative self-stretch w-full">
-                  <div className="relative w-[30px] h-[30px] bg-[url(https://c.animaapp.com/ZNF68wCJ/img/group-4@2x.png)] bg-[100%_100%]" />
-
-                  <p className="flex-1 mt-[-1.00px] text-[#68717a] relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
-                    Selected accessories:
-                    {Boolean(
-                      selectedAccessoriesShades?.productVarant &&
-                        selectedAccessoriesShades?.quantity
-                    ) && (
-                      <span>
-                        {selectedAccessoriesHeater?.productVarant?.title ?? ""}{" "}
-                      </span>
-                    )}
-                    {Boolean(
-                      selectedAccessoriesShades?.productVarant &&
-                        selectedAccessoriesShades?.quantity
-                    ) && (
-                      <span>
-                        {selectedAccessoriesShades?.productVarant?.title ?? ""}{" "}
-                      </span>
-                    )}
-                    {Boolean(
-                      selectedAccessoriesGlassdoor?.productVarant &&
-                        selectedAccessoriesGlassdoor?.quantity
-                    ) && (
-                      <span>
-                        {selectedAccessoriesGlassdoor?.productVarant?.title ??
-                          ""}{" "}
-                      </span>
-                    )}
-                  </p>
-                </div>
-
-                <div className="flex h-[74px] items-start gap-5 px-0 py-2.5 relative self-stretch w-full">
-                  <img
-                    className="relative w-[30px] h-[30px]"
-                    alt="Frame"
-                    src="https://c.animaapp.com/ZNF68wCJ/img/frame-1000004742.svg"
-                  />
-
-                  <p className="flex-1 mt-[-1.00px] text-[#68717a] relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
-                    Customizable features allow you to create the perfect
-                    outdoor space for your needs.
-                  </p>
-                </div>
-              </div>
+              {activeTab === "Description" && <Description />}
+              {activeTab === "Shipping" && <Description />}
             </div>
           </div>
           <div className="w-full lg:w-[35%] flex justify-end items-start mt-4 gap-2.5 px-2.5">
@@ -323,6 +250,14 @@ export const ProductItem = ({
             </div>
           </div>
         </div>
+        <div className="w-full relative flex justify-end items-start mt-4 gap-2.5 px-2.5">
+          {activeTab === "Assembly" && <Assembly />}
+        </div>
+        <OurPromise />
+        <ImageOnLeft />
+        <ImageOnRight />
+        <Advantages />
+        <AccessoriesCards />
       </div>
       <FooterDark />
     </div>

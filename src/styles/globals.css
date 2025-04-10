@@ -533,17 +533,34 @@ You can apply the theme on any DOM node, not just the `body`
   animation: diagonal-movement 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-/* 隐藏滚动条但保持滚动功能 */
+/* 自定义滚动条样式 */
 ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(249, 250, 251, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(12, 17, 29, 0.3);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(7, 47, 108, 0.5);
+}
+
+/* 移除上下箭头 */
+::-webkit-scrollbar-button {
   display: none;
 }
 
-/* 或者使用更全面的方案 */
-html {
-  scrollbar-width: none;  /* Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
-}
-
-html::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari, Opera */
+/* Firefox 滚动条样式 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(12, 17, 29, 0.3) rgba(249, 250, 251, 0.3);
 }
