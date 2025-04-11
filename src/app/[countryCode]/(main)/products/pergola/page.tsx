@@ -68,6 +68,5 @@ export default async function ProductPage(props: Props) {
   if (!products.length) {
     notFound()
   }
-  console.log("products", products)
   return <ProductItem product={products[0]} accessories={accessories} />
 }

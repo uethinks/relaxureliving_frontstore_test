@@ -8,7 +8,6 @@ export const PaymentFinish = ({
   order,
 }: OrderCompletedTemplateProps): JSX.Element | "" => {
   const [paymentFinishShow, setPaymentFinishShow] = useState(true)
-  console.log("PaymentFinish", order)
   return !paymentFinishShow ? (
     ""
   ) : (

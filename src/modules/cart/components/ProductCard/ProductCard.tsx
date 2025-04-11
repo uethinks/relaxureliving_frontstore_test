@@ -7,7 +7,6 @@ export const ProductCard = (): JSX.Element | null => {
   const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
   useEffect(() => {
     getCart().then((cart) => {
-      console.log("cart", cart)
       setCart(cart)
     })
   }, [])

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { BuyNowButton } from "./components/BuyNowButton"
 import { PergulaSizeSelector } from "./components/PergulaSizeSelector"
 import { ImgContent } from "./components/ImgContent"
@@ -46,11 +46,17 @@ export const ProductItem = ({
   const [selectedAccessoriesGlassdoor, setSelectedAccessoriesGlassdoor] =
     useState<accessoryGlassdoorVariant>({ productVarant: null, quantity: 0 })
   const [activeTab, setActiveTab] = useState("Description")
-
+  const [pergolaQuantity, setPergolaQuantity] = useState(1)
+  const [totalPrice, setTotalPrice] = useState(0)
   const handleVariantChange = (variant: StoreProductVariant | undefined) => {
     setSelectedVariant(variant)
   }
-
+  useEffect(() => {
+    setTotalPrice(
+      pergolaQuantity *
+        (selectedVariant?.calculated_price?.calculated_amount ?? 0)
+    )
+  }, [pergolaQuantity, selectedVariant])
   const handleAccessoryToggle = ({
     type,
     productVarant,
@@ -69,20 +75,6 @@ export const ProductItem = ({
     }
   }
 
-  const tabContent = {
-    Description: {
-      image: "https://c.animaapp.com/ZNF68wCJ/img/img@4x.jpg",
-      text: "This modern pergola is the perfect blend of sleek design and durability, crafted from premium materials to ensure both style and longevity. Featuring a robust aluminum frame, it is powder-coated for superior resistance to weathering, corrosion, and fading, making it ideal for year-round outdoor use. The elegant, minimalist design is complemented by clean lines and a streamlined structure, adding a touch of sophistication to any garden, patio, or backyard.",
-    },
-    Assembly: {
-      image: "https://c.animaapp.com/ZNF68wCJ/img/img@4x.jpg",
-      text: "Assembly of this pergola is straightforward and can typically be completed in a few hours. The kit comes with all necessary hardware and detailed instructions. We recommend having at least two people for the assembly process for safety and efficiency.",
-    },
-    Shipping: {
-      image: "https://c.animaapp.com/ZNF68wCJ/img/img@4x.jpg",
-      text: "We offer free shipping on all pergola orders within the continental United States. Delivery typically takes 2-3 weeks from the order date. International shipping is available at an additional cost, with delivery times varying by location.",
-    },
-  }
   const router = useRouter()
   // add the selected variant to the cart
   const handleBuyNow = async () => {
@@ -94,8 +86,6 @@ export const ProductItem = ({
         buyGlassdoor(),
       ])
 
-      console.log("All items added to cart:", results)
-
       // 这里可以添加后续逻辑，比如导航到购物车页面
       router.push("/cart")
     } catch (error) {
@@ -103,18 +93,17 @@ export const ProductItem = ({
     }
   }
   const buyPergula = async () => {
-    console.log("selectedVariant", selectedVariant)
+    console.log("selectedVariant", selectedVariant, pergolaQuantity)
     if (!selectedVariant?.id) return null
 
     return await addToCart({
       variantId: selectedVariant.id,
-      quantity: 1,
+      quantity: pergolaQuantity,
       countryCode: "us",
     })
   }
 
   const buyHeater = async () => {
-    console.log("selectedAccessoriesHeater", selectedAccessoriesHeater)
     if (
       !selectedAccessoriesHeater?.productVarant?.id ||
       !selectedAccessoriesHeater.quantity
@@ -129,7 +118,6 @@ export const ProductItem = ({
   }
 
   const buyShades = async () => {
-    console.log("selectedAccessoriesShades", selectedAccessoriesShades)
     if (
       !selectedAccessoriesShades?.productVarant?.id ||
       !selectedAccessoriesShades.quantity
@@ -144,7 +132,6 @@ export const ProductItem = ({
   }
 
   const buyGlassdoor = async () => {
-    console.log("selectedAccessoriesGlassdoor", selectedAccessoriesGlassdoor)
     if (
       !selectedAccessoriesGlassdoor?.productVarant?.id ||
       !selectedAccessoriesGlassdoor.quantity
@@ -167,7 +154,11 @@ export const ProductItem = ({
             <div className="relative self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
               {product.title}
             </div>
-
+            <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+              <p className="w-full text-[#69727a] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+                {product.subtitle}
+              </p>
+            </div>
             <p className="w-full text-[#69727a] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
               {product.description}
             </p>
@@ -209,18 +200,39 @@ export const ProductItem = ({
               <div className="absolute w-full h-full top-0 left-0 bg-[#f3f3f3] rounded-[20px] overflow-hidden shadow-shadow-relaxure-button opacity-90"></div>
 
               <div className="flex w-full flex-col items-start gap-4 relative flex-[0_0_auto] p-5">
-                <div className="flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
-                  <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                    <div className="flex items-center gap-2.5 relative flex-1 grow">
-                      <div className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[22px] tracking-[0] leading-[33px]">
-                        {product.subtitle}
+                <div className="flex w-full flex-col items-start gap-2.5 relative flex-[0_0_auto]">
+                  <div className="flex justify-between items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+                    <div className="flex items-center justify-center gap-2.5 px-2.5 py-0 relative flex-[0_0_auto]">
+                      <div className="w-fit [font-family:'Montserrat',Helvetica] font-semibold text-[22px] leading-[30.8px] whitespace-nowrap relative mt-[-1.00px] text-[#343a40] tracking-[0]">
+                        ${totalPrice}
                       </div>
                     </div>
-
-                    <div className="inline-flex items-center justify-center gap-2.5 px-2.5 py-0 relative flex-[0_0_auto]">
-                      <div className="w-fit [font-family:'Montserrat',Helvetica] font-semibold text-[22px] leading-[30.8px] whitespace-nowrap relative mt-[-1.00px] text-[#343a40] tracking-[0]">
-                        ${selectedVariant?.calculated_price?.calculated_amount}
+                    <div className="flex items-center gap-2.5 relative">
+                      <button
+                        onClick={() =>
+                          setPergolaQuantity(
+                            pergolaQuantity == 1
+                              ? pergolaQuantity
+                              : pergolaQuantity - 1
+                          )
+                        }
+                        className="w-6 h-6 bg-white rounded-full border border-[#f3f3f3] flex items-center justify-center"
+                      >
+                        <span className="text-[#343a40] text-lg -mt-0.5">
+                          -
+                        </span>
+                      </button>
+                      <div className="text-[#343a40] text-lg font-medium">
+                        {pergolaQuantity}
                       </div>
+                      <button
+                        onClick={() => setPergolaQuantity(pergolaQuantity + 1)}
+                        className="w-6 h-6 bg-white rounded-full border border-[#f3f3f3] flex items-center justify-center"
+                      >
+                        <span className="text-[#343a40] text-lg -mt-0.5">
+                          +
+                        </span>
+                      </button>
                     </div>
                   </div>
                 </div>

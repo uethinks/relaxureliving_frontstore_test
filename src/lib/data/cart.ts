@@ -228,7 +228,6 @@ export async function setShippingMethod({
   const headers = {
     ...(await getAuthHeaders()),
   }
-  console.log("addShippingMethod", cartId, shippingMethodId)
   return await sdk.store.cart
     .addShippingMethod(cartId, { option_id: shippingMethodId }, {}, headers)
     .then(async (res) => {
@@ -419,7 +418,6 @@ export async function placeOrder(cartId?: string) {
     removeCartId()
     redirect(`/${countryCode}/order/${cartRes?.order.id}/confirmed`)
   }
-  console.log("complete", cartRes)
   return cartRes
 }
 

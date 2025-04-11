@@ -7,7 +7,6 @@ export const ShadesCard = (): JSX.Element | null => {
   const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
   useEffect(() => {
     getCart().then((cart) => {
-      console.log("cart", cart)
       setCart(cart)
     })
   }, [])
@@ -44,7 +43,6 @@ export const ShadesCard = (): JSX.Element | null => {
     setQuantity(shadesInCart?.quantity ?? 1)
   }, [cart])
 
-  console.log("shades", shades, cart)
   return !shades ? null : (
     <div className="flex h-[190px] items-center gap-5 p-5 rounded-[20px] border border-solid border-[#69727a]">
       <div

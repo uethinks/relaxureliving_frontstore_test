@@ -73,7 +73,6 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const getCart = async () => {
     const cartData = await retrieveCart()
-    console.log("getCart", cartData)
     setCart(cartData)
     return cartData
   }

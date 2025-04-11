@@ -90,9 +90,7 @@ interface PageProps {
 }
 
 export default async function TermsPage({ params }: PageProps) {
-  console.log("TermsPage params:", params)
   const type = params.type
-  console.log("TermsPage type:", type)
 
   // 验证条款类型是否有效
   if (!termsTypes[type]) {
@@ -101,7 +99,6 @@ export default async function TermsPage({ params }: PageProps) {
 
   const { title } = termsTypes[type]
   const termsData = await getAllTerms()
-  console.log("TermsPage termsData:", termsData)
   const content = termsData[type]?.data?.content
 
   if (!content) {

@@ -28,7 +28,6 @@ export const SizeSelector = (): JSX.Element | null => {
     const currentPergola =
       cart?.items?.find((item) => item.product_type === "Pergula") || null
     setCurrentPergola(currentPergola)
-    console.log("cart", cart)
   }, [cart])
 
   //set the default size and color
@@ -77,7 +76,6 @@ export const SizeSelector = (): JSX.Element | null => {
   )
   const removePergolaVariantByLineId = async () => {
     const lineId = currentPergola?.id ?? ""
-    console.log("removePergolaVariantByLineId", currentPergola?.variant_id)
     await removeVariant(lineId)
   }
 
@@ -93,13 +91,6 @@ export const SizeSelector = (): JSX.Element | null => {
         variant.options?.find((option) => option.value === size) &&
         variant.options?.find((option) => option.value === color)
     )
-    console.log(
-      "getPergolaVariantIdBySizeAndColor",
-      size,
-      color,
-      variant?.options,
-      product?.variants
-    )
     return variant?.id
   }
 
@@ -109,7 +100,6 @@ export const SizeSelector = (): JSX.Element | null => {
   const selecteSizeHandler = async (size: string) => {
     await removePergolaVariantByLineId()
     const variantId = getPergolaVariantIdBySizeAndColor(size, selectedColor)
-    console.log("selecteSizeHandler", variantId)
     if (variantId) {
       await addVariant({
         variantId: variantId,

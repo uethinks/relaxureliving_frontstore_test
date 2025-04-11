@@ -42,7 +42,6 @@ export const PergulaSizeSelector = ({
 
   const getVariant = useCallback(() => {
     return product.variants?.find((variant) => {
-      console.log("variant", variant?.options)
       const matchingSize = variant?.options?.find(
         (option) =>
           option.option?.title === "Size" && option.value === selectedSize.value
@@ -58,19 +57,14 @@ export const PergulaSizeSelector = ({
 
   const handleSizeClick = (size: StoreProductOptionValue) => {
     setSelectedSize(size)
-    // const variant = getVariant()
-    // console.log("variant", variant)
-    // onVariantChange(variant)
   }
   useEffect(() => {
     const variant = getVariant()
     onVariantChange(variant)
-    console.log("onVariantChange", variant, selectedSize, selectedColor)
   }, [selectedSize, selectedColor])
 
   const handleColorClick = (color: StoreProductOptionValue) => {
     setSelectedColor(color)
-    console.log("selectedColor", selectedColor)
   }
 
   return (

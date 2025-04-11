@@ -7,7 +7,6 @@ export const OurBlog = ({
 }: {
   homepageBlog: HomepageBlog | null
 }): JSX.Element => {
-  console.log("homepageBlog", homepageBlog)
   return (
     <div className="flex flex-col lg:flex-row w-full items-center gap-[98px] px-[47px] py-0 relative flex-[0_0_auto] ml-[-47.00px] mr-[-47.00px]">
       {/* Desktop Layout */}

@@ -67,7 +67,6 @@ export const Homepage = (): JSX.Element => {
   const [homepageBlog, setHomepageBlog] = useState<HomepageBlog | null>(null)
   useEffect(() => {
     getHomePage().then(({ data }) => {
-      console.log("getHomePage", data)
       setHero(data.HomepageHero)
       setPergola(data.OurPergola)
       setFaq(data.FAQ)
