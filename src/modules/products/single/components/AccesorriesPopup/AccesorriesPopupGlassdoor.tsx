@@ -1,5 +1,10 @@
-import { StoreProduct, StoreProductVariant } from "@medusajs/types"
-import { useState } from "react"
+import {
+  StoreProduct,
+  StoreProductOption,
+  StoreProductOptionValue,
+  StoreProductVariant,
+} from "@medusajs/types"
+import { useCallback, useEffect, useState } from "react"
 import { AddAccessories } from "./AddAccessories"
 export const AccesorriesPopupGlassdoor = ({
   accessoryGlassdoor,
@@ -35,29 +40,60 @@ export const AccesorriesPopupGlassdoor = ({
     )
   const [currentGlassdoorVarantQuantity, setCurrentGlassdoorVarantQuantity] =
     useState(selectedGlassdoorVariant.quantity)
+
+  const glassdoorSizes: StoreProductOption | undefined =
+    accessoryGlassdoor?.options?.find((option) => option.title === "Size")
+  const glassdoorColors: StoreProductOption | undefined =
+    accessoryGlassdoor?.options?.find((option) => option.title === "Color")
+
+  const defaultSize: StoreProductOptionValue = glassdoorSizes?.values?.[0] || {
+    id: "",
+    value: "",
+  }
+  const defaultColor: StoreProductOptionValue = glassdoorColors
+    ?.values?.[0] || {
+    id: "",
+    value: "",
+  }
+
+  const [selectedSize, setSelectedSize] =
+    useState<StoreProductOptionValue>(defaultSize)
+  const [selectedColor, setSelectedColor] =
+    useState<StoreProductOptionValue>(defaultColor)
+
+  const getVariant = useCallback(() => {
+    return accessoryGlassdoor?.variants?.find((variant) => {
+      const matchingSize = variant?.options?.find(
+        (option) =>
+          option.option?.title === "Size" && option.value === selectedSize.value
+      )
+      const matchingColor = variant?.options?.find(
+        (option) =>
+          option.option?.title === "Color" &&
+          option.value === selectedColor.value
+      )
+      return matchingSize && matchingColor
+    })
+  }, [accessoryGlassdoor, selectedSize, selectedColor])
+
+  const handleSizeClick = (size: StoreProductOptionValue) => {
+    setSelectedSize(size)
+  }
+
+  const handleColorClick = (color: StoreProductOptionValue) => {
+    setSelectedColor(color)
+  }
+
+  useEffect(() => {
+    const variant = getVariant()
+    if (variant) {
+      setCurrentGlassdoorVarant(variant)
+    }
+  }, [selectedSize, selectedColor, getVariant])
+  console.log("accessoryGlassdoor?.variants", glassdoorSizes, glassdoorColors)
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
-        <button
-          onClick={closePopupGlassdoor}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-
         <div className="flex items-start gap-[30px]">
           <div
             className={`relative w-[466px] h-[467px] rounded-[20px] bg-cover bg-[50%_50%]`}
@@ -75,10 +111,10 @@ export const AccesorriesPopupGlassdoor = ({
               </div>
 
               <div className="flex flex-col items-start gap-2.5 py-2.5 self-stretch w-full">
-                <h2 className="self-stretch font-merriweather text-[#343a40] text-[28px] font-bold leading-[39.2px]">
-                  {accessoryGlassdoor?.title}
-                </h2>
-                <div className="w-full flex justify-between items-center gap-2">
+                <div className="flex items-center justify-between w-full">
+                  <h2 className="self-stretch font-merriweather text-[#343a40] text-[28px] font-bold leading-[39.2px]">
+                    {accessoryGlassdoor?.title}
+                  </h2>
                   <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
                     {currentGlassdoorVarant?.calculated_price
                       ?.calculated_amount && currentGlassdoorVarantQuantity
@@ -88,37 +124,37 @@ export const AccesorriesPopupGlassdoor = ({
                           currentGlassdoorVarantQuantity
                       : ""}
                   </div>
-                  <div className="relative h-12">
-                    <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
-                      <div className="inline-flex items-center gap-[18px] relative">
-                        {accessoryGlassdoor?.variants?.map((varant) => (
-                          <button
-                            key={varant.id}
-                            className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer ${
-                              currentGlassdoorVarant?.id === varant.id
-                                ? "bg-[#dce7f8] rounded-[20px]"
-                                : ""
-                            }`}
-                            onClick={() => setCurrentGlassdoorVarant(varant)}
-                          >
-                            <div
-                              className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap ${
-                                currentGlassdoorVarant?.id === varant.id
-                                  ? "text-[#072f6c]"
-                                  : "text-[#69727a]"
-                              }`}
-                            >
-                              {varant.title}
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
-                <div className="self-stretch text-[#343a40] text-lg leading-[25.2px] font-montserrat font-medium mt-2">
-                  Description
+                <div className="relative h-12 flex flex-row items-center gap-2.5">
+                  <div className="flex flex-row items-center gap-2.5 relative">
+                    <p>Size:</p>
+                  </div>
+                  <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
+                    <div className="inline-flex items-center gap-[18px] relative">
+                      {glassdoorSizes?.values?.map((size) => (
+                        <button
+                          key={size.id}
+                          className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer ${
+                            selectedSize === size
+                              ? "bg-[#dce7f8] rounded-[20px]"
+                              : ""
+                          }`}
+                          onClick={() => handleSizeClick(size)}
+                        >
+                          <div
+                            className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap ${
+                              selectedSize === size
+                                ? "text-[#072f6c]"
+                                : "text-[#69727a]"
+                            }`}
+                          >
+                            {size.value}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <p className="self-stretch text-[#68717a] leading-[22.4px] font-montserrat text-base font-medium mt-2">
@@ -128,7 +164,7 @@ export const AccesorriesPopupGlassdoor = ({
                 <div className="flex items-center gap-2 self-stretch w-full mt-4">
                   <div className="flex items-center justify-center gap-2.5 py-2.5">
                     <p className="text-[#69727a] text-lg leading-[27px] whitespace-nowrap font-montserrat font-medium">
-                      How many heaters do you need:
+                      How many glass doors do you need:
                     </p>
                   </div>
 
@@ -161,14 +197,21 @@ export const AccesorriesPopupGlassdoor = ({
                   Download specs
                 </span>
               </button>
-
-              <AddAccessories
-                buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold"
-                className="!w-[235px]"
-                property1="primary-button-l"
-                text="Add accesory"
-                addAccessory={addAccessoryGlassdoorHandler}
-              />
+              <div className="flex flex-row items-center gap-2.5 relative">
+                <button
+                  onClick={closePopupGlassdoor}
+                  className=" border text-gray-500 hover:text-gray-700 border-gray-500 rounded-[10px] px-4 py-2"
+                >
+                  Close
+                </button>
+                <AddAccessories
+                  buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold"
+                  className="!w-[235px]"
+                  property1="primary-button-l"
+                  text="Add accesory"
+                  addAccessory={addAccessoryGlassdoorHandler}
+                />
+              </div>
             </div>
           </div>
         </div>
