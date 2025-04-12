@@ -146,9 +146,9 @@ export const ProductItem = ({
   }
 
   return (
-    <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full overflow-hidden">
+    <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full overflow-hidden lg:block lg:h-[100vh] lg:overflow-y-scroll">
       <NavBarWrapper isFixed={false} />
-      <div className="flex flex-col justify-between items-start bg-[#ffffff] w-full md:w-full lg:w-[90%] 2xl:w-[1512px] relative [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] mb-10">
+      <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full md:w-full lg:w-[90%] 2xl:w-[1512px] relative [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] mb-10">
         <div className="flex flex-col w-full lg:w-[65%] items-center gap-5 px-4">
           <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
             <div className="relative mb-2 self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
@@ -256,7 +256,7 @@ export const ProductItem = ({
               {activeTab === "Description" && <Description />}
             </div>
           </div>
-          <div className="hidden lg:flex w-full lg:w-[35%] justify-end items-start mt-4 gap-2.5 px-2.5 sticky top-0 right-0">
+          <div className="hidden lg:flex w-full lg:w-[35%] justify-end items-start mt-4 gap-2.5 px-2.5 sticky top-10 right-0">
             <div className="flex flex-col w-full items-start gap-2.5 p-5 relative bg-[#f3f3f3] rounded-[20px] overflow-y-auto">
               <div className="flex w-full flex-col items-start gap-4 relative flex-[0_0_auto]">
                 <div className="flex w-full flex-col items-start gap-2.5 relative flex-[0_0_auto]">

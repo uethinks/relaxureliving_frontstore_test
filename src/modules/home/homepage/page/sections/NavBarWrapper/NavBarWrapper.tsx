@@ -11,7 +11,7 @@ export const NavBarWrapper = ({
 
   return (
     <div
-      className={`w-full lg:w-[780px] xl:w-[900px] 2xl:w-[1205px] inline-flex flex-col items-start gap-2.5 px-0 py-4 lg:py-10  ${
+      className={`w-full lg:mx-auto lg:w-[780px] xl:w-[900px] 2xl:w-[1205px] flex flex-col items-start gap-2.5 px-0 py-4 lg:py-10  ${
         isFixed ? "lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2" : ""
       } z-50`}
     >

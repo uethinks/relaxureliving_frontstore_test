@@ -2,14 +2,14 @@ import React from "react"
 
 export const ImageOnLeft = (): JSX.Element => {
   return (
-    <div className="w-full inline-flex flex-col items-center gap-10 relative">
+    <div className="w-full inline-flex flex-col items-center gap-10 relative mt-10">
       <div className="flex w-full items-center justify-center gap-2.5 relative">
         <p className="relative w-full font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
           Your outdoor space, comfortable and usable in any season, any weather,
           any time.
         </p>
       </div>
-      <div className="flex flex-col lg:flex-row w-full items-center gap-[100px] relative px-4">
+      <div className="flex flex-col lg:flex-row w-full items-center gap-10 relative px-4">
         <div className="flex flex-col w-full lg:w-1/2 items-center justify-center gap-5 relative mr-[-6.00px]">
           <img
             className="relative h-full w-full object-cover rounded-[20px]"
