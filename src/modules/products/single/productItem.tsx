@@ -18,18 +18,14 @@ import {
   AccessoriesCards,
 } from "./components/LandingPage"
 import { Assembly, Description } from "./components/PergolaInformations"
-type accessoryHeaterVirant = {
-  productVarant: StoreProductVariant | null
-  quantity: number
-}
-type accessoryShadesVariant = {
-  productVarant: StoreProductVariant | null
-  quantity: number
-}
-type accessoryGlassdoorVariant = {
-  productVarant: StoreProductVariant | null
-  quantity: number
-}
+import {
+  PergolaSize,
+  selectedProducts,
+  selectedProductVariant,
+} from "types/global"
+type accessoryHeaterVirant = selectedProductVariant
+type accessoryShadesVariant = selectedProductVariant
+type accessoryGlassdoorVariant = selectedProductVariant
 
 export const ProductItem = ({
   product,
@@ -39,12 +35,22 @@ export const ProductItem = ({
   accessories: StoreProduct[]
 }): JSX.Element => {
   const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
+  const [pergolaSize, setPergolaSize] = useState<PergolaSize>({
+    width: 0,
+    length: 0,
+  })
+  useEffect(() => {
+    setPergolaSize({
+      width: selectedVariant?.width ?? 0,
+      length: selectedVariant?.length ?? 0,
+    })
+  }, [selectedVariant])
   const [selectedAccessoriesHeater, setSelectedAccessoriesHeater] =
-    useState<accessoryHeaterVirant>({ productVarant: null, quantity: 0 })
+    useState<selectedProducts>([])
   const [selectedAccessoriesShades, setSelectedAccessoriesShades] =
-    useState<accessoryShadesVariant>({ productVarant: null, quantity: 0 })
+    useState<selectedProducts>([])
   const [selectedAccessoriesGlassdoor, setSelectedAccessoriesGlassdoor] =
-    useState<accessoryGlassdoorVariant>({ productVarant: null, quantity: 0 })
+    useState<selectedProducts>([])
   const [activeTab, setActiveTab] = useState("Description")
   const [pergolaQuantity, setPergolaQuantity] = useState(1)
   const [totalPrice, setTotalPrice] = useState(0)
@@ -59,19 +65,17 @@ export const ProductItem = ({
   }, [pergolaQuantity, selectedVariant])
   const handleAccessoryToggle = ({
     type,
-    productVarant,
-    quantity,
+    selectedProducts,
   }: {
     type: string
-    productVarant: StoreProductVariant | null
-    quantity: number
+    selectedProducts: selectedProducts
   }) => {
     if (type === "Heating") {
-      setSelectedAccessoriesHeater({ productVarant, quantity })
+      setSelectedAccessoriesHeater(selectedProducts)
     } else if (type === "Shades") {
-      setSelectedAccessoriesShades({ productVarant, quantity })
+      setSelectedAccessoriesShades(selectedProducts)
     } else if (type === "Glass door") {
-      setSelectedAccessoriesGlassdoor({ productVarant, quantity })
+      setSelectedAccessoriesGlassdoor(selectedProducts)
     }
   }
 
@@ -93,7 +97,6 @@ export const ProductItem = ({
     }
   }
   const buyPergula = async () => {
-    console.log("selectedVariant", selectedVariant, pergolaQuantity)
     if (!selectedVariant?.id) return null
 
     return await addToCart({
@@ -104,44 +107,38 @@ export const ProductItem = ({
   }
 
   const buyHeater = async () => {
-    if (
-      !selectedAccessoriesHeater?.productVarant?.id ||
-      !selectedAccessoriesHeater.quantity
-    )
-      return null
-
-    return await addToCart({
-      variantId: selectedAccessoriesHeater.productVarant.id,
-      quantity: selectedAccessoriesHeater.quantity,
-      countryCode: "us",
+    if (selectedAccessoriesHeater.length === 0) return null
+    selectedAccessoriesHeater.forEach(async (item) => {
+      if (!item.productVarant || !item.quantity) return null
+      addToCart({
+        variantId: item.productVarant.id,
+        quantity: item.quantity,
+        countryCode: "us",
+      })
     })
   }
 
   const buyShades = async () => {
-    if (
-      !selectedAccessoriesShades?.productVarant?.id ||
-      !selectedAccessoriesShades.quantity
-    )
-      return null
-
-    return await addToCart({
-      variantId: selectedAccessoriesShades.productVarant.id,
-      quantity: selectedAccessoriesShades.quantity,
-      countryCode: "us",
+    if (selectedAccessoriesShades.length === 0) return null
+    selectedAccessoriesShades.forEach(async (item) => {
+      if (!item.productVarant || !item.quantity) return null
+      addToCart({
+        variantId: item.productVarant.id,
+        quantity: item.quantity,
+        countryCode: "us",
+      })
     })
   }
 
   const buyGlassdoor = async () => {
-    if (
-      !selectedAccessoriesGlassdoor?.productVarant?.id ||
-      !selectedAccessoriesGlassdoor.quantity
-    )
-      return null
-
-    return await addToCart({
-      variantId: selectedAccessoriesGlassdoor.productVarant.id,
-      quantity: selectedAccessoriesGlassdoor.quantity,
-      countryCode: "us",
+    if (selectedAccessoriesGlassdoor.length === 0) return null
+    selectedAccessoriesGlassdoor.forEach(async (item) => {
+      if (!item.productVarant || !item.quantity) return null
+      addToCart({
+        variantId: item.productVarant.id,
+        quantity: item.quantity,
+        countryCode: "us",
+      })
     })
   }
 
@@ -221,6 +218,7 @@ export const ProductItem = ({
                     selectedHeaterVariant={selectedAccessoriesHeater}
                     selectedShadesVariant={selectedAccessoriesShades}
                     selectedGlassdoorVariant={selectedAccessoriesGlassdoor}
+                    pergolaSize={pergolaSize}
                   />
                 </div>
                 <BuyNowButton
@@ -304,6 +302,7 @@ export const ProductItem = ({
                     onVariantChange={handleVariantChange}
                   />
                   <AccesorriesSelector
+                    pergolaSize={pergolaSize}
                     onAccessoryChange={handleAccessoryToggle}
                     accessories={accessories}
                     selectedHeaterVariant={selectedAccessoriesHeater}

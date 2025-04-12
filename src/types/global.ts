@@ -1,4 +1,4 @@
-import { StorePrice } from "@medusajs/types"
+import { StorePrice, StoreProductVariant } from "@medusajs/types"
 
 export type FeaturedProduct = {
   id: string
@@ -105,3 +105,13 @@ export type HomepageBlog = {
   articles: Blog[]
 } 
 
+export type PergolaSize = {
+  width: number
+  length: number
+}
+
+export type selectedProductVariant = {
+  productVarant: StoreProductVariant | null
+  quantity: number
+}
+export type selectedProducts = selectedProductVariant[]

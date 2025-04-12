@@ -2,65 +2,57 @@ import {
   StoreProduct,
   StoreProductOption,
   StoreProductOptionValue,
-  StoreProductVariant,
 } from "@medusajs/types"
 import { useCallback, useEffect, useState } from "react"
 import { AddAccessories } from "./AddAccessories"
+import ShadesSideSelector from "./ShadesSideSelector"
+import { PergolaSize, selectedProducts } from "types/global"
 export const AccesorriesPopupShades = ({
   accessoryShades,
   closePopup,
   addAccessoryShades,
   selectedShadesVariant,
+  pergolaSize,
 }: {
   accessoryShades: StoreProduct | null
   closePopup: (type: string) => void
-  addAccessoryShades: (
-    selectedAccessoryShades: StoreProductVariant | null,
-    selectedAccessoryShadesQuantity: number
-  ) => void
-  selectedShadesVariant: {
-    productVarant: StoreProductVariant | null
-    quantity: number
-  }
+  addAccessoryShades: (selectedProducts: selectedProducts) => void
+  selectedShadesVariant: selectedProducts
+  pergolaSize: PergolaSize
 }): JSX.Element => {
   const closePopupShades = () => {
     closePopup("Shades")
   }
   const productImage = accessoryShades?.images?.[0].url
   const addAccessoryShadesHandler = () => {
-    addAccessoryShades(currentShadesVarant, currentShadesVarantQuantity)
+    addAccessoryShades(selectedShades)
     closePopupShades()
   }
-  const [currentShadesVarant, setCurrentShadesVarant] =
-    useState<StoreProductVariant | null>(
-      selectedShadesVariant.productVarant || null
-    )
-  const [currentShadesVarantQuantity, setCurrentShadesVarantQuantity] =
-    useState(selectedShadesVariant.quantity)
-  const shadeSizes: StoreProductOption | undefined =
-    accessoryShades?.options?.find((option) => option.title === "Size")
+  const [selectedShades, setSelectedShades] = useState<selectedProducts>(
+    selectedShadesVariant
+  )
+
   const shadesColors: StoreProductOption | undefined =
     accessoryShades?.options?.find((option) => option.title === "Color")
 
-  const defaultSize: StoreProductOptionValue = shadeSizes?.values?.[0] || {
-    id: "",
-    value: "",
-  }
   const defaultColor: StoreProductOptionValue = shadesColors?.values?.[0] || {
     id: "",
     value: "",
   }
 
-  const [selectedSize, setSelectedSize] =
-    useState<StoreProductOptionValue>(defaultSize)
+  const [selectedSize, setSelectedSize] = useState<string[]>()
   const [selectedColor, setSelectedColor] =
     useState<StoreProductOptionValue>(defaultColor)
+  const [selectedSides, setSelectedSides] = useState<string[]>([])
 
   const getVariant = useCallback(() => {
-    return accessoryShades?.variants?.find((variant) => {
+    return accessoryShades?.variants?.filter((variant) => {
       const matchingSize = variant?.options?.find(
         (option) =>
-          option.option?.title === "Size" && option.value === selectedSize.value
+          option.option?.title === "Size" &&
+          selectedSize?.find((size) =>
+            size.includes(variant?.length?.toString() ?? "")
+          )
       )
       const matchingColor = variant?.options?.find(
         (option) =>
@@ -71,29 +63,100 @@ export const AccesorriesPopupShades = ({
     })
   }, [accessoryShades, selectedSize, selectedColor])
 
-  const handleSizeClick = (size: StoreProductOptionValue) => {
-    setSelectedSize(size)
-  }
   useEffect(() => {
-    const variant = getVariant()
-    if (variant) {
-      setCurrentShadesVarant(variant)
-    }
+    const variants = getVariant()
+    setSelectedShades(
+      variants?.map((variant) => ({
+        productVarant: variant,
+        quantity:
+          selectedSize?.filter((size) =>
+            size.includes(variant?.length?.toString() ?? "")
+          ).length ?? 0,
+      })) || []
+    )
   }, [selectedSize, selectedColor])
 
   const handleColorClick = (color: StoreProductOptionValue) => {
     setSelectedColor(color)
   }
+
+  /**
+   * 根据sides选择对应的size
+   * @param sides
+   */
+  const handleSideSelect = (sides: string[]) => {
+    setSelectedSides(sides)
+    setSelectedSize(
+      sides.map((side) => {
+        if (side === "left" || side === "right") {
+          return shortSideLength
+        } else {
+          return longSideLength
+        }
+      })
+    )
+  }
+  const [shortSideLength, setShortSideLength] = useState<string>("")
+  const [longSideLength, setLongSideLength] = useState<string>("")
+  useEffect(() => {
+    setShortSideLength(pergolaSize.width.toString() + '"')
+    setLongSideLength(pergolaSize.length.toString() + '"')
+  }, [pergolaSize])
+
+  const priceDefault = selectedShades.reduce((acc, shade) => {
+    return (
+      acc +
+      (shade.productVarant?.calculated_price?.calculated_amount ?? 0) *
+        shade.quantity
+    )
+  }, 0)
+  const [totalPrice, setTotalPrice] = useState<number>(priceDefault)
+  useEffect(() => {
+    setTotalPrice(
+      selectedShades.reduce((acc, shade) => {
+        return (
+          acc +
+          (shade.productVarant?.calculated_price?.calculated_amount ?? 0) *
+            shade.quantity
+        )
+      }, 0)
+    )
+  }, [selectedShades])
+
+  useEffect(() => {
+    /**
+     * 根据selectedShades计算对应的sides
+     */
+    const numOfShortSide = selectedShades.filter((shade) => {
+      return shade.productVarant?.width === pergolaSize.width
+    }).length
+    const numOfLongSide = selectedShades.filter((shade) => {
+      return shade.productVarant?.length === pergolaSize.length
+    }).length
+    const slides = []
+    if (numOfShortSide === 1) {
+      slides.push("left")
+    } else if (numOfShortSide === 2) {
+      slides.push("left", "right")
+    }
+    if (numOfLongSide === 1) {
+      slides.push("right")
+    } else if (numOfLongSide === 2) {
+      slides.push("left", "right")
+    }
+    setSelectedSides(slides)
+  }, [])
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
-        <div className="flex items-start gap-[30px]">
+        <div className="flex flex-col lg:flex-row items-start gap-[30px]">
           <div
-            className={`relative w-[466px] h-[467px] rounded-[20px] bg-cover bg-[50%_50%]`}
+            className={`relative w-full lg:w-1/2 aspect-square rounded-[20px] bg-cover bg-[50%_50%]`}
             style={{ backgroundImage: `url(${productImage})` }}
           />
 
-          <div className="flex flex-col w-[733px] items-start gap-10">
+          <div className="flex flex-col w-full lg:w-1/2 items-start gap-10">
             <div className="flex flex-col items-start gap-5 self-stretch w-full">
               <div className="flex flex-col items-start gap-2.5 py-2.5 self-stretch w-full">
                 <div className="flex items-center justify-between w-full">
@@ -101,18 +164,12 @@ export const AccesorriesPopupShades = ({
                     {accessoryShades?.title}
                   </h2>
                   <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                    {currentShadesVarant?.calculated_price?.calculated_amount &&
-                    currentShadesVarantQuantity
-                      ? "$" +
-                        currentShadesVarant?.calculated_price
-                          ?.calculated_amount *
-                          currentShadesVarantQuantity
-                      : ""}
+                    {totalPrice ? "$" + totalPrice : ""}
                   </div>
                 </div>
                 <div className="relative h-12">
-                  <div className="flex px-2 h-12 gap-5">
-                    <div className="flex flex-row items-center gap-2.5 relative">
+                  <div className="flex h-12 gap-5">
+                    <div className="flex flex-row items-center gap-2.5 relative text-lg font-medium ">
                       <p>Color:</p>
                     </div>
                     <div className="inline-flex items-center gap-[18px] relative">
@@ -142,60 +199,33 @@ export const AccesorriesPopupShades = ({
                   </div>
                 </div>
                 <div className="relative h-12 flex flex-row items-center gap-2.5">
-                  <div className="flex flex-row items-center gap-2.5 relative">
-                    <p>Size:</p>
+                  <div className="flex flex-row items-center gap-2.5 relative text-lg font-medium ">
+                    <p>Pergola Size:</p>
                   </div>
-                  <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
+                  <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px]">
                     <div className="inline-flex items-center gap-[18px] relative">
-                      {shadeSizes?.values?.map((size) => (
-                        <button
-                          key={size.id}
-                          className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer ${
-                            selectedSize === size
-                              ? "bg-[#dce7f8] rounded-[20px]"
-                              : ""
-                          }`}
-                          onClick={() => handleSizeClick(size)}
+                      <button
+                        className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer bg-[#dce7f8] rounded-[20px]`}
+                      >
+                        <div
+                          className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#69727a]`}
                         >
-                          <div
-                            className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap ${
-                              selectedSize === size
-                                ? "text-[#072f6c]"
-                                : "text-[#69727a]"
-                            }`}
-                          >
-                            {size.value}
-                          </div>
-                        </button>
-                      ))}
+                          {shortSideLength}x{longSideLength}
+                        </div>
+                      </button>
                     </div>
                   </div>
                 </div>
+                <ShadesSideSelector
+                  onSideSelect={handleSideSelect}
+                  selectedSides={selectedSides}
+                  shortSideLength={shortSideLength}
+                  longSideLength={longSideLength}
+                />
 
                 <p className="self-stretch text-[#68717a] leading-[22.4px] font-montserrat text-base font-medium mt-2">
                   {accessoryShades?.description}
                 </p>
-
-                <div className="flex items-center gap-2 self-stretch w-full mt-4">
-                  <div className="flex items-center justify-center gap-2.5 py-2.5">
-                    <p className="text-[#69727a] text-lg leading-[27px] whitespace-nowrap font-montserrat font-medium">
-                      How many shades do you need:
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <div className="w-14 h-10 flex items-center justify-center rounded-[10px] border border-solid border-[#a8a8a8]">
-                      <input
-                        value={currentShadesVarantQuantity}
-                        onChange={(e) =>
-                          setCurrentShadesVarantQuantity(Number(e.target.value))
-                        }
-                        type="text"
-                        className="text-[#69727a] leading-6 font-montserrat font-medium text-base focus:outline-none border-0 text-center w-full"
-                      ></input>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 

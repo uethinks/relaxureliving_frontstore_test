@@ -3,29 +3,24 @@ import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { AccesorriesPopupHeater } from "../AccesorriesPopup/AccesorriesPopupHeater"
 import { AccesorriesPopupShades } from "../AccesorriesPopup/AccesorriesPopupShades"
 import { AccesorriesPopupGlassdoor } from "../AccesorriesPopup/AccesorriesPopupGlassdoor"
+import {
+  PergolaSize,
+  selectedProductVariant,
+  selectedProducts,
+} from "types/global"
 interface Props {
   onAccessoryChange: ({
     type,
-    productVarant,
-    quantity,
+    selectedProducts,
   }: {
     type: string
-    productVarant: StoreProductVariant | null
-    quantity: number
+    selectedProducts: selectedProducts
   }) => void
   accessories: StoreProduct[]
-  selectedHeaterVariant: {
-    productVarant: StoreProductVariant | null
-    quantity: number
-  }
-  selectedShadesVariant: {
-    productVarant: StoreProductVariant | null
-    quantity: number
-  }
-  selectedGlassdoorVariant: {
-    productVarant: StoreProductVariant | null
-    quantity: number
-  }
+  selectedHeaterVariant: selectedProducts
+  selectedShadesVariant: selectedProducts
+  selectedGlassdoorVariant: selectedProducts
+  pergolaSize: PergolaSize
 }
 type accessoriesIcons = {
   name: string
@@ -39,6 +34,7 @@ export const AccesorriesSelector = ({
   selectedHeaterVariant,
   selectedShadesVariant,
   selectedGlassdoorVariant,
+  pergolaSize,
 }: Props): JSX.Element => {
   const [accessoriesIcons, setAccessoriesIcons] = useState<accessoriesIcons[]>([
     {
@@ -103,21 +99,17 @@ export const AccesorriesSelector = ({
       setIsOpenGlassdoor(false)
     }
   }
-  const addAccessoryHeater = (
-    selectedAccessoryHeater: StoreProductVariant | null,
-    selectedAccessoryHeaterQuantity: number
-  ) => {
+  const addAccessoryHeater = (selectedProducts: selectedProducts) => {
     onAccessoryChange({
       type: "Heating",
-      productVarant: selectedAccessoryHeater,
-      quantity: selectedAccessoryHeaterQuantity,
+      selectedProducts: selectedProducts,
     })
     setAccessoriesIcons(
       accessoriesIcons.map((item) => {
         if (
           item.name === "Heating" &&
-          (selectedAccessoryHeater === null ||
-            selectedAccessoryHeaterQuantity === 0)
+          (selectedProducts?.[0].productVarant === null ||
+            selectedProducts?.[0].quantity === 0)
         ) {
           item.selected = false
         }
@@ -125,21 +117,17 @@ export const AccesorriesSelector = ({
       })
     )
   }
-  const addAccessoryShades = (
-    selectedAccessoryShades: StoreProductVariant | null,
-    selectedAccessoryShadesQuantity: number
-  ) => {
+  const addAccessoryShades = (selectedProducts: selectedProducts) => {
     onAccessoryChange({
       type: "Shades",
-      productVarant: selectedAccessoryShades,
-      quantity: selectedAccessoryShadesQuantity,
+      selectedProducts: selectedProducts,
     })
     setAccessoriesIcons(
       accessoriesIcons.map((item) => {
         if (
           item.name === "Shades" &&
-          (selectedAccessoryShades === null ||
-            selectedAccessoryShadesQuantity === 0)
+          (selectedProducts?.[0].productVarant === null ||
+            selectedProducts?.[0].quantity === 0)
         ) {
           item.selected = false
         }
@@ -147,21 +135,17 @@ export const AccesorriesSelector = ({
       })
     )
   }
-  const addAccessoryGlassdoor = (
-    selectedAccessoryGlassdoor: StoreProductVariant | null,
-    selectedAccessoryGlassdoorQuantity: number
-  ) => {
+  const addAccessoryGlassdoor = (selectedProducts: selectedProducts) => {
     onAccessoryChange({
       type: "Glass door",
-      productVarant: selectedAccessoryGlassdoor,
-      quantity: selectedAccessoryGlassdoorQuantity,
+      selectedProducts: selectedProducts,
     })
     setAccessoriesIcons(
       accessoriesIcons.map((item) => {
         if (
           item.name === "Glass door" &&
-          (selectedAccessoryGlassdoor === null ||
-            selectedAccessoryGlassdoorQuantity === 0)
+          (selectedProducts?.[0].productVarant === null ||
+            selectedProducts?.[0].quantity === 0)
         ) {
           item.selected = false
         }
@@ -217,6 +201,7 @@ export const AccesorriesSelector = ({
           accessoryShades={selectedShade}
           addAccessoryShades={addAccessoryShades}
           selectedShadesVariant={selectedShadesVariant}
+          pergolaSize={pergolaSize}
         />
       )}
       {isOpenGlassdoor && (
@@ -225,6 +210,7 @@ export const AccesorriesSelector = ({
           accessoryGlassdoor={selectedGlassdoor}
           addAccessoryGlassdoor={addAccessoryGlassdoor}
           selectedGlassdoorVariant={selectedGlassdoorVariant}
+          pergolaSize={pergolaSize}
         />
       )}
     </div>

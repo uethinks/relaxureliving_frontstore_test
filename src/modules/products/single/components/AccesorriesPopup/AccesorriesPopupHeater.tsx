@@ -6,6 +6,8 @@ import {
 } from "@medusajs/types"
 import { useCallback, useEffect, useState } from "react"
 import { AddAccessories } from "./AddAccessories"
+import { selectedProducts } from "types/global"
+
 export const AccesorriesPopupHeater = ({
   accessoryHeater,
   closePopup,
@@ -14,29 +16,28 @@ export const AccesorriesPopupHeater = ({
 }: {
   accessoryHeater: StoreProduct | null
   closePopup: (type: string) => void
-  addAccessoryHeater: (
-    selectedAccessoryHeater: StoreProductVariant | null,
-    selectedAccessoryHeaterQuantity: number
-  ) => void
-  selectedHeaterVariant: {
-    productVarant: StoreProductVariant | null
-    quantity: number
-  }
+  addAccessoryHeater: (selectedProducts: selectedProducts) => void
+  selectedHeaterVariant: selectedProducts
 }): JSX.Element => {
   const closePopupHeater = () => {
     closePopup("Heating")
   }
   const productImage = accessoryHeater?.images?.[0].url
   const addAccessoryHeaterHandler = () => {
-    addAccessoryHeater(currentHeaterVarant, currentHeaterVarantQuantity)
+    const selectedHeater = {
+      productVarant: selectedHeaterVariant?.[0]?.productVarant,
+      quantity: selectedHeaterVariant?.[0]?.quantity,
+    }
+    addAccessoryHeater([selectedHeater])
     closePopupHeater()
   }
-  const [currentHeaterVarant, setCurrentHeaterVarant] =
+  const [selectedHeater, setSelectedHeater] =
     useState<StoreProductVariant | null>(
-      selectedHeaterVariant.productVarant || null
+      selectedHeaterVariant?.[0]?.productVarant || null
     )
-  const [currentHeaterVarantQuantity, setCurrentHeaterVarantQuantity] =
-    useState(selectedHeaterVariant.quantity)
+  const [selectedHeaterQuantity, setSelectedHeaterQuantity] = useState(
+    selectedHeaterVariant?.[0]?.quantity || 0
+  )
 
   const heaterSizes: StoreProductOption | undefined =
     accessoryHeater?.options?.find((option) => option.title === "Watt")
@@ -83,41 +84,31 @@ export const AccesorriesPopupHeater = ({
   useEffect(() => {
     const variant = getVariant()
     if (variant) {
-      setCurrentHeaterVarant(variant)
+      setSelectedHeater(variant)
     }
   }, [selectedSize, selectedColor, getVariant])
-  console.log("accessoryHeater?.variants", heaterSizes, heaterColors)
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
         <div className="flex items-start gap-[30px]">
           <div
-            className={`relative w-[466px] h-[467px] rounded-[20px] bg-cover bg-[50%_50%]`}
+            className={`relative w-full lg:w-1/2 rounded-[20px] bg-cover bg-[50%_50%] aspect-square`}
             style={{ backgroundImage: `url(${productImage})` }}
           />
 
-          <div className="flex flex-col w-[733px] items-start gap-10">
+          <div className="flex flex-col justify-between w-full h-full lg:w-1/2 items-start gap-10">
             <div className="flex flex-col items-start gap-5 self-stretch w-full">
-              <div className="flex flex-col items-start gap-2.5 self-stretch w-full">
-                <div className="flex w-[105px] h-[41px] items-center justify-center gap-2.5 p-2.5 bg-[#072f6c] rounded-[30px] border border-solid border-[#a8a8a8]">
-                  <div className="font-montserrat font-medium text-white text-base leading-6 whitespace-nowrap">
-                    Exclusive
-                  </div>
-                </div>
-              </div>
-
               <div className="flex flex-col items-start gap-2.5 py-2.5 self-stretch w-full">
                 <div className="flex items-center justify-between w-full">
                   <h2 className="self-stretch font-merriweather text-[#343a40] text-[28px] font-bold leading-[39.2px]">
                     {accessoryHeater?.title}
                   </h2>
                   <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                    {currentHeaterVarant?.calculated_price?.calculated_amount &&
-                    currentHeaterVarantQuantity
+                    {selectedHeater?.calculated_price?.calculated_amount &&
+                    selectedHeaterQuantity
                       ? "$" +
-                        currentHeaterVarant?.calculated_price
-                          ?.calculated_amount *
-                          currentHeaterVarantQuantity
+                        selectedHeater?.calculated_price?.calculated_amount *
+                          selectedHeaterQuantity
                       : ""}
                   </div>
                 </div>
@@ -199,9 +190,9 @@ export const AccesorriesPopupHeater = ({
                   <div className="flex items-center gap-2">
                     <div className="w-14 h-10 flex items-center justify-center rounded-[10px] border border-solid border-[#a8a8a8]">
                       <input
-                        value={currentHeaterVarantQuantity}
+                        value={selectedHeaterQuantity}
                         onChange={(e) =>
-                          setCurrentHeaterVarantQuantity(Number(e.target.value))
+                          setSelectedHeaterQuantity(Number(e.target.value))
                         }
                         type="text"
                         className="text-[#69727a] leading-6 font-montserrat font-medium text-base focus:outline-none border-0 text-center w-full"
@@ -233,7 +224,6 @@ export const AccesorriesPopupHeater = ({
                 </button>
                 <AddAccessories
                   buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold"
-                  className="!w-[235px]"
                   property1="primary-button-l"
                   text="Add accesory"
                   addAccessory={addAccessoryHeaterHandler}

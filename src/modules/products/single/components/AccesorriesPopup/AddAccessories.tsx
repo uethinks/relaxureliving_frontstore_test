@@ -3,7 +3,7 @@ import { useReducer } from "react"
 
 interface Props {
   property1: "primary-button-hover-l" | "primary-button-l"
-  className: any
+  className?: any
   buttonClassName: any
   text: string
   addAccessory: () => void
@@ -23,7 +23,7 @@ export const AddAccessories = ({
   return (
     <button
       onClick={addAccessory}
-      className={`all-[unset] box-border w-[200px] flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative ${
+      className={`all-[unset] box-border flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative ${
         state.property1 === "primary-button-hover-l"
           ? "bg-[#0a3980]"
           : "bg-[#072f6c]"
