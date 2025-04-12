@@ -136,13 +136,19 @@ export const PergulaSizeSelector = ({
                   className="flex flex-row items-center gap-2.5 relative"
                 >
                   <button
-                    className={`w-10 h-10 rounded-[20px] cursor-pointer border-2 border-solid ${
-                      color.value == "Dark Grey"
-                        ? "bg-[#7F7F7F]"
-                        : "bg-[#ffffff]"
-                    }  ${selectedColor === color ? "border-[#072F6C]" : ""}`}
+                    className={`w-10 h-10 rounded-[20px] cursor-pointer border-solid p-1 ${
+                      selectedColor === color ? "border-[#072F6C] border-2" : ""
+                    }`}
                     onClick={() => handleColorClick(color)}
-                  ></button>
+                  >
+                    <div
+                      className={`w-full h-full rounded-[20px]   ${
+                        color.value == "Dark Grey"
+                          ? "bg-[#7F7F7F]"
+                          : "bg-[#ffffff]"
+                      } `}
+                    ></div>
+                  </button>
                   <div
                     className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
                   >

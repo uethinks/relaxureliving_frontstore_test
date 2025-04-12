@@ -3,7 +3,7 @@ import { BoringStuff } from "./BoringStuff/BoringStuff"
 
 export const OurPromise = (): JSX.Element => {
   return (
-    <div className="inline-flex flex-col items-center justify-center gap-5 pt-20 pb-10 relative rounded-[20px] border border-solid border-transparent">
+    <div className="flex flex-col items-center justify-center gap-5 pt-20 pb-10 relative rounded-[20px] border border-solid border-transparent">
       <div className="w-full justify-center gap-[30px] px-0 py-4 flex flex-col items-center relative flex-[0_0_auto]">
         <div className="flex-col items-center gap-10 flex relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex-col items-start gap-2.5 flex relative self-stretch w-full flex-[0_0_auto]">
@@ -14,7 +14,7 @@ export const OurPromise = (): JSX.Element => {
             </div>
 
             <div className="items-center justify-center gap-2.5 px-0 py-2.5 flex relative self-stretch w-full flex-[0_0_auto]">
-              <p className="w-full lg:w-[974px] mt-[-1.00px] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] text-center leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+              <p className="px-2 w-full lg:w-[974px] mt-[-1.00px] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] text-center leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
                 Discover our premium pergolas designed to enhance your outdoor
                 living experience. Crafted with quality materials, they provide
                 both style and functionality for any backyard.

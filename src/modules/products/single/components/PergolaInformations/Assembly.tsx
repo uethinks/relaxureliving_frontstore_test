@@ -11,7 +11,7 @@ export const AssemblyContainer = ({
 }: Props): JSX.Element => {
   return (
     <div className="flex w-full flex-col gap-4">
-      <div className="font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)]">
+      <div className="hidden font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)]">
         Welcome to outdoor living, perfected!
       </div>
       <div
