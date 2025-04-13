@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from "react"
 import { AddAccessories } from "./AddAccessories"
 import ShadesSideSelector from "./ShadesSideSelector"
 import { PergolaSize, selectedProducts } from "types/global"
+import { ImageSlider } from "@modules/common/components/ImageSlider"
 export const AccesorriesPopupShades = ({
   accessoryShades,
   closePopup,
@@ -151,10 +152,9 @@ export const AccesorriesPopupShades = ({
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
         <div className="flex flex-col lg:flex-row items-start gap-[30px]">
-          <div
-            className={`relative w-full lg:w-1/2 aspect-square rounded-[20px] bg-cover bg-[50%_50%]`}
-            style={{ backgroundImage: `url(${productImage})` }}
-          />
+          <div className="relative w-full lg:w-1/2 aspect-square">
+            <ImageSlider images={accessoryShades?.images || []} />
+          </div>
 
           <div className="flex flex-col w-full lg:w-1/2 items-start gap-10">
             <div className="flex flex-col items-start gap-5 self-stretch w-full">

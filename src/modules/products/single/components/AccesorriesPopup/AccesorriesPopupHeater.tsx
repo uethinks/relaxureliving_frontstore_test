@@ -7,6 +7,7 @@ import {
 import { useCallback, useEffect, useState } from "react"
 import { AddAccessories } from "./AddAccessories"
 import { selectedProducts } from "types/global"
+import { ImageSlider } from "@modules/common/components/ImageSlider"
 
 export const AccesorriesPopupHeater = ({
   accessoryHeater,
@@ -91,10 +92,9 @@ export const AccesorriesPopupHeater = ({
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
         <div className="flex items-start gap-[30px]">
-          <div
-            className={`relative w-full lg:w-1/2 rounded-[20px] bg-cover bg-[50%_50%] aspect-square`}
-            style={{ backgroundImage: `url(${productImage})` }}
-          />
+          <div className="relative w-full lg:w-1/2 aspect-square">
+            <ImageSlider images={accessoryHeater?.images || []} />
+          </div>
 
           <div className="flex flex-col justify-between w-full h-full lg:w-1/2 items-start gap-10">
             <div className="flex flex-col items-start gap-5 self-stretch w-full">
