@@ -21,7 +21,12 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
     if (isSquare) {
       // For square case, handle number selection (1-4)
       const count = typeof side === "number" ? side : 1
-      newSelectedSides = Array(count).fill("left")
+      // Check if the same number is clicked again
+      if (selectedSides.length === count) {
+        newSelectedSides = [] // Deselect if clicking the same number
+      } else {
+        newSelectedSides = Array(count).fill("left")
+      }
     } else {
       // For rectangle case, handle side selection
       const sideStr = side as string

@@ -223,6 +223,9 @@ export const AccesorriesPopupHeater = ({
                   Close
                 </button>
                 <AddAccessories
+                  disabled={
+                    selectedHeaterQuantity === 0 || selectedHeater === null
+                  }
                   buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold"
                   property1="primary-button-l"
                   text="Add accesory"

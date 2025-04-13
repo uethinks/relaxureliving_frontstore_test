@@ -6,7 +6,7 @@ import {
 } from "@medusajs/types"
 import { useCallback, useEffect, useState } from "react"
 import { AddAccessories } from "./AddAccessories"
-import { GlassdoorSideSelector } from "./GlassdoorSideSelector"
+import GlassdoorSideSelector from "./GlassdoorSideSelector"
 import { PergolaSize, selectedProducts } from "types/global"
 
 interface SelectedProduct {
@@ -257,6 +257,7 @@ export const AccesorriesPopupGlassdoor = ({
                   Close
                 </button>
                 <AddAccessories
+                  disabled={selectedGlassdoor.length === 0}
                   buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold"
                   className="!w-[235px]"
                   property1="primary-button-l"

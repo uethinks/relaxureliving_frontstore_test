@@ -7,6 +7,7 @@ interface Props {
   buttonClassName: any
   text: string
   addAccessory: () => void
+  disabled?: boolean
 }
 
 export const AddAccessories = ({
@@ -15,6 +16,7 @@ export const AddAccessories = ({
   buttonClassName,
   text = "Get started",
   addAccessory,
+  disabled = false,
 }: Props): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, {
     property1: property1 || "primary-button-l",
@@ -22,12 +24,13 @@ export const AddAccessories = ({
 
   return (
     <button
+      disabled={disabled}
       onClick={addAccessory}
       className={`all-[unset] box-border flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative ${
         state.property1 === "primary-button-hover-l"
           ? "bg-[#0a3980]"
           : "bg-[#072f6c]"
-      } ${className}`}
+      } ${className} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
       onMouseLeave={() => {
         dispatch("mouse_leave")
       }}

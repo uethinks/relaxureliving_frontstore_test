@@ -248,6 +248,7 @@ export const AccesorriesPopupShades = ({
                   Close
                 </button>
                 <AddAccessories
+                  disabled={selectedShades.length === 0}
                   buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold"
                   className="!w-[235px]"
                   property1="primary-button-l"
