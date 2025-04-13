@@ -4,14 +4,14 @@ import { ProductCard } from "../ProductCard/ProductCard"
 import { HeaterCard } from "../HeaterCard/HeaterCard"
 import { GlassDoorCard } from "../GlassDoorCard/GlassDoorCard"
 import { ShadesCard } from "../ShadesCard/ShadesCard"
-import { Header } from "../Header/Header"
 import { AccessoriesSection } from "../AccessoriesSection/AccessoriesSection"
-
+import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
+import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 export const ProductPage = (): JSX.Element => {
   return (
     <div className="bg-[#ffffff] flex flex-row justify-center w-full">
       <div className="bg-[#ffffff] w-full md:w-full lg:w-[90%] 2xl:w-[1512px] relative flex flex-col justify-center items-center pt-10">
-        <Header />
+        <NavBarWrapper isFixed={false} />
 
         <div className="inline-flex items-center justify-start gap-2.5 p-2.5 w-full mt-10">
           <img
@@ -35,11 +35,7 @@ export const ProductPage = (): JSX.Element => {
           </div>
         </div>
         <AccessoriesSection />
-        <img
-          className="w-[1512px] h-[688px] top-[3198px] left-0"
-          alt="Footer dark"
-          src="https://c.animaapp.com/m8o9g6iofzwjOy/img/footer-4-dark.png"
-        />
+        <FooterDark />
       </div>
     </div>
   )
