@@ -3,8 +3,8 @@ import React from "react"
 interface ShadesSideSelectorProps {
   onSideSelect: (sides: string[]) => void
   selectedSides: string[]
-  shortSideLength?: string // 短边长度，默认13"
-  longSideLength?: string // 长边长度，默认19"
+  shortSideLength?: string
+  longSideLength?: string
 }
 
 const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
@@ -13,17 +13,52 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
   shortSideLength = '13"',
   longSideLength = '19"',
 }) => {
-  const handleSideClick = (side: string) => {
-    const isSelected = selectedSides.includes(side)
-    let newSelectedSides
+  const isSquare = shortSideLength === longSideLength
 
-    if (isSelected) {
-      newSelectedSides = selectedSides.filter((s) => s !== side)
+  const handleSideClick = (side: string | number) => {
+    let newSelectedSides: string[]
+
+    if (isSquare) {
+      // For square case, handle number selection (1-4)
+      const count = typeof side === "number" ? side : 1
+      newSelectedSides = Array(count).fill("left")
     } else {
-      newSelectedSides = [...selectedSides, side]
+      // For rectangle case, handle side selection
+      const sideStr = side as string
+      const isSelected = selectedSides.includes(sideStr)
+      if (isSelected) {
+        newSelectedSides = selectedSides.filter((s) => s !== sideStr)
+      } else {
+        newSelectedSides = [...selectedSides, sideStr]
+      }
     }
 
     onSideSelect(newSelectedSides)
+  }
+
+  if (isSquare) {
+    return (
+      <div className="flex flex-col items-start w-full max-w-[400px]">
+        <h3 className="text-lg font-medium mb-6">
+          How many shades do you want?
+        </h3>
+        <div className="flex items-center gap-2">
+          {[1, 2, 3, 4].map((number) => (
+            <button
+              key={number}
+              onClick={() => handleSideClick(number)}
+              className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all ${
+                selectedSides.length === number
+                  ? "border-[#072F6C] bg-[#DCE7F8] text-[#072F6C]"
+                  : "border-[#E9E9E9] text-[#69727A]"
+              }`}
+            >
+              {number}
+            </button>
+          ))}
+        </div>
+      </div>
+    )
   }
 
   return (

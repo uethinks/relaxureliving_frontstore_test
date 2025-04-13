@@ -32,6 +32,7 @@ export const AccesorriesPopupGlassdoor = ({
   }
   const productImage = accessoryGlassdoor?.images?.[0].url
   const addAccessoryGlassdoorHandler = () => {
+    console.log("selectedGlassdoor", selectedGlassdoor)
     addAccessoryGlassdoor(selectedGlassdoor)
     closePopupGlassdoor()
   }

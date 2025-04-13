@@ -99,24 +99,53 @@ export const ProductItem = ({
   const buyPergula = async () => {
     if (!selectedVariant?.id) return null
 
-    return await addToCart({
-      variantId: selectedVariant.id,
-      quantity: pergolaQuantity,
-      countryCode: "us",
-    })
+    try {
+      const result = await addToCart({
+        variantId: selectedVariant.id,
+        quantity: pergolaQuantity,
+        countryCode: "us",
+      })
+      console.log("Pergola added to cart successfully:", result)
+      return result
+    } catch (error) {
+      console.error("Error adding pergola to cart:", error)
+      throw error
+    }
   }
 
   const buyHeater = async () => {
     if (selectedAccessoriesHeater.length === 0) return null
-    console.log("selectedAccessoriesHeater", selectedAccessoriesHeater)
-    selectedAccessoriesHeater.forEach(async (item) => {
-      if (!item.productVarant || !item.quantity) return null
-      addToCart({
-        variantId: item.productVarant.id,
-        quantity: item.quantity,
-        countryCode: "us",
+
+    const addToCartPromises = selectedAccessoriesHeater
+      .filter((item) => item.productVarant && item.quantity)
+      .map(async (item) => {
+        console.log(
+          "selectedAccessoriesHeater",
+          item?.productVarant?.id,
+          item?.quantity
+        )
+        try {
+          const result = await addToCart({
+            variantId: item?.productVarant?.id ?? "",
+            quantity: item.quantity,
+            countryCode: "us",
+          })
+          console.log("Heater added to cart successfully:", result)
+          return result
+        } catch (error) {
+          console.error("Error adding heater to cart:", error)
+          throw error
+        }
       })
-    })
+
+    try {
+      const results = await Promise.all(addToCartPromises)
+      console.log("All heaters added to cart successfully:", results)
+      return results
+    } catch (error) {
+      console.error("Error adding heaters to cart:", error)
+      throw error
+    }
   }
 
   const buyShades = async () => {
@@ -156,15 +185,37 @@ export const ProductItem = ({
 
   const buyGlassdoor = async () => {
     if (selectedAccessoriesGlassdoor.length === 0) return null
-    console.log("selectedAccessoriesGlassdoor", selectedAccessoriesGlassdoor)
-    selectedAccessoriesGlassdoor.forEach(async (item) => {
-      if (!item.productVarant || !item.quantity) return null
-      addToCart({
-        variantId: item.productVarant.id,
-        quantity: item.quantity,
-        countryCode: "us",
+
+    const addToCartPromises = selectedAccessoriesGlassdoor
+      .filter((item) => item.productVarant && item.quantity)
+      .map(async (item) => {
+        console.log(
+          "selectedAccessoriesGlassdoor",
+          item?.productVarant?.id,
+          item?.quantity
+        )
+        try {
+          const result = await addToCart({
+            variantId: item?.productVarant?.id ?? "",
+            quantity: item.quantity,
+            countryCode: "us",
+          })
+          console.log("Glassdoor added to cart successfully:", result)
+          return result
+        } catch (error) {
+          console.error("Error adding glassdoor to cart:", error)
+          throw error
+        }
       })
-    })
+
+    try {
+      const results = await Promise.all(addToCartPromises)
+      console.log("All glassdoors added to cart successfully:", results)
+      return results
+    } catch (error) {
+      console.error("Error adding glassdoors to cart:", error)
+      throw error
+    }
   }
 
   return (
