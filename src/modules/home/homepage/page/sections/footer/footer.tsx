@@ -5,9 +5,9 @@ export const FooterDark = (): JSX.Element => {
   return (
     <div className="relative flex justify-center w-full overflow-hidden bg-[#0A142F]">
       <div className="relative flex flex-col justify-between gap-10  w-full md:w-full lg:w-[90%] 2xl:w-[1512px]">
-        <div className="flex flex-col justify-center w-full items-center gap-5 mt-10">
+        <div className="flex flex-col justify-center w-full items-center gap-5 mt-10 px-5">
           <img
-            className="relative max-w-[767px] h-[392px] mt-[-10.00px]"
+            className="relative max-w-full lg:max-w-[767px] mt-[-10.00px]"
             alt="Rectangle"
             src="https://c.animaapp.com/q2tzgr8Y/img/rectangle-1307-1.png"
           />
@@ -17,7 +17,7 @@ export const FooterDark = (): JSX.Element => {
               See Relaxure in Action
             </div>
 
-            <p className="relative w-[991px] opacity-80 font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-white text-[length:var(--relaxure-sub-heading-18-font-size)] text-center tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+            <p className="relative w-full opacity-80 font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-white text-[length:var(--relaxure-sub-heading-18-font-size)] text-center tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
               Our sample kit puts premium quality in your hands. Get a tangible
               preview of your future outdoor oasis with aluminum frame pieces,
               glass door samples, and shade material swatches in all standard
@@ -41,42 +41,44 @@ export const FooterDark = (): JSX.Element => {
         </div>
 
         <div className="flex flex-col w-full items-center gap-2">
-          <div className="relative self-stretch w-full h-[148px]">
-            <div className="w-full h-[89px]">
-              <div className="w-full h-[87px] flex justify-between items-center ">
-                <Link href="/">
-                  <img
-                    className="w-[112px] h-[74px] "
-                    alt="Logo"
-                    src="https://c.animaapp.com/ipQflS1Z/img/logo.svg"
-                  />
-                </Link>
-                <div className=" w-[132px] h-[21px] opacity-80 [font-family:'Montserrat',Helvetica] font-normal text-white text-[14px] text-center tracking-[0] leading-[normal]">
-                  © 2025 Relaxure
+          <div className="relative self-stretch w-full">
+            <div className="w-full">
+              <div className="w-full flex justify-between items-center ">
+                <div className="flex flex-wrap justify-between items-center gap-2">
+                  <Link href="/">
+                    <img
+                      className="w-[112px] h-[74px] "
+                      alt="Logo"
+                      src="https://c.animaapp.com/ipQflS1Z/img/logo.svg"
+                    />
+                  </Link>
+                  <div className="opacity-80 [font-family:'Montserrat',Helvetica] font-normal text-white text-[14px] text-center tracking-[0] leading-[normal]">
+                    © 2025 Relaxure
+                  </div>
                 </div>
-                <div className="flex h-11 items-center justify-center gap-10 relative">
+                <div className="flex flex-wrap h-11 items-center justify-between lg:gap-10 relative">
                   <Link href="/us/terms/warranty">
-                    <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                    <div className="underline [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                       Warranty
                     </div>
                   </Link>
                   <Link href="/us/terms/refund-policy">
-                    <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                    <div className="underline [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                       Refund policy
                     </div>
                   </Link>
                   <Link href="/us/terms/terms-of-service">
-                    <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                    <div className="underline [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                       Terms of service
                     </div>
                   </Link>
                   <Link href="/us/terms/privacy-policy">
-                    <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                    <div className="underline [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                       Privacy policy
                     </div>
                   </Link>
                 </div>
-                <div className="relative w-[219px] h-[45px] flex justify-end items-center gap-5">
+                <div className="relative flex flex-wrap justify-end items-center gap-5">
                   <Link href="https://www.instagram.com/relaxurepergola/">
                     <div className="w-[47px] h-[45px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/oval-copy.svg)] bg-cover">
                       <div className="relative w-[14px] h-[13px] top-[16px] left-[17px]">

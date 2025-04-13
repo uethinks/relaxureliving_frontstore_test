@@ -1,4 +1,5 @@
-import React from "react"
+"use client"
+import React, { useEffect, useState } from "react"
 import { OrderSummary } from "../OrderSummary/OrderSummary"
 import { ProductCard } from "../ProductCard/ProductCard"
 import { HeaterCard } from "../HeaterCard/HeaterCard"
@@ -7,10 +8,38 @@ import { ShadesCard } from "../ShadesCard/ShadesCard"
 import { AccessoriesSection } from "../AccessoriesSection/AccessoriesSection"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
+import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
+import { FaqWrapper } from "@modules/home/homepage/page/sections/FaqWrapper"
+import { getHomePage } from "@lib/cms/strapiCmsApi"
+
+interface FAQData {
+  id: number
+  Title: string
+  Subtitle: string
+  homepageFAQ: FAQCategory[]
+}
+
+interface FAQCategory {
+  id: number
+  Title: string
+  question_and_answer: FAQAnswer[]
+}
+
+interface FAQAnswer {
+  id: number
+  question: string
+  Answer: string
+}
 export const ProductPage = (): JSX.Element => {
+  const [faq, setFaq] = useState<FAQData | null>(null)
+  useEffect(() => {
+    getHomePage().then(({ data }) => {
+      setFaq(data.FAQ)
+    })
+  }, [])
   return (
-    <div className="bg-[#ffffff] flex flex-row justify-center w-full">
-      <div className="bg-[#ffffff] w-full md:w-full lg:w-[90%] 2xl:w-[1512px] relative flex flex-col justify-center items-center pt-10">
+    <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full">
+      <div className="bg-[#ffffff] w-full lg:w-[90%] 2xl:w-[1512px] relative flex flex-col justify-center items-center pt-10">
         <NavBarWrapper isFixed={false} />
 
         <div className="inline-flex items-center justify-start gap-2.5 p-2.5 w-full mt-10">
@@ -23,7 +52,7 @@ export const ProductPage = (): JSX.Element => {
             Products
           </div>
         </div>
-        <div className="flex items-start justify-between gap-2.5 p-2.5 w-full mt-10">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-2.5 p-2.5 w-full mt-10">
           <div className="flex flex-col gap-2.5 w-full lg:w-2/3">
             <ProductCard />
             <HeaterCard />
@@ -35,8 +64,11 @@ export const ProductPage = (): JSX.Element => {
           </div>
         </div>
         <AccessoriesSection />
-        <FooterDark />
+        <OurPromise />
+        {/* FAQ */}
+        {faq && <FaqWrapper faq={faq} />}
       </div>
+      <FooterDark />
     </div>
   )
 }

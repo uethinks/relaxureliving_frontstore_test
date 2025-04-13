@@ -11,8 +11,8 @@ export const PaymentFinish = ({
   return !paymentFinishShow ? (
     ""
   ) : (
-    <div className="bg-[#00000080] flex justify-center items-center w-full h-full absolute top-0 left-0">
-      <div className="flex flex-col w-[547px] items-center justify-center gap-5 p-5 relative bg-[#ffffff] rounded-[20px]">
+    <div className="bg-[#00000080] flex justify-center items-start w-full h-full absolute top-0 left-0 px-10 z-50 pt-5">
+      <div className="flex flex-col w-full lg:w-[547px] items-center justify-start gap-5 p-5 relative bg-[#ffffff] rounded-[20px]">
         <div className="inline-flex flex-col items-center gap-5 relative flex-[0_0_auto]">
           <div className="relative w-[155px] h-[147px] bg-[url(https://c.animaapp.com/OZvkuZwc/img/https---lottiefiles-com-animations-item-shipped-cm0d29wrd2.gif)] bg-cover bg-[50%_50%]" />
 
