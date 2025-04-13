@@ -24,11 +24,11 @@ export const AccesorriesPopupHeater = ({
   }
   const productImage = accessoryHeater?.images?.[0].url
   const addAccessoryHeaterHandler = () => {
-    const selectedHeater = {
-      productVarant: selectedHeaterVariant?.[0]?.productVarant,
-      quantity: selectedHeaterVariant?.[0]?.quantity,
+    const selectedHeaterProduct = {
+      productVarant: selectedHeater,
+      quantity: selectedHeaterQuantity,
     }
-    addAccessoryHeater([selectedHeater])
+    addAccessoryHeater([selectedHeaterProduct])
     closePopupHeater()
   }
   const [selectedHeater, setSelectedHeater] =

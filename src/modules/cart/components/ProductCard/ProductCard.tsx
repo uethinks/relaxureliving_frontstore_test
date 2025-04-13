@@ -42,12 +42,12 @@ export const ProductCard = (): JSX.Element | null => {
   return !pergola ? null : (
     <div className="flex items-center gap-5 p-5 bg-[#f3f3f3] rounded-[20px]">
       <div
-        className="relative w-[209px] h-[175px] rounded-[20px]"
+        className="relative w-full lg:w-1/3 h-[175px] rounded-[20px]"
         style={{
           background: `url(${pergola?.product?.thumbnail}) no-repeat center center / cover`,
         }}
       />
-      <div className="flex flex-col w-[548px] items-start gap-[26px] relative">
+      <div className="flex flex-col w-full lg:w-2/3 items-start gap-[26px] relative">
         <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
           <p className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[22px] tracking-[0] leading-[30.8px] whitespace-nowrap">
             {pergola?.product_subtitle}
@@ -95,7 +95,7 @@ export const ProductCard = (): JSX.Element | null => {
           </div>
           <button
             onClick={removeProduct}
-            className="flex w-10 h-10 items-center gap-2.5 px-[9px] py-[7px] absolute top-[3px] left-[502px] bg-[#ffffff] rounded-[31px] border border-solid border-[#a8a8a8]"
+            className="flex w-10 h-10 items-center gap-2.5 px-[9px] py-[7px] bg-[#ffffff] rounded-[31px] border border-solid border-[#a8a8a8]"
           >
             <div className="relative w-4 h-5">
               <img

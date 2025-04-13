@@ -24,13 +24,13 @@ export const ProductPage = (): JSX.Element => {
           </div>
         </div>
         <div className="flex items-start justify-between gap-2.5 p-2.5 w-full mt-10">
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-2.5 w-full lg:w-2/3">
             <ProductCard />
             <HeaterCard />
             <GlassDoorCard />
             <ShadesCard />
           </div>
-          <div className="flex flex-col justify-start gap-2.5">
+          <div className="flex flex-col justify-start gap-2.5 w-full lg:w-1/3">
             <OrderSummary />
           </div>
         </div>

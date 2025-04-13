@@ -61,20 +61,22 @@ export const HeaterCard = (): JSX.Element | null => {
           </div>
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-          <div className="inline-flex items-center justify-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
-            <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-lg leading-[25.2px] whitespace-nowrap relative tracking-[0]">
-              Quantity
+          <div className="flex gap-2.5">
+            <div className="inline-flex items-center justify-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
+              <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-lg leading-[25.2px] whitespace-nowrap relative tracking-[0]">
+                Quantity
+              </div>
             </div>
-          </div>
-          <div className="inline-flex items-center gap-10 relative flex-[0_0_auto]">
-            <div className="flex w-14 h-10 items-center justify-center gap-2.5 p-2.5 relative bg-[#ffffff] rounded-[20px] border border-solid border-[#a8a8a8]">
-              <input
-                type="number"
-                value={quantity}
-                min={1}
-                onChange={(e) => updateQuantity(Number(e.target.value))}
-                className="text-right focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap"
-              ></input>
+            <div className="inline-flex items-center gap-10 relative flex-[0_0_auto]">
+              <div className="flex w-14 h-10 items-center justify-center gap-2.5 p-2.5 relative bg-[#ffffff] rounded-[20px] border border-solid border-[#a8a8a8]">
+                <input
+                  type="number"
+                  value={quantity}
+                  min={1}
+                  onChange={(e) => updateQuantity(Number(e.target.value))}
+                  className="text-right focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap"
+                ></input>
+              </div>
             </div>
           </div>
           <button

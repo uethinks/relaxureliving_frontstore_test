@@ -26,6 +26,7 @@ export const Checkout = () => {
     }
     getCart().then((cart) => {
       setCart(cart)
+      console.log("cart", cart)
       fetchShippingOptions(cart?.id ?? "")
       fetchPaymentProvider(cart?.region_id || "")
     })

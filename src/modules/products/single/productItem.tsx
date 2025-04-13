@@ -108,6 +108,7 @@ export const ProductItem = ({
 
   const buyHeater = async () => {
     if (selectedAccessoriesHeater.length === 0) return null
+    console.log("selectedAccessoriesHeater", selectedAccessoriesHeater)
     selectedAccessoriesHeater.forEach(async (item) => {
       if (!item.productVarant || !item.quantity) return null
       addToCart({
@@ -120,18 +121,42 @@ export const ProductItem = ({
 
   const buyShades = async () => {
     if (selectedAccessoriesShades.length === 0) return null
-    selectedAccessoriesShades.forEach(async (item) => {
-      if (!item.productVarant || !item.quantity) return null
-      addToCart({
-        variantId: item.productVarant.id,
-        quantity: item.quantity,
-        countryCode: "us",
+
+    const addToCartPromises = selectedAccessoriesShades
+      .filter((item) => item.productVarant && item.quantity)
+      .map(async (item) => {
+        console.log(
+          "selectedAccessoriesShades",
+          item?.productVarant?.id,
+          item?.quantity
+        )
+        try {
+          const result = await addToCart({
+            variantId: item?.productVarant?.id ?? "",
+            quantity: item.quantity,
+            countryCode: "us",
+          })
+          console.log("Add to cart result:", result)
+          return result
+        } catch (error) {
+          console.error("Error adding item to cart:", error)
+          throw error
+        }
       })
-    })
+
+    try {
+      const results = await Promise.all(addToCartPromises)
+      console.log("All shades added to cart successfully:", results)
+      return results
+    } catch (error) {
+      console.error("Error adding shades to cart:", error)
+      throw error
+    }
   }
 
   const buyGlassdoor = async () => {
     if (selectedAccessoriesGlassdoor.length === 0) return null
+    console.log("selectedAccessoriesGlassdoor", selectedAccessoriesGlassdoor)
     selectedAccessoriesGlassdoor.forEach(async (item) => {
       if (!item.productVarant || !item.quantity) return null
       addToCart({
