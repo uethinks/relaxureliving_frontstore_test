@@ -9,18 +9,16 @@ import {
   initiatePaymentSession,
 } from "@lib/data/cart"
 import { listCartShippingMethods } from "@lib/data/fulfillment"
-import { listCartPaymentMethods } from "@lib/data/payment"
 import Link from "next/link"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import PaymentWrapper from "@modules/checkout/components/payment-wrapper"
 import AirwallexPaymentButton from "@modules/checkout/components/payment-button/airwallex-button"
+import { init } from "@airwallex/components-sdk"
 
 export const Checkout = () => {
   const { cart, setCart, getCart } = useCart()
   const [shippingOptions, setShippingOptions] = useState<any[]>([])
-  const [paymentOptions, setPaymentOptions] = useState<any[]>([])
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>("")
   const [errors, setErrors] = useState({
     email: "",
     phone: "",
@@ -32,37 +30,42 @@ export const Checkout = () => {
     postalCode: "",
   })
 
-  // 初始化支付会话和购物车
-  const initializePaymentAndCart = async () => {
+  // 初始化购物车
+  const initializeCart = async () => {
     try {
       // 1. 首先获取购物车
       const currentCart = await getCart()
       console.log("currentCart", currentCart)
       if (!currentCart) return
 
-      // 2. 设置Airwallex为默认支付方式
-      setSelectedPaymentMethod("pp_Airwallex_Airwallex")
+      // 2. 更新购物车状态
+      setCart(currentCart)
 
-      // 3. 初始化支付会话
-      await initiatePaymentSession(currentCart, {
-        provider_id: "pp_Airwallex_Airwallex",
-      })
-
-      // 4. 重新获取购物车以获取更新后的payment_collection
-      const updatedCart = await getCart()
-      console.log("updatedCart", updatedCart)
-      setCart(updatedCart)
-
-      // 5. 获取配送选项
+      // 3. 获取配送选项
       const shippingMethods = await listCartShippingMethods(currentCart.id)
       setShippingOptions(shippingMethods ?? [])
     } catch (error) {
-      console.error("Error initializing payment and cart:", error)
+      console.error("Error initializing cart:", error)
     }
   }
 
+  // 初始化 Airwallex SDK
   useEffect(() => {
-    initializePaymentAndCart()
+    const initAirwallex = async () => {
+      try {
+        await init({
+          env: process.env.NODE_ENV === "production" ? "prod" : "demo",
+          enabledElements: ["payments"],
+        })
+      } catch (error) {
+        console.error("Failed to initialize Airwallex:", error)
+      }
+    }
+    initAirwallex()
+  }, [])
+
+  useEffect(() => {
+    initializeCart()
   }, [])
 
   const handlePaymentComplete = async () => {
@@ -140,52 +143,73 @@ export const Checkout = () => {
 
   const confirmOrder = async () => {
     if (!validateForm()) return
-    const shipping_address = {
-      first_name: cart?.shipping_address?.first_name ?? "",
-      last_name: cart?.shipping_address?.last_name ?? "",
-      address_1: cart?.shipping_address?.address_1 ?? "",
-      city: cart?.shipping_address?.city ?? "",
-      province: cart?.shipping_address?.province ?? "",
-      postal_code: cart?.shipping_address?.postal_code ?? "",
-      phone: cart?.shipping_address?.phone ?? "",
-      country_code: cart?.shipping_address?.country_code ?? "us",
-    }
-    const data = {
-      email: cart?.email,
-      shipping_address: shipping_address,
-    }
-    await updateCart(data)
-    await setShippingMethod({
-      cartId: cart?.id ?? "",
-      shippingMethodId: shippingOptions?.[0]?.id ?? "",
-    })
 
     try {
-      // 初始化支付会话
-      await initiatePaymentSession(cart as StoreCart, {
-        provider_id: "pp_Airwallex_Airwallex",
+      // 1. 更新购物车信息
+      const shipping_address = {
+        first_name: cart?.shipping_address?.first_name ?? "",
+        last_name: cart?.shipping_address?.last_name ?? "",
+        address_1: cart?.shipping_address?.address_1 ?? "",
+        city: cart?.shipping_address?.city ?? "",
+        province: cart?.shipping_address?.province ?? "",
+        postal_code: cart?.shipping_address?.postal_code ?? "",
+        phone: cart?.shipping_address?.phone ?? "",
+        country_code: cart?.shipping_address?.country_code ?? "us",
+      }
+      const data = {
+        email: cart?.email,
+        shipping_address: shipping_address,
+      }
+      await updateCart(data)
+
+      // 2. 设置配送方式
+      await setShippingMethod({
+        cartId: cart?.id ?? "",
+        shippingMethodId: shippingOptions?.[0]?.id ?? "",
       })
 
-      // 重新获取购物车以获取最新的支付会话
-      const updatedCart = await getCart()
-      if (updatedCart) {
-        const paymentSession =
-          updatedCart.payment_collection?.payment_sessions?.find(
-            (session) => session.provider_id === "pp_Airwallex_Airwallex"
-          )
+      // 3. 初始化支付会话
+      const paymentSession = await initiatePaymentSession(cart as StoreCart, {
+        provider_id: "pp_Airwallex_Airwallex",
+        data: { cart },
+      })
+      console.log("paymentSession", paymentSession)
 
-        // 获取支付URL并跳转
-        const redirectUrl = paymentSession?.data?.redirect_url as
-          | string
-          | undefined
-        if (redirectUrl) {
-          window.location.href = redirectUrl
-        } else {
-          console.error("No redirect URL found in payment session")
-        }
+      // 4. 创建订单
+      const orderResult = await placeOrder(cart?.id ?? "")
+      if (!orderResult || orderResult.type !== "cart") {
+        throw new Error("Failed to create order")
       }
+      console.log("orderResult", orderResult)
+
+      // 5. 获取支付会话数据
+      const paymentSessionData = (paymentSession as any).payment_collection
+        ?.payment_sessions?.[0]?.data
+      if (
+        !paymentSessionData?.payment_intent_id ||
+        !paymentSessionData?.client_secret
+      ) {
+        throw new Error("Missing required payment session data")
+      }
+
+      // 6. 重定向到 Airwallex 支付页面
+      const { payments } = await init({
+        env: "prod",
+        enabledElements: ["payments"],
+      })
+
+      if (!payments) {
+        throw new Error("Failed to initialize Airwallex payments")
+      }
+
+      await payments.redirectToCheckout({
+        intent_id: paymentSessionData.payment_intent_id,
+        client_secret: paymentSessionData.client_secret,
+        currency: cart?.currency_code ?? "USD",
+        country_code: cart?.shipping_address?.country_code ?? "US",
+      })
     } catch (error) {
-      console.error("Error initiating payment session:", error)
+      console.error("Error in payment process:", error)
     }
   }
 
