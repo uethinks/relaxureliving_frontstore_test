@@ -65,9 +65,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { countryCode: string; type: string }
+  params: Promise<{ countryCode: string; type: string }>
 }) {
-  const type = params.type
+  const { type } = await params
   if (!termsTypes[type]) {
     return {
       title: "Not Found - Relaxure Living",
@@ -83,16 +83,16 @@ export async function generateMetadata({
 }
 
 interface PageProps {
-  readonly params: {
+  readonly params: Promise<{
     readonly countryCode: string
     readonly type: string
-  }
+  }>
 }
 
 export const dynamic = "force-dynamic"
 
 export default async function TermsPage({ params }: PageProps) {
-  const type = params.type
+  const { type } = await params
 
   // 验证条款类型是否有效
   if (!termsTypes[type]) {
