@@ -54,7 +54,7 @@ export const Checkout = () => {
     const initAirwallex = async () => {
       try {
         await init({
-          env: process.env.NODE_ENV === "production" ? "prod" : "demo",
+          env: "prod",
           enabledElements: ["payments"],
         })
       } catch (error) {
@@ -207,6 +207,7 @@ export const Checkout = () => {
         client_secret: paymentSessionData.client_secret,
         currency: cart?.currency_code ?? "USD",
         country_code: cart?.shipping_address?.country_code ?? "US",
+        successUrl: `www.relaxureliving.com`,
       })
     } catch (error) {
       console.error("Error in payment process:", error)
