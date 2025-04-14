@@ -89,6 +89,8 @@ interface PageProps {
   }
 }
 
+export const dynamic = "force-dynamic"
+
 export default async function TermsPage({ params }: PageProps) {
   const type = params.type
 
