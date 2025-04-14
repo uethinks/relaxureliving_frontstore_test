@@ -3,6 +3,7 @@
 import { loadStripe } from "@stripe/stripe-js"
 import React from "react"
 import StripeWrapper from "./stripe-wrapper"
+import AirwallexWrapper from "./airwallex-wrapper"
 import { HttpTypes } from "@medusajs/types"
 import { isStripe } from "@lib/constants"
 
@@ -18,6 +19,29 @@ const PaymentWrapper: React.FC<PaymentWrapperProps> = ({ cart, children }) => {
   const paymentSession = cart.payment_collection?.payment_sessions?.find(
     (s) => s.status === "pending"
   )
+
+  if (paymentSession?.provider_id === "pp_Airwallex_Airwallex") {
+    const hasRedirectUrl =
+      paymentSession.data &&
+      typeof paymentSession.data === "object" &&
+      "redirect_url" in paymentSession.data &&
+      typeof paymentSession.data.redirect_url === "string"
+    if (!hasRedirectUrl) {
+      console.warn("Airwallex payment session missing redirect_url")
+      return <div>{children}</div>
+    }
+    return (
+      <AirwallexWrapper
+        paymentSession={
+          paymentSession as HttpTypes.StorePaymentSession & {
+            data: { redirect_url: string }
+          }
+        }
+      >
+        {children}
+      </AirwallexWrapper>
+    )
+  }
 
   if (
     isStripe(paymentSession?.provider_id) &&

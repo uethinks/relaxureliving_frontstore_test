@@ -12,24 +12,11 @@ export const listCartPaymentMethods = async (regionId: string) => {
   const next = {
     ...(await getCacheOptions("payment_providers")),
   }
-
-  return sdk.client
-    .fetch<HttpTypes.StorePaymentProviderListResponse>(
-      `/store/payment-providers`,
-      {
-        method: "GET",
-        query: { region_id: regionId },
-        headers,
-        next,
-        cache: "force-cache",
-      }
-    )
-    .then(({ payment_providers }) =>
-      payment_providers.sort((a, b) => {
-        return a.id > b.id ? 1 : -1
-      })
-    )
-    .catch(() => {
-      return null
-    })
+  return sdk.store.payment.listPaymentProviders({
+    region_id: regionId
+  })
+  .then(({ payment_providers, count, offset, limit }) => {
+    console.log("payment_providers", payment_providers)
+    return payment_providers
+  })
 }

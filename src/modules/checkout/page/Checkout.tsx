@@ -13,10 +13,14 @@ import { listCartPaymentMethods } from "@lib/data/payment"
 import Link from "next/link"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
+import PaymentWrapper from "@modules/checkout/components/payment-wrapper"
+import AirwallexPaymentButton from "@modules/checkout/components/payment-button/airwallex-button"
+
 export const Checkout = () => {
   const { cart, setCart, getCart } = useCart()
   const [shippingOptions, setShippingOptions] = useState<any[]>([])
   const [paymentOptions, setPaymentOptions] = useState<any[]>([])
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>("")
   const [errors, setErrors] = useState({
     email: "",
     phone: "",
@@ -28,22 +32,44 @@ export const Checkout = () => {
     postalCode: "",
   })
 
+  // 初始化支付会话和购物车
+  const initializePaymentAndCart = async () => {
+    try {
+      // 1. 首先获取购物车
+      const currentCart = await getCart()
+      console.log("currentCart", currentCart)
+      if (!currentCart) return
+
+      // 2. 设置Airwallex为默认支付方式
+      setSelectedPaymentMethod("pp_Airwallex_Airwallex")
+
+      // 3. 初始化支付会话
+      await initiatePaymentSession(currentCart, {
+        provider_id: "pp_Airwallex_Airwallex",
+      })
+
+      // 4. 重新获取购物车以获取更新后的payment_collection
+      const updatedCart = await getCart()
+      console.log("updatedCart", updatedCart)
+      setCart(updatedCart)
+
+      // 5. 获取配送选项
+      const shippingMethods = await listCartShippingMethods(currentCart.id)
+      setShippingOptions(shippingMethods ?? [])
+    } catch (error) {
+      console.error("Error initializing payment and cart:", error)
+    }
+  }
+
   useEffect(() => {
-    const fetchShippingOptions = async (cartId: string) => {
-      const options = await listCartShippingMethods(cartId)
-      setShippingOptions(options ?? [])
-    }
-    const fetchPaymentProvider = async (regionId: string) => {
-      const options = await listCartPaymentMethods(regionId)
-      setPaymentOptions(options || [])
-    }
-    getCart().then((cart) => {
-      setCart(cart)
-      console.log("cart", cart)
-      fetchShippingOptions(cart?.id ?? "")
-      fetchPaymentProvider(cart?.region_id || "")
-    })
+    initializePaymentAndCart()
   }, [])
+
+  const handlePaymentComplete = async () => {
+    if (cart) {
+      await placeOrder(cart.id)
+    }
+  }
 
   const validateForm = () => {
     let valid = true
@@ -133,11 +159,36 @@ export const Checkout = () => {
       cartId: cart?.id ?? "",
       shippingMethodId: shippingOptions?.[0]?.id ?? "",
     })
-    await initiatePaymentSession(cart as StoreCart, {
-      provider_id: paymentOptions[0].id,
-    })
-    await placeOrder(cart?.id ?? "")
+
+    try {
+      // 初始化支付会话
+      await initiatePaymentSession(cart as StoreCart, {
+        provider_id: "pp_Airwallex_Airwallex",
+      })
+
+      // 重新获取购物车以获取最新的支付会话
+      const updatedCart = await getCart()
+      if (updatedCart) {
+        const paymentSession =
+          updatedCart.payment_collection?.payment_sessions?.find(
+            (session) => session.provider_id === "pp_Airwallex_Airwallex"
+          )
+
+        // 获取支付URL并跳转
+        const redirectUrl = paymentSession?.data?.redirect_url as
+          | string
+          | undefined
+        if (redirectUrl) {
+          window.location.href = redirectUrl
+        } else {
+          console.error("No redirect URL found in payment session")
+        }
+      }
+    } catch (error) {
+      console.error("Error initiating payment session:", error)
+    }
   }
+
   return (
     <div className="bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex flex-col items-center justify-start w-full">
       <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full lg:w-[90%] 2xl:w-[1512px] relative pt-10">
@@ -153,7 +204,7 @@ export const Checkout = () => {
 
         <div className="flex flex-col justify-start items-center lg:flex-row lg:justify-between lg:items-start w-full gap-5 px-5">
           {/* Payment Form */}
-          <div className="w-full lg:w-3/5 flex flex-col items-start justify-end gap-10 p-5 lg:p-10  bg-[#efefef] rounded-[20px]">
+          <div className="w-full lg:w-3/5 flex flex-col items-start justify-end gap-10 p-5 lg:p-10 bg-[#efefef] rounded-[20px]">
             <div className="flex flex-col lg:flex-row items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
               {/* Email Input */}
               <div className="flex flex-col">
@@ -418,16 +469,37 @@ export const Checkout = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-start gap-[456px] relative self-stretch w-full flex-[0_0_auto]">
-                    <div className="inline-flex h-[31px] items-center gap-2 relative flex-[0_0_auto]">
-                      <div className="relative w-6 h-6 bg-contain bg-[url(https://c.animaapp.com/m8tqwcaxIEhNf6/img/magnetic-card.png)] bg-[100%_100%]" />
-                      <div className="inline-flex items-center gap-[17.41px] relative flex-[0_0_auto]">
-                        <div className="relative w-fit mt-[-1.93px] [font-family:'Montserrat',Helvetica] font-normal text-formblacksecondary text-lg tracking-[0.21px] leading-[normal]">
-                          Pay by airwallex
-                        </div>
-                      </div>
+
+                  {/* Airwallex Payment Display */}
+                  <div className="flex items-center gap-4 p-4 border rounded-lg w-full">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src="/img/airwallex-logo.svg"
+                        alt="Airwallex"
+                        className="w-[173px] h-6"
+                      />
                     </div>
                   </div>
+
+                  {/* Payment Wrapper */}
+                  {cart?.payment_collection && (
+                    <PaymentWrapper cart={cart}>
+                      {cart.payment_collection.payment_sessions?.map(
+                        (session) => (
+                          <div key={session.id}>
+                            {session.provider_id ===
+                              "pp_Airwallex_Airwallex" && (
+                              <AirwallexPaymentButton
+                                cart={cart}
+                                session={session}
+                                onPaymentCompleted={handlePaymentComplete}
+                              />
+                            )}
+                          </div>
+                        )
+                      )}
+                    </PaymentWrapper>
+                  )}
                 </div>
               </div>
             </div>
