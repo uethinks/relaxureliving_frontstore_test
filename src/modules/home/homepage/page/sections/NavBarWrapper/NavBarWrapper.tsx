@@ -5,10 +5,27 @@ import Link from "next/link"
 
 export const NavBarWrapper = ({
   isFixed = true,
+  isHomePage = false,
 }: {
   isFixed?: boolean
+  isHomePage?: boolean
 }): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const handleScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    section: string
+  ) => {
+    e.preventDefault()
+    if (isHomePage) {
+      const element = document.getElementById(section)
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" })
+      }
+    } else {
+      window.location.href = `/#${section}`
+    }
+  }
 
   return (
     <div
@@ -31,7 +48,8 @@ export const NavBarWrapper = ({
             <div className="flex items-center justify-end gap-2.5 relative flex-1 grow ml-[-20.00px]">
               <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
                 <a
-                  href="/#pergola"
+                  href="#pergola"
+                  onClick={(e) => handleScroll(e, "pergola")}
                   className="relative w-[138px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
                 >
                   Our pergola
@@ -40,7 +58,8 @@ export const NavBarWrapper = ({
 
               <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
                 <a
-                  href="/#features"
+                  href="#features"
+                  onClick={(e) => handleScroll(e, "features")}
                   className="relative w-[139px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
                 >
                   Features
@@ -49,7 +68,8 @@ export const NavBarWrapper = ({
 
               <div className="flex w-[101px] items-center justify-center gap-2.5 px-0 py-2.5 relative">
                 <a
-                  href="/#accessories"
+                  href="#accessories"
+                  onClick={(e) => handleScroll(e, "accessories")}
                   className="relative w-[139px] mt-[-1.00px] ml-[-19.00px] mr-[-19.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
                 >
                   Accessories
@@ -57,7 +77,7 @@ export const NavBarWrapper = ({
               </div>
             </div>
 
-            <a href="/#contact">
+            <a href="#contact" onClick={(e) => handleScroll(e, "contact")}>
               <Component
                 className="!mr-[-1.00px]"
                 property1="primary-button-l"
@@ -114,30 +134,42 @@ export const NavBarWrapper = ({
           <div className="w-full mt-2 bg-[#ffffffcc] rounded-[30px] border border-solid border-[#ffffff] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
             <div className="flex flex-col items-center py-4 space-y-4">
               <a
-                href="/#pergola"
+                href="#pergola"
+                onClick={(e) => {
+                  handleScroll(e, "pergola")
+                  setIsMenuOpen(false)
+                }}
                 className="w-full text-center py-2 [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Our pergola
               </a>
               <a
-                href="/#features"
+                href="#features"
+                onClick={(e) => {
+                  handleScroll(e, "features")
+                  setIsMenuOpen(false)
+                }}
                 className="w-full text-center py-2 [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Features
               </a>
               <a
-                href="/#accessories"
+                href="#accessories"
+                onClick={(e) => {
+                  handleScroll(e, "accessories")
+                  setIsMenuOpen(false)
+                }}
                 className="w-full text-center py-2 [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Accessories
               </a>
               <a
-                href="/#contact"
+                href="#contact"
+                onClick={(e) => {
+                  handleScroll(e, "contact")
+                  setIsMenuOpen(false)
+                }}
                 className="w-full flex justify-center"
-                onClick={() => setIsMenuOpen(false)}
               >
                 <Component
                   className="!mr-[-1.00px]"

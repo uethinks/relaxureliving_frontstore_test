@@ -88,7 +88,7 @@ const Testimonials = lazy(() =>
 const AboveTheFold = ({ hero }: { hero: HeroProps }) => {
   return (
     <>
-      <NavBarWrapper />
+      <NavBarWrapper isHomePage={true} />
       <Hero hero={hero} />
     </>
   )
