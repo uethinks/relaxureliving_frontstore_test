@@ -12,8 +12,6 @@ import { listCartShippingMethods } from "@lib/data/fulfillment"
 import Link from "next/link"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
-import PaymentWrapper from "@modules/checkout/components/payment-wrapper"
-import AirwallexPaymentButton from "@modules/checkout/components/payment-button/airwallex-button"
 import { init } from "@airwallex/components-sdk"
 
 export const Checkout = () => {
@@ -44,25 +42,67 @@ export const Checkout = () => {
       // 3. 获取配送选项
       const shippingMethods = await listCartShippingMethods(currentCart.id)
       setShippingOptions(shippingMethods ?? [])
+
+      // 4. 初始化 Airwallex SDK
+      const { payments } = await init({
+        env: "prod",
+        enabledElements: ["payments"],
+      })
+
+      if (!payments) {
+        throw new Error("Failed to initialize Airwallex payments")
+      }
+
+      // 5. 初始化支付会话
+      const paymentSession = await initiatePaymentSession(
+        currentCart as StoreCart,
+        {
+          provider_id: "pp_Airwallex_Airwallex",
+          data: {
+            amount: currentCart?.total,
+            currency: currentCart?.currency_code,
+            merchant_order_id: currentCart?.id,
+          },
+        }
+      )
+      console.log("paymentSession", paymentSession)
+
+      // 6. 创建 Drop-in Element
+      const element = await payments.createElement("dropIn", {
+        intent_id: paymentSession.payment_collection?.payment_sessions?.[0]
+          ?.data?.payment_intent_id as string,
+        client_secret: paymentSession.payment_collection?.payment_sessions?.[0]
+          ?.data?.client_secret as string,
+        currency: currentCart?.currency_code?.toUpperCase() || "USD",
+      })
+
+      if (!element) {
+        throw new Error("Failed to create Airwallex drop-in element")
+      }
+
+      // 7. 挂载 Drop-in Element
+      const container = document.getElementById("airwallex-dropin-container")
+      if (container) {
+        element.mount(container)
+      }
+
+      // 8. 监听事件
+      element.on("success", (event: any) => {
+        console.log("Payment successful:", event)
+        handlePaymentComplete()
+      })
+
+      element.on("error", (event: any) => {
+        console.error("Payment failed:", event)
+      })
+
+      element.on("ready", () => {
+        console.log("Drop-in element is ready")
+      })
     } catch (error) {
       console.error("Error initializing cart:", error)
     }
   }
-
-  // 初始化 Airwallex SDK
-  useEffect(() => {
-    const initAirwallex = async () => {
-      try {
-        await init({
-          env: "prod",
-          enabledElements: ["payments"],
-        })
-      } catch (error) {
-        console.error("Failed to initialize Airwallex:", error)
-      }
-    }
-    initAirwallex()
-  }, [])
 
   useEffect(() => {
     initializeCart()
@@ -168,52 +208,12 @@ export const Checkout = () => {
         shippingMethodId: shippingOptions?.[0]?.id ?? "",
       })
 
-      // 3. 初始化支付会话
-      const paymentSession = await initiatePaymentSession(cart as StoreCart, {
-        provider_id: "pp_Airwallex_Airwallex",
-        data: { cart },
-      })
-      console.log("paymentSession", paymentSession)
-
-      // 4. 创建订单
+      // 3. 创建订单
       const orderResult = await placeOrder(cart?.id ?? "")
       console.log("orderResult", orderResult)
-      if (!orderResult || orderResult.type !== "order") {
+      if (!orderResult || orderResult.type == "cart") {
         throw new Error("Failed to create order")
       }
-
-      // 5. 获取支付会话数据
-      const paymentSessionData = (paymentSession as any).payment_collection
-        ?.payment_sessions?.[0]?.data
-      if (
-        !paymentSessionData?.payment_intent_id ||
-        !paymentSessionData?.client_secret
-      ) {
-        throw new Error("Missing required payment session data")
-      }
-
-      // 6. 重定向到 Airwallex 支付页面
-      const { payments } = await init({
-        env: "prod",
-        enabledElements: ["payments"],
-      })
-
-      if (!payments) {
-        throw new Error("Failed to initialize Airwallex payments")
-      }
-      const orderId = orderResult?.order?.id
-      const countryCode =
-        orderResult?.order?.shipping_address?.country_code ?? "US"
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-      const successUrl = `${baseUrl}/${countryCode}/order/${orderId}/confirmed`
-      console.log("successUrl", orderResult, cart, successUrl)
-      await payments.redirectToCheckout({
-        intent_id: paymentSessionData.payment_intent_id,
-        client_secret: paymentSessionData.client_secret,
-        currency: cart?.currency_code ?? "USD",
-        country_code: cart?.shipping_address?.country_code ?? "US",
-        successUrl: successUrl,
-      })
     } catch (error) {
       console.error("Error in payment process:", error)
     }
@@ -499,37 +499,8 @@ export const Checkout = () => {
                       </div>
                     </div>
                   </div>
-
-                  {/* Airwallex Payment Display */}
-                  <div className="flex items-center gap-4 p-4 border rounded-lg w-full">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src="/img/airwallex-logo.svg"
-                        alt="Airwallex"
-                        className="w-[173px] h-6"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Payment Wrapper */}
-                  {cart?.payment_collection && (
-                    <PaymentWrapper cart={cart}>
-                      {cart.payment_collection.payment_sessions?.map(
-                        (session) => (
-                          <div key={session.id}>
-                            {session.provider_id ===
-                              "pp_Airwallex_Airwallex" && (
-                              <AirwallexPaymentButton
-                                cart={cart}
-                                session={session}
-                                onPaymentCompleted={handlePaymentComplete}
-                              />
-                            )}
-                          </div>
-                        )
-                      )}
-                    </PaymentWrapper>
-                  )}
+                  {/* Airwallex Drop-in Element Container */}
+                  <div id="airwallex-dropin-container" className="w-full" />
                 </div>
               </div>
             </div>
