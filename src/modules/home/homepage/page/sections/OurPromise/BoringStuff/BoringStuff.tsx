@@ -182,39 +182,31 @@ export const BoringStuff = ({
                 )}
 
                 {property1 === "assembly" && (
-                  <>
+                  <div className="absolute w-[180px] h-[191px] top-0 left-[-22px]">
                     <img
-                      className={`absolute w-[83px] h-[136px] top-[-956px] left-[-49743px] ${vectorClassName}`}
+                      className="absolute w-[93px] h-[103px] top-[88px] left-[17px]"
                       alt="Vector"
-                      src={vector}
+                      src={img}
                     />
 
-                    <div className="absolute w-[180px] h-[191px] top-0 left-[-22px]">
-                      <img
-                        className="absolute w-[93px] h-[103px] top-[88px] left-[17px]"
-                        alt="Vector"
-                        src={img}
-                      />
+                    <img
+                      className="absolute w-[93px] h-[103px] top-[88px] left-16"
+                      alt="Vector"
+                      src={vector1}
+                    />
 
-                      <img
-                        className="absolute w-[93px] h-[103px] top-[88px] left-16"
-                        alt="Vector"
-                        src={vector1}
-                      />
+                    <img
+                      className="absolute w-[180px] h-[180px] top-0 left-0"
+                      alt="Vector"
+                      src={vector2}
+                    />
 
-                      <img
-                        className="absolute w-[180px] h-[180px] top-0 left-0"
-                        alt="Vector"
-                        src={vector2}
-                      />
-
-                      <img
-                        className="absolute w-16 h-[62px] top-[42px] left-[58px]"
-                        alt="Star"
-                        src={star}
-                      />
-                    </div>
-                  </>
+                    <img
+                      className="absolute w-16 h-[62px] top-[42px] left-[58px]"
+                      alt="Star"
+                      src={star}
+                    />
+                  </div>
                 )}
               </div>
             )}

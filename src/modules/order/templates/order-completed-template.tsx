@@ -11,7 +11,7 @@ import PaymentDetails from "@modules/order/components/payment-details"
 import { HttpTypes } from "@medusajs/types"
 import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
-import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
+import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 
 type OrderCompletedTemplateProps = {
   order: HttpTypes.StoreOrder

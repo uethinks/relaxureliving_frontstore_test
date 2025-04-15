@@ -40,7 +40,6 @@ export const OurPromise = (): JSX.Element => {
               img="https://c.animaapp.com/bEMo3Gov/img/vector-7-1.svg"
               property1="assembly"
               star="https://c.animaapp.com/bEMo3Gov/img/star-1-1.svg"
-              vector="/img/image.svg"
               vector1="https://c.animaapp.com/bEMo3Gov/img/vector-14-1.svg"
               vector2="https://c.animaapp.com/bEMo3Gov/img/vector-1.svg"
               vectorClassName="!left-[-52808px] !top-[-3621px]"

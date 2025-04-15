@@ -27,6 +27,9 @@ export type Image = {
   name: string;
   url: string;
   formats: {
+    xlarge: {
+      url: string;
+    };
     large: {
       url: string;
     };

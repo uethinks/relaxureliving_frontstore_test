@@ -9,7 +9,7 @@ import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
-import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
+import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
 import {
   ImageOnLeft,
