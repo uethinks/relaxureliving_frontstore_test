@@ -1,6 +1,6 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { StoreCart } from "@medusajs/types"
 import {
   updateCart,
@@ -17,6 +17,9 @@ import { init } from "@airwallex/components-sdk"
 export const Checkout = () => {
   const { cart, setCart, getCart } = useCart()
   const [shippingOptions, setShippingOptions] = useState<any[]>([])
+  const [isFormValid, setIsFormValid] = useState(false)
+  const [validationTimeout, setValidationTimeout] =
+    useState<NodeJS.Timeout | null>(null)
   const [errors, setErrors] = useState({
     email: "",
     phone: "",
@@ -27,6 +30,39 @@ export const Checkout = () => {
     province: "",
     postalCode: "",
   })
+
+  // 防抖验证函数
+  const debouncedValidateForm = useCallback(() => {
+    if (validationTimeout) {
+      clearTimeout(validationTimeout)
+    }
+
+    const timeout = setTimeout(() => {
+      const isValid = validateForm()
+      setIsFormValid(isValid)
+    }, 500)
+
+    setValidationTimeout(timeout)
+  }, [])
+
+  // 监听表单变化
+  useEffect(() => {
+    debouncedValidateForm()
+    return () => {
+      if (validationTimeout) {
+        clearTimeout(validationTimeout)
+      }
+    }
+  }, [cart, debouncedValidateForm])
+
+  // 组件卸载时清理定时器
+  useEffect(() => {
+    return () => {
+      if (validationTimeout) {
+        clearTimeout(validationTimeout)
+      }
+    }
+  }, [validationTimeout])
 
   // 初始化购物车
   const initializeCart = async () => {
@@ -114,7 +150,44 @@ export const Checkout = () => {
     }
   }
 
+  const handleInputChange = (field: string, value: string) => {
+    if (!cart) return
+
+    const newCart = { ...cart }
+    if (field === "email") {
+      newCart.email = value
+    } else if (field.startsWith("shipping_")) {
+      const addressField = field.replace("shipping_", "")
+      if (!newCart.shipping_address) {
+        newCart.shipping_address = {
+          id: "",
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          first_name: "",
+          last_name: "",
+          address_1: "",
+          address_2: "",
+          city: "",
+          province: "",
+          postal_code: "",
+          country_code: "us",
+          phone: "",
+        }
+      }
+      if (addressField in newCart.shipping_address) {
+        ;(newCart.shipping_address as any)[addressField] = value
+      }
+    }
+
+    setCart(newCart)
+  }
+
   const validateForm = () => {
+    if (!cart) {
+      setIsFormValid(false)
+      return false
+    }
+
     let valid = true
     let newErrors = {
       email: "",
@@ -128,58 +201,83 @@ export const Checkout = () => {
     }
 
     // Email validation
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    if (!emailRegex.test(cart?.email ?? "")) {
-      newErrors.email =
-        "Please enter a valid email address, e.g., example@domain.com."
+    const email = cart.email?.trim() ?? ""
+    if (!email) {
+      newErrors.email = "Email is required"
       valid = false
+    } else {
+      const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+      if (!emailRegex.test(email)) {
+        newErrors.email = "Please enter a valid email address"
+        valid = false
+      }
     }
 
     // Phone validation
-    const phoneRegex = /^\+?[1-9]\d{1,14}$/
-    if (!phoneRegex.test(cart?.shipping_address?.phone ?? "")) {
-      newErrors.phone =
-        "Please enter a valid phone number, including country code if necessary."
+    const phone = cart.shipping_address?.phone?.trim() ?? ""
+    if (!phone) {
+      newErrors.phone = "Phone number is required"
       valid = false
+    } else {
+      const phoneRegex = /^\+?[1-9]\d{1,14}$/
+      if (!phoneRegex.test(phone)) {
+        newErrors.phone = "Please enter a valid phone number"
+        valid = false
+      }
     }
 
     // Required fields validation
-    if (!cart?.email) {
-      newErrors.email = "Email is required."
+    const shippingAddress = cart.shipping_address ?? {
+      first_name: "",
+      last_name: "",
+      address_1: "",
+      city: "",
+      province: "",
+      postal_code: "",
+      phone: "",
+    }
+
+    if (!shippingAddress.first_name?.trim()) {
+      newErrors.firstName = "First name is required"
       valid = false
     }
-    if (!cart?.shipping_address?.first_name) {
-      newErrors.firstName = "First name is required."
+
+    if (!shippingAddress.last_name?.trim()) {
+      newErrors.lastName = "Last name is required"
       valid = false
     }
-    if (!cart?.shipping_address?.last_name) {
-      newErrors.lastName = "Last name is required."
+
+    if (!shippingAddress.address_1?.trim()) {
+      newErrors.address = "Address is required"
       valid = false
     }
-    if (!cart?.shipping_address?.address_1) {
-      newErrors.address = "Address is required."
+
+    if (!shippingAddress.city?.trim()) {
+      newErrors.city = "City is required"
       valid = false
     }
-    if (!cart?.shipping_address?.city) {
-      newErrors.city = "City is required."
+
+    if (!shippingAddress.province?.trim()) {
+      newErrors.province = "State is required"
       valid = false
     }
-    if (!cart?.shipping_address?.province) {
-      newErrors.province = "State is required."
-      valid = false
-    }
-    if (!cart?.shipping_address?.postal_code) {
-      newErrors.postalCode = "ZIP code is required."
-      valid = false
-    }
-    if (!cart?.shipping_address?.phone) {
-      newErrors.phone = "Phone number is required."
+
+    if (!shippingAddress.postal_code?.trim()) {
+      newErrors.postalCode = "ZIP code is required"
       valid = false
     }
 
     setErrors(newErrors)
+    setIsFormValid(valid)
     return valid
   }
+
+  // 监听表单变化
+  useEffect(() => {
+    if (cart) {
+      validateForm()
+    }
+  }, [cart])
 
   const confirmOrder = async () => {
     if (!validateForm()) return
@@ -243,16 +341,7 @@ export const Checkout = () => {
                   placeholder="Email or phone number"
                   type="email"
                   value={cart?.email ?? ""}
-                  onChange={(e) => {
-                    setCart(
-                      cart
-                        ? {
-                            ...cart,
-                            email: e.target.value,
-                          }
-                        : null
-                    )
-                  }}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
                 />
                 {errors.email && (
                   <div className="text-red-500 mt-1 block">{errors.email}</div>
@@ -265,19 +354,9 @@ export const Checkout = () => {
                   placeholder="Phone"
                   type="tel"
                   value={cart?.shipping_address?.phone ?? ""}
-                  onChange={(e) => {
-                    setCart(
-                      cart
-                        ? ({
-                            ...cart,
-                            shipping_address: {
-                              ...cart.shipping_address,
-                              phone: e.target.value,
-                            },
-                          } as StoreCart)
-                        : null
-                    )
-                  }}
+                  onChange={(e) =>
+                    handleInputChange("shipping_phone", e.target.value)
+                  }
                 />
                 {errors.phone && (
                   <div className="text-red-500 mt-1 block">{errors.phone}</div>
@@ -332,19 +411,9 @@ export const Checkout = () => {
                       placeholder="First name"
                       type="text"
                       value={cart?.shipping_address?.first_name ?? ""}
-                      onChange={(e) => {
-                        setCart(
-                          cart
-                            ? ({
-                                ...cart,
-                                shipping_address: {
-                                  ...cart.shipping_address,
-                                  first_name: e.target.value,
-                                },
-                              } as StoreCart)
-                            : null
-                        )
-                      }}
+                      onChange={(e) =>
+                        handleInputChange("shipping_first_name", e.target.value)
+                      }
                     />
                     {errors.firstName && (
                       <div className="text-red-500 mt-1 block">
@@ -358,19 +427,9 @@ export const Checkout = () => {
                       placeholder="Last name"
                       type="text"
                       value={cart?.shipping_address?.last_name ?? ""}
-                      onChange={(e) => {
-                        setCart(
-                          cart
-                            ? ({
-                                ...cart,
-                                shipping_address: {
-                                  ...cart.shipping_address,
-                                  last_name: e.target.value,
-                                },
-                              } as StoreCart)
-                            : null
-                        )
-                      }}
+                      onChange={(e) =>
+                        handleInputChange("shipping_last_name", e.target.value)
+                      }
                     />
                     {errors.lastName && (
                       <div className="text-red-500 mt-1 block">
@@ -387,19 +446,9 @@ export const Checkout = () => {
                   placeholder="Address"
                   type="text"
                   value={cart?.shipping_address?.address_1 ?? ""}
-                  onChange={(e) => {
-                    setCart(
-                      cart
-                        ? ({
-                            ...cart,
-                            shipping_address: {
-                              ...cart.shipping_address,
-                              address_1: e.target.value,
-                            },
-                          } as StoreCart)
-                        : null
-                    )
-                  }}
+                  onChange={(e) =>
+                    handleInputChange("shipping_address_1", e.target.value)
+                  }
                 />
                 {errors.address && (
                   <div className="text-red-500 mt-1 block">
@@ -415,19 +464,9 @@ export const Checkout = () => {
                     placeholder="City"
                     type="text"
                     value={cart?.shipping_address?.city ?? ""}
-                    onChange={(e) => {
-                      setCart(
-                        cart
-                          ? ({
-                              ...cart,
-                              shipping_address: {
-                                ...cart.shipping_address,
-                                city: e.target.value,
-                              },
-                            } as StoreCart)
-                          : null
-                      )
-                    }}
+                    onChange={(e) =>
+                      handleInputChange("shipping_city", e.target.value)
+                    }
                   />
                   {errors.city && (
                     <div className="text-red-500 mt-1 block">{errors.city}</div>
@@ -439,19 +478,9 @@ export const Checkout = () => {
                     placeholder="State"
                     type="text"
                     value={cart?.shipping_address?.province ?? ""}
-                    onChange={(e) => {
-                      setCart(
-                        cart
-                          ? ({
-                              ...cart,
-                              shipping_address: {
-                                ...cart.shipping_address,
-                                province: e.target.value,
-                              },
-                            } as StoreCart)
-                          : null
-                      )
-                    }}
+                    onChange={(e) =>
+                      handleInputChange("shipping_province", e.target.value)
+                    }
                   />
                   {errors.province && (
                     <div className="text-red-500 mt-1 block">
@@ -465,19 +494,9 @@ export const Checkout = () => {
                     placeholder="ZIP code"
                     type="text"
                     value={cart?.shipping_address?.postal_code ?? ""}
-                    onChange={(e) => {
-                      setCart(
-                        cart
-                          ? ({
-                              ...cart,
-                              shipping_address: {
-                                ...cart.shipping_address,
-                                postal_code: e.target.value,
-                              },
-                            } as StoreCart)
-                          : null
-                      )
-                    }}
+                    onChange={(e) =>
+                      handleInputChange("shipping_postal_code", e.target.value)
+                    }
                   />
                   {errors.postalCode && (
                     <div className="text-red-500 mt-1 block">
@@ -503,17 +522,6 @@ export const Checkout = () => {
                   <div id="airwallex-dropin-container" className="w-full" />
                 </div>
               </div>
-            </div>
-            {/* Confirm Payment Button */}
-            <div className="flex flex-col items-center justify-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <button
-                onClick={confirmOrder}
-                className="all-[unset] box-border w-full flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative bg-[#072f6c] self-stretch flex-[0_0_auto]"
-              >
-                <div className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#ffffff] relative font-medium whitespace-nowrap leading-6">
-                  Confirm payment
-                </div>
-              </button>
             </div>
             {/* Security Message */}
             <div className="flex w-fullitems-end gap-2 relative flex-[0_0_auto]">
