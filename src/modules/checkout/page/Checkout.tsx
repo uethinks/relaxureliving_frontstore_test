@@ -177,10 +177,10 @@ export const Checkout = () => {
 
       // 4. 创建订单
       const orderResult = await placeOrder(cart?.id ?? "")
-      if (!orderResult || orderResult.type !== "cart") {
+      console.log("orderResult", orderResult)
+      if (!orderResult || orderResult.type !== "order") {
         throw new Error("Failed to create order")
       }
-      console.log("orderResult", orderResult)
 
       // 5. 获取支付会话数据
       const paymentSessionData = (paymentSession as any).payment_collection
@@ -201,13 +201,18 @@ export const Checkout = () => {
       if (!payments) {
         throw new Error("Failed to initialize Airwallex payments")
       }
-
+      const orderId = orderResult?.order?.id
+      const countryCode =
+        orderResult?.order?.shipping_address?.country_code ?? "US"
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+      const successUrl = `${baseUrl}/${countryCode}/order/${orderId}/confirmed`
+      console.log("successUrl", orderResult, cart, successUrl)
       await payments.redirectToCheckout({
         intent_id: paymentSessionData.payment_intent_id,
         client_secret: paymentSessionData.client_secret,
         currency: cart?.currency_code ?? "USD",
         country_code: cart?.shipping_address?.country_code ?? "US",
-        successUrl: `www.relaxureliving.com`,
+        successUrl: successUrl,
       })
     } catch (error) {
       console.error("Error in payment process:", error)
