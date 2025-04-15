@@ -5,43 +5,60 @@ import { StoreCartLineItem } from "@medusajs/types"
 
 export const ProductCard = (): JSX.Element | null => {
   const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
+  const [pergola, setPergola] = useState<StoreCartLineItem[]>([])
+
+  // 初始化加载购物车数据
   useEffect(() => {
-    getCart().then((cart) => {
-      console.log("ProductCard", cart)
-      setCart(cart)
-    })
+    const loadCart = async () => {
+      try {
+        const cartData = await getCart()
+        setCart(cartData)
+        // 直接在这里设置 pergola 数据
+        const pergolaItems =
+          cartData?.items?.filter((item) => item.product_type === "Pergula") ||
+          []
+        setPergola(pergolaItems)
+      } catch (error) {
+        console.error("Failed to load cart:", error)
+      }
+    }
+    loadCart()
   }, [])
 
-  let pergolaInCart = cart?.items?.filter(
-    (item) => item.product_type === "Pergula"
-  )
-  const [pergola, setPergola] = useState<StoreCartLineItem[] | null>(
-    pergolaInCart ?? null
-  )
+  // 监听 cart 变化，更新 pergola
+  useEffect(() => {
+    if (cart?.items) {
+      const pergolaItems = cart.items.filter(
+        (item) => item.product_type === "Pergula"
+      )
+      setPergola(pergolaItems)
+    }
+  }, [cart])
 
   const removeProduct = async (pergolaId: string) => {
     if (pergolaId) {
       await removeVariant(pergolaId)
-      await getCart()
+      const updatedCart = await getCart()
+      setCart(updatedCart)
     }
   }
+
   const updateQuantity = async (quantity: number, pergolaId: string) => {
     if (pergolaId) {
       await updateVariantInfo({
         lineId: pergolaId,
         quantity: quantity,
       })
-      await getCart()
+      const updatedCart = await getCart()
+      setCart(updatedCart)
     }
   }
-  useEffect(() => {
-    pergolaInCart = cart?.items?.filter(
-      (item) => item.product_type === "Pergula"
-    )
-    setPergola(pergolaInCart ?? [])
-  }, [cart])
 
-  return !pergola ? null : (
+  if (pergola.length === 0) {
+    return null
+  }
+
+  return (
     <>
       {pergola.map((item) => (
         <div
