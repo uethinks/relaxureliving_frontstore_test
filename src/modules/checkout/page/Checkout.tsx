@@ -31,19 +31,107 @@ export const Checkout = () => {
     postalCode: "",
   })
 
-  // 防抖验证函数
+  // 修改防抖验证函数
   const debouncedValidateForm = useCallback(() => {
     if (validationTimeout) {
       clearTimeout(validationTimeout)
     }
 
     const timeout = setTimeout(() => {
-      const isValid = validateForm()
-      setIsFormValid(isValid)
+      if (!cart) return
+
+      const newErrors = { ...errors }
+      let hasError = false
+
+      // Email validation
+      const email = cart.email?.trim() ?? ""
+      if (!email) {
+        newErrors.email = "Email is required"
+        hasError = true
+      } else {
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        if (!emailRegex.test(email)) {
+          newErrors.email = "Please enter a valid email address"
+          hasError = true
+        } else {
+          newErrors.email = ""
+        }
+      }
+
+      // Phone validation
+      const phone = cart.shipping_address?.phone?.trim() ?? ""
+      if (!phone) {
+        newErrors.phone = "Phone number is required"
+        hasError = true
+      } else {
+        const phoneRegex = /^\+?[1-9]\d{1,14}$/
+        if (!phoneRegex.test(phone)) {
+          newErrors.phone = "Please enter a valid phone number"
+          hasError = true
+        } else {
+          newErrors.phone = ""
+        }
+      }
+
+      // Required fields validation
+      const shippingAddress = cart.shipping_address ?? {
+        first_name: "",
+        last_name: "",
+        address_1: "",
+        city: "",
+        province: "",
+        postal_code: "",
+        phone: "",
+      }
+
+      if (!shippingAddress.first_name?.trim()) {
+        newErrors.firstName = "First name is required"
+        hasError = true
+      } else {
+        newErrors.firstName = ""
+      }
+
+      if (!shippingAddress.last_name?.trim()) {
+        newErrors.lastName = "Last name is required"
+        hasError = true
+      } else {
+        newErrors.lastName = ""
+      }
+
+      if (!shippingAddress.address_1?.trim()) {
+        newErrors.address = "Address is required"
+        hasError = true
+      } else {
+        newErrors.address = ""
+      }
+
+      if (!shippingAddress.city?.trim()) {
+        newErrors.city = "City is required"
+        hasError = true
+      } else {
+        newErrors.city = ""
+      }
+
+      if (!shippingAddress.province?.trim()) {
+        newErrors.province = "State is required"
+        hasError = true
+      } else {
+        newErrors.province = ""
+      }
+
+      if (!shippingAddress.postal_code?.trim()) {
+        newErrors.postalCode = "ZIP code is required"
+        hasError = true
+      } else {
+        newErrors.postalCode = ""
+      }
+
+      setErrors(newErrors)
+      setIsFormValid(!hasError)
     }, 500)
 
     setValidationTimeout(timeout)
-  }, [])
+  }, [cart, errors])
 
   // 监听表单变化
   useEffect(() => {
@@ -150,6 +238,7 @@ export const Checkout = () => {
     }
   }
 
+  // 修改输入处理函数
   const handleInputChange = (field: string, value: string) => {
     if (!cart) return
 
@@ -180,107 +269,11 @@ export const Checkout = () => {
     }
 
     setCart(newCart)
+    debouncedValidateForm()
   }
-
-  const validateForm = () => {
-    if (!cart) {
-      setIsFormValid(false)
-      return false
-    }
-
-    let valid = true
-    let newErrors = {
-      email: "",
-      phone: "",
-      firstName: "",
-      lastName: "",
-      address: "",
-      city: "",
-      province: "",
-      postalCode: "",
-    }
-
-    // Email validation
-    const email = cart.email?.trim() ?? ""
-    if (!email) {
-      newErrors.email = "Email is required"
-      valid = false
-    } else {
-      const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-      if (!emailRegex.test(email)) {
-        newErrors.email = "Please enter a valid email address"
-        valid = false
-      }
-    }
-
-    // Phone validation
-    const phone = cart.shipping_address?.phone?.trim() ?? ""
-    if (!phone) {
-      newErrors.phone = "Phone number is required"
-      valid = false
-    } else {
-      const phoneRegex = /^\+?[1-9]\d{1,14}$/
-      if (!phoneRegex.test(phone)) {
-        newErrors.phone = "Please enter a valid phone number"
-        valid = false
-      }
-    }
-
-    // Required fields validation
-    const shippingAddress = cart.shipping_address ?? {
-      first_name: "",
-      last_name: "",
-      address_1: "",
-      city: "",
-      province: "",
-      postal_code: "",
-      phone: "",
-    }
-
-    if (!shippingAddress.first_name?.trim()) {
-      newErrors.firstName = "First name is required"
-      valid = false
-    }
-
-    if (!shippingAddress.last_name?.trim()) {
-      newErrors.lastName = "Last name is required"
-      valid = false
-    }
-
-    if (!shippingAddress.address_1?.trim()) {
-      newErrors.address = "Address is required"
-      valid = false
-    }
-
-    if (!shippingAddress.city?.trim()) {
-      newErrors.city = "City is required"
-      valid = false
-    }
-
-    if (!shippingAddress.province?.trim()) {
-      newErrors.province = "State is required"
-      valid = false
-    }
-
-    if (!shippingAddress.postal_code?.trim()) {
-      newErrors.postalCode = "ZIP code is required"
-      valid = false
-    }
-
-    setErrors(newErrors)
-    setIsFormValid(valid)
-    return valid
-  }
-
-  // 监听表单变化
-  useEffect(() => {
-    if (cart) {
-      validateForm()
-    }
-  }, [cart])
 
   const confirmOrder = async () => {
-    if (!validateForm()) return
+    if (!isFormValid) return
 
     try {
       // 1. 更新购物车信息
