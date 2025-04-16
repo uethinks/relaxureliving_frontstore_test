@@ -101,14 +101,14 @@ export const ProductPage = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-2.5 p-2.5 w-full">
+        <div className="relative flex flex-col lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-2.5 p-2.5 w-full">
           <div className="flex flex-col gap-2.5 w-full lg:w-2/3">
             <ProductCard />
             <HeaterCard />
             <GlassDoorCard />
             <ShadesCard />
           </div>
-          <div className="flex flex-col justify-start gap-2.5 w-full lg:w-1/3">
+          <div className="flex flex-col justify-start gap-2.5 w-full lg:w-1/3 sticky top-10">
             <OrderSummary />
           </div>
         </div>

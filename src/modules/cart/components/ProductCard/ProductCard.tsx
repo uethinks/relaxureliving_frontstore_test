@@ -45,7 +45,7 @@ export const ProductCard = (): JSX.Element | null => {
       {pergola.map((item) => (
         <div
           key={item.id}
-          className="full flex items-center gap-5 p-5 rounded-[20px] border border-solid border-[#69727a]"
+          className="full flex items-center gap-5 p-5 rounded-[20px] bg-[#F3F3F3]"
         >
           <div
             className="relative w-full lg:w-1/3 h-[146px] rounded-[20px]"
