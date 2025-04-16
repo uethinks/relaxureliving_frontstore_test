@@ -1,45 +1,37 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
 import { StoreCartLineItem } from "@medusajs/types"
-import React, { useEffect, useState } from "react"
+import React, { useMemo } from "react"
 
 export const HeaterCard = (): JSX.Element | null => {
-  const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
-  useEffect(() => {
-    getCart().then((cart) => {
-      console.log("HeaterCard", cart)
-      setCart(cart)
-    })
-  }, [])
+  const { cart, removeVariant, updateVariantInfo } = useCart()
 
-  let heaterInCart = cart?.items?.filter(
-    (item) => item.product_title === "Heater"
-  )
-  const [heater, setHeater] = useState<StoreCartLineItem[] | null>(
-    heaterInCart ?? null
-  )
+  const heater = useMemo(() => {
+    if (!cart?.items) return null
+    const heaterItems = cart.items.filter(
+      (item) => item.product_title === "Heater"
+    )
+    return heaterItems.length > 0 ? heaterItems : null
+  }, [cart?.items])
 
   const removeProduct = async (heaterId: string) => {
-    if (heaterId) {
+    try {
       await removeVariant(heaterId)
-      await getCart()
+    } catch (error) {
+      console.error("Failed to remove product:", error)
     }
   }
+
   const updateQuantity = async (quantity: number, heaterId: string) => {
-    if (heaterId) {
+    try {
       await updateVariantInfo({
         lineId: heaterId,
         quantity: quantity,
       })
-      await getCart()
+    } catch (error) {
+      console.error("Failed to update quantity:", error)
     }
   }
-  useEffect(() => {
-    heaterInCart = cart?.items?.filter(
-      (item) => item.product_title === "Heater"
-    )
-    setHeater(heaterInCart ?? [])
-  }, [cart])
 
   return !heater ? null : (
     <>

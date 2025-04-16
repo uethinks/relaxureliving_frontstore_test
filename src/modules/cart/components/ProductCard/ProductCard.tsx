@@ -1,87 +1,39 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { useMemo } from "react"
 import { useCart } from "@lib/context/cartContext"
-import { StoreCartLineItem } from "@medusajs/types"
 
 export const ProductCard = (): JSX.Element | null => {
-  const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
-  const [pergola, setPergola] = useState<StoreCartLineItem[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  // 初始化加载购物车数据
-  useEffect(() => {
-    let isMounted = true
-
-    const loadCart = async () => {
-      try {
-        const cartData = await getCart()
-        if (isMounted && cartData) {
-          setCart(cartData)
-          const pergolaItems =
-            cartData.items?.filter(
-              (item) => item?.product_type === "Pergola"
-            ) || []
-          setPergola(pergolaItems)
-        }
-      } catch (error) {
-        console.error("Failed to load cart:", error)
-      } finally {
-        if (isMounted) {
-          setIsLoading(false)
-        }
-      }
-    }
-
-    loadCart()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
-
-  // 监听 cart 变化，更新 pergola
-  useEffect(() => {
-    if (!cart?.items) return
-
-    const pergolaItems = cart.items.filter(
-      (item) => item?.product_type === "Pergola"
-    )
-    setPergola(pergolaItems)
-  }, [cart])
+  const { cart, removeVariant, updateVariantInfo } = useCart()
+  console.log("cart ProductCard", cart)
+  const pergola = useMemo(() => {
+    if (!cart?.items) return []
+    return cart.items.filter((item) => {
+      // 检查多个可能的标识
+      return (
+        item.title?.includes("Pergola") ||
+        item.product_title?.includes("Pergola") ||
+        item.product_type === "Pergola"
+      )
+    })
+  }, [cart?.items])
 
   const removeProduct = async (pergolaId: string) => {
-    if (!pergolaId) return
-
     try {
       await removeVariant(pergolaId)
-      const updatedCart = await getCart()
-      if (updatedCart) {
-        setCart(updatedCart)
-      }
     } catch (error) {
       console.error("Failed to remove product:", error)
     }
   }
 
   const updateQuantity = async (quantity: number, pergolaId: string) => {
-    if (!pergolaId) return
-
     try {
       await updateVariantInfo({
         lineId: pergolaId,
         quantity: quantity,
       })
-      const updatedCart = await getCart()
-      if (updatedCart) {
-        setCart(updatedCart)
-      }
     } catch (error) {
       console.error("Failed to update quantity:", error)
     }
-  }
-
-  if (isLoading) {
-    return null
   }
 
   if (pergola.length === 0) {

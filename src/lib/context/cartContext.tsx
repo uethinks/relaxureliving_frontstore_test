@@ -7,6 +7,7 @@ import {
   ReactNode,
   useMemo,
   useEffect,
+  useCallback,
 } from "react"
 import { StoreCart } from "@medusajs/types"
 import {
@@ -15,11 +16,14 @@ import {
   updateLineItem,
   retrieveCart,
 } from "@lib/data/cart"
+import { usePathname } from "next/navigation"
+
 type variantInfo = {
   variantId: string
   quantity: number
   countryCode: string
 }
+
 interface CartContextType {
   cart: StoreCart | null
   setCart: (cart: StoreCart | null) => void
@@ -36,28 +40,50 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [cart, setCart] = useState<StoreCart | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const pathname = usePathname()
 
-  useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const cartData = await retrieveCart()
-        setCart(cartData)
-      } catch (error) {
-        console.error("Failed to fetch cart:", error)
-      }
+  const fetchCart = useCallback(async () => {
+    try {
+      const cartData = await retrieveCart()
+      setCart(cartData)
+    } catch (error) {
+      console.error("Failed to fetch cart:", error)
+    } finally {
+      setIsLoading(false)
     }
+  }, [])
 
+  // 初始化加载购物车数据
+  useEffect(() => {
     fetchCart()
-  }, []) // 空依赖数组表示只在组件挂载时执行一次
+  }, [fetchCart])
+
+  // 监听路由变化，在从产品页面进入购物车页面时刷新数据
+  useEffect(() => {
+    if (pathname === "/us/cart") {
+      fetchCart()
+    }
+  }, [pathname, fetchCart])
 
   const addVariant = async (variantInfo: variantInfo) => {
-    const cartData = await addToCart(variantInfo)
-    // setCart(cartData)
+    try {
+      const updatedCart = await addToCart(variantInfo)
+      setCart(updatedCart)
+    } catch (error) {
+      console.error("Failed to add variant:", error)
+      await fetchCart()
+    }
   }
 
   const removeVariant = async (lineId: string) => {
-    const cartData = await deleteLineItem(lineId)
-    // setCart(cartData)
+    try {
+      const updatedCart = await deleteLineItem(lineId)
+      setCart(updatedCart)
+    } catch (error) {
+      console.error("Failed to remove variant:", error)
+      await fetchCart()
+    }
   }
 
   const updateVariantInfo = async ({
@@ -67,15 +93,21 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     lineId: string
     quantity: number
   }) => {
-    const cartData = await updateLineItem({ lineId, quantity })
-    // setCart(cartData)
+    try {
+      const updatedCart = await updateLineItem({ lineId, quantity })
+      setCart(updatedCart)
+    } catch (error) {
+      console.error("Failed to update variant:", error)
+      await fetchCart()
+    }
   }
 
-  const getCart = async () => {
-    const cartData = await retrieveCart()
-    setCart(cartData)
-    return cartData
-  }
+  const getCart = useCallback(async () => {
+    if (!isLoading && cart) {
+      return cart
+    }
+    return await retrieveCart()
+  }, [cart, isLoading])
 
   const value = useMemo(
     () => ({
@@ -86,7 +118,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
       removeVariant,
       updateVariantInfo,
     }),
-    [cart]
+    [cart, getCart]
   )
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
