@@ -1,7 +1,7 @@
 import React from "react"
 import { getAllTerms } from "@lib/cms/strapiCmsApi"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
-import Link from "next/link"
+import AgreeButton from "./components/AgreeButton"
 
 interface TermType {
   title: string
@@ -65,9 +65,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ countryCode: string; type: string }>
+  params: { countryCode: string; type: string }
 }) {
-  const { type } = await params
+  const { type } = params
   if (!termsTypes[type]) {
     return {
       title: "Not Found - Relaxure Living",
@@ -82,17 +82,12 @@ export async function generateMetadata({
   }
 }
 
-interface PageProps {
-  readonly params: Promise<{
-    readonly countryCode: string
-    readonly type: string
-  }>
-}
-
-export const dynamic = "force-dynamic"
-
-export default async function TermsPage({ params }: PageProps) {
-  const { type } = await params
+export default async function TermsPage({
+  params,
+}: {
+  params: { type: string; countryCode: string }
+}) {
+  const { type } = params
 
   // 验证条款类型是否有效
   if (!termsTypes[type]) {
@@ -115,11 +110,7 @@ export default async function TermsPage({ params }: PageProps) {
           <div className="prose max-w-none">
             <BlocksRenderer content={content} />
           </div>
-          <Link href="javascript:history.back()">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-              Agree and continue
-            </button>
-          </Link>
+          <AgreeButton />
         </div>
       </div>
     </main>

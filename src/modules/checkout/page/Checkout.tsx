@@ -204,6 +204,20 @@ export const Checkout = () => {
         throw new Error("Failed to create Airwallex drop-in element")
       }
 
+      return element
+    } catch (error) {
+      console.error("Error initializing cart:", error)
+      return null
+    }
+  }
+
+  useEffect(() => {
+    let element: any = null
+
+    const setupPayment = async () => {
+      element = await initializeCart()
+      if (!element) return
+
       // 7. 挂载 Drop-in Element
       const container = document.getElementById("airwallex-dropin-container")
       if (container) {
@@ -223,13 +237,15 @@ export const Checkout = () => {
       element.on("ready", () => {
         console.log("Drop-in element is ready")
       })
-    } catch (error) {
-      console.error("Error initializing cart:", error)
     }
-  }
 
-  useEffect(() => {
-    initializeCart()
+    setupPayment()
+
+    return () => {
+      if (element) {
+        element.unmount()
+      }
+    }
   }, [])
 
   const handlePaymentComplete = async () => {
@@ -317,7 +333,7 @@ export const Checkout = () => {
         <NavBarWrapper isFixed={false} />
 
         {/* Payment Title */}
-        <div className="w-full inline-flex items-center justify-start gap-2.5 p-2.5 mt-10 mb-5 px-5">
+        <div className="w-full inline-flex items-center justify-start gap-2.5 p-2.5 px-5">
           <div className="mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] relative w-fit text-[#343a40] tracking-[var(--heading-2-letter-spacing)] whitespace-nowrap [font-style:var(--heading-2-font-style)]">
             Payment
           </div>
