@@ -18,6 +18,19 @@ export const Checkout = () => {
   const { cart, setCart, getCart } = useCart()
   const [shippingOptions, setShippingOptions] = useState<any[]>([])
   const [isFormValid, setIsFormValid] = useState(false)
+  const [formData, setFormData] = useState({
+    email: "",
+    shipping_address: {
+      first_name: "",
+      last_name: "",
+      address_1: "",
+      city: "",
+      province: "",
+      postal_code: "",
+      phone: "",
+      country_code: "us",
+    },
+  })
   const [validationTimeout, setValidationTimeout] =
     useState<NodeJS.Timeout | null>(null)
   const [errors, setErrors] = useState({
@@ -31,6 +44,25 @@ export const Checkout = () => {
     postalCode: "",
   })
 
+  // 初始化 formData
+  useEffect(() => {
+    if (cart) {
+      setFormData({
+        email: cart.email ?? "",
+        shipping_address: {
+          first_name: cart.shipping_address?.first_name ?? "",
+          last_name: cart.shipping_address?.last_name ?? "",
+          address_1: cart.shipping_address?.address_1 ?? "",
+          city: cart.shipping_address?.city ?? "",
+          province: cart.shipping_address?.province ?? "",
+          postal_code: cart.shipping_address?.postal_code ?? "",
+          phone: cart.shipping_address?.phone ?? "",
+          country_code: cart.shipping_address?.country_code ?? "us",
+        },
+      })
+    }
+  }, [cart])
+
   // 修改防抖验证函数
   const debouncedValidateForm = useCallback(() => {
     if (validationTimeout) {
@@ -38,13 +70,11 @@ export const Checkout = () => {
     }
 
     const timeout = setTimeout(() => {
-      if (!cart) return
-
       const newErrors = { ...errors }
       let hasError = false
 
       // Email validation
-      const email = cart.email?.trim() ?? ""
+      const email = formData.email?.trim() ?? ""
       if (!email) {
         newErrors.email = "Email is required"
         hasError = true
@@ -59,7 +89,7 @@ export const Checkout = () => {
       }
 
       // Phone validation
-      const phone = cart.shipping_address?.phone?.trim() ?? ""
+      const phone = formData.shipping_address.phone?.trim() ?? ""
       if (!phone) {
         newErrors.phone = "Phone number is required"
         hasError = true
@@ -74,52 +104,42 @@ export const Checkout = () => {
       }
 
       // Required fields validation
-      const shippingAddress = cart.shipping_address ?? {
-        first_name: "",
-        last_name: "",
-        address_1: "",
-        city: "",
-        province: "",
-        postal_code: "",
-        phone: "",
-      }
-
-      if (!shippingAddress.first_name?.trim()) {
+      if (!formData.shipping_address.first_name?.trim()) {
         newErrors.firstName = "First name is required"
         hasError = true
       } else {
         newErrors.firstName = ""
       }
 
-      if (!shippingAddress.last_name?.trim()) {
+      if (!formData.shipping_address.last_name?.trim()) {
         newErrors.lastName = "Last name is required"
         hasError = true
       } else {
         newErrors.lastName = ""
       }
 
-      if (!shippingAddress.address_1?.trim()) {
+      if (!formData.shipping_address.address_1?.trim()) {
         newErrors.address = "Address is required"
         hasError = true
       } else {
         newErrors.address = ""
       }
 
-      if (!shippingAddress.city?.trim()) {
+      if (!formData.shipping_address.city?.trim()) {
         newErrors.city = "City is required"
         hasError = true
       } else {
         newErrors.city = ""
       }
 
-      if (!shippingAddress.province?.trim()) {
+      if (!formData.shipping_address.province?.trim()) {
         newErrors.province = "State is required"
         hasError = true
       } else {
         newErrors.province = ""
       }
 
-      if (!shippingAddress.postal_code?.trim()) {
+      if (!formData.shipping_address.postal_code?.trim()) {
         newErrors.postalCode = "ZIP code is required"
         hasError = true
       } else {
@@ -131,7 +151,7 @@ export const Checkout = () => {
     }, 500)
 
     setValidationTimeout(timeout)
-  }, [cart, errors])
+  }, [formData, errors])
 
   // 监听表单变化
   useEffect(() => {
@@ -141,7 +161,7 @@ export const Checkout = () => {
         clearTimeout(validationTimeout)
       }
     }
-  }, [cart, debouncedValidateForm])
+  }, [formData, debouncedValidateForm])
 
   // 组件卸载时清理定时器
   useEffect(() => {
@@ -165,11 +185,14 @@ export const Checkout = () => {
 
       // 3. 获取配送选项
       const shippingMethods = await listCartShippingMethods(currentCart.id)
-      setShippingOptions(shippingMethods ?? [])
+      await setShippingMethod({
+        cartId: currentCart?.id ?? "",
+        shippingMethodId: shippingMethods?.[0]?.id ?? "",
+      })
 
       // 4. 初始化 Airwallex SDK
       const { payments } = await init({
-        env: "prod",
+        env: process.env.AIRWALLEX_ENV as "dev" | "staging" | "demo" | "prod",
         enabledElements: ["payments"],
       })
 
@@ -248,81 +271,43 @@ export const Checkout = () => {
     }
   }, [])
 
-  const handlePaymentComplete = async () => {
-    if (cart) {
-      await placeOrder(cart.id)
-    }
-  }
-
   // 修改输入处理函数
   const handleInputChange = (field: string, value: string) => {
-    if (!cart) return
-
-    const newCart = { ...cart }
-    if (field === "email") {
-      newCart.email = value
-    } else if (field.startsWith("shipping_")) {
-      const addressField = field.replace("shipping_", "")
-      if (!newCart.shipping_address) {
-        newCart.shipping_address = {
-          id: "",
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          first_name: "",
-          last_name: "",
-          address_1: "",
-          address_2: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country_code: "us",
-          phone: "",
+    console.log("handleInputChange called with:", field, value)
+    setFormData((prevFormData) => {
+      const newFormData = { ...prevFormData }
+      if (field === "email") {
+        newFormData.email = value
+      } else if (field.startsWith("shipping_")) {
+        const addressField = field.replace("shipping_", "")
+        if (addressField in newFormData.shipping_address) {
+          ;(newFormData.shipping_address as any)[addressField] = value
         }
       }
-      if (addressField in newCart.shipping_address) {
-        ;(newCart.shipping_address as any)[addressField] = value
-      }
-    }
-
-    setCart(newCart)
+      console.log("New formData:", newFormData)
+      return newFormData
+    })
     debouncedValidateForm()
   }
 
-  const confirmOrder = async () => {
-    if (!isFormValid) return
+  // 添加一个 ref 来存储最新的 formData
+  const formDataRef = React.useRef(formData)
 
-    try {
-      // 1. 更新购物车信息
-      const shipping_address = {
-        first_name: cart?.shipping_address?.first_name ?? "",
-        last_name: cart?.shipping_address?.last_name ?? "",
-        address_1: cart?.shipping_address?.address_1 ?? "",
-        city: cart?.shipping_address?.city ?? "",
-        province: cart?.shipping_address?.province ?? "",
-        postal_code: cart?.shipping_address?.postal_code ?? "",
-        phone: cart?.shipping_address?.phone ?? "",
-        country_code: cart?.shipping_address?.country_code ?? "us",
-      }
-      const data = {
-        email: cart?.email,
-        shipping_address: shipping_address,
-      }
-      await updateCart(data)
+  // 更新 ref 当 formData 变化时
+  React.useEffect(() => {
+    formDataRef.current = formData
+  }, [formData])
 
-      // 2. 设置配送方式
-      await setShippingMethod({
-        cartId: cart?.id ?? "",
-        shippingMethodId: shippingOptions?.[0]?.id ?? "",
+  // 修改 handlePaymentComplete 使用 ref
+  const handlePaymentComplete = async () => {
+    if (cart) {
+      console.log("Form data before update:", formDataRef.current)
+      // Update cart with form data before placing order
+      await updateCart({
+        email: formDataRef.current.email,
+        shipping_address: formDataRef.current.shipping_address,
       })
-
-      // 3. 创建订单
-      const orderResult = await placeOrder(cart?.id ?? "")
-      console.log("orderResult", orderResult)
-      if (!orderResult || orderResult.type == "cart") {
-        throw new Error("Failed to create order")
-      }
-    } catch (error) {
-      console.error("Error in payment process:", error)
+      await placeOrder(cart.id)
     }
   }
 
@@ -349,8 +334,11 @@ export const Checkout = () => {
                   className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
                   placeholder="Email or phone number"
                   type="email"
-                  value={cart?.email ?? ""}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  value={formData.email}
+                  onChange={(e) => {
+                    console.log("Email input changed:", e.target.value)
+                    handleInputChange("email", e.target.value)
+                  }}
                 />
                 {errors.email && (
                   <div className="text-red-500 mt-1 block">{errors.email}</div>
@@ -362,7 +350,7 @@ export const Checkout = () => {
                   className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
                   placeholder="Phone"
                   type="tel"
-                  value={cart?.shipping_address?.phone ?? ""}
+                  value={formData.shipping_address.phone}
                   onChange={(e) =>
                     handleInputChange("shipping_phone", e.target.value)
                   }
@@ -403,7 +391,7 @@ export const Checkout = () => {
                       className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
                       placeholder="First name"
                       type="text"
-                      value={cart?.shipping_address?.first_name ?? ""}
+                      value={formData.shipping_address.first_name}
                       onChange={(e) =>
                         handleInputChange("shipping_first_name", e.target.value)
                       }
@@ -419,7 +407,7 @@ export const Checkout = () => {
                       className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
                       placeholder="Last name"
                       type="text"
-                      value={cart?.shipping_address?.last_name ?? ""}
+                      value={formData.shipping_address.last_name}
                       onChange={(e) =>
                         handleInputChange("shipping_last_name", e.target.value)
                       }
@@ -438,7 +426,7 @@ export const Checkout = () => {
                   className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
                   placeholder="Address"
                   type="text"
-                  value={cart?.shipping_address?.address_1 ?? ""}
+                  value={formData.shipping_address.address_1}
                   onChange={(e) =>
                     handleInputChange("shipping_address_1", e.target.value)
                   }
@@ -456,7 +444,7 @@ export const Checkout = () => {
                     className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
                     placeholder="City"
                     type="text"
-                    value={cart?.shipping_address?.city ?? ""}
+                    value={formData.shipping_address.city}
                     onChange={(e) =>
                       handleInputChange("shipping_city", e.target.value)
                     }
@@ -470,7 +458,7 @@ export const Checkout = () => {
                     className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
                     placeholder="State"
                     type="text"
-                    value={cart?.shipping_address?.province ?? ""}
+                    value={formData.shipping_address.province}
                     onChange={(e) =>
                       handleInputChange("shipping_province", e.target.value)
                     }
@@ -486,7 +474,7 @@ export const Checkout = () => {
                     className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
                     placeholder="ZIP code"
                     type="text"
-                    value={cart?.shipping_address?.postal_code ?? ""}
+                    value={formData.shipping_address.postal_code}
                     onChange={(e) =>
                       handleInputChange("shipping_postal_code", e.target.value)
                     }

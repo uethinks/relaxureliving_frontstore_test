@@ -25,7 +25,7 @@ export const PaymentFinish = ({
 
             <div className="flex items-center justify-center gap-2.5 p-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="w-[323px] opacity-[0.56] text-base text-center leading-6 relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] tracking-[0]">
-                We will send you an email with the delivery details
+                {/* We will send you an email with the delivery details */}
               </p>
             </div>
           </div>
@@ -47,7 +47,7 @@ export const PaymentFinish = ({
 
           <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
             <p className="self-stretch text-base leading-6 relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] tracking-[0]">
-              Expected delivery day 12 Jan 2025
+              {/* Expected delivery day 12 Jan 2025 */}
             </p>
           </div>
         </div>
@@ -90,13 +90,13 @@ export const PaymentFinish = ({
               <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col items-start gap-5 relative flex-1 grow">
                   <div className="relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
-                    Build ID
+                    Order number
                   </div>
                 </div>
 
                 <div className="inline-flex items-center justify-center gap-2.5 p-1.5 relative flex-[0_0_auto] rounded-[10px]">
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap">
-                    # 9893322
+                    {order.id}
                   </div>
                 </div>
               </div>
