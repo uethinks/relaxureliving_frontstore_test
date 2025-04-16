@@ -19,7 +19,7 @@ export const ProductCard = (): JSX.Element | null => {
           setCart(cartData)
           const pergolaItems =
             cartData.items?.filter(
-              (item) => item?.product_type === "Pergula"
+              (item) => item?.product_type === "Pergola"
             ) || []
           setPergola(pergolaItems)
         }
@@ -44,7 +44,7 @@ export const ProductCard = (): JSX.Element | null => {
     if (!cart?.items) return
 
     const pergolaItems = cart.items.filter(
-      (item) => item?.product_type === "Pergula"
+      (item) => item?.product_type === "Pergola"
     )
     setPergola(pergolaItems)
   }, [cart])
