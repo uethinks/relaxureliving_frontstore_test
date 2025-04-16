@@ -34,6 +34,7 @@ interface CartContextType {
     lineId: string
     quantity: number
   }) => Promise<void>
+  isLoading: boolean
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -45,6 +46,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const fetchCart = useCallback(async () => {
     try {
+      setIsLoading(true)
       const cartData = await retrieveCart()
       setCart(cartData)
     } catch (error) {
@@ -59,11 +61,9 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     fetchCart()
   }, [fetchCart])
 
-  // 监听路由变化，在从产品页面进入购物车页面时刷新数据
+  // 监听路由变化，在进入任何页面时都刷新数据
   useEffect(() => {
-    if (pathname === "/us/cart") {
-      fetchCart()
-    }
+    fetchCart()
   }, [pathname, fetchCart])
 
   const addVariant = async (variantInfo: variantInfo) => {
@@ -103,11 +103,15 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   }
 
   const getCart = useCallback(async () => {
-    if (!isLoading && cart) {
-      return cart
+    try {
+      const cartData = await retrieveCart()
+      setCart(cartData)
+      return cartData
+    } catch (error) {
+      console.error("Failed to get cart:", error)
+      return null
     }
-    return await retrieveCart()
-  }, [cart, isLoading])
+  }, [])
 
   const value = useMemo(
     () => ({
@@ -117,8 +121,9 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
       addVariant,
       removeVariant,
       updateVariantInfo,
+      isLoading,
     }),
-    [cart, getCart]
+    [cart, getCart, isLoading]
   )
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

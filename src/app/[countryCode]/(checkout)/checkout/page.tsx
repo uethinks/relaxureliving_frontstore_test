@@ -18,7 +18,7 @@ import { notFound } from "next/navigation"
 import { Checkout as CheckoutComponent } from "@modules/checkout/page/Checkout"
 
 export default function CheckoutPage() {
-  const { cart, setCart, getCart } = useCart()
+  const { cart, setCart, getCart, isLoading } = useCart()
   const [shippingOptions, setShippingOptions] = useState<any[]>([])
   const [isFormValid, setIsFormValid] = useState(false)
   const [validationTimeout, setValidationTimeout] =
@@ -47,8 +47,19 @@ export default function CheckoutPage() {
     fetchCustomer()
   }, [])
 
+  if (isLoading) {
+    return null
+  }
+
   if (!cart) {
-    return notFound()
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold mb-4">No items in cart</h1>
+        <Link href="/cart" className="text-blue-500 hover:underline">
+          Go to cart
+        </Link>
+      </div>
+    )
   }
 
   return <CheckoutComponent />
