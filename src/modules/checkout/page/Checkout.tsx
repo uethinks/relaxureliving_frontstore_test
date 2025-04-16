@@ -312,7 +312,7 @@ export const Checkout = () => {
 
   return (
     <div className="bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex flex-col items-center justify-start w-full">
-      <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full lg:w-[90%] 2xl:w-[1512px] relative pt-10">
+      <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full relative px-10">
         {/* Header */}
         <NavBarWrapper isFixed={false} />
 
@@ -375,22 +375,6 @@ export const Checkout = () => {
                       <img src="/img/USA.png" alt="USA" />
                       <span>United States</span>
                     </div>
-                  </div>
-                </div>
-              </div>
-              {/* Shipping Method Selector */}
-              <div className="flex flex-col items-start gap-3 relative w-full self-stretch flex-[0_0_auto]">
-                <div className="border-[#d8dadc] text-[#8d9299] flex flex-col items-center flex-[0_0_auto] px-[14.53px] py-[16.34px] w-full rounded-[9.08px] gap-[9.08px] bg-[#ffffff] border border-solid self-stretch">
-                  <div className="w-full h-[13px] [font-family:'Montserrat',Helvetica] font-normal text-[#8d9299] text-xs tracking-[0] leading-[13.2px]">
-                    Shipping Method
-                  </div>
-                  <div className="w-full flex  items-center gap-2">
-                    {shippingOptions.map((option) => (
-                      <div className="w-1/3" key={option.id}>
-                        {/* <input type="radio" name="shippingMethod" /> */}
-                        <label>{option.name}</label>
-                      </div>
-                    ))}
                   </div>
                 </div>
               </div>
@@ -552,7 +536,7 @@ export const Checkout = () => {
             </div>
           </div>
           {/* Order Summary */}
-          <div className="w-full lg:w-2/5 flex flex-col items-start gap-5 px-2.5 lg:sticky lg:top-0">
+          <div className="w-full lg:w-2/5 flex flex-col items-start gap-5 px-2.5 lg:sticky lg:top-10">
             <div className="flex flex-col items-start gap-5 p-5 relative self-stretch w-full bg-[#efefef] rounded-[20px] shadow-shadow-relaxure-button">
               <div className="inline-flex items-center relative flex-[0_0_auto]">
                 <div className="mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[22px] leading-[30.8px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
