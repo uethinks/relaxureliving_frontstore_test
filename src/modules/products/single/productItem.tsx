@@ -1,19 +1,11 @@
 "use client"
 import React, { useState, useEffect, Suspense } from "react"
 import { FirstScreen } from "./components/FirstScreen"
-import { Advantage } from "./components/Advantage"
 import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
-import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
-import {
-  ImageOnLeft,
-  ImageOnRight,
-  Advantages,
-  AccessoriesCards,
-} from "./components/LandingPage"
-import { Assembly, Description } from "./components/PergolaInformations"
+
 import {
   PergolaSize,
   selectedProducts,
@@ -71,10 +63,6 @@ const LazyOurPromise = dynamic(
   }
 )
 
-type accessoryHeaterVirant = selectedProductVariant
-type accessoryShadesVariant = selectedProductVariant
-type accessoryGlassdoorVariant = selectedProductVariant
-
 export const ProductItem = ({
   product,
   accessories,
@@ -99,7 +87,6 @@ export const ProductItem = ({
     useState<selectedProducts>([])
   const [selectedAccessoriesGlassdoor, setSelectedAccessoriesGlassdoor] =
     useState<selectedProducts>([])
-  const [activeTab, setActiveTab] = useState("Description")
   const [pergolaQuantity, setPergolaQuantity] = useState(1)
   const [totalPrice, setTotalPrice] = useState(0)
   const handleVariantChange = (variant: StoreProductVariant | undefined) => {
