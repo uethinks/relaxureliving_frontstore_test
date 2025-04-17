@@ -1,12 +1,19 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
 import { StoreCartLineItem } from "@medusajs/types"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import { ConfirmDialog } from "../../../../components/ConfirmDialog"
 
 export const GlassDoorCard = (): JSX.Element | null => {
   const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
+  const [quantities, setQuantities] = useState<{
+    [key: string]: number | string
+  }>({})
+  const [updateTimeout, setUpdateTimeout] = useState<{
+    [key: string]: NodeJS.Timeout
+  }>({})
+  const [isUpdating, setIsUpdating] = useState(false)
 
   useEffect(() => {
     getCart().then((cart) => {
@@ -21,6 +28,16 @@ export const GlassDoorCard = (): JSX.Element | null => {
   const [glassDoor, setGlassDoor] = useState<StoreCartLineItem[] | null>(
     glassDoorInCart ?? null
   )
+
+  // Initialize quantities from cart items
+  useEffect(() => {
+    if (!glassDoor) return
+    const newQuantities: { [key: string]: number } = {}
+    glassDoor.forEach((item) => {
+      newQuantities[item.id] = item.quantity
+    })
+    setQuantities(newQuantities)
+  }, [glassDoor])
 
   const handleDelete = (itemId: string) => {
     setDeleteItemId(itemId)
@@ -44,15 +61,111 @@ export const GlassDoorCard = (): JSX.Element | null => {
     }
   }
 
-  const updateQuantity = async (quantity: number, glassDoorId: string) => {
-    if (glassDoorId) {
-      await updateVariantInfo({
-        lineId: glassDoorId,
-        quantity: quantity,
-      })
-      await getCart()
+  const handleQuantityChange = useCallback(
+    (quantity: number | string, itemId: string): void => {
+      if (isUpdating) return
+
+      // Allow empty input but set to 1 after debounce
+      if (quantity === "") {
+        setQuantities((prev) => ({ ...prev, [itemId]: "" }))
+
+        // Clear existing timeout for this item
+        if (updateTimeout[itemId]) {
+          clearTimeout(updateTimeout[itemId])
+        }
+
+        // Set new timeout with debounce
+        const timeoutId = setTimeout(async () => {
+          try {
+            setIsUpdating(true)
+            await updateVariantInfo({
+              lineId: itemId,
+              quantity: 1,
+            })
+            // Only update cart if the update was successful
+            const updatedCart = await getCart()
+            if (updatedCart) {
+              setCart(updatedCart)
+              setQuantities((prev) => ({ ...prev, [itemId]: 1 }))
+            }
+          } catch (error) {
+            console.error("Failed to update quantity:", error)
+            // Revert to original quantity on error
+            setQuantities((prev) => ({
+              ...prev,
+              [itemId]:
+                cart?.items?.find((item) => item.id === itemId)?.quantity || 1,
+            }))
+          } finally {
+            setIsUpdating(false)
+          }
+        }, 800)
+
+        setUpdateTimeout((prev) => ({ ...prev, [itemId]: timeoutId }))
+        return
+      }
+
+      // Only proceed with number validation if the input is not empty
+      const numQuantity = Number(quantity)
+      if (isNaN(numQuantity)) return // Allow partial input like "4" when typing "41"
+
+      // Update local state immediately with the current input
+      setQuantities((prev) => ({ ...prev, [itemId]: quantity }))
+
+      // Only proceed with API update if we have a valid number
+      if (numQuantity >= 1) {
+        // Clear existing timeout for this item
+        if (updateTimeout[itemId]) {
+          clearTimeout(updateTimeout[itemId])
+        }
+
+        // Set new timeout with debounce
+        const timeoutId = setTimeout(async () => {
+          try {
+            setIsUpdating(true)
+            await updateVariantInfo({
+              lineId: itemId,
+              quantity: numQuantity,
+            })
+            // Only update cart if the update was successful
+            const updatedCart = await getCart()
+            if (updatedCart) {
+              setCart(updatedCart)
+            }
+          } catch (error) {
+            console.error("Failed to update quantity:", error)
+            // Revert to original quantity on error
+            setQuantities((prev) => ({
+              ...prev,
+              [itemId]:
+                cart?.items?.find((item) => item.id === itemId)?.quantity || 1,
+            }))
+          } finally {
+            setIsUpdating(false)
+          }
+        }, 800) // Increased debounce time to 800ms
+
+        setUpdateTimeout((prev) => ({ ...prev, [itemId]: timeoutId }))
+      }
+    },
+    [
+      cart?.items,
+      updateTimeout,
+      isUpdating,
+      updateVariantInfo,
+      getCart,
+      setCart,
+    ]
+  )
+
+  // Cleanup timeouts on unmount
+  React.useEffect(() => {
+    return () => {
+      Object.values(updateTimeout).forEach((timeoutId) =>
+        clearTimeout(timeoutId)
+      )
     }
-  }
+  }, [updateTimeout])
 
   useEffect(() => {
     glassDoorInCart = cart?.items?.filter(
@@ -87,7 +200,7 @@ export const GlassDoorCard = (): JSX.Element | null => {
             </div>
             <div className="inline-flex flex-col items-center gap-2.5 relative flex-[0_0_auto]">
               <div className="text-[18px] text-[#7e7e7e]">
-                {item?.quantity} x {item?.variant_title}
+                {quantities[item.id]} x {item?.variant_title}
               </div>
             </div>
             <div className="flex justify-between items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -100,14 +213,17 @@ export const GlassDoorCard = (): JSX.Element | null => {
                 <div className="flex items-center gap-10 relative flex-[0_0_auto]">
                   <div className="flex w-14 h-10 items-center justify-center gap-2.5 p-2.5 relative bg-[#ffffff] rounded-[20px] border border-solid border-[#a8a8a8]">
                     <input
-                      type="number"
-                      value={item.quantity}
-                      min={1}
-                      onChange={(e) =>
-                        updateQuantity(Number(e.target.value), item.id)
-                      }
-                      className="text-right focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap"
-                    ></input>
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={quantities[item.id] ?? ""}
+                      disabled={isUpdating}
+                      onChange={(e) => {
+                        const value = e.target.value
+                        handleQuantityChange(value, item.id)
+                      }}
+                      className="text-center focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                    />
                   </div>
                 </div>
               </div>
