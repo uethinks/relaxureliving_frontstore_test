@@ -261,11 +261,7 @@ export const ShadesCard = (): JSX.Element | null => {
                 className="flex w-10 h-10 items-center gap-2.5 px-[9px] py-[7px] bg-[#ffffff] rounded-[31px] border border-solid border-[#a8a8a8]"
               >
                 <div className="relative w-4 h-5">
-                  <img
-                    className="absolute w-4 h-5 top-0 left-[3px]"
-                    alt="Layer"
-                    src="https://c.animaapp.com/m8o9g6iofzwjOy/img/layer-3-1.png"
-                  />
+                  <img alt="Layer" src="/img/delete.png" />
                 </div>
               </button>
             </div>
