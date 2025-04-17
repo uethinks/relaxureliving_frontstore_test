@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
 import Image from "next/image"
+import { ImageReviewModal } from "./ImageReviewModal"
 
-interface ReviewType {
+export interface ReviewType {
   id: string
   rating: number
   date: string
@@ -41,6 +42,25 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
   ratingDistribution,
   reviews,
 }) => {
+  // Get all reviews that have images
+  const reviewsWithImages = reviews.filter(
+    (review) => review.images && review.images.length > 0
+  )
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleImageClick = (reviewIndex: number) => {
+    setCurrentReviewIndex(reviewIndex)
+    setIsModalOpen(true)
+  }
+
+  const handleSeeMoreClick = () => {
+    if (reviewsWithImages.length > 0) {
+      setCurrentReviewIndex(0)
+      setIsModalOpen(true)
+    }
+  }
+
   // Split reviews into columns based on screen size
   const splitReviews = (reviewList: ReviewType[], columnCount: number) => {
     const columns: ReviewType[][] = Array.from(
@@ -54,7 +74,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-16">
+    <div className="w-full max-w-7xl mx-auto py-16">
       {/* Reviews Overview Section */}
       <div className="mb-16">
         <h2 className="text-3xl font-semibold text-center mb-8">
@@ -99,34 +119,46 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
       </div>
 
       {/* Customer Photos Section */}
-      <div className="mb-16">
+      <div className="mb-16 flex flex-col items-center">
         <h3 className="text-xl font-medium mb-6">Customer photos & videos</h3>
         <div className="flex gap-4 overflow-x-auto pb-4">
-          {reviews
-            .filter((review) => review.images && review.images.length > 0)
-            .flatMap((review) => review.images || [])
-            .slice(0, 7)
-            .map((image, index) => (
-              <div
-                key={index}
-                className="min-w-[120px] h-[120px] relative rounded-lg overflow-hidden"
-              >
-                <Image
-                  src={image}
-                  alt="Customer review photo"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          <button className="min-w-[120px] h-[120px] bg-gray-50 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors">
+          {reviewsWithImages.slice(0, 7).map((review, index) => (
+            <div
+              key={review.id}
+              className="min-w-[120px] h-[120px] relative rounded-lg overflow-hidden cursor-pointer"
+              onClick={() => handleImageClick(index)}
+            >
+              <Image
+                src={review.images![0]}
+                alt="Customer review photo"
+                fill
+                className="object-cover hover:opacity-90 transition-opacity"
+              />
+            </div>
+          ))}
+          <button
+            onClick={handleSeeMoreClick}
+            className="min-w-[120px] h-[120px] bg-gray-50 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
+          >
             See more
           </button>
         </div>
       </div>
 
+      {/* Image Review Modal */}
+      {reviewsWithImages.length > 0 && (
+        <ImageReviewModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          review={reviewsWithImages[currentReviewIndex]}
+          currentReviewIndex={currentReviewIndex}
+          onReviewChange={setCurrentReviewIndex}
+          totalReviews={reviewsWithImages.length}
+        />
+      )}
+
       {/* Review Cards - Flex Column Layout */}
-      <div className="hidden xl:flex gap-8">
+      <div className="hidden xl:flex justify-between gap-8">
         {/* Large screens - 3 columns */}
         {splitReviews(reviews, 3).map((columnReviews, columnIndex) => (
           <div key={columnIndex} className="w-1/3 flex flex-col gap-8">
@@ -137,7 +169,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
         ))}
       </div>
 
-      <div className="hidden md:flex xl:hidden gap-8">
+      <div className="hidden md:flex xl:hidden justify-between gap-8">
         {/* Medium screens - 2 columns */}
         {splitReviews(reviews, 2).map((columnReviews, columnIndex) => (
           <div key={columnIndex} className="w-1/2 flex flex-col gap-8">
