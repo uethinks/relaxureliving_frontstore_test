@@ -199,7 +199,7 @@ export const Checkout = () => {
       // 1. 首先获取购物车
       const currentCart = await getCart()
       console.log("currentCart", currentCart)
-      if (!currentCart) return
+      if (!currentCart) return null
 
       // 2. 更新购物车状态
       setCart(currentCart)
@@ -211,44 +211,52 @@ export const Checkout = () => {
         shippingMethodId: shippingMethods?.[0]?.id ?? "",
       })
 
-      // 4. 初始化 Airwallex SDK
-      const { payments } = await init({
-        env: process.env.AIRWALLEX_ENV as "dev" | "staging" | "demo" | "prod",
-        enabledElements: ["payments"],
-      })
+      // 4. 初始化 Airwallex SDK - 只在客户端执行
+      if (typeof window !== "undefined") {
+        const { payments } = await init({
+          env: process.env.NEXT_PUBLIC_AIRWALLEX_ENV as
+            | "dev"
+            | "staging"
+            | "demo"
+            | "prod",
+          enabledElements: ["payments"],
+        })
 
-      if (!payments) {
-        throw new Error("Failed to initialize Airwallex payments")
-      }
-
-      // 5. 初始化支付会话
-      const paymentSession = await initiatePaymentSession(
-        currentCart as StoreCart,
-        {
-          provider_id: "pp_Airwallex_Airwallex",
-          data: {
-            amount: currentCart?.total,
-            currency: currentCart?.currency_code,
-            merchant_order_id: currentCart?.id,
-          },
+        if (!payments) {
+          throw new Error("Failed to initialize Airwallex payments")
         }
-      )
-      console.log("paymentSession", paymentSession)
 
-      // 6. 创建 Drop-in Element
-      const element = await payments.createElement("dropIn", {
-        intent_id: paymentSession.payment_collection?.payment_sessions?.[0]
-          ?.data?.payment_intent_id as string,
-        client_secret: paymentSession.payment_collection?.payment_sessions?.[0]
-          ?.data?.client_secret as string,
-        currency: currentCart?.currency_code?.toUpperCase() || "USD",
-      })
+        // 5. 初始化支付会话
+        const paymentSession = await initiatePaymentSession(
+          currentCart as StoreCart,
+          {
+            provider_id: "pp_Airwallex_Airwallex",
+            data: {
+              amount: currentCart?.total,
+              currency: currentCart?.currency_code,
+              merchant_order_id: currentCart?.id,
+            },
+          }
+        )
+        console.log("paymentSession", paymentSession)
 
-      if (!element) {
-        throw new Error("Failed to create Airwallex drop-in element")
+        // 6. 创建 Drop-in Element
+        const element = await payments.createElement("dropIn", {
+          intent_id: paymentSession.payment_collection?.payment_sessions?.[0]
+            ?.data?.payment_intent_id as string,
+          client_secret: paymentSession.payment_collection
+            ?.payment_sessions?.[0]?.data?.client_secret as string,
+          currency: currentCart?.currency_code?.toUpperCase() || "USD",
+        })
+
+        if (!element) {
+          throw new Error("Failed to create Airwallex drop-in element")
+        }
+
+        return element
       }
 
-      return element
+      return null
     } catch (error) {
       console.error("Error initializing cart:", error)
       return null
@@ -259,6 +267,9 @@ export const Checkout = () => {
     let element: any = null
 
     const setupPayment = async () => {
+      // 只在客户端执行
+      if (typeof window === "undefined") return
+
       element = await initializeCart()
       if (!element) return
 
