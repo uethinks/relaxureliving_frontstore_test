@@ -77,7 +77,11 @@ const mockReviewData = {
       title: "Beautiful Setup",
       content:
         "Setting up the pergola with my son wasn't very difficult and the reward after it was done is awesome, have already had so many compliments on the pergola, thank you so much Pergolux.",
-      images: ["/img/pergola-description.jpg"],
+      images: [
+        "/img/pergola-description.jpg",
+        "/img/pergola-description.jpg",
+        "/img/pergola-description.jpg",
+      ],
       verified: true,
     },
     {
@@ -88,7 +92,7 @@ const mockReviewData = {
       title: "PERGOLUX Screen 52 19'",
       content:
         'Installing this screen was pretty straight forward. It is reasonably heavy so would recommend three people to do the job. It is so long that the aluminum housing deforms just a bit toward the center. It is easy to move up and down. The spring tension is not quite enough on one end to go fully up but it is within about 1/4". I will probably just file a catch slot on that end that the built in spring catch can fail into to hold it fully up. Does a great job of shading us from the afternoon sun which hits our Pergolux Sundance full on. The screen looks very nice when extended.',
-      images: ["/img/pergola-description.jpg"],
+      images: ["/img/pergola-description.jpg", "/img/pergola-description.jpg"],
       verified: true,
     },
     {
@@ -99,7 +103,12 @@ const mockReviewData = {
       title: "Ready for Installation",
       content:
         "Pergolux is ready for installation, as long as the weather permits.",
-      images: ["/img/pergola-description.jpg"],
+      images: [
+        "/img/pergola-description.jpg",
+        "/img/pergola-description.jpg",
+        "/img/pergola-description.jpg",
+        "/img/pergola-description.jpg",
+      ],
       verified: true,
       response: {
         author: "PERGOLUX USA",
@@ -387,13 +396,12 @@ export const ProductItem = ({
           </Suspense>
         </div>
         <div className="w-full">
+          <CustomerReviews {...mockReviewData} />
+        </div>
+        <div className="w-full">
           <Suspense fallback={<LoadingSpinner />}>
             <LazyOurPromise />
           </Suspense>
-        </div>
-
-        <div className="w-full">
-          <CustomerReviews {...mockReviewData} />
         </div>
       </div>
       <FooterDark />
