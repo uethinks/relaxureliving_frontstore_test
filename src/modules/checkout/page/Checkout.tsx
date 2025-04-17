@@ -148,12 +148,31 @@ export const Checkout = () => {
         newErrors.postalCode = ""
       }
 
-      setErrors(newErrors)
-      setIsFormValid(!hasError)
+      // 只在错误状态发生变化时更新状态
+      if (JSON.stringify(newErrors) !== JSON.stringify(errors)) {
+        setErrors(newErrors)
+        setIsFormValid(!hasError)
+      }
     }, 500)
 
     setValidationTimeout(timeout)
   }, [formData, errors])
+
+  // 修改输入处理函数
+  const handleInputChange = useCallback((field: string, value: string) => {
+    setFormData((prevFormData) => {
+      const newFormData = { ...prevFormData }
+      if (field === "email") {
+        newFormData.email = value
+      } else if (field.startsWith("shipping_")) {
+        const addressField = field.replace("shipping_", "")
+        if (addressField in newFormData.shipping_address) {
+          ;(newFormData.shipping_address as any)[addressField] = value
+        }
+      }
+      return newFormData
+    })
+  }, [])
 
   // 监听表单变化
   useEffect(() => {
@@ -273,25 +292,6 @@ export const Checkout = () => {
     }
   }, [])
 
-  // 修改输入处理函数
-  const handleInputChange = (field: string, value: string) => {
-    console.log("handleInputChange called with:", field, value)
-    setFormData((prevFormData) => {
-      const newFormData = { ...prevFormData }
-      if (field === "email") {
-        newFormData.email = value
-      } else if (field.startsWith("shipping_")) {
-        const addressField = field.replace("shipping_", "")
-        if (addressField in newFormData.shipping_address) {
-          ;(newFormData.shipping_address as any)[addressField] = value
-        }
-      }
-      console.log("New formData:", newFormData)
-      return newFormData
-    })
-    debouncedValidateForm()
-  }
-
   // 添加一个 ref 来存储最新的 formData
   const formDataRef = React.useRef(formData)
 
@@ -309,6 +309,7 @@ export const Checkout = () => {
         email: formDataRef.current.email,
         shipping_address: formDataRef.current.shipping_address,
       })
+
       const cartRes = await placeOrder(cart.id)
       setOrder(cartRes.type === "order" ? cartRes.order : null)
     }
@@ -335,7 +336,7 @@ export const Checkout = () => {
               <div className="flex flex-col w-full">
                 <input
                   className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
-                  placeholder="Email or phone number"
+                  placeholder="Email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => {

@@ -78,9 +78,7 @@ export const ProductPage = (): JSX.Element => {
 
   if (isLoading) {
     return (
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] min-h-screen">
-        <div className="animate-pulse bg-gray-200 h-[200px] w-full max-w-[1200px] rounded-lg" />
-      </div>
+      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] min-h-screen"></div>
     )
   }
 
@@ -113,11 +111,7 @@ export const ProductPage = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <Suspense
-        fallback={
-          <div className="animate-pulse bg-gray-200 h-[200px] w-full rounded-lg" />
-        }
-      >
+      <Suspense>
         <AccessoriesSection />
         <OurPromise />
         {faq && <FaqWrapper faq={faq} />}
