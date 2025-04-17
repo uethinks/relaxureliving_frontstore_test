@@ -16,12 +16,17 @@ const homePagePopulate = {
     "populate[OurBlog][populate][articles][populate][category][populate]": "*"
 };
 
+const reviewsPopulate = {
+    "populate[testimonials_item][populate][0]": "image",
+};
+
 const API_URLS = {
   getHomePage: '/api/home-page',
   getWarranty: '/api/warranty',
   getPrivacyPolicy: '/api/privacy-policy',
   getTermsOfService: '/api/terms-of-service',
   getRefundPolicy: '/api/refund-policy',
+  getReviews: '/api/testimonials-plural',
 };
 
 // 获取所有项目
@@ -61,6 +66,19 @@ export const getAllTerms = async () => {
     return termsData;
   } catch (error) {
     console.error('Error fetching terms:', error);
+    throw error;
+  }
+};
+
+// 获取用户评论
+export const getReviews = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getReviews, {
+        params: reviewsPopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
     throw error;
   }
 };

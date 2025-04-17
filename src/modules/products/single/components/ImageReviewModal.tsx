@@ -1,7 +1,7 @@
 import React from "react"
 import Image from "next/image"
 import { ReviewType } from "./CustomerReviews"
-
+const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 interface ImageReviewModalProps {
   isOpen: boolean
   onClose: () => void
@@ -72,7 +72,7 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
         <div className="h-full flex flex-col md:flex-row">
           {/* Image section */}
           <div className="w-full md:w-2/3 h-1/2 md:h-full relative bg-black">
-            {review.images && review.images.length > 0 && (
+            {review.image && review.image.length > 0 && (
               <>
                 {isLoading && (
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -80,7 +80,7 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
                   </div>
                 )}
                 <Image
-                  src={review.images[0]}
+                  src={`${strapiUrl}${review.image[0].formats.large.url}`}
                   alt="Review photo"
                   fill
                   className="object-contain"
@@ -157,20 +157,18 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center">
                 <span className="text-gray-600 text-lg font-medium">
-                  {review.author.charAt(0)}
+                  {review.name?.charAt(0)}
                 </span>
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-medium">{review.author}</span>
-                  {review.verified && (
-                    <span className="bg-black text-white text-xs px-2 py-0.5 rounded-full">
-                      Verified
-                    </span>
-                  )}
+                  <span className="font-medium">{review.name}</span>
+                  <span className="bg-black text-white text-xs px-2 py-0.5 rounded-full">
+                    Verified
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                  <StarRating rating={review.rating} />
+                  <StarRating rating={review.stars} />
                   <span className="text-gray-500 text-sm">{review.date}</span>
                 </div>
               </div>
@@ -179,20 +177,20 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
             {/* Review content */}
             <h4 className="font-medium text-lg mb-2">{review.title}</h4>
             <p className="text-gray-600 mb-4 leading-relaxed">
-              {review.content}
+              {review.review}
             </p>
 
             {/* Merchant response */}
-            {review.response && (
+            {review.relaxure_team && (
               <div className="bg-gray-50 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
                     <span className="text-gray-600 text-sm">P</span>
                   </div>
-                  <p className="font-medium">{review.response.author}</p>
+                  <p className="font-medium">Relaxure Team</p>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  {review.response.content}
+                  {review.relaxure_team}
                 </p>
               </div>
             )}

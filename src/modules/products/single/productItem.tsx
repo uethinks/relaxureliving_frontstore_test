@@ -64,123 +64,6 @@ const LazyOurPromise = dynamic(
   }
 )
 
-const mockReviewData = {
-  averageRating: 4.79,
-  totalReviews: 343,
-  ratingDistribution: [273, 69, 1, 0, 0],
-  reviews: [
-    {
-      id: "1",
-      rating: 5,
-      date: "03/16/2024",
-      author: "Ed Sprick",
-      title: "Beautiful Setup",
-      content:
-        "Setting up the pergola with my son wasn't very difficult and the reward after it was done is awesome, have already had so many compliments on the pergola, thank you so much Pergolux.",
-      images: [
-        "/img/pergola-description.jpg",
-        "/img/pergola-description.jpg",
-        "/img/pergola-description.jpg",
-      ],
-      verified: true,
-    },
-    {
-      id: "2",
-      rating: 4,
-      date: "03/14/2024",
-      author: "Charles Nunn",
-      title: "PERGOLUX Screen 52 19'",
-      content:
-        'Installing this screen was pretty straight forward. It is reasonably heavy so would recommend three people to do the job. It is so long that the aluminum housing deforms just a bit toward the center. It is easy to move up and down. The spring tension is not quite enough on one end to go fully up but it is within about 1/4". I will probably just file a catch slot on that end that the built in spring catch can fail into to hold it fully up. Does a great job of shading us from the afternoon sun which hits our Pergolux Sundance full on. The screen looks very nice when extended.',
-      images: ["/img/pergola-description.jpg", "/img/pergola-description.jpg"],
-      verified: true,
-    },
-    {
-      id: "3",
-      rating: 5,
-      date: "03/12/2024",
-      author: "Tor Odd Worth",
-      title: "Ready for Installation",
-      content:
-        "Pergolux is ready for installation, as long as the weather permits.",
-      images: [
-        "/img/pergola-description.jpg",
-        "/img/pergola-description.jpg",
-        "/img/pergola-description.jpg",
-        "/img/pergola-description.jpg",
-      ],
-      verified: true,
-      response: {
-        author: "PERGOLUX USA",
-        content:
-          "Hi, great to see how easily the packages can be stored! Will probably be a very good supplement to the bath stamp. Good luck with your new Pergola.",
-      },
-    },
-    {
-      id: "4",
-      rating: 5,
-      date: "03/10/2024",
-      author: "Sarah Johnson",
-      title: "Exceeded Our Expectations",
-      content:
-        "We've been looking for the perfect outdoor solution for our patio for months, and the Pergolux has exceeded all our expectations. The installation process was straightforward with clear instructions. What really impressed us was the quality of the materials - everything from the frame to the smallest screw feels premium. The motorized louvers work smoothly, and the LED lighting creates such a beautiful ambiance in the evening. We've essentially gained an extra room in our house!",
-      images: ["/img/pergola-description.jpg", "/img/pergola-description.jpg"],
-      verified: true,
-    },
-    {
-      id: "5",
-      rating: 4,
-      date: "03/08/2024",
-      author: "Michael Chen",
-      title: "Great Product, Minor Issues",
-      content:
-        "Overall, I'm very satisfied with my Pergolux. The build quality is excellent and it looks stunning in our backyard. Installation took about a day with two people. Only giving 4 stars because the remote control had some connectivity issues initially, but customer service was quick to help resolve it.",
-      verified: true,
-    },
-    {
-      id: "6",
-      rating: 5,
-      date: "03/05/2024",
-      author: "Emma Wilson",
-      title: "Perfect for Year-Round Use",
-      content:
-        "Living in Seattle, we wanted something that could handle all weather conditions, and this pergola delivers! The rain sensors work perfectly, automatically closing the louvers when it starts to rain. We added the optional side screens and heaters, which have made it comfortable even during winter months. It's become our favorite spot for morning coffee and evening dinners.",
-      images: ["/img/pergola-description.jpg"],
-      verified: true,
-      response: {
-        author: "PERGOLUX USA",
-        content:
-          "Thank you for your wonderful review, Emma! We're so glad to hear that you're enjoying your pergola year-round. The rain sensors and climate control features are indeed perfect for the Seattle weather!",
-      },
-    },
-    {
-      id: "7",
-      rating: 5,
-      date: "03/01/2024",
-      author: "David Martinez",
-      title: "Worth Every Penny",
-      content:
-        "After comparing various options, we decided to invest in the Pergolux system. While it wasn't the cheapest option, it has proven to be worth every penny. The quality is outstanding, and the versatility is amazing. We use it practically every day, whether for family gatherings or just relaxing outside.",
-      verified: true,
-    },
-    {
-      id: "8",
-      rating: 4,
-      date: "02/28/2024",
-      author: "Lisa Thompson",
-      title: "Beautiful Addition to Our Home",
-      content:
-        "The pergola has transformed our backyard into a stunning outdoor living space. Installation was a bit challenging - definitely recommend getting professional help. The lighting system is fantastic and creates such a wonderful atmosphere in the evenings.",
-      images: [
-        "/img/pergola-description.jpg",
-        "/img/pergola-description.jpg",
-        "/img/pergola-description.jpg",
-      ],
-      verified: true,
-    },
-  ],
-}
-
 export const ProductItem = ({
   product,
   accessories,
@@ -396,7 +279,7 @@ export const ProductItem = ({
           </Suspense>
         </div>
         <div className="w-full">
-          <CustomerReviews {...mockReviewData} />
+          <CustomerReviews />
         </div>
         <div className="w-full">
           <Suspense fallback={<LoadingSpinner />}>

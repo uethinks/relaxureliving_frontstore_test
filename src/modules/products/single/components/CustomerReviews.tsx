@@ -1,27 +1,21 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Image from "next/image"
 import { ImageReviewModal } from "./ImageReviewModal"
-
+import { getReviews } from "../../../../lib/cms/strapiCmsApi"
+import { Image as ImageType } from "../../../../types/global"
 export interface ReviewType {
   id: string
-  rating: number
+  stars: number
   date: string
-  author: string
+  name: string
   title: string
-  content: string
-  images?: string[]
-  verified?: boolean
-  response?: {
-    author: string
-    content: string
-  }
+  review: string
+  image?: ImageType[]
+  relaxure_team?: string
 }
 
 interface CustomerReviewsProps {
-  averageRating: number
-  totalReviews: number
-  ratingDistribution: number[]
-  reviews: ReviewType[]
+  productId?: string
 }
 
 const StarRating = ({ rating }: { rating: number }) => {
@@ -35,19 +29,77 @@ const StarRating = ({ rating }: { rating: number }) => {
     </div>
   )
 }
-
+const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
-  averageRating,
-  totalReviews,
-  ratingDistribution,
-  reviews,
+  productId,
 }) => {
-  // Get all reviews that have images
-  const reviewsWithImages = reviews.filter(
-    (review) => review.images && review.images.length > 0
-  )
+  const [reviews, setReviews] = useState<ReviewType[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await getReviews()
+        const productionReviews = response.data.find((review: any) =>
+          review.name?.includes("production page")
+        )
+        console.log("productionReviews", productionReviews)
+        const transformedReviews = productionReviews?.testimonials_item?.map(
+          (review: any) => ({
+            id: review.id.toString(),
+            stars: review.stars,
+            date: new Date(review.date).toLocaleDateString(),
+            name: review.name,
+            title: review.title,
+            review: review.review,
+            image: review.image,
+            relaxure_team: review.relaxure_team,
+          })
+        )
+        setReviews(transformedReviews)
+      } catch (err) {
+        setError("Failed to load reviews")
+        console.error("Error fetching reviews:", err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchReviews()
+  }, [])
+
+  const averageRating =
+    reviews.length > 0
+      ? reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length
+      : 0
+  const totalReviews = reviews.length
+  const ratingDistribution = [5, 4, 3, 2, 1].map(
+    (stars) => reviews.filter((review) => review.stars === stars).length
+  )
+
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-7xl mx-auto py-16 text-center">
+        Loading reviews...
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="w-full max-w-7xl mx-auto py-16 text-center text-red-500">
+        {error}
+      </div>
+    )
+  }
+
+  // Get all reviews that have images
+  const reviewsWithImages = reviews.filter(
+    (review) => review.image && review.image.length > 0
+  )
 
   const handleImageClick = (reviewIndex: number) => {
     setCurrentReviewIndex(reviewIndex)
@@ -129,7 +181,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
               onClick={() => handleImageClick(index)}
             >
               <Image
-                src={review.images![0]}
+                src={`${strapiUrl}${review.image![0].formats.small.url}`}
                 alt="Customer review photo"
                 fill
                 className="object-cover hover:opacity-90 transition-opacity"
@@ -201,7 +253,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
     <div className="bg-white rounded-xl p-6 border border-gray-100">
       {/* First row: Rating and Date */}
       <div className="flex justify-between items-center mb-4">
-        <StarRating rating={review.rating} />
+        <StarRating rating={review.stars} />
         <span className="text-gray-500 text-sm">{review.date}</span>
       </div>
 
@@ -209,12 +261,12 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       <div className="flex items-center gap-3 mb-4">
         <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0">
           <span className="text-gray-600 text-lg font-medium">
-            {review.author.charAt(0)}
+            {(review.name || "A").charAt(0)}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="font-medium">{review.author}</span>
-          {review.verified && (
+          <span className="font-medium">{review.name || "Anonymous"}</span>
+          {review.relaxure_team && (
             <span className="bg-black text-white text-xs px-2 py-0.5 rounded-full">
               Verified
             </span>
@@ -223,12 +275,12 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       </div>
 
       {/* Third row: Images */}
-      {review.images && review.images.length > 0 && (
+      {review.image && review.image.length > 0 && (
         <div className="w-full mb-4">
           {/* Main image */}
           <div className="w-full h-[200px] relative rounded-lg overflow-hidden group cursor-pointer mb-2">
             <Image
-              src={review.images[0]}
+              src={`${strapiUrl}${review.image[0].formats.small.url}`}
               alt="Review photo"
               fill
               className="object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
@@ -236,15 +288,15 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           </div>
 
           {/* Thumbnail images */}
-          {review.images.length > 1 && (
+          {review.image.length > 1 && (
             <div className="flex gap-2 justify-center">
-              {review.images.slice(1).map((image: string, index: number) => (
+              {review.image.slice(1).map((image: ImageType, index: number) => (
                 <div
                   key={index}
                   className="w-16 h-16 relative rounded-lg overflow-hidden group cursor-pointer flex-shrink-0"
                 >
                   <Image
-                    src={image}
+                    src={`${strapiUrl}${image.formats.small.url}`}
                     alt="Review photo thumbnail"
                     fill
                     className="object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
@@ -258,22 +310,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
 
       {/* Review Content */}
       <h4 className="font-medium text-lg mb-2">{review.title}</h4>
-      <p className="text-gray-600 mb-4 leading-relaxed">{review.content}</p>
-
-      {/* Merchant Response */}
-      {review.response && (
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-gray-600 text-sm">P</span>
-            </div>
-            <p className="font-medium">{review.response.author}</p>
-          </div>
-          <p className="text-gray-600 leading-relaxed">
-            {review.response.content}
-          </p>
-        </div>
-      )}
+      <p className="text-gray-600 mb-4 leading-relaxed">{review.review}</p>
     </div>
   )
 }
