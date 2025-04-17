@@ -80,7 +80,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
     <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full">
       <NavBarWrapper isFixed={false} />
       <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
-        <div className="flex flex-col w-full lg:w-[65%] items-center gap-5">
+        <div className="flex flex-col w-full lg:max-w-[817px] items-center gap-5">
           <div className="flex flex-col items-start relative self-stretch w-full">
             <div className="relative mb-2 self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
               {product.title}
@@ -96,7 +96,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
           </div>
         </div>
         <div className="flex flex-row justify-between items-start bg-[#ffffff] w-full relative">
-          <div className="w-full lg:w-[65%] relative flex flex-col">
+          <div className="w-full lg:max-w-[817px] relative flex flex-col">
             <div className="flex flex-row justify-between mt-4">
               <ImgContent product={product} property1="default" />
             </div>

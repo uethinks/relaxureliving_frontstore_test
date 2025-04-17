@@ -2,6 +2,7 @@
 import React, { useState } from "react"
 import { Component } from "../../../../components/Component"
 import Link from "next/link"
+import { useCart } from "@lib/context/cartContext"
 
 export const NavBarWrapper = ({
   isFixed = true,
@@ -11,6 +12,9 @@ export const NavBarWrapper = ({
   isHomePage?: boolean
 }): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { cart } = useCart()
+
+  const hasItemsInCart = cart?.items && cart.items.length > 0
 
   const handleScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -36,7 +40,7 @@ export const NavBarWrapper = ({
       } z-50`}
     >
       {/* Desktop Navigation */}
-      <div className="hidden max-w-[1248px] lg:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 relative bg-gray-100 bg-opacity-80 rounded-[30px] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
+      <div className="hidden max-w-[1248px] xl:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 relative bg-gray-100 bg-opacity-80 rounded-[30px] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
         <div className="justify-between self-stretch w-full flex-[0_0_auto] mt-[-4.50px] mb-[-4.50px] flex items-center relative">
           <Link href="/">
             <img
@@ -87,12 +91,15 @@ export const NavBarWrapper = ({
               </div>
               <div className="flex  items-center justify-center gap-2.5 px-0 py-2.5 relative">
                 <a
-                  href="/about-us"
+                  href="/cart"
                   className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
                 >
                   <div className="flex items-center gap-2">
-                    <div>
+                    <div className="relative">
                       <img src="/img/cart.png" alt="cart" />
+                      {hasItemsInCart && (
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+                      )}
                     </div>
                     <div>Cart</div>
                   </div>
@@ -113,7 +120,7 @@ export const NavBarWrapper = ({
       </div>
 
       {/* Mobile Navigation */}
-      <div className="lg:hidden flex flex-col w-full items-center justify-center relative">
+      <div className="xl:hidden flex flex-col w-full items-center justify-center relative">
         <div className="w-full h-[60px] flex items-center justify-between bg-[#ffffffcc] rounded-[30px] border border-solid border-[#ffffff] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
           <Link href="/">
             <img
@@ -126,12 +133,15 @@ export const NavBarWrapper = ({
           <div className="flex items-center justify-end gap-10 relative">
             <div className="flex  items-center justify-center gap-2.5 px-0 py-2.5 relative">
               <a
-                href="/about-us"
+                href="/cart"
                 className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
               >
                 <div className="flex items-center gap-2">
-                  <div>
+                  <div className="relative">
                     <img src="/img/cart.png" alt="cart" />
+                    {hasItemsInCart && (
+                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+                    )}
                   </div>
                 </div>
               </a>
