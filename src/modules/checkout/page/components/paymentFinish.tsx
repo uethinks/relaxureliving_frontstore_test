@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from "react"
 import { HttpTypes } from "@medusajs/types"
+import { useRouter } from "next/navigation"
 type OrderCompletedTemplateProps = {
   order: HttpTypes.StoreOrder
 }
@@ -8,6 +9,10 @@ export const PaymentFinish = ({
   order,
 }: OrderCompletedTemplateProps): JSX.Element | "" => {
   const [paymentFinishShow, setPaymentFinishShow] = useState(true)
+  const router = useRouter()
+  const handleExploreMore = () => {
+    router.push(`/`)
+  }
   return !paymentFinishShow ? (
     ""
   ) : (
@@ -175,7 +180,7 @@ export const PaymentFinish = ({
 
           <div className="flex items-center justify-end gap-5 relative self-stretch w-full flex-[0_0_auto]">
             <button
-              onClick={() => setPaymentFinishShow(false)}
+              onClick={handleExploreMore}
               className="all-[unset] box-border w-full flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative bg-[#072f6c] self-stretch flex-[0_0_auto]"
             >
               <div className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#ffffff] relative font-medium whitespace-nowrap leading-6">

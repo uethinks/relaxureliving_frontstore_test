@@ -9,7 +9,6 @@ import OrderDetails from "@modules/order/components/order-details"
 import ShippingDetails from "@modules/order/components/shipping-details"
 import PaymentDetails from "@modules/order/components/payment-details"
 import { HttpTypes } from "@medusajs/types"
-import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 
@@ -53,7 +52,6 @@ export default async function OrderCompletedTemplate({
         </div>
       </div>
       <FooterDark />
-      <PaymentFinish order={order} />
     </div>
   )
 }

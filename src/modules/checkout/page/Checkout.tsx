@@ -13,11 +13,13 @@ import Link from "next/link"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { init } from "@airwallex/components-sdk"
+import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 
 export const Checkout = () => {
   const { cart, setCart, getCart } = useCart()
   const [shippingOptions, setShippingOptions] = useState<any[]>([])
   const [isFormValid, setIsFormValid] = useState(false)
+  const [order, setOrder] = useState<any>(null)
   const [formData, setFormData] = useState({
     email: "",
     shipping_address: {
@@ -307,29 +309,30 @@ export const Checkout = () => {
         email: formDataRef.current.email,
         shipping_address: formDataRef.current.shipping_address,
       })
-      await placeOrder(cart.id)
+      const cartRes = await placeOrder(cart.id)
+      setOrder(cartRes.type === "order" ? cartRes.order : null)
     }
   }
 
   return (
-    <div className="bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex flex-col items-center justify-start w-full">
-      <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full relative px-10">
+    <div className="w-full 2xl:w-[1512px] bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex justify-center flex-col items-center">
+      <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full relative px-20">
         {/* Header */}
         <NavBarWrapper isFixed={false} />
 
         {/* Payment Title */}
-        <div className="w-full inline-flex items-center justify-start gap-2.5 p-2.5 px-5">
+        <div className="w-full inline-flex items-center justify-start gap-2.5 p-2.5">
           <div className="mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] relative w-fit text-[#343a40] tracking-[var(--heading-2-letter-spacing)] whitespace-nowrap [font-style:var(--heading-2-font-style)]">
             Payment
           </div>
         </div>
 
-        <div className="flex flex-col justify-start items-center lg:flex-row lg:justify-between lg:items-start w-full gap-5 px-5">
+        <div className="mt-10 flex flex-col justify-start items-center lg:flex-row lg:justify-between lg:items-start w-full gap-5">
           {/* Payment Form */}
           <div className="w-full lg:w-3/5 flex flex-col items-start justify-end gap-10 p-5 lg:p-10 bg-[#efefef] rounded-[20px]">
             <div className="flex flex-col lg:flex-row items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
               {/* Email Input */}
-              <div className="flex flex-col">
+              <div className="flex flex-col w-full">
                 <input
                   className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
                   placeholder="Email or phone number"
@@ -342,21 +345,6 @@ export const Checkout = () => {
                 />
                 {errors.email && (
                   <div className="text-red-500 mt-1 block">{errors.email}</div>
-                )}
-              </div>
-              {/* Phone Input */}
-              <div className="flex flex-col">
-                <input
-                  className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
-                  placeholder="Phone"
-                  type="tel"
-                  value={formData.shipping_address.phone}
-                  onChange={(e) =>
-                    handleInputChange("shipping_phone", e.target.value)
-                  }
-                />
-                {errors.phone && (
-                  <div className="text-red-500 mt-1 block">{errors.phone}</div>
                 )}
               </div>
             </div>
@@ -486,6 +474,21 @@ export const Checkout = () => {
                   )}
                 </div>
               </div>
+              {/* Phone Input */}
+              <div className="flex flex-col w-full">
+                <input
+                  className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
+                  placeholder="Phone"
+                  type="tel"
+                  value={formData.shipping_address.phone}
+                  onChange={(e) =>
+                    handleInputChange("shipping_phone", e.target.value)
+                  }
+                />
+                {errors.phone && (
+                  <div className="text-red-500 mt-1 block">{errors.phone}</div>
+                )}
+              </div>
             </div>
 
             {/* Payment Section */}
@@ -540,7 +543,7 @@ export const Checkout = () => {
             </div>
           </div>
           {/* Order Summary */}
-          <div className="w-full lg:w-2/5 flex flex-col items-start gap-5 px-2.5 lg:sticky lg:top-10">
+          <div className="w-full max-w-[470px] flex flex-col items-start gap-5 px-2.5 lg:sticky lg:top-10">
             <div className="flex flex-col items-start gap-5 p-5 relative self-stretch w-full bg-[#efefef] rounded-[20px] shadow-shadow-relaxure-button">
               <div className="inline-flex items-center relative flex-[0_0_auto]">
                 <div className="mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[22px] leading-[30.8px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
@@ -586,6 +589,7 @@ export const Checkout = () => {
       </div>
       {/* Footer */}
       <FooterDark />
+      {order && <PaymentFinish order={order} />}
     </div>
   )
 }

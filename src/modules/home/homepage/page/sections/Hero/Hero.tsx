@@ -8,18 +8,18 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
   return (
     <div className="flex flex-col items-end gap-2 pt-2.5 lg:pb-10 px-0 relative self-stretch w-full">
       <div
-        className="flex h-[500px] md:h-[900px] items-center px-4 md:px-16 py-0 relative self-stretch w-full rounded-[20px] overflow-hidden shadow-shadow-cards-relaxure bg-cover bg-[50%_50%]"
+        className="flex h-[500px] md:h-[900px] items-center px-[64px] py-0 relative self-stretch w-full rounded-[20px] overflow-hidden shadow-shadow-cards-relaxure bg-cover bg-[50%_50%]"
         style={{
           backgroundImage: `url(${cmsBaseUrl}${hero?.BackgroundImage.formats.xlarge.url})`,
         }}
       >
-        <div className="flex flex-col w-full md:w-2/3 lg:w-1/2 items-start gap-8 relative">
+        <div className="flex flex-col w-full lg:w-4/5 items-start gap-8 relative">
           <div className="flex flex-col items-start gap-6 relative flex-[0_0_auto]">
             <p className="self-stretch mt-[-1.00px] font-heading font-[number:var(--heading-font-weight)] text-[#ffffff] text-[22px] lg:text-[length:var(--heading-font-size)] leading-[var(--heading-line-height)] relative tracking-[var(--heading-letter-spacing)] [font-style:var(--heading-font-style)]">
               {hero?.Title}
             </p>
 
-            <p className="self-stretch text-[#ffffff] text-[length:var(--relaxure-sub-heading-18-font-size)] leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+            <p className="self-stretch w-full lg:w-3/4 text-[#ffffff] text-[length:var(--relaxure-sub-heading-18-font-size)] leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
               {hero?.Description}
             </p>
           </div>

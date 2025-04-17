@@ -78,18 +78,18 @@ export const ProductPage = (): JSX.Element => {
 
   if (isLoading) {
     return (
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full min-h-screen">
+      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] min-h-screen">
         <div className="animate-pulse bg-gray-200 h-[200px] w-full max-w-[1200px] rounded-lg" />
       </div>
     )
   }
 
   return (
-    <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full">
-      <div className="bg-[#ffffff] w-full relative flex flex-col justify-center items-center pt-0 px-10">
+    <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px]">
+      <div className="bg-[#ffffff] w-full relative flex flex-col justify-center items-center pt-0 px-20">
         <NavBarWrapper isFixed={false} />
 
-        <div className="inline-flex items-center justify-start gap-2.5 p-2.5 w-full">
+        <div className="inline-flex items-center justify-start gap-2.5 w-full">
           <img
             className="relative w-[30px] h-[30px]"
             alt="Frame"
@@ -101,8 +101,8 @@ export const ProductPage = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="relative flex flex-col lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-2.5 p-2.5 w-full">
-          <div className="flex flex-col gap-2.5 w-full lg:w-2/3">
+        <div className="relative flex flex-col mt-10 lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-2.5 w-full">
+          <div className="flex flex-col gap-[30px] w-full lg:w-2/3">
             <ProductCard />
             <HeaterCard />
             <GlassDoorCard />
@@ -112,17 +112,16 @@ export const ProductPage = (): JSX.Element => {
             <OrderSummary />
           </div>
         </div>
-
-        <Suspense
-          fallback={
-            <div className="animate-pulse bg-gray-200 h-[200px] w-full rounded-lg" />
-          }
-        >
-          <AccessoriesSection />
-          <OurPromise />
-          {faq && <FaqWrapper faq={faq} />}
-        </Suspense>
       </div>
+      <Suspense
+        fallback={
+          <div className="animate-pulse bg-gray-200 h-[200px] w-full rounded-lg" />
+        }
+      >
+        <AccessoriesSection />
+        <OurPromise />
+        {faq && <FaqWrapper faq={faq} />}
+      </Suspense>
       <FooterDark />
     </div>
   )

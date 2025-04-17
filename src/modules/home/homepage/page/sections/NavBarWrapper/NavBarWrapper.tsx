@@ -29,12 +29,14 @@ export const NavBarWrapper = ({
 
   return (
     <div
-      className={`w-full lg:mx-auto lg:w-[780px] xl:w-[900px] 2xl:w-[1205px] flex flex-col items-start gap-2.5 px-0 py-4 lg:py-10  ${
-        isFixed ? "lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2" : ""
+      className={`w-full max-w-[1248px] flex flex-col items-start gap-2.5 py-10  ${
+        isFixed
+          ? "px-[132px] lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2"
+          : "px-[52px]"
       } z-50`}
     >
       {/* Desktop Navigation */}
-      <div className="hidden lg:flex flex-col w-full h-[79px] items-center justify-center gap-2.5 p-5 relative bg-[#ffffffcc] rounded-[30px] border border-solid border-[#ffffff] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
+      <div className="hidden lg:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 relative bg-gray-100 bg-opacity-80 rounded-[30px] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
         <div className="justify-between self-stretch w-full flex-[0_0_auto] mt-[-4.50px] mb-[-4.50px] flex items-center relative">
           <Link href="/">
             <img

@@ -8,7 +8,10 @@ export default function CheckoutLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="w-full relative" data-testid="checkout-container">
+    <div
+      className="w-full relative flex justify-center"
+      data-testid="checkout-container"
+    >
       {children}
     </div>
   )

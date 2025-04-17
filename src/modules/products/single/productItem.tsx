@@ -239,7 +239,7 @@ export const ProductItem = ({
   }
 
   return (
-    <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full overflow-hidden lg:block lg:h-[100vh] lg:overflow-y-scroll">
+    <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-20 overflow-hidden lg:block lg:h-[100vh] lg:overflow-y-scroll">
       <FirstScreen
         product={product}
         accessories={accessories}
@@ -256,7 +256,7 @@ export const ProductItem = ({
         onBuyNow={handleBuyNow}
       />
 
-      <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full px-10 relative">
+      <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
         <div className="w-full">
           <Suspense fallback={<LoadingSpinner />}>
             <LazyImageOnLeft />
