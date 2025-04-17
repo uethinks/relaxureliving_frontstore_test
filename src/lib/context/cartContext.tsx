@@ -56,18 +56,19 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     }
   }, [])
 
-  // 初始化加载购物车数据
-  useEffect(() => {
-    fetchCart()
-  }, [fetchCart])
+  // // 初始化加载购物车数据
+  // useEffect(() => {
+  //   fetchCart()
+  // }, [fetchCart])
 
   // 监听路由变化，在进入任何页面时都刷新数据
   useEffect(() => {
     fetchCart()
-  }, [pathname, fetchCart])
+  }, [pathname])
 
   const addVariant = async (variantInfo: variantInfo) => {
     try {
+      console.log("addVariant", variantInfo)
       const updatedCart = await addToCart(variantInfo)
       setCart(updatedCart)
     } catch (error) {
@@ -78,8 +79,8 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const removeVariant = async (lineId: string) => {
     try {
-      const updatedCart = await deleteLineItem(lineId)
-      setCart(updatedCart)
+      await deleteLineItem(lineId)
+      await fetchCart()
     } catch (error) {
       console.error("Failed to remove variant:", error)
       await fetchCart()
@@ -94,6 +95,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     quantity: number
   }) => {
     try {
+      console.log("updateVariantInfo", lineId, quantity)
       const updatedCart = await updateLineItem({ lineId, quantity })
       setCart(updatedCart)
     } catch (error) {
