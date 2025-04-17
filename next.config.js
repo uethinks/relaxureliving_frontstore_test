@@ -6,7 +6,7 @@ checkEnvVariables()
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   logging: {
     fetches: {
       fullUrl: true,
@@ -36,7 +36,18 @@ const nextConfig = {
         protocol: "https",
         hostname: "medusa-server-testing.s3.us-east-1.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "relaxureliving.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cms.relaxureliving.com",
+      },
     ],
+  },
+  env: {
+    AIRWALLEX_ENV: process.env.NEXT_PUBLIC_AIRWALLEX_ENV || "demo",
   },
 }
 

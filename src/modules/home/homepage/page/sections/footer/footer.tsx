@@ -4,10 +4,10 @@ import Link from "next/link"
 export const FooterDark = (): JSX.Element => {
   return (
     <div className="relative flex justify-center w-full overflow-hidden bg-[#0A142F]">
-      <div className="relative flex flex-col justify-between gap-10  w-full md:w-full lg:w-[90%] 2xl:w-[1512px]">
-        <div className="flex flex-col justify-center w-full items-center gap-5 mt-10 px-5">
+      <div className="relative flex flex-col justify-between gap-10  w-full 2xl:w-[1512px]">
+        <div className="flex flex-col justify-center w-full items-center gap-5 mt-[68px] px-[260px]">
           <img
-            className="relative max-w-full lg:max-w-[767px] mt-[-10.00px]"
+            className="relative max-w-full lg:max-w-[563px] mt-[-10.00px]"
             alt="Rectangle"
             src="https://c.animaapp.com/q2tzgr8Y/img/rectangle-1307-1.png"
           />
@@ -39,8 +39,30 @@ export const FooterDark = (): JSX.Element => {
             </div>
           </div>
         </div>
+        <div className="flex flex-col items-center justify-center w-full gap-5">
+          <div className="flex items-center justify-start w-full gap-5">
+            <img
+              className="w-[24px] h-[24px] "
+              alt="Logo"
+              src="/img/phone.png"
+            />
+            <span className="text-white text-base tracking-[0] leading-6 whitespace-nowrap">
+              (+1) 800-227-0000
+            </span>
+          </div>
+          <div className="flex items-center justify-start w-full gap-5">
+            <img
+              className="w-[24px] h-[24px] "
+              alt="Logo"
+              src="/img/plane.png"
+            />
+            <span className="text-white text-base tracking-[0] leading-6 whitespace-nowrap">
+              info@relaxureline.com
+            </span>
+          </div>
+        </div>
 
-        <div className="flex flex-col w-full items-center gap-2">
+        <div className="flex flex-col w-full items-center gap-2 mb-10 border-t border-gray-700 pt-4">
           <div className="relative self-stretch w-full">
             <div className="w-full">
               <div className="w-full flex justify-between items-center ">
@@ -52,9 +74,6 @@ export const FooterDark = (): JSX.Element => {
                       src="https://c.animaapp.com/ipQflS1Z/img/logo.svg"
                     />
                   </Link>
-                  <div className="opacity-80 [font-family:'Montserrat',Helvetica] font-normal text-white text-[14px] text-center tracking-[0] leading-[normal]">
-                    © 2025 Relaxure
-                  </div>
                 </div>
                 <div className="flex flex-wrap h-11 items-center justify-between lg:gap-10 relative">
                   <Link href="/us/terms/warranty">
@@ -107,6 +126,11 @@ export const FooterDark = (): JSX.Element => {
                       <div className="relative w-[17px] h-[11px] top-[17px] left-[16px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/shape.svg)] bg-cover" />
                     </div>
                   </Link>
+                </div>
+              </div>
+              <div className="flex justify-center items-center">
+                <div className="opacity-80 [font-family:'Montserrat',Helvetica] font-normal text-white text-[14px] text-center tracking-[0] leading-[normal]">
+                  © 2025 Relaxure
                 </div>
               </div>
             </div>

@@ -240,54 +240,56 @@ export const ProductItem = ({
   }
 
   return (
-    <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-20">
-      <FirstScreen
-        product={product}
-        accessories={accessories}
-        onVariantChange={handleVariantChange}
-        onAccessoryToggle={handleAccessoryToggle}
-        selectedVariant={selectedVariant}
-        selectedAccessoriesHeater={selectedAccessoriesHeater}
-        selectedAccessoriesShades={selectedAccessoriesShades}
-        selectedAccessoriesGlassdoor={selectedAccessoriesGlassdoor}
-        pergolaSize={pergolaSize}
-        pergolaQuantity={pergolaQuantity}
-        totalPrice={totalPrice}
-        onQuantityChange={setPergolaQuantity}
-        onBuyNow={handleBuyNow}
-      />
+    <>
+      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-20">
+        <FirstScreen
+          product={product}
+          accessories={accessories}
+          onVariantChange={handleVariantChange}
+          onAccessoryToggle={handleAccessoryToggle}
+          selectedVariant={selectedVariant}
+          selectedAccessoriesHeater={selectedAccessoriesHeater}
+          selectedAccessoriesShades={selectedAccessoriesShades}
+          selectedAccessoriesGlassdoor={selectedAccessoriesGlassdoor}
+          pergolaSize={pergolaSize}
+          pergolaQuantity={pergolaQuantity}
+          totalPrice={totalPrice}
+          onQuantityChange={setPergolaQuantity}
+          onBuyNow={handleBuyNow}
+        />
 
-      <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
-        <div className="w-full">
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyImageOnLeft />
-          </Suspense>
-        </div>
-        <div className="w-full">
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyImageOnRight />
-          </Suspense>
-        </div>
-        <div className="w-full">
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyAdvantages />
-          </Suspense>
-        </div>
-        <div className="w-full">
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyAccessoriesCards />
-          </Suspense>
-        </div>
-        <div className="w-full">
-          <CustomerReviews />
-        </div>
-        <div className="w-full">
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyOurPromise />
-          </Suspense>
+        <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
+          <div className="w-full">
+            <Suspense fallback={<LoadingSpinner />}>
+              <LazyImageOnLeft />
+            </Suspense>
+          </div>
+          <div className="w-full">
+            <Suspense fallback={<LoadingSpinner />}>
+              <LazyImageOnRight />
+            </Suspense>
+          </div>
+          <div className="w-full">
+            <Suspense fallback={<LoadingSpinner />}>
+              <LazyAdvantages />
+            </Suspense>
+          </div>
+          <div className="w-full">
+            <Suspense fallback={<LoadingSpinner />}>
+              <LazyAccessoriesCards />
+            </Suspense>
+          </div>
+          <div className="w-full">
+            <CustomerReviews />
+          </div>
+          <div className="w-full">
+            <Suspense fallback={<LoadingSpinner />}>
+              <LazyOurPromise />
+            </Suspense>
+          </div>
         </div>
       </div>
       <FooterDark />
-    </div>
+    </>
   )
 }
