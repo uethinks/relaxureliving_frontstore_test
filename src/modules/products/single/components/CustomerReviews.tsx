@@ -56,19 +56,26 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-16">
       {/* Reviews Overview Section */}
-      <div className="text-center mb-16">
-        <h2 className="text-3xl font-semibold mb-8">Customer Reviews</h2>
-        <div className="max-w-xl mx-auto">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <StarRating rating={averageRating} />
-            <span className="text-xl font-medium">
-              {averageRating} out of 5
-            </span>
+      <div className="mb-16">
+        <h2 className="text-3xl font-semibold text-center mb-8">
+          Customer Reviews
+        </h2>
+
+        {/* Flex container for rating overview and distribution */}
+        <div className="flex flex-col md:flex-row justify-center gap-16 items-center md:items-start">
+          {/* Rating Overview */}
+          <div className="text-center md:text-left">
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <StarRating rating={averageRating} />
+              <span className="text-xl font-medium">
+                {averageRating} out of 5
+              </span>
+              <p className="text-gray-600">Based on {totalReviews} reviews</p>
+            </div>
           </div>
-          <p className="text-gray-600 mb-8">Based on {totalReviews} reviews</p>
 
           {/* Rating Distribution */}
-          <div className="max-w-md mx-auto">
+          <div className="w-full max-w-md md:max-w-sm">
             {[5, 4, 3, 2, 1].map((stars) => (
               <div key={stars} className="flex items-center gap-3 mb-3">
                 <StarRating rating={stars} />
@@ -186,29 +193,29 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       {/* Third row: Images */}
       {review.images && review.images.length > 0 && (
         <div className="w-full mb-4">
-          {review.images.length === 1 ? (
-            // Single image layout
-            <div className="w-full h-[200px] relative rounded-lg overflow-hidden">
-              <Image
-                src={review.images[0]}
-                alt="Review photo"
-                fill
-                className="object-cover"
-              />
-            </div>
-          ) : (
-            // Multiple images layout
-            <div className="flex gap-2 overflow-x-auto">
-              {review.images.map((image: string, index: number) => (
+          {/* Main image */}
+          <div className="w-full h-[200px] relative rounded-lg overflow-hidden group cursor-pointer mb-2">
+            <Image
+              src={review.images[0]}
+              alt="Review photo"
+              fill
+              className="object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
+            />
+          </div>
+
+          {/* Thumbnail images */}
+          {review.images.length > 1 && (
+            <div className="flex gap-2 justify-center">
+              {review.images.slice(1).map((image: string, index: number) => (
                 <div
                   key={index}
-                  className="w-full h-[200px] min-w-[200px] relative rounded-lg overflow-hidden"
+                  className="w-16 h-16 relative rounded-lg overflow-hidden group cursor-pointer flex-shrink-0"
                 >
                   <Image
                     src={image}
-                    alt="Review photo"
+                    alt="Review photo thumbnail"
                     fill
-                    className="object-cover"
+                    className="object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
                   />
                 </div>
               ))}
