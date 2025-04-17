@@ -178,7 +178,7 @@ export const Homepage = ({
         revalidateOnReconnect: true,
       }}
     >
-      <div className="w-full flex flex-col items-center gap-[10px] lg:gap-10 px-10 py-0 relative bg-[#ffffff]">
+      <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-20 py-0 relative bg-[#ffffff]">
         <AboveTheFold hero={data.hero} />
         <ProgressiveComponents data={data} />
       </div>
