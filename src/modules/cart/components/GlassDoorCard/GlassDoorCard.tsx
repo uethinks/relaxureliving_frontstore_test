@@ -2,9 +2,12 @@
 import { useCart } from "@lib/context/cartContext"
 import { StoreCartLineItem } from "@medusajs/types"
 import React, { useEffect, useState } from "react"
+import { ConfirmDialog } from "../../../../components/ConfirmDialog"
 
 export const GlassDoorCard = (): JSX.Element | null => {
   const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
+  const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
+
   useEffect(() => {
     getCart().then((cart) => {
       console.log("GlassDoorCard", cart)
@@ -19,12 +22,28 @@ export const GlassDoorCard = (): JSX.Element | null => {
     glassDoorInCart ?? null
   )
 
+  const handleDelete = (itemId: string) => {
+    setDeleteItemId(itemId)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (deleteItemId) {
+      await removeProduct(deleteItemId)
+      setDeleteItemId(null)
+    }
+  }
+
+  const handleCancelDelete = () => {
+    setDeleteItemId(null)
+  }
+
   const removeProduct = async (glassDoorId: string) => {
     if (glassDoorId) {
       await removeVariant(glassDoorId)
       await getCart()
     }
   }
+
   const updateQuantity = async (quantity: number, glassDoorId: string) => {
     if (glassDoorId) {
       await updateVariantInfo({
@@ -34,6 +53,7 @@ export const GlassDoorCard = (): JSX.Element | null => {
       await getCart()
     }
   }
+
   useEffect(() => {
     glassDoorInCart = cart?.items?.filter(
       (item) => item.product_title === "Frameless Sliding Glass Door"
@@ -93,7 +113,7 @@ export const GlassDoorCard = (): JSX.Element | null => {
               </div>
 
               <button
-                onClick={() => removeProduct(item.id)}
+                onClick={() => handleDelete(item.id)}
                 className="flex w-10 h-10 items-center gap-2.5 px-[9px] py-[7px] bg-[#ffffff] rounded-[31px] border border-solid border-[#a8a8a8]"
               >
                 <div className="relative w-4 h-5">
@@ -108,6 +128,13 @@ export const GlassDoorCard = (): JSX.Element | null => {
           </div>
         </div>
       ))}
+      <ConfirmDialog
+        isOpen={deleteItemId !== null}
+        title="Are you sure you want to delete this product?"
+        message="Confirming will permanently remove this glass door."
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </>
   )
 }

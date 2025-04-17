@@ -2,9 +2,12 @@
 import { useCart } from "@lib/context/cartContext"
 import { StoreCartLineItem } from "@medusajs/types"
 import React, { useEffect, useState } from "react"
+import { ConfirmDialog } from "../../../../components/ConfirmDialog"
 
 export const ShadesCard = (): JSX.Element | null => {
   const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
+  const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
+
   useEffect(() => {
     getCart().then((cart) => {
       console.log("ShadesCard", cart)
@@ -19,6 +22,21 @@ export const ShadesCard = (): JSX.Element | null => {
   const [shades, setShades] = useState<StoreCartLineItem[] | null>(
     shadesInCart ?? null
   )
+
+  const handleDelete = (itemId: string) => {
+    setDeleteItemId(itemId)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (deleteItemId) {
+      await removeProduct(deleteItemId)
+      setDeleteItemId(null)
+    }
+  }
+
+  const handleCancelDelete = () => {
+    setDeleteItemId(null)
+  }
 
   const removeProduct = async (shadeId: string) => {
     if (shadeId) {
@@ -109,7 +127,7 @@ export const ShadesCard = (): JSX.Element | null => {
               </div>
 
               <button
-                onClick={() => removeProduct(shade.id)}
+                onClick={() => handleDelete(shade.id)}
                 className="flex w-10 h-10 items-center gap-2.5 px-[9px] py-[7px] bg-[#ffffff] rounded-[31px] border border-solid border-[#a8a8a8]"
               >
                 <div className="relative w-4 h-5">
@@ -124,6 +142,13 @@ export const ShadesCard = (): JSX.Element | null => {
           </div>
         </div>
       ))}
+      <ConfirmDialog
+        isOpen={deleteItemId !== null}
+        title="Are you sure you want to delete this product?"
+        message="Confirming will permanently remove this shade screen."
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </>
   )
 }

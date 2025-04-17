@@ -1,10 +1,12 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
 import { StoreCartLineItem } from "@medusajs/types"
-import React, { useMemo } from "react"
+import React, { useMemo, useState } from "react"
+import { ConfirmDialog } from "../../../../components/ConfirmDialog"
 
 export const HeaterCard = (): JSX.Element | null => {
   const { cart, removeVariant, updateVariantInfo } = useCart()
+  const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
 
   const heater = useMemo(() => {
     if (!cart?.items) return null
@@ -13,6 +15,21 @@ export const HeaterCard = (): JSX.Element | null => {
     )
     return heaterItems.length > 0 ? heaterItems : null
   }, [cart?.items])
+
+  const handleDelete = (itemId: string) => {
+    setDeleteItemId(itemId)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (deleteItemId) {
+      await removeProduct(deleteItemId)
+      setDeleteItemId(null)
+    }
+  }
+
+  const handleCancelDelete = () => {
+    setDeleteItemId(null)
+  }
 
   const removeProduct = async (heaterId: string) => {
     try {
@@ -85,7 +102,7 @@ export const HeaterCard = (): JSX.Element | null => {
               </div>
 
               <button
-                onClick={() => removeProduct(item.id)}
+                onClick={() => handleDelete(item.id)}
                 className="flex w-10 h-10 items-center gap-2.5 px-[9px] py-[7px] bg-[#ffffff] rounded-[31px] border border-solid border-[#a8a8a8]"
               >
                 <div className="relative w-4 h-5">
@@ -100,6 +117,13 @@ export const HeaterCard = (): JSX.Element | null => {
           </div>
         </div>
       ))}
+      <ConfirmDialog
+        isOpen={deleteItemId !== null}
+        title="Are you sure you want to delete this product?"
+        message="Confirming will permanently remove this heater."
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </>
   )
 }
