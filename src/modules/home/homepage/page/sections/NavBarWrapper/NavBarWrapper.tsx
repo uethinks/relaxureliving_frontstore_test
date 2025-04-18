@@ -83,7 +83,7 @@ export const NavBarWrapper = ({
               </div>
               <div className="flex  items-center justify-center gap-2.5 px-0 py-2.5 relative">
                 <a
-                  href="/about-us"
+                  href="/us/about-us"
                   className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
                 >
                   About us
