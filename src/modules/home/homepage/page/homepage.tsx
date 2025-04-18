@@ -188,7 +188,7 @@ export const Homepage = ({
       <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-5 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
         <ContactUs contactUs={data.contactUs} />
       </div>
-      <FooterDark />
+      <FooterDark isHomepage={true} />
     </SWRConfig>
   )
 }
