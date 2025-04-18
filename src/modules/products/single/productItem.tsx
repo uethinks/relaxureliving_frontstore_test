@@ -260,34 +260,34 @@ export const ProductItem = ({
 
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <LazyImageOnLeft />
             </Suspense>
           </div>
           <div className="w-full">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <LazyImageOnRight />
             </Suspense>
           </div>
           <div className="w-full">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <LazyAdvantages />
             </Suspense>
           </div>
           <div className="w-full">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <LazyAccessoriesCards />
             </Suspense>
           </div>
           <div className="w-full">
             <CustomerReviews />
           </div>
-          <div className="w-full">
-            <Suspense fallback={<LoadingSpinner />}>
-              <LazyOurPromise />
-            </Suspense>
-          </div>
         </div>
+      </div>
+      <div className="w-full">
+        <Suspense>
+          <LazyOurPromise />
+        </Suspense>
       </div>
       <FooterDark />
     </>
