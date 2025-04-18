@@ -117,8 +117,8 @@ const ProgressiveComponents = ({ data }: { data: InitialData }) => {
       setTimeout(() => loadNextComponent(), 1500), // Testimonials
       setTimeout(() => loadNextComponent(), 2000), // OurPromise
       setTimeout(() => loadNextComponent(), 2500), // OurBlog
-      setTimeout(() => loadNextComponent(), 3000), // FAQ
-      setTimeout(() => loadNextComponent(), 3500), // ContactUs
+      // setTimeout(() => loadNextComponent(), 3000), // FAQ
+      // setTimeout(() => loadNextComponent(), 3500), // ContactUs
     ]
 
     return () => {
@@ -134,10 +134,10 @@ const ProgressiveComponents = ({ data }: { data: InitialData }) => {
       {loadedComponents >= 4 && <Testimonials />}
       {loadedComponents >= 5 && <OurPromise />}
       {loadedComponents >= 6 && <OurBlog homepageBlog={homepageBlog} />}
-      {loadedComponents >= 7 && faq && <FaqWrapper faq={faq} />}
+      {/* {loadedComponents >= 7 && faq && <FaqWrapper faq={faq} />}
       {loadedComponents >= 8 && contactUs && (
         <ContactUs contactUs={contactUs} />
-      )}
+      )} */}
     </>
   )
 }
@@ -181,6 +181,10 @@ export const Homepage = ({
       <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-20 py-0 relative bg-[#ffffff]">
         <AboveTheFold hero={data.hero} />
         <ProgressiveComponents data={data} />
+      </div>
+      <FaqWrapper faq={data.faq} />
+      <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-20 py-0 relative bg-[#ffffff]">
+        <ContactUs contactUs={data.contactUs} />
       </div>
       <FooterDark />
     </SWRConfig>
