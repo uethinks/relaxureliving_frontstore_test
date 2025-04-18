@@ -194,27 +194,27 @@ export const ShadesCard = (): JSX.Element | null => {
       {shades.map((shade) => (
         <div
           key={shade.id}
-          className="full flex items-center gap-5 p-5 rounded-[20px] border border-solid border-[#69727a]"
+          className="full flex flex-col md:flex-row items-center gap-5 p-5 rounded-[20px] border border-solid border-[#69727a]"
         >
           <div
-            className="relative w-full lg:w-1/3 h-[146px] rounded-[20px] bg-cover bg-center bg-no-repeat"
+            className="relative w-full md:w-1/3 h-[146px] rounded-[20px] bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage: `url(${memoizedImageUrls[shade.id]})`,
             }}
           />
-          <div className="flex flex-col w-full lg:w-2/3 items-start gap-4 relative">
+          <div className="flex flex-col w-full md:w-2/3 items-start gap-4 relative">
             <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
-              <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[22px] leading-[33px] whitespace-nowrap relative tracking-[0]">
+              <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[14px] lg:text-[22px] leading-[33px] whitespace-nowrap relative tracking-[0]">
                 {shade?.product_subtitle}
               </div>
               <div className="inline-flex items-center justify-center gap-2.5 px-2.5 py-0 relative flex-[0_0_auto]">
-                <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-semibold text-[#343a40] text-[22px] leading-[30.8px] whitespace-nowrap relative tracking-[0]">
+                <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-semibold text-[#343a40] text-[14px] lg:text-[22px] leading-[30.8px] whitespace-nowrap relative tracking-[0]">
                   $ {shade?.total}
                 </div>
               </div>
             </div>
             <div className="inline-flex flex-col items-center gap-2.5 relative flex-[0_0_auto]">
-              <div className="text-[18px] text-[#7e7e7e]">
+              <div className="text-[14px] lg:text-[18px] text-[#7e7e7e]">
                 {quantities[shade.id]} x {shade?.variant_title}
               </div>
               <div className="w-full flex items-center gap-2 relative">
@@ -224,7 +224,7 @@ export const ShadesCard = (): JSX.Element | null => {
 
                 <div className="w-[60px] flex items-start px-0 py-2.5 rounded-[20px] justify-center relative">
                   <div className="w-[61px] flex items-center mr-[-0.50px] gap-2.5 ml-[-0.50px] px-0 py-2.5 h-6 rounded-[20px] relative">
-                    <div className="text-[16px] [font-family:'Montserrat',Helvetica] w-[81px] mt-[-11.00px] tracking-[0] text-base mr-[-20.00px] text-[#7e7e7e] h-6 font-medium leading-6 whitespace-nowrap mb-[-9.00px] relative">
+                    <div className="text-[14px] lg:text-[16px] [font-family:'Montserrat',Helvetica] w-[81px] mt-[-11.00px] tracking-[0] text-base mr-[-20.00px] text-[#7e7e7e] h-6 font-medium leading-6 whitespace-nowrap mb-[-9.00px] relative">
                       Dark grey
                     </div>
                   </div>
@@ -234,7 +234,7 @@ export const ShadesCard = (): JSX.Element | null => {
             <div className="flex justify-between items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <div className="flex gap-2.5">
                 <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
-                  <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-lg leading-[25.2px] whitespace-nowrap relative tracking-[0]">
+                  <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-[14px] lg:text-[16px] leading-[25.2px] whitespace-nowrap relative tracking-[0]">
                     Quantity
                   </div>
                 </div>

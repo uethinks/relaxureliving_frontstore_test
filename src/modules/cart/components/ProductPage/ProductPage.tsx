@@ -85,7 +85,7 @@ export const ProductPage = (): JSX.Element => {
   return (
     <>
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px]">
-        <div className="bg-[#ffffff] w-full relative flex flex-col justify-center items-center pt-0 px-20">
+        <div className="bg-[#ffffff] w-full relative flex flex-col justify-center items-center pt-0 px-5 lg:px-20">
           <NavBarWrapper isFixed={false} />
 
           <div className="inline-flex items-center justify-start gap-2.5 w-full">
