@@ -8,6 +8,7 @@ import { ProductCard } from "../ProductCard/ProductCard"
 import { HeaterCard } from "../HeaterCard/HeaterCard"
 import { GlassDoorCard } from "../GlassDoorCard/GlassDoorCard"
 import { ShadesCard } from "../ShadesCard/ShadesCard"
+import { SampleKitCard } from "../SampleKitCard/SampleKitCard"
 import { useCart } from "@lib/context/cartContext"
 
 // Lazy load only non-critical components
@@ -103,9 +104,10 @@ export const ProductPage = (): JSX.Element => {
           <div className="relative flex flex-col mt-10 lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-2.5 w-full">
             <div className="flex flex-col gap-[30px] w-full lg:w-2/3">
               <ProductCard />
+              <ShadesCard />
               <HeaterCard />
               <GlassDoorCard />
-              <ShadesCard />
+              <SampleKitCard />
             </div>
             <div className="flex flex-col justify-start gap-2.5 w-full lg:w-1/3 sticky top-10">
               <OrderSummary />
