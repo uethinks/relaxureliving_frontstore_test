@@ -3,8 +3,8 @@ import Link from "next/link"
 
 export const FooterDark = (): JSX.Element => {
   return (
-    <div className="relative flex justify-center w-full overflow-hidden bg-[#0A142F]">
-      <div className="relative flex flex-col justify-between gap-10  w-full 2xl:w-[1512px]">
+    <div className="relative flex justify-center w-full overflow-hidden bg-[#0A142F] mt-[120px]">
+      <div className="relative flex flex-col justify-between gap-10  w-full 2xl:w-[1512px] 2xl:px-[193px]">
         <div className="flex flex-col justify-center w-full items-center gap-5 mt-[68px] px-[260px]">
           <img
             className="relative max-w-full lg:max-w-[563px] mt-[-10.00px]"

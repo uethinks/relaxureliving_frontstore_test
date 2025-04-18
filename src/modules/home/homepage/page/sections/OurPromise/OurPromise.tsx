@@ -1,49 +1,71 @@
 import React from "react"
-import { BoringStuff } from "./BoringStuff/BoringStuff"
+
+interface PromiseCardProps {
+  icon: string
+  description: string
+}
+
+const PromiseCard: React.FC<PromiseCardProps> = ({ icon, description }) => {
+  return (
+    <div className="flex flex-col gap-4 p-6 flex-1 min-w-[280px] rounded-lg">
+      <img src={icon} alt="Feature icon" className="w-12 h-12" />
+      <h3 className="text-[#343a40] text-xl font-semibold">
+        We are the gift that keeps giving
+      </h3>
+      <p className="text-[#68717a] text-base">{description}</p>
+    </div>
+  )
+}
 
 export const OurPromise = (): JSX.Element => {
-  return (
-    <div className="flex flex-col items-center justify-center gap-5 pt-20 pb-10 relative rounded-[20px] border border-solid border-transparent">
-      <div className="w-full justify-center gap-[30px] px-0 py-4 flex flex-col items-center relative flex-[0_0_auto]">
-        <div className="flex-col items-center gap-10 flex relative self-stretch w-full flex-[0_0_auto]">
-          <div className="flex-col items-start gap-2.5 flex relative self-stretch w-full flex-[0_0_auto]">
-            <div className="items-center justify-center gap-2.5 px-0 py-2.5 flex relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative w-full lg:w-[896px] mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
-                The boring but important stuff
-              </p>
-            </div>
+  const promiseCards = [
+    {
+      icon: "/img/calendar.png",
+      description:
+        "We use only commercial-grade aluminum and stainless steel hardware —the same materials used in high-end commercial buildings where cutting corners isn't an option. Our premium powder coating is designed for permanent long-term outdoor use so colors don't fade, scratch, or fall off.",
+    },
+    {
+      icon: "/img/checked.png",
+      description:
+        "Our 15-year total warranty is three times the industry standard, reflecting our confidence in every weld, joint, and component—because we'd rather spend money on quality materials than warranty claims.",
+    },
+    {
+      icon: "/img/car.png",
+      description:
+        "Your pergola ships within XXX days—completely free!—and arrives at your door in clearly labeled, fully protected packaging. We coordinate delivery timing with you and ensure all components arrive together—so your outdoor transformation can begin right away without waiting or wondering.",
+    },
+    {
+      icon: "/img/barge.png",
+      description:
+        "Our pre-assembled modular sections connect like building blocks, allowing installation in just 2-3 hours with clear instructions and video guidance—transforming your Saturday project into Saturday evening entertainment.",
+    },
+  ]
 
-            <div className="items-center justify-center gap-2.5 px-0 py-2.5 flex relative self-stretch w-full flex-[0_0_auto]">
-              <p className="px-2 w-full lg:w-[974px] mt-[-1.00px] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] text-center leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
-                Discover our premium pergolas designed to enhance your outdoor
-                living experience. Crafted with quality materials, they provide
-                both style and functionality for any backyard.
-              </p>
-            </div>
+  return (
+    <div className="w-full bg-[#F3F3F3] mt-[120px]">
+      <div className="p-10 w-full 2xl:w-[1512px] 2xl:px-[193px] mx-auto">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-[132px]">
+          {/* Left Section */}
+          <div className="flex flex-col gap-5 lg:max-w-[320px]">
+            <h2 className="text-[#343a40] text-3xl font-bold">
+              The Boring But Important Stuff
+            </h2>
+            <p className="text-[#68717a] text-lg">
+              These details might not be flashy, but they're why you'll love
+              your Relaxure pergola from the day it arrives and for decades
+              more!
+            </p>
           </div>
 
-          <div className="flex flex-col gap-4 lg:flex-row lg:flex-wrap justify-between lg:items-start items-center pt-10 pb-0 px-0 relative self-stretch w-full flex-[0_0_auto]">
-            <BoringStuff
-              className="!flex-[0_0_auto]"
-              element="https://c.animaapp.com/bEMo3Gov/img/22-1@2x.png"
-              october="https://c.animaapp.com/bEMo3Gov/img/october-1@2x.png"
-              property1="build-the-last"
-            />
-            <BoringStuff
-              className="!flex-[0_0_auto]"
-              property1="delivery"
-              subtract="https://c.animaapp.com/bEMo3Gov/img/subtract-1.svg"
-            />
-            <BoringStuff className="!flex-[0_0_auto]" property1="warranty" />
-            <BoringStuff
-              className="!flex-[0_0_auto]"
-              img="https://c.animaapp.com/bEMo3Gov/img/vector-7-1.svg"
-              property1="assembly"
-              star="https://c.animaapp.com/bEMo3Gov/img/star-1-1.svg"
-              vector1="https://c.animaapp.com/bEMo3Gov/img/vector-14-1.svg"
-              vector2="https://c.animaapp.com/bEMo3Gov/img/vector-1.svg"
-              vectorClassName="!left-[-52808px] !top-[-3621px]"
-            />
+          {/* Right Section - Grid of Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1">
+            {promiseCards.map((card, index) => (
+              <PromiseCard
+                key={index}
+                icon={card.icon}
+                description={card.description}
+              />
+            ))}
           </div>
         </div>
       </div>

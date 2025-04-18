@@ -115,8 +115,8 @@ const ProgressiveComponents = ({ data }: { data: InitialData }) => {
       setTimeout(() => loadNextComponent(), 500), // Features
       setTimeout(() => loadNextComponent(), 1000), // Accessories
       setTimeout(() => loadNextComponent(), 1500), // Testimonials
-      setTimeout(() => loadNextComponent(), 2000), // OurPromise
-      setTimeout(() => loadNextComponent(), 2500), // OurBlog
+      // setTimeout(() => loadNextComponent(), 2000), // OurPromise
+      setTimeout(() => loadNextComponent(), 2000), // OurBlog
       // setTimeout(() => loadNextComponent(), 3000), // FAQ
       // setTimeout(() => loadNextComponent(), 3500), // ContactUs
     ]
@@ -132,8 +132,8 @@ const ProgressiveComponents = ({ data }: { data: InitialData }) => {
       {loadedComponents >= 2 && <Features features={features} />}
       {loadedComponents >= 3 && <Accessories accessories={accessories} />}
       {loadedComponents >= 4 && <Testimonials />}
-      {loadedComponents >= 5 && <OurPromise />}
-      {loadedComponents >= 6 && <OurBlog homepageBlog={homepageBlog} />}
+      {/* {loadedComponents >= 5 && <OurPromise />} */}
+      {loadedComponents >= 5 && <OurBlog homepageBlog={homepageBlog} />}
       {/* {loadedComponents >= 7 && faq && <FaqWrapper faq={faq} />}
       {loadedComponents >= 8 && contactUs && (
         <ContactUs contactUs={contactUs} />
@@ -182,8 +182,10 @@ export const Homepage = ({
         <AboveTheFold hero={data.hero} />
         <ProgressiveComponents data={data} />
       </div>
+      <OurPromise />
+      {/* <FaqWrapper faq={data.faq} /> */}
       <FaqWrapper faq={data.faq} />
-      <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-20 py-0 relative bg-[#ffffff]">
+      <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-20 py-0 relative bg-[#ffffff] mt-[120px]">
         <ContactUs contactUs={data.contactUs} />
       </div>
       <FooterDark />
