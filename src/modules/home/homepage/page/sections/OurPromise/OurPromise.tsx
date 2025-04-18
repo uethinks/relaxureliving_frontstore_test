@@ -7,7 +7,7 @@ interface PromiseCardProps {
 
 const PromiseCard: React.FC<PromiseCardProps> = ({ icon, description }) => {
   return (
-    <div className="flex flex-col gap-4 p-6 flex-1 min-w-[280px] rounded-lg">
+    <div className="flex flex-col gap-4 p-6 w-full rounded-lg">
       <img src={icon} alt="Feature icon" className="w-12 h-12" />
       <h3 className="text-[#343a40] text-xl font-semibold">
         We are the gift that keeps giving
@@ -43,10 +43,10 @@ export const OurPromise = (): JSX.Element => {
 
   return (
     <div className="w-full bg-[#F3F3F3] mt-[120px]">
-      <div className="p-10 w-full 2xl:w-[1512px] 2xl:px-[193px] mx-auto">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-[132px]">
+      <div className="p-10 w-full 2xl:w-[1512px] px-20 mx-auto">
+        <div className="flex flex-col lg:gap-[132px] md:items-center lg:flex-row lg:items-center lg:justify-between">
           {/* Left Section */}
-          <div className="flex flex-col gap-5 lg:max-w-[320px]">
+          <div className="flex flex-col gap-5 w-full md:w-[600px] lg:w-1/3 mb-10 lg:mb-0">
             <h2 className="text-[#343a40] text-3xl font-bold">
               The Boring But Important Stuff
             </h2>
@@ -58,7 +58,7 @@ export const OurPromise = (): JSX.Element => {
           </div>
 
           {/* Right Section - Grid of Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1">
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-8 w-full md:w-full lg:w-2/3">
             {promiseCards.map((card, index) => (
               <PromiseCard
                 key={index}
