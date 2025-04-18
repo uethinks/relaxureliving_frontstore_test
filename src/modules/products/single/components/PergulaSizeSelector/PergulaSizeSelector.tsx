@@ -34,7 +34,6 @@ export const PergulaSizeSelector = ({
     id: "",
     value: "",
   }
-  console.log("defaultSize", defaultSize, pergolaSizes, product.options)
   const [selectedSize, setSelectedSize] =
     useState<StoreProductOptionValue>(defaultSize)
   const [selectedColor, setSelectedColor] =

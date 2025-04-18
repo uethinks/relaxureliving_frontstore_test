@@ -48,7 +48,6 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
         const productionReviews = response.data.find((review: any) =>
           review.name?.includes("production page")
         )
-        console.log("productionReviews", productionReviews)
         const transformedReviews = productionReviews?.testimonials_item?.map(
           (review: any) => ({
             id: review.id.toString(),

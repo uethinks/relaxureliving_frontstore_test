@@ -137,22 +137,28 @@ export const AccesorriesPopupGlassdoor = ({
     /**
      * 根据selectedGlassdoor计算对应的sides
      */
-    const numOfShortSide = selectedGlassdoor.filter((glassdoor) => {
-      return glassdoor.productVarant?.width === pergolaSize.width
-    }).length
-    const numOfLongSide = selectedGlassdoor.filter((glassdoor) => {
-      return glassdoor.productVarant?.length === pergolaSize.length
-    }).length
-    const slides = []
-    if (numOfShortSide === 1) {
-      slides.push("left")
-    } else if (numOfShortSide === 2) {
-      slides.push("left", "right")
-    }
-    if (numOfLongSide === 1) {
-      slides.push("right")
-    } else if (numOfLongSide === 2) {
-      slides.push("left", "right")
+
+    const isSquare = pergolaSize.width === pergolaSize.length
+    const numOfProducts = selectedGlassdoor[0]?.quantity ?? 1
+    const slides = new Array(numOfProducts).fill("left")
+    if (!isSquare) {
+      const numOfShortSide = selectedGlassdoor.filter((glassdoor) => {
+        return glassdoor.productVarant?.length === pergolaSize.width
+      }).length
+      const numOfLongSide = selectedGlassdoor.filter((glassdoor) => {
+        return glassdoor.productVarant?.length === pergolaSize.length
+      }).length
+
+      if (numOfShortSide === 1) {
+        slides.push("left")
+      } else if (numOfShortSide === 2) {
+        slides.push("left", "right")
+      }
+      if (numOfLongSide === 1) {
+        slides.push("top")
+      } else if (numOfLongSide === 2) {
+        slides.push("top", "bottom")
+      }
     }
     setSelectedSides(slides)
   }, [])

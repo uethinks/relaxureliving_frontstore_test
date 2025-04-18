@@ -233,8 +233,6 @@ export const ProductItem = ({
     }
   }
 
-  console.log("product", product)
-
   return (
     <>
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">

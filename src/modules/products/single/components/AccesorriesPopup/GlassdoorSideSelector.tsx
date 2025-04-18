@@ -40,7 +40,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
 
     onSideSelect(newSelectedSides)
   }
-
+  console.log("selectedSides", selectedSides)
   if (isSquare) {
     return (
       <div className="flex flex-col items-start w-full max-w-[400px]">
