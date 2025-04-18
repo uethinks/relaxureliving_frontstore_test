@@ -17,6 +17,7 @@ interface ContactUsProps {
   PhoneNumber: string
   SendButton: string
 }
+
 export const ContactUs = ({
   contactUs,
 }: {
@@ -25,125 +26,107 @@ export const ContactUs = ({
   return (
     <div
       id="contact"
-      className="flex flex-col lg:flex-row w-full justify-center items-center gap-[87px] px-10 py-10 relative flex-[0_0_auto]"
+      className="flex flex-col lg:flex-row w-full justify-center items-center gap-[87px]"
     >
-      <div className="flex justify-center w-full lg:w-3/5 lg:h-[947px] items-center relative">
+      <div className="flex justify-center w-full lg:w-3/5 lg:h-[947px] items-center">
         <img
-          className="relative flex-1 grow h-[947px] object-cover rounded-[20px]"
+          className="h-[947px] w-full object-cover rounded-[20px]"
           alt="Unsplash"
           src="/img/unsplash-csk5xpo87li.png"
         />
 
-        <div className="absolute bottom-10 left-0 w-[80%] lg:w-full items-center justify-center px-4  py-2.5 flex gap-2.5">
-          <p className="flex-1 mt-[-1.00px] [font-family:'Merriweather',Helvetica] font-bold text-[#ffffff] text-[18px] lg:text-[32px] leading-[44.8px] relative tracking-[0]">
+        <div className="absolute bottom-10 left-0 w-[80%] lg:w-full px-4 py-2.5">
+          <p className="font-bold text-white text-[18px] lg:text-[32px] leading-[44.8px] tracking-[0]">
             {contactUs.DescriptionOnImage}
           </p>
         </div>
       </div>
 
-      <div className="flex w-full lg:w-2/5 items-center gap-2.5 relative">
-        <div className="flex flex-col w-full px-4 py-10 items-center justify-center gap-[30px] relative bg-[#f8f8f8] rounded-[18.16px] border-[0.91px] border-solid border-[#ffffff6e] backdrop-blur-[32.4px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(32.4px)_brightness(100%)]">
+      <div className="flex w-full lg:w-2/5 items-center">
+        <div className="flex flex-col w-full px-4 py-10 items-center gap-[30px] bg-[#f8f8f8] rounded-[18.16px] border border-solid border-[#ffffff6e] backdrop-blur-[32.4px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(32.4px)_brightness(100%)]">
           <div className="relative w-[102px] h-[82.21px]">
-            <div className="h-[82px]">
-              <div className="relative w-[253px] h-[232px] top-[-61px] left-[-86px]">
-                <img
-                  className="absolute w-[47px] h-[58px] top-[76px] left-[140px]"
-                  alt="Group"
-                  src="/img/group-266.png"
-                />
-
-                <img
-                  className="absolute w-[253px] h-[232px] top-0 left-0"
-                  alt="Vector"
-                  src="/img/vector-1.svg"
-                />
-
-                <img
-                  className="absolute w-[102px] h-[111px] top-[61px] left-[71px]"
-                  alt="Group"
-                  src="/img/group-265.png"
-                />
-              </div>
+            <div className="relative w-[253px] h-[232px] -top-[61px] -left-[86px]">
+              <img
+                className="absolute w-[47px] h-[58px] top-[76px] left-[140px]"
+                alt="Group"
+                src="/img/group-266.png"
+              />
+              <img
+                className="absolute w-[253px] h-[232px]"
+                alt="Vector"
+                src="/img/vector-1.svg"
+              />
+              <img
+                className="absolute w-[102px] h-[111px] top-[61px] left-[71px]"
+                alt="Group"
+                src="/img/group-265.png"
+              />
             </div>
           </div>
 
-          <div className="flex flex-col items-center gap-[52.66px] px-[3.63px] py-0 relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex flex-col items-center justify-center gap-[18.16px] pl-[68.09px] pr-[72.63px] py-0 relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center justify-center gap-[9.08px] relative self-stretch w-full flex-[0_0_auto]">
-                <p className="relative w-full mt-[-0.91px] ml-[-53.99px] mr-[-53.99px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#000000] text-[18px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
-                  {contactUs.FormDescription}
-                </p>
-              </div>
+          <div className="flex flex-col items-center gap-[52.66px] w-full">
+            <div className="flex flex-col items-center gap-[18.16px] w-full">
+              <p className="font-heading-2 text-black text-[18px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)]">
+                {contactUs.FormDescription}
+              </p>
             </div>
 
-            <div className="inline-flex w-full flex-col items-center gap-[36.32px] px-[3.63px] py-0 relative flex-[0_0_auto]">
-              <div className="flex flex-col w-full items-start justify-center gap-[29.05px] px-[3.63px] py-0 relative flex-[0_0_auto]">
-                <div className="flex flex-col w-full items-start gap-[29.05px] relative flex-[0_0_auto]">
-                  <div className="flex flex-col w-full items-start gap-[3.63px] relative flex-[0_0_auto]">
-                    <div className="flex flex-col items-start gap-[5.45px] relative self-stretch w-full flex-[0_0_auto]">
-                      <div className="flex flex-col items-start gap-[5.45px] relative self-stretch w-full flex-[0_0_auto]">
-                        <div className="relative w-fit mt-[-0.91px] [font-family:'Inter',Helvetica] font-normal text-[#000000] text-sm tracking-[0] leading-[15.4px] whitespace-nowrap [background:transparent] border-[none] p-0">
-                          {contactUs.FullName}
-                        </div>
-
-                        <input
-                          className="focus:outline-none items-center gap-[9.08px] px-[14.53px] py-[16.34px] flex-[0_0_auto] bg-[#ffffff] rounded-[9.08px] border-[0.91px] border-solid border-[#d8dadc] flex relative self-stretch w-full"
-                          id="fullname"
-                          placeholder={contactUs.FullName}
-                          type="text"
-                        />
+            <div className="w-full flex flex-col items-center gap-[36.32px]">
+              <div className="w-full flex flex-col items-start gap-[29.05px]">
+                <div className="w-full flex flex-col items-start gap-[29.05px]">
+                  <div className="w-full flex flex-col items-start gap-[3.63px]">
+                    <div className="w-full flex flex-col items-start gap-[5.45px]">
+                      <div className="font-['Inter'] text-black text-sm tracking-[0] leading-[15.4px]">
+                        {contactUs.FullName}
                       </div>
+                      <input
+                        className="w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid border-[#d8dadc] focus:outline-none"
+                        id="fullname"
+                        placeholder={contactUs.FullName}
+                        type="text"
+                      />
                     </div>
                   </div>
 
-                  <div className="flex flex-col w-full items-start gap-[3.63px] relative flex-[0_0_auto]">
-                    <div className="flex-col items-start gap-[5.45px] flex-[0_0_auto] flex relative self-stretch w-full">
-                      <div className="flex flex-col items-start gap-[5.45px] relative self-stretch w-full flex-[0_0_auto]">
-                        <div className="relative w-fit mt-[-0.91px] [font-family:'Inter',Helvetica] font-normal text-[#000000] text-[12.7px] tracking-[0] leading-[14.0px] whitespace-nowrap">
-                          {contactUs.PhoneNumber}
-                        </div>
-
-                        <input
-                          className="focus:outline-none items-center gap-[9.08px] px-[14.53px] py-[16.34px] flex-[0_0_auto] bg-[#ffffff] rounded-[9.08px] border-[0.91px] border-solid border-[#d8dadc] flex relative self-stretch w-full"
-                          id="phone"
-                          placeholder={contactUs.PhoneNumber}
-                          type="text"
-                        />
+                  <div className="w-full flex flex-col items-start gap-[3.63px]">
+                    <div className="w-full flex flex-col items-start gap-[5.45px]">
+                      <div className="font-['Inter'] text-black text-[12.7px] tracking-[0] leading-[14.0px]">
+                        {contactUs.PhoneNumber}
                       </div>
+                      <input
+                        className="w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid border-[#d8dadc] focus:outline-none"
+                        id="phone"
+                        placeholder={contactUs.PhoneNumber}
+                        type="text"
+                      />
                     </div>
                   </div>
 
-                  <div className="flex flex-col w-full items-start gap-[3.63px] relative flex-[0_0_auto]">
-                    <div className="flex flex-col items-start gap-[5.45px] relative self-stretch w-full flex-[0_0_auto] bg-[#f6f7f9]">
-                      <div className="flex flex-col items-start gap-[5.45px] relative self-stretch w-full flex-[0_0_auto]">
-                        <div className="relative w-fit mt-[-0.91px] [font-family:'Inter',Helvetica] font-normal text-[#000000] text-[12.7px] tracking-[0] leading-[14.0px] whitespace-nowrap">
-                          {contactUs.Email}
-                        </div>
-
-                        <input
-                          className="focus:outline-none items-center gap-[9.08px] px-[14.53px] py-[16.34px] flex-[0_0_auto] bg-[#ffffff] rounded-[9.08px] border-[0.91px] border-solid border-[#d8dadc] flex relative self-stretch w-full"
-                          id="email"
-                          placeholder={contactUs.Email}
-                          type="text"
-                        />
+                  <div className="w-full flex flex-col items-start gap-[3.63px]">
+                    <div className="w-full flex flex-col items-start gap-[5.45px]">
+                      <div className="font-['Inter'] text-black text-[12.7px] tracking-[0] leading-[14.0px]">
+                        {contactUs.Email}
                       </div>
+                      <input
+                        className="w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid border-[#d8dadc] focus:outline-none"
+                        id="email"
+                        placeholder={contactUs.Email}
+                        type="text"
+                      />
                     </div>
                   </div>
 
-                  <div className="flex flex-col w-full items-start gap-[3.63px] relative flex-[0_0_auto] mr-[-0.45px]">
-                    <div className="flex flex-col h-[207px] items-start gap-[5.45px] relative self-stretch w-full">
-                      <div className="flex flex-col items-start gap-[5.45px] relative self-stretch w-full flex-[0_0_auto]">
-                        <div className="relative w-fit mt-[-0.91px] [font-family:'Inter',Helvetica] font-normal text-[#000000] text-[12.7px] tracking-[0] leading-[14.0px] whitespace-nowrap">
-                          Message
-                        </div>
-
-                        <textarea
-                          className="focus:outline-none items-center gap-[9.08px] px-[14.53px] py-[16.34px] flex-[0_0_auto] bg-[#ffffff] rounded-[9.08px] border-[0.91px] border-solid border-[#d8dadc] flex relative self-stretch w-full resize-vertical min-h-[120px]"
-                          id="message"
-                          placeholder={contactUs.Message}
-                          rows={4}
-                        />
+                  <div className="w-full flex flex-col items-start gap-[3.63px]">
+                    <div className="w-full flex flex-col items-start gap-[5.45px]">
+                      <div className="font-['Inter'] text-black text-[12.7px] tracking-[0] leading-[14.0px]">
+                        Message
                       </div>
+                      <textarea
+                        className="w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid border-[#d8dadc] focus:outline-none resize-vertical min-h-[120px]"
+                        id="message"
+                        placeholder={contactUs.Message}
+                        rows={4}
+                      />
                     </div>
                   </div>
                 </div>
@@ -151,13 +134,12 @@ export const ContactUs = ({
             </div>
           </div>
 
-          <div className="flex-col w-full items-start gap-[9.08px] flex-[0_0_auto] flex relative">
-            <button className="flex flex-col h-[43.58px] items-center gap-[var(--3-spacing-spacing-sm)] relative self-stretch w-full">
-              <div className="h-[43.58px] items-center justify-center gap-[var(--3-spacing-spacing-md)] px-[12.71px] py-[9.08px] bg-[#072f6c] rounded-[var(--2-radius-radius-md)] overflow-hidden flex relative self-stretch w-full">
-                <div className="inline-flex items-center relative flex-[0_0_auto] mt-[-5.45px] mb-[-5.45px]">
-                  <div className="relative w-[30.87px] rounded-[7.26px] shadow-shadows-shadow-xs" />
-
-                  <div className="relative w-fit font-med-16 font-[number:var(--med-16-font-weight)] text-variable-collection-beige-brand text-[length:var(--med-16-font-size)] tracking-[var(--med-16-letter-spacing)] leading-[var(--med-16-line-height)] whitespace-nowrap [font-style:var(--med-16-font-style)]">
+          <div className="w-full">
+            <button className="w-full h-[43.58px]">
+              <div className="h-full flex items-center justify-center gap-[var(--3-spacing-spacing-md)] px-[12.71px] py-[9.08px] bg-[#072f6c] rounded-[var(--2-radius-radius-md)]">
+                <div className="flex items-center">
+                  <div className="w-[30.87px] rounded-[7.26px] shadow-shadows-shadow-xs" />
+                  <div className="font-med-16 text-variable-collection-beige-brand">
                     {contactUs.SendButton}
                   </div>
                 </div>

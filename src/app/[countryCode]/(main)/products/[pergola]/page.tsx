@@ -1,17 +1,35 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { getProductByProductType, getProductByHandle } from "@lib/data/products"
+import {
+  getProductByProductType,
+  getProductByHandle,
+  getProductsListFromStoreApi,
+} from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { ProductItem } from "@modules/products/single"
 import { StoreProductListParams } from "@medusajs/types"
+import { listProductsForStaticParams } from "@lib/data/products"
 
 type Props = Readonly<{
-  params: Promise<{ countryCode: string; handle: string; productId: string }>
+  params: Promise<{ countryCode: string; pergola: string }>
 }>
 
 export async function generateStaticParams() {
-  const paths = [{ countryCode: "us", handle: "pergola" }]
-  return paths
+  const region = await getRegion("us")
+
+  if (!region) {
+    return []
+  }
+
+  const { response } = await listProductsForStaticParams({
+    countryCode: "us",
+    regionId: region.id,
+  })
+
+  return response.products.map((product) => ({
+    countryCode: "us",
+    pergola: product.handle,
+  }))
 }
 
 async function getProductsForAccessory({ regionId }: { regionId: string }) {
@@ -34,7 +52,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
   const { products } = await getProductByHandle({
     region_id: region.id,
-    handle: params.handle,
+    handle: params.pergola,
   })
   if (!products.length) {
     notFound()
@@ -60,7 +78,7 @@ export default async function ProductPage(props: Props) {
 
   const { products } = await getProductByHandle({
     region_id: region.id,
-    handle: "pergola",
+    handle: params.pergola,
   })
   const accessories = await getProductsForAccessory({
     regionId: region.id,

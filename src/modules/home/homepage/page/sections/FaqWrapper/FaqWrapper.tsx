@@ -27,7 +27,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
     level2: number
   }>({ level1: 0, level2: 0 })
   return faq?.homepageFAQ.length > 0 ? (
-    <div className="flex flex-col w-full items-center justify-center gap-2.5 relative ml-[-80.00px] mr-[-80.00px] bg-[#f3f3f3] mt-[120px]">
+    <div className="flex flex-col w-full items-center justify-center gap-2.5 relative ml-[-80.00px] mr-[-80.00px] bg-[#f3f3f3] mt-10 lg:mt-[120px]">
       <div className="flex flex-col w-full items-center gap-10 px-0 py-10 relative flex-[0_0_auto]">
         <div className="flex flex-col h-[89px] items-start relative self-stretch w-full">
           <div className="h-[89px] items-start justify-center px-0 py-10 relative self-stretch w-full mb-[-77.00px] flex gap-2.5">

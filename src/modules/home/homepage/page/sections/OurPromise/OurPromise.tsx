@@ -42,12 +42,12 @@ export const OurPromise = (): JSX.Element => {
   ]
 
   return (
-    <div className="w-full bg-[#F3F3F3] mt-[120px]">
-      <div className="p-10 w-full 2xl:w-[1512px] px-20 mx-auto">
-        <div className="flex flex-col lg:gap-[132px] md:items-center lg:flex-row lg:items-center lg:justify-between">
+    <div className="w-full bg-[#F3F3F3] mt-10 lg:mt-[120px]">
+      <div className="p-10 w-full 2xl:w-[1512px] px-5 md:px-20 mx-auto">
+        <div className="flex flex-col justify-start items-center lg:gap-[132px] md:items-center lg:flex-row lg:items-center lg:justify-between">
           {/* Left Section */}
-          <div className="flex flex-col gap-5 w-full md:w-[600px] lg:w-1/3 mb-10 lg:mb-0">
-            <h2 className="text-[#343a40] text-[36px] font-bold">
+          <div className="flex flex-col justify-start items-start text-center lg:text-left gap-5 w-full md:w-[600px] lg:w-1/3 mb-10 lg:mb-0">
+            <h2 className="text-[#343a40] text-[36px] font-bold mx-auto lg:mx-0">
               The Boring But Important Stuff
             </h2>
             <p className="text-[#68717a] text-[18px]">

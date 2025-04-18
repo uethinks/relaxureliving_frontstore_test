@@ -7,17 +7,11 @@ import { PergolaSize, selectedProducts } from "types/global"
 import { ProductSelector } from "./ProductSelector"
 import dynamic from "next/dynamic"
 
-const LoadingSpinner = () => (
-  <div className="w-full flex justify-center items-center py-4">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-  </div>
-)
-
 const LazyAdvantage = dynamic(
   () => import("./Advantage").then((mod) => mod.Advantage),
   {
     ssr: false,
-    loading: () => <LoadingSpinner />,
+    loading: () => null,
   }
 )
 
@@ -25,7 +19,7 @@ const LazyDescription = dynamic(
   () => import("./PergolaInformations").then((mod) => mod.Description),
   {
     ssr: false,
-    loading: () => <LoadingSpinner />,
+    loading: () => null,
   }
 )
 
@@ -33,7 +27,7 @@ const LazyAssembly = dynamic(
   () => import("./PergolaInformations").then((mod) => mod.Assembly),
   {
     ssr: false,
-    loading: () => <LoadingSpinner />,
+    loading: () => null,
   }
 )
 
@@ -119,7 +113,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
             />
 
             <div className="flex flex-col w-full items-center gap-4 mt-6">
-              <Suspense fallback={<LoadingSpinner />}>
+              <Suspense>
                 <LazyAdvantage />
               </Suspense>
 
@@ -144,7 +138,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
               </div>
 
               {activeTab === "Description" && (
-                <Suspense fallback={<LoadingSpinner />}>
+                <Suspense>
                   <LazyDescription />
                 </Suspense>
               )}
@@ -173,7 +167,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
         {/* Assembly Tab Content - Full Width */}
         {activeTab === "Assembly" && (
           <div className="w-full mt-4">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense>
               <LazyAssembly />
             </Suspense>
           </div>

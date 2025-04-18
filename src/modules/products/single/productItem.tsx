@@ -14,18 +14,12 @@ import {
 } from "types/global"
 import dynamic from "next/dynamic"
 
-const LoadingSpinner = () => (
-  <div className="w-full flex justify-center items-center py-4">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-  </div>
-)
-
 // Lazy load components with explicit client-side rendering
 const LazyImageOnLeft = dynamic(
   () => import("./components/LandingPage").then((mod) => mod.ImageOnLeft),
   {
     ssr: false,
-    loading: () => <LoadingSpinner />,
+    loading: () => null,
   }
 )
 
@@ -33,7 +27,7 @@ const LazyImageOnRight = dynamic(
   () => import("./components/LandingPage").then((mod) => mod.ImageOnRight),
   {
     ssr: false,
-    loading: () => <LoadingSpinner />,
+    loading: () => null,
   }
 )
 
@@ -41,7 +35,7 @@ const LazyAdvantages = dynamic(
   () => import("./components/LandingPage").then((mod) => mod.Advantages),
   {
     ssr: false,
-    loading: () => <LoadingSpinner />,
+    loading: () => null,
   }
 )
 
@@ -49,7 +43,7 @@ const LazyAccessoriesCards = dynamic(
   () => import("./components/LandingPage").then((mod) => mod.AccessoriesCards),
   {
     ssr: false,
-    loading: () => <LoadingSpinner />,
+    loading: () => null,
   }
 )
 
@@ -60,7 +54,7 @@ const LazyOurPromise = dynamic(
     ),
   {
     ssr: false,
-    loading: () => <LoadingSpinner />,
+    loading: () => null,
   }
 )
 
@@ -238,6 +232,8 @@ export const ProductItem = ({
       throw error
     }
   }
+
+  console.log("product", product)
 
   return (
     <>
