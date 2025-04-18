@@ -27,25 +27,25 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
     level2: number
   }>({ level1: 0, level2: 0 })
   return faq?.homepageFAQ.length > 0 ? (
-    <div className="flex flex-col w-full items-center justify-center gap-2.5 relative ml-[-80.00px] mr-[-80.00px] bg-[#f3f3f3] mt-10 lg:mt-[120px]">
-      <div className="flex flex-col w-full items-center gap-10 px-0 py-10 relative flex-[0_0_auto]">
-        <div className="flex flex-col h-[89px] items-start relative self-stretch w-full">
-          <div className="h-[89px] items-start justify-center px-0 py-10 relative self-stretch w-full mb-[-77.00px] flex gap-2.5">
-            <div className="w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] text-center leading-[var(--heading-2-line-height)] relative tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
+    <div className="flex flex-col w-full items-center justify-center gap-2.5 relative -mx-20 bg-[#f3f3f3] mt-10 lg:mt-[120px]">
+      <div className="flex flex-col w-full items-center gap-10 py-10 relative flex-[0_0_auto]">
+        <div className="flex flex-col h-[89px] items-start relative w-full">
+          <div className="h-[89px] items-start justify-center py-10 relative w-full -mb-[77px] flex gap-2.5">
+            <div className="w-full -mt-[1px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center leading-[var(--heading-2-line-height)] relative tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
               {faq.Subtitle}
             </div>
           </div>
         </div>
 
-        <div className="relative w-full lg:w-[977px] flex flex-col items-center gap-2.5">
+        <div className="relative w-full lg:w-[977px] flex flex-col items-center gap-2.5 px-5">
           {faq.homepageFAQ.map((category, indexLevel1) => (
             <div
               key={category.id}
-              className="flex flex-col items-center w-4/5 rounded-[20px] overflow-hidden px-4 gap-6"
+              className="flex flex-col items-center w-full rounded-[20px] overflow-hidden px-4 gap-6"
             >
               <div className="flex flex-row items-start gap-2.5 w-full">
                 <div
-                  className="flex-1 font-semibold text-[#343A40] text-lg leading-[21.6px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0] cursor-pointer"
+                  className="flex-1 font-semibold text-[#343A40] text-lg leading-[21.6px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0] cursor-pointer"
                   onClick={() =>
                     setOpenQuestion({ level1: indexLevel1, level2: 0 })
                   }
@@ -58,16 +58,16 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                   category.question_and_answer.map((answer, indexLevel2) => (
                     <div
                       key={answer.id}
-                      className={`flex flex-col w-full items-start gap-[4px] p-5 ${
+                      className={`flex flex-col w-full items-start gap-1 p-5 ${
                         openQuestion.level2 === indexLevel2
                           ? "bg-white p-4 rounded-lg"
                           : ""
                       }`}
                     >
-                      <div className="flex-[0_0_auto] flex items-start gap-2.5 relative self-stretch w-full">
+                      <div className="flex-[0_0_auto] flex items-start gap-2.5 relative w-full">
                         <div className="flex items-center gap-4 relative flex-1 grow">
                           <div
-                            className="flex items-start relative flex-1 self-stretch grow cursor-pointer"
+                            className="flex items-start relative flex-1 grow cursor-pointer"
                             onClick={() =>
                               setOpenQuestion({
                                 level1: indexLevel1,
@@ -75,7 +75,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                               })
                             }
                           >
-                            <div className="flex-1 font-semibold text-[#595c5f] text-base leading-[21.6px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
+                            <div className="flex-1 font-semibold text-[#595c5f] text-base leading-[21.6px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0]">
                               {answer.question}
                             </div>
                           </div>
@@ -102,8 +102,8 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                       </div>
 
                       {openQuestion.level2 === indexLevel2 && (
-                        <div className="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto]">
-                          <p className="self-stretch font-normal text-texttxt-secondary text-base leading-[22.4px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
+                        <div className="flex flex-col items-start gap-4 relative w-full flex-[0_0_auto]">
+                          <p className="font-normal text-texttxt-secondary text-base leading-[22.4px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0]">
                             {answer.Answer}
                           </p>
                         </div>

@@ -4,7 +4,7 @@ export const ImageOnRight = (): JSX.Element => {
   return (
     <div className="w-full inline-flex flex-col items-center gap-10 relative mt-10">
       <div className="flex w-full items-center justify-center gap-2.5 relative">
-        <p className="relative w-full font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+        <p className="relative w-full font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
           Your outdoor space, comfortable and usable in any season, any weather,
           any time.
         </p>
@@ -28,14 +28,14 @@ export const ImageOnRight = (): JSX.Element => {
                     alt="Frame"
                     src="https://c.animaapp.com/9ZRP9Uof/img/frame-1000004940.svg"
                   />
-                  <p className="relative w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#68717a] text-lg tracking-[0] leading-[27px] whitespace-nowrap">
+                  <p className="relative w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#68717a] text-lg tracking-[0] leading-[27px] whitespace-normal">
                     Sleek, contemporary design
                   </p>
                 </div>
 
                 <div className="inline-flex items-center gap-5 p-2.5 relative self-stretch">
                   <div className="relative w-6 h-6 bg-cover bg-[url(https://c.animaapp.com/9ZRP9Uof/img/group@2x.png)] bg-[100%_100%]" />
-                  <p className="relative w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#68717a] text-lg tracking-[0] leading-[27px] whitespace-nowrap">
+                  <p className="relative w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#68717a] text-lg tracking-[0] leading-[27px] whitespace-normal">
                     Premium finishes (multiple color options)
                   </p>
                 </div>
@@ -46,7 +46,7 @@ export const ImageOnRight = (): JSX.Element => {
                     alt="Frame"
                     src="https://c.animaapp.com/9ZRP9Uof/img/frame-1000004945.svg"
                   />
-                  <p className="relative w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#68717a] text-lg tracking-[0] leading-[27px] whitespace-nowrap">
+                  <p className="relative w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#68717a] text-lg tracking-[0] leading-[27px] whitespace-normal">
                     Hidden fastener system for clean lines
                   </p>
                 </div>

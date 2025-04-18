@@ -4,7 +4,7 @@ export const ImageOnLeft = (): JSX.Element => {
   return (
     <div className="w-full inline-flex flex-col items-center gap-10 relative mt-10">
       <div className="flex w-full items-center justify-center gap-2.5 relative">
-        <p className="relative w-full font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+        <p className="relative w-full font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
           Your outdoor space, comfortable and usable in any season, any weather,
           any time.
         </p>
@@ -72,33 +72,33 @@ export const ImageOnLeft = (): JSX.Element => {
 
                 <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
                   <div className="inline-flex items-center gap-2.5 px-2.5 py-0 relative flex-[0_0_auto]">
-                    <p className="w-[428px] mt-[-1.00px] [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-[22px] leading-[30.8px] relative tracking-[0]">
+                    <p className="w-full mt-[-1.00px] [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-[18px] lg:text-[22px] leading-[30.8px] relative tracking-[0]">
                       With Relaxure Corsica, your get:
                     </p>
                   </div>
 
-                  <div className="flex flex-col h-[170px] items-start gap-[85px] relative self-stretch w-full">
-                    <div className="inline-flex flex-col items-start justify-center gap-2.5 relative flex-[0_0_auto]">
-                      <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
+                  <div className="flex flex-colitems-start gap-[85px] relative self-stretch w-full">
+                    <div className="w-full flex flex-col items-start justify-center gap-2.5 relative flex-[0_0_auto]">
+                      <div className="w-full flex items-center justify-start gap-2.5 p-2.5 relative flex-[0_0_auto]">
                         <div className="relative w-[30px] h-[30px] bg-cover bg-[url(https://c.animaapp.com/xZorZhSb/img/group-2@2x.png)] bg-[100%_100%]" />
 
-                        <p className="relative w-fit font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] whitespace-nowrap [font-style:var(--relaxure-sub-heading-18-font-style)]">
+                        <p className="relative w-fit font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] whitespace-normal [font-style:var(--relaxure-sub-heading-18-font-style)]">
                           Optional side screens for sunshine, wind, and privacy
                         </p>
                       </div>
 
-                      <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
+                      <div className="w-full flex items-center justify-start gap-2.5 p-2.5 relative flex-[0_0_auto]">
                         <div className="relative w-[30px] h-[30px] bg-cover bg-[url(https://c.animaapp.com/xZorZhSb/img/group-2@2x.png)] bg-[100%_100%]" />
 
-                        <p className="relative w-fit font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] whitespace-nowrap [font-style:var(--relaxure-sub-heading-18-font-style)]">
+                        <p className="relative w-fit font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] whitespace-normal [font-style:var(--relaxure-sub-heading-18-font-style)]">
                           Rain sensor with automatic response
                         </p>
                       </div>
 
-                      <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
+                      <div className="w-full flex items-center justify-start gap-2.5 p-2.5 relative flex-[0_0_auto]">
                         <div className="relative w-[30px] h-[30px] bg-cover bg-[url(https://c.animaapp.com/xZorZhSb/img/group-2@2x.png)] bg-[100%_100%]" />
 
-                        <p className="relative w-fit font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] whitespace-nowrap [font-style:var(--relaxure-sub-heading-18-font-style)]">
+                        <p className="relative w-fit font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] whitespace-normal [font-style:var(--relaxure-sub-heading-18-font-style)]">
                           Integrated LED lighting for extended evening use
                         </p>
                       </div>

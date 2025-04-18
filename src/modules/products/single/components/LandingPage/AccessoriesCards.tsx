@@ -6,13 +6,13 @@ export const AccessoriesCards = (): JSX.Element => {
       <div className="flex flex-col w-full items-center gap-5 relative flex-[0_0_auto]">
         <div className="flex flex-col w-full h-[100px] items-start relative">
           <div className="flex items-center justify-center gap-2.5 px-2.5 py-0 relative self-stretch w-full flex-[0_0_auto]">
-            <div className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+            <div className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
               Your patio, your way
             </div>
           </div>
 
           <div className="flex items-center justify-center gap-2.5 px-2.5 py-0 relative self-stretch w-full flex-[0_0_auto]">
-            <div className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+            <div className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
               Accessories and customizations
             </div>
           </div>

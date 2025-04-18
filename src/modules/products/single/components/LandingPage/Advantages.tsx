@@ -4,13 +4,13 @@ export const Advantages = (): JSX.Element => {
   return (
     <div className="flex flex-col w-full items-center justify-center px-8 py-6 relative bg-[#f3f3f3] mt-10">
       <div className="flex flex-col items-center gap-[60px] relative self-stretch w-full flex-[0_0_auto]">
-        <p className="relative self-stretch [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-[24px] text-center tracking-[0] leading-[50.4px]">
+        <p className="relative self-stretch [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[0] leading-[50.4px]">
           Not just a pretty face — Relaxure Corsica is smart and reliable
         </p>
         <div className="flex flex-col lg:flex-row items-start gap-[60px] relative flex-[0_0_auto]">
           <div className="flex flex-col w-full lg:1/2 items-start gap-[20px] relative">
             <div className="flex flex-col items-start gap-[10px] relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative self-stretch [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-[22px] tracking-[0] leading-[30.8px]">
+              <p className="relative self-stretch [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-[18px] lg:text-[22px] tracking-[0] leading-[30.8px]">
                 Smart tech with simple controls
               </p>
               <p className="relative self-stretch [font-family:'Montserrat',Helvetica] font-medium text-[#68717a] text-[18px] tracking-[0] leading-[27px]">
@@ -74,7 +74,7 @@ export const Advantages = (): JSX.Element => {
           </div>
           <div className="flex flex-col w-full lg:1/2 items-start gap-[20px] relative">
             <div className="flex flex-col items-start gap-[10px] relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative self-stretch [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-[22px] tracking-[0] leading-[30.8px]">
+              <p className="relative self-stretch [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-[18px] lg:text-[22px] tracking-[0] leading-[30.8px]">
                 Superior quality at a reasonable price
               </p>
               <p className="relative self-stretch [font-family:'Montserrat',Helvetica] font-medium text-[#68717a] text-[18px] tracking-[0] leading-[27px]">

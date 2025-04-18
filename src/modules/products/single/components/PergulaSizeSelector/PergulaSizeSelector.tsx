@@ -72,15 +72,15 @@ export const PergulaSizeSelector = ({
       <div
         className={`flex flex-col w-full items-start gap-5 relative ${className} mb-4`}
       >
-        <div className="flex h-6 items-center gap-2.5 relative">
-          <p className="relative w-full h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-18 tracking-[0] leading-6 whitespace-nowrap">
+        <div className="flex w-full items-center gap-2.5 relative">
+          <p className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
             What size do you want for your pergola?
           </p>
         </div>
 
         <div className="relative h-12">
-          <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
-            <div className="inline-flex items-center gap-[18px] relative">
+          <div className="flex p-1 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
+            <div className="inline-flex items-center gap-1 md:gap-[18px] relative">
               {pergolaSizes?.values?.map((size) => (
                 <button
                   key={size.id}
@@ -90,7 +90,7 @@ export const PergulaSizeSelector = ({
                   onClick={() => handleSizeClick(size)}
                 >
                   <div
-                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap ${
+                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[18px] tracking-[0] leading-[27px] whitespace-nowrap ${
                       selectedSize === size
                         ? "text-[#072f6c]"
                         : "text-[#69727a]"
@@ -103,7 +103,7 @@ export const PergulaSizeSelector = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full items-start gap-5 relative">
+        <div className="flex flex-col w-full items-start gap-5 relative text-[#343A40]">
           <div className="flex flex-row items-center gap-2.5 relative">
             <img src="/img/fits-people.png" alt="Fits People" />
             <p>Fits 2 people</p>
@@ -119,10 +119,10 @@ export const PergulaSizeSelector = ({
         </div>
       </div>
       <div
-        className={`inline-flex flex-col items-start gap-2.5 relative ${className}`}
+        className={`flex flex-col items-start gap-2.5 relative ${className}`}
       >
-        <div className="inline-flex h-6 items-center gap-2.5 relative">
-          <p className="relative w-[327px] h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-18 tracking-[0] leading-6 whitespace-nowrap">
+        <div className="flex w-full items-center gap-2.5 relative">
+          <p className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
             What Color would you like to choose?
           </p>
         </div>
@@ -150,7 +150,7 @@ export const PergulaSizeSelector = ({
                     ></div>
                   </button>
                   <div
-                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
+                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
                   >
                     {color.value}
                   </div>

@@ -129,7 +129,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
     <div className="w-full max-w-7xl mx-auto py-16">
       {/* Reviews Overview Section */}
       <div className="mb-16">
-        <h2 className="text-3xl font-semibold text-center mb-8">
+        <h2 className="text-3xl text-[18px] lg:text-[36px] font-semibold text-center mb-8">
           Customer Reviews
         </h2>
 

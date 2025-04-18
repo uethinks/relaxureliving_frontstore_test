@@ -237,7 +237,7 @@ export const ProductItem = ({
 
   return (
     <>
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-20">
+      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
         <FirstScreen
           product={product}
           accessories={accessories}
