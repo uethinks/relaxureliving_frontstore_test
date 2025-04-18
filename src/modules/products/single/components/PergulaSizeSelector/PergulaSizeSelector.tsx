@@ -114,7 +114,7 @@ export const PergulaSizeSelector = ({
           </div>
           <div className="flex flex-row items-center gap-2.5 relative">
             <img src="/img/morning-coffee.png" alt="Morning Coffee" />
-            <p>Ideal for smal patios</p>
+            <p>Ideal for small patios</p>
           </div>
         </div>
       </div>
