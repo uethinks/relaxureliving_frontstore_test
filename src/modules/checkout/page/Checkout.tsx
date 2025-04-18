@@ -328,7 +328,7 @@ export const Checkout = () => {
 
   return (
     <div className="w-full 2xl:w-[1512px] bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex justify-center flex-col items-center">
-      <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full relative px-20">
+      <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full relative px-5 lg:px-20">
         {/* Header */}
         <NavBarWrapper isFixed={false} />
 
@@ -339,14 +339,14 @@ export const Checkout = () => {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col justify-start items-center lg:flex-row lg:justify-between lg:items-start w-full gap-5">
+        <div className="mt-10 flex flex-col-reverse justify-start items-center lg:flex-row lg:justify-between lg:items-start w-full gap-5">
           {/* Payment Form */}
           <div className="w-full lg:w-3/5 flex flex-col items-start justify-end gap-10 p-5 lg:p-10 bg-[#efefef] rounded-[20px]">
             <div className="flex flex-col lg:flex-row items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
               {/* Email Input */}
               <div className="flex flex-col w-full">
                 <input
-                  className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
+                  className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
                   placeholder="Email"
                   type="email"
                   value={formData.email}
@@ -385,8 +385,8 @@ export const Checkout = () => {
 
               {/* Name Inputs */}
               <div className="flex items-center gap-[39px] relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex flex-col lg:flex-row w-full items-start gap-5 relative">
-                  <div className="flex flex-col">
+                <div className="flex flex-col md:flex-row w-full items-start gap-5 relative">
+                  <div className="flex flex-col w-full md:w-1/2">
                     <input
                       className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
                       placeholder="First name"
@@ -402,7 +402,7 @@ export const Checkout = () => {
                       </div>
                     )}
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col w-full md:w-1/2">
                     <input
                       className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
                       placeholder="Last name"
@@ -423,7 +423,7 @@ export const Checkout = () => {
               {/* Address Input */}
               <div className="flex flex-col w-full">
                 <input
-                  className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
+                  className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
                   placeholder="Address"
                   type="text"
                   value={formData.shipping_address.address_1}
@@ -438,10 +438,10 @@ export const Checkout = () => {
                 )}
               </div>
               {/* City, State, ZIP Inputs */}
-              <div className="flex w-full flex-col lg:flex-row lg:items-center gap-2 relative flex-[0_0_auto]">
-                <div className="flex flex-col w-1/3">
+              <div className="flex w-full flex-col md:flex-row md:items-center gap-2 relative flex-[0_0_auto]">
+                <div className="flex flex-col w-full md:w-1/3">
                   <input
-                    className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
+                    className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
                     placeholder="City"
                     type="text"
                     value={formData.shipping_address.city}
@@ -453,9 +453,9 @@ export const Checkout = () => {
                     <div className="text-red-500 mt-1 block">{errors.city}</div>
                   )}
                 </div>
-                <div className="flex flex-col w-1/3">
+                <div className="flex flex-col w-full md:w-1/3">
                   <input
-                    className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
+                    className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
                     placeholder="State"
                     type="text"
                     value={formData.shipping_address.province}
@@ -469,9 +469,9 @@ export const Checkout = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col w-1/3">
+                <div className="flex flex-col w-full md:w-1/3">
                   <input
-                    className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
+                    className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
                     placeholder="ZIP code"
                     type="text"
                     value={formData.shipping_address.postal_code}
@@ -489,7 +489,7 @@ export const Checkout = () => {
               {/* Phone Input */}
               <div className="flex flex-col w-full">
                 <input
-                  className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
+                  className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
                   placeholder="Phone"
                   type="tel"
                   value={formData.shipping_address.phone}
@@ -555,7 +555,7 @@ export const Checkout = () => {
             </div>
           </div>
           {/* Order Summary */}
-          <div className="w-full max-w-[470px] flex flex-col items-start gap-5 px-2.5 lg:sticky lg:top-10">
+          <div className="w-full lg:max-w-[470px] flex flex-col items-start gap-5 lg:px-2.5 lg:sticky lg:top-10">
             <div className="flex flex-col items-start gap-5 p-5 relative self-stretch w-full bg-[#efefef] rounded-[20px] shadow-shadow-relaxure-button">
               <div className="inline-flex items-center relative flex-[0_0_auto]">
                 <div className="mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[22px] leading-[30.8px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
