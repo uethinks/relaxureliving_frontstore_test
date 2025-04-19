@@ -117,10 +117,7 @@ export default async function AccessoriesPage(props: Props) {
         <NavBarWrapper isFixed={false} />
         <div className="content-container py-6 small:py-8">
           <div className="flex flex-col gap-4">
-            <AccessoriesGrid
-              accessories={accessories}
-              pergolaProduct={products[0]}
-            />
+            <AccessoriesGrid accessories={accessories} />
           </div>
         </div>
 

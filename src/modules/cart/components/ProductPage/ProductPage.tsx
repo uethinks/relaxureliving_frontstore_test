@@ -10,7 +10,7 @@ import { GlassDoorCard } from "../GlassDoorCard/GlassDoorCard"
 import { ShadesCard } from "../ShadesCard/ShadesCard"
 import { SampleKitCard } from "../SampleKitCard/SampleKitCard"
 import { useCart } from "@lib/context/cartContext"
-
+import { StoreProduct } from "@medusajs/types"
 // Lazy load only non-critical components
 const AccessoriesSection = lazy(() =>
   import("../AccessoriesSection/AccessoriesSection").then((module) => ({
@@ -47,7 +47,11 @@ interface FAQAnswer {
   Answer: string
 }
 
-export const ProductPage = (): JSX.Element => {
+export const ProductPage = ({
+  accessories,
+}: {
+  accessories: StoreProduct[]
+}): JSX.Element => {
   const [faq, setFaq] = useState<FAQData | null>(null)
   const { cart } = useCart()
   const [isLoading, setIsLoading] = useState(true)
@@ -115,7 +119,7 @@ export const ProductPage = (): JSX.Element => {
           </div>
         </div>
         <Suspense>
-          <AccessoriesSection />
+          {/* <AccessoriesSection accessories={accessories} /> */}
         </Suspense>
       </div>
       <Suspense>

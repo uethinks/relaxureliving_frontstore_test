@@ -5,22 +5,14 @@ import { useState } from "react"
 
 interface AccessoriesGridProps {
   accessories: StoreProduct[]
-  pergolaProduct: StoreProduct
 }
 
-export const AccessoriesGrid = ({
-  accessories,
-  pergolaProduct,
-}: AccessoriesGridProps) => {
+export const AccessoriesGrid = ({ accessories }: AccessoriesGridProps) => {
   const [selectedAccessory, setSelectedAccessory] =
     useState<StoreProduct | null>(null)
 
   const handleAccessoryClick = (accessory: StoreProduct) => {
     setSelectedAccessory(accessory)
-  }
-
-  const handleClosePopup = () => {
-    setSelectedAccessory(null)
   }
 
   return (
