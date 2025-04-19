@@ -47,7 +47,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 }) => {
   const baseClasses = isMobile
     ? "mt-10 flex lg:hidden flex-col w-full items-start gap-2.5 p-2 md:p-5 relative bg-[#f3f3f3] rounded-[20px]"
-    : "hidden lg:flex w-full lg:max-w-[470px] justify-end items-start mt-4 gap-2.5 px-2.5 sticky top-10 right-0"
+    : "hidden lg:flex w-full lg:max-w-[470px] justify-end items-start mt-4 gap-2.5 px-2.5 sticky top-[280px] right-[-132px]"
 
   return (
     <div className={baseClasses}>
