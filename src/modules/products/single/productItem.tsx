@@ -93,6 +93,10 @@ export const ProductItem = ({
         (selectedVariant?.calculated_price?.calculated_amount ?? 0)
     )
   }, [pergolaQuantity, selectedVariant])
+  useEffect(() => {
+    setSelectedAccessoriesShades([])
+    setSelectedAccessoriesGlassdoor([])
+  }, [selectedVariant])
   const handleAccessoryToggle = ({
     type,
     selectedProducts,

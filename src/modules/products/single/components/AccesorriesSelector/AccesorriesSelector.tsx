@@ -108,8 +108,8 @@ export const AccesorriesSelector = ({
       accessoriesIcons.map((item) => {
         if (
           item.name === "Heating" &&
-          (selectedProducts?.[0].productVarant === null ||
-            selectedProducts?.[0].quantity === 0)
+          (selectedProducts?.[0]?.productVarant === null ||
+            selectedProducts?.[0]?.quantity === 0)
         ) {
           item.selected = false
         }
@@ -126,8 +126,8 @@ export const AccesorriesSelector = ({
       accessoriesIcons.map((item) => {
         if (
           item.name === "Shades" &&
-          (selectedProducts?.[0].productVarant === null ||
-            selectedProducts?.[0].quantity === 0)
+          (selectedProducts?.[0]?.productVarant === null ||
+            selectedProducts?.[0]?.quantity === 0)
         ) {
           item.selected = false
         }
@@ -144,8 +144,8 @@ export const AccesorriesSelector = ({
       accessoriesIcons.map((item) => {
         if (
           item.name === "Glass door" &&
-          (selectedProducts?.[0].productVarant === null ||
-            selectedProducts?.[0].quantity === 0)
+          (selectedProducts?.[0]?.productVarant === null ||
+            selectedProducts?.[0]?.quantity === 0)
         ) {
           item.selected = false
         }
@@ -166,11 +166,63 @@ export const AccesorriesSelector = ({
             <button
               key={accessory.name}
               className={`flex flex-col w-1/3 h-[76px] items-center justify-center gap-2.5 px-0 py-0 relative rounded-[20px] cursor-pointer ${
-                accessory.selected ? "bg-[#dce7f8]" : "bg-[#ffffff]"
+                (accessory.name.toLowerCase().includes("heating") &&
+                  selectedHeaterVariant?.reduce(
+                    (sum, item) => sum + (item.quantity || 0),
+                    0
+                  ) > 0) ||
+                (accessory.name.toLowerCase().includes("shades") &&
+                  selectedShadesVariant?.reduce(
+                    (sum, item) => sum + (item.quantity || 0),
+                    0
+                  ) > 0) ||
+                (accessory.name.toLowerCase().includes("glass") &&
+                  selectedGlassdoorVariant?.reduce(
+                    (sum, item) => sum + (item.quantity || 0),
+                    0
+                  ) > 0)
+                  ? "bg-[#dce7f8]"
+                  : "bg-[#ffffff]"
               }`}
               onClick={() => handleAccessoryClick(accessory)}
               aria-pressed={accessory.selected}
             >
+              {((accessory.name.toLowerCase().includes("heating") &&
+                selectedHeaterVariant?.reduce(
+                  (sum, item) => sum + (item.quantity || 0),
+                  0
+                ) > 0) ||
+                (accessory.name.toLowerCase().includes("shades") &&
+                  selectedShadesVariant?.reduce(
+                    (sum, item) => sum + (item.quantity || 0),
+                    0
+                  ) > 0) ||
+                (accessory.name.toLowerCase().includes("glass") &&
+                  selectedGlassdoorVariant?.reduce(
+                    (sum, item) => sum + (item.quantity || 0),
+                    0
+                  ) > 0)) && (
+                <div className="absolute -top-3 -right-3 w-8 h-8 p-1 rounded-full bg-[#f3f3f3]">
+                  <div className="w-full h-full flex items-center justify-center bg-[#E6EEFF] rounded-full">
+                    <span className="text-[#072F6C] text-base font-semibold">
+                      {accessory.name.toLowerCase().includes("heating")
+                        ? selectedHeaterVariant?.reduce(
+                            (sum, item) => sum + (item.quantity || 0),
+                            0
+                          )
+                        : accessory.name.toLowerCase().includes("shades")
+                        ? selectedShadesVariant?.reduce(
+                            (sum, item) => sum + (item.quantity || 0),
+                            0
+                          )
+                        : selectedGlassdoorVariant?.reduce(
+                            (sum, item) => sum + (item.quantity || 0),
+                            0
+                          )}
+                    </span>
+                  </div>
+                </div>
+              )}
               <img
                 className="relative w-6 h-6 mt-[-10.00px]"
                 alt={accessory.name}

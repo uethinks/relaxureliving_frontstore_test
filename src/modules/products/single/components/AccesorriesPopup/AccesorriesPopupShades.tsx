@@ -129,15 +129,16 @@ export const AccesorriesPopupShades = ({
      * 根据selectedShades计算对应的sides
      */
     const isSquare = pergolaSize.width === pergolaSize.length
-    const numOfProducts = selectedShades[0]?.quantity ?? 1
-    const slides = new Array(numOfProducts).fill("left")
+    let slides = []
     if (!isSquare) {
-      const numOfShortSide = selectedShades.filter((shade) => {
-        return shade.productVarant?.length === pergolaSize.width
-      }).length
-      const numOfLongSide = selectedShades.filter((shade) => {
-        return shade.productVarant?.length === pergolaSize.length
-      }).length
+      const numOfShortSide =
+        selectedShades.find((shade) => {
+          return shade.productVarant?.length === pergolaSize.width
+        })?.quantity ?? 0
+      const numOfLongSide =
+        selectedShades.find((shade) => {
+          return shade.productVarant?.length === pergolaSize.length
+        })?.quantity ?? 0
       if (numOfShortSide === 1) {
         slides.push("left")
       } else if (numOfShortSide === 2) {
@@ -148,6 +149,9 @@ export const AccesorriesPopupShades = ({
       } else if (numOfLongSide === 2) {
         slides.push("top", "bottom")
       }
+    } else {
+      const numOfProducts = selectedShades[0]?.quantity ?? 0
+      slides = new Array(numOfProducts).fill("left")
     }
 
     setSelectedSides(slides)

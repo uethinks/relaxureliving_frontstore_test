@@ -31,9 +31,7 @@ export const AccesorriesPopupGlassdoor = ({
   const closePopupGlassdoor = () => {
     closePopup("Glass door")
   }
-  const productImage = accessoryGlassdoor?.images?.[0].url
   const addAccessoryGlassdoorHandler = () => {
-    console.log("selectedGlassdoor", selectedGlassdoor)
     addAccessoryGlassdoor(selectedGlassdoor)
     closePopupGlassdoor()
   }
@@ -74,6 +72,7 @@ export const AccesorriesPopupGlassdoor = ({
   }, [accessoryGlassdoor, selectedSize, selectedColor])
 
   useEffect(() => {
+    if (!selectedSize?.length || !selectedColor.id) return
     const variants = getVariant()
     setSelectedGlassdoor(
       variants?.map((variant) => ({
@@ -139,15 +138,16 @@ export const AccesorriesPopupGlassdoor = ({
      */
 
     const isSquare = pergolaSize.width === pergolaSize.length
-    const numOfProducts = selectedGlassdoor[0]?.quantity ?? 1
-    const slides = new Array(numOfProducts).fill("left")
+    let slides = []
     if (!isSquare) {
-      const numOfShortSide = selectedGlassdoor.filter((glassdoor) => {
-        return glassdoor.productVarant?.length === pergolaSize.width
-      }).length
-      const numOfLongSide = selectedGlassdoor.filter((glassdoor) => {
-        return glassdoor.productVarant?.length === pergolaSize.length
-      }).length
+      const numOfShortSide =
+        selectedGlassdoor.find((glassdoor) => {
+          return glassdoor.productVarant?.length === pergolaSize.width
+        })?.quantity ?? 0
+      const numOfLongSide =
+        selectedGlassdoor.find((glassdoor) => {
+          return glassdoor.productVarant?.length === pergolaSize.length
+        })?.quantity ?? 0
 
       if (numOfShortSide === 1) {
         slides.push("left")
@@ -159,21 +159,12 @@ export const AccesorriesPopupGlassdoor = ({
       } else if (numOfLongSide === 2) {
         slides.push("top", "bottom")
       }
+    } else {
+      const numOfProducts = selectedGlassdoor[0]?.quantity ?? 0
+      slides = new Array(numOfProducts).fill("left")
     }
     setSelectedSides(slides)
   }, [])
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const images = accessoryGlassdoor?.images || []
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length)
-  }
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
-  }
-
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
