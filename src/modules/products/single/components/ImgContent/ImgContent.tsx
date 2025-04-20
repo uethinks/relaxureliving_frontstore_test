@@ -22,7 +22,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center relative w-full rounded-[20px] overflow-hidden shadow-shadow-relaxure-button">
+      <div className="flex flex-col justify-center items-center relative w-full rounded-[20px] overflow-hidden">
         <img
           className="rounded-[20px] cursor-pointer"
           src={images?.[currentImageIndex]?.url}

@@ -114,7 +114,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                   isMobile={true}
                 />
 
-                <div className="flex flex-col w-full items-start gap-4 lg:mt-[80px]">
+                <div className="flex flex-col w-full items-start lg:mt-[80px]">
                   <Suspense>
                     <LazyAdvantage />
                   </Suspense>
