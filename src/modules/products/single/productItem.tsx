@@ -264,15 +264,19 @@ export const ProductItem = ({
               <LazyAccessoriesCards />
             </Suspense>
           </div>
-          <div className="w-full">
-            <CustomerReviews />
-          </div>
         </div>
       </div>
       <div className="w-full">
         <Suspense>
           <LazyOurPromise />
         </Suspense>
+      </div>
+      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
+        <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
+          <div className="w-full">
+            <CustomerReviews />
+          </div>
+        </div>
       </div>
       <FooterDark />
     </>

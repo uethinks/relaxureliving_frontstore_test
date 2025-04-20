@@ -72,8 +72,9 @@ export const AccesorriesPopupGlassdoor = ({
   }, [accessoryGlassdoor, selectedSize, selectedColor])
 
   useEffect(() => {
-    if (!selectedSize?.length || !selectedColor.id) return
+    // if (!selectedSize?.length || !selectedColor.id) return
     const variants = getVariant()
+    console.log("variants", variants)
     setSelectedGlassdoor(
       variants?.map((variant) => ({
         productVarant: variant,
@@ -94,6 +95,7 @@ export const AccesorriesPopupGlassdoor = ({
    * @param sides
    */
   const handleSideSelect = (sides: string[]) => {
+    console.log("handleSideSelect", sides)
     setSelectedSides(sides)
     setSelectedSize(
       sides.map((side) => {

@@ -37,7 +37,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
         newSelectedSides = [...selectedSides, sideStr]
       }
     }
-
+    console.log("newSelectedSides", newSelectedSides)
     onSideSelect(newSelectedSides)
   }
   console.log("selectedSides", selectedSides)

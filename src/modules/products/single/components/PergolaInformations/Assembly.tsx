@@ -28,7 +28,7 @@ const extractYouTubeId = (url: string): string | null => {
 
 export const AssemblyContainer = ({
   videoId,
-  videoUrl = "https://www.youtube.com/watch?v=YOUR_VIDEO_ID", // 替换为你的默认视频
+  videoUrl = "https://youtu.be/ZwKTt2-D1mk", // 替换为你的默认视频
 }: Props): JSX.Element => {
   const [currentTime, setCurrentTime] = useState(0)
   const [player, setPlayer] = useState<any>(null)
@@ -52,19 +52,19 @@ export const AssemblyContainer = ({
       id: 2,
       title: "Installation",
       description: "Mount the louvers ",
-      timeStamp: 25,
+      timeStamp: 29,
     },
     {
       id: 3,
       title: "Installation",
       description: "Install the transmission rod ",
-      timeStamp: 50,
+      timeStamp: 68,
     },
     {
       id: 4,
       title: "Installation",
       description: "Attach the cover caps ",
-      timeStamp: 75,
+      timeStamp: 85,
     },
   ]
 
@@ -172,7 +172,7 @@ export const Assembly = (): JSX.Element => {
       // 方式1：直接传入视频 ID
       // videoId="ABC12345678"
       // 方式2：传入视频 URL
-      videoUrl="https://www.youtube.com/watch?v=GKOFllBvqws"
+      videoUrl="https://youtu.be/ZwKTt2-D1mk"
     />
   )
 }
