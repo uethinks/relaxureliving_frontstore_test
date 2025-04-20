@@ -23,11 +23,13 @@ interface CustomerReviewsProps {
 const StarRating = ({ rating }: { rating: number }) => {
   return (
     <div className="flex">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <span key={star} className="text-yellow-400 text-lg">
-          {star <= rating ? "★" : "☆"}
-        </span>
-      ))}
+      {[1, 2, 3, 4, 5].map((star) =>
+        star <= rating ? (
+          <span key={star} className="text-yellow-400 text-[20px]">
+            ★
+          </span>
+        ) : null
+      )}
     </div>
   )
 }
@@ -131,14 +133,14 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
       {/* Reviews Overview Section */}
       <div className="mb-16">
         <h2 className="text-3xl text-[18px] lg:text-[36px] font-semibold text-center mb-8">
-          Customer Reviews
+          What our customers say
         </h2>
 
         {/* Flex container for rating overview and distribution */}
-        <div className="flex flex-col md:flex-row justify-center gap-16 items-center md:items-start">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-16 relative">
           {/* Rating Overview */}
-          <div className="text-center md:text-left">
-            <div className="flex flex-col items-center md:items-start gap-2">
+          <div className="text-center">
+            <div className="flex flex-col items-center gap-2">
               <StarRating rating={averageRating} />
               <span className="text-xl font-medium">
                 {averageRating} out of 5
@@ -147,24 +149,20 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
             </div>
           </div>
 
+          {/* Vertical Divider */}
+          <div className="hidden md:block w-[1px] h-32 bg-gray-200"></div>
+
           {/* Rating Distribution */}
-          <div className="w-full max-w-md md:max-w-sm">
+          <div className="">
             {[5, 4, 3, 2, 1].map((stars) => (
-              <div key={stars} className="flex items-center gap-3 mb-3">
+              <div key={stars} className="flex items-center gap-3">
                 <StarRating rating={stars} />
-                <div className="flex-1 h-2.5 bg-gray-100 rounded-full">
-                  <div
-                    className="h-full bg-yellow-400 rounded-full"
-                    style={{
-                      width: `${
-                        (ratingDistribution[5 - stars] / totalReviews) * 100
-                      }%`,
-                    }}
-                  />
-                </div>
-                <span className="text-gray-600 min-w-[40px] text-right">
-                  {ratingDistribution[5 - stars]}
-                </span>
+
+                {ratingDistribution[5 - stars] > 0 && (
+                  <span className="text-gray-600 min-w-[40px] text-left">
+                    {ratingDistribution[5 - stars]}
+                  </span>
+                )}
               </div>
             ))}
           </div>
