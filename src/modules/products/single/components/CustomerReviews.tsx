@@ -42,6 +42,34 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
   const [error, setError] = useState<string | null>(null)
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(9) // Default for large screens
+
+  // Update items per page based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1280) {
+        // xl screens
+        setItemsPerPage(9)
+      } else if (window.innerWidth >= 768) {
+        // md screens
+        setItemsPerPage(8)
+      } else {
+        // sm screens
+        setItemsPerPage(4)
+      }
+    }
+
+    handleResize() // Initial call
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  // Calculate pagination
+  const totalPages = Math.ceil(reviews.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const currentReviews = reviews.slice(startIndex, endIndex)
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -128,8 +156,35 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
     return columns
   }
 
+  // Pagination controls component
+  const PaginationControls = () => {
+    return (
+      <div className="flex justify-center items-center gap-2 mt-8">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Previous
+        </button>
+        <span className="px-4 py-2">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Next
+        </button>
+      </div>
+    )
+  }
+
   return (
-    <div className="w-full mx-auto py-16 bg-[#F3F3F3] px-[63px]">
+    <div className="w-full mx-auto py-16 bg-[#F3F3F3] px-[63px] lg:mt-[80px] rounded-[20px]">
       {/* Reviews Overview Section */}
       <div className="mb-16">
         <h2 className="text-3xl text-[18px] lg:text-[36px] font-semibold text-center mb-8">
@@ -211,7 +266,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
       {/* Review Cards - Flex Column Layout */}
       <div className="hidden xl:flex justify-between gap-8">
         {/* Large screens - 3 columns */}
-        {splitReviews(reviews, 3).map((columnReviews, columnIndex) => (
+        {splitReviews(currentReviews, 3).map((columnReviews, columnIndex) => (
           <div key={columnIndex} className="w-1/3 flex flex-col gap-8">
             {columnReviews.map((review: ReviewType) => (
               <ReviewCard key={review.id} review={review} />
@@ -222,7 +277,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
 
       <div className="hidden md:flex xl:hidden justify-between gap-8">
         {/* Medium screens - 2 columns */}
-        {splitReviews(reviews, 2).map((columnReviews, columnIndex) => (
+        {splitReviews(currentReviews, 2).map((columnReviews, columnIndex) => (
           <div key={columnIndex} className="w-1/2 flex flex-col gap-8">
             {columnReviews.map((review: ReviewType) => (
               <ReviewCard key={review.id} review={review} />
@@ -234,11 +289,14 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
       <div className="flex md:hidden gap-8">
         {/* Small screens - 1 column */}
         <div className="w-full flex flex-col gap-8">
-          {reviews.map((review: ReviewType) => (
+          {currentReviews.map((review: ReviewType) => (
             <ReviewCard key={review.id} review={review} />
           ))}
         </div>
       </div>
+
+      {/* Add pagination controls */}
+      <PaginationControls />
     </div>
   )
 }
@@ -310,6 +368,21 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       {/* Review Content */}
       <h4 className="font-medium text-lg mb-2">{review.title}</h4>
       <p className="text-gray-600 mb-4 leading-relaxed">{review.review}</p>
+
+      {/* Merchant response */}
+      {review.relaxure_team && (
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
+              <span className="text-gray-600 text-sm">P</span>
+            </div>
+            <p className="font-medium">Relaxure Team</p>
+          </div>
+          <p className="text-gray-600 leading-relaxed">
+            {review.relaxure_team}
+          </p>
+        </div>
+      )}
     </div>
   )
 }
