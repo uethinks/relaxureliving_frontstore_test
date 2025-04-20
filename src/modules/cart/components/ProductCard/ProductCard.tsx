@@ -168,9 +168,9 @@ export const ProductCard = (): JSX.Element | null => {
           className="full flex flex-col md:flex-row items-center gap-5 p-5 rounded-[20px] bg-[#F3F3F3]"
         >
           <div
-            className="relative w-full md:w-1/3 h-[146px] rounded-[20px]"
+            className="relative w-full md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 aspect-square rounded-[20px] bg-cover bg-[50%_50%]"
             style={{
-              background: `url(${item?.product?.thumbnail}) no-repeat center center / cover`,
+              backgroundImage: `url(${item?.product?.thumbnail})`,
             }}
           />
           <div className="flex flex-col w-full md:w-2/3 items-start gap-4 relative">

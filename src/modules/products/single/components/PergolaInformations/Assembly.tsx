@@ -45,25 +45,25 @@ export const AssemblyContainer = ({
     {
       id: 1,
       title: "Installation",
-      description: "Our flagship pergola with motorized louvers",
+      description: "Install posts & beams ",
       timeStamp: 0,
     },
     {
       id: 2,
       title: "Installation",
-      description: "Our flagship pergola with motorized louvers",
+      description: "Mount the louvers ",
       timeStamp: 25,
     },
     {
       id: 3,
       title: "Installation",
-      description: "Our flagship pergola with motorized louvers",
+      description: "Install the transmission rod ",
       timeStamp: 50,
     },
     {
       id: 4,
       title: "Installation",
-      description: "Our flagship pergola with motorized louvers",
+      description: "Attach the cover caps ",
       timeStamp: 75,
     },
   ]
@@ -82,7 +82,24 @@ export const AssemblyContainer = ({
   }
 
   return (
-    <div className="flex w-full flex-col gap-4 md:p-6">
+    <div className="flex w-full flex-col gap-4">
+      <div className="flex flex-col items-start justify-center gap-2.5 px-0 relative self-stretch w-full flex-[0_0_auto]">
+        <div className="relative flex-1 mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+          Easy assembly in 1-4 steps:
+        </div>
+        <div className="flex flex-col items-start justify-center gap-2.5 px-0 relative self-stretch w-full flex-[0_0_auto] lg:mt-[30px]">
+          <p className="text-[#69727a] text-[14px] lg:text-[18px] font-relaxure-sub-heading-18 font-[500]">
+            In just 2-3 Hours, gather your friends, transform your Saturday
+            project into Saturday evening entertainment.
+          </p>
+          <p className="text-[#69727a] text-[14px] lg:text-[18px] font-relaxure-sub-heading-18 font-[500]">
+            Simple, smart, and stress-free! Our pre-assembled modular sections
+            connect like building blocks. No extra trips, no missing parts.
+            Everything’s included. And for reinstallation, your Corsica pergola
+            is strong and solid enough to ensure it is just as easy.
+          </p>
+        </div>
+      </div>
       <div className="flex flex-col md:flex-row justify-between w-full gap-6">
         {/* Navigation Buttons - Left on desktop, bottom on mobile */}
         <div className="w-full md:w-[48%] grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6 order-2 md:order-1">

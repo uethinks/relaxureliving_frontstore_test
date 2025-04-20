@@ -197,7 +197,7 @@ export const ShadesCard = (): JSX.Element | null => {
           className="full flex flex-col md:flex-row items-center gap-5 p-5 rounded-[20px] border border-solid border-[#69727a]"
         >
           <div
-            className="relative w-full md:w-1/3 h-[146px] rounded-[20px] bg-cover bg-center bg-no-repeat"
+            className="relative w-full md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 aspect-square rounded-[20px] bg-cover bg-[50%_50%]"
             style={{
               backgroundImage: `url(${memoizedImageUrls[shade.id]})`,
             }}
@@ -216,19 +216,6 @@ export const ShadesCard = (): JSX.Element | null => {
             <div className="inline-flex flex-col items-center gap-2.5 relative flex-[0_0_auto]">
               <div className="text-[14px] lg:text-[18px] text-[#7e7e7e]">
                 {quantities[shade.id]} x {shade?.variant_title}
-              </div>
-              <div className="w-full flex items-center gap-2 relative">
-                <div className="w-[41px] h-[41px] rounded-[20px] relative flex items-center justify-center">
-                  <div className="w-[31px] h-[31px] rounded-[15.5px] bg-[#7e7e7e] relative" />
-                </div>
-
-                <div className="w-[60px] flex items-start px-0 py-2.5 rounded-[20px] justify-center relative">
-                  <div className="w-[61px] flex items-center mr-[-0.50px] gap-2.5 ml-[-0.50px] px-0 py-2.5 h-6 rounded-[20px] relative">
-                    <div className="text-[14px] lg:text-[16px] [font-family:'Montserrat',Helvetica] w-[81px] mt-[-11.00px] tracking-[0] text-base mr-[-20.00px] text-[#7e7e7e] h-6 font-medium leading-6 whitespace-nowrap mb-[-9.00px] relative">
-                      Dark grey
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
             <div className="flex justify-between items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">

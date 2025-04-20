@@ -114,31 +114,44 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                   isMobile={true}
                 />
 
-                <div className="flex flex-col w-full items-start lg:mt-[80px]">
+                <div className="flex flex-col w-full items-start mt-5 lg:mt-[80px]">
                   <Suspense>
                     <LazyAdvantage />
                   </Suspense>
 
-                  <div className="inline-flex items-start gap-10 relative flex-[0_0_auto] lg:mt-[60px] lg:mb-[60px]">
-                    {["Description", "Assembly"].map((tab) => (
-                      <button
-                        key={tab}
-                        className={`inline-flex h-[41px] items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto] rounded-[30px] border border-solid border-[#ffffffad] shadow-[0px_0px_8.91px_#ffffff73,0px_0px_17.82px_#ffffff73,0px_0px_62.37px_#ffffff73,0px_0px_124.74px_#ffffff73,0px_0px_213.84px_#ffffff73,0px_0px_250px_#ffffff73] cursor-pointer ${
-                          activeTab === tab ? "bg-[#dce7f8]" : "bg-[#f3f3f3]"
-                        }`}
-                        onClick={() => setActiveTab(tab)}
-                      >
-                        <div
-                          className={`w-fit mt-[-4.00px] mb-[-2.00px] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px] ${
-                            activeTab === tab
-                              ? "text-[#072f6c]"
-                              : "text-[#343a40]"
+                  <div className="inline-flex items-center justify-between w-full mt-5 mb-5 lg:mt-[60px] lg:mb-[60px]">
+                    <div className="inline-flex items-start gap-10">
+                      {["Description", "Assembly"].map((tab) => (
+                        <button
+                          key={tab}
+                          className={`inline-flex h-[41px] items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto] rounded-[30px] border border-solid border-[#ffffffad] shadow-[0px_0px_8.91px_#ffffff73,0px_0px_17.82px_#ffffff73,0px_0px_62.37px_#ffffff73,0px_0px_124.74px_#ffffff73,0px_0px_213.84px_#ffffff73,0px_0px_250px_#ffffff73] cursor-pointer ${
+                            activeTab === tab ? "bg-[#dce7f8]" : "bg-[#f3f3f3]"
                           }`}
+                          onClick={() => setActiveTab(tab)}
                         >
-                          {tab}
-                        </div>
-                      </button>
-                    ))}
+                          <div
+                            className={`w-fit mt-[-4.00px] mb-[-2.00px] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px] ${
+                              activeTab === tab
+                                ? "text-[#072f6c]"
+                                : "text-[#343a40]"
+                            }`}
+                          >
+                            {tab}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                    <a
+                      href="/upload_files/Pergola_technical_sheet.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2"
+                    >
+                      <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
+                      <span className="font-medium text-[#69727A] text-[14px]">
+                        Product technical sheet
+                      </span>
+                    </a>
                   </div>
 
                   {activeTab === "Description" && (
@@ -170,7 +183,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
         </div>
         {/* Assembly Tab Content - Full Width */}
         {activeTab === "Assembly" && (
-          <div className="w-full mt-4">
+          <div className="w-full">
             <Suspense>
               <LazyAssembly />
             </Suspense>

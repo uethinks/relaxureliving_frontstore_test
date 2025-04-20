@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { StoreProduct } from "@medusajs/types"
 
 interface Props {
@@ -33,6 +33,41 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     setIsModalOpen(false)
   }
 
+  const handleModalImageNavigation = useCallback(
+    (direction: "prev" | "next") => {
+      if (!images) return
+
+      if (direction === "prev") {
+        setCurrentImageIndex((prev) =>
+          prev > 0 ? prev - 1 : images.length - 1
+        )
+      } else {
+        setCurrentImageIndex((prev) =>
+          prev < images.length - 1 ? prev + 1 : 0
+        )
+      }
+    },
+    [images]
+  )
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    if (!isModalOpen) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        handleModalImageNavigation("prev")
+      } else if (e.key === "ArrowRight") {
+        handleModalImageNavigation("next")
+      } else if (e.key === "Escape") {
+        handleCloseModal()
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [isModalOpen, handleModalImageNavigation])
+
   const handleThumbnailNavigation = (direction: "left" | "right") => {
     if (!images || isAnimating) return
 
@@ -45,7 +80,6 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
       )
     }
 
-    // Reset animation state after transition
     setTimeout(() => {
       setIsAnimating(false)
     }, 300)
@@ -147,7 +181,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
 
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
           onClick={handleCloseModal}
         >
           <div className="relative max-w-[90vw] max-h-[90vh]">
@@ -158,11 +192,64 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
               onClick={(e) => e.stopPropagation()}
             />
             <button
-              className="absolute top-4 right-4 text-white text-2xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center"
+              className="absolute top-4 right-4 text-white text-2xl bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-all duration-200"
               onClick={handleCloseModal}
             >
               ×
             </button>
+
+            {/* Previous button */}
+            <button
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 transition-all duration-200"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleModalImageNavigation("prev")
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+
+            {/* Next button */}
+            <button
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 transition-all duration-200"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleModalImageNavigation("next")
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Image counter */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full">
+              {currentImageIndex + 1} / {images?.length}
+            </div>
           </div>
         </div>
       )}

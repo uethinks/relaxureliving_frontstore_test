@@ -186,8 +186,8 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
   return (
     <div className="w-full mx-auto py-16 bg-[#F3F3F3] px-[63px] lg:mt-[80px] rounded-[20px]">
       {/* Reviews Overview Section */}
-      <div className="mb-16">
-        <h2 className="text-3xl text-[18px] lg:text-[36px] font-semibold text-center mb-8">
+      <div className="mb-5">
+        <h2 className="text-3xl font-700 text-[18px] lg:text-[36px] font-semibold text-center mb-8">
           What our customers say
         </h2>
 
@@ -226,7 +226,6 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
 
       {/* Customer Photos Section */}
       <div className="mb-16 flex flex-col items-center">
-        <h3 className="text-xl font-medium mb-6">Customer photos & videos</h3>
         <div className="flex gap-4 overflow-x-auto pb-4">
           {reviewsWithImages.slice(0, 7).map((review, index) => (
             <div
@@ -366,8 +365,12 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       )}
 
       {/* Review Content */}
-      <h4 className="font-medium text-lg mb-2">{review.title}</h4>
-      <p className="text-gray-600 mb-4 leading-relaxed">{review.review}</p>
+      <h4 className="font-medium text-[18px] font-relaxure-sub-heading-18 text-[#343A40] mb-2">
+        {review.title}
+      </h4>
+      <p className="text-[#343A40] mb-4 font-relaxure-sub-heading-18 leading-relaxed">
+        {review.review}
+      </p>
 
       {/* Merchant response */}
       {review.relaxure_team && (
@@ -376,9 +379,11 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
               <span className="text-gray-600 text-sm">P</span>
             </div>
-            <p className="font-medium">Relaxure Team</p>
+            <p className="font-medium text-[#343A40] text-[18px] font-relaxure-sub-heading-18">
+              Relaxure Team
+            </p>
           </div>
-          <p className="text-gray-600 leading-relaxed">
+          <p className="text-[#343A40] font-relaxure-sub-heading-18 leading-relaxed">
             {review.relaxure_team}
           </p>
         </div>

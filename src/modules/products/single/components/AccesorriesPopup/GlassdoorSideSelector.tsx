@@ -74,7 +74,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
       <div className="relative flex justify-center items-center gap-2">
         <button
           onClick={() => handleSideClick("left")}
-          className={`w-[50px] h-[80px] border rounded transition-all flex flex-col items-center justify-center ${
+          className={`w-[70px] h-[100px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("left")
               ? "border-[#072F6C] bg-[#DCE7F8]"
               : "border-[#E9E9E9]"
@@ -84,10 +84,10 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
           <div className="text-[10px] text-[#69727A]">{shortSideLength}</div>
         </button>
 
-        <div className="flex flex-col gap-2 h-[80px]">
+        <div className="flex flex-col gap-2 h-[100px]">
           <button
             onClick={() => handleSideClick("top")}
-            className={`w-[120px] h-[50px] border rounded transition-all flex flex-col items-center justify-center ${
+            className={`w-[140px] h-[50px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("top")
                 ? "border-[#072F6C] bg-[#DCE7F8]"
                 : "border-[#E9E9E9]"
@@ -99,7 +99,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
 
           <button
             onClick={() => handleSideClick("bottom")}
-            className={`w-[120px] h-[50px] border rounded transition-all flex flex-col items-center justify-center ${
+            className={`w-[140px] h-[50px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("bottom")
                 ? "border-[#072F6C] bg-[#DCE7F8]"
                 : "border-[#E9E9E9]"
@@ -112,7 +112,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
 
         <button
           onClick={() => handleSideClick("right")}
-          className={`w-[50px] h-[80px] border rounded transition-all flex flex-col items-center justify-center ${
+          className={`w-[70px] h-[100px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("right")
               ? "border-[#072F6C] bg-[#DCE7F8]"
               : "border-[#E9E9E9]"

@@ -165,7 +165,7 @@ export const AccesorriesPopupShades = ({
             <ImageSlider images={accessoryShades?.images || []} />
           </div>
 
-          <div className="flex flex-col w-full lg:w-1/2 items-start gap-10">
+          <div className="flex flex-col justify-between w-full lg:w-1/2 items-start gap-10">
             <div className="flex flex-col items-start gap-5 self-stretch w-full">
               <div className="flex flex-col items-start gap-2.5 py-2.5 self-stretch w-full">
                 <div className="flex items-center justify-between w-full">
@@ -239,16 +239,17 @@ export const AccesorriesPopupShades = ({
             </div>
 
             <div className="flex items-center justify-between self-stretch w-full">
-              <button className="flex items-center gap-1.5 py-3 rounded-[10px]">
-                <img
-                  className="w-6 h-6"
-                  alt="Download icon"
-                  src="https://c.animaapp.com/QOr7NHyD/img/frame-1000004698.svg"
-                />
-                <span className="text-[#69727a] font-montserrat font-medium text-sm leading-[21px]">
+              <a
+                href="/upload_files/Sunshade_technical_sheet.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2"
+              >
+                <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
+                <span className="font-medium text-[#69727A] text-[14px]">
                   Download specs
                 </span>
-              </button>
+              </a>
               <div className="flex flex-row items-center gap-2.5 relative">
                 <button
                   onClick={closePopupShades}
