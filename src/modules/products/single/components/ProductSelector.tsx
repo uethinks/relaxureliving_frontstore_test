@@ -106,9 +106,15 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
           <BuyNowButton
             onClick={onBuyNow}
             property1="primary-button-l"
-            text="Buy now"
+            text="Add to cart"
             className=""
           />
+          <div className="flex items-center justify-center w-full mt-2 py-3 px-4 border border-[#0A3B5C] rounded-[10px]">
+            <p className="text-[#0A3B5C] text-center text-base">
+              Pay ${Math.round(totalPrice / 24)}/mo x 24 with{" "}
+              <span className="font-bold">Klarna.</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@ export const Advantage = (): JSX.Element => {
             />
 
             <div className="relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
-              5 years warranty
+              15 years warranty
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@ export const Advantage = (): JSX.Element => {
             />
 
             <div className="relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
-              2 months delivery
+              Fast delivery
             </div>
           </div>
         </div>

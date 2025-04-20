@@ -89,7 +89,7 @@ export const PergulaSizeSelector = ({
                   onClick={() => handleSizeClick(size)}
                 >
                   <div
-                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[18px] tracking-[0] leading-[27px] whitespace-nowrap ${
+                    className={`mx-2 relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[18px] tracking-[0] leading-[27px] whitespace-nowrap ${
                       selectedSize === size
                         ? "text-[#072f6c]"
                         : "text-[#69727a]"

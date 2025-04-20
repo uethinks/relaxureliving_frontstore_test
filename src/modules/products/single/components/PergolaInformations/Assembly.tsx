@@ -82,7 +82,7 @@ export const AssemblyContainer = ({
   }
 
   return (
-    <div className="flex w-full flex-col gap-4 p-4 md:p-6">
+    <div className="flex w-full flex-col gap-4 md:p-6">
       <div className="flex flex-col md:flex-row justify-between w-full gap-6">
         {/* Navigation Buttons - Left on desktop, bottom on mobile */}
         <div className="w-full md:w-[48%] grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6 order-2 md:order-1">

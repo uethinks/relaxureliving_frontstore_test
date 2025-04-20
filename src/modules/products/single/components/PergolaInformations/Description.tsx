@@ -6,7 +6,7 @@ export const Description = (): JSX.Element => {
       <div className="flex flex-col items-center justify-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
         <div
           style={{
-            backgroundImage: `url("/img/pergola-description.jpg")`,
+            backgroundImage: `url("/img/pergola2.jpg")`,
           }}
           className="w-full h-[600px] rounded-[20px] border-4 border-solid border-transparent bg-no-repeat bg-cover bg-[50%_50%]"
         ></div>
