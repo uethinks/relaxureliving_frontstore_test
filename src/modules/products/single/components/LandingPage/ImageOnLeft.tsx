@@ -1,6 +1,8 @@
 import React from "react"
+import YouTube from "react-youtube"
 
 export const ImageOnLeft = (): JSX.Element => {
+  const actualVideoId = "GKOFllBvqws"
   return (
     <div className="w-full inline-flex flex-col items-center gap-[60px] relative mt-10">
       <div className="flex flex-col w-full items-center justify-center gap-2.5 relative">
@@ -14,6 +16,25 @@ export const ImageOnLeft = (): JSX.Element => {
           word. It’s the favorite way to adjust your pergola for kids and
           grown-ups alike!
         </p>
+        <div className="w-full rounded-[20px] overflow-hidden">
+          {actualVideoId ? (
+            <YouTube
+              videoId={actualVideoId}
+              opts={{
+                height: "100%",
+                width: "100%",
+                playerVars: {
+                  autoplay: 0,
+                  controls: 1,
+                  modestbranding: 1,
+                  rel: 0, // 不显示相关视频
+                  showinfo: 0, // 不显示视频信息
+                },
+              }}
+              className="w-full aspect-video"
+            />
+          ) : null}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-x-[68px] gap-y-[40px]">
