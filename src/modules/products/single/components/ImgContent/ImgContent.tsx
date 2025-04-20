@@ -121,7 +121,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                         : "hover:scale-105"
                     }`}
                     style={{
-                      backgroundImage: `url(${image.url})`,
+                      backgroundImage: `url("${image.url}")`,
                       minWidth: `calc((100% - 12.5px) / 6)`,
                       maxWidth: `calc((100% - 12.5px) / 6)`,
                     }}
