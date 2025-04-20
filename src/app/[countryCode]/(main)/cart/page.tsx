@@ -5,10 +5,6 @@ import { notFound } from "next/navigation"
 import { getProductByProductType } from "@lib/data/products"
 import { StoreProductListParams } from "@medusajs/types"
 
-export const metadata: Metadata = {
-  title: "Cart",
-  description: "View your cart",
-}
 type Props = Readonly<{
   params: Promise<{ countryCode: string; pergola: string }>
 }>

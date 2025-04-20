@@ -23,14 +23,6 @@ const LazyImageOnLeft = dynamic(
   }
 )
 
-const LazyImageOnRight = dynamic(
-  () => import("./components/LandingPage").then((mod) => mod.ImageOnRight),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-)
-
 const LazyAdvantages = dynamic(
   () => import("./components/LandingPage").then((mod) => mod.Advantages),
   {
@@ -260,11 +252,6 @@ export const ProductItem = ({
           <div className="w-full">
             <Suspense>
               <LazyImageOnLeft />
-            </Suspense>
-          </div>
-          <div className="w-full">
-            <Suspense>
-              <LazyImageOnRight />
             </Suspense>
           </div>
           <div className="w-full">

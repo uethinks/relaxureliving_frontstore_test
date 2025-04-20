@@ -27,8 +27,13 @@ export const AccessoriesCards = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center gap-10 relative self-stretch w-full flex-[0_0_auto] px-10 lg:px-0">
-        <div className="flex flex-col items-center justify-end relative w-full lg:w-1/3 h-[600px] rounded-[20px] overflow-hidden bg-[url(https://c.animaapp.com/1ZQaGn9E/img/rectangle-1276.svg)] bg-cover bg-[50%_50%]">
+      <div className="flex flex-col lg:flex-row items-center gap-10 relative self-stretch w-full flex-[0_0_auto] px-00">
+        <div
+          style={{
+            backgroundImage: "url('/img/shades.webp')",
+          }}
+          className="flex flex-col items-center justify-end relative w-full lg:w-1/3 h-[450px] rounded-[20px] overflow-hidden bg-cover bg-[50%_50%]"
+        >
           <div className="flex justify-center items-center relative rounded-[20px] mb-10">
             <div className="flex flex-col w-[90%] items-center gap-5 relative bg-[#ffffff3d] rounded-[20px] border border-solid border-[#ffffff70] backdrop-blur-[14.1px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.1px)_brightness(100%)]">
               <div className="flex flex-col items-center gap-2 p-2.5 relative self-stretch w-full">
@@ -49,7 +54,12 @@ export const AccessoriesCards = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-end items-center relative w-full lg:w-1/3 h-[600px] rounded-[20px] overflow-hidden bg-[url(https://c.animaapp.com/1ZQaGn9E/img/rectangle-1276-1.svg)] bg-cover bg-[50%_50%]">
+        <div
+          style={{
+            backgroundImage: "url('/img/heater2.webp')",
+          }}
+          className="flex flex-col justify-end items-center relative w-full lg:w-1/3 h-[450px] rounded-[20px] overflow-hidden  bg-cover bg-[50%_50%]"
+        >
           <div className="flex justify-center items-center relative rounded-[20px] mb-10">
             <div className="flex flex-col w-[90%] items-center gap-5 relative bg-[#ffffff3d] rounded-[20px] border border-solid border-[#ffffff70] backdrop-blur-[14.1px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.1px)_brightness(100%)]">
               <div className="flex flex-col items-center gap-2 p-2.5 relative self-stretch w-full">
@@ -70,7 +80,12 @@ export const AccessoriesCards = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-end items-center relative w-full lg:w-1/3 h-[600px] rounded-[20px] overflow-hidden bg-[url(https://c.animaapp.com/1ZQaGn9E/img/rectangle-1276-2.svg)] bg-cover bg-[50%_50%]">
+        <div
+          style={{
+            backgroundImage: "url('/img/accessory-glassdoor.webp')",
+          }}
+          className="flex flex-col justify-end items-center relative w-full lg:w-1/3 h-[450px] rounded-[20px] overflow-hidden bg-cover bg-[50%_50%]"
+        >
           <div className="flex justify-center items-center relative rounded-[20px] mb-10">
             <div className="flex flex-col w-[90%] items-center gap-5 relative bg-[#ffffff3d] rounded-[20px] border border-solid border-[#ffffff70] backdrop-blur-[14.1px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.1px)_brightness(100%)]">
               <div className="flex flex-col items-center gap-2 p-2.5 relative self-stretch w-full">

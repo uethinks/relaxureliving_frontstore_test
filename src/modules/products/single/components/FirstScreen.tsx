@@ -114,12 +114,12 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                   isMobile={true}
                 />
 
-                <div className="flex flex-col w-full items-start gap-4 mt-6">
+                <div className="flex flex-col w-full items-start gap-4 lg:mt-[80px]">
                   <Suspense>
                     <LazyAdvantage />
                   </Suspense>
 
-                  <div className="inline-flex items-start gap-10 relative flex-[0_0_auto]">
+                  <div className="inline-flex items-start gap-10 relative flex-[0_0_auto] lg:mt-[60px] lg:mb-[60px]">
                     {["Description", "Assembly"].map((tab) => (
                       <button
                         key={tab}
