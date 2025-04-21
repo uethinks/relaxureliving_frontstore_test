@@ -119,7 +119,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                     <LazyAdvantage />
                   </Suspense>
 
-                  <div className="inline-flex items-center justify-between w-full mt-5 mb-5 lg:mt-[60px] lg:mb-[60px]">
+                  <div className="flex flex-wrap items-center justify-between w-full mt-5 mb-5 lg:mt-[60px] lg:mb-[60px]">
                     <div className="inline-flex items-start gap-10">
                       {["Description", "Assembly"].map((tab) => (
                         <button
@@ -149,7 +149,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                     >
                       <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
                       <span className="font-medium text-[#69727A] text-[14px]">
-                        Product technical sheet
+                        Product Technical Sheet
                       </span>
                     </a>
                   </div>

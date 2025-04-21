@@ -77,13 +77,13 @@ export const PergulaSizeSelector = ({
           </p>
         </div>
 
-        <div className="relative h-12">
+        <div className="relative h-12 w-full">
           <div className="flex p-1 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
             <div className="inline-flex items-center gap-1 md:gap-[18px] relative">
               {pergolaSizes?.values?.map((size) => (
                 <button
                   key={size.id}
-                  className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer ${
+                  className={`inline-flex items-center justify-center gap-2.5 p-1 relative flex-[0_0_auto] cursor-pointer ${
                     selectedSize === size ? "bg-[#dce7f8] rounded-[20px]" : ""
                   }`}
                   onClick={() => handleSizeClick(size)}
