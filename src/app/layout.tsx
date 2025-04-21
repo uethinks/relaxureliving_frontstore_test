@@ -2,6 +2,7 @@ import { CartProvider } from "@lib/context/cartContext"
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
 import "styles/globals.css"
+import Script from "next/script"
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
@@ -65,6 +66,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             </div>
           </main>
         </CartProvider>
+
+        <Script
+          id="gorgias-chat-widget-install-v3"
+          src="https://config.gorgias.chat/bundle-loader/01JS9W54W6NK3XC6TQ1DKVER8F"
+        />
       </body>
     </html>
   )

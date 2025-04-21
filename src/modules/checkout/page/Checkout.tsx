@@ -235,6 +235,35 @@ export const Checkout = () => {
               amount: currentCart?.total,
               currency: currentCart?.currency_code,
               merchant_order_id: currentCart?.id,
+              customer: {
+                email: formData.email,
+                first_name: formData.shipping_address.first_name,
+                last_name: formData.shipping_address.last_name,
+                phone_number: formData.shipping_address.phone,
+              },
+              order: {
+                products: currentCart?.items?.map((item) => ({
+                  code: item?.product?.id,
+                  name: item?.product?.title,
+                  quantity: item?.quantity,
+                  unit_price: item?.unit_price,
+                })),
+                shipping: {
+                  address: {
+                    country_code: formData.shipping_address.country_code,
+                    state: formData.shipping_address.province,
+                    city: formData.shipping_address.city,
+                    street: formData.shipping_address.address_1,
+                    postcode: formData.shipping_address.postal_code,
+                  },
+                  first_name: formData.shipping_address.first_name,
+                  last_name: formData.shipping_address.last_name,
+                  email: formData.email,
+                  phone_number: formData.shipping_address.phone,
+                  shipping_method: "standard",
+                },
+                type: "physical_goods",
+              },
             },
           }
         )

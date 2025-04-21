@@ -1,5 +1,6 @@
 import React from "react"
 import YouTube from "react-youtube"
+import Image from "next/image"
 
 export const ImageOnLeft = (): JSX.Element => {
   const actualVideoId = "ZwKTt2-D1mk"
@@ -13,7 +14,7 @@ export const ImageOnLeft = (): JSX.Element => {
           Hands full? Simply speak and your pergola responds. Seamlessly
           integrated with your smart home system, we bring intelligent control
           to your outdoor space—adjusting shade, lighting, and locks with a
-          word. It’s the favorite way to adjust your pergola for kids and
+          word. It's the favorite way to adjust your pergola for kids and
           grown-ups alike!
         </p>
         <div className="w-full rounded-[20px] overflow-hidden">
@@ -50,10 +51,13 @@ export const ImageOnLeft = (): JSX.Element => {
             </p>
           </div>
           <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <img
+            <Image
               src="/img/wifi.webp"
               alt="WiFi app control"
-              className="w-full h-full object-cover rounded-[20px]"
+              fill
+              className="object-cover rounded-[20px]"
+              quality={100}
+              priority
             />
           </div>
         </div>
@@ -70,10 +74,13 @@ export const ImageOnLeft = (): JSX.Element => {
             </p>
           </div>
           <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <img
+            <Image
               src="/img/rain.webp"
               alt="Rain sensor"
-              className="w-full h-full object-cover rounded-[20px]"
+              fill
+              className="object-cover rounded-[20px]"
+              quality={100}
+              priority
             />
           </div>
         </div>
@@ -90,10 +97,13 @@ export const ImageOnLeft = (): JSX.Element => {
             </p>
           </div>
           <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <img
+            <Image
               src="/img/motorized.webp"
               alt="Motorized louvers"
-              className="w-full h-full object-cover rounded-[20px]"
+              fill
+              className="object-cover rounded-[20px]"
+              quality={100}
+              priority
             />
           </div>
         </div>
@@ -111,10 +121,13 @@ export const ImageOnLeft = (): JSX.Element => {
             </p>
           </div>
           <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <img
+            <Image
               src="/img/led.gif"
               alt="RGB LED lighting"
-              className="w-full h-full object-cover rounded-[20px]"
+              fill
+              className="object-cover rounded-[20px]"
+              quality={100}
+              priority
             />
           </div>
         </div>
@@ -131,10 +144,13 @@ export const ImageOnLeft = (): JSX.Element => {
             </p>
           </div>
           <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <img
-              src="/img/outdoor.webp"
+            <Image
+              src="/img/outdoor.jpg"
               alt="Outdoor resistant"
-              className="w-full h-full object-cover rounded-[20px]"
+              fill
+              className="object-cover rounded-[20px]"
+              quality={100}
+              priority
             />
           </div>
         </div>
@@ -154,10 +170,13 @@ export const ImageOnLeft = (): JSX.Element => {
             </p>
           </div>
           <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <img
+            <Image
               src="/img/commercial.webp"
               alt="Commercial grade aluminum"
-              className="w-full h-full object-cover rounded-[20px]"
+              fill
+              className="object-cover rounded-[20px]"
+              quality={100}
+              priority
             />
           </div>
         </div>

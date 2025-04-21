@@ -61,7 +61,7 @@ export const HomepageSampleKit = (): JSX.Element => {
       <img
         className="relative max-w-full lg:max-w-[563px] mt-[-10.00px]"
         alt="Rectangle"
-        src="https://c.animaapp.com/q2tzgr8Y/img/rectangle-1307-1.png"
+        src={sampleKitProduct?.images?.[0]?.url ?? undefined}
       />
 
       <div className="flex flex-col items-center gap-5 relative self-stretch w-full flex-[0_0_auto]">

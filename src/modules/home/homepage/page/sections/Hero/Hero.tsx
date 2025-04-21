@@ -2,6 +2,15 @@ import React from "react"
 import { StyleSecondary } from "../../../../components/StyleSecondary"
 import { HeroProps } from "types/global"
 import Link from "next/link"
+
+declare global {
+  interface Window {
+    GorgiasChat: {
+      open: () => void
+    }
+  }
+}
+
 const cmsBaseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 
 export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
@@ -32,13 +41,13 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
                 </button>
               </div>
             </Link>
-            <Link href="#contact">
+            <button onClick={() => window.GorgiasChat.open()}>
               <StyleSecondary
                 className="!border-[#ffffff] !rounded-[10px] !mr-[-1.00px] !mt-[-1.00px] !mb-[-1.00px] !flex-[0_0_auto]"
                 divClassName="!text-[#ffffff] !tracking-[0] !text-base ![font-style:unset] !font-normal ![font-family:'Roboto',Helvetica] !leading-6"
                 text={hero?.RightButton ?? ""}
               />
-            </Link>
+            </button>
           </div>
         </div>
       </div>
