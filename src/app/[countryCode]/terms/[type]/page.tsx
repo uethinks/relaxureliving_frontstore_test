@@ -61,6 +61,10 @@ export async function generateStaticParams() {
   }
 }
 
+// 添加动态配置
+export const dynamic = "force-dynamic"
+export const revalidate = 3600 // 每小时重新验证一次
+
 // 生成页面元数据
 export async function generateMetadata({
   params,
@@ -91,28 +95,47 @@ export default async function TermsPage({
 
   // 验证条款类型是否有效
   if (!termsTypes[type]) {
+    console.error(`Invalid terms type: ${type}`)
     return <ErrorMessage message="Invalid terms type requested." />
   }
 
   const { title } = termsTypes[type]
-  const termsData = await getAllTerms()
-  const content = termsData[type]?.data?.content
 
-  if (!content) {
-    return <ErrorMessage message="Content not available for this terms type." />
-  }
+  try {
+    console.log(`Fetching terms data for type: ${type}`)
+    const termsData = await getAllTerms()
 
-  return (
-    <main className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="bg-white rounded-lg shadow-sm p-8">
-          <h1 className="text-3xl font-bold mb-8">{title}</h1>
-          <div className="prose max-w-none">
-            <BlocksRenderer content={content} />
+    if (!termsData) {
+      console.error("No terms data received")
+      return <ErrorMessage message="Failed to fetch terms data." />
+    }
+
+    const content = termsData[type]?.data?.content
+
+    if (!content) {
+      console.error(`No content found for type: ${type}`)
+      return (
+        <ErrorMessage message="Content not available for this terms type." />
+      )
+    }
+
+    return (
+      <main className="min-h-screen bg-gray-50 py-12">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-lg shadow-sm p-8">
+            <h1 className="text-3xl font-bold mb-8">{title}</h1>
+            <div className="prose max-w-none">
+              <BlocksRenderer content={content} />
+            </div>
+            <AgreeButton />
           </div>
-          <AgreeButton />
         </div>
-      </div>
-    </main>
-  )
+      </main>
+    )
+  } catch (error) {
+    console.error("Error fetching terms content:", error)
+    return (
+      <ErrorMessage message="Failed to load terms content. Please try again later." />
+    )
+  }
 }

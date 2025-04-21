@@ -3,8 +3,11 @@ import axios from 'axios';
 
 // 创建 Axios 实例
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL ?? 'http://localhost:9000', // 基础 URL
+  baseURL: process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL,
   timeout: 10000, // 请求超时时间
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 // 请求拦截器
@@ -19,6 +22,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     // 处理请求错误
+    console.error('Request error:', error);
     return Promise.reject(error instanceof Error ? error : new Error(error));
   }
 );
@@ -33,7 +37,7 @@ axiosInstance.interceptors.response.use(
     // 处理响应错误
     if (error.response) {
       // 服务器返回的错误
-      console.error('Error response:', error.response);
+      console.error('Error response:', error.response.status, error.response.data);
     } else if (error.request) {
       // 请求没有收到响应
       console.error('Error request:', error.request);
