@@ -12,28 +12,30 @@ export const FooterDark = ({
 }: FooterDarkProps): JSX.Element => {
   return (
     <div className="relative flex justify-center w-full overflow-hidden bg-[#0A142F] mt-10 lg:mt-[120px]">
-      <div className="relative flex flex-col justify-between gap-10  w-full 2xl:w-[1512px] px-5 md:px-20 2xl:px-[193px]">
+      <div className="relative flex flex-col justify-between gap-2  w-full 2xl:w-[1512px] px-5 md:px-20 2xl:px-[193px]">
         {isHomepage ? <HomepageSampleKit /> : <BadWeatherSection />}
         <div className="flex flex-col items-center justify-center w-full gap-5">
-          <div className="flex items-center justify-start w-full gap-5">
-            <img
-              className="w-[24px] h-[24px] "
-              alt="Logo"
-              src="/img/phone.png"
-            />
-            <span className="text-white text-base tracking-[0] leading-6 whitespace-nowrap">
-              (+1) 800-227-0000
-            </span>
-          </div>
-          <div className="flex items-center justify-start w-full gap-5">
-            <img
-              className="w-[24px] h-[24px] "
-              alt="Logo"
-              src="/img/plane.png"
-            />
-            <span className="text-white text-base tracking-[0] leading-6 whitespace-nowrap">
-              info@relaxureline.com
-            </span>
+          <div className="flex flex-wrap h-11 items-center justify-between lg:gap-10 relative">
+            <Link href="/us/terms/warranty">
+              <div className=" [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                Warranty
+              </div>
+            </Link>
+            <Link href="/us/terms/refund-policy">
+              <div className=" [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                Refund policy
+              </div>
+            </Link>
+            <Link href="/us/terms/terms-of-service">
+              <div className=" [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                Terms of service
+              </div>
+            </Link>
+            <Link href="/us/terms/privacy-policy">
+              <div className=" [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                Privacy policy
+              </div>
+            </Link>
           </div>
         </div>
 
@@ -46,32 +48,33 @@ export const FooterDark = ({
                     <img
                       className="w-[112px] h-[74px] "
                       alt="Logo"
-                      src="https://c.animaapp.com/ipQflS1Z/img/logo.svg"
+                      src="/img/logo.svg"
                     />
                   </Link>
                 </div>
-                <div className="flex flex-wrap h-11 items-center justify-between lg:gap-10 relative">
-                  <Link href="/us/terms/warranty">
-                    <div className="underline [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
-                      Warranty
-                    </div>
-                  </Link>
-                  <Link href="/us/terms/refund-policy">
-                    <div className="underline [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
-                      Refund policy
-                    </div>
-                  </Link>
-                  <Link href="/us/terms/terms-of-service">
-                    <div className="underline [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
-                      Terms of service
-                    </div>
-                  </Link>
-                  <Link href="/us/terms/privacy-policy">
-                    <div className="underline [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
-                      Privacy policy
-                    </div>
-                  </Link>
+                <div className="flex items-center justify-center gap-5">
+                  <div className="flex items-center justify-start w-full gap-5">
+                    <img
+                      className="w-[24px] h-[24px] "
+                      alt="Logo"
+                      src="/img/phone.png"
+                    />
+                    <span className="text-white text-base tracking-[0] leading-6 whitespace-nowrap">
+                      1-672-673-0150
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-start w-full gap-5">
+                    <img
+                      className="w-[24px] h-[24px] "
+                      alt="Logo"
+                      src="/img/plane.png"
+                    />
+                    <span className="text-white text-base tracking-[0] leading-6 whitespace-nowrap">
+                      info@relaxureliving.com
+                    </span>
+                  </div>
                 </div>
+
                 <div className="relative flex flex-wrap justify-end items-center gap-5">
                   <Link href="https://www.instagram.com/relaxurepergola/">
                     <div className="w-[47px] h-[45px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/oval-copy.svg)] bg-cover">

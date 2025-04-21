@@ -1,9 +1,9 @@
 import React from "react"
 import YouTube from "react-youtube"
-import Image from "next/image"
 
 export const ImageOnLeft = (): JSX.Element => {
   const actualVideoId = "ZwKTt2-D1mk"
+
   return (
     <div className="w-full inline-flex flex-col items-center gap-[60px] relative mt-10">
       <div className="flex flex-col w-full items-center justify-center gap-2.5 relative">
@@ -28,8 +28,8 @@ export const ImageOnLeft = (): JSX.Element => {
                   autoplay: 0,
                   controls: 1,
                   modestbranding: 1,
-                  rel: 0, // 不显示相关视频
-                  showinfo: 0, // 不显示视频信息
+                  rel: 0,
+                  showinfo: 0,
                 },
               }}
               className="w-full aspect-video"
@@ -50,14 +50,11 @@ export const ImageOnLeft = (): JSX.Element => {
               for different weather conditions and activities.
             </p>
           </div>
-          <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <Image
+          <div className="mt-5 relative w-full aspect-[3/2] rounded-[20px] overflow-hidden">
+            <img
               src="/img/wifi.webp"
               alt="WiFi app control"
-              fill
-              className="object-cover rounded-[20px]"
-              quality={100}
-              priority
+              className="absolute inset-0 w-full h-full object-cover rounded-[20px]"
             />
           </div>
         </div>
@@ -73,14 +70,11 @@ export const ImageOnLeft = (): JSX.Element => {
               your outdoor furnishings even when you're away.
             </p>
           </div>
-          <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <Image
+          <div className="mt-5 relative w-full aspect-[3/2] rounded-[20px] overflow-hidden">
+            <img
               src="/img/rain.webp"
               alt="Rain sensor"
-              fill
-              className="object-cover rounded-[20px]"
-              quality={100}
-              priority
+              className="absolute inset-0 w-full h-full object-cover rounded-[20px]"
             />
           </div>
         </div>
@@ -96,14 +90,11 @@ export const ImageOnLeft = (): JSX.Element => {
               for any occasion, from full sunshine to complete shade.
             </p>
           </div>
-          <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <Image
+          <div className="mt-5 relative w-full aspect-[3/2] rounded-[20px] overflow-hidden">
+            <img
               src="/img/motorized.webp"
               alt="Motorized louvers"
-              fill
-              className="object-cover rounded-[20px]"
-              quality={100}
-              priority
+              className="absolute inset-0 w-full h-full object-cover rounded-[20px]"
             />
           </div>
         </div>
@@ -120,14 +111,11 @@ export const ImageOnLeft = (): JSX.Element => {
               light options.
             </p>
           </div>
-          <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <Image
+          <div className="mt-5 relative w-full aspect-[3/2] rounded-[20px] overflow-hidden">
+            <img
               src="/img/led.gif"
               alt="RGB LED lighting"
-              fill
-              className="object-cover rounded-[20px]"
-              quality={100}
-              priority
+              className="absolute inset-0 w-full h-full object-cover rounded-[20px]"
             />
           </div>
         </div>
@@ -143,14 +131,11 @@ export const ImageOnLeft = (): JSX.Element => {
               colors stay as pristine as the day you assembled it.
             </p>
           </div>
-          <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <Image
+          <div className="mt-5 relative w-full aspect-[3/2] rounded-[20px] overflow-hidden">
+            <img
               src="/img/outdoor.jpg"
               alt="Outdoor resistant"
-              fill
-              className="object-cover rounded-[20px]"
-              quality={100}
-              priority
+              className="absolute inset-0 w-full h-full object-cover rounded-[20px]"
             />
           </div>
         </div>
@@ -169,14 +154,11 @@ export const ImageOnLeft = (): JSX.Element => {
               failures, tipping, or collapsing.
             </p>
           </div>
-          <div className="mt-5 relative w-full h-[400px] rounded-[20px] overflow-hidden">
-            <Image
+          <div className="relative w-full aspect-[3/2] rounded-[20px] overflow-hidden">
+            <img
               src="/img/commercial.webp"
               alt="Commercial grade aluminum"
-              fill
-              className="object-cover rounded-[20px]"
-              quality={100}
-              priority
+              className="absolute inset-0 w-full h-full object-cover rounded-[20px]"
             />
           </div>
         </div>

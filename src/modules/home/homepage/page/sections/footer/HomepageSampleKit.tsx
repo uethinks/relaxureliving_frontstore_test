@@ -84,6 +84,7 @@ export const HomepageSampleKit = (): JSX.Element => {
           </div>
         </button>
         <div className="relative w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#ffffff] text-[14px] md:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+          $
           {sampleKitProduct?.variants?.[0]?.calculated_price?.calculated_amount}{" "}
           with Free Shipping
         </div>
