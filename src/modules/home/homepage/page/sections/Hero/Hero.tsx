@@ -10,7 +10,7 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
       <div
         className="flex h-[500px] md:h-[900px] items-center px-[64px] py-0 relative self-stretch w-full rounded-[20px] overflow-hidden shadow-shadow-cards-relaxure bg-cover bg-[50%_50%]"
         style={{
-          backgroundImage: `url(${cmsBaseUrl}${hero?.BackgroundImage.formats.xlarge.url})`,
+          backgroundImage: `url("${cmsBaseUrl}${hero?.BackgroundImage.formats.xlarge.url}")`,
         }}
       >
         <div className="flex flex-col w-full lg:w-4/5 items-start gap-8 relative">

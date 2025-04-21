@@ -105,9 +105,9 @@ export const Features = ({
                   index === currentSlide ? "opacity-100" : "opacity-0"
                 }`}
                 style={{
-                  backgroundImage: `url(${
+                  backgroundImage: `url("${
                     strapiUrl + slider.Image.formats.large.url
-                  })`,
+                  }")`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -142,9 +142,9 @@ export const Features = ({
                     slider.expand ? "w-1/2" : "w-1/4"
                   }`}
                   style={{
-                    backgroundImage: `url(${
+                    backgroundImage: `url("${
                       strapiUrl + slider.Image.formats.large.url
-                    })`,
+                    }")`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
@@ -191,9 +191,9 @@ export const Features = ({
                       slider.expand ? "w-1/2" : "w-1/4"
                     }`}
                     style={{
-                      backgroundImage: `url(${
+                      backgroundImage: `url("${
                         strapiUrl + slider.Image.formats.large.url
-                      })`,
+                      }")`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                     }}

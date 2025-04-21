@@ -19,7 +19,7 @@ export const ImageText = ({
   return (
     <div
       style={{
-        backgroundImage: `url(${strapiUrl}${largeImage})`,
+        backgroundImage: `url("${strapiUrl}${largeImage}")`,
       }}
       className={`flex flex-col items-center justify-end !h-[785.5px] !rounded-[26.18px] !relative w-full overflow-hidden bg-cover bg-[100%_100%] ${
         show ? "block" : "hidden"
@@ -30,7 +30,7 @@ export const ImageText = ({
       >
         <div
           style={{
-            backgroundImage: `url(${strapiUrl}${smallImage})`,
+            backgroundImage: `url("${strapiUrl}${smallImage}")`,
           }}
           className={`!h-[149.24px] !rounded-[11.94px] !max-w-[117.82px] --- relative flex-1 grow bg-cover bg-[50%_50%]`}
         />

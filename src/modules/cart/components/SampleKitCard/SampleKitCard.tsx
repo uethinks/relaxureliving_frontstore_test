@@ -176,7 +176,7 @@ export const SampleKitCard = (): JSX.Element | null => {
         <div
           className="relative w-full md:w-1/3 h-[146px] rounded-[20px] bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url(${sampleKit?.product?.thumbnail})`,
+            backgroundImage: `url("${sampleKit?.product?.thumbnail}")`,
           }}
         />
         <div className="flex flex-col w-full md:w-2/3 items-start gap-4 relative">
