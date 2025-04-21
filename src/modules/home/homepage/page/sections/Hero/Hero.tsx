@@ -17,7 +17,7 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
   return (
     <div className="flex flex-col items-end gap-2 pt-2.5 lg:pb-10 px-0 relative self-stretch w-full">
       <div
-        className="flex h-[500px] md:h-[900px] items-center px-[64px] py-0 relative self-stretch w-full rounded-[20px] overflow-hidden shadow-shadow-cards-relaxure bg-cover bg-[50%_50%]"
+        className="flex h-[500px] md:h-[900px] items-center px-5 md:px-[64px] py-0 relative self-stretch w-full rounded-[20px] overflow-hidden lg:shadow-shadow-cards-relaxure bg-cover bg-[50%_50%]"
         style={{
           backgroundImage: `url("${cmsBaseUrl}${hero?.BackgroundImage.formats.xlarge.url}")`,
         }}
@@ -28,7 +28,7 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
               {hero?.Title}
             </p>
 
-            <p className="self-stretch w-full lg:w-3/4 text-[#ffffff] text-[length:var(--relaxure-sub-heading-18-font-size)] leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+            <p className="self-stretch w-full lg:w-3/4 text-[#ffffff] text-[16px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
               {hero?.Description}
             </p>
           </div>
@@ -36,7 +36,7 @@ export const Hero = ({ hero }: { hero: HeroProps | null }): JSX.Element => {
           <div className="inline-flex flex-col md:flex-row items-start justify-end gap-5 relative flex-[0_0_auto]">
             <Link href="/us/products/pergola">
               <div className="inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] bg-[#072f6c] rounded-[10px]">
-                <button className="all-[unset] box-border relative w-fit [font-family:'Montserrat',Helvetica] font-normal text-[color:var(--semantic-border-alternate)] text-base tracking-[0] leading-6 whitespace-nowrap">
+                <button className="all-[unset] box-border relative w-fit [font-family:'Montserrat',Helvetica] font-normal text-[color:var(--semantic-border-alternate)] text-base tracking-[0] leading-6 whitespace-normal">
                   {hero?.LeftButton}
                 </button>
               </div>

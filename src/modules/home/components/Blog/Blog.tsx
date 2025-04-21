@@ -11,8 +11,8 @@ export const Blog = ({ size, blog }: Props): JSX.Element => {
   return (
     <div
       className={`flex flex-col justify-between w-full bg-[100%_100%] overflow-hidden rounded-[20px] relative ${
-        size === "small" ? "h-[383px]" : "h-[600px]"
-      } bg-[url(/img/rectangle-1276-4.svg)]`}
+        size === "small" ? "lg:h-[383px]" : "lg:h-[600px]"
+      } bg-[url(/img/rectangle-1276-4.svg)] h-[450px]`}
       style={{
         backgroundImage: `url(${strapiUrl + blog?.cover.formats.large.url})`,
       }}

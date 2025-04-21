@@ -86,7 +86,7 @@ export const Features = ({
           </p>
 
           <div className="px-0 py-2.5 flex items-center justify-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-            <p className="flex-1 mt-[-1.00px] text-[#68717a] text-center relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+            <p className="flex-1 mt-[-1.00px] text-[#68717a] text-center relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[16px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
               {features?.Description}
             </p>
           </div>
@@ -120,10 +120,10 @@ export const Features = ({
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="flex m-auto w-[90%] h-[136px] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative bg-[#ffffff73] rounded-[20px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
                     <div className="flex flex-col gap-2.5 w-full">
-                      <div className="relative flex-1 [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-lg tracking-[0] leading-[25.2px]">
+                      <div className="relative text-[14px] lg:text-[18px] flex-1 [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] tracking-[0] leading-[25.2px]">
                         {slider.subtitle}
                       </div>
-                      <p className="relative [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-sm tracking-[0] leading-[21px]">
+                      <p className="relative [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[12px] lg:text-[14px] tracking-[0] leading-[21px]">
                         {slider.Description}
                       </p>
                     </div>
