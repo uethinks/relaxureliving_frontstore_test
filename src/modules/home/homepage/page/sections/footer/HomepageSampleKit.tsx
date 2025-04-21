@@ -59,7 +59,7 @@ export const HomepageSampleKit = (): JSX.Element => {
   return (
     <div className="flex flex-col justify-center w-full items-center gap-5 mt-[68px] lg:px-[260px]">
       <img
-        className="relative max-w-full lg:max-w-[563px] mt-[-10.00px]"
+        className="relative max-w-full lg:max-w-[563px] mt-[-10.00px] rounded-[30px] border-[10px] border-solid border-[#ffffff]"
         alt="Rectangle"
         src={sampleKitProduct?.images?.[0]?.url ?? undefined}
       />

@@ -169,7 +169,7 @@ export const AccesorriesPopupGlassdoor = ({
   }, [])
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
-      <div className="relative bg-white rounded-[20px] p-10 max-w-[1269px] max-h-[90vh] overflow-auto">
+      <div className="relative bg-white rounded-t-[20px] md:rounded-[20px] p-10 max-w-[1269px] max-h-[90vh]  overflow-auto">
         <div className="flex flex-col lg:flex-row items-start gap-[30px]">
           <div className="relative w-full lg:w-1/2 aspect-square">
             <ImageSlider images={accessoryGlassdoor?.images || []} />
@@ -248,7 +248,7 @@ export const AccesorriesPopupGlassdoor = ({
               </div>
             </div>
 
-            <div className="flex items-center justify-between self-stretch w-full">
+            <div className="flex flex-col md:flex-row items-center justify-between self-stretch w-full">
               <a
                 href="/upload_files/Frameless_sliding_glass_door_technical_sheet.pdf"
                 target="_blank"

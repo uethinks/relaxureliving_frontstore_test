@@ -112,11 +112,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
   )
 
   if (isLoading) {
-    return (
-      <div className="w-full max-w-7xl mx-auto py-16 text-center">
-        Loading reviews...
-      </div>
-    )
+    return null
   }
 
   if (error) {
@@ -184,7 +180,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
   }
 
   return (
-    <div className="w-full mx-auto py-16 bg-[#F3F3F3] px-[63px] lg:mt-[80px] rounded-[20px]">
+    <div className="w-full mx-auto py-16 bg-[#F3F3F3] px-5 lg:px-[63px] mt-10 lg:mt-[80px] rounded-[20px]">
       {/* Reviews Overview Section */}
       <div className="mb-5">
         <h2 className="text-3xl font-700 text-[18px] lg:text-[36px] font-semibold text-center mb-8">
@@ -227,20 +223,25 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
       {/* Customer Photos Section */}
       <div className="mb-16 flex flex-col items-center">
         <div className="flex gap-4 overflow-x-auto pb-4">
-          {reviewsWithImages.slice(0, 7).map((review, index) => (
-            <div
-              key={review.id}
-              className="min-w-[120px] h-[120px] relative rounded-lg overflow-hidden cursor-pointer"
-              onClick={() => handleImageClick(index)}
-            >
-              <Image
-                src={`${strapiUrl}${review.image![0].formats.small.url}`}
-                alt="Customer review photo"
-                fill
-                className="object-cover hover:opacity-90 transition-opacity"
-              />
-            </div>
-          ))}
+          {reviewsWithImages
+            .slice(
+              0,
+              window.innerWidth >= 1280 ? 7 : window.innerWidth >= 768 ? 4 : 1
+            )
+            .map((review, index) => (
+              <div
+                key={review.id}
+                className="min-w-[120px] h-[120px] relative rounded-lg overflow-hidden cursor-pointer"
+                onClick={() => handleImageClick(index)}
+              >
+                <Image
+                  src={`${strapiUrl}${review.image![0].formats.small.url}`}
+                  alt="Customer review photo"
+                  fill
+                  className="object-cover hover:opacity-90 transition-opacity"
+                />
+              </div>
+            ))}
           <button
             onClick={handleSeeMoreClick}
             className="min-w-[120px] h-[120px] bg-gray-50 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"

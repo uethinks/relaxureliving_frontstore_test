@@ -238,7 +238,7 @@ export const AccesorriesPopupShades = ({
               </div>
             </div>
 
-            <div className="flex items-center justify-between self-stretch w-full">
+            <div className="flex flex-col md:flex-row items-center justify-between self-stretch w-full">
               <a
                 href="/upload_files/Sunshade_technical_sheet.pdf"
                 target="_blank"
