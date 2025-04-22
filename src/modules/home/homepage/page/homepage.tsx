@@ -131,7 +131,7 @@ const ProgressiveComponents = ({ data }: { data: InitialData }) => {
       {loadedComponents >= 1 && <OurPergola pergola={pergola} />}
       {loadedComponents >= 2 && <Features features={features} />}
       {loadedComponents >= 3 && <Accessories accessories={accessories} />}
-      {loadedComponents >= 4 && <Testimonials />}
+      {/* {loadedComponents >= 4 && <Testimonials />} */}
       {/* {loadedComponents >= 5 && <OurPromise />} */}
       {loadedComponents >= 5 && <OurBlog homepageBlog={homepageBlog} />}
       {/* {loadedComponents >= 7 && faq && <FaqWrapper faq={faq} />}
@@ -183,6 +183,9 @@ export const Homepage = ({
         <ProgressiveComponents data={data} />
       </div>
       <OurPromise />
+      <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-5 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
+        <Testimonials />
+      </div>
       {/* <FaqWrapper faq={data.faq} /> */}
       <FaqWrapper faq={data.faq} />
       <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-5 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
