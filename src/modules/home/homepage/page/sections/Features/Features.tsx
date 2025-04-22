@@ -118,7 +118,7 @@ export const Features = ({
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <div className="flex m-auto w-[90%] h-[136px] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative bg-[#ffffff73] rounded-[20px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
+                  <div className="flex m-auto w-[90%] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative bg-[#ffffff73] rounded-[20px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
                     <div className="flex flex-col gap-2.5 w-full">
                       <div className="relative text-[14px] lg:text-[18px] flex-1 [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] tracking-[0] leading-[25.2px]">
                         {slider.subtitle}
@@ -161,7 +161,7 @@ export const Features = ({
                     }`}
                   >
                     <div className="relative self-stretch w-full mb-[-10.00px] rounded-[0px_0px_20px_20px] [background:linear-gradient(180deg,rgba(52,58,64,0)_51%,rgba(0,0,0,0.6)_100%)]">
-                      <div className="flex m-auto mb-10 w-[90%] h-[136px] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative bg-[#ffffff73] rounded-[20px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
+                      <div className="flex m-auto mb-10 w-[90%] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative bg-[#ffffff73] rounded-[20px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
                         <div className="flex flex-col items-start gap-2 relative flex-1 grow">
                           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                             <div className="relative flex-1 mt-[-1.00px] [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-lg tracking-[0] leading-[25.2px]">
@@ -210,7 +210,7 @@ export const Features = ({
                       }`}
                     >
                       <div className="relative self-stretch w-full mb-[-10.00px] rounded-[0px_0px_20px_20px] [background:linear-gradient(180deg,rgba(52,58,64,0)_51%,rgba(0,0,0,0.6)_100%)]">
-                        <div className="flex m-auto mb-10 w-[90%] h-[136px] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative bg-[#ffffff73] rounded-[20px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
+                        <div className="flex m-auto mb-10 w-[90%] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative bg-[#ffffff73] rounded-[20px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
                           <div className="flex flex-col items-start gap-2 relative flex-1 grow">
                             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                               <div className="relative flex-1 mt-[-1.00px] [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-lg tracking-[0] leading-[25.2px]">
