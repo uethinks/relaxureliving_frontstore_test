@@ -178,17 +178,17 @@ export const Homepage = ({
         revalidateOnReconnect: true,
       }}
     >
-      <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-5 lg:px-20 py-0 relative bg-[#ffffff]">
+      <div className="w-full 2xl:w-[1920px] flex flex-col items-center gap-[10px] lg:gap-10 px-5 lg:px-20 py-0 relative bg-[#ffffff]">
         <AboveTheFold hero={data.hero} />
         <ProgressiveComponents data={data} />
       </div>
       <OurPromise />
-      <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-5 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
+      <div className="w-full 2xl:w-[1920px] flex flex-col items-center gap-[10px] lg:gap-10 px-5 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
         <Testimonials />
       </div>
       {/* <FaqWrapper faq={data.faq} /> */}
       <FaqWrapper faq={data.faq} />
-      <div className="w-full 2xl:w-[1512px] flex flex-col items-center gap-[10px] lg:gap-10 px-5 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
+      <div className="w-full 2xl:w-[1920px] flex flex-col items-center gap-[10px] lg:gap-10 px-5 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
         <ContactUs contactUs={data.contactUs} />
       </div>
       <FooterDark isHomepage={true} />

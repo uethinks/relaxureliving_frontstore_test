@@ -52,7 +52,7 @@ export const OurPromise = (): JSX.Element => {
 
   return (
     <div className="w-full bg-[#F3F3F3] mt-10 lg:mt-[120px]">
-      <div className="p-10 w-full 2xl:w-[1512px] px-5 md:px-20 mx-auto">
+      <div className="p-10 w-full 2xl:w-[1920px] px-5 md:px-20 mx-auto">
         <div className="flex flex-col justify-start items-center lg:gap-[132px] md:items-center lg:flex-row lg:items-center lg:justify-between">
           {/* Left Section */}
           <div className="flex flex-col justify-start items-start text-center lg:text-left gap-5 w-full md:w-[600px] lg:w-1/3 mb-10 lg:mb-0">

@@ -215,7 +215,7 @@ export const Testimonials = (): JSX.Element => {
       <div className="hidden 2xl:block">
         <div
           data-property-1="Default"
-          className="w-full p-10 inline-flex flex-col justify-center items-center gap-2.5"
+          className="w-full p-10 flex justify-center items-center gap-2.5"
         >
           <div className="self-stretch h-[711px] relative bg-white flex flex-col justify-center items-center gap-2.5 overflow-hidden">
             <div className="w-[1182px] flex flex-col justify-center items-center gap-2.5">

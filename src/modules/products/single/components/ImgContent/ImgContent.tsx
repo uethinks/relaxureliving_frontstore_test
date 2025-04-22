@@ -96,7 +96,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     <>
       <div className="flex flex-col justify-center items-center relative w-full rounded-[20px] overflow-hidden">
         <img
-          className="rounded-[20px] cursor-pointer"
+          className="rounded-[20px] cursor-pointer aspect-[817/558] w-full"
           src={images?.[currentImageIndex]?.url}
           alt=""
           onClick={handleImageClick}

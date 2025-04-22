@@ -77,7 +77,7 @@ export const PergulaSizeSelector = ({
           </p>
         </div>
 
-        <div className="relative h-12 w-full">
+        <div className="relative h-12 w-full 2xl:w-auto">
           <div className="flex p-1 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
             <div className="inline-flex items-center gap-1 md:gap-[18px] relative">
               {pergolaSizes?.values?.map((size) => (

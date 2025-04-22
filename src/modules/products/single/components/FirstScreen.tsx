@@ -76,7 +76,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
       <div className="lg:mx-auto flex flex-col  bg-[#ffffff] w-full relative">
         <div className="flex flex-col w-full lg:flex-row justify-between items-start">
           <div className="flex flex-col w-full  gap-5">
-            <div className="flex flex-col w-full lg:max-w-[817px] items-center gap-5">
+            <div className="flex flex-col w-full lg:max-w-[64%] items-center gap-5 lg:pr-[65px]">
               <div className="flex flex-col items-start relative self-stretch w-full">
                 <div className="relative mb-[24px] self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] lg:text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
                   {product.title}
@@ -91,9 +91,9 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                 </p>
               </div>
             </div>
-            <div className="flex flex-row justify-between items-start relative w-full">
-              <div className="w-full lg:max-w-[817px] relative flex flex-col">
-                <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between items-start relative w-full gap-[65px]">
+              <div className="w-full lg:w-[64%] relative flex flex-col">
+                <div className="flex flex-row justify-between w-full">
                   <ImgContent product={product} property1="default" />
                 </div>
                 {/* Mobile View */}

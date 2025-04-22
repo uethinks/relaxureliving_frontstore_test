@@ -231,7 +231,7 @@ export const ProductItem = ({
 
   return (
     <>
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
+      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1920px] px-5 lg:px-20">
         <FirstScreen
           product={product}
           accessories={accessories}
@@ -271,7 +271,7 @@ export const ProductItem = ({
           <LazyOurPromise />
         </Suspense>
       </div>
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] md:px-5 lg:px-20">
+      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20">
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
             <CustomerReviews />
