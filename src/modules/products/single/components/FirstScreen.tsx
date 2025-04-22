@@ -182,7 +182,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
           </div>
         </div>
         {/* Assembly Tab Content - Full Width */}
-        {activeTab === "Assembly" && (
+        {activeTab === "Put it together" && (
           <div className="w-full">
             <Suspense>
               <LazyAssembly />
