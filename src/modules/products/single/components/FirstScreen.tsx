@@ -121,7 +121,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
 
                   <div className="flex flex-wrap items-center justify-between w-full mt-5 mb-5 lg:mt-[60px] lg:mb-[60px]">
                     <div className="inline-flex items-start gap-10">
-                      {["Description", "Assembly"].map((tab) => (
+                      {["Description", "Put it together"].map((tab) => (
                         <button
                           key={tab}
                           className={`inline-flex h-[41px] items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto] rounded-[30px] border border-solid border-[#ffffffad] shadow-[0px_0px_8.91px_#ffffff73,0px_0px_17.82px_#ffffff73,0px_0px_62.37px_#ffffff73,0px_0px_124.74px_#ffffff73,0px_0px_213.84px_#ffffff73,0px_0px_250px_#ffffff73] cursor-pointer ${
