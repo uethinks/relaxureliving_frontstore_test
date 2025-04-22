@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export const BadWeatherSection = (): JSX.Element => {
   return (
-    <div className="flex flex-col justify-center w-full items-center gap-5 mt-[68px] mb-[108px] lg:px-[260px] text-white">
+    <div className="flex flex-col justify-center w-full items-center gap-5 mt-[68px] mb-[192px] lg:px-[260px] text-white">
       <h2 className="relative self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-white text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
         Leave "Bad Weather" Days Behind
       </h2>
