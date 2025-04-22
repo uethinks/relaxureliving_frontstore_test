@@ -83,7 +83,7 @@ export const ImageOnLeft = (): JSX.Element => {
         <div className="flex flex-col w-full">
           <div className="flex flex-col mb-2.5">
             <h3 className="text-[18px] lg:text-[36px] font-heading-2 text-[#343a40] mb-5">
-              Motorized louvers
+              Motorized louvres
             </h3>
             <p className="text-[#69727a] text-[14px] lg:text-[18px] font-relaxure-sub-heading-18 font-[500]">
               With 0-100% adjustability let you perfect your outdoor environment
