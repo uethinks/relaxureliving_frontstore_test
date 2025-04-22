@@ -1,6 +1,42 @@
 import React, { useState } from "react"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 
+// Add keyframes for wave animation
+const styles = `
+@keyframes wave {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes wave2 {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes wave3 {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+`
+
 interface TestimonialBubbleProps {
   message: string
   name: string
@@ -110,7 +146,7 @@ export const Testimonials = (): JSX.Element => {
       id: 4,
       image: "/img/ellipse-79-7.svg",
       message:
-        "I like the offerings of this company. They have enough clearance under their pergolas. It’s crazy how many are just 7 feet or so, and if you want a fan, well hope all your friends are short! In my case, 9 foot also assures I clear a window.",
+        "I like the offerings of this company. They have enough clearance under their pergolas. It's crazy how many are just 7 feet or so, and if you want a fan, well hope all your friends are short! In my case, 9 foot also assures I clear a window.",
       name: "Emily R.",
       title: "Project Manager",
       position: "bottom",
@@ -122,7 +158,7 @@ export const Testimonials = (): JSX.Element => {
       id: 5,
       image: "/img/ellipse-80-6.svg",
       message: `The thick posts make it feel like a permanent, solid structure, not some flimsy add-on.
-Hanso Pergola’s louvers are so thin, they make a Chinese historical drama belt look like a heavyweight champion. A strong gust of wind might just send them to early retirement! 😆🎭💨
+Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt look like a heavyweight champion. A strong gust of wind might just send them to early retirement! 😆🎭💨
 `,
       name: "Michael P.",
       title: "Tech Lead",
@@ -136,7 +172,7 @@ Hanso Pergola’s louvers are so thin, they make a Chinese historical drama belt
       id: 6,
       image: "/img/ellipse-80-7.svg",
       message:
-        "I love that I can keep my lights and on without freaking out about the weather….if you think about how the electric wires and directly in contact with water, there is no way you can be rest assured.. It’s such a relief not having to unplug everything when it starts drizzling!!",
+        "I love that I can keep my lights and on without freaking out about the weather….if you think about how the electric wires and directly in contact with water, there is no way you can be rest assured.. It's such a relief not having to unplug everything when it starts drizzling!!",
       name: "Lisa T.",
       title: "Product Owner",
       position: "bottom",
@@ -167,9 +203,10 @@ Hanso Pergola’s louvers are so thin, they make a Chinese historical drama belt
       <div key={data.id} className={data.containerClass}>
         {isActive && (
           <>
-            <div className="w-[180px] h-[180px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-[#6c95d3]/30 rounded-full" />
-            <div className="w-[120px] h-[120px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-[#072f6c]/30 rounded-full" />
-            <div className="w-[240px] h-[240px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-gradient-to-b from-[#c7d6eb]/40 to-[#c8d6ec]/5 rounded-full" />
+            <style>{styles}</style>
+            <div className="w-[180px] h-[180px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-[#6c95d3]/30 rounded-full animate-[wave_1s_ease-out_infinite]" />
+            <div className="w-[120px] h-[120px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-[#072f6c]/30 rounded-full animate-[wave2_1.2s_ease-out_infinite]" />
+            <div className="w-[240px] h-[240px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-gradient-to-b from-[#c7d6eb]/40 to-[#c8d6ec]/5 rounded-full animate-[wave3_1.4s_ease-out_infinite]" />
             <div className={data.bubbleClass}>
               <TestimonialBubble
                 position={data.position}
@@ -200,9 +237,10 @@ Hanso Pergola’s louvers are so thin, they make a Chinese historical drama belt
         }`}
       >
         <div className="relative w-[200px] h-[200px]">
-          <div className="w-[180px] h-[180px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#6c95d3]/30 rounded-full" />
-          <div className="w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#072f6c]/30 rounded-full" />
-          <div className="w-[200px] h-[200px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-[#c7d6eb]/40 to-[#c8d6ec]/5 rounded-full" />
+          <style>{styles}</style>
+          <div className="w-[180px] h-[180px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#6c95d3]/30 rounded-full animate-[wave_1s_ease-out_infinite]" />
+          <div className="w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#072f6c]/30 rounded-full animate-[wave2_1.2s_ease-out_infinite]" />
+          <div className="w-[200px] h-[200px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-[#c7d6eb]/40 to-[#c8d6ec]/5 rounded-full animate-[wave3_1.4s_ease-out_infinite]" />
           <img
             className="w-[100px] h-[100px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
             src={data.image}

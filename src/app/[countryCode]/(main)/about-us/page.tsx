@@ -1,5 +1,7 @@
+"use client"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
+import Link from "next/link"
 export default function AboutPage() {
   return (
     <main className="w-full flex flex-col items-center">
@@ -18,9 +20,11 @@ export default function AboutPage() {
             make their open space—it's where memories are made, connections
             flourish, and life's best moments unfold.
           </p>
-          <button className="bg-blue-900 text-white px-6 py-3 rounded-md hover:bg-blue-800">
-            Explore our products
-          </button>
+          <Link href="/us/products/pergola">
+            <button className="bg-blue-900 text-white px-6 py-3 rounded-md hover:bg-blue-800">
+              Explore our products
+            </button>
+          </Link>
         </div>
         <div className="flex-1">
           <img
@@ -98,7 +102,7 @@ export default function AboutPage() {
       </section>
 
       {/* Quote Section */}
-      <section className="bg-gray-50 py-16 md:py-24">
+      <section className="bg-gray-50 py-16 md:py-24 w-full">
         <div className="max-w-7xl mx-auto px-4">
           <div className="relative rounded-2xl overflow-hidden">
             <img
@@ -217,7 +221,10 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl font-serif mb-6">
             Experience the Relaxure Difference
           </h2>
-          <button className="bg-[#072F6C] text-white px-8 py-4 rounded-md hover:bg-blue-800">
+          <button
+            onClick={() => window.GorgiasChat.open()}
+            className="bg-[#072F6C] text-white px-8 py-4 rounded-md hover:bg-blue-800"
+          >
             Meet a Relaxure Expert
           </button>
         </div>
