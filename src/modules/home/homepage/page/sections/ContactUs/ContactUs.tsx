@@ -28,7 +28,7 @@ export const ContactUs = ({
       id="contact"
       className="flex flex-col lg:flex-row w-full justify-center items-center gap-4 lg:gap-[87px]"
     >
-      <div className="flex justify-center w-full lg:w-3/5 h-[490px] lg:h-[947px] items-center">
+      <div className="flex relative justify-center w-full lg:w-3/5 h-[490px] lg:h-[947px] items-center">
         <img
           className="h-[490px] lg:h-[947px] w-full object-cover rounded-[20px]"
           alt="Unsplash"
