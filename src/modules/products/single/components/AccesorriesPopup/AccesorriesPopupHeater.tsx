@@ -188,6 +188,16 @@ export const AccesorriesPopupHeater = ({
                   </div>
 
                   <div className="flex items-center gap-2">
+                    <button
+                      onClick={() =>
+                        setSelectedHeaterQuantity(
+                          Math.max(0, selectedHeaterQuantity - 1)
+                        )
+                      }
+                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                    >
+                      <span className="text-xl font-medium">-</span>
+                    </button>
                     <div className="w-14 h-10 flex items-center justify-center rounded-[10px] border border-solid border-[#a8a8a8]">
                       <input
                         value={selectedHeaterQuantity}
@@ -198,6 +208,14 @@ export const AccesorriesPopupHeater = ({
                         className="text-[#69727a] leading-6 font-montserrat font-medium text-base focus:outline-none border-0 text-center w-full"
                       ></input>
                     </div>
+                    <button
+                      onClick={() =>
+                        setSelectedHeaterQuantity(selectedHeaterQuantity + 1)
+                      }
+                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                    >
+                      <span className="text-xl font-medium">+</span>
+                    </button>
                   </div>
                 </div>
               </div>

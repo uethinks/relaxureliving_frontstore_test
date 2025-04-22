@@ -197,19 +197,43 @@ export const ProductCard = (): JSX.Element | null => {
                   </div>
                 </div>
                 <div className="flex items-center gap-10 relative flex-[0_0_auto]">
-                  <div className="flex w-14 h-10 items-center justify-center gap-2.5 p-2.5 relative bg-[#ffffff] rounded-[20px] border border-solid border-[#a8a8a8]">
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      value={quantities[item.id] ?? ""}
-                      disabled={isUpdating}
-                      onChange={(e) => {
-                        const value = e.target.value
-                        handleQuantityChange(value, item.id)
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => {
+                        const currentValue = Number(quantities[item.id] || 1)
+                        const newValue = Math.max(1, currentValue - 1)
+                        handleQuantityChange(newValue.toString(), item.id)
                       }}
-                      className="text-center focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-                    />
+                      disabled={isUpdating}
+                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span className="text-xl font-medium">-</span>
+                    </button>
+                    <div className="flex w-14 h-10 items-center justify-center gap-2.5 p-2.5 relative bg-[#ffffff] rounded-[20px] border border-solid border-[#a8a8a8]">
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        value={quantities[item.id] ?? ""}
+                        disabled={isUpdating}
+                        onChange={(e) => {
+                          const value = e.target.value
+                          handleQuantityChange(value, item.id)
+                        }}
+                        className="text-center focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                      />
+                    </div>
+                    <button
+                      onClick={() => {
+                        const currentValue = Number(quantities[item.id] || 1)
+                        const newValue = currentValue + 1
+                        handleQuantityChange(newValue.toString(), item.id)
+                      }}
+                      disabled={isUpdating}
+                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span className="text-xl font-medium">+</span>
+                    </button>
                   </div>
                 </div>
               </div>
