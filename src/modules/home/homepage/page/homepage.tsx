@@ -133,7 +133,7 @@ const ProgressiveComponents = ({ data }: { data: InitialData }) => {
       {loadedComponents >= 3 && <Accessories accessories={accessories} />}
       {/* {loadedComponents >= 4 && <Testimonials />} */}
       {/* {loadedComponents >= 5 && <OurPromise />} */}
-      {loadedComponents >= 5 && <OurBlog homepageBlog={homepageBlog} />}
+      {/* {loadedComponents >= 5 && <OurBlog homepageBlog={homepageBlog} />} */}
       {/* {loadedComponents >= 7 && faq && <FaqWrapper faq={faq} />}
       {loadedComponents >= 8 && contactUs && (
         <ContactUs contactUs={contactUs} />
