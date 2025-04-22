@@ -66,7 +66,7 @@ export const ContactUs = ({
 
           <div className="flex flex-col items-center gap-[52.66px] w-full">
             <div className="flex flex-col items-center gap-[18.16px] w-full">
-              <p className="font-heading-2 text-black text-[18px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)]">
+              <p className="font-heading-2 text-black text-[18px] lg:text-[36px] font-medium text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)]">
                 {contactUs.FormDescription}
               </p>
             </div>
@@ -76,7 +76,7 @@ export const ContactUs = ({
                 <div className="w-full flex flex-col items-start gap-[29.05px]">
                   <div className="w-full flex flex-col items-start gap-[3.63px]">
                     <div className="w-full flex flex-col items-start gap-[5.45px]">
-                      <div className="font-['Inter'] text-black text-sm tracking-[0] leading-[15.4px]">
+                      <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
                         {contactUs.FullName}
                       </div>
                       <input
@@ -90,7 +90,7 @@ export const ContactUs = ({
 
                   <div className="w-full flex flex-col items-start gap-[3.63px]">
                     <div className="w-full flex flex-col items-start gap-[5.45px]">
-                      <div className="font-['Inter'] text-black text-[12.7px] tracking-[0] leading-[14.0px]">
+                      <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
                         {contactUs.PhoneNumber}
                       </div>
                       <input
@@ -104,7 +104,7 @@ export const ContactUs = ({
 
                   <div className="w-full flex flex-col items-start gap-[3.63px]">
                     <div className="w-full flex flex-col items-start gap-[5.45px]">
-                      <div className="font-['Inter'] text-black text-[12.7px] tracking-[0] leading-[14.0px]">
+                      <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
                         {contactUs.Email}
                       </div>
                       <input
@@ -118,7 +118,7 @@ export const ContactUs = ({
 
                   <div className="w-full flex flex-col items-start gap-[3.63px]">
                     <div className="w-full flex flex-col items-start gap-[5.45px]">
-                      <div className="font-['Inter'] text-black text-[12.7px] tracking-[0] leading-[14.0px]">
+                      <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
                         Message
                       </div>
                       <textarea
@@ -139,7 +139,7 @@ export const ContactUs = ({
               <div className="h-full flex items-center justify-center gap-[var(--3-spacing-spacing-md)] px-[12.71px] py-[9.08px] bg-[#072f6c] rounded-[var(--2-radius-radius-md)]">
                 <div className="flex items-center">
                   <div className="w-[30.87px] rounded-[7.26px] shadow-shadows-shadow-xs" />
-                  <div className="font-med-16 text-variable-collection-beige-brand">
+                  <div className="font-medium text-[16px] font-relaxure-sub-heading-18 text-variable-collection-beige-brand">
                     {contactUs.SendButton}
                   </div>
                 </div>
