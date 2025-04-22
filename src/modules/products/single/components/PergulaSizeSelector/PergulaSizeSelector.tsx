@@ -105,7 +105,7 @@ export const PergulaSizeSelector = ({
         <div className="flex flex-col w-full items-start gap-5 relative text-[#343A40]">
           <div className="flex flex-row items-center gap-2.5 relative">
             <img src="/img/fits-people.png" alt="Fits People" />
-            <p>Fits 2 people</p>
+            <p>Fits 2-4 people</p>
           </div>
           <div className="flex flex-row items-center gap-2.5 relative">
             <img src="/img/ideal.png" alt="Ideal" />
