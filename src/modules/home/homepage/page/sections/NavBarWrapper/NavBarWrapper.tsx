@@ -96,10 +96,15 @@ export const NavBarWrapper = ({
                 >
                   <div className="flex items-center gap-2">
                     <div className="relative">
-                      <img src="/img/cart.png" alt="cart" />
-                      {hasItemsInCart && (
-                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
-                      )}
+                      <img
+                        className="w-[30px] h-[30px]"
+                        src={
+                          hasItemsInCart
+                            ? "/img/cart-with-products.png"
+                            : "/img/cart.png"
+                        }
+                        alt="cart"
+                      />
                     </div>
                     <div>Cart</div>
                   </div>
@@ -138,10 +143,15 @@ export const NavBarWrapper = ({
               >
                 <div className="flex items-center gap-2">
                   <div className="relative">
-                    <img src="/img/cart.png" alt="cart" />
-                    {hasItemsInCart && (
-                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
-                    )}
+                    <img
+                      className="w-[30px] h-[30px]"
+                      src={
+                        hasItemsInCart
+                          ? "/img/cart-with-products.png"
+                          : "/img/cart.png"
+                      }
+                      alt="cart"
+                    />
                   </div>
                 </div>
               </a>
