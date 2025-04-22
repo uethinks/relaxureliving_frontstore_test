@@ -25,7 +25,10 @@ export const PergulaSizeSelector = ({
   const pergolaColors: StoreProductOption | undefined = product.options?.find(
     (option) => option.title === "Color"
   )
-
+  const sortedColors = pergolaColors?.values?.sort((a, b) =>
+    a.value.localeCompare(b.value)
+  )
+  console.log("pergolaColors", pergolaColors, product.options)
   const defaultSize: StoreProductOptionValue = pergolaSizes?.values?.[0] || {
     id: "",
     value: "",
@@ -129,7 +132,7 @@ export const PergulaSizeSelector = ({
         <div className="relative h-12">
           <div className="flex px-2 h-12">
             <div className="inline-flex items-center gap-[18px] relative">
-              {pergolaColors?.values?.map((color) => (
+              {sortedColors?.map((color) => (
                 <div
                   key={color.id}
                   className="flex flex-row items-center gap-2.5 relative"

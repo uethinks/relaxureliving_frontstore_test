@@ -44,6 +44,9 @@ export const AccesorriesPopupHeater = ({
     accessoryHeater?.options?.find((option) => option.title === "Watt")
   const heaterColors: StoreProductOption | undefined =
     accessoryHeater?.options?.find((option) => option.title === "Color")
+  const sortedColors = heaterColors?.values?.sort((a, b) =>
+    a.value.localeCompare(b.value)
+  )
 
   const defaultSize: StoreProductOptionValue = heaterSizes?.values?.[0] || {
     id: "",
@@ -119,7 +122,7 @@ export const AccesorriesPopupHeater = ({
                       <p>Color:</p>
                     </div>
                     <div className="inline-flex items-center gap-[18px] relative">
-                      {heaterColors?.values?.map((color) => (
+                      {sortedColors?.map((color) => (
                         <div
                           key={color.id}
                           className="flex flex-row items-center gap-2.5 relative"

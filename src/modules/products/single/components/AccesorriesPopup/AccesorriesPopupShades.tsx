@@ -35,6 +35,9 @@ export const AccesorriesPopupShades = ({
 
   const shadesColors: StoreProductOption | undefined =
     accessoryShades?.options?.find((option) => option.title === "Color")
+  const sortedColors = shadesColors?.values?.sort((a, b) =>
+    a.value.localeCompare(b.value)
+  )
 
   const defaultColor: StoreProductOptionValue = shadesColors?.values?.[0] || {
     id: "",
@@ -182,7 +185,7 @@ export const AccesorriesPopupShades = ({
                       <p>Color:</p>
                     </div>
                     <div className="inline-flex items-center gap-[18px] relative">
-                      {shadesColors?.values?.map((color) => (
+                      {sortedColors?.map((color) => (
                         <div
                           key={color.id}
                           className="flex flex-row items-center gap-2.5 relative"

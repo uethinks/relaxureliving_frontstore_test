@@ -41,6 +41,9 @@ export const AccesorriesPopupGlassdoor = ({
 
   const glassdoorColors: StoreProductOption | undefined =
     accessoryGlassdoor?.options?.find((option) => option.title === "Color")
+  const sortedColors = glassdoorColors?.values?.sort((a, b) =>
+    a.value.localeCompare(b.value)
+  )
 
   const defaultColor: StoreProductOptionValue = glassdoorColors
     ?.values?.[0] || {
@@ -192,7 +195,7 @@ export const AccesorriesPopupGlassdoor = ({
                       <p>Color:</p>
                     </div>
                     <div className="inline-flex items-center gap-[18px] relative">
-                      {glassdoorColors?.values?.map((color) => (
+                      {sortedColors?.map((color) => (
                         <div
                           key={color.id}
                           className="flex flex-row items-center gap-2.5 relative"
