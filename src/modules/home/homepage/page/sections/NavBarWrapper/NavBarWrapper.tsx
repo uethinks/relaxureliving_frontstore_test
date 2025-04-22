@@ -33,7 +33,7 @@ export const NavBarWrapper = ({
 
   return (
     <div
-      className={`w-full flex flex-col items-center gap-2.5 pb-[43px] pt-[34px]  ${
+      className={`w-full 2xl:w-[1512px] flex flex-col items-center gap-2.5 pb-[43px] pt-[34px]  ${
         isFixed
           ? "lg:px-[132px] lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2"
           : "lg:px-[52px]"

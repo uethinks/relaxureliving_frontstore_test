@@ -1,9 +1,8 @@
-import Image from "next/image"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 export default function AboutPage() {
   return (
-    <main className="w-full">
+    <main className="w-full flex flex-col items-center">
       <NavBarWrapper isFixed={false} />
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 py-16 md:py-24 flex flex-col md:flex-row items-center gap-8">
@@ -24,12 +23,10 @@ export default function AboutPage() {
           </button>
         </div>
         <div className="flex-1">
-          <Image
+          <img
             src="/img/pergola-description.jpg"
             alt="Outdoor living space"
-            width={600}
-            height={400}
-            className="rounded-lg"
+            className="rounded-lg w-full max-w-[600px] h-auto"
           />
         </div>
       </section>
@@ -148,7 +145,7 @@ export default function AboutPage() {
           <div className="lg:col-span-8 grid md:grid-cols-2 gap-8">
             {/* Feature 1 */}
             <div className="bg-white rounded-xl p-8 space-y-4">
-              <Image
+              <img
                 src="/img/demand-better.png"
                 alt="Demand Better"
                 width={160}
@@ -165,7 +162,7 @@ export default function AboutPage() {
 
             {/* Feature 2 */}
             <div className="bg-white rounded-xl p-8 space-y-4">
-              <Image
+              <img
                 src="/img/accessable.png"
                 alt="Accessible Excellence"
                 width={160}
@@ -182,7 +179,7 @@ export default function AboutPage() {
 
             {/* Feature 3 */}
             <div className="bg-white rounded-xl p-8 space-y-4">
-              <Image
+              <img
                 src="/img/quantity.png"
                 alt="Uncompromising Quality"
                 width={160}
@@ -199,7 +196,7 @@ export default function AboutPage() {
 
             {/* Feature 4 */}
             <div className="bg-white rounded-xl p-8 space-y-4">
-              <Image
+              <img
                 src="/img/promise.png"
                 alt="Our Promise to You"
                 width={160}

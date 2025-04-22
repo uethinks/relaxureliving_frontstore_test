@@ -7,6 +7,7 @@ interface TestimonialBubbleProps {
   title: string
   position: "top" | "bottom"
   className?: string
+  popupClass?: string
 }
 
 const TestimonialBubble: React.FC<TestimonialBubbleProps> = ({
@@ -15,6 +16,7 @@ const TestimonialBubble: React.FC<TestimonialBubbleProps> = ({
   title,
   position,
   className = "",
+  popupClass = "",
 }) => {
   return (
     <div
@@ -30,7 +32,7 @@ const TestimonialBubble: React.FC<TestimonialBubbleProps> = ({
           }}
         />
       )}
-      <div className="bg-[#343A40] text-white p-6 rounded-2xl max-w-[400px]">
+      <div className={`bg-[#343A40] text-white p-6 rounded-2xl ${popupClass}`}>
         <p className="text-base mb-4">{message}</p>
         <div className="space-y-1">
           <h4 className="font-medium">{name}</h4>
@@ -58,6 +60,7 @@ interface TestimonialData {
   position: "top" | "bottom"
   containerClass: string
   bubbleClass: string
+  popupClass?: string
 }
 
 export const Testimonials = (): JSX.Element => {
@@ -69,18 +72,20 @@ export const Testimonials = (): JSX.Element => {
       id: 1,
       image: "/img/ellipse-79-4.svg",
       message:
-        "The service was exceptional! I highly recommend it to everyone.",
+        "Ordered in mid December and came quickly in January. You gotta wonder how they managed logistics. Lots of sturdy packaging. I am a doctor and hate wasting hours with mislabeled part. Thank god all their parts come with matching labels to help my contractor. Every part has sticky and plastic on it to prevent scratching. I will have more reviews later. Hopefully this is helping. No regrets so far.",
       name: "Sarah M.",
       title: "Marketing Director",
       position: "top",
       containerClass: "w-[266px] h-[266px] left-[13px] top-[356px] absolute",
       bubbleClass:
-        "w-full absolute left-1/2 transform -translate-x-1/2 top-[-130px] z-10",
+        "w-full absolute left-1/2 transform -translate-x-1/2 top-[-230px] z-10",
+      popupClass: "w-[600px]",
     },
     {
       id: 2,
       image: "/img/ellipse-79-5.svg",
-      message: "Outstanding quality and attention to detail. Very satisfied!",
+      message:
+        "Okay, buckle up. Their warranty is like the superhero of all warranties—15 years of total protection!",
       name: "James K.",
       title: "Creative Designer",
       position: "top",
@@ -92,18 +97,20 @@ export const Testimonials = (): JSX.Element => {
       id: 3,
       image: "/img/ellipse-79-6.svg",
       message:
-        "Nice to meet you! If you have any question about our services, feel free to contact us.",
+        "I was amazed at how silent the pergola stays during storms. I started wondering if it had taken a vow of silence—no creaking or rattling, just pure relaxation.",
       name: "Robert L.",
       title: "Business Administration",
       position: "bottom",
       containerClass: "w-[266px] h-[266px] left-[948px] top-[76px] absolute",
       bubbleClass:
         "w-full absolute left-1/2 transform -translate-x-1/2 top-[170px] z-10",
+      popupClass: "w-[200px]",
     },
     {
       id: 4,
       image: "/img/ellipse-79-7.svg",
-      message: "Excellent team and great communication throughout.",
+      message:
+        "I like the offerings of this company. They have enough clearance under their pergolas. It’s crazy how many are just 7 feet or so, and if you want a fan, well hope all your friends are short! In my case, 9 foot also assures I clear a window.",
       name: "Emily R.",
       title: "Project Manager",
       position: "bottom",
@@ -114,18 +121,22 @@ export const Testimonials = (): JSX.Element => {
     {
       id: 5,
       image: "/img/ellipse-80-6.svg",
-      message: "Very professional service, exceeded my expectations!",
+      message: `The thick posts make it feel like a permanent, solid structure, not some flimsy add-on.
+Hanso Pergola’s louvers are so thin, they make a Chinese historical drama belt look like a heavyweight champion. A strong gust of wind might just send them to early retirement! 😆🎭💨
+`,
       name: "Michael P.",
       title: "Tech Lead",
       position: "top",
       containerClass: "w-[266px] h-[266px] left-[364px] top-[470px] absolute",
       bubbleClass:
-        "w-full absolute left-1/2 transform -translate-x-1/2 top-[-160px] z-10",
+        "w-full absolute left-1/2 transform -translate-x-1/2 top-[-200px] z-10",
+      popupClass: "w-[600px]",
     },
     {
       id: 6,
       image: "/img/ellipse-80-7.svg",
-      message: "Incredible experience from start to finish.",
+      message:
+        "I love that I can keep my lights and on without freaking out about the weather….if you think about how the electric wires and directly in contact with water, there is no way you can be rest assured.. It’s such a relief not having to unplug everything when it starts drizzling!!",
       name: "Lisa T.",
       title: "Product Owner",
       position: "bottom",
@@ -165,6 +176,7 @@ export const Testimonials = (): JSX.Element => {
                 message={data.message}
                 name={data.name}
                 title={data.title}
+                popupClass={data.popupClass}
               />
             </div>
           </>
@@ -187,7 +199,7 @@ export const Testimonials = (): JSX.Element => {
           currentSlide === index ? "block" : "hidden"
         }`}
       >
-        <div className="relative w-[200px] h-[200px] mb-8">
+        <div className="relative w-[200px] h-[200px]">
           <div className="w-[180px] h-[180px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#6c95d3]/30 rounded-full" />
           <div className="w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#072f6c]/30 rounded-full" />
           <div className="w-[200px] h-[200px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-[#c7d6eb]/40 to-[#c8d6ec]/5 rounded-full" />
@@ -197,7 +209,7 @@ export const Testimonials = (): JSX.Element => {
             alt={`${data.name}'s testimonial`}
           />
         </div>
-        <div className="w-full max-w-[300px]">
+        <div className="w-full max-w-[280px]">
           <TestimonialBubble
             position="bottom"
             message={data.message}
@@ -282,7 +294,7 @@ export const Testimonials = (): JSX.Element => {
           </button>
 
           {/* Dots indicator */}
-          <div className="flex justify-center gap-2 mt-6">
+          {/* <div className="flex justify-center gap-2 mt-6">
             {testimonials.map((_, index) => (
               <button
                 key={index}
@@ -292,7 +304,7 @@ export const Testimonials = (): JSX.Element => {
                 onClick={() => setCurrentSlide(index)}
               />
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
