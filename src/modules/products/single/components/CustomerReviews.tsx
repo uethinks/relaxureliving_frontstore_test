@@ -234,12 +234,13 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
                 className="min-w-[120px] h-[120px] relative rounded-lg overflow-hidden cursor-pointer"
                 onClick={() => handleImageClick(index)}
               >
-                <Image
-                  src={`${strapiUrl}${review.image![0].formats.small.url}`}
-                  alt="Customer review photo"
-                  fill
-                  className="object-cover hover:opacity-90 transition-opacity"
-                />
+                {review.image?.[0]?.formats?.small?.url && (
+                  <img
+                    src={`${strapiUrl}${review.image[0].formats.small.url}`}
+                    alt="Customer review photo"
+                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
+                  />
+                )}
               </div>
             ))}
           <button
@@ -336,12 +337,13 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         <div className="w-full mb-4">
           {/* Main image */}
           <div className="w-full h-[200px] relative rounded-lg overflow-hidden group cursor-pointer mb-2">
-            <Image
-              src={`${strapiUrl}${review.image[0].formats.small.url}`}
-              alt="Review photo"
-              fill
-              className="object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
-            />
+            {review.image?.[0]?.formats?.small?.url && (
+              <img
+                src={`${strapiUrl}${review.image[0].formats.small.url}`}
+                alt="Review photo"
+                className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
+              />
+            )}
           </div>
 
           {/* Thumbnail images */}
@@ -352,12 +354,13 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
                   key={index}
                   className="w-16 h-16 relative rounded-lg overflow-hidden group cursor-pointer flex-shrink-0"
                 >
-                  <Image
-                    src={`${strapiUrl}${image.formats.small.url}`}
-                    alt="Review photo thumbnail"
-                    fill
-                    className="object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
-                  />
+                  {image.formats.small.url && (
+                    <img
+                      src={`${strapiUrl}${image.formats.small.url}`}
+                      alt="Review photo thumbnail"
+                      className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
+                    />
+                  )}
                 </div>
               ))}
             </div>
