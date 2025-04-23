@@ -20,13 +20,14 @@ const reviewsPopulate = {
     "populate[testimonials_item][populate][0]": "image",
 };
 
-const API_URLS = {
+export const API_URLS = {
   getHomePage: '/api/home-page',
   getWarranty: '/api/warranty',
   getPrivacyPolicy: '/api/privacy-policy',
   getTermsOfService: '/api/terms-of-service',
   getRefundPolicy: '/api/refund-policy',
   getReviews: '/api/testimonials-plural',
+  submitContact: '/api/contact-submissions',
 };
 
 // 获取所有项目
@@ -79,6 +80,33 @@ export const getReviews = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching reviews:', error);
+    throw error;
+  }
+};
+
+// 提交联系表单
+export const submitContactForm = async (formData: {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  message: string;
+}) => {
+  try {
+    const response = await axiosInstance.post(API_URLS.submitContact, {
+      data: {
+        fullName: formData.fullName,
+        phoneNumber: formData.phoneNumber,
+        email: formData.email,
+        message: formData.message
+      }
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.status === 403) {
+      console.error('Permission denied. Please check Strapi CMS permissions for contact-submissions collection.');
+      throw new Error('Permission denied. Please check Strapi CMS permissions for contact-submissions collection.');
+    }
+    console.error('Error submitting contact form:', error);
     throw error;
   }
 };

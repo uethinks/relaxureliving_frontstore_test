@@ -2,7 +2,7 @@ import React from "react"
 import YouTube from "react-youtube"
 
 export const ImageOnLeft = (): JSX.Element => {
-  const actualVideoId = "ZwKTt2-D1mk"
+  const actualVideoId = "qtfijujZKO0"
 
   return (
     <div className="w-full inline-flex flex-col items-center gap-[60px] relative mt-10">

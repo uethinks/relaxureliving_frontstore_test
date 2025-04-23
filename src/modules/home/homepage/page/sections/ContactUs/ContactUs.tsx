@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useState } from "react"
+import { submitContactForm } from "@lib/cms/strapiCmsApi"
 
 interface ContactUsProps {
   id: number
@@ -18,11 +19,112 @@ interface ContactUsProps {
   SendButton: string
 }
 
+interface FormData {
+  fullName: string
+  phoneNumber: string
+  email: string
+  message: string
+}
+
+interface FormErrors {
+  fullName?: string
+  email?: string
+  message?: string
+}
+
 export const ContactUs = ({
   contactUs,
 }: {
   contactUs: ContactUsProps
 }): JSX.Element => {
+  const [formData, setFormData] = useState<FormData>({
+    fullName: "",
+    phoneNumber: "",
+    email: "",
+    message: "",
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+    null
+  )
+  const [errors, setErrors] = useState<FormErrors>({})
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {}
+
+    // Validate name
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Name is required"
+    }
+
+    // Validate email
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required"
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
+    ) {
+      newErrors.email = "Invalid email address"
+    }
+
+    // Validate message
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }))
+    // 清除对应字段的错误信息
+    if (errors[id as keyof FormErrors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [id]: undefined,
+      }))
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    // 表单验证
+    if (!validateForm()) {
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitStatus(null)
+
+    try {
+      await submitContactForm({
+        fullName: formData.fullName,
+        phoneNumber: formData.phoneNumber,
+        email: formData.email,
+        message: formData.message,
+      })
+      setSubmitStatus("success")
+      setFormData({
+        fullName: "",
+        phoneNumber: "",
+        email: "",
+        message: "",
+      })
+    } catch (error) {
+      setSubmitStatus("error")
+      console.error("Error submitting form:", error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div
       id="contact"
@@ -71,20 +173,34 @@ export const ContactUs = ({
               </p>
             </div>
 
-            <div className="w-full flex flex-col items-center gap-[36.32px]">
+            <form
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col items-center gap-[36.32px]"
+            >
               <div className="w-full flex flex-col items-start gap-[29.05px]">
                 <div className="w-full flex flex-col items-start gap-[29.05px]">
                   <div className="w-full flex flex-col items-start gap-[3.63px]">
                     <div className="w-full flex flex-col items-start gap-[5.45px]">
                       <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
-                        {contactUs.FullName}
+                        {contactUs.FullName} *
                       </div>
                       <input
-                        className="w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid border-[#d8dadc] focus:outline-none"
-                        id="fullname"
+                        className={`w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid ${
+                          errors.fullName
+                            ? "border-red-500"
+                            : "border-[#d8dadc]"
+                        } focus:outline-none`}
+                        id="fullName"
                         placeholder={contactUs.FullName}
                         type="text"
+                        value={formData.fullName}
+                        onChange={handleInputChange}
                       />
+                      {errors.fullName && (
+                        <span className="text-red-500 text-sm mt-1">
+                          {errors.fullName}
+                        </span>
+                      )}
                     </div>
                   </div>
 
@@ -95,9 +211,11 @@ export const ContactUs = ({
                       </div>
                       <input
                         className="w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid border-[#d8dadc] focus:outline-none"
-                        id="phone"
+                        id="phoneNumber"
                         placeholder={contactUs.PhoneNumber}
-                        type="text"
+                        type="tel"
+                        value={formData.phoneNumber}
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
@@ -105,46 +223,82 @@ export const ContactUs = ({
                   <div className="w-full flex flex-col items-start gap-[3.63px]">
                     <div className="w-full flex flex-col items-start gap-[5.45px]">
                       <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
-                        {contactUs.Email}
+                        {contactUs.Email} *
                       </div>
                       <input
-                        className="w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid border-[#d8dadc] focus:outline-none"
+                        className={`w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid ${
+                          errors.email ? "border-red-500" : "border-[#d8dadc]"
+                        } focus:outline-none`}
                         id="email"
                         placeholder={contactUs.Email}
-                        type="text"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
                       />
+                      {errors.email && (
+                        <span className="text-red-500 text-sm mt-1">
+                          {errors.email}
+                        </span>
+                      )}
                     </div>
                   </div>
 
                   <div className="w-full flex flex-col items-start gap-[3.63px]">
                     <div className="w-full flex flex-col items-start gap-[5.45px]">
                       <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
-                        Message
+                        Message *
                       </div>
                       <textarea
-                        className="w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid border-[#d8dadc] focus:outline-none resize-vertical min-h-[120px]"
+                        className={`w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid ${
+                          errors.message ? "border-red-500" : "border-[#d8dadc]"
+                        } focus:outline-none resize-vertical min-h-[120px]`}
                         id="message"
                         placeholder={contactUs.Message}
                         rows={4}
+                        value={formData.message}
+                        onChange={handleInputChange}
                       />
+                      {errors.message && (
+                        <span className="text-red-500 text-sm mt-1">
+                          {errors.message}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div className="w-full">
-            <button className="w-full h-[43.58px]">
-              <div className="h-full flex items-center justify-center gap-[var(--3-spacing-spacing-md)] px-[12.71px] py-[9.08px] bg-[#072f6c] rounded-[var(--2-radius-radius-md)]">
-                <div className="flex items-center">
-                  <div className="w-[30.87px] rounded-[7.26px] shadow-shadows-shadow-xs" />
-                  <div className="font-medium text-[16px] font-relaxure-sub-heading-18 text-variable-collection-beige-brand">
-                    {contactUs.SendButton}
+              {submitStatus === "success" && (
+                <div className="text-[#072f6c] mt-2">
+                  Thank you for your message! We will get back to you soon.
+                </div>
+              )}
+              {submitStatus === "error" && (
+                <div className="text-red-600 mt-2">
+                  Sorry, we couldn't send your message. Please try again or
+                  contact us directly.
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full h-[43.58px]"
+              >
+                <div
+                  className={`h-full flex items-center justify-center gap-[var(--3-spacing-spacing-md)] px-[12.71px] py-[9.08px] ${
+                    isSubmitting ? "bg-gray-400" : "bg-[#072f6c]"
+                  } rounded-[var(--2-radius-radius-md)]`}
+                >
+                  <div className="flex items-center">
+                    <div className="w-[30.87px] rounded-[7.26px] shadow-shadows-shadow-xs" />
+                    <div className="font-medium text-[16px] font-relaxure-sub-heading-18 text-variable-collection-beige-brand">
+                      {isSubmitting ? "Sending..." : contactUs.SendButton}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </button>
+              </button>
+            </form>
           </div>
         </div>
       </div>
