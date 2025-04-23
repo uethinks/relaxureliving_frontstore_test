@@ -15,24 +15,24 @@ export const FooterDark = ({
       <div className="relative flex flex-col justify-between gap-2  w-full 2xl:w-[1512px] px-5 md:px-20 2xl:px-[193px]">
         {isHomepage ? <HomepageSampleKit /> : <BadWeatherSection />}
         <div className="flex flex-col items-center justify-center w-full gap-5">
-          <div className="flex flex-wrap h-11 items-center justify-between lg:gap-10 relative">
-            <Link href="/us/terms/warranty">
-              <div className=" [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+          <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:h-11 md:items-center md:justify-between md:lg:gap-10 relative">
+            <Link href="/us/terms/warranty" className="text-center">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 Warranty
               </div>
             </Link>
-            <Link href="/us/terms/refund-policy">
-              <div className=" [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+            <Link href="/us/terms/refund-policy" className="text-center">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 Refund policy
               </div>
             </Link>
-            <Link href="/us/terms/terms-of-service">
-              <div className=" [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+            <Link href="/us/terms/terms-of-service" className="text-center">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 Terms of service
               </div>
             </Link>
-            <Link href="/us/terms/privacy-policy">
-              <div className=" [font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+            <Link href="/us/terms/privacy-policy" className="text-center">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 Privacy policy
               </div>
             </Link>

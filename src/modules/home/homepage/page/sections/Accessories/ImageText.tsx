@@ -26,7 +26,7 @@ export const ImageText = ({
       }`}
     >
       <div
-        className={`mx-auto mb-10 !min-h-[159px] !rounded-[26.18px] !gap-[20.95px] !border-[1.31px] !border-solid !p-[13.09px] w-[90%] flex items-start relative bg-[#ffffff73] border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]`}
+        className={`mx-auto mb-10  !rounded-[26.18px] !gap-[20.95px] !border-[1.31px] !border-solid !p-[13.09px] w-[90%] flex items-start relative bg-[#ffffff73] border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]`}
       >
         <div
           style={{
@@ -36,7 +36,7 @@ export const ImageText = ({
         />
 
         <div
-          className={`flex flex-col items-start relative flex-1 grow !gap-[10.47px] !mb-[-29.23px]`}
+          className={`flex flex-col items-start relative flex-1 grow !gap-[10.47px] `}
         >
           <div
             className={`flex items-center relative self-stretch w-full flex-[0_0_auto] !gap-[13.09px]`}

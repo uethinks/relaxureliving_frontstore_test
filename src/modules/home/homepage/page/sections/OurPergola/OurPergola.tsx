@@ -100,7 +100,7 @@ export const OurPergola = ({
                       src={strapiUrl + scenario.LargeImage.formats.large.url}
                     />
                     <FloatImage
-                      className="!absolute left-[20px] lg:left-[66px] -bottom-[30px] animate-diagonal"
+                      className="!absolute left-[20px] -bottom-[10px] lg:left-[66px] lg:-bottom-[30px] animate-diagonal"
                       rectangle={
                         strapiUrl + scenario.SmallImage.formats.small.url
                       }
