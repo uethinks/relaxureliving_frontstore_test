@@ -202,7 +202,7 @@ export const AccesorriesPopupGlassdoor = ({
                         >
                           <button
                             className={`w-6 h-6 rounded-[20px] cursor-pointer border-2 border-solid ${
-                              color.value == "Dark Grey"
+                              color.value == "Dark Gray"
                                 ? "bg-[#7F7F7F]"
                                 : "bg-[#ffffff]"
                             }  ${

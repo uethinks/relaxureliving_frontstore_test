@@ -28,7 +28,6 @@ export const PergulaSizeSelector = ({
   const sortedColors = pergolaColors?.values?.sort((a, b) =>
     a.value.localeCompare(b.value)
   )
-  console.log("pergolaColors", pergolaColors, product.options)
   const defaultSize: StoreProductOptionValue = pergolaSizes?.values?.[0] || {
     id: "",
     value: "",
@@ -145,7 +144,7 @@ export const PergulaSizeSelector = ({
                   >
                     <div
                       className={`w-full h-full rounded-[20px]   ${
-                        color.value == "Dark Grey"
+                        color.value == "Dark Gray"
                           ? "bg-[#7F7F7F]"
                           : "bg-[#ffffff]"
                       } `}
