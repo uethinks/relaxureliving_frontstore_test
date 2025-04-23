@@ -14,6 +14,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
   const [isAnimating, setIsAnimating] = useState(false)
   const images = product.images?.map((image) => image)
   const THUMBNAILS_PER_PAGE = 6
+  const MOBILE_THUMBNAILS_PER_PAGE = 4
 
   // Preload all images
   useEffect(() => {
@@ -87,16 +88,24 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
 
   const visibleThumbnails = images?.slice(
     thumbnailStartIndex,
-    thumbnailStartIndex + THUMBNAILS_PER_PAGE
+    thumbnailStartIndex +
+      (window.innerWidth < 1024
+        ? MOBILE_THUMBNAILS_PER_PAGE
+        : THUMBNAILS_PER_PAGE)
   )
 
-  const translateX = -thumbnailStartIndex * (100 / THUMBNAILS_PER_PAGE)
+  const translateX =
+    -thumbnailStartIndex *
+    (100 /
+      (window.innerWidth < 1024
+        ? MOBILE_THUMBNAILS_PER_PAGE
+        : THUMBNAILS_PER_PAGE))
 
   return (
     <>
       <div className="flex flex-col justify-center items-center relative w-full rounded-[20px] overflow-hidden">
         <img
-          className="rounded-[20px] cursor-pointer aspect-[817/558] w-full"
+          className="rounded-[20px] cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full object-cover object-center"
           src={images?.[currentImageIndex]?.url}
           alt=""
           onClick={handleImageClick}
@@ -108,22 +117,34 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                 className="flex w-full gap-2.5 transition-transform duration-300 ease-in-out transform-gpu"
                 style={{
                   transform: `translateX(-${
-                    thumbnailStartIndex * (100 / THUMBNAILS_PER_PAGE)
+                    thumbnailStartIndex *
+                    (100 /
+                      (window.innerWidth < 1024
+                        ? MOBILE_THUMBNAILS_PER_PAGE
+                        : THUMBNAILS_PER_PAGE))
                   }%)`,
                 }}
               >
                 {images?.map((image, index) => (
                   <button
                     key={index}
-                    className={`flex-shrink-0 w-[calc((100%-12.5px)/6)] aspect-square rounded-2xl bg-cover bg-center cursor-pointer transition-all duration-300 ${
+                    className={`flex-shrink-0 w-[calc((100%-12.5px)/6)] lg:w-[calc((100%-12.5px)/6)] sm:w-[calc((100%-12.5px)/4)] aspect-square rounded-2xl bg-cover bg-center cursor-pointer transition-all duration-300 ${
                       index === currentImageIndex
                         ? "border-2 border-white-500 scale-105"
                         : "hover:scale-105"
                     }`}
                     style={{
                       backgroundImage: `url("${image.url}")`,
-                      minWidth: `calc((100% - 12.5px) / 6)`,
-                      maxWidth: `calc((100% - 12.5px) / 6)`,
+                      minWidth: `calc((100% - 12.5px) / ${
+                        window.innerWidth < 1024
+                          ? MOBILE_THUMBNAILS_PER_PAGE
+                          : THUMBNAILS_PER_PAGE
+                      })`,
+                      maxWidth: `calc((100% - 12.5px) / ${
+                        window.innerWidth < 1024
+                          ? MOBILE_THUMBNAILS_PER_PAGE
+                          : THUMBNAILS_PER_PAGE
+                      })`,
                     }}
                     onClick={() => setCurrentImageIndex(index)}
                   ></button>

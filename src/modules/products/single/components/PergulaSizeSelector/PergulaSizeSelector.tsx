@@ -117,6 +117,14 @@ export const PergulaSizeSelector = ({
             <img src="/img/morning-coffee.png" alt="Morning Coffee" />
             <p>Ideal for small patios</p>
           </div>
+          <div className="flex flex-row items-center gap-2.5 relative text-[#072F6C]">
+            <button
+              onClick={() => window.GorgiasChat.open()}
+              className="text-[#072F6C]"
+            >
+              I want a custom size
+            </button>
+          </div>
         </div>
       </div>
       <div

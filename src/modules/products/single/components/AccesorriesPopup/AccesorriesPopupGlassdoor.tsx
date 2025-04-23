@@ -28,6 +28,19 @@ export const AccesorriesPopupGlassdoor = ({
   selectedGlassdoorVariant: selectedProducts
   pergolaSize: PergolaSize
 }): JSX.Element => {
+  // Add useEffect to handle body scroll lock
+  useEffect(() => {
+    // Save the current body overflow style
+    const originalStyle = window.getComputedStyle(document.body).overflow
+    // Prevent background scroll
+    document.body.style.overflow = "hidden"
+
+    // Cleanup function to restore original scroll behavior
+    return () => {
+      document.body.style.overflow = originalStyle
+    }
+  }, []) // Empty dependency array means this runs once when component mounts
+
   const closePopupGlassdoor = () => {
     closePopup("Glass door")
   }
@@ -171,114 +184,152 @@ export const AccesorriesPopupGlassdoor = ({
     setSelectedSides(slides)
   }, [])
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black-50 z-50">
-      <div className="relative bg-white rounded-t-[20px] md:rounded-[20px] p-10 max-w-[1269px] max-h-[90vh]  overflow-auto">
-        <div className="flex flex-col lg:flex-row items-start gap-[30px]">
-          <div className="relative w-full lg:w-1/2 aspect-square">
-            <ImageSlider images={accessoryGlassdoor?.images || []} />
-          </div>
+    <div className="fixed inset-0 flex items-end md:items-center justify-center bg-black-50 z-50">
+      <div className="relative bg-white rounded-t-[20px] md:rounded-[20px] w-full md:w-auto md:max-w-[1269px] h-[95vh] md:h-auto md:max-h-[90vh] overflow-auto">
+        {/* Close button for mobile */}
+        <div className="sticky top-0 left-0 right-0 bg-white z-10 h-10 flex items-center px-4 md:hidden">
+          <button
+            onClick={closePopupGlassdoor}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
 
-          <div className="flex flex-col w-full lg:w-1/2 items-start gap-10">
-            <div className="flex flex-col items-start gap-5 self-stretch w-full">
-              <div className="flex flex-col items-start gap-2.5 py-2.5 self-stretch w-full">
-                <div className="flex items-center justify-between w-full">
-                  <h2 className="self-stretch font-merriweather text-[#343a40] text-[28px] font-bold leading-[39.2px]">
-                    {accessoryGlassdoor?.title}
-                  </h2>
-                  <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                    {totalPrice ? "$" + totalPrice : ""}
-                  </div>
-                </div>
-                <div className="relative h-12">
-                  <div className="flex h-12 gap-5">
-                    <div className="flex flex-row items-center gap-2.5 relative text-lg font-medium">
-                      <p>Color:</p>
-                    </div>
-                    <div className="inline-flex items-center gap-[18px] relative">
-                      {sortedColors?.map((color) => (
-                        <div
-                          key={color.id}
-                          className="flex flex-row items-center gap-2.5 relative"
-                        >
-                          <button
-                            className={`w-6 h-6 rounded-[20px] cursor-pointer border-2 border-solid ${
-                              color.value == "Dark Gray"
-                                ? "bg-[#7F7F7F]"
-                                : "bg-[#ffffff]"
-                            }  ${
-                              selectedColor === color ? "border-[#072F6C]" : ""
-                            }`}
-                            onClick={() => handleColorClick(color)}
-                          ></button>
-                          <div
-                            className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
-                          >
-                            {color.value}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="relative h-12 flex flex-row items-center gap-2.5">
-                  <div className="flex flex-row items-center gap-2.5 relative text-lg font-medium">
-                    <p>Pergola Size:</p>
-                  </div>
-                  <div className="flex px-2 h-12 bg-[#ffffff] rounded-[20px]">
-                    <div className="inline-flex items-center gap-[18px] relative">
-                      <button
-                        className={`inline-flex items-center justify-center gap-2.5 p-2 relative flex-[0_0_auto] cursor-pointer bg-[#dce7f8] rounded-[20px]`}
-                      >
-                        <div
-                          className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#69727a]`}
-                        >
-                          {shortSideLength}x{longSideLength}
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <GlassdoorSideSelector
-                  onSideSelect={handleSideSelect}
-                  selectedSides={selectedSides}
-                  shortSideLength={shortSideLength}
-                  longSideLength={longSideLength}
-                />
-
-                <p className="self-stretch text-[#68717a] leading-[22.4px] font-montserrat text-base font-medium mt-2">
-                  {accessoryGlassdoor?.description}
-                </p>
-              </div>
+        <div className="px-4 pb-[160px] md:pb-4 lg:p-10">
+          <div className="flex flex-col lg:flex-row items-start gap-5 lg:gap-[30px]">
+            <h2 className="lg:hidden self-stretch font-merriweather text-[#343a40] text-[22px] font-medium leading-[39.2px]">
+              {accessoryGlassdoor?.title}
+            </h2>
+            <div className="relative w-full lg:w-auto h-auto lg:h-[546px] aspect-[360/300] lg:aspect-[466/546]">
+              <ImageSlider images={accessoryGlassdoor?.images || []} />
             </div>
 
-            <div className="flex flex-col md:flex-row items-center justify-between self-stretch w-full">
+            <div className="flex flex-col w-full lg:w-1/2 items-start gap-10">
+              <div className="flex flex-col items-start gap-5 self-stretch w-full">
+                <div className="flex flex-col items-start lg:gap-2.5 py-2.5 self-stretch w-full">
+                  <div className="flex items-center justify-between w-full">
+                    <h2 className="hidden lg:block self-stretch font-merriweather text-[#343a40] text-[28px] font-bold leading-[39.2px]">
+                      {accessoryGlassdoor?.title}
+                    </h2>
+                    <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
+                      {totalPrice ? "$" + totalPrice : ""}
+                    </div>
+                  </div>
+                  <div className="relative h-12">
+                    <div className="flex h-12 gap-5">
+                      <div className="flex flex-row items-center gap-2.5 relative text-[16px] lg:text-lg font-medium">
+                        <p>Color:</p>
+                      </div>
+                      <div className="inline-flex items-center gap-[18px] relative">
+                        {sortedColors?.map((color) => (
+                          <div
+                            key={color.id}
+                            className="flex flex-row items-center gap-2.5 relative"
+                          >
+                            <button
+                              className={`w-6 h-6 rounded-[20px] cursor-pointer border-2 border-solid ${
+                                !color.value?.toLowerCase().includes("white")
+                                  ? "bg-[#7F7F7F]"
+                                  : "bg-[#ffffff]"
+                              }  ${
+                                selectedColor === color
+                                  ? "border-[#072F6C]"
+                                  : ""
+                              }`}
+                              onClick={() => handleColorClick(color)}
+                            ></button>
+                            <div
+                              className={`hidden lg:block relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
+                            >
+                              {color.value}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <GlassdoorSideSelector
+                    onSideSelect={handleSideSelect}
+                    selectedSides={selectedSides}
+                    shortSideLength={shortSideLength}
+                    longSideLength={longSideLength}
+                  />
+                  <p className="self-stretch text-[#68717a] leading-[22.4px] font-montserrat text-[16px] lg:text-base font-medium mt-2">
+                    {accessoryGlassdoor?.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Desktop buttons */}
+              <div className="hidden md:flex flex-col md:flex-row items-center justify-between self-stretch w-full">
+                <a
+                  href="/upload_files/Frameless_sliding_glass_door_technical_sheet.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2"
+                >
+                  <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
+                  <span className="font-medium text-[#69727A] text-[14px]">
+                    Download specs
+                  </span>
+                </a>
+                <div className="flex flex-row items-center gap-2.5 relative">
+                  <button
+                    onClick={closePopupGlassdoor}
+                    className="border text-gray-500 hover:text-gray-700 border-gray-500 rounded-[10px] px-4 py-2"
+                  >
+                    Close
+                  </button>
+                  <AddAccessories
+                    disabled={selectedGlassdoor.length === 0}
+                    buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold"
+                    className="!w-[235px]"
+                    property1="primary-button-l"
+                    text="Add accesory"
+                    addAccessory={addAccessoryGlassdoorHandler}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile bottom buttons */}
+          <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white px-4 pb-4 border-t">
+            <div className="flex flex-col gap-0">
               <a
                 href="/upload_files/Frameless_sliding_glass_door_technical_sheet.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2"
               >
                 <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
                 <span className="font-medium text-[#69727A] text-[14px]">
                   Download specs
                 </span>
               </a>
-              <div className="flex flex-row items-center gap-2.5 relative">
-                <button
-                  onClick={closePopupGlassdoor}
-                  className=" border text-gray-500 hover:text-gray-700 border-gray-500 rounded-[10px] px-4 py-2"
-                >
-                  Close
-                </button>
-                <AddAccessories
-                  disabled={selectedGlassdoor.length === 0}
-                  buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold"
-                  className="!w-[235px]"
-                  property1="primary-button-l"
-                  text="Add accesory"
-                  addAccessory={addAccessoryGlassdoorHandler}
-                />
-              </div>
+              <AddAccessories
+                disabled={selectedGlassdoor.length === 0}
+                buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold w-full text-center"
+                className="!w-full"
+                property1="primary-button-l"
+                text="Add accesory"
+                addAccessory={addAccessoryGlassdoorHandler}
+              />
             </div>
           </div>
         </div>

@@ -95,14 +95,14 @@ export const AssemblyContainer = ({
           <p className="text-[#69727a] text-[14px] lg:text-[18px] font-relaxure-sub-heading-18 font-[500]">
             Simple, smart, and stress-free! Our pre-assembled modular sections
             connect like building blocks. No extra trips, no missing parts.
-            Everything’s included. And for reinstallation, your Corsica pergola
+            Everything's included. And for reinstallation, your Corsica pergola
             is strong and solid enough to ensure it is just as easy.
           </p>
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-between w-full gap-6">
-        {/* Navigation Buttons - Left on desktop, bottom on mobile */}
-        <div className="w-full md:w-[48%] grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6 order-2 md:order-1">
+        {/* Navigation Buttons - Always on top */}
+        <div className="w-full grid grid-cols-2 gap-3 md:gap-6 order-1">
           {videoSections.map((section) => (
             <button
               key={section.id}
@@ -120,23 +120,23 @@ export const AssemblyContainer = ({
                     : "bg-[#f8f9fa] text-[#072f6c]"
                 }`}
               >
-                <span className="text-lg md:text-xl font-medium">
+                <span className="text-[18px] md:text-xl font-medium font-montserrat">
                   {String(section.id).padStart(2, "0")}
                 </span>
               </div>
 
-              <h3 className="text-xl md:text-2xl font-bold mb-1 md:mb-2">
+              <h3 className="text-[18px] md:text-2xl font-montserrat font-bold mb-1 md:mb-2">
                 {section.title}
               </h3>
-              <p className="text-center text-xs md:text-sm opacity-90 line-clamp-2">
+              <p className="text-center text-[14px] md:text-sm opacity-90 line-clamp-2">
                 {section.description}
               </p>
             </button>
           ))}
         </div>
 
-        {/* Video Section - Right on desktop, top on mobile */}
-        <div className="w-full md:w-[48%] rounded-2xl overflow-hidden order-1 md:order-2">
+        {/* Video Section - Always below */}
+        <div className="w-full rounded-2xl overflow-hidden order-2">
           {actualVideoId ? (
             <YouTube
               videoId={actualVideoId}
@@ -147,8 +147,8 @@ export const AssemblyContainer = ({
                   autoplay: 0,
                   controls: 1,
                   modestbranding: 1,
-                  rel: 0, // 不显示相关视频
-                  showinfo: 0, // 不显示视频信息
+                  rel: 0,
+                  showinfo: 0,
                 },
               }}
               onReady={onReady}
