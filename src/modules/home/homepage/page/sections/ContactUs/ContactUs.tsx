@@ -126,9 +126,9 @@ export const ContactUs = ({
       id="contact"
       className="flex flex-col lg:flex-row w-full justify-center items-center gap-4 lg:gap-[87px]"
     >
-      <div className="flex relative justify-center w-full lg:w-3/5 h-[490px] lg:h-[947px] items-center">
+      <div className="flex relative justify-center w-full lg:w-auto h-[490px] lg:h-[947px] items-center">
         <img
-          className="h-[490px] lg:h-[947px] w-full object-cover rounded-[20px]"
+          className="h-[490px] lg:h-[947px] aspect-[695/947] w-full object-cover rounded-[20px]"
           alt="Unsplash"
           src={`${strapiUrl}${contactUs.Image?.url}`}
         />
@@ -140,7 +140,7 @@ export const ContactUs = ({
         </div>
       </div>
 
-      <div className="flex w-full lg:w-2/5 items-center">
+      <div className="flex w-full lg:w-auto lg:h-[964px] aspect-[528/964] items-center">
         <div className="flex flex-col w-full px-4 py-10 items-center gap-[30px] bg-[#f8f8f8] rounded-[18.16px] border border-solid border-[#ffffff6e] backdrop-blur-[32.4px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(32.4px)_brightness(100%)]">
           <div className="relative w-[102px] h-[82.21px]">
             <div className="relative w-[253px] h-[232px] -top-[61px] -left-[86px]">
@@ -286,11 +286,8 @@ export const ContactUs = ({
                     isSubmitting ? "bg-gray-400" : "bg-[#072f6c]"
                   } rounded-[var(--2-radius-radius-md)]`}
                 >
-                  <div className="flex items-center">
-                    <div className="w-[30.87px] rounded-[7.26px] shadow-shadows-shadow-xs" />
-                    <div className="font-medium text-[16px] font-relaxure-sub-heading-18 text-variable-collection-beige-brand">
-                      {isSubmitting ? "Sending..." : contactUs.SendButton}
-                    </div>
+                  <div className="font-medium text-[16px] font-relaxure-sub-heading-18 text-variable-collection-beige-brand">
+                    {isSubmitting ? "Sending..." : contactUs.SendButton}
                   </div>
                 </div>
               </button>
