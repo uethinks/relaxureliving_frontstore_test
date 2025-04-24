@@ -4,7 +4,12 @@ import { FloatImage } from "./FloatImage"
 import { PropertyDefaultWrapper } from "./PropertyDefaultWrapper"
 import Link from "next/link"
 import { OurPergolaProps, UsageScenario } from "types/global"
-type pergolaScenario = { show: boolean } & UsageScenario
+type pergolaScenario = {
+  show: boolean
+  subtitle: string
+  description: string
+  button: string
+} & UsageScenario
 export const OurPergola = ({
   pergola,
 }: {
@@ -16,6 +21,9 @@ export const OurPergola = ({
     const scenarios = pergola?.UsageScenarios.map((scenario, index) => ({
       ...scenario,
       show: index === 0,
+      subtitle: scenario.subtitle || pergola?.SubTitle || "",
+      description: scenario.description || pergola?.Description || "",
+      button: scenario.button || "Learn More About Value",
     }))
     setUsageScenarios(scenarios || [])
   }, [pergola])
@@ -61,13 +69,15 @@ export const OurPergola = ({
             <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <div className="flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full">
                 <p className="text-center lg:text-left relative flex-1 mt-[-6.00px] mb-[-4.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
-                  {pergola?.SubTitle}
+                  {usageScenarios.find((scenario) => scenario.show)?.subtitle ||
+                    pergola?.SubTitle}
                 </p>
               </div>
 
               <div className="flex w-full items-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
                 <p className="text-center lg:text-left relative flex-1 mt-[-1.00px] font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#68717a] text-[16px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
-                  {pergola?.Description}
+                  {usageScenarios.find((scenario) => scenario.show)
+                    ?.description || pergola?.Description}
                 </p>
               </div>
             </div>
@@ -76,7 +86,10 @@ export const OurPergola = ({
               <Button
                 className="!flex-[0_0_auto] !inline-flex !w-[unset]"
                 property1="primary-button-l"
-                text="Learn More About Value"
+                text={
+                  usageScenarios.find((scenario) => scenario.show)?.button ||
+                  "Learn More About Value"
+                }
               />
             </Link>
           </div>

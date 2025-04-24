@@ -51,6 +51,9 @@ export type UsageScenario = {
   ScenarioName: string;
   LargeImage: Image;
   SmallImage: Image;
+  subtitle?: string;
+  description?: string;
+  button?: string;
 }
 export type OurPergolaProps = {
   Title: string;
