@@ -16,24 +16,24 @@ export const FooterDark = ({
         {isHomepage ? <HomepageSampleKit /> : <BadWeatherSection />}
         <div className="flex flex-col items-center justify-center w-full gap-5">
           <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:h-11 md:items-center md:justify-between md:lg:gap-10 relative">
-            <Link href="/us/terms/warranty" className="text-center">
-              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
-                Warranty
-              </div>
-            </Link>
-            <Link href="/us/terms/refund-policy" className="text-center">
-              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
-                Refund policy
-              </div>
-            </Link>
             <Link href="/us/terms/terms-of-service" className="text-center">
-              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] lg:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 Terms of service
               </div>
             </Link>
             <Link href="/us/terms/privacy-policy" className="text-center">
-              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] lg:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 Privacy policy
+              </div>
+            </Link>
+            <Link href="/us/terms/warranty" className="text-center">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] lg:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                Warranty
+              </div>
+            </Link>
+            <Link href="/us/terms/refund-policy" className="text-center">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] lg:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                Refund policy
               </div>
             </Link>
           </div>
