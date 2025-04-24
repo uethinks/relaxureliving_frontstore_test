@@ -43,9 +43,9 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
               key={category.id}
               className="flex flex-col items-center w-full rounded-[20px] overflow-hidden px-4 gap-6"
             >
-              <div className="flex flex-row items-start gap-2.5 w-full">
+              <div className="flex flex-row items-start gap-2.5 w-full pe-5">
                 <div
-                  className="flex-1 font-semibold text-[#343A40] text-lg leading-[21.6px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0] cursor-pointer"
+                  className="flex-1 font-semibold text-[#343A40] text-lg leading-[21.6px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0] cursor-pointer flex items-center justify-between"
                   onClick={() =>
                     setOpenQuestion((prev) => ({
                       level1: prev.level1 === indexLevel1 ? -1 : indexLevel1,
@@ -54,6 +54,14 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                   }
                 >
                   {category.Title}
+                  <IconChevronDown4
+                    className={`!relative !w-4 !h-4 transition-transform duration-200 ${
+                      openQuestion.level1 === indexLevel1
+                        ? "rotate-0"
+                        : "-rotate-90"
+                    }`}
+                    color="#072F6C"
+                  />
                 </div>
               </div>
               <div className="w-full transition-all duration-300 ease-in-out">
@@ -101,8 +109,8 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                             <IconChevronDown4
                               className={`!relative !w-4 !h-4 transition-transform duration-200 ${
                                 openQuestion.level2 === indexLevel2
-                                  ? "rotate-180"
-                                  : ""
+                                  ? "rotate-0"
+                                  : "-rotate-90"
                               }`}
                               color="#072F6C"
                             />
