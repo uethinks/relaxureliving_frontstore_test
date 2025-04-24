@@ -36,7 +36,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story Section */}
-      <section className="max-w-7xl mx-auto px-4 py-8 lg:py-24">
+      <section className="max-w-7xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8">
           <h2 className="text-[18px] lg:text-[28px] font-[700] mb-12 md:col-span-1 font-['Merriweather']">
             Our Story: From Humble Beginnings to Outdoor Innovation
@@ -104,15 +104,17 @@ export default function AboutPage() {
       </section>
 
       {/* Quote Section */}
-      <section className="bg-gray-50 py-8 lg:py-24 w-full">
+      <section className="w-full">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="relative rounded-2xl overflow-hidden flex flex-col lg:block">
+          <div className="relative rounded-2xl flex flex-col lg:block p-[2px]">
             <img
               src="/img/about-us.webp"
               alt="Founder quote"
-              className="w-full lg:rounded-[20px] lg:max-w-[1069px] lg:max-h-[648px] object-cover"
+              className="w-full rounded-t-[20px] lg:rounded-[20px] lg:max-w-[1069px] lg:max-h-[648px] object-cover
+              shadow-[15px_25px_40px_rgba(0,0,0,0.20)] 
+              shadow-[12px_20px_30px_rgba(0,0,0,0.15)]"
             />
-            <div className="lg:absolute lg:top-1/2 lg:right-0 lg:transform lg:-translate-y-1/2 bg-[#072F6C] text-white py-8 px-6 lg:px-12 lg:max-w-[600px]">
+            <div className="lg:absolute rounded-b-[20px] lg:rounded-b-none lg:top-1/2 lg:right-0 lg:transform lg:-translate-y-1/2 bg-[#072F6C] text-white py-8 px-6 lg:px-12 lg:max-w-[600px]">
               <p className="text-[18px] lg:text-[28px] font-[700] leading-relaxed font-['Montserrat']">
                 "Why should creating a beautiful outdoor space require either a
                 small fortune or constant compromise?"
@@ -123,7 +125,7 @@ export default function AboutPage() {
       </section>
 
       {/* Features Section */}
-      <section className="max-w-7xl mx-auto px-4 py-8 lg:py-24">
+      <section className="max-w-7xl mx-auto px-4 py-8 lg:mt-[140px]">
         <div className="grid lg:grid-cols-12 gap-12">
           {/* Left Column - Title and Description */}
           <div className="lg:col-span-4 flex flex-col justify-center space-y-6">
@@ -148,17 +150,19 @@ export default function AboutPage() {
           </div>
 
           {/* Right Column - Features Grid */}
-          <div className="lg:col-span-8 grid md:grid-cols-2 gap-8">
+          <div className="lg:col-span-8 grid md:grid-cols-2 gap-24">
             {/* Feature 1 */}
-            <div className="bg-white rounded-xl p-8 space-y-4">
-              <img
-                src="/img/demand-better.png"
-                alt="Demand Better"
-                width={160}
-                height={160}
-                className="mx-auto"
-              />
-              <h3 className="text-[18px] lg:text-[28px] font-[700] font-['Merriweather']">
+            <div className="bg-white rounded-xl p-8 space-y-4 border border-[#343A40] relative pt-14">
+              <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-1">
+                <img
+                  src="/img/demand-better.png"
+                  alt="Demand Better"
+                  width={160}
+                  height={160}
+                  className="mx-auto"
+                />
+              </div>
+              <h3 className="text-[18px] lg:text-[22px] font-[700] font-['Merriweather'] text-center">
                 Demand Better
               </h3>
               <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
@@ -169,15 +173,17 @@ export default function AboutPage() {
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-xl p-8 space-y-4">
-              <img
-                src="/img/accessable.png"
-                alt="Accessible Excellence"
-                width={160}
-                height={160}
-                className="mx-auto"
-              />
-              <h3 className="text-[18px] lg:text-[28px] font-[700] font-['Merriweather']">
+            <div className="bg-white rounded-xl p-8 space-y-4 border border-[#343A40] relative pt-14">
+              <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-1">
+                <img
+                  src="/img/accessable.png"
+                  alt="Accessible Excellence"
+                  width={160}
+                  height={160}
+                  className="mx-auto"
+                />
+              </div>
+              <h3 className="text-[18px] lg:text-[22px] font-[700] font-['Merriweather'] text-center">
                 Accessible Excellence
               </h3>
               <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
@@ -188,15 +194,17 @@ export default function AboutPage() {
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-xl p-8 space-y-4">
-              <img
-                src="/img/quantity.png"
-                alt="Uncompromising Quality"
-                width={160}
-                height={160}
-                className="mx-auto"
-              />
-              <h3 className="text-[18px] lg:text-[28px] font-[700] font-['Merriweather']">
+            <div className="bg-white rounded-xl p-8 space-y-4 border border-[#343A40] relative pt-14">
+              <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-1">
+                <img
+                  src="/img/quantity.png"
+                  alt="Uncompromising Quality"
+                  width={160}
+                  height={160}
+                  className="mx-auto"
+                />
+              </div>
+              <h3 className="text-[18px] lg:text-[22px] font-[700] font-['Merriweather'] text-center">
                 Uncompromising Quality
               </h3>
               <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
@@ -207,15 +215,17 @@ export default function AboutPage() {
             </div>
 
             {/* Feature 4 */}
-            <div className="bg-white rounded-xl p-8 space-y-4">
-              <img
-                src="/img/promise.png"
-                alt="Our Promise to You"
-                width={160}
-                height={160}
-                className="mx-auto"
-              />
-              <h3 className="text-[18px] lg:text-[28px] font-[700] font-['Merriweather']">
+            <div className="bg-white rounded-xl p-8 space-y-4 border border-[#343A40] relative pt-14">
+              <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-1">
+                <img
+                  src="/img/promise.png"
+                  alt="Our Promise to You"
+                  width={160}
+                  height={160}
+                  className="mx-auto"
+                />
+              </div>
+              <h3 className="text-[18px] lg:text-[22px] font-[700] font-['Merriweather'] text-center">
                 Our Promise to You
               </h3>
               <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
