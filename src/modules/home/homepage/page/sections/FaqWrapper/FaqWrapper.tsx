@@ -25,7 +25,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
   const [openQuestion, setOpenQuestion] = useState<{
     level1: number
     level2: number
-  }>({ level1: 0, level2: 0 })
+  }>({ level1: -1, level2: -1 })
   return faq?.homepageFAQ.length > 0 ? (
     <div className="flex flex-col w-full items-center justify-center gap-2.5 relative -mx-20 bg-[#f3f3f3] mt-10 lg:mt-[120px]">
       <div className="flex flex-col w-full items-center gap-10 py-10 relative flex-[0_0_auto]">
@@ -47,7 +47,10 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                 <div
                   className="flex-1 font-semibold text-[#343A40] text-lg leading-[21.6px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0] cursor-pointer"
                   onClick={() =>
-                    setOpenQuestion({ level1: indexLevel1, level2: 0 })
+                    setOpenQuestion((prev) => ({
+                      level1: prev.level1 === indexLevel1 ? -1 : indexLevel1,
+                      level2: 0,
+                    }))
                   }
                 >
                   {category.Title}
@@ -69,10 +72,13 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                           <div
                             className="flex items-start relative flex-1 grow cursor-pointer"
                             onClick={() =>
-                              setOpenQuestion({
+                              setOpenQuestion((prev) => ({
                                 level1: indexLevel1,
-                                level2: indexLevel2,
-                              })
+                                level2:
+                                  prev.level2 === indexLevel2
+                                    ? -1
+                                    : indexLevel2,
+                              }))
                             }
                           >
                             <div className="flex-1 font-semibold text-[#595c5f] text-base leading-[21.6px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0]">
@@ -82,10 +88,13 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
 
                           <button
                             onClick={() =>
-                              setOpenQuestion({
+                              setOpenQuestion((prev) => ({
                                 level1: indexLevel1,
-                                level2: indexLevel2,
-                              })
+                                level2:
+                                  prev.level2 === indexLevel2
+                                    ? -1
+                                    : indexLevel2,
+                              }))
                             }
                             className="inline-flex items-start gap-2.5 relative flex-[0_0_auto]"
                           >
