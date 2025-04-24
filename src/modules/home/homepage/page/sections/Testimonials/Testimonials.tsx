@@ -72,7 +72,6 @@ const TestimonialBubble: React.FC<TestimonialBubbleProps> = ({
         <p className="text-base mb-4">{message}</p>
         <div className="space-y-1">
           <h4 className="font-medium">{name}</h4>
-          <p className="text-sm text-gray-300">{title}</p>
         </div>
       </div>
       {position === "bottom" && (
@@ -109,7 +108,7 @@ export const Testimonials = (): JSX.Element => {
       image: "/img/ellipse-79-4.svg",
       message:
         "Ordered in mid December and came quickly in January. You gotta wonder how they managed logistics. Lots of sturdy packaging. I am a doctor and hate wasting hours with mislabeled part. Thank god all their parts come with matching labels to help my contractor. Every part has sticky and plastic on it to prevent scratching. I will have more reviews later. Hopefully this is helping. No regrets so far.",
-      name: "Sarah M.",
+      name: "Lucas Martinez",
       title: "Marketing Director",
       position: "top",
       containerClass: "w-[266px] h-[266px] left-[13px] top-[356px] absolute",
@@ -122,7 +121,7 @@ export const Testimonials = (): JSX.Element => {
       image: "/img/ellipse-79-5.svg",
       message:
         "Okay, buckle up. Their warranty is like the superhero of all warranties—15 years of total protection!",
-      name: "James K.",
+      name: "Emma Thompson",
       title: "Creative Designer",
       position: "top",
       containerClass: "w-[266px] h-[266px] left-[839px] top-[427px] absolute",
@@ -160,7 +159,7 @@ export const Testimonials = (): JSX.Element => {
       message: `The thick posts make it feel like a permanent, solid structure, not some flimsy add-on.
 Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt look like a heavyweight champion. A strong gust of wind might just send them to early retirement! 😆🎭💨
 `,
-      name: "Michael P.",
+      name: "Sophia Anderson",
       title: "Tech Lead",
       position: "top",
       containerClass: "w-[266px] h-[266px] left-[364px] top-[470px] absolute",
@@ -173,7 +172,7 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
       image: "/img/ellipse-80-7.svg",
       message:
         "I love that I can keep my lights and on without freaking out about the weather….if you think about how the electric wires and directly in contact with water, there is no way you can be rest assured.. It's such a relief not having to unplug everything when it starts drizzling!!",
-      name: "Lisa T.",
+      name: "James Wilson",
       title: "Product Owner",
       position: "bottom",
       containerClass: "w-[266px] h-[266px] left-[672px] top-[16px] absolute",
