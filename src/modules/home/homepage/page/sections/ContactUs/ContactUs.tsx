@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { submitContactForm } from "@lib/cms/strapiCmsApi"
+import { Image } from "types/global"
 
 interface ContactUsProps {
   id: number
@@ -7,9 +8,7 @@ interface ContactUsProps {
   Email: string
   FormDescription: string
   FullName: string
-  Image: {
-    url: string
-  } | null
+  Image: Image | null
   Message: string
   PhoneNumber: string
   SendButton: string
@@ -121,6 +120,8 @@ export const ContactUs = ({
     }
   }
   const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+  const imageUrl = contactUs.Image?.url
+
   return (
     <div
       id="contact"
@@ -130,7 +131,7 @@ export const ContactUs = ({
         <img
           className="h-[490px] lg:h-[947px] aspect-[695/947] w-full object-cover rounded-[20px]"
           alt="Unsplash"
-          src={`${strapiUrl}${contactUs.Image?.url}`}
+          src={imageUrl ? `${strapiUrl}${imageUrl}` : ""}
         />
 
         <div className="absolute bottom-10 left-0 w-[80%] lg:w-full px-4 py-2.5">

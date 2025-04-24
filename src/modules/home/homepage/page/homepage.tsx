@@ -14,6 +14,7 @@ import {
   features,
   Accessories as AccessoriesType,
   HomepageBlog,
+  Image,
 } from "types/global"
 import { SWRConfig } from "swr"
 
@@ -42,13 +43,7 @@ interface ContactUsProps {
   Email: string
   FormDescription: string
   FullName: string
-  Image: {
-    data: {
-      attributes: {
-        url: string
-      }
-    }
-  } | null
+  Image: Image | null
   Message: string
   PhoneNumber: string
   SendButton: string

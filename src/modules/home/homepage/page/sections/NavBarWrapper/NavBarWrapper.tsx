@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Component } from "../../../../components/Component"
 import Link from "next/link"
 import { useCart } from "@lib/context/cartContext"
@@ -15,6 +15,46 @@ export const NavBarWrapper = ({
   const { cart } = useCart()
 
   const hasItemsInCart = cart?.items && cart.items.length > 0
+
+  useEffect(() => {
+    if (!isHomePage) return
+
+    const handleHashScroll = () => {
+      const hash = window.location.hash
+      if (hash) {
+        const section = hash.substring(1)
+        // 使用 MutationObserver 监听 DOM 变化
+        const observer = new MutationObserver((mutations, obs) => {
+          const element = document.getElementById(section)
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" })
+            obs.disconnect() // 找到元素后停止观察
+          }
+        })
+
+        // 开始观察整个文档的变化
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+        })
+
+        // 设置超时，如果5秒后还没找到元素就停止观察
+        setTimeout(() => {
+          observer.disconnect()
+        }, 5000)
+      }
+    }
+
+    // 初始滚动
+    handleHashScroll()
+
+    // 监听 hash 变化
+    window.addEventListener("hashchange", handleHashScroll)
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashScroll)
+    }
+  }, [isHomePage])
 
   const handleScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
