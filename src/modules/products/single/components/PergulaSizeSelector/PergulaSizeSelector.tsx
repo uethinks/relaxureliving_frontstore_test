@@ -22,6 +22,20 @@ export const PergulaSizeSelector = ({
   const pergolaSizes: StoreProductOption | undefined = product.options?.find(
     (option) => option.title === "Size"
   )
+  const sortedSizes = pergolaSizes?.values?.sort((a, b) => {
+    // Extract numbers from size strings (e.g., "10\"x10\"" -> [10, 10])
+    const getDimensions = (size: string) => {
+      const matches = size.match(/(\d+)["']x(\d+)["']/)
+      return matches ? [parseInt(matches[1]), parseInt(matches[2])] : [0, 0]
+    }
+
+    const [aWidth, aLength] = getDimensions(a.value)
+    const [bWidth, bLength] = getDimensions(b.value)
+
+    // First compare by width, then by length
+    if (aWidth !== bWidth) return aWidth - bWidth
+    return aLength - bLength
+  })
   const pergolaColors: StoreProductOption | undefined = product.options?.find(
     (option) => option.title === "Color"
   )
@@ -82,7 +96,7 @@ export const PergulaSizeSelector = ({
         <div className="relative h-12 w-full 2xl:w-auto">
           <div className="flex p-1 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
             <div className="inline-flex items-center gap-1 md:gap-[18px] relative">
-              {pergolaSizes?.values?.map((size) => (
+              {sortedSizes?.map((size) => (
                 <button
                   key={size.id}
                   className={`inline-flex items-center justify-center gap-2.5 p-1 relative flex-[0_0_auto] cursor-pointer ${
