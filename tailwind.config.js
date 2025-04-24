@@ -55,6 +55,8 @@ module.exports = {
         "black-50": "rgba(0, 0, 0, 0.5)",
       },
       fontFamily: {
+        merriweather: ["Merriweather", "serif"],
+        montserrat: ["Montserrat", "sans-serif"],
         heading: "var(--heading-font-family)",
         "heading-2": "var(--heading-2-font-family)",
         "heading-3": "var(--heading-3-font-family)",

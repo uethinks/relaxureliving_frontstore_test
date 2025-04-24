@@ -232,7 +232,7 @@ export const AccesorriesPopupGlassdoor = ({
                   </div>
                   <div className="relative h-12">
                     <div className="flex h-12 gap-5">
-                      <div className="flex flex-row items-center gap-2.5 relative text-[16px] lg:text-lg font-medium">
+                      <div className="flex flex-row text-[#343A40] items-center gap-2.5 relative text-[16px] lg:text-[18px] [font-family:'Montserrat',sans-serif] font-medium">
                         <p>Color:</p>
                       </div>
                       <div className="inline-flex items-center gap-[18px] relative">
@@ -284,7 +284,7 @@ export const AccesorriesPopupGlassdoor = ({
                   className="inline-flex items-center gap-2 px-4 py-2"
                 >
                   <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
-                  <span className="font-medium text-[#69727A] text-[14px]">
+                  <span className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
                     Download specs
                   </span>
                 </a>
@@ -318,7 +318,7 @@ export const AccesorriesPopupGlassdoor = ({
                 className="inline-flex items-center justify-center gap-2 px-4 py-2"
               >
                 <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
-                <span className="font-medium text-[#69727A] text-[14px]">
+                <span className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
                   Download specs
                 </span>
               </a>

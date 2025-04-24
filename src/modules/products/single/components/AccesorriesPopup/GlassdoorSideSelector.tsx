@@ -44,7 +44,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
   if (isSquare) {
     return (
       <div className="flex flex-col items-start w-full max-w-[400px]">
-        <h3 className="text-[16px] lg:text-lg font-medium mb-2 lg:mb-6">
+        <h3 className="text-[#343A40] text-[16px] lg:text-lg [font-family:'Montserrat',sans-serif] font-medium mb-2 lg:mb-6">
           How many glass doors do you want?
         </h3>
         <div className="flex items-center gap-2">
@@ -68,7 +68,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
 
   return (
     <div className="flex flex-col items-start w-full max-w-[400px]">
-      <h3 className="text-[16px] lg:text-lg font-medium mb-2 lg:mb-6">
+      <h3 className="text-[#343A40] text-[16px] lg:text-lg [font-family:'Montserrat',sans-serif] font-medium mb-2 lg:mb-6">
         Which side do you want the glass doors?
       </h3>
       <div className="relative flex justify-center items-center gap-2">
@@ -80,7 +80,9 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
               : "border-[#E9E9E9]"
           }`}
         >
-          <div className="text-[14px] font-medium">Short</div>
+          <div className="text-[14px] font-medium [font-family:'Montserrat',sans-serif]">
+            Short
+          </div>
           <div className="text-[14px] font-medium text-[#69727A]">
             {shortSideLength}
           </div>
@@ -95,7 +97,9 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
                 : "border-[#E9E9E9]"
             }`}
           >
-            <div className="text-[14px] font-medium">Long</div>
+            <div className="text-[14px] font-medium [font-family:'Montserrat',sans-serif]">
+              Long
+            </div>
             <div className="text-[14px] font-medium text-[#69727A]">
               {longSideLength}
             </div>
@@ -109,7 +113,9 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
                 : "border-[#E9E9E9]"
             }`}
           >
-            <div className="text-[14px] font-medium">Long</div>
+            <div className="text-[14px] font-medium [font-family:'Montserrat',sans-serif]">
+              Long
+            </div>
             <div className="text-[14px] font-medium text-[#69727A]">
               {longSideLength}
             </div>
@@ -124,7 +130,9 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
               : "border-[#E9E9E9]"
           }`}
         >
-          <div className="text-[14px] font-medium">Short</div>
+          <div className="text-[14px] font-medium [font-family:'Montserrat',sans-serif]">
+            Short
+          </div>
           <div className="text-[14px] font-medium text-[#69727A]">
             {shortSideLength}
           </div>

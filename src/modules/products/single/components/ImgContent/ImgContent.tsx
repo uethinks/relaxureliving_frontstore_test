@@ -12,19 +12,53 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
+  const [loadedThumbnails, setLoadedThumbnails] = useState<Set<number>>(
+    new Set()
+  )
   const images = product.images?.map((image) => image)
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
-  console.log("images", images)
-  // Preload all images
+
+  // Preload images with loading state
   useEffect(() => {
     if (images) {
-      images.forEach((image) => {
+      images.forEach((image, index) => {
         const img = new Image()
         img.src = image.url
+        img.onload = () => {
+          setLoadedImages((prev) => new Set([...Array.from(prev), index]))
+        }
       })
     }
   }, [images])
+
+  // Preload visible thumbnails
+  useEffect(() => {
+    if (!images) return
+
+    const thumbnailsPerPage =
+      window.innerWidth < 1024
+        ? MOBILE_THUMBNAILS_PER_PAGE
+        : THUMBNAILS_PER_PAGE
+    const visibleThumbnails = images.slice(
+      thumbnailStartIndex,
+      thumbnailStartIndex + thumbnailsPerPage
+    )
+
+    visibleThumbnails.forEach((_, index) => {
+      const actualIndex = thumbnailStartIndex + index
+      if (!loadedThumbnails.has(actualIndex)) {
+        const img = new Image()
+        img.src = images[actualIndex].url
+        img.onload = () => {
+          setLoadedThumbnails(
+            (prev) => new Set([...Array.from(prev), actualIndex])
+          )
+        }
+      }
+    })
+  }, [images, thumbnailStartIndex])
 
   const handleImageClick = () => {
     setIsModalOpen(true)
@@ -98,22 +132,28 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     thumbnailStartIndex + thumbnailsPerPage
   )
 
-  const translateX =
-    -thumbnailStartIndex *
-    (100 /
-      (window.innerWidth < 1024
-        ? MOBILE_THUMBNAILS_PER_PAGE
-        : THUMBNAILS_PER_PAGE))
-
   return (
     <>
       <div className="flex flex-col justify-center items-center relative w-full rounded-[20px] overflow-hidden">
-        <img
-          className="rounded-[20px] cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full object-cover object-center"
-          src={images?.[currentImageIndex]?.url}
-          alt=""
-          onClick={handleImageClick}
-        />
+        {/* Main Image with Loading State */}
+        <div className="relative w-full">
+          {!loadedImages.has(currentImageIndex) && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-[20px]">
+              <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
+          <img
+            className={`rounded-[20px] cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full object-cover object-center transition-opacity duration-300 ${
+              loadedImages.has(currentImageIndex) ? "opacity-100" : "opacity-0"
+            }`}
+            src={images?.[currentImageIndex]?.url}
+            alt=""
+            onClick={handleImageClick}
+            loading="lazy"
+          />
+        </div>
+
+        {/* Thumbnails */}
         <div className="flex py-2 justify-center items-center px-1 w-[98%] bg-[#ffffff] rounded-[20px] overflow-hidden border border-solid border-[#ffffff87] backdrop-blur-[3.3px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(3.3px)_brightness(100%)]">
           <div className="relative w-full">
             <div className="flex gap-2.5 px-2 overflow-hidden">
@@ -136,9 +176,11 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                       index === currentImageIndex
                         ? "border-2 border-white-500 scale-105"
                         : "hover:scale-105"
-                    }`}
+                    } ${!loadedThumbnails.has(index) ? "bg-gray-100" : ""}`}
                     style={{
-                      backgroundImage: `url("${image.url}")`,
+                      backgroundImage: loadedThumbnails.has(index)
+                        ? `url("${image.url}")`
+                        : "none",
                       minWidth: `calc((100% - 12.5px) / ${
                         window.innerWidth < 1024
                           ? MOBILE_THUMBNAILS_PER_PAGE
@@ -151,7 +193,13 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                       })`,
                     }}
                     onClick={() => setCurrentImageIndex(index)}
-                  ></button>
+                  >
+                    {!loadedThumbnails.has(index) && (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                      </div>
+                    )}
+                  </button>
                 ))}
               </div>
             </div>
@@ -203,17 +251,28 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
         </div>
       </div>
 
+      {/* Modal with Loading State */}
       {isModalOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
           onClick={handleCloseModal}
         >
           <div className="relative max-w-[90vw] max-h-[90vh]">
+            {!loadedImages.has(currentImageIndex) && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
             <img
-              className="max-w-full max-h-[90vh] object-contain"
+              className={`max-w-full max-h-[90vh] object-contain transition-opacity duration-300 ${
+                loadedImages.has(currentImageIndex)
+                  ? "opacity-100"
+                  : "opacity-0"
+              }`}
               src={images?.[currentImageIndex]?.url}
               alt=""
               onClick={(e) => e.stopPropagation()}
+              loading="lazy"
             />
             <button
               className="absolute top-4 right-4 text-white text-2xl bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-all duration-200"

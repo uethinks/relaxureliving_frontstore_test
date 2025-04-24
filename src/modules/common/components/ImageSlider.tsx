@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 interface ImageSliderProps {
   images: { url: string }[]
@@ -12,6 +12,25 @@ export const ImageSlider = ({
   className = "",
 }: ImageSliderProps): JSX.Element => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Preload next and previous images
+  useEffect(() => {
+    const preloadImage = (index: number) => {
+      if (index < 0 || index >= images.length) return
+      const img = new Image()
+      img.src = images[index].url
+      img.onload = () => {
+        setLoadedImages((prev) => new Set([...Array.from(prev), index]))
+      }
+    }
+
+    // Preload current, next and previous images
+    preloadImage(currentImageIndex)
+    preloadImage((currentImageIndex + 1) % images.length)
+    preloadImage((currentImageIndex - 1 + images.length) % images.length)
+  }, [currentImageIndex, images])
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length)
@@ -25,10 +44,18 @@ export const ImageSlider = ({
     <div className={`relative w-full h-full ${className}`}>
       {/* Main Image */}
       <div className="relative w-full h-full rounded-[20px] overflow-hidden">
+        {!loadedImages.has(currentImageIndex) && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        )}
         <img
           src={images[currentImageIndex]?.url}
           alt=""
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-opacity duration-300 ${
+            loadedImages.has(currentImageIndex) ? "opacity-100" : "opacity-0"
+          }`}
+          loading="lazy"
         />
 
         {/* Navigation Arrows */}
