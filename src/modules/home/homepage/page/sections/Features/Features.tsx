@@ -182,7 +182,7 @@ export const Features = ({
                 <div
                   key={slider.Title}
                   className={`flex flex-col h-[600px] items-start justify-between gap-2.5 rounded-[20px] transition-all duration-500 ease-in-out ${
-                    slider.expand ? "w-1/2" : "w-1/4"
+                    slider.expand ? "w-auto aspect-[707/600]" : "w-1/4"
                   }`}
                   style={{
                     backgroundImage: `url("${
@@ -231,7 +231,7 @@ export const Features = ({
                   <div
                     key={slider.Title}
                     className={`flex flex-col h-[600px] items-start justify-between gap-2.5 rounded-[20px] transition-all duration-500 ease-in-out ${
-                      slider.expand ? "w-1/2" : "w-1/4"
+                      slider.expand ? "w-auto aspect-[707/600]" : "w-1/4"
                     }`}
                     style={{
                       backgroundImage: `url("${
