@@ -157,7 +157,7 @@ export const AccesorriesSelector = ({
   return (
     <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
       <p className="relative self-stretch h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-16 tracking-[0] leading-6 whitespace-nowrap">
-        Add Accessories to your pergola
+        Add accessories to your pergola
       </p>
 
       <div className="flex flex-col w-full items-start gap-5 relative flex-[0_0_auto]">
