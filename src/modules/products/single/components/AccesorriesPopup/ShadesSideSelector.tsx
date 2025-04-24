@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 
 interface ShadesSideSelectorProps {
   onSideSelect: (sides: string[]) => void
@@ -37,14 +37,15 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
         newSelectedSides = [...selectedSides, sideStr]
       }
     }
-
+    console.log("newSelectedSides", newSelectedSides)
     onSideSelect(newSelectedSides)
   }
+  console.log("selectedSides", selectedSides)
 
   if (isSquare) {
     return (
       <div className="flex flex-col items-start w-full max-w-[400px]">
-        <h3 className="text-[16px] lg:text-lg text-[#343A40] [font-family:'Montserrat',sans-serif] font-medium mb-2 lg:mb-6">
+        <h3 className="text-[#343A40] text-[16px] lg:text-lg [font-family:'Montserrat',sans-serif] font-medium mb-2 lg:mb-6">
           How many shades do you want?
         </h3>
         <div className="flex items-center gap-2">
@@ -68,14 +69,13 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
 
   return (
     <div className="flex flex-col items-start w-full max-w-[400px]">
-      <h3 className="text-[16px] lg:text-lg text-[#343A40] [font-family:'Montserrat',sans-serif] font-medium mb-2 lg:mb-6">
+      <h3 className="text-[#343A40] text-[16px] lg:text-lg [font-family:'Montserrat',sans-serif] font-medium mb-2 lg:mb-6">
         Which side do you want the shades?
       </h3>
-      <div className="relative flex justify-center items-center gap-2">
-        {/* Left Short Rectangle */}
+      <div className="relative flex justify-center items-center gap-1">
         <button
           onClick={() => handleSideClick("left")}
-          className={`w-[70px] h-[100px] border rounded transition-all flex flex-col items-center justify-center ${
+          className={`w-[65px] h-[130px] lg:w-[78px] lg:h-[139px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("left")
               ? "border-[#072F6C] bg-[#DCE7F8]"
               : "border-[#E9E9E9]"
@@ -89,11 +89,10 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
           </div>
         </button>
 
-        {/* Middle Column with Long Rectangles */}
-        <div className="flex flex-col gap-2 h-[100px]">
+        <div className="flex flex-col justify-between gap-2">
           <button
             onClick={() => handleSideClick("top")}
-            className={`w-[140px] h-[50px] border rounded transition-all flex flex-col items-center justify-center ${
+            className={`w-[205px] h-[60px] lg:w-[225px] lg:h-[63px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("top")
                 ? "border-[#072F6C] bg-[#DCE7F8]"
                 : "border-[#E9E9E9]"
@@ -109,7 +108,7 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
 
           <button
             onClick={() => handleSideClick("bottom")}
-            className={`w-[140px] h-[50px] border rounded transition-all flex flex-col items-center justify-center ${
+            className={`w-[205px] h-[60px] lg:w-[225px] lg:h-[63px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("bottom")
                 ? "border-[#072F6C] bg-[#DCE7F8]"
                 : "border-[#E9E9E9]"
@@ -124,10 +123,9 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
           </button>
         </div>
 
-        {/* Right Short Rectangle */}
         <button
           onClick={() => handleSideClick("right")}
-          className={`w-[70px] h-[100px] border rounded transition-all flex flex-col items-center justify-center ${
+          className={`w-[65px] h-[130px] lg:w-[78px] lg:h-[139px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("right")
               ? "border-[#072F6C] bg-[#DCE7F8]"
               : "border-[#E9E9E9]"

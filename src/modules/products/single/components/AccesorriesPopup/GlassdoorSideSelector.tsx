@@ -71,10 +71,10 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
       <h3 className="text-[#343A40] text-[16px] lg:text-lg [font-family:'Montserrat',sans-serif] font-medium mb-2 lg:mb-6">
         Which side do you want the glass doors?
       </h3>
-      <div className="relative flex justify-center items-center gap-2">
+      <div className="relative flex justify-center items-center gap-1">
         <button
           onClick={() => handleSideClick("left")}
-          className={`w-[70px] h-[100px] border rounded transition-all flex flex-col items-center justify-center ${
+          className={`w-[65px] h-[130px] lg:w-[78px] lg:h-[139px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("left")
               ? "border-[#072F6C] bg-[#DCE7F8]"
               : "border-[#E9E9E9]"
@@ -88,10 +88,10 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
           </div>
         </button>
 
-        <div className="flex flex-col gap-2 h-[100px]">
+        <div className="flex flex-col justify-between gap-2">
           <button
             onClick={() => handleSideClick("top")}
-            className={`w-[140px] h-[50px] border rounded transition-all flex flex-col items-center justify-center ${
+            className={`w-[205px] h-[60px] lg:w-[225px] lg:h-[63px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("top")
                 ? "border-[#072F6C] bg-[#DCE7F8]"
                 : "border-[#E9E9E9]"
@@ -107,7 +107,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
 
           <button
             onClick={() => handleSideClick("bottom")}
-            className={`w-[140px] h-[50px] border rounded transition-all flex flex-col items-center justify-center ${
+            className={`w-[205px] h-[60px] lg:w-[225px] lg:h-[63px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("bottom")
                 ? "border-[#072F6C] bg-[#DCE7F8]"
                 : "border-[#E9E9E9]"
@@ -124,7 +124,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
 
         <button
           onClick={() => handleSideClick("right")}
-          className={`w-[70px] h-[100px] border rounded transition-all flex flex-col items-center justify-center ${
+          className={`w-[65px] h-[130px] lg:w-[78px] lg:h-[139px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("right")
               ? "border-[#072F6C] bg-[#DCE7F8]"
               : "border-[#E9E9E9]"
