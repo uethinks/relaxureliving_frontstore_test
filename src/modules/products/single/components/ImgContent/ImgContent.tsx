@@ -15,7 +15,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
   const images = product.images?.map((image) => image)
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
-
+  console.log("images", images)
   // Preload all images
   useEffect(() => {
     if (images) {
@@ -73,12 +73,16 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     if (!images || isAnimating) return
 
     setIsAnimating(true)
+    const thumbnailsPerPage =
+      window.innerWidth < 1024
+        ? MOBILE_THUMBNAILS_PER_PAGE
+        : THUMBNAILS_PER_PAGE
+
     if (direction === "left") {
       setThumbnailStartIndex((prev) => Math.max(0, prev - 1))
     } else {
-      setThumbnailStartIndex((prev) =>
-        Math.min(images.length - THUMBNAILS_PER_PAGE, prev + 1)
-      )
+      const maxStartIndex = Math.max(0, images.length - thumbnailsPerPage)
+      setThumbnailStartIndex((prev) => Math.min(maxStartIndex, prev + 1))
     }
 
     setTimeout(() => {
@@ -86,12 +90,12 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     }, 300)
   }
 
+  const thumbnailsPerPage =
+    window.innerWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
+  const maxStartIndex = Math.max(0, (images?.length || 0) - thumbnailsPerPage)
   const visibleThumbnails = images?.slice(
     thumbnailStartIndex,
-    thumbnailStartIndex +
-      (window.innerWidth < 1024
-        ? MOBILE_THUMBNAILS_PER_PAGE
-        : THUMBNAILS_PER_PAGE)
+    thumbnailStartIndex + thumbnailsPerPage
   )
 
   const translateX =
@@ -154,12 +158,12 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
 
             {thumbnailStartIndex > 0 && (
               <button
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
                 onClick={() => handleThumbnailNavigation("left")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
+                  className="h-4 w-4 text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -167,35 +171,34 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={3}
                     d="M15 19l-7-7 7-7"
                   />
                 </svg>
               </button>
             )}
 
-            {images &&
-              thumbnailStartIndex + THUMBNAILS_PER_PAGE < images.length && (
-                <button
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110"
-                  onClick={() => handleThumbnailNavigation("right")}
+            {images && thumbnailStartIndex < maxStartIndex && (
+              <button
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
+                onClick={() => handleThumbnailNavigation("right")}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              )}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -221,7 +224,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
 
             {/* Previous button */}
             <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 transition-all duration-200"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/80 hover:bg-black/90 rounded-full p-3 transition-all duration-200 border-4 border-white/90 shadow-[0_0_10px_rgba(0,0,0,0.5)]"
               onClick={(e) => {
                 e.stopPropagation()
                 handleModalImageNavigation("prev")
@@ -237,7 +240,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={3}
                   d="M15 19l-7-7 7-7"
                 />
               </svg>
@@ -245,7 +248,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
 
             {/* Next button */}
             <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 transition-all duration-200"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/80 hover:bg-black/90 rounded-full p-3 transition-all duration-200 border-4 border-white/90 shadow-[0_0_10px_rgba(0,0,0,0.5)]"
               onClick={(e) => {
                 e.stopPropagation()
                 handleModalImageNavigation("next")
@@ -261,7 +264,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={3}
                   d="M9 5l7 7-7 7"
                 />
               </svg>
