@@ -7,12 +7,12 @@ export default function AboutPage() {
     <main className="w-full flex flex-col items-center">
       <NavBarWrapper isFixed={false} />
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 py-16 md:py-24 flex flex-col md:flex-row items-center gap-8">
+      <section className="max-w-7xl mx-auto px-4 py-8 lg:py-24 flex flex-col md:flex-row items-center gap-8">
         <div className="flex-1">
-          <h1 className="text-4xl md:text-5xl font-serif mb-6">
+          <h1 className="text-[18px] lg:text-[36px] font-[700] mb-6 font-['Merriweather']">
             Creating Spaces Where Life Happens, In Every Season
           </h1>
-          <p className="text-gray-600 mb-8">
+          <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 mb-8 font-['Montserrat']">
             At Relaxure, we believe exceptional seasonal spaces is extraordinary
             outdoor living—without compromising on quality, functionality or
             time. We're bridging the gap between overpriced luxury and
@@ -36,14 +36,14 @@ export default function AboutPage() {
       </section>
 
       {/* Story Section */}
-      <section className="max-w-7xl mx-auto px-4 py-16 md:py-24">
+      <section className="max-w-7xl mx-auto px-4 py-8 lg:py-24">
         <div className="grid md:grid-cols-2 gap-8">
-          <h2 className="text-3xl md:text-4xl font-serif mb-12 md:col-span-1">
+          <h2 className="text-[18px] lg:text-[28px] font-[700] mb-12 md:col-span-1 font-['Merriweather']">
             Our Story: From Humble Beginnings to Outdoor Innovation
           </h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-8 text-gray-600">
-          <div className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-8 text-gray-600 font-['Montserrat']">
+          <div className="space-y-6 text-[16px] lg:text-[18px] font-[500]">
             <p>
               To understand what we do here at Relaxure, you need to know where
               I come from. I spent my childhood in a small rural village, and my
@@ -69,7 +69,7 @@ export default function AboutPage() {
               rather than enhancements to homes.
             </p>
           </div>
-          <div className="space-y-6">
+          <div className="space-y-6 text-[16px] lg:text-[18px] font-[500]">
             <p>
               I gathered a team that shared my vision—top engineers from Fortune
               500 companies, experienced inventors, and design specialists with
@@ -96,22 +96,24 @@ export default function AboutPage() {
               and technology but with a sense of purpose. We know we're helping
               craft the backdrop for your life's most meaningful moments.
             </p>
-            <p className="font-medium">—Peter, Founder</p>
+            <p className="text-[18px] lg:text-[28px] font-[700] leading-relaxed font-['Merriweather']">
+              —Peter, Founder
+            </p>
           </div>
         </div>
       </section>
 
       {/* Quote Section */}
-      <section className="bg-gray-50 py-16 md:py-24 w-full">
+      <section className="bg-gray-50 py-8 lg:py-24 w-full">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="relative rounded-2xl overflow-hidden">
+          <div className="relative rounded-2xl overflow-hidden flex flex-col lg:block">
             <img
-              src="/img/self-thinking.png"
+              src="/img/about-us.webp"
               alt="Founder quote"
-              className="w-full lg:max-w-[1069px] lg:max-h-[648px] object-cover"
+              className="w-full lg:rounded-[20px] lg:max-w-[1069px] lg:max-h-[648px] object-cover"
             />
-            <div className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-[#072F6C] text-white py-8 px-12 max-w-[600px]">
-              <p className="text-2xl md:text-3xl font-serif leading-relaxed">
+            <div className="lg:absolute lg:top-1/2 lg:right-0 lg:transform lg:-translate-y-1/2 bg-[#072F6C] text-white py-8 px-6 lg:px-12 lg:max-w-[600px]">
+              <p className="text-[18px] lg:text-[28px] font-[700] leading-relaxed font-['Montserrat']">
                 "Why should creating a beautiful outdoor space require either a
                 small fortune or constant compromise?"
               </p>
@@ -121,14 +123,14 @@ export default function AboutPage() {
       </section>
 
       {/* Features Section */}
-      <section className="max-w-7xl mx-auto px-4 py-16 md:py-24">
+      <section className="max-w-7xl mx-auto px-4 py-8 lg:py-24">
         <div className="grid lg:grid-cols-12 gap-12">
           {/* Left Column - Title and Description */}
           <div className="lg:col-span-4 flex flex-col justify-center space-y-6">
-            <h2 className="text-3xl md:text-4xl font-serif">
+            <h2 className="text-[18px] lg:text-[36px] font-[700] font-['Merriweather']">
               What We Stand For
             </h2>
-            <div className="space-y-6 text-gray-600">
+            <div className="space-y-6 text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
               <p>
                 When you choose Relaxure, you're joining a community of
                 homeowners who refuse to compromise on their outdoor dreams.
@@ -156,8 +158,10 @@ export default function AboutPage() {
                 height={160}
                 className="mx-auto"
               />
-              <h3 className="text-xl font-serif">Demand Better</h3>
-              <p className="text-gray-600">
+              <h3 className="text-[18px] lg:text-[28px] font-[700] font-['Merriweather']">
+                Demand Better
+              </h3>
+              <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
                 We're not here to follow trends—we're here to redefine what's
                 possible outdoors. By integrating cutting-edge technology with
                 thoughtful design.
@@ -173,8 +177,10 @@ export default function AboutPage() {
                 height={160}
                 className="mx-auto"
               />
-              <h3 className="text-xl font-serif">Accessible Excellence</h3>
-              <p className="text-gray-600">
+              <h3 className="text-[18px] lg:text-[28px] font-[700] font-['Merriweather']">
+                Accessible Excellence
+              </h3>
+              <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
                 We're not here to follow trends—we're here to redefine what's
                 possible outdoors. By integrating cutting-edge technology with
                 thoughtful design.
@@ -190,8 +196,10 @@ export default function AboutPage() {
                 height={160}
                 className="mx-auto"
               />
-              <h3 className="text-xl font-serif">Uncompromising Quality</h3>
-              <p className="text-gray-600">
+              <h3 className="text-[18px] lg:text-[28px] font-[700] font-['Merriweather']">
+                Uncompromising Quality
+              </h3>
+              <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
                 We're not here to follow trends—we're here to redefine what's
                 possible outdoors. By integrating cutting-edge technology with
                 thoughtful design.
@@ -207,8 +215,10 @@ export default function AboutPage() {
                 height={160}
                 className="mx-auto"
               />
-              <h3 className="text-xl font-serif">Our Promise to You</h3>
-              <p className="text-gray-600">
+              <h3 className="text-[18px] lg:text-[28px] font-[700] font-['Merriweather']">
+                Our Promise to You
+              </h3>
+              <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
                 What sets Relaxure apart isn't just what we make—it's why we
                 make it. While our industry focuses on exclusivity, we're driven
                 by something else:
@@ -218,7 +228,7 @@ export default function AboutPage() {
         </div>
 
         <div className="text-center mt-16">
-          <h2 className="text-3xl md:text-4xl font-serif mb-6">
+          <h2 className="text-[18px] lg:text-[36px] font-[700] mb-6 font-['Merriweather']">
             Experience the Relaxure Difference
           </h2>
           <button
