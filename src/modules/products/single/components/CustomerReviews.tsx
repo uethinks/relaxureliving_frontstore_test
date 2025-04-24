@@ -90,7 +90,13 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
             relaxure_team: review.relaxure_team,
           })
         )
-        setReviews(transformedReviews)
+        // Sort reviews by date in descending order
+        const sortedReviews = transformedReviews?.sort(
+          (a: ReviewType, b: ReviewType) => {
+            return new Date(b.date).getTime() - new Date(a.date).getTime()
+          }
+        )
+        setReviews(sortedReviews || [])
       } catch (err) {
         setError("Failed to load reviews")
         console.error("Error fetching reviews:", err)
@@ -354,7 +360,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
                   key={index}
                   className="w-16 h-16 relative rounded-lg overflow-hidden group cursor-pointer flex-shrink-0"
                 >
-                  {image.formats.small.url && (
+                  {image.formats?.small?.url && (
                     <img
                       src={`${strapiUrl}${image.formats.small.url}`}
                       alt="Review photo thumbnail"

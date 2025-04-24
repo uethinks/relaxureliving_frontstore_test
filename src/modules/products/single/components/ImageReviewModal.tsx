@@ -79,7 +79,7 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
                 </div>
               )}
               <Image
-                src={`${strapiUrl}${review.image[0].formats.large.url}`}
+                src={`${strapiUrl}${review.image[0].formats?.large?.url}`}
                 alt="Review photo"
                 fill
                 className="object-contain"
