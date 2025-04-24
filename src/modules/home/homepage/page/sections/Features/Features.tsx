@@ -20,6 +20,34 @@ export const Features = ({
   >([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe) {
+      setCurrentSlide((prev) => (prev + 1) % 6)
+    }
+    if (isRightSwipe) {
+      setCurrentSlide((prev) => (prev - 1 + 6) % 6)
+    }
+  }
 
   useEffect(() => {
     const checkMobile = () => {
@@ -96,7 +124,9 @@ export const Features = ({
         {isMobile ? (
           <div
             className="relative w-full h-[600px] overflow-hidden cursor-pointer rounded-[20px]"
-            onClick={nextSlide}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
             {allSlides.map((slider, index) => (
               <div
@@ -131,6 +161,19 @@ export const Features = ({
                 </div>
               </div>
             ))}
+            {/* Indicator dots */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+              {allSlides.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentSlide
+                      ? "bg-white scale-125"
+                      : "bg-white/30 border border-white/50"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         ) : (
           <>
