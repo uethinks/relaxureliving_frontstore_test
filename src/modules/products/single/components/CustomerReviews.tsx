@@ -313,6 +313,14 @@ interface ReviewCardProps {
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  const handleImageClick = (index: number) => {
+    setCurrentImageIndex(index)
+    setIsModalOpen(true)
+  }
+
   return (
     <div className="bg-white rounded-xl p-6 border border-gray-100">
       {/* First row: Rating and Date */}
@@ -342,7 +350,10 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       {review.image && review.image.length > 0 && (
         <div className="w-full mb-4">
           {/* Main image */}
-          <div className="w-full h-[200px] relative rounded-lg overflow-hidden group cursor-pointer mb-2">
+          <div
+            className="w-full h-[200px] relative rounded-lg overflow-hidden group cursor-pointer mb-2"
+            onClick={() => handleImageClick(0)}
+          >
             {review.image?.[0]?.formats?.small?.url && (
               <img
                 src={`${strapiUrl}${review.image[0].formats.small.url}`}
@@ -359,6 +370,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
                 <div
                   key={index}
                   className="w-16 h-16 relative rounded-lg overflow-hidden group cursor-pointer flex-shrink-0"
+                  onClick={() => handleImageClick(index + 1)}
                 >
                   {image.formats?.small?.url && (
                     <img
@@ -397,6 +409,18 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             {review.relaxure_team}
           </p>
         </div>
+      )}
+
+      {/* Image Modal */}
+      {review.image && review.image.length > 0 && (
+        <ImageReviewModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          review={review}
+          currentReviewIndex={currentImageIndex}
+          onReviewChange={setCurrentImageIndex}
+          totalReviews={review.image.length}
+        />
       )}
     </div>
   )
