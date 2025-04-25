@@ -618,8 +618,29 @@ export const Checkout = () => {
                     <div className="[font-family:'Montserrat',Helvetica] font-medium text-[22px] leading-[30.8px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
                       Total
                     </div>
-                    <div className="mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-semibold text-2xl leading-[33.6px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
-                      $ {cart?.total}
+                    <div className="flex items-end justify-start gap-4">
+                      <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
+                        ${cart?.total}
+                      </div>
+                      {cart?.discount_total &&
+                        cart?.discount_total > 0 &&
+                        cart?.original_total && (
+                          <div className="flex items-center gap-2">
+                            <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
+                              ${cart.original_total}
+                            </div>
+                            <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
+                              <span className="text-[12px] font-normal text-[red]">
+                                Save{" "}
+                                {Math.round(
+                                  (cart.discount_total / cart.original_total) *
+                                    100
+                                )}
+                                %
+                              </span>
+                            </div>
+                          </div>
+                        )}
                     </div>
                   </div>
                 </div>

@@ -247,7 +247,7 @@ export const AccesorriesPopupGlassdoor = ({
                             ${totalOriginalPrice}
                           </div>
                           <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
-                            <span className="text-[12px] font-normal text-[#0A3B5C]">
+                            <span className="text-[12px] font-normal text-[red]">
                               Save{" "}
                               {Math.round(
                                 ((totalOriginalPrice - totalPrice) /

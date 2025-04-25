@@ -192,10 +192,26 @@ export const GlassDoorCard = (): JSX.Element | null => {
               <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[14px] lg:text-[22px] leading-[33px] whitespace-nowrap relative tracking-[0]">
                 {item?.product_title}
               </div>
-              <div className="inline-flex items-center justify-center gap-2.5 px-2.5 py-0 relative flex-[0_0_auto]">
-                <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-semibold text-[#343a40] text-[14px] lg:text-[22px] leading-[30.8px] whitespace-nowrap relative tracking-[0]">
-                  $ {item?.total}
+              <div className="flex items-end justify-start gap-4">
+                <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
+                  ${item?.total}
                 </div>
+                {item?.discount_total > 0 && (
+                  <div className="flex items-center gap-2">
+                    <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
+                      ${item?.original_total}
+                    </div>
+                    <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
+                      <span className="text-[12px] font-normal text-[red]">
+                        Save{" "}
+                        {Math.round(
+                          (item?.discount_total / item?.original_total) * 100
+                        )}
+                        %
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="inline-flex flex-col items-center gap-2.5 relative flex-[0_0_auto]">
