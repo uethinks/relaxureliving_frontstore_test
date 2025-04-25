@@ -22,8 +22,10 @@ export const HomepageSampleKit = (): JSX.Element => {
         if (!region) return
 
         const { products } = await getProductByHandle({
-          region_id: region.id,
-          handle: "sample-kit",
+          queryParams: {
+            region_id: region.id,
+            handle: "sample-kit",
+          },
         })
         if (products.length > 0) {
           setSampleKitProduct(products[0])
@@ -55,7 +57,6 @@ export const HomepageSampleKit = (): JSX.Element => {
       console.error("Failed to add sample kit to cart:", error)
     }
   }
-  console.log("sampleKitProduct", sampleKitProduct)
   return (
     <div className="flex flex-col justify-center w-full items-center gap-5 mt-[68px] mb-[100px] lg:px-[260px]">
       <div className="flex flex-col lg:flex-row justify-center items-center gap-20 relative self-stretch w-full flex-[0_0_auto]">

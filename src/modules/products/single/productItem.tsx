@@ -62,6 +62,7 @@ export const ProductItem = ({
     width: 0,
     length: 0,
   })
+  console.log("product", product)
   useEffect(() => {
     setPergolaSize({
       width: selectedVariant?.width ?? 0,
@@ -76,6 +77,7 @@ export const ProductItem = ({
     useState<selectedProducts>([])
   const [pergolaQuantity, setPergolaQuantity] = useState(1)
   const [totalPrice, setTotalPrice] = useState(0)
+  const [totalOriginalPrice, setTotalOriginalPrice] = useState(0)
   const handleVariantChange = (variant: StoreProductVariant | undefined) => {
     setSelectedVariant(variant)
   }
@@ -83,6 +85,10 @@ export const ProductItem = ({
     setTotalPrice(
       pergolaQuantity *
         (selectedVariant?.calculated_price?.calculated_amount ?? 0)
+    )
+    setTotalOriginalPrice(
+      pergolaQuantity *
+        (selectedVariant?.calculated_price?.original_amount ?? 0)
     )
   }, [pergolaQuantity, selectedVariant])
   useEffect(() => {
@@ -244,6 +250,7 @@ export const ProductItem = ({
           pergolaSize={pergolaSize}
           pergolaQuantity={pergolaQuantity}
           totalPrice={totalPrice}
+          totalOriginalPrice={totalOriginalPrice}
           onQuantityChange={setPergolaQuantity}
           onBuyNow={handleBuyNow}
         />

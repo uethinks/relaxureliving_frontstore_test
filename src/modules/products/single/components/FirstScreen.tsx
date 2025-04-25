@@ -49,6 +49,7 @@ interface FirstScreenProps {
   pergolaSize: PergolaSize
   pergolaQuantity: number
   totalPrice: number
+  totalOriginalPrice: number
   onQuantityChange: (quantity: number) => void
   onBuyNow: () => void
 }
@@ -65,6 +66,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
   pergolaSize,
   pergolaQuantity,
   totalPrice,
+  totalOriginalPrice,
   onQuantityChange,
   onBuyNow,
 }) => {
@@ -73,17 +75,17 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
   return (
     <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full">
       <NavBarWrapper isFixed={false} />
-      <div className="lg:mx-auto flex flex-col  bg-[#ffffff] w-full relative">
+      <div className="lg:mx-auto flex flex-col  bg-[#ffffff] w-full relative mt-5">
         <div className="flex flex-col w-full lg:flex-row justify-between items-start">
           <div className="flex flex-col w-full  gap-5">
             <div className="flex flex-col w-full lg:max-w-[64%] items-center gap-5 lg:pr-[65px]">
               <div className="flex flex-col items-start relative self-stretch w-full">
                 <div className="relative mb-[24px] self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] lg:text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
-                  {product.title}
+                  {product.subtitle}
                 </div>
                 <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full">
                   <p className="w-full text-[#69727a] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[18px] lg:text-[22px] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
-                    {product.subtitle}
+                    {product.title}
                   </p>
                 </div>
                 <p className="w-full text-[#69727A] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[16px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
@@ -109,6 +111,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                   pergolaSize={pergolaSize}
                   pergolaQuantity={pergolaQuantity}
                   totalPrice={totalPrice}
+                  totalOriginalPrice={totalOriginalPrice}
                   onQuantityChange={onQuantityChange}
                   onBuyNow={onBuyNow}
                   isMobile={true}
@@ -174,6 +177,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                 pergolaSize={pergolaSize}
                 pergolaQuantity={pergolaQuantity}
                 totalPrice={totalPrice}
+                totalOriginalPrice={totalOriginalPrice}
                 onQuantityChange={onQuantityChange}
                 onBuyNow={onBuyNow}
                 isMobile={false}

@@ -99,6 +99,15 @@ export const AccesorriesPopupHeater = ({
       setSelectedHeater(variant)
     }
   }, [selectedSize, selectedColor, getVariant])
+
+  const totalPrice = selectedHeater?.calculated_price?.calculated_amount
+    ? selectedHeater?.calculated_price?.calculated_amount *
+      selectedHeaterQuantity
+    : 0
+  const totalOriginalPrice = selectedHeater?.calculated_price?.original_amount
+    ? selectedHeater?.calculated_price?.original_amount * selectedHeaterQuantity
+    : 0
+
   return (
     <div className="fixed inset-0 flex items-end md:items-center justify-center bg-black-50 z-50">
       <div className="relative bg-white rounded-t-[20px] md:rounded-[20px] w-full md:w-auto md:max-w-[1269px] h-[95vh] md:h-auto md:max-h-[90vh] overflow-auto">
@@ -141,13 +150,28 @@ export const AccesorriesPopupHeater = ({
                     <h2 className="hidden lg:block self-stretch [font-family:'Merriweather',serif] text-[#343a40] text-[28px] font-bold leading-[39.2px]">
                       {accessoryHeater?.title}
                     </h2>
-                    <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] [font-family:'Montserrat',sans-serif] font-medium">
-                      {selectedHeater?.calculated_price?.calculated_amount &&
-                      selectedHeaterQuantity
-                        ? "$" +
-                          selectedHeater?.calculated_price?.calculated_amount *
-                            selectedHeaterQuantity
-                        : ""}
+                    <div className="flex items-end justify-start gap-4">
+                      <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
+                        {totalPrice ? "$" + totalPrice : ""}
+                      </div>
+                      {totalOriginalPrice > totalPrice && (
+                        <div className="flex items-center gap-2">
+                          <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
+                            ${totalOriginalPrice}
+                          </div>
+                          <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
+                            <span className="text-[12px] font-normal text-[#0A3B5C]">
+                              Save{" "}
+                              {Math.round(
+                                ((totalOriginalPrice - totalPrice) /
+                                  totalOriginalPrice) *
+                                  100
+                              )}
+                              %
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 

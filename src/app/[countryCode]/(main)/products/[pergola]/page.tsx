@@ -50,8 +50,11 @@ export default async function ProductPage(props: Props) {
   }
 
   const { products } = await getProductByHandle({
-    region_id: region.id,
-    handle: params.pergola,
+    queryParams: {
+      fields: `*variants.calculated_price`,
+      region_id: region.id,
+      handle: params.pergola,
+    },
   })
   const accessories = await getProductsForAccessory({
     regionId: region.id,

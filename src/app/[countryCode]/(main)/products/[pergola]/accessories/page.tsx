@@ -62,8 +62,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     notFound()
   }
   const { products } = await getProductByHandle({
-    region_id: region.id,
-    handle: params.pergola,
+    queryParams: {
+      region_id: region.id,
+      handle: params.pergola,
+    },
   })
   if (!products.length) {
     notFound()
@@ -89,8 +91,10 @@ export default async function AccessoriesPage(props: Props) {
 
   // Get the pergola product data
   const { products } = await getProductByHandle({
-    region_id: region.id,
-    handle: params.pergola,
+    queryParams: {
+      region_id: region.id,
+      handle: params.pergola,
+    },
   })
   if (!products.length) {
     notFound()

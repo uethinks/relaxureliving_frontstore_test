@@ -124,12 +124,23 @@ export const AccesorriesPopupShades = ({
     )
   }, 0)
   const [totalPrice, setTotalPrice] = useState<number>(priceDefault)
+  const [totalOriginalPrice, setTotalOriginalPrice] =
+    useState<number>(priceDefault)
   useEffect(() => {
     setTotalPrice(
       selectedShades.reduce((acc, shade) => {
         return (
           acc +
           (shade.productVarant?.calculated_price?.calculated_amount ?? 0) *
+            shade.quantity
+        )
+      }, 0)
+    )
+    setTotalOriginalPrice(
+      selectedShades.reduce((acc, shade) => {
+        return (
+          acc +
+          (shade.productVarant?.calculated_price?.original_amount ?? 0) *
             shade.quantity
         )
       }, 0)
@@ -211,8 +222,28 @@ export const AccesorriesPopupShades = ({
                     <h2 className="hidden lg:block self-stretch font-merriweather text-[#343a40] text-[28px] font-bold leading-[39.2px]">
                       {accessoryShades?.title}
                     </h2>
-                    <div className="self-stretch text-[#343a40] text-[22px] leading-[30.8px] font-montserrat font-medium">
-                      {totalPrice ? "$" + totalPrice : ""}
+                    <div className="flex items-end justify-start gap-4">
+                      <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
+                        {totalPrice ? "$" + totalPrice : ""}
+                      </div>
+                      {totalOriginalPrice > totalPrice && (
+                        <div className="flex items-center gap-2">
+                          <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
+                            ${totalOriginalPrice}
+                          </div>
+                          <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
+                            <span className="text-[12px] font-normal text-[#0A3B5C]">
+                              Save{" "}
+                              {Math.round(
+                                ((totalOriginalPrice - totalPrice) /
+                                  totalOriginalPrice) *
+                                  100
+                              )}
+                              %
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="relative h-12">

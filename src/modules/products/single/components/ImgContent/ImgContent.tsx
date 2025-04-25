@@ -19,6 +19,23 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
   const images = product.images?.map((image) => image)
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
+  const [windowWidth, setWindowWidth] = useState<number>(0)
+
+  useEffect(() => {
+    // Set initial window width
+    setWindowWidth(window.innerWidth)
+
+    // Add resize listener
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+    window.addEventListener("resize", handleResize)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
 
   // Preload images with loading state
   useEffect(() => {
@@ -38,9 +55,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     if (!images) return
 
     const thumbnailsPerPage =
-      window.innerWidth < 1024
-        ? MOBILE_THUMBNAILS_PER_PAGE
-        : THUMBNAILS_PER_PAGE
+      windowWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
     const visibleThumbnails = images.slice(
       thumbnailStartIndex,
       thumbnailStartIndex + thumbnailsPerPage
@@ -58,7 +73,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
         }
       }
     })
-  }, [images, thumbnailStartIndex])
+  }, [images, thumbnailStartIndex, windowWidth])
 
   const handleImageClick = () => {
     setIsModalOpen(true)
@@ -108,9 +123,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
 
     setIsAnimating(true)
     const thumbnailsPerPage =
-      window.innerWidth < 1024
-        ? MOBILE_THUMBNAILS_PER_PAGE
-        : THUMBNAILS_PER_PAGE
+      windowWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
 
     if (direction === "left") {
       setThumbnailStartIndex((prev) => Math.max(0, prev - 1))
@@ -125,7 +138,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
   }
 
   const thumbnailsPerPage =
-    window.innerWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
+    windowWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
   const maxStartIndex = Math.max(0, (images?.length || 0) - thumbnailsPerPage)
   const visibleThumbnails = images?.slice(
     thumbnailStartIndex,
@@ -163,7 +176,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                   transform: `translateX(-${
                     thumbnailStartIndex *
                     (100 /
-                      (window.innerWidth < 1024
+                      (windowWidth < 1024
                         ? MOBILE_THUMBNAILS_PER_PAGE
                         : THUMBNAILS_PER_PAGE))
                   }%)`,
@@ -182,12 +195,12 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                         ? `url("${image.url}")`
                         : "none",
                       minWidth: `calc((100% - 12.5px) / ${
-                        window.innerWidth < 1024
+                        windowWidth < 1024
                           ? MOBILE_THUMBNAILS_PER_PAGE
                           : THUMBNAILS_PER_PAGE
                       })`,
                       maxWidth: `calc((100% - 12.5px) / ${
-                        window.innerWidth < 1024
+                        windowWidth < 1024
                           ? MOBILE_THUMBNAILS_PER_PAGE
                           : THUMBNAILS_PER_PAGE
                       })`,
