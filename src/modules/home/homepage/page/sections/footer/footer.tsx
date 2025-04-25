@@ -66,7 +66,7 @@ export const FooterDark = ({
                 </div>
 
                 <div className="relative flex flex-wrap justify-end items-center gap-5">
-                  <Link href="https://www.instagram.com/relaxurepergola/">
+                  <Link href="https://www.instagram.com/relaxureliving/">
                     <div className="w-[47px] h-[45px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/oval-copy.svg)] bg-cover">
                       <div className="relative w-[14px] h-[13px] top-[16px] left-[17px]">
                         <div className="relative h-[13px]">
