@@ -6,6 +6,8 @@ import {
   StoreProductOptionValue,
   StoreProductVariant,
 } from "@medusajs/types"
+import { PergolaFeatures } from "./PergolaFeatures"
+
 interface Props {
   property1: "default"
   className: string
@@ -118,28 +120,7 @@ export const PergulaSizeSelector = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full items-start gap-5 relative text-[#343A40]">
-          <div className="flex flex-row items-center gap-2.5 relative">
-            <img src="/img/fits-people.png" alt="Fits People" />
-            <p>Fits 2-4 people</p>
-          </div>
-          <div className="flex flex-row items-center gap-2.5 relative">
-            <img src="/img/ideal.png" alt="Ideal" />
-            <p>Perfect for morning coffee</p>
-          </div>
-          <div className="flex flex-row items-center gap-2.5 relative">
-            <img src="/img/morning-coffee.png" alt="Morning Coffee" />
-            <p>Ideal for small patios</p>
-          </div>
-          <div className="flex flex-row items-center gap-2.5 relative text-[#072F6C]">
-            <button
-              onClick={() => window.GorgiasChat.open()}
-              className="text-[#072F6C]"
-            >
-              I want a custom size
-            </button>
-          </div>
-        </div>
+        <PergolaFeatures selectedSize={selectedSize?.value || "10'x10'"} />
       </div>
       <div
         className={`flex flex-col items-start gap-2.5 relative ${className}`}
