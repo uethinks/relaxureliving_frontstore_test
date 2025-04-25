@@ -20,6 +20,8 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
   const [windowWidth, setWindowWidth] = useState<number>(0)
+  const thumbnailsPerPage =
+    windowWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
 
   useEffect(() => {
     // Set initial window width
@@ -122,14 +124,27 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     if (!images || isAnimating) return
 
     setIsAnimating(true)
-    const thumbnailsPerPage =
-      windowWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
+    const maxStartIndex = Math.max(0, images.length - thumbnailsPerPage)
+
+    // Prevent over-scrolling by checking current position
+    const currentPosition = thumbnailStartIndex
+    let newPosition
 
     if (direction === "left") {
-      setThumbnailStartIndex((prev) => Math.max(0, prev - 1))
+      newPosition = Math.max(0, currentPosition - 1)
     } else {
-      const maxStartIndex = Math.max(0, images.length - thumbnailsPerPage)
-      setThumbnailStartIndex((prev) => Math.min(maxStartIndex, prev + 1))
+      // When moving right, check if we're about to show the last image
+      if (currentPosition + thumbnailsPerPage >= images.length - 1) {
+        // Set position to show the last image fully
+        newPosition = images.length - thumbnailsPerPage
+      } else {
+        newPosition = Math.min(maxStartIndex, currentPosition + 1)
+      }
+    }
+
+    // Only update if the position actually changes
+    if (newPosition !== currentPosition) {
+      setThumbnailStartIndex(newPosition)
     }
 
     setTimeout(() => {
@@ -137,13 +152,24 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     }, 300)
   }
 
-  const thumbnailsPerPage =
-    windowWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
-  const maxStartIndex = Math.max(0, (images?.length || 0) - thumbnailsPerPage)
-  const visibleThumbnails = images?.slice(
-    thumbnailStartIndex,
-    thumbnailStartIndex + thumbnailsPerPage
-  )
+  // Calculate if navigation buttons should be shown
+  const showLeftButton = thumbnailStartIndex > 0
+  const showRightButton =
+    thumbnailStartIndex < Math.max(0, (images?.length || 0) - thumbnailsPerPage)
+
+  // Calculate the actual number of visible thumbnails
+  const visibleCount = Math.min(thumbnailsPerPage, images?.length || 0)
+
+  // Calculate the container width and transform, including gaps
+  const gapWidth = 10 // 2.5rem = 10px
+  const containerStyle = {
+    transform: `translateX(calc(-${thumbnailStartIndex} * ((100% - ${
+      (visibleCount - 1) * gapWidth
+    }px) / ${visibleCount} + ${gapWidth}px))`,
+    width: `calc(${images?.length || 0} * ((100% - ${
+      (visibleCount - 1) * gapWidth
+    }px) / ${visibleCount}) + ${(images?.length || 0) - 1} * ${gapWidth}px)`,
+  }
 
   return (
     <>
@@ -171,21 +197,13 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
           <div className="relative w-full">
             <div className="flex gap-2.5 px-2 overflow-hidden">
               <div
-                className="flex w-full gap-2.5 transition-transform duration-300 ease-in-out transform-gpu"
-                style={{
-                  transform: `translateX(-${
-                    thumbnailStartIndex *
-                    (100 /
-                      (windowWidth < 1024
-                        ? MOBILE_THUMBNAILS_PER_PAGE
-                        : THUMBNAILS_PER_PAGE))
-                  }%)`,
-                }}
+                className="flex gap-2.5 transition-transform duration-300 ease-in-out transform-gpu"
+                style={containerStyle}
               >
                 {images?.map((image, index) => (
                   <button
                     key={index}
-                    className={`flex-shrink-0 w-[calc((100%-12.5px)/6)] lg:w-[calc((100%-12.5px)/6)] sm:w-[calc((100%-12.5px)/4)] aspect-square rounded-2xl bg-cover bg-center cursor-pointer transition-all duration-300 ${
+                    className={`flex-shrink-0 aspect-square rounded-2xl bg-cover bg-center cursor-pointer transition-all duration-300 ${
                       index === currentImageIndex
                         ? "border-2 border-white-500 scale-105"
                         : "hover:scale-105"
@@ -194,16 +212,9 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                       backgroundImage: loadedThumbnails.has(index)
                         ? `url("${image.url}")`
                         : "none",
-                      minWidth: `calc((100% - 12.5px) / ${
-                        windowWidth < 1024
-                          ? MOBILE_THUMBNAILS_PER_PAGE
-                          : THUMBNAILS_PER_PAGE
-                      })`,
-                      maxWidth: `calc((100% - 12.5px) / ${
-                        windowWidth < 1024
-                          ? MOBILE_THUMBNAILS_PER_PAGE
-                          : THUMBNAILS_PER_PAGE
-                      })`,
+                      width: `calc((100% - ${
+                        (visibleCount - 1) * gapWidth
+                      }px) / ${visibleCount})`,
                     }}
                     onClick={() => setCurrentImageIndex(index)}
                   >
@@ -217,7 +228,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
               </div>
             </div>
 
-            {thumbnailStartIndex > 0 && (
+            {showLeftButton && (
               <button
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
                 onClick={() => handleThumbnailNavigation("left")}
@@ -239,7 +250,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
               </button>
             )}
 
-            {images && thumbnailStartIndex < maxStartIndex && (
+            {showRightButton && (
               <button
                 className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
                 onClick={() => handleThumbnailNavigation("right")}
