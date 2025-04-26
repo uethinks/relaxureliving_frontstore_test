@@ -1,35 +1,11 @@
-"use client"
 import React, { useState, useEffect, Suspense } from "react"
 import { ImgContent } from "./ImgContent"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
 import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { PergolaSize, selectedProducts } from "types/global"
 import { ProductSelector } from "./ProductSelector"
-import dynamic from "next/dynamic"
-
-const LazyAdvantage = dynamic(
-  () => import("./Advantage").then((mod) => mod.Advantage),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-)
-
-const LazyDescription = dynamic(
-  () => import("./PergolaInformations").then((mod) => mod.Description),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-)
-
-const LazyAssembly = dynamic(
-  () => import("./PergolaInformations").then((mod) => mod.Assembly),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-)
+import { Advantage } from "./Advantage"
+import { Description, Assembly } from "./PergolaInformations"
 
 interface FirstScreenProps {
   product: StoreProduct
@@ -118,9 +94,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                 />
 
                 <div className="flex flex-col w-full items-start mt-5 lg:mt-[80px]">
-                  <Suspense>
-                    <LazyAdvantage />
-                  </Suspense>
+                  <Advantage />
 
                   <div className="flex flex-wrap items-center justify-between w-full mt-5 mb-5 lg:mt-[60px] lg:mb-[60px]">
                     <div className="inline-flex items-start gap-10">
@@ -157,11 +131,13 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                     </a>
                   </div>
 
-                  {activeTab === "Description" && (
-                    <Suspense>
-                      <LazyDescription />
-                    </Suspense>
-                  )}
+                  <div
+                    style={{
+                      display: activeTab === "Description" ? "block" : "none",
+                    }}
+                  >
+                    <Description />
+                  </div>
                 </div>
               </div>
               {/* Desktop View */}
@@ -186,13 +162,14 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
           </div>
         </div>
         {/* Assembly Tab Content - Full Width */}
-        {activeTab === "Put it together" && (
-          <div className="w-full">
-            <Suspense>
-              <LazyAssembly />
-            </Suspense>
-          </div>
-        )}
+        <div
+          className="w-full"
+          style={{
+            display: activeTab === "Put it together" ? "block" : "none",
+          }}
+        >
+          <Assembly />
+        </div>
       </div>
     </div>
   )
