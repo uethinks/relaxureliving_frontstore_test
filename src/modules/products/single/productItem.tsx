@@ -1,54 +1,23 @@
 "use client"
-import React, { useState, useEffect, Suspense } from "react"
+import React, { useState, useEffect } from "react"
 import { FirstScreen } from "./components/FirstScreen"
 import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { CustomerReviews } from "./components/CustomerReviews"
+import {
+  ImageOnLeft,
+  Advantages,
+  AccessoriesCards,
+} from "./components/LandingPage"
+import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
 
 import {
   PergolaSize,
   selectedProducts,
   selectedProductVariant,
 } from "types/global"
-import dynamic from "next/dynamic"
-
-// Lazy load components with explicit client-side rendering
-const LazyImageOnLeft = dynamic(
-  () => import("./components/LandingPage").then((mod) => mod.ImageOnLeft),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-)
-
-const LazyAdvantages = dynamic(
-  () => import("./components/LandingPage").then((mod) => mod.Advantages),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-)
-
-const LazyAccessoriesCards = dynamic(
-  () => import("./components/LandingPage").then((mod) => mod.AccessoriesCards),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-)
-
-const LazyOurPromise = dynamic(
-  () =>
-    import("@modules/home/homepage/page/sections/OurPromise").then(
-      (mod) => mod.OurPromise
-    ),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-)
 
 export const ProductItem = ({
   product,
@@ -257,26 +226,18 @@ export const ProductItem = ({
 
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
-            <Suspense>
-              <LazyImageOnLeft />
-            </Suspense>
+            <ImageOnLeft />
           </div>
           <div className="w-full">
-            <Suspense>
-              <LazyAdvantages />
-            </Suspense>
+            <Advantages />
           </div>
           <div className="w-full">
-            <Suspense>
-              <LazyAccessoriesCards />
-            </Suspense>
+            <AccessoriesCards />
           </div>
         </div>
       </div>
       <div className="w-full">
-        <Suspense>
-          <LazyOurPromise />
-        </Suspense>
+        <OurPromise />
       </div>
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20">
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
