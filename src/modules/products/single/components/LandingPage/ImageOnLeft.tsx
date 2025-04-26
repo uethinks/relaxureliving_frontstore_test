@@ -1,5 +1,5 @@
 import React from "react"
-import YouTube from "react-youtube"
+import YouTubeWrapper from "../YouTubeWrapper"
 
 export const ImageOnLeft = (): JSX.Element => {
   const actualVideoId = "qtfijujZKO0"
@@ -18,23 +18,7 @@ export const ImageOnLeft = (): JSX.Element => {
           grown-ups alike!
         </p>
         <div className="w-full rounded-[20px] overflow-hidden">
-          {actualVideoId ? (
-            <YouTube
-              videoId={actualVideoId}
-              opts={{
-                height: "100%",
-                width: "100%",
-                playerVars: {
-                  autoplay: 0,
-                  controls: 1,
-                  modestbranding: 1,
-                  rel: 0,
-                  showinfo: 0,
-                },
-              }}
-              className="w-full aspect-video"
-            />
-          ) : null}
+          {actualVideoId ? <YouTubeWrapper videoId={actualVideoId} /> : null}
         </div>
       </div>
 

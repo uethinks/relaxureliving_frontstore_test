@@ -1,52 +1,206 @@
 "use client"
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { BuyNowButton } from "./BuyNowButton"
 import { PergulaSizeSelector } from "./PergulaSizeSelector"
 import { AccesorriesSelector } from "./AccesorriesSelector"
 import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { PergolaSize, selectedProducts } from "types/global"
+import { addToCart } from "@lib/data/cart"
+import { useRouter } from "next/navigation"
 
 interface ProductSelectorProps {
   product: StoreProduct
   accessories: StoreProduct[]
-  onVariantChange: (variant: StoreProductVariant | undefined) => void
-  onAccessoryToggle: ({
-    type,
-    selectedProducts,
-  }: {
-    type: string
-    selectedProducts: selectedProducts
-  }) => void
-  selectedVariant?: StoreProductVariant
-  selectedAccessoriesHeater: selectedProducts
-  selectedAccessoriesShades: selectedProducts
-  selectedAccessoriesGlassdoor: selectedProducts
-  pergolaSize: PergolaSize
-  pergolaQuantity: number
-  totalPrice: number
-  totalOriginalPrice: number
-  onQuantityChange: (quantity: number) => void
-  onBuyNow: () => void
   isMobile?: boolean
 }
 
 export const ProductSelector: React.FC<ProductSelectorProps> = ({
   product,
   accessories,
-  onVariantChange,
-  onAccessoryToggle,
-  selectedVariant,
-  selectedAccessoriesHeater,
-  selectedAccessoriesShades,
-  selectedAccessoriesGlassdoor,
-  pergolaSize,
-  pergolaQuantity,
-  totalPrice,
-  totalOriginalPrice,
-  onQuantityChange,
-  onBuyNow,
   isMobile = false,
 }) => {
+  const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
+  const [pergolaSize, setPergolaSize] = useState<PergolaSize>({
+    width: 0,
+    length: 0,
+  })
+  const [selectedAccessoriesHeater, setSelectedAccessoriesHeater] =
+    useState<selectedProducts>([])
+  const [selectedAccessoriesShades, setSelectedAccessoriesShades] =
+    useState<selectedProducts>([])
+  const [selectedAccessoriesGlassdoor, setSelectedAccessoriesGlassdoor] =
+    useState<selectedProducts>([])
+  const [pergolaQuantity, setPergolaQuantity] = useState(1)
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [totalOriginalPrice, setTotalOriginalPrice] = useState(0)
+
+  const router = useRouter()
+
+  useEffect(() => {
+    setPergolaSize({
+      width: selectedVariant?.width ?? 0,
+      length: selectedVariant?.length ?? 0,
+    })
+  }, [selectedVariant])
+
+  useEffect(() => {
+    setTotalPrice(
+      pergolaQuantity *
+        (selectedVariant?.calculated_price?.calculated_amount ?? 0)
+    )
+    setTotalOriginalPrice(
+      pergolaQuantity *
+        (selectedVariant?.calculated_price?.original_amount ?? 0)
+    )
+  }, [pergolaQuantity, selectedVariant])
+
+  useEffect(() => {
+    setSelectedAccessoriesShades([])
+    setSelectedAccessoriesGlassdoor([])
+  }, [selectedVariant])
+
+  const handleVariantChange = (variant: StoreProductVariant | undefined) => {
+    setSelectedVariant(variant)
+  }
+
+  const handleAccessoryToggle = ({
+    type,
+    selectedProducts,
+  }: {
+    type: string
+    selectedProducts: selectedProducts
+  }) => {
+    if (type === "Heating") {
+      setSelectedAccessoriesHeater(selectedProducts)
+    } else if (type === "Shades") {
+      setSelectedAccessoriesShades(selectedProducts)
+    } else if (type === "Glass door") {
+      setSelectedAccessoriesGlassdoor(selectedProducts)
+    }
+  }
+
+  const handleBuyNow = async () => {
+    try {
+      const results = await Promise.all([
+        buyPergula(),
+        buyHeater(),
+        buyShades(),
+        buyGlassdoor(),
+      ])
+
+      router.push("/cart")
+    } catch (error) {
+      console.error("Error adding items to cart:", error)
+    }
+  }
+
+  const buyPergula = async () => {
+    if (!selectedVariant?.id) return null
+
+    try {
+      const result = await addToCart({
+        variantId: selectedVariant.id,
+        quantity: pergolaQuantity,
+        countryCode: "us",
+      })
+      console.log("Pergola added to cart successfully:", result)
+      return result
+    } catch (error) {
+      console.error("Error adding pergola to cart:", error)
+      throw error
+    }
+  }
+
+  const buyHeater = async () => {
+    if (selectedAccessoriesHeater.length === 0) return null
+
+    const addToCartPromises = selectedAccessoriesHeater
+      .filter((item) => item.productVarant && item.quantity)
+      .map(async (item) => {
+        try {
+          const result = await addToCart({
+            variantId: item?.productVarant?.id ?? "",
+            quantity: item.quantity,
+            countryCode: "us",
+          })
+          console.log("Heater added to cart successfully:", result)
+          return result
+        } catch (error) {
+          console.error("Error adding heater to cart:", error)
+          throw error
+        }
+      })
+
+    try {
+      const results = await Promise.all(addToCartPromises)
+      console.log("All heaters added to cart successfully:", results)
+      return results
+    } catch (error) {
+      console.error("Error adding heaters to cart:", error)
+      throw error
+    }
+  }
+
+  const buyShades = async () => {
+    if (selectedAccessoriesShades.length === 0) return null
+
+    const addToCartPromises = selectedAccessoriesShades
+      .filter((item) => item.productVarant && item.quantity)
+      .map(async (item) => {
+        try {
+          const result = await addToCart({
+            variantId: item?.productVarant?.id ?? "",
+            quantity: item.quantity,
+            countryCode: "us",
+          })
+          console.log("Add to cart result:", result)
+          return result
+        } catch (error) {
+          console.error("Error adding item to cart:", error)
+          throw error
+        }
+      })
+
+    try {
+      const results = await Promise.all(addToCartPromises)
+      console.log("All shades added to cart successfully:", results)
+      return results
+    } catch (error) {
+      console.error("Error adding shades to cart:", error)
+      throw error
+    }
+  }
+
+  const buyGlassdoor = async () => {
+    if (selectedAccessoriesGlassdoor.length === 0) return null
+
+    const addToCartPromises = selectedAccessoriesGlassdoor
+      .filter((item) => item.productVarant && item.quantity)
+      .map(async (item) => {
+        try {
+          const result = await addToCart({
+            variantId: item?.productVarant?.id ?? "",
+            quantity: item.quantity,
+            countryCode: "us",
+          })
+          console.log("Glassdoor added to cart successfully:", result)
+          return result
+        } catch (error) {
+          console.error("Error adding glassdoor to cart:", error)
+          throw error
+        }
+      })
+
+    try {
+      const results = await Promise.all(addToCartPromises)
+      console.log("All glassdoors added to cart successfully:", results)
+      return results
+    } catch (error) {
+      console.error("Error adding glassdoors to cart:", error)
+      throw error
+    }
+  }
+
   const baseClasses = isMobile
     ? "mt-10 flex lg:hidden flex-col w-full items-start gap-2.5 p-2 md:p-5 relative bg-[#f3f3f3] rounded-[20px]"
     : "hidden lg:flex w-full lg:max-w-[36%] justify-end items-start gap-2.5 px-2.5 sticky top-0"
@@ -89,7 +243,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
               <div className="flex items-center gap-2.5 relative">
                 <button
                   onClick={() =>
-                    onQuantityChange(
+                    setPergolaQuantity(
                       pergolaQuantity > 1 ? pergolaQuantity - 1 : 1
                     )
                   }
@@ -101,7 +255,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
                   {pergolaQuantity}
                 </div>
                 <button
-                  onClick={() => onQuantityChange(pergolaQuantity + 1)}
+                  onClick={() => setPergolaQuantity(pergolaQuantity + 1)}
                   className="w-6 h-6 bg-white rounded-full border border-[#f3f3f3] flex items-center justify-center"
                 >
                   <span className="text-[#343a40] text-lg -mt-0.5">+</span>
@@ -114,11 +268,11 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
               product={product}
               className="!self-stretch !flex-[0_0_auto] !flex"
               property1="default"
-              onVariantChange={onVariantChange}
+              onVariantChange={handleVariantChange}
             />
             <AccesorriesSelector
               pergolaSize={pergolaSize}
-              onAccessoryChange={onAccessoryToggle}
+              onAccessoryChange={handleAccessoryToggle}
               accessories={accessories}
               selectedHeaterVariant={selectedAccessoriesHeater}
               selectedShadesVariant={selectedAccessoriesShades}
@@ -126,7 +280,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
             />
           </div>
           <BuyNowButton
-            onClick={onBuyNow}
+            onClick={handleBuyNow}
             property1="primary-button-l"
             text="Add to cart"
             className=""

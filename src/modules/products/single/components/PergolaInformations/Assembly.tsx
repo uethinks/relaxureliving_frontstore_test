@@ -1,5 +1,6 @@
+"use client"
 import React, { useState } from "react"
-import YouTube from "react-youtube"
+import YouTubeWrapper from "../YouTubeWrapper"
 
 interface Props {
   videoId?: string
@@ -138,22 +139,7 @@ export const AssemblyContainer = ({
         {/* Video Section - Always below */}
         <div className="w-full rounded-2xl overflow-hidden order-2">
           {actualVideoId ? (
-            <YouTube
-              videoId={actualVideoId}
-              opts={{
-                height: "100%",
-                width: "100%",
-                playerVars: {
-                  autoplay: 0,
-                  controls: 1,
-                  modestbranding: 1,
-                  rel: 0,
-                  showinfo: 0,
-                },
-              }}
-              onReady={onReady}
-              className="w-full aspect-video"
-            />
+            <YouTubeWrapper videoId={actualVideoId} onReady={onReady} />
           ) : (
             <div className="w-full aspect-video bg-gray-100 flex items-center justify-center text-gray-500">
               请提供有效的 YouTube 视频 ID 或 URL
