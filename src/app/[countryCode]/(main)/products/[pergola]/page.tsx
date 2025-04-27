@@ -1,14 +1,17 @@
 import { notFound } from "next/navigation"
-import {
-  getProductByProductType,
-  getProductByHandle,
-  getProductsListFromStoreApi,
-} from "@lib/data/products"
+import { getProductByProductId } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { ProductItem } from "@modules/products/single"
-import { StoreProductListParams } from "@medusajs/types"
-import { listProductsForStaticParams } from "@lib/data/products"
 import { getPergola } from "@lib/cms/strapiCmsApi"
+import { StoreProduct, StoreProductResponse } from "@medusajs/types"
+
+type ProductInformation = {
+  id: number
+  productTitle: string
+  productSubtitle: string
+  productDescription: string
+  urlLink: string
+}
 
 type Props = Readonly<{
   params: Promise<{ countryCode: string; pergola: string }>
@@ -16,32 +19,16 @@ type Props = Readonly<{
 
 export async function generateStaticParams() {
   const pergolaData = await getPergola()
-  console.log("pergolaData", pergolaData)
-  const region = await getRegion("us")
 
-  if (!region) {
+  if (!pergolaData?.data?.productInformations) {
     return []
   }
 
-  const { response } = await listProductsForStaticParams({
-    countryCode: "us",
-    regionId: region.id,
-  })
-
-  return response.products.map((product) => ({
-    countryCode: "us",
-    pergola: product.handle,
-  }))
-}
-
-async function getProductsForAccessory({ regionId }: { regionId: string }) {
-  const queryParams: StoreProductListParams = {
-    fields: `*variants.calculated_price`,
-    region_id: regionId,
-    type_id: "ptyp_01JPP7MCZ9JAQNZJ55V91XWCSY",
-  }
-  return await getProductByProductType({ queryParams }).then(
-    ({ products }) => products
+  return pergolaData?.data?.productInformations.map(
+    (product: ProductInformation) => ({
+      countryCode: "us",
+      pergola: product.urlLink,
+    })
   )
 }
 
@@ -52,18 +39,70 @@ export default async function ProductPage(props: Props) {
     notFound()
   }
 
-  const { products } = await getProductByHandle({
-    queryParams: {
-      fields: `*variants.calculated_price`,
-      region_id: region.id,
-      handle: params.pergola,
-    },
-  })
-  const accessories = await getProductsForAccessory({
-    regionId: region.id,
-  })
-  if (!products.length) {
+  // 获取主 pergola 数据
+  const pergolaData = await getPergola().catch(() => null)
+  if (!pergolaData) {
     notFound()
   }
-  return <ProductItem product={products[0]} accessories={accessories} />
+  console.log("pergolaData", pergolaData)
+  // 获取当前产品的信息
+  const currentProductInfo = pergolaData.data.productInformations.find(
+    (product: ProductInformation) => product.urlLink === params.pergola
+  )
+  if (!currentProductInfo) {
+    notFound()
+  }
+
+  // 获取相关产品数据
+  const { relatedProductIds } = pergolaData.data
+  const [mainProduct, heaterProduct, shadesProduct, glassDoorProduct] =
+    await Promise.all([
+      getProductByProductId({
+        productId: relatedProductIds.pergolaId,
+        queryParams: {
+          fields: `*variants.calculated_price`,
+          region_id: region.id,
+        },
+      }),
+      getProductByProductId({
+        productId: relatedProductIds.heaterId,
+        queryParams: {
+          fields: `*variants.calculated_price`,
+          region_id: region.id,
+        },
+      }),
+      getProductByProductId({
+        productId: relatedProductIds.shadesId,
+        queryParams: {
+          fields: `*variants.calculated_price`,
+          region_id: region.id,
+        },
+      }),
+      getProductByProductId({
+        productId: relatedProductIds.glassDoorId,
+        queryParams: {
+          fields: `*variants.calculated_price`,
+          region_id: region.id,
+        },
+      }),
+    ])
+  console.log("mainProduct", mainProduct)
+  if (!mainProduct) {
+    notFound()
+  }
+
+  // 将 StoreProductResponse 转换为 StoreProduct
+  const mainProductData = mainProduct.product as unknown as StoreProduct
+  const accessoriesData = [heaterProduct, shadesProduct, glassDoorProduct].map(
+    (product) => product.product as unknown as StoreProduct
+  )
+  console.log("currentProductInfo", currentProductInfo)
+  return (
+    <ProductItem
+      product={mainProductData}
+      accessories={accessoriesData}
+      pergolaData={pergolaData.data}
+      currentProductInfo={currentProductInfo}
+    />
+  )
 }

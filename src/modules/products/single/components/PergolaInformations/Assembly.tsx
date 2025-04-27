@@ -1,8 +1,9 @@
 "use client"
 import React, { useState } from "react"
 import YouTubeWrapper from "../YouTubeWrapper"
-
+import { PergolaData } from "@/types/global"
 interface Props {
+  pergolaData: PergolaData
   videoId?: string
   videoUrl?: string // 新增：支持直接传入 YouTube URL
 }
@@ -28,6 +29,7 @@ const extractYouTubeId = (url: string): string | null => {
 }
 
 export const AssemblyContainer = ({
+  pergolaData,
   videoId,
   videoUrl = "https://youtu.be/ZwKTt2-D1mk", // 替换为你的默认视频
 }: Props): JSX.Element => {
@@ -42,32 +44,15 @@ export const AssemblyContainer = ({
     console.warn("No valid YouTube video ID provided")
   }
 
-  const videoSections = [
-    {
-      id: 1,
-      title: "Installation",
-      description: "Install posts & beams ",
-      timeStamp: 0,
-    },
-    {
-      id: 2,
-      title: "Installation",
-      description: "Mount the louvers ",
-      timeStamp: 29,
-    },
-    {
-      id: 3,
-      title: "Installation",
-      description: "Install the transmission rod ",
-      timeStamp: 68,
-    },
-    {
-      id: 4,
-      title: "Installation",
-      description: "Attach the cover caps ",
-      timeStamp: 85,
-    },
-  ]
+  const videoSections = pergolaData.putItTogether.youtubeButtons.map(
+    (button) => ({
+      id: button.id,
+      numberOfButton: button.numberOfButton,
+      title: button.tittle,
+      description: button.description,
+      timeStamp: button.percentage,
+    })
+  )
 
   const onReady = (event: any) => {
     setPlayer(event.target)
@@ -86,19 +71,17 @@ export const AssemblyContainer = ({
     <div className="flex w-full flex-col gap-4">
       <div className="flex flex-col items-start justify-center gap-2.5 px-0 relative self-stretch w-full flex-[0_0_auto]">
         <div className="relative flex-1 mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
-          Easy assembly in 1-4 steps:
+          {pergolaData.putItTogether.title}
         </div>
         <div className="flex flex-col items-start justify-center gap-2.5 px-0 relative self-stretch w-full flex-[0_0_auto] lg:mt-[30px]">
-          <p className="text-[#69727a] text-[14px] lg:text-[18px] font-relaxure-sub-heading-18 font-[500]">
-            In just 2-3 Hours, gather your friends, transform your Saturday
-            project into Saturday evening entertainment.
-          </p>
-          <p className="text-[#69727a] text-[14px] lg:text-[18px] font-relaxure-sub-heading-18 font-[500]">
-            Simple, smart, and stress-free! Our pre-assembled modular sections
-            connect like building blocks. No extra trips, no missing parts.
-            Everything's included. And for reinstallation, your Corsica pergola
-            is strong and solid enough to ensure it is just as easy.
-          </p>
+          {pergolaData.putItTogether.descriptions.map((item, index) => (
+            <p
+              key={index}
+              className="text-[#69727a] text-[14px] lg:text-[18px] font-relaxure-sub-heading-18 font-[500]"
+            >
+              {item.multiDescriptions}
+            </p>
+          ))}
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-between w-full gap-6">
@@ -122,7 +105,7 @@ export const AssemblyContainer = ({
                 }`}
               >
                 <span className="text-[18px] md:text-xl font-medium font-montserrat">
-                  {String(section.id).padStart(2, "0")}
+                  {String(section.numberOfButton).padStart(2, "0")}
                 </span>
               </div>
 
@@ -151,9 +134,14 @@ export const AssemblyContainer = ({
   )
 }
 
-export const Assembly = (): JSX.Element => {
+export const Assembly = ({
+  pergolaData,
+}: {
+  pergolaData: PergolaData
+}): JSX.Element => {
   return (
     <AssemblyContainer
+      pergolaData={pergolaData}
       // 两种方式都可以：
       // 方式1：直接传入视频 ID
       // videoId="ABC12345678"

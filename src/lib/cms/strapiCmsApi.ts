@@ -24,11 +24,13 @@ const pergolaPopulate = {
     "populate[productInformations]": "*",
     "populate[relatedProductIds]": "*",
     "populate[descriptionTab][populate][0]": "image",
+    "populate[descriptionTab][populate][1]": "descriptions",
     "populate[putItTogether][populate][youtubeButtons]": "*",
+    "populate[putItTogether][populate][descriptions]": "*",
     "populate[productFeatures][populate][featureItem][populate][0]": "image",
-    "populate[notJustAPrettyFace][populate][notJustAPrettyFaceItem][populate][notJustPrettyFaceIconContent]": "icon",
+    "populate[notJustAPrettyFace][populate][notJustAPrettyFaceItem][populate][notJustPrettyFaceIconContent][populate][0]": "icon",
     "populate[productAccessories][populate][productAccessoryItem][populate][0]": "image",
-    "populate[boringButImportantStuff][populate][Promise][populate][0]": "icon",
+    "populate[boringButImportantStuff][populate][Promise][populate][0]": "Icon",
 };
 
 export const API_URLS = {

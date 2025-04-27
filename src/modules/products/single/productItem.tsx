@@ -9,18 +9,30 @@ import {
   AccessoriesCards,
 } from "./components/LandingPage"
 import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
+import { PergolaData, ProductInformation } from "@/types/global"
+
+interface ProductItemProps {
+  product: StoreProduct
+  accessories: StoreProduct[]
+  pergolaData: PergolaData
+  currentProductInfo: ProductInformation
+}
 
 export const ProductItem = ({
   product,
   accessories,
-}: {
-  product: StoreProduct
-  accessories: StoreProduct[]
-}): JSX.Element => {
+  pergolaData,
+  currentProductInfo,
+}: ProductItemProps): JSX.Element => {
   return (
     <>
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1910px] px-4 lg:px-20">
-        <FirstScreen product={product} accessories={accessories} />
+        <FirstScreen
+          product={product}
+          accessories={accessories}
+          currentProductInfo={currentProductInfo}
+          pergolaData={pergolaData}
+        />
 
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
