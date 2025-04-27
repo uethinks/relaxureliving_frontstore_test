@@ -36,10 +36,10 @@ export const ProductItem = ({
 
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
-            <ImageOnLeft />
+            <ImageOnLeft pergolaData={pergolaData} />
           </div>
           <div className="w-full">
-            <Advantages />
+            <Advantages pergolaData={pergolaData} />
           </div>
           <div className="w-full">
             <AccessoriesCards />

@@ -28,21 +28,12 @@ const extractYouTubeId = (url: string): string | null => {
   return null
 }
 
-export const AssemblyContainer = ({
-  pergolaData,
-  videoId,
-  videoUrl = "https://youtu.be/ZwKTt2-D1mk", // 替换为你的默认视频
-}: Props): JSX.Element => {
-  const [currentTime, setCurrentTime] = useState(0)
+export const AssemblyContainer = ({ pergolaData }: Props): JSX.Element => {
   const [player, setPlayer] = useState<any>(null)
   const [activeSection, setActiveSection] = useState(1)
 
   // 获取实际使用的视频 ID
-  const actualVideoId = videoId || extractYouTubeId(videoUrl)
-
-  if (!actualVideoId) {
-    console.warn("No valid YouTube video ID provided")
-  }
+  const actualVideoId = pergolaData.putItTogether.youtubeCode || "ZwKTt2-D1mk"
 
   const videoSections = pergolaData.putItTogether.youtubeButtons.map(
     (button) => ({
@@ -139,14 +130,5 @@ export const Assembly = ({
 }: {
   pergolaData: PergolaData
 }): JSX.Element => {
-  return (
-    <AssemblyContainer
-      pergolaData={pergolaData}
-      // 两种方式都可以：
-      // 方式1：直接传入视频 ID
-      // videoId="ABC12345678"
-      // 方式2：传入视频 URL
-      videoUrl="https://youtu.be/ZwKTt2-D1mk"
-    />
-  )
+  return <AssemblyContainer pergolaData={pergolaData} />
 }
