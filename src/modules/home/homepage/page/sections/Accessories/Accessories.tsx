@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from "react"
 import { AddAccessories } from "./AddAccessories"
 import { ImageText } from "./ImageText"

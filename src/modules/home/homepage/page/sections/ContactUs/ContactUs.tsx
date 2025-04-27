@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react"
 import { submitContactForm } from "@lib/cms/strapiCmsApi"
 import { Image } from "types/global"

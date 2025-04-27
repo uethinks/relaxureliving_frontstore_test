@@ -1,3 +1,4 @@
+"use client"
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useState, useCallback } from "react"
 import { features, featureSlider } from "types/global"

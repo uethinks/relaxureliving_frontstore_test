@@ -29,7 +29,8 @@ export const OurPromise = ({
 }: {
   pergolaData: PergolaData
 }): JSX.Element => {
-  const promiseCards = pergolaData?.boringButImportantStuff?.Promise || []
+  const boringButImportantStuff = pergolaData?.boringButImportantStuff
+  const promiseCards = boringButImportantStuff?.Promise || []
   const strapiBaseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 
   return (
@@ -39,12 +40,10 @@ export const OurPromise = ({
           {/* Left Section */}
           <div className="flex flex-col justify-start items-start text-center lg:text-left gap-5 w-full md:w-[600px] lg:w-1/3 mb-10 lg:mb-0">
             <h2 className="text-[#343a40] text-[18px] font-heading-2 lg:text-[36px] font-bold mx-auto lg:mx-0">
-              The Boring But Important Stuff
+              {boringButImportantStuff?.Title}111
             </h2>
             <p className="text-[#68717a] text-[18px] font-relaxure-sub-heading-18">
-              These details might not be flashy, but they're why you'll love
-              your Relaxure pergola from the day it arrives and for decades
-              more!
+              {boringButImportantStuff?.Description}
             </p>
           </div>
 
