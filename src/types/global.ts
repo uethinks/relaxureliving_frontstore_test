@@ -244,6 +244,9 @@ export type ProductAccessoryItem = {
 // 产品配件类型
 export type ProductAccessories = {
   id: number
+  title: string
+  subtitle: string
+  description: string
   productAccessoryItem: ProductAccessoryItem[]
 }
 

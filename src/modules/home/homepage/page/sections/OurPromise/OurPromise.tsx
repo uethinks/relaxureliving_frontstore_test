@@ -1,5 +1,5 @@
 import React from "react"
-
+import { PergolaData } from "@/types/global"
 interface PromiseCardProps {
   icon: string
   description: string
@@ -24,33 +24,13 @@ const PromiseCard: React.FC<PromiseCardProps> = ({
   )
 }
 
-export const OurPromise = (): JSX.Element => {
-  const promiseCards = [
-    {
-      icon: "/img/calendar.png",
-      title: "Built to Last",
-      description:
-        "We use only commercial-grade aluminum and stainless steel hardware —the same materials used in high-end commercial buildings where cutting corners isn't an option. Our premium powder coating is designed for permanent long-term outdoor use so colors don't fade, scratch, or fall off.",
-    },
-    {
-      icon: "/img/checked.png",
-      title: "Industry-Leading Warranty",
-      description:
-        "Our 15-year total warranty is three times the industry standard, reflecting our confidence in every weld, joint, and component—because we'd rather spend money on quality materials than warranty claims.",
-    },
-    {
-      icon: "/img/car.png",
-      title: "Hassle-Free Delivery",
-      description:
-        "Your pergola ships within 2 days—completely free!—and arrives at your door in clearly labeled, fully protected packaging. We coordinate delivery timing with you and ensure all components arrive together—so your outdoor transformation can begin right away without waiting or wondering.",
-    },
-    {
-      icon: "/img/barge.png",
-      title: "Quick-Assembly Design",
-      description:
-        "Our pre-assembled modular sections connect like building blocks, allowing installation in just 2-3 hours with clear instructions and video guidance—transforming your Saturday project into Saturday evening entertainment.",
-    },
-  ]
+export const OurPromise = ({
+  pergolaData,
+}: {
+  pergolaData: PergolaData
+}): JSX.Element => {
+  const promiseCards = pergolaData?.boringButImportantStuff?.Promise || []
+  const strapiBaseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 
   return (
     <div className="w-full bg-[#F3F3F3] mt-10 lg:mt-[120px]">
@@ -73,9 +53,9 @@ export const OurPromise = (): JSX.Element => {
             {promiseCards.map((card, index) => (
               <PromiseCard
                 key={index}
-                icon={card.icon}
-                title={card.title}
-                description={card.description}
+                icon={`${strapiBaseUrl}${card.Icon.url}`}
+                title={card.Title}
+                description={card.Description}
               />
             ))}
           </div>
