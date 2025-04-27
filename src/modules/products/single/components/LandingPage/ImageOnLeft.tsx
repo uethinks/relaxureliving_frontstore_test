@@ -8,7 +8,6 @@ export const ImageOnLeft = ({
 }): JSX.Element => {
   const productFeatures = pergolaData?.productFeatures
   const actualVideoId = productFeatures?.youtubeCode || "qtfijujZKO0"
-  console.log("productFeatures", productFeatures)
   const strapiBaseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
   return (
     <div className="w-full inline-flex flex-col items-center gap-[60px] relative mt-10">

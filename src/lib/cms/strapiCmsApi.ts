@@ -10,6 +10,7 @@ const homePagePopulate = {
     "populate[ContactUs][populate][0]": "Image",
     "populate[Features][populate][FeaturesSlider][populate][0]": "Image",
     "populate[Accessories][populate][slider][populate][0]": "largeImage",
+    "populate[OurPromise][populate][Promise][populate][0]": "Icon",
     "populate[Accessories][populate][slider][populate][1]": "smallImage",
     "populate[OurBlog][populate][articles][populate][cover][populate]": "*",
     "populate[OurBlog][populate][articles][populate][author][populate]": "*",

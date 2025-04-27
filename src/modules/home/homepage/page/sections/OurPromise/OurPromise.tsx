@@ -40,7 +40,7 @@ export const OurPromise = ({
           {/* Left Section */}
           <div className="flex flex-col justify-start items-start text-center lg:text-left gap-5 w-full md:w-[600px] lg:w-1/3 mb-10 lg:mb-0">
             <h2 className="text-[#343a40] text-[18px] font-heading-2 lg:text-[36px] font-bold mx-auto lg:mx-0">
-              {boringButImportantStuff?.Title}111
+              {boringButImportantStuff?.Title}
             </h2>
             <p className="text-[#68717a] text-[18px] font-relaxure-sub-heading-18">
               {boringButImportantStuff?.Description}

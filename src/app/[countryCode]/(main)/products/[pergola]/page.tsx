@@ -44,7 +44,6 @@ export default async function ProductPage(props: Props) {
   if (!pergolaData) {
     notFound()
   }
-  console.log("pergolaData", pergolaData)
   // 获取当前产品的信息
   const currentProductInfo = pergolaData.data.productInformations.find(
     (product: ProductInformation) => product.urlLink === params.pergola
@@ -86,7 +85,6 @@ export default async function ProductPage(props: Props) {
         },
       }),
     ])
-  console.log("mainProduct", mainProduct)
   if (!mainProduct) {
     notFound()
   }
@@ -96,7 +94,6 @@ export default async function ProductPage(props: Props) {
   const accessoriesData = [heaterProduct, shadesProduct, glassDoorProduct].map(
     (product) => product.product as unknown as StoreProduct
   )
-  console.log("currentProductInfo", currentProductInfo)
   return (
     <ProductItem
       product={mainProductData}
