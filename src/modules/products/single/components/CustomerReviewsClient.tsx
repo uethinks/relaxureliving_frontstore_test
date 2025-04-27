@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react"
 import Image from "next/image"
 import { ImageReviewModal } from "./ImageReviewModal"
-import { getReviews } from "../../../../lib/cms/strapiCmsApi"
 import { Image as ImageType } from "../../../../types/global"
+
 export interface ReviewType {
   id: string
   stars: number
@@ -18,6 +18,7 @@ export interface ReviewType {
 
 interface CustomerReviewsProps {
   productId?: string
+  reviews: ReviewType[]
 }
 
 const StarRating = ({ rating }: { rating: number }) => {
@@ -33,12 +34,15 @@ const StarRating = ({ rating }: { rating: number }) => {
     </div>
   )
 }
+
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
-export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
+
+export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   productId,
+  reviews: initialReviews,
 }) => {
-  const [reviews, setReviews] = useState<ReviewType[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [reviews, setReviews] = useState<ReviewType[]>(initialReviews)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -70,43 +74,6 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const currentReviews = reviews.slice(startIndex, endIndex)
-
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await getReviews()
-        const productionReviews = response.data.find((review: any) =>
-          review.name?.includes("production page")
-        )
-        const transformedReviews = productionReviews?.testimonials_item?.map(
-          (review: any) => ({
-            id: review.id.toString(),
-            stars: review.stars,
-            date: new Date(review.date).toLocaleDateString(),
-            name: review.name,
-            title: review.title,
-            review: review.review,
-            image: review.image,
-            relaxure_team: review.relaxure_team,
-          })
-        )
-        // Sort reviews by date in descending order
-        const sortedReviews = transformedReviews?.sort(
-          (a: ReviewType, b: ReviewType) => {
-            return new Date(b.date).getTime() - new Date(a.date).getTime()
-          }
-        )
-        setReviews(sortedReviews || [])
-      } catch (err) {
-        setError("Failed to load reviews")
-        console.error("Error fetching reviews:", err)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchReviews()
-  }, [])
 
   const averageRating =
     reviews.length > 0

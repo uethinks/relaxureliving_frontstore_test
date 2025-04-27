@@ -2,7 +2,7 @@ import React from "react"
 import { FirstScreen } from "./components/FirstScreen"
 import { StoreProduct } from "@medusajs/types"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
-import { CustomerReviews } from "./components/CustomerReviews"
+import { CustomerReviewsServer } from "./components/CustomerReviewsServer"
 import {
   ImageOnLeft,
   Advantages,
@@ -52,7 +52,7 @@ export const ProductItem = ({
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20">
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
-            <CustomerReviews />
+            <CustomerReviewsServer />
           </div>
         </div>
       </div>
