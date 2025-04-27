@@ -14,7 +14,6 @@ export const ProductCard = (): JSX.Element | null => {
   }>({})
   const [isUpdating, setIsUpdating] = useState(false)
 
-  console.log("cart ProductCard", cart)
   const pergola = useMemo(() => {
     if (!cart?.items) return []
     return cart.items.filter((item) => {

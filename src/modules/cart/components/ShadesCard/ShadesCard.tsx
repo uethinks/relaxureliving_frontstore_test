@@ -17,7 +17,6 @@ export const ShadesCard = (): JSX.Element | null => {
 
   useEffect(() => {
     getCart().then((cart) => {
-      console.log("ShadesCard", cart)
       setCart(cart)
     })
   }, [])

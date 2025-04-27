@@ -198,7 +198,6 @@ export const Checkout = () => {
     try {
       // 1. 首先获取购物车
       const currentCart = await getCart()
-      console.log("currentCart", currentCart)
       if (!currentCart) return null
 
       // 2. 更新购物车状态
@@ -267,7 +266,6 @@ export const Checkout = () => {
             },
           }
         )
-        console.log("paymentSession", paymentSession)
 
         // 6. 创建 Drop-in Element
         const element = await payments.createElement("dropIn", {
@@ -310,7 +308,6 @@ export const Checkout = () => {
 
       // 8. 监听事件
       element.on("success", (event: any) => {
-        console.log("Payment successful:", event)
         handlePaymentComplete()
       })
 
@@ -343,7 +340,6 @@ export const Checkout = () => {
   // 修改 handlePaymentComplete 使用 ref
   const handlePaymentComplete = async () => {
     if (cart) {
-      console.log("Form data before update:", formDataRef.current)
       // Update cart with form data before placing order
       await updateCart({
         email: formDataRef.current.email,
@@ -380,7 +376,6 @@ export const Checkout = () => {
                   type="email"
                   value={formData.email}
                   onChange={(e) => {
-                    console.log("Email input changed:", e.target.value)
                     handleInputChange("email", e.target.value)
                   }}
                 />

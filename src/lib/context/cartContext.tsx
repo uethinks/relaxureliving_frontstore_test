@@ -68,7 +68,6 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const addVariant = async (variantInfo: variantInfo) => {
     try {
-      console.log("addVariant", variantInfo)
       const updatedCart = await addToCart(variantInfo)
       setCart(updatedCart)
     } catch (error) {
@@ -95,7 +94,6 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     quantity: number
   }) => {
     try {
-      console.log("updateVariantInfo", lineId, quantity)
       const updatedCart = await updateLineItem({ lineId, quantity })
       setCart(updatedCart)
     } catch (error) {

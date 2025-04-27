@@ -17,7 +17,6 @@ export const GlassDoorCard = (): JSX.Element | null => {
 
   useEffect(() => {
     getCart().then((cart) => {
-      console.log("GlassDoorCard", cart)
       setCart(cart)
     })
   }, [])

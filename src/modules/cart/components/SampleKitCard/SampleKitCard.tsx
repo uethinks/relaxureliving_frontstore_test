@@ -18,7 +18,6 @@ export const SampleKitCard = (): JSX.Element | null => {
 
   useEffect(() => {
     getCart().then((cart) => {
-      console.log("SampleKitCard", cart)
       setCart(cart)
     })
   }, [])

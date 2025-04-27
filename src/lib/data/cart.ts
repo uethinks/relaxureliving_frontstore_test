@@ -245,7 +245,6 @@ export async function initiatePaymentSession(
   const headers = {
     ...(await getAuthHeaders()),
   }
-  console.log("initiatePaymentSession", cart, data)
   return sdk.store.payment
     .initiatePaymentSession(cart, data, {}, headers)
     .then(async (resp) => {

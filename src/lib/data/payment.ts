@@ -16,7 +16,6 @@ export const listCartPaymentMethods = async (regionId: string) => {
     region_id: regionId
   })
   .then(({ payment_providers, count, offset, limit }) => {
-    console.log("payment_providers", payment_providers)
     return payment_providers
   })
 }

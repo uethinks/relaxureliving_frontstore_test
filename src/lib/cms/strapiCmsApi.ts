@@ -20,6 +20,17 @@ const reviewsPopulate = {
     "populate[testimonials_item][populate][0]": "image",
 };
 
+const pergolaPopulate = {
+    "populate[productInformations]": "*",
+    "populate[relatedProductIds]": "*",
+    "populate[descriptionTab][populate][0]": "image",
+    "populate[putItTogether][populate][youtubeButtons]": "*",
+    "populate[productFeatures][populate][featureItem][populate][0]": "image",
+    "populate[notJustAPrettyFace][populate][notJustAPrettyFaceItem][populate][notJustPrettyFaceIconContent]": "icon",
+    "populate[productAccessories][populate][productAccessoryItem][populate][0]": "image",
+    "populate[boringButImportantStuff][populate][Promise][populate][0]": "icon",
+};
+
 export const API_URLS = {
   getHomePage: '/api/home-page',
   getWarranty: '/api/warranty',
@@ -28,6 +39,7 @@ export const API_URLS = {
   getRefundPolicy: '/api/refund-policy',
   getReviews: '/api/testimonials-plural',
   submitContact: '/api/contact-submissions',
+  getPergola: '/api/pergola',
 };
 
 // 获取所有项目
@@ -80,6 +92,19 @@ export const getReviews = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching reviews:', error);
+    throw error;
+  }
+};
+
+// 获取 Pergola 数据
+export const getPergola = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getPergola, {
+        params: pergolaPopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching pergola data:', error);
     throw error;
   }
 };

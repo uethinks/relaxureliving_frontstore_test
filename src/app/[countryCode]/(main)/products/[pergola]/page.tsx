@@ -8,12 +8,15 @@ import { getRegion } from "@lib/data/regions"
 import { ProductItem } from "@modules/products/single"
 import { StoreProductListParams } from "@medusajs/types"
 import { listProductsForStaticParams } from "@lib/data/products"
+import { getPergola } from "@lib/cms/strapiCmsApi"
 
 type Props = Readonly<{
   params: Promise<{ countryCode: string; pergola: string }>
 }>
 
 export async function generateStaticParams() {
+  const pergolaData = await getPergola()
+  console.log("pergolaData", pergolaData)
   const region = await getRegion("us")
 
   if (!region) {

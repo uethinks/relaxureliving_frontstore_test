@@ -5,7 +5,6 @@ import { useCart } from "@lib/context/cartContext"
 import { useRouter } from "next/navigation"
 export const OrderSummary = (): JSX.Element => {
   const { cart } = useCart()
-  console.log("OrderSummary cart", cart)
   const router = useRouter()
   return (
     <div className="flex flex-col w-full items-start gap-2.5 px-2.5">

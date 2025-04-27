@@ -100,8 +100,6 @@ export default async function AccessoriesPage(props: Props) {
     notFound()
   }
 
-  console.log("Pergola product:", products[0])
-
   // Get accessories data
   const accessories = await getProductsForAccessory({
     regionId: region.id,
@@ -112,8 +110,6 @@ export default async function AccessoriesPage(props: Props) {
     width: products[0].width || 0,
     length: products[0].length || 0,
   }
-
-  console.log("Pergola size:", pergolaSize)
 
   return (
     <>

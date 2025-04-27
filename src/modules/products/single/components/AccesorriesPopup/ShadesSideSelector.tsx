@@ -37,10 +37,8 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
         newSelectedSides = [...selectedSides, sideStr]
       }
     }
-    console.log("newSelectedSides", newSelectedSides)
     onSideSelect(newSelectedSides)
   }
-  console.log("selectedSides", selectedSides)
 
   if (isSquare) {
     return (

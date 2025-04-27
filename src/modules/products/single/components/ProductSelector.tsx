@@ -103,7 +103,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
         quantity: pergolaQuantity,
         countryCode: "us",
       })
-      console.log("Pergola added to cart successfully:", result)
       return result
     } catch (error) {
       console.error("Error adding pergola to cart:", error)
@@ -123,7 +122,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
             quantity: item.quantity,
             countryCode: "us",
           })
-          console.log("Heater added to cart successfully:", result)
           return result
         } catch (error) {
           console.error("Error adding heater to cart:", error)
@@ -133,7 +131,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
     try {
       const results = await Promise.all(addToCartPromises)
-      console.log("All heaters added to cart successfully:", results)
       return results
     } catch (error) {
       console.error("Error adding heaters to cart:", error)
@@ -153,7 +150,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
             quantity: item.quantity,
             countryCode: "us",
           })
-          console.log("Add to cart result:", result)
           return result
         } catch (error) {
           console.error("Error adding item to cart:", error)
@@ -163,7 +159,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
     try {
       const results = await Promise.all(addToCartPromises)
-      console.log("All shades added to cart successfully:", results)
       return results
     } catch (error) {
       console.error("Error adding shades to cart:", error)
@@ -183,7 +178,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
             quantity: item.quantity,
             countryCode: "us",
           })
-          console.log("Glassdoor added to cart successfully:", result)
           return result
         } catch (error) {
           console.error("Error adding glassdoor to cart:", error)
@@ -193,7 +187,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
     try {
       const results = await Promise.all(addToCartPromises)
-      console.log("All glassdoors added to cart successfully:", results)
       return results
     } catch (error) {
       console.error("Error adding glassdoors to cart:", error)

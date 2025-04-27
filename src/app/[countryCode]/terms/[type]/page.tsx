@@ -102,7 +102,6 @@ export default async function TermsPage({
   const { title } = termsTypes[type]
 
   try {
-    console.log(`Fetching terms data for type: ${type}`)
     const termsData = await getAllTerms()
 
     if (!termsData) {
