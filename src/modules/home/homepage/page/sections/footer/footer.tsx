@@ -73,7 +73,7 @@ export const FooterDark = ({
                     <div className="relative w-[47px] h-[45px] bg-[url('/img/insta.png')] bg-cover"></div>
                   </Link>
                   <Link href="https://www.youtube.com/@Relaxure-Pergola">
-                    <div className="relative w-[47px] h-[45px] bg-[url('/img/Youtube.png')] bg-cover"></div>
+                    <div className="relative w-[47px] h-[45px] bg-[url('/img/youtube.png')] bg-cover"></div>
                   </Link>
                 </div>
               </div>
