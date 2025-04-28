@@ -48,18 +48,19 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(9) // Default for large screens
+  const [imagesToShow, setImagesToShow] = useState(7) // 默认大屏
 
   // Update items per page based on screen size
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1280) {
-        // xl screens
+        setImagesToShow(7)
         setItemsPerPage(9)
       } else if (window.innerWidth >= 768) {
-        // md screens
+        setImagesToShow(4)
         setItemsPerPage(8)
       } else {
-        // sm screens
+        setImagesToShow(1)
         setItemsPerPage(4)
       }
     }
@@ -196,26 +197,21 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
       {/* Customer Photos Section */}
       <div className="mb-16 flex flex-col items-center">
         <div className="flex gap-4 overflow-x-auto pb-4">
-          {reviewsWithImages
-            .slice(
-              0,
-              window.innerWidth >= 1280 ? 7 : window.innerWidth >= 768 ? 4 : 1
-            )
-            .map((review, index) => (
-              <div
-                key={review.id}
-                className="min-w-[120px] h-[120px] relative rounded-lg overflow-hidden cursor-pointer"
-                onClick={() => handleImageClick(index)}
-              >
-                {review.image?.[0]?.formats?.small?.url && (
-                  <img
-                    src={`${strapiUrl}${review.image[0].formats.small.url}`}
-                    alt="Customer review photo"
-                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
-                  />
-                )}
-              </div>
-            ))}
+          {reviewsWithImages.slice(0, imagesToShow).map((review, index) => (
+            <div
+              key={review.id}
+              className="min-w-[120px] h-[120px] relative rounded-lg overflow-hidden cursor-pointer"
+              onClick={() => handleImageClick(index)}
+            >
+              {review.image?.[0]?.formats?.small?.url && (
+                <img
+                  src={`${strapiUrl}${review.image[0].formats.small.url}`}
+                  alt="Customer review photo"
+                  className="w-full h-full object-cover hover:opacity-90 transition-opacity"
+                />
+              )}
+            </div>
+          ))}
           <button
             onClick={handleSeeMoreClick}
             className="min-w-[120px] h-[120px] bg-gray-50 rounded-lg flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
