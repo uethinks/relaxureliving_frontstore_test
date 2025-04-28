@@ -66,33 +66,14 @@ export const FooterDark = ({
                 </div>
 
                 <div className="relative flex flex-wrap justify-end items-center gap-5">
-                  <Link href="https://www.instagram.com/relaxureliving/">
-                    <div className="w-[47px] h-[45px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/oval-copy.svg)] bg-cover">
-                      <div className="relative w-[14px] h-[13px] top-[16px] left-[17px]">
-                        <div className="relative h-[13px]">
-                          <img
-                            className="absolute w-[2px] h-[2px] top-[2px] left-[10px]"
-                            alt="Oval"
-                            src="https://c.animaapp.com/ipQflS1Z/img/oval.svg"
-                          />
-                          <img
-                            className="absolute w-[7px] h-[6px] top-[3px] left-[3px]"
-                            alt="Shape"
-                            src="https://c.animaapp.com/ipQflS1Z/img/shape-1.svg"
-                          />
-                          <img
-                            className="absolute w-[14px] h-[13px] top-0 left-0"
-                            alt="Shape"
-                            src="https://c.animaapp.com/ipQflS1Z/img/shape-2.svg"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                  <Link href="https://www.facebook.com/profile.php?id=61570952814126&mibextid=wwXIfr&mibextid=wwXIfr">
+                    <div className="relative w-[47px] h-[45px] bg-[url('/img/facebook.png')] bg-cover"></div>
                   </Link>
-                  <Link href="https://www.youtube.com/@Relaxure-m1z">
-                    <div className="relative w-[47px] h-[45px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/twitter@2x.png)] bg-cover">
-                      <div className="relative w-[17px] h-[11px] top-[17px] left-[16px] bg-[url(https://c.animaapp.com/ipQflS1Z/img/shape.svg)] bg-cover" />
-                    </div>
+                  <Link href="https://www.instagram.com/relaxureliving/">
+                    <div className="relative w-[47px] h-[45px] bg-[url('/img/insta.png')] bg-cover"></div>
+                  </Link>
+                  <Link href="https://www.youtube.com/@Relaxure-Pergola">
+                    <div className="relative w-[47px] h-[45px] bg-[url('/img/Youtube.png')] bg-cover"></div>
                   </Link>
                 </div>
               </div>
