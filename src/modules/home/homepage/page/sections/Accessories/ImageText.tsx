@@ -21,20 +21,13 @@ export const ImageText = ({
       style={{
         backgroundImage: `url("${strapiUrl}${largeImage}")`,
       }}
-      className={`flex flex-col items-center justify-end !h-[500px] lg:!h-[785.5px] !rounded-[26.18px] !relative w-full overflow-hidden bg-cover bg-[100%_100%] ${
+      className={`flex flex-col items-center justify-end aspect-[360/500] lg:aspect-square !h-[500px] lg:!h-[785.5px] !rounded-[26.18px] !relative overflow-hidden bg-cover bg-[50%_50%] ${
         show ? "block" : "hidden"
       }`}
     >
       <div
         className={`mx-auto mb-10  !rounded-[26.18px] !gap-[20.95px] !border-[1.31px] !border-solid !p-[13.09px] w-[90%] flex items-start relative bg-[#ffffff73] border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]`}
       >
-        <div
-          style={{
-            backgroundImage: `url("${strapiUrl}${smallImage}")`,
-          }}
-          className={`hidden lg:block !h-[149.24px] !rounded-[11.94px] !max-w-[117.82px] --- relative flex-1 grow bg-cover bg-[50%_50%]`}
-        />
-
         <div
           className={`flex flex-col items-start relative flex-1 grow !gap-[10.47px] `}
         >
