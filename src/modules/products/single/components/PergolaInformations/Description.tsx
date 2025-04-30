@@ -7,12 +7,13 @@ export const Description = ({
   pergolaData: PergolaData
 }): JSX.Element => {
   const { descriptionTab } = pergolaData
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
   return (
     <div className="flex flex-col w-full items-start gap-4 relative">
       <div className="flex flex-col items-center justify-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
         <div
           style={{
-            backgroundImage: `url("/img/pergola2.jpg")`,
+            backgroundImage: `url("${baseUrl}${descriptionTab.image.url}")`,
           }}
           className="w-full lg:mb-[60px] aspect-[360/400] lg:aspect-[817/600] rounded-[20px] bg-no-repeat bg-cover bg-[50%_50%]"
         ></div>

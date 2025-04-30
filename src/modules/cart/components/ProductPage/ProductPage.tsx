@@ -12,6 +12,7 @@ import { SampleKitCard } from "../SampleKitCard/SampleKitCard"
 import { useCart } from "@lib/context/cartContext"
 import { StoreProduct } from "@medusajs/types"
 import { EmptyCart } from "../EmptyCart/EmptyCart"
+import { PergolaData, BoringButImportantStuff } from "@/types/global"
 // Lazy load only non-critical components
 const AccessoriesSection = lazy(() =>
   import("../AccessoriesSection/AccessoriesSection").then((module) => ({
@@ -54,6 +55,9 @@ export const ProductPage = ({
   accessories: StoreProduct[]
 }): JSX.Element => {
   const [faq, setFaq] = useState<FAQData | null>(null)
+  const [ourPromise, setOurPromise] = useState<BoringButImportantStuff | null>(
+    null
+  )
   const { cart } = useCart()
 
   // 初始化加载 FAQ 数据
@@ -62,6 +66,7 @@ export const ProductPage = ({
       try {
         const { data } = await getHomePage()
         setFaq(data.FAQ)
+        setOurPromise(data.OurPromise)
       } catch (error) {
         console.error("Failed to fetch FAQ:", error)
       }
@@ -88,7 +93,7 @@ export const ProductPage = ({
               <img
                 className="relative w-[30px] h-[30px]"
                 alt="Frame"
-                src="https://c.animaapp.com/m8o9g6iofzwjOy/img/frame-1000004708.svg"
+                src="/img/cart.png"
                 loading="lazy"
               />
               <div className="w-fit mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] lg:text-[36px] leading-[var(--heading-2-line-height)] whitespace-nowrap relative tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
@@ -120,7 +125,13 @@ export const ProductPage = ({
         </Suspense>
       </div>
       <Suspense>
-        <OurPromise />
+        <OurPromise
+          pergolaData={
+            {
+              boringButImportantStuff: ourPromise,
+            } as PergolaData
+          }
+        />
         {faq && <FaqWrapper faq={faq} />}
         <FooterDark />
       </Suspense>
