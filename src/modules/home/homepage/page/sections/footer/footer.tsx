@@ -59,9 +59,13 @@ export const FooterDark = ({
                     </span>
                   </div>
                   <div className="flex items-center justify-start w-full gap-5">
-                    <span className="text-white text-base tracking-[0] leading-6 whitespace-normal">
+                    <a
+                      href="mailto:info@relaxureliving.com"
+                      className="text-white text-base tracking-[0] leading-6 whitespace-normal hover:text-blue-300 hover:underline transition-colors duration-200 cursor-pointer"
+                      title="点击发送邮件"
+                    >
                       info@relaxureliving.com
-                    </span>
+                    </a>
                   </div>
                 </div>
 
@@ -85,9 +89,12 @@ export const FooterDark = ({
                     </span>
                   </div>
                   <div className="flex items-center justify-start w-full gap-2">
-                    <span className="text-white text-base tracking-[0] leading-6 whitespace-normal">
+                    <a
+                      href="mailto:info@relaxureliving.com"
+                      className="text-white text-base tracking-[0] leading-6 whitespace-normal"
+                    >
                       info@relaxureliving.com
-                    </span>
+                    </a>
                   </div>
                 </div>
                 <div className="mt-2 opacity-80 [font-family:'Montserrat',Helvetica] font-normal text-white text-[14px] text-center tracking-[0] leading-[normal]">
