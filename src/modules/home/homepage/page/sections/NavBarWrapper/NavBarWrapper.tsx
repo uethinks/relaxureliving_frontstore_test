@@ -94,8 +94,7 @@ export const NavBarWrapper = ({
             <div className="flex items-center justify-end gap-10 relative flex-1 grow">
               <div className="flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
                 <a
-                  href="#pergola"
-                  onClick={(e) => handleScroll(e, "pergola")}
+                  href="/us/products/pergola"
                   className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
                 >
                   Our pergola
