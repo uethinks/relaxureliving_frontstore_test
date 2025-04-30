@@ -308,7 +308,7 @@ export const AccesorriesPopupGlassdoor = ({
               {/* Desktop buttons */}
               <div className="hidden md:flex flex-col md:flex-row items-center justify-between self-stretch w-full">
                 <a
-                  href="/upload_files/Frameless_sliding_glass_door_technical_sheet.pdf"
+                  href="/upload_files/Frameless_sliding_glass_door_technical_sheet_new.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2"

@@ -61,7 +61,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                   <div className="flex flex-wrap items-center justify-between w-full mt-5 mb-5 lg:mt-[60px] lg:mb-[60px]">
                     <TabButtons />
                     <a
-                      href="/upload_files/Pergola_technical_sheet.pdf"
+                      href="/upload_files/Pergola_technical_sheet_new.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2"

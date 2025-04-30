@@ -295,7 +295,7 @@ export const AccesorriesPopupShades = ({
 
               <div className="hidden md:flex flex-col md:flex-row items-center justify-between self-stretch w-full">
                 <a
-                  href="/upload_files/Sunshade_technical_sheet.pdf"
+                  href="/upload_files/Sunshade_technical_sheet_new.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2"
