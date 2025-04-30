@@ -1,6 +1,9 @@
 "use client"
 import React, { useState } from "react"
-import { submitContactForm } from "@lib/cms/strapiCmsApi"
+import {
+  sendKlaviyoContactUsForm,
+  submitContactForm,
+} from "@lib/cms/strapiCmsApi"
 import { Image } from "types/global"
 
 interface ContactUsProps {
@@ -101,6 +104,12 @@ export const ContactUs = ({
 
     try {
       await submitContactForm({
+        fullName: formData.fullName,
+        phoneNumber: formData.phoneNumber,
+        email: formData.email,
+        message: formData.message,
+      })
+      await sendKlaviyoContactUsForm({
         fullName: formData.fullName,
         phoneNumber: formData.phoneNumber,
         email: formData.email,

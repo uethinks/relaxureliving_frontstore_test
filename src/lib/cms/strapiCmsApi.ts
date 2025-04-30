@@ -1,4 +1,5 @@
 // src/lib/cms/api.ts
+import axios from 'axios';
 import axiosInstance from '../axiosInstance';
 
 // 定义 API URL
@@ -43,6 +44,7 @@ export const API_URLS = {
   getReviews: '/api/testimonials-plural',
   submitContact: '/api/contact-submissions',
   getPergola: '/api/pergola',
+  sendKlaviyoTrackInfo: '/api/contact-submissions',
 };
 
 // 获取所有项目
@@ -138,4 +140,25 @@ export const submitContactForm = async (formData: {
     throw error;
   }
 };
+
+export const sendKlaviyoContactUsForm = async (info: any) => {
+  try {
+      await axios.post('/api/klaviyo/track', {
+          event: 'contact us submission',
+          customer_properties: {
+              $email: info.email,
+              $first_name: info.fullName,
+          },
+          properties: {
+            fullName: info.fullName,
+            phoneNumber: info.phoneNumber,
+            email: info.email,
+            message: info.message
+          }
+      })
+      console.log('Klaviyo event sent')
+  } catch (error) {
+      console.error('Failed to send Klaviyo event:', error)
+  }
+}
 
