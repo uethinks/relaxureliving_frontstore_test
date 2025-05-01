@@ -131,14 +131,18 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     let newPosition
 
     if (direction === "left") {
-      newPosition = Math.max(0, currentPosition - 1)
-    } else {
-      // When moving right, check if we're about to show the last image
-      if (currentPosition + thumbnailsPerPage >= images.length - 1) {
-        // Set position to show the last image fully
-        newPosition = images.length - thumbnailsPerPage
+      // 如果是第一页，则跳转到最后一页
+      if (currentPosition === 0) {
+        newPosition = maxStartIndex
       } else {
-        newPosition = Math.min(maxStartIndex, currentPosition + 1)
+        newPosition = currentPosition - 1
+      }
+    } else {
+      // 如果是最后一页，则跳转到第一页
+      if (currentPosition >= maxStartIndex) {
+        newPosition = 0
+      } else {
+        newPosition = currentPosition + 1
       }
     }
 
@@ -228,49 +232,45 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
               </div>
             </div>
 
-            {showLeftButton && (
-              <button
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
-                onClick={() => handleThumbnailNavigation("left")}
+            <button
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
+              onClick={() => handleThumbnailNavigation("left")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-white"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-            )}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
 
-            {showRightButton && (
-              <button
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
-                onClick={() => handleThumbnailNavigation("right")}
+            <button
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
+              onClick={() => handleThumbnailNavigation("right")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-white"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            )}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
