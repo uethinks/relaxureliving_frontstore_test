@@ -18,6 +18,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  staticPageGenerationTimeout: 180,
+  experimental: {},
   images: {
     remotePatterns: [
       {
@@ -31,10 +33,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "medusa-server-testing.s3.amazonaws.com",
-      },
-      {
-        protocol: "https",
-        hostname: "medusa-server-testing.s3.us-east-1.amazonaws.com",
       },
       {
         protocol: "https",
