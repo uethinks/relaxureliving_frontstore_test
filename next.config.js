@@ -44,6 +44,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "cms.relaxureliving.com",
       },
+      {
+        protocol: "https",
+        hostname: "relaxureliving-bucket.s3.us-east-1.amazonaws.com",
+      },
     ],
   },
   env: {

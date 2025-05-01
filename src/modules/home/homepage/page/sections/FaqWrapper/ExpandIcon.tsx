@@ -3,15 +3,15 @@ We're constantly improving the code you see.
 Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
 */
 
-import PropTypes from "prop-types";
-import React from "react";
+import PropTypes from "prop-types"
+import React from "react"
 
 interface Props {
-  color: string;
-  className: any;
+  color: string
+  className: any
 }
 
-export const IconChevronDown4 = ({
+export const ExpandIcon = ({
   color = "#072F6C",
   className,
 }: Props): JSX.Element => {
@@ -31,9 +31,5 @@ export const IconChevronDown4 = ({
         strokeWidth="0.5"
       />
     </svg>
-  );
-};
-
-IconChevronDown4.propTypes = {
-  color: PropTypes.string,
-};
+  )
+}

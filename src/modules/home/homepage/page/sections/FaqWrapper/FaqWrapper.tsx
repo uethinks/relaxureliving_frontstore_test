@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from "react"
-import { IconChevronDown4 } from "../../../../icons/IconChevronDown4"
+import { ExpandIcon } from "./ExpandIcon"
 
 interface FAQAnswer {
   id: number
@@ -54,7 +54,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                   }
                 >
                   {category.Title}
-                  <IconChevronDown4
+                  <ExpandIcon
                     className={`!relative !w-4 !h-4 transition-transform duration-200 ${
                       openQuestion.level1 === indexLevel1
                         ? "rotate-0"
@@ -106,7 +106,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                             }
                             className="inline-flex items-start gap-2.5 relative flex-[0_0_auto]"
                           >
-                            <IconChevronDown4
+                            <ExpandIcon
                               className={`!relative !w-4 !h-4 transition-transform duration-200 ${
                                 openQuestion.level2 === indexLevel2
                                   ? "rotate-0"
