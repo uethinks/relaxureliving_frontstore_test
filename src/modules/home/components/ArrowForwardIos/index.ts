@@ -1,1 +1,0 @@
-export { ArrowForwardIos } from "./ArrowForwardIos";

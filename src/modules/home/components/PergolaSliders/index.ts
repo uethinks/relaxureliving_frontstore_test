@@ -1,1 +1,0 @@
-export { PergolaSliders } from "./PergolaSliders";
