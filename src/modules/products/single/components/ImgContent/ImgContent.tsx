@@ -1,6 +1,16 @@
 "use client"
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect } from "react"
 import { StoreProduct } from "@medusajs/types"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { FreeMode, Navigation, Thumbs, Pagination } from "swiper/modules"
+import type { Swiper as SwiperType } from "swiper"
+
+// 导入 Swiper 样式
+import "swiper/css"
+import "swiper/css/free-mode"
+import "swiper/css/navigation"
+import "swiper/css/thumbs"
+import "swiper/css/pagination"
 
 interface Props {
   product: StoreProduct
@@ -8,74 +18,20 @@ interface Props {
 }
 
 export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
-  const [loadedThumbnails, setLoadedThumbnails] = useState<Set<number>>(
-    new Set()
-  )
+  const [windowWidth, setWindowWidth] = useState<number>(0)
   const images = product.images?.map((image) => image)
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
-  const [windowWidth, setWindowWidth] = useState<number>(0)
-  const thumbnailsPerPage =
-    windowWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
 
   useEffect(() => {
-    // Set initial window width
     setWindowWidth(window.innerWidth)
-
-    // Add resize listener
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth)
-    }
+    const handleResize = () => setWindowWidth(window.innerWidth)
     window.addEventListener("resize", handleResize)
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("resize", handleResize)
-    }
+    return () => window.removeEventListener("resize", handleResize)
   }, [])
-
-  // Preload images with loading state
-  useEffect(() => {
-    if (images) {
-      images.forEach((image, index) => {
-        const img = new Image()
-        img.src = image.url
-        img.onload = () => {
-          setLoadedImages((prev) => new Set([...Array.from(prev), index]))
-        }
-      })
-    }
-  }, [images])
-
-  // Preload visible thumbnails
-  useEffect(() => {
-    if (!images) return
-
-    const thumbnailsPerPage =
-      windowWidth < 1024 ? MOBILE_THUMBNAILS_PER_PAGE : THUMBNAILS_PER_PAGE
-    const visibleThumbnails = images.slice(
-      thumbnailStartIndex,
-      thumbnailStartIndex + thumbnailsPerPage
-    )
-
-    visibleThumbnails.forEach((_, index) => {
-      const actualIndex = thumbnailStartIndex + index
-      if (!loadedThumbnails.has(actualIndex)) {
-        const img = new Image()
-        img.src = images[actualIndex].url
-        img.onload = () => {
-          setLoadedThumbnails(
-            (prev) => new Set([...Array.from(prev), actualIndex])
-          )
-        }
-      }
-    })
-  }, [images, thumbnailStartIndex, windowWidth])
 
   const handleImageClick = () => {
     setIsModalOpen(true)
@@ -85,156 +41,65 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
     setIsModalOpen(false)
   }
 
-  const handleModalImageNavigation = useCallback(
-    (direction: "prev" | "next") => {
-      if (!images) return
-
-      if (direction === "prev") {
-        setCurrentImageIndex((prev) =>
-          prev > 0 ? prev - 1 : images.length - 1
-        )
-      } else {
-        setCurrentImageIndex((prev) =>
-          prev < images.length - 1 ? prev + 1 : 0
-        )
-      }
-    },
-    [images]
-  )
-
-  // Handle keyboard navigation
-  useEffect(() => {
-    if (!isModalOpen) return
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        handleModalImageNavigation("prev")
-      } else if (e.key === "ArrowRight") {
-        handleModalImageNavigation("next")
-      } else if (e.key === "Escape") {
-        handleCloseModal()
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [isModalOpen, handleModalImageNavigation])
-
-  const handleThumbnailNavigation = (direction: "left" | "right") => {
-    if (!images || isAnimating) return
-
-    setIsAnimating(true)
-    const maxStartIndex = Math.max(0, images.length - thumbnailsPerPage)
-
-    // Prevent over-scrolling by checking current position
-    const currentPosition = thumbnailStartIndex
-    let newPosition
-
-    if (direction === "left") {
-      // 如果是第一页，则跳转到最后一页
-      if (currentPosition === 0) {
-        newPosition = maxStartIndex
-      } else {
-        newPosition = currentPosition - 1
-      }
-    } else {
-      // 如果是最后一页，则跳转到第一页
-      if (currentPosition >= maxStartIndex) {
-        newPosition = 0
-      } else {
-        newPosition = currentPosition + 1
-      }
-    }
-
-    // Only update if the position actually changes
-    if (newPosition !== currentPosition) {
-      setThumbnailStartIndex(newPosition)
-    }
-
-    setTimeout(() => {
-      setIsAnimating(false)
-    }, 300)
-  }
-
-  // Calculate if navigation buttons should be shown
-  const showLeftButton = thumbnailStartIndex > 0
-  const showRightButton =
-    thumbnailStartIndex < Math.max(0, (images?.length || 0) - thumbnailsPerPage)
-
-  // Calculate the actual number of visible thumbnails
-  const visibleCount = Math.min(thumbnailsPerPage, images?.length || 0)
-
-  // Calculate the container width and transform, including gaps
-  const gapWidth = 10 // 2.5rem = 10px
-  const containerStyle = {
-    transform: `translateX(calc(-${thumbnailStartIndex} * ((100% - ${
-      (visibleCount - 1) * gapWidth
-    }px) / ${visibleCount} + ${gapWidth}px))`,
-    width: `calc(${images?.length || 0} * ((100% - ${
-      (visibleCount - 1) * gapWidth
-    }px) / ${visibleCount}) + ${(images?.length || 0) - 1} * ${gapWidth}px)`,
-  }
+  const isMobile = windowWidth < 1024
 
   return (
     <>
       <div className="flex flex-col justify-center items-center relative w-full rounded-[20px] overflow-hidden">
-        {/* Main Image with Loading State */}
+        {/* 主图 */}
         <div className="relative w-full">
-          {!loadedImages.has(currentImageIndex) && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-[20px]">
-              <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-          )}
-          <img
-            className={`rounded-[20px] cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full object-cover object-center transition-opacity duration-300 ${
-              loadedImages.has(currentImageIndex) ? "opacity-100" : "opacity-0"
-            }`}
-            src={images?.[currentImageIndex]?.url}
-            alt=""
-            onClick={handleImageClick}
-            loading="lazy"
-          />
+          <div className="rounded-[20px] cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full overflow-hidden">
+            <img
+              src={images?.[currentImageIndex]?.url}
+              alt=""
+              className="w-full h-full object-cover object-center"
+              onClick={handleImageClick}
+            />
+          </div>
         </div>
 
-        {/* Thumbnails */}
+        {/* 缩略图轮播 */}
         <div className="flex py-2 justify-center items-center px-1 w-[98%] bg-[#ffffff] rounded-[20px] overflow-hidden border border-solid border-[#ffffff87] backdrop-blur-[3.3px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(3.3px)_brightness(100%)]">
           <div className="relative w-full">
-            <div className="flex gap-2.5 px-2 overflow-hidden">
-              <div
-                className="flex gap-2.5 transition-transform duration-300 ease-in-out transform-gpu"
-                style={containerStyle}
-              >
-                {images?.map((image, index) => (
-                  <button
-                    key={index}
-                    className={`flex-shrink-0 aspect-square rounded-2xl bg-cover bg-center cursor-pointer transition-all duration-300 ${
-                      index === currentImageIndex
-                        ? "border-2 border-white-500 scale-105"
-                        : "hover:scale-105"
-                    } ${!loadedThumbnails.has(index) ? "bg-gray-100" : ""}`}
-                    style={{
-                      backgroundImage: loadedThumbnails.has(index)
-                        ? `url("${image.url}")`
-                        : "none",
-                      width: `calc((100% - ${
-                        (visibleCount - 1) * gapWidth
-                      }px) / ${visibleCount})`,
-                    }}
-                    onClick={() => setCurrentImageIndex(index)}
-                  >
-                    {!loadedThumbnails.has(index) && (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <Swiper
+              onSwiper={setThumbsSwiper}
+              spaceBetween={10}
+              slidesPerView={
+                windowWidth < 1024
+                  ? MOBILE_THUMBNAILS_PER_PAGE
+                  : THUMBNAILS_PER_PAGE
+              }
+              freeMode={true}
+              watchSlidesProgress={true}
+              modules={[FreeMode, Navigation]}
+              className="thumbs-swiper"
+              loop={true}
+              onSlideChange={(swiper) => {
+                setCurrentImageIndex(swiper.realIndex)
+              }}
+            >
+              {images?.map((image, index) => (
+                <SwiperSlide
+                  key={index}
+                  className="cursor-pointer"
+                  onClick={() => setCurrentImageIndex(index)}
+                >
+                  <div className="aspect-square rounded-2xl overflow-hidden">
+                    <img
+                      src={image.url}
+                      alt=""
+                      className="w-full h-full object-cover object-center"
+                      loading="lazy"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
+            {/* 自定义导航按钮 */}
             <button
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
-              onClick={() => handleThumbnailNavigation("left")}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
+              onClick={() => thumbsSwiper?.slidePrev()}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -246,15 +111,15 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={3}
+                  strokeWidth={2}
                   d="M15 19l-7-7 7-7"
                 />
               </svg>
             </button>
 
             <button
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/80 hover:bg-black/90 rounded-full p-2 w-8 h-8 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-all duration-200 hover:scale-110 border-4 border-white/90"
-              onClick={() => handleThumbnailNavigation("right")}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
+              onClick={() => thumbsSwiper?.slideNext()}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -266,7 +131,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={3}
+                  strokeWidth={2}
                   d="M9 5l7 7-7 7"
                 />
               </svg>
@@ -275,91 +140,105 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
         </div>
       </div>
 
-      {/* Modal with Loading State */}
+      {/* 模态框 */}
       {isModalOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
-          onClick={handleCloseModal}
-        >
-          <div className="relative max-w-[90vw] max-h-[90vh]">
-            {!loadedImages.has(currentImageIndex) && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            )}
-            <img
-              className={`max-w-full max-h-[90vh] object-contain transition-opacity duration-300 ${
-                loadedImages.has(currentImageIndex)
-                  ? "opacity-100"
-                  : "opacity-0"
-              }`}
-              src={images?.[currentImageIndex]?.url}
-              alt=""
-              onClick={(e) => e.stopPropagation()}
-              loading="lazy"
-            />
+        <div className="fixed inset-0 bg-black bg-opacity-80 z-50">
+          <div className="relative w-full h-full flex items-center justify-center">
+            <div className="relative w-[90vw] h-[90vh] flex items-center justify-center">
+              <Swiper
+                spaceBetween={10}
+                navigation={{
+                  prevEl: ".modal-prev-button",
+                  nextEl: ".modal-next-button",
+                }}
+                pagination={{
+                  enabled: isMobile,
+                  clickable: true,
+                }}
+                modules={[Navigation, Pagination]}
+                className="modal-swiper !static w-full h-full"
+                loop={true}
+                initialSlide={currentImageIndex}
+              >
+                {images?.map((image, index) => (
+                  <SwiperSlide
+                    key={index}
+                    className="!flex items-center justify-center h-full"
+                  >
+                    <img
+                      src={image.url}
+                      alt=""
+                      className="max-w-full max-h-full w-auto h-auto object-contain"
+                      loading="lazy"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* 自定义导航按钮 - 仅在大屏显示 */}
+              {!isMobile && (
+                <>
+                  <button className="modal-prev-button absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+
+                  <button className="modal-next-button absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* 关闭按钮 */}
             <button
-              className="absolute top-4 right-4 text-white text-2xl bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-all duration-200"
+              className="fixed top-4 right-4 text-white text-3xl hover:text-gray-300 transition-colors duration-200 z-50"
               onClick={handleCloseModal}
             >
               ×
             </button>
-
-            {/* Previous button */}
-            <button
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 text-white bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 opacity-50 hover:opacity-100 hover:scale-110"
-              onClick={(e) => {
-                e.stopPropagation()
-                handleModalImageNavigation("prev")
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={3}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-
-            {/* Next button */}
-            <button
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 text-white bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 opacity-50 hover:opacity-100 hover:scale-110"
-              onClick={(e) => {
-                e.stopPropagation()
-                handleModalImageNavigation("next")
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={3}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-
-            {/* Image counter */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-2 text-white text-sm">
-              {currentImageIndex + 1} / {images?.length}
-            </div>
           </div>
         </div>
       )}
+
+      <style jsx global>{`
+        .swiper-pagination {
+          position: absolute;
+          bottom: 20px !important;
+        }
+        .swiper-pagination-bullet {
+          background: white;
+          opacity: 0.5;
+        }
+        .swiper-pagination-bullet-active {
+          opacity: 1;
+        }
+      `}</style>
     </>
   )
 }
