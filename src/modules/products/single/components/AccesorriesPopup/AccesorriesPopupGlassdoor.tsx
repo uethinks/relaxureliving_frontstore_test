@@ -22,26 +22,15 @@ export const AccesorriesPopupGlassdoor = ({
   addAccessoryGlassdoor,
   selectedGlassdoorVariant,
   pergolaSize,
+  showPopup,
 }: {
   accessoryGlassdoor: StoreProduct | null
   closePopup: (type: string) => void
   addAccessoryGlassdoor: (selectedProducts: selectedProducts) => void
   selectedGlassdoorVariant: selectedProducts
   pergolaSize: PergolaSize
+  showPopup: boolean
 }): JSX.Element => {
-  // Add useEffect to handle body scroll lock
-  useEffect(() => {
-    // Save the current body overflow style
-    const originalStyle = window.getComputedStyle(document.body).overflow
-    // Prevent background scroll
-    document.body.style.overflow = "hidden"
-
-    // Cleanup function to restore original scroll behavior
-    return () => {
-      document.body.style.overflow = originalStyle
-    }
-  }, []) // Empty dependency array means this runs once when component mounts
-
   const closePopupGlassdoor = () => {
     closePopup("Glass door")
   }
@@ -69,7 +58,14 @@ export const AccesorriesPopupGlassdoor = ({
   const [selectedColor, setSelectedColor] =
     useState<StoreProductOptionValue>(defaultColor)
   const [selectedSides, setSelectedSides] = useState<string[]>([])
-
+  useEffect(() => {
+    setSelectedColor(
+      sortedColors?.[0] || {
+        id: "",
+        value: "",
+      }
+    )
+  }, [sortedColors])
   const getVariant = useCallback(() => {
     return accessoryGlassdoor?.variants?.filter((variant) => {
       const matchingSize = variant?.options?.find(
@@ -164,7 +160,11 @@ export const AccesorriesPopupGlassdoor = ({
     /**
      * 根据selectedGlassdoor计算对应的sides
      */
-
+    if (showPopup) {
+      setSelectedGlassdoor(selectedGlassdoorVariant)
+    } else {
+      setSelectedGlassdoor([])
+    }
     const isSquare = pergolaSize.width === pergolaSize.length
     let slides = []
     if (!isSquare) {
@@ -192,9 +192,13 @@ export const AccesorriesPopupGlassdoor = ({
       slides = new Array(numOfProducts).fill("left")
     }
     setSelectedSides(slides)
-  }, [])
+  }, [showPopup])
   return (
-    <div className="fixed inset-0 flex items-end md:items-center justify-center bg-black-50 z-50">
+    <div
+      className={`fixed inset-0 flex items-end md:items-center justify-center bg-black-50 z-50 ${
+        showPopup ? "flex" : "hidden"
+      }`}
+    >
       <div className="relative bg-white rounded-t-[20px] md:rounded-[20px] w-full md:w-auto md:max-w-[1269px] h-[95vh] md:h-auto md:max-h-[90vh] overflow-auto">
         {/* Close button for mobile */}
         <div className="sticky top-0 left-0 right-0 bg-white z-10 h-10 flex items-center px-4 md:hidden">

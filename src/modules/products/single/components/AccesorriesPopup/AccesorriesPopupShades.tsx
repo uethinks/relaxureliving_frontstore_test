@@ -16,21 +16,15 @@ export const AccesorriesPopupShades = ({
   addAccessoryShades,
   selectedShadesVariant,
   pergolaSize,
+  showPopup,
 }: {
   accessoryShades: StoreProduct | null
   closePopup: (type: string) => void
   addAccessoryShades: (selectedProducts: selectedProducts) => void
   selectedShadesVariant: selectedProducts
   pergolaSize: PergolaSize
+  showPopup: boolean
 }): JSX.Element => {
-  useEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body).overflow
-    document.body.style.overflow = "hidden"
-    return () => {
-      document.body.style.overflow = originalStyle
-    }
-  }, [])
-
   const closePopupShades = () => {
     closePopup("Shades")
   }
@@ -58,7 +52,14 @@ export const AccesorriesPopupShades = ({
   const [selectedColor, setSelectedColor] =
     useState<StoreProductOptionValue>(defaultColor)
   const [selectedSides, setSelectedSides] = useState<string[]>([])
-
+  useEffect(() => {
+    setSelectedColor(
+      sortedColors?.[0] || {
+        id: "",
+        value: "",
+      }
+    )
+  }, [sortedColors])
   const getVariant = useCallback(() => {
     return accessoryShades?.variants?.filter((variant) => {
       const matchingSize = variant?.options?.find(
@@ -149,6 +150,11 @@ export const AccesorriesPopupShades = ({
   }, [selectedShades])
 
   useEffect(() => {
+    if (showPopup) {
+      setSelectedShades(selectedShadesVariant)
+    } else {
+      setSelectedShades([])
+    }
     /**
      * 根据selectedShades计算对应的sides
      */
@@ -179,10 +185,14 @@ export const AccesorriesPopupShades = ({
     }
 
     setSelectedSides(slides)
-  }, [])
+  }, [showPopup])
 
   return (
-    <div className="fixed inset-0 flex items-end md:items-center justify-center bg-black-50 z-50">
+    <div
+      className={`fixed inset-0 flex items-end md:items-center justify-center bg-black-50 z-50 ${
+        showPopup ? "flex" : "hidden"
+      }`}
+    >
       <div className="relative bg-white rounded-t-[20px] md:rounded-[20px] w-full md:w-auto md:max-w-[1269px] h-[95vh] md:h-auto md:max-h-[90vh] overflow-auto">
         <div className="sticky top-0 left-0 right-0 bg-white z-10 h-10 flex items-center px-4 md:hidden">
           <button

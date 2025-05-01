@@ -25,7 +25,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
   return (
     <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full">
       <NavBarWrapper isFixed={false} />
-      <div className="lg:mx-auto flex flex-col  bg-[#ffffff] w-full relative mt-5">
+      <div className="lg:mx-auto flex flex-col  bg-[#ffffff] w-full relative mt-5 z-10">
         <div className="flex flex-col w-full lg:flex-row justify-between items-start">
           <div className="flex flex-col w-full  gap-5">
             <div className="flex flex-col w-full lg:max-w-[64%] items-center gap-5 lg:pr-[65px]">

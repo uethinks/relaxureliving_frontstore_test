@@ -239,32 +239,35 @@ export const AccesorriesSelector = ({
         </div>
       </div>
 
-      {isOpenHeater && (
+      {
         <AccesorriesPopupHeater
           closePopup={closePopup}
           accessoryHeater={selectedHeater}
           addAccessoryHeater={addAccessoryHeater}
           selectedHeaterVariant={selectedHeaterVariant}
+          showPopup={isOpenHeater}
         />
-      )}
-      {isOpenShade && (
+      }
+      {
         <AccesorriesPopupShades
           closePopup={closePopup}
           accessoryShades={selectedShade}
           addAccessoryShades={addAccessoryShades}
           selectedShadesVariant={selectedShadesVariant}
           pergolaSize={pergolaSize}
+          showPopup={isOpenShade}
         />
-      )}
-      {isOpenGlassdoor && (
+      }
+      {
         <AccesorriesPopupGlassdoor
           closePopup={closePopup}
           accessoryGlassdoor={selectedGlassdoor}
           addAccessoryGlassdoor={addAccessoryGlassdoor}
           selectedGlassdoorVariant={selectedGlassdoorVariant}
           pergolaSize={pergolaSize}
+          showPopup={isOpenGlassdoor}
         />
-      )}
+      }
     </div>
   )
 }
