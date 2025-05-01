@@ -307,7 +307,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
 
             {/* Previous button */}
             <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/80 hover:bg-black/90 rounded-full p-3 transition-all duration-200 border-4 border-white/90 shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 text-white bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 opacity-50 hover:opacity-100 hover:scale-110"
               onClick={(e) => {
                 e.stopPropagation()
                 handleModalImageNavigation("prev")
@@ -315,7 +315,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -331,7 +331,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
 
             {/* Next button */}
             <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/80 hover:bg-black/90 rounded-full p-3 transition-all duration-200 border-4 border-white/90 shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 text-white bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 opacity-50 hover:opacity-100 hover:scale-110"
               onClick={(e) => {
                 e.stopPropagation()
                 handleModalImageNavigation("next")
@@ -339,7 +339,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -354,7 +354,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
             </button>
 
             {/* Image counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full">
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full mt-2 text-white text-sm">
               {currentImageIndex + 1} / {images?.length}
             </div>
           </div>
