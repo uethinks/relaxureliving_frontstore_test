@@ -1,5 +1,10 @@
 "use client"
-import React, { useState } from "react"
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void
+  }
+}
+import React, { useEffect, useState } from "react"
 import { HttpTypes } from "@medusajs/types"
 import { useRouter } from "next/navigation"
 type OrderCompletedTemplateProps = {
@@ -13,6 +18,16 @@ export const PaymentFinish = ({
   const handleExploreMore = () => {
     router.push(`/`)
   }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.gtag("event", "conversion", {
+        send_to: "AW-17016286848/U7uBCPfngrwaEIDd_7E",
+        value: order.total,
+        currency: "USD",
+        transaction_id: order.id,
+      })
+    }
+  }, [])
   return !paymentFinishShow ? (
     ""
   ) : (
