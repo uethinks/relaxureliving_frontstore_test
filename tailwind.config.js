@@ -53,6 +53,9 @@ module.exports = {
         "variable-collection-grey-1": "var(--variable-collection-grey-1)",
         white: "var(--white)",
         "black-50": "rgba(0, 0, 0, 0.5)",
+        "black-30": "rgba(0, 0, 0, 0.3)",
+        "black-20": "rgba(0, 0, 0, 0.2)",
+        "black-10": "rgba(0, 0, 0, 0.1)",
       },
       fontFamily: {
         merriweather: ["Merriweather", "serif"],

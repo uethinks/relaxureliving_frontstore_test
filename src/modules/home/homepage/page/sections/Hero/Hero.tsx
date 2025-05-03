@@ -19,7 +19,8 @@ export const Hero = ({
           backgroundImage: `url("${cmsBaseUrl}${hero.BackgroundImage.formats.xlarge.url}")`,
         }}
       >
-        <div className="flex flex-col w-full lg:w-4/5 items-start gap-8 relative">
+        <div className="absolute inset-0 bg-black-20" />
+        <div className="flex flex-col w-full lg:w-4/5 items-start gap-8 relative z-10">
           <div className="flex flex-col items-start gap-6 relative flex-[0_0_auto]">
             <p className="self-stretch mt-20 lg:mt-[-1.00px] font-heading font-[number:var(--heading-font-weight)] text-[#ffffff] text-[22px] lg:text-[length:var(--heading-font-size)] leading-[var(--heading-line-height)] relative tracking-[var(--heading-letter-spacing)] [font-style:var(--heading-font-style)]">
               {hero.Title}
