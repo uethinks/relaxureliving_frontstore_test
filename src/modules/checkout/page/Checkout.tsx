@@ -17,7 +17,6 @@ import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 
 export const Checkout = () => {
   const { cart, setCart, getCart } = useCart()
-  const [shippingOptions, setShippingOptions] = useState<any[]>([])
   const [isFormValid, setIsFormValid] = useState(false)
   const [order, setOrder] = useState<any>(null)
   const [formData, setFormData] = useState({
@@ -45,6 +44,7 @@ export const Checkout = () => {
     province: "",
     postalCode: "",
   })
+  const [isLoading, setIsLoading] = useState(false)
 
   // 初始化 formData
   useEffect(() => {
@@ -209,124 +209,104 @@ export const Checkout = () => {
         cartId: currentCart?.id ?? "",
         shippingMethodId: shippingMethods?.[0]?.id ?? "",
       })
-
-      // 4. 初始化 Airwallex SDK - 只在客户端执行
-      if (typeof window !== "undefined") {
-        const { payments } = await init({
-          env: process.env.NEXT_PUBLIC_AIRWALLEX_ENV as
-            | "dev"
-            | "staging"
-            | "demo"
-            | "prod",
-          enabledElements: ["payments"],
-        })
-
-        if (!payments) {
-          throw new Error("Failed to initialize Airwallex payments")
-        }
-
-        // 5. 初始化支付会话
-        const paymentSession = await initiatePaymentSession(
-          currentCart as StoreCart,
-          {
-            provider_id: "pp_Airwallex_Airwallex",
-            data: {
-              amount: currentCart?.total,
-              currency: currentCart?.currency_code,
-              merchant_order_id: currentCart?.id,
-              customer: {
-                email: formData.email,
-                first_name: formData.shipping_address.first_name,
-                last_name: formData.shipping_address.last_name,
-                phone_number: formData.shipping_address.phone,
-              },
-              order: {
-                products: currentCart?.items?.map((item) => ({
-                  code: item?.product?.id,
-                  name: item?.product?.title,
-                  quantity: item?.quantity,
-                  unit_price: item?.unit_price,
-                })),
-                shipping: {
-                  address: {
-                    country_code: formData.shipping_address.country_code,
-                    state: formData.shipping_address.province,
-                    city: formData.shipping_address.city,
-                    street: formData.shipping_address.address_1,
-                    postcode: formData.shipping_address.postal_code,
-                  },
-                  first_name: formData.shipping_address.first_name,
-                  last_name: formData.shipping_address.last_name,
-                  email: formData.email,
-                  phone_number: formData.shipping_address.phone,
-                  shipping_method: "standard",
-                },
-                type: "physical_goods",
-              },
-            },
-          }
-        )
-
-        // 6. 创建 Drop-in Element
-        const element = await payments.createElement("dropIn", {
-          intent_id: paymentSession.payment_collection?.payment_sessions?.[0]
-            ?.data?.payment_intent_id as string,
-          client_secret: paymentSession.payment_collection
-            ?.payment_sessions?.[0]?.data?.client_secret as string,
-          currency: currentCart?.currency_code?.toUpperCase() || "USD",
-        })
-
-        if (!element) {
-          throw new Error("Failed to create Airwallex drop-in element")
-        }
-
-        return element
-      }
-
-      return null
     } catch (error) {
       console.error("Error initializing cart:", error)
-      return null
+    }
+  }
+  //初始化paymentSession
+  const initializePaymentSession = async () => {
+    const paymentSession = await initiatePaymentSession(cart as StoreCart, {
+      provider_id: "pp_Airwallex_Airwallex",
+      data: {
+        amount: cart?.total,
+        currency: cart?.currency_code,
+        merchant_order_id: cart?.id,
+        customer: {
+          email: formData.email,
+          first_name: formData.shipping_address.first_name,
+          last_name: formData.shipping_address.last_name,
+          phone_number: formData.shipping_address.phone,
+        },
+        order: {
+          products: cart?.items?.map((item) => ({
+            code: item?.product?.id,
+            name: item?.product?.title,
+            quantity: item?.quantity,
+            unit_price: item?.unit_price,
+          })),
+          shipping: {
+            address: {
+              country_code: formData.shipping_address.country_code,
+              state: formData.shipping_address.province,
+              city: formData.shipping_address.city,
+              street: formData.shipping_address.address_1,
+              postcode: formData.shipping_address.postal_code,
+            },
+            first_name: formData.shipping_address.first_name,
+            last_name: formData.shipping_address.last_name,
+            email: formData.email,
+            phone_number: formData.shipping_address.phone,
+            shipping_method: "standard",
+          },
+          type: "physical_goods",
+        },
+      },
+    })
+    return paymentSession
+  }
+  // airwallex 初始化
+  const setupAirwallex = async (paymentSession: any) => {
+    const { payments } = await init({
+      env: process.env.NEXT_PUBLIC_AIRWALLEX_ENV as
+        | "dev"
+        | "staging"
+        | "demo"
+        | "prod",
+      enabledElements: ["payments"],
+    })
+
+    if (!payments) {
+      throw new Error("Failed to initialize Airwallex payments")
+    }
+    // 6. 创建 Drop-in Element
+    const element = await payments.createElement("dropIn", {
+      intent_id: paymentSession.payment_collection?.payment_sessions?.[0]?.data
+        ?.payment_intent_id as string,
+      client_secret: paymentSession.payment_collection?.payment_sessions?.[0]
+        ?.data?.client_secret as string,
+      currency: cart?.currency_code?.toUpperCase() || "USD",
+    })
+    // 7. 挂载 Drop-in Element
+    const container = document.getElementById("airwallex-dropin-container")
+    if (container) {
+      element?.mount(container)
+    }
+    // 8. 监听事件
+    element?.on("success", (event: any) => {
+      handlePaymentComplete()
+    })
+
+    element?.on("error", (event: any) => {
+      console.error("Payment failed:", event)
+    })
+
+    element?.on("ready", () => {
+      console.log("Drop-in element is ready")
+    })
+  }
+  // 初始化 paymentinfo
+  const initializePaymentInfo = async () => {
+    // 4. 初始化 Airwallex SDK - 只在客户端执行
+    if (typeof window !== "undefined") {
+      // 5. 初始化支付会话
+      const paymentSession = await initializePaymentSession()
+      // airwallex 初始化
+      setupAirwallex(paymentSession)
     }
   }
 
   useEffect(() => {
-    let element: any = null
-
-    const setupPayment = async () => {
-      // 只在客户端执行
-      if (typeof window === "undefined") return
-
-      element = await initializeCart()
-      if (!element) return
-
-      // 7. 挂载 Drop-in Element
-      const container = document.getElementById("airwallex-dropin-container")
-      if (container) {
-        element.mount(container)
-      }
-
-      // 8. 监听事件
-      element.on("success", (event: any) => {
-        handlePaymentComplete()
-      })
-
-      element.on("error", (event: any) => {
-        console.error("Payment failed:", event)
-      })
-
-      element.on("ready", () => {
-        console.log("Drop-in element is ready")
-      })
-    }
-
-    setupPayment()
-
-    return () => {
-      if (element) {
-        element.unmount()
-      }
-    }
+    initializeCart()
   }, [])
 
   // 添加一个 ref 来存储最新的 formData
@@ -348,6 +328,22 @@ export const Checkout = () => {
 
       const cartRes = await placeOrder(cart.id)
       setOrder(cartRes.type === "order" ? cartRes.order : null)
+    }
+  }
+  const [showPayment, setShowPayment] = useState(false)
+  const handleContinue = async () => {
+    if (isFormValid) {
+      setIsLoading(true)
+      try {
+        await initializePaymentInfo()
+        setShowPayment(true)
+      } catch (error) {
+        console.error("Error initializing payment:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    } else {
+      setShowPayment(false)
     }
   }
 
@@ -525,10 +521,34 @@ export const Checkout = () => {
                   <div className="text-red-500 mt-1 block">{errors.phone}</div>
                 )}
               </div>
+              <div className="flex flex-col w-full">
+                <button
+                  onClick={handleContinue}
+                  disabled={isLoading}
+                  className="w-full hover:bg-[#0a3980] bg-[#072f6c] all-[unset] box-border flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#ffffff] relative font-medium whitespace-nowrap leading-6">
+                        Processing...
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#ffffff] relative font-medium whitespace-nowrap leading-6">
+                      Continue
+                    </span>
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Payment Section */}
-            <div className="flex flex-col items-start gap-[70px] relative self-stretch w-full flex-[0_0_auto]">
+            <div
+              className={`flex flex-col items-start gap-[70px] relative self-stretch w-full flex-[0_0_auto] ${
+                showPayment && isFormValid ? "opacity-100" : "opacity-50"
+              }`}
+            >
               <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                   <div className="flex items-center relative self-stretch w-full flex-[0_0_auto]">

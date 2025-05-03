@@ -7,6 +7,19 @@ declare global {
 import React, { useEffect, useState } from "react"
 import { HttpTypes } from "@medusajs/types"
 import { useRouter } from "next/navigation"
+
+const formatDateTime = (dateString: string | Date) => {
+  const date = new Date(dateString)
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  })
+}
+
 type OrderCompletedTemplateProps = {
   order: HttpTypes.StoreOrder
 }
@@ -15,6 +28,17 @@ export const PaymentFinish = ({
 }: OrderCompletedTemplateProps): JSX.Element | "" => {
   const [paymentFinishShow, setPaymentFinishShow] = useState(true)
   const router = useRouter()
+  const componentRef = React.useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (paymentFinishShow && componentRef.current) {
+      componentRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    }
+  }, [paymentFinishShow])
+
   const handleExploreMore = () => {
     router.push(`/`)
   }
@@ -31,7 +55,10 @@ export const PaymentFinish = ({
   return !paymentFinishShow ? (
     ""
   ) : (
-    <div className="bg-[#00000080] flex justify-center items-start w-full h-full absolute top-0 left-0 px-10 z-50 pt-5">
+    <div
+      ref={componentRef}
+      className="bg-[#00000080] flex justify-center items-start w-full h-full absolute top-0 left-0 px-4 lg:px-10 z-50 pt-5"
+    >
       <div className="flex flex-col w-full lg:w-[547px] items-center justify-start gap-5 p-5 relative bg-[#ffffff] rounded-[20px]">
         <div className="inline-flex flex-col items-center gap-5 relative flex-[0_0_auto]">
           <div className="relative w-[155px] h-[147px] bg-[url(https://c.animaapp.com/OZvkuZwc/img/https---lottiefiles-com-animations-item-shipped-cm0d29wrd2.gif)] bg-cover bg-[50%_50%]" />
@@ -107,18 +134,16 @@ export const PaymentFinish = ({
             </div>
 
             <div className="flex flex-col items-center justify-center gap-2.5 p-5 relative self-stretch w-full flex-[0_0_auto] bg-[#f9f9f9] rounded-[0px_0px_20px_20px]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex flex-col items-start gap-5 relative flex-1 grow">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 relative self-stretch w-full">
+                <div className="flex flex-col items-start gap-5 relative flex-shrink-0">
                   <div className="relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
                     Order number
                   </div>
                 </div>
 
-                <div className="inline-flex items-center justify-center gap-2.5 p-1.5 relative flex-[0_0_auto] rounded-[10px]">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap">
-                    {order.id
-                      ? `${order.id.slice(0, 4)}...${order.id.slice(-4)}`
-                      : ""}
+                <div className="flex-1 w-full sm:w-auto">
+                  <div className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] break-all">
+                    {order.id}
                   </div>
                 </div>
               </div>
@@ -126,51 +151,17 @@ export const PaymentFinish = ({
           </div>
 
           <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex flex-col items-center justify-center gap-2.5 p-5 relative self-stretch w-full flex-[0_0_auto] bg-[#f9f9f9] rounded-[20px_20px_0px_0px]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex flex-col items-start gap-5 relative flex-1 grow">
-                  <div className="relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
-                    Payment method
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center justify-center gap-2.5 p-1.5 relative flex-[0_0_auto] rounded-[10px]">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap">
-                    Aire Wallex
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div className="flex-col justify-center p-5 bg-[#f9f9f9] flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col items-start gap-5 relative flex-1 grow">
                   <div className="relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
-                    Date
+                    Date and time
                   </div>
                 </div>
 
-                <div className="inline-flex items-center justify-center gap-2.5 p-1.5 relative flex-[0_0_auto] rounded-[10px]">
+                <div className="flex justify-start gap-2.5 p-1.5 relative flex-[0_0_auto] rounded-[10px]">
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap">
-                    {typeof order?.updated_at === "string"
-                      ? order.updated_at
-                      : order?.updated_at?.toLocaleDateString()}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center gap-2.5 p-5 relative self-stretch w-full flex-[0_0_auto] bg-[#f9f9f9] rounded-[0px_0px_20px_20px]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex flex-col items-start gap-5 relative flex-1 grow">
-                  <div className="relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
-                    Time
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center justify-center gap-2.5 p-1.5 relative flex-[0_0_auto] rounded-[10px]">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap">
-                    10:48:34 Pm
+                    {formatDateTime(order.updated_at)}
                   </div>
                 </div>
               </div>
