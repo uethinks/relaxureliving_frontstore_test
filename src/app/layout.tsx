@@ -100,9 +100,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         </CartProvider>
 
         <Script
-          id="gorgias-chat-widget-install-v3"
-          src="https://config.gorgias.chat/bundle-loader/01JS9W54W6NK3XC6TQ1DKVER8F"
-        />
+          src="//code.tidio.co/spcvp06pvbgtarykyqq2afrepjvccury.js"
+          async
+        ></Script>
       </body>
     </html>
   )
