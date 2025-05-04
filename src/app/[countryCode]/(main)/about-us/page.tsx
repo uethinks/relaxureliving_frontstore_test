@@ -97,14 +97,14 @@ export default function AboutPage() {
               craft the backdrop for your life's most meaningful moments.
             </p>
             <p className="text-[18px] lg:text-[28px] font-[700] leading-relaxed font-['Merriweather']">
-              —Peter, Founder
+              —Peter Y. Founder
             </p>
           </div>
         </div>
       </section>
 
       {/* Quote Section */}
-      <section className="w-full">
+      <section className="w-full mt-[60px]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="relative rounded-2xl flex flex-col lg:block p-[2px]">
             <img
