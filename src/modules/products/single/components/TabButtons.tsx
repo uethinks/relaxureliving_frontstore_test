@@ -3,18 +3,58 @@ import React, { useEffect } from "react"
 
 export const TabButtons = () => {
   useEffect(() => {
-    // 初始化时隐藏 Assembly 内容
     const assemblyContent = document.getElementById("assembly-content")
     const descriptionContent = document.getElementById("description-content")
-    if (assemblyContent) {
-      assemblyContent.style.display = "none"
-      assemblyContent.style.opacity = "0"
-      assemblyContent.style.transition = "opacity 0.3s ease-in-out"
-    }
-    if (descriptionContent) {
-      descriptionContent.style.display = "block"
-      descriptionContent.style.opacity = "1"
-      descriptionContent.style.transition = "opacity 0.3s ease-in-out"
+    const assemblyTab = document.getElementById("assembly-tab")
+    const descriptionTab = document.getElementById("description-tab")
+
+    // 检查当前URL
+    const isPergolaKitPage = window.location.href.includes(
+      "aluminum-pergola-kit"
+    )
+
+    if (isPergolaKitPage) {
+      // 显示assembly内容
+      if (assemblyContent) {
+        assemblyContent.style.display = "block"
+        assemblyContent.style.opacity = "1"
+        assemblyContent.style.transition = "opacity 0.3s ease-in-out"
+      }
+      if (descriptionContent) {
+        descriptionContent.style.display = "none"
+        descriptionContent.style.opacity = "0"
+        descriptionContent.style.transition = "opacity 0.3s ease-in-out"
+      }
+      if (assemblyTab) {
+        assemblyTab.classList.add(
+          "text-[#072F6C]",
+          "border-b-2",
+          "border-[#072F6C]",
+          "bg-[#dce7f8]"
+        )
+        assemblyTab.classList.remove("bg-[#f3f3f3]")
+      }
+      if (descriptionTab) {
+        descriptionTab.classList.remove(
+          "text-[#072F6C]",
+          "border-b-2",
+          "border-[#072F6C]",
+          "bg-[#dce7f8]"
+        )
+        descriptionTab.classList.add("bg-[#f3f3f3]")
+      }
+    } else {
+      // 默认显示description内容
+      if (assemblyContent) {
+        assemblyContent.style.display = "none"
+        assemblyContent.style.opacity = "0"
+        assemblyContent.style.transition = "opacity 0.3s ease-in-out"
+      }
+      if (descriptionContent) {
+        descriptionContent.style.display = "block"
+        descriptionContent.style.opacity = "1"
+        descriptionContent.style.transition = "opacity 0.3s ease-in-out"
+      }
     }
   }, [])
 
