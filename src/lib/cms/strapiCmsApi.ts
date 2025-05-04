@@ -15,7 +15,8 @@ const homePagePopulate = {
     "populate[Accessories][populate][slider][populate][1]": "smallImage",
     "populate[OurBlog][populate][articles][populate][cover][populate]": "*",
     "populate[OurBlog][populate][articles][populate][author][populate]": "*",
-    "populate[OurBlog][populate][articles][populate][category][populate]": "*"
+    "populate[OurBlog][populate][articles][populate][category][populate]": "*",
+    "populate[credential][populate][images][populate]": "*"
 };
 
 const reviewsPopulate = {

@@ -2,8 +2,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useState, useCallback } from "react"
 import { features, featureSlider } from "types/global"
-import { ArrowForwardIos4 } from "@modules/home/icons/ArrowForwardIos4"
-import { StyleOutlined } from "@modules/home/icons/StyleOutlined"
 
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 type featureSliderGroup = { expand: boolean } & featureSlider

@@ -12,7 +12,7 @@ export const Hero = ({
   if (!hero) return null
 
   return (
-    <div className="flex flex-col items-end gap-2 pt-2.5 lg:pb-10 px-0 relative self-stretch w-full">
+    <div className="flex flex-col items-end gap-2 pt-2.5 px-0 relative self-stretch w-full">
       <div
         className="flex lg:aspect-[1352/900] min-h-[586px] items-center px-5 md:px-[64px] py-0 relative self-stretch w-full rounded-[20px] overflow-hidden lg:shadow-shadow-cards-relaxure bg-cover bg-[50%_50%]"
         style={{

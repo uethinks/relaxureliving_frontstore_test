@@ -283,3 +283,8 @@ export type PergolaData = {
     productAccessories: ProductAccessories
     boringButImportantStuff: BoringButImportantStuff
 }
+
+export type AwardBlockProps = {
+  title: string
+  images: Image[]
+}

@@ -11,6 +11,7 @@ import { OurBlog } from "./sections/OurBlog"
 import { FaqWrapper } from "./sections/FaqWrapper"
 import { ContactUs } from "./sections/ContactUs"
 import { Testimonials } from "./sections/Testimonials"
+import { AwardBlock } from "@modules/common/components/AwardBlock"
 import {
   HeroProps,
   OurPergolaProps,
@@ -20,6 +21,7 @@ import {
   Image,
   BoringButImportantStuff,
   PergolaData,
+  AwardBlockProps,
 } from "types/global"
 import { unstable_cache } from "next/cache"
 
@@ -67,6 +69,7 @@ interface InitialData {
   faq: FAQData
   contactUs: ContactUsProps
   ourPromise: BoringButImportantStuff
+  awardBlock: AwardBlockProps
 }
 
 // 缓存数据获取函数
@@ -74,6 +77,7 @@ const getCachedHomePage = unstable_cache(
   async () => {
     try {
       const { data } = await getHomePage()
+      console.log("data", data)
       return data
     } catch (error) {
       console.error("Error fetching homepage data:", error)
@@ -101,12 +105,13 @@ export default async function Homepage() {
 
   return (
     <>
-      <div className="w-full 2xl:w-[1910px] flex flex-col items-center gap-[10px] lg:gap-10 px-4 lg:px-20 py-0 relative bg-[#ffffff]">
+      <div className="w-full 2xl:w-[1910px] flex flex-col items-center gap-[10px] lg:gap-[120px] px-4 lg:px-20 py-0 relative bg-[#ffffff]">
         <NavBarWrapper isHomePage={true} />
         <Hero hero={data.HomepageHero} />
         <OurPergola pergola={data.OurPergola} />
         <Features features={data.Features} />
         <Accessories accessories={data.Accessories} />
+        <AwardBlock data={data.credential} />
       </div>
       <OurPromise
         pergolaData={
