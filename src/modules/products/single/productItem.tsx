@@ -3,6 +3,7 @@ import { FirstScreen } from "./components/FirstScreen"
 import { StoreProduct } from "@medusajs/types"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { CustomerReviewsServer } from "./components/CustomerReviewsServer"
+import { AwardBlock } from "@modules/common/components/AwardBlock"
 import {
   ImageOnLeft,
   Advantages,
@@ -48,6 +49,13 @@ export const ProductItem = ({
       </div>
       <div className="w-full">
         <OurPromise pergolaData={pergolaData} />
+      </div>
+      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20 mt-5 lg:mt-[80px]">
+        <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
+          <div className="w-full">
+            <AwardBlock data={pergolaData.credential} />
+          </div>
+        </div>
       </div>
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20">
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">

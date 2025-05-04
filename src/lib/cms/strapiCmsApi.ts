@@ -34,6 +34,7 @@ const pergolaPopulate = {
     "populate[notJustAPrettyFace][populate][notJustAPrettyFaceItem][populate][notJustPrettyFaceIconContent][populate][0]": "icon",
     "populate[productAccessories][populate][productAccessoryItem][populate][0]": "image",
     "populate[boringButImportantStuff][populate][Promise][populate][0]": "Icon",
+    "populate[credential][populate][images][populate]": "*"
 };
 
 export const API_URLS = {

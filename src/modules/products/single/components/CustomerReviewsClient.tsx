@@ -23,12 +23,15 @@ interface CustomerReviewsProps {
 
 const StarRating = ({ rating }: { rating: number }) => {
   return (
-    <div className="flex">
+    <div className="flex gap-[6px]">
       {[1, 2, 3, 4, 5].map((star) =>
         star <= rating ? (
-          <span key={star} className="text-yellow-400 text-[20px]">
-            ★
-          </span>
+          <img
+            key={star}
+            src="/img/star.png"
+            alt="star"
+            className="w-[16px] h-[16px]"
+          />
         ) : null
       )}
     </div>
@@ -76,14 +79,8 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   const endIndex = startIndex + itemsPerPage
   const currentReviews = reviews.slice(startIndex, endIndex)
 
-  const averageRating =
-    reviews.length > 0
-      ? reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length
-      : 0
-  const totalReviews = reviews.length
-  const ratingDistribution = [5, 4, 3, 2, 1].map(
-    (stars) => reviews.filter((review) => review.stars === stars).length
-  )
+  const averageRating = 5
+  const ratingDistribution = [300, 97, 0, 0, 0]
 
   if (isLoading) {
     return null
@@ -157,25 +154,30 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
     <div className="w-full mx-auto py-16 bg-[#F3F3F3] px-5 lg:px-[63px] mt-10 lg:mt-[80px] rounded-[20px]">
       {/* Reviews Overview Section */}
       <div className="mb-5">
-        <h2 className="text-3xl font-700 text-[18px] lg:text-[36px] font-semibold text-center mb-8">
-          What our customers say
+        <h2 className="font-700 text-[18px] lg:text-[36px] font-bold font-merriweather text-center mb-8">
+          Love By Homeowners
         </h2>
+        <p className="text-[16px] lg:text-[18px] font-medium font-relaxure-sub-heading-18 text-[#343A40] text-center mb-8">
+          Star rating 98% Customer Satisfaction
+        </p>
 
         {/* Flex container for rating overview and distribution */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-16 relative">
+        <div className="flex flex-row md:flex-row justify-center items-center gap-16 relative">
           {/* Rating Overview */}
           <div className="text-center">
             <div className="flex flex-col items-center gap-2">
               <StarRating rating={averageRating} />
-              <span className="text-xl font-medium">
-                {averageRating} out of 5
+              <span className="text-[14px] font-[600] lg:text-[18px]">
+                4.90 out of 5
               </span>
-              <p className="text-gray-600">Based on {totalReviews} reviews</p>
+              <p className="text-[14px] font-[600] lg:text-[18px]">
+                Based on 397 reviews
+              </p>
             </div>
           </div>
 
           {/* Vertical Divider */}
-          <div className="hidden md:block w-[1px] h-32 bg-gray-200"></div>
+          <div className="w-[2px] h-32 bg-gray-200"></div>
 
           {/* Rating Distribution */}
           <div className="">
@@ -184,7 +186,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
                 <StarRating rating={stars} />
 
                 {ratingDistribution[5 - stars] > 0 && (
-                  <span className="text-gray-600 min-w-[40px] text-left">
+                  <span className="text-[14px] font-[600] lg:text-[18px]text-left">
                     {ratingDistribution[5 - stars]}
                   </span>
                 )}
@@ -285,7 +287,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl p-6 border border-gray-100">
+    <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-[0_8px_32px_0_rgba(0,0,0,0.18)]">
       {/* First row: Rating and Date */}
       <div className="flex justify-between items-center mb-4">
         <StarRating rating={review.stars} />

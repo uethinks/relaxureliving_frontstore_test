@@ -282,6 +282,7 @@ export type PergolaData = {
     notJustAPrettyFace: NotJustAPrettyFace
     productAccessories: ProductAccessories
     boringButImportantStuff: BoringButImportantStuff
+    credential: AwardBlockProps
 }
 
 export type AwardBlockProps = {

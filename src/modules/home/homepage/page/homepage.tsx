@@ -12,17 +12,7 @@ import { FaqWrapper } from "./sections/FaqWrapper"
 import { ContactUs } from "./sections/ContactUs"
 import { Testimonials } from "./sections/Testimonials"
 import { AwardBlock } from "@modules/common/components/AwardBlock"
-import {
-  HeroProps,
-  OurPergolaProps,
-  features,
-  Accessories as AccessoriesType,
-  HomepageBlog,
-  Image,
-  BoringButImportantStuff,
-  PergolaData,
-  AwardBlockProps,
-} from "types/global"
+import { PergolaData } from "types/global"
 import { unstable_cache } from "next/cache"
 
 // 配置静态生成
@@ -46,30 +36,6 @@ interface FAQAnswer {
   id: number
   question: string
   Answer: string
-}
-
-interface ContactUsProps {
-  id: number
-  DescriptionOnImage: string
-  Email: string
-  FormDescription: string
-  FullName: string
-  Image: Image | null
-  Message: string
-  PhoneNumber: string
-  SendButton: string
-}
-
-interface InitialData {
-  hero: HeroProps
-  pergola: OurPergolaProps
-  features: features
-  accessories: AccessoriesType
-  homepageBlog: HomepageBlog
-  faq: FAQData
-  contactUs: ContactUsProps
-  ourPromise: BoringButImportantStuff
-  awardBlock: AwardBlockProps
 }
 
 // 缓存数据获取函数
