@@ -2,6 +2,8 @@ import React from "react"
 import { getAllTerms } from "@lib/cms/strapiCmsApi"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 import AgreeButton from "./components/AgreeButton"
+import { FooterDark } from "@modules/home/homepage/page/sections/footer"
+import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 
 interface TermType {
   title: string
@@ -91,7 +93,7 @@ export default async function TermsPage({
 }: {
   params: { type: string; countryCode: string }
 }) {
-  const { type } = params
+  const { type } = await params
 
   // 验证条款类型是否有效
   if (!termsTypes[type]) {
@@ -119,7 +121,8 @@ export default async function TermsPage({
     }
 
     return (
-      <main className="min-h-screen bg-gray-50 py-12">
+      <main className="min-h-screen bg-gray-50">
+        <NavBarWrapper isHomePage={false} isFixed={false} />
         <div className="max-w-4xl mx-auto px-4">
           <div className="bg-white rounded-lg shadow-sm p-8">
             <h1 className="text-3xl font-bold mb-8">{title}</h1>
@@ -129,6 +132,7 @@ export default async function TermsPage({
             <AgreeButton />
           </div>
         </div>
+        <FooterDark />
       </main>
     )
   } catch (error) {

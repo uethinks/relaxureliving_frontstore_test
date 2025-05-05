@@ -9,7 +9,7 @@ export const Advantages = ({
   const notJustAPrettyFace = pergolaData?.notJustAPrettyFace
   const strapiBaseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
   return (
-    <div className="flex flex-col w-full items-center justify-center px-8 py-6 relative bg-[#f3f3f3] mt-10">
+    <div className="flex rounded-[20px] flex-col w-full items-center justify-center px-8 py-6 relative bg-[#f3f3f3] mt-10">
       <div className="flex flex-col items-center gap-[60px] relative self-stretch w-full flex-[0_0_auto]">
         <p className="relative self-stretch [font-family:'Merriweather',Helvetica] font-bold text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[0] leading-[50.4px]">
           {notJustAPrettyFace?.title}

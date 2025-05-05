@@ -11,7 +11,7 @@ import {
 } from "./components/LandingPage"
 import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
 import { PergolaData, ProductInformation } from "@/types/global"
-
+import { OneHundredDayRiskFreeTrial } from "./components/OneHundredDayRiskFreeTrial"
 interface ProductItemProps {
   product: StoreProduct
   accessories: StoreProduct[]
@@ -38,6 +38,9 @@ export const ProductItem = ({
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
             <ImageOnLeft pergolaData={pergolaData} />
+          </div>
+          <div className="w-full mt-10">
+            <OneHundredDayRiskFreeTrial pergolaData={pergolaData} />
           </div>
           <div className="w-full">
             <Advantages pergolaData={pergolaData} />

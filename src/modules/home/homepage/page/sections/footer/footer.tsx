@@ -98,7 +98,7 @@ export const FooterDark = ({
                   </div>
                 </div>
                 <div className="mt-2 opacity-80 [font-family:'Montserrat',Helvetica] font-normal text-white text-[14px] text-center tracking-[0] leading-[normal]">
-                  © 2025 Relaxure
+                  © 2025 Relaxure TM
                 </div>
               </div>
             </div>

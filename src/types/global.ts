@@ -266,6 +266,14 @@ export type BoringButImportantStuff = {
   Promise: PromiseItem[]
 }
 
+export type OneHundredDayRiskFreeTrial = {
+  id: number
+  Title: string
+  short_description: any[]
+  popup_content: any[]
+  button: string
+}
+
 // 主数据类型
 export type PergolaData = {
     id: number
@@ -283,9 +291,16 @@ export type PergolaData = {
     productAccessories: ProductAccessories
     boringButImportantStuff: BoringButImportantStuff
     credential: AwardBlockProps
+    one_hundred_day_risk_free_trial: OneHundredDayRiskFreeTrial
 }
 
 export type AwardBlockProps = {
   title: string
   images: Image[]
 }
+
+export type ReviewType = {
+  id: number
+  image: Image[]
+}
+

@@ -4,6 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+  
+  p, span, div, button, input, textarea {
+    @apply font-sans;
+  }
+}
+
 @layer components {
   .all-\[unset\] {
     all: unset;

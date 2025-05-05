@@ -1,6 +1,6 @@
 import React from "react"
 import Image from "next/image"
-import { ReviewType } from "./CustomerReviews"
+import { ReviewType } from "@/types/global"
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 interface ImageReviewModalProps {
   isOpen: boolean
