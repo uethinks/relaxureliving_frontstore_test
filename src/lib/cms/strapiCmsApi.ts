@@ -43,6 +43,8 @@ export const API_URLS = {
   getWarranty: '/api/warranty',
   getPrivacyPolicy: '/api/privacy-policy',
   getTermsOfService: '/api/terms-of-service',
+  getShippingPolicy: '/api/shipping-policy',
+  getIntellectualPropertyRights: '/api/intellectual-property-right',
   getRefundPolicy: '/api/refund-policy',
   getReviews: '/api/testimonials-plural',
   submitContact: '/api/contact-submissions',
@@ -68,6 +70,12 @@ export const getAllTerms = async () => {
   const termsData: Record<string, any> = {};
   
   try {
+    // Intellectual Property Rights
+    const intellectualPropertyRights = await axiosInstance.get(API_URLS.getIntellectualPropertyRights);
+    termsData['intellectual-property-right'] = intellectualPropertyRights.data;
+    // Shipping Policy 
+    const shippingPolicy = await axiosInstance.get(API_URLS.getShippingPolicy);
+    termsData['shipping-policy'] = shippingPolicy.data;
     // 获取服务条款
     const termsOfService = await axiosInstance.get(API_URLS.getTermsOfService);
     termsData['terms-of-service'] = termsOfService.data;

@@ -44,6 +44,16 @@ export const FooterDark = ({
           <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:h-11 md:items-center md:justify-between md:lg:gap-10 relative">
             <Link href="/us/terms/terms-of-service" className="text-center">
               <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] lg:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                Intellectual Property Rights
+              </div>
+            </Link>
+            <Link href="/us/terms/terms-of-service" className="text-center">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] lg:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+                Shipping Policy
+              </div>
+            </Link>
+            <Link href="/us/terms/terms-of-service" className="text-center">
+              <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] lg:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 Terms of service
               </div>
             </Link>
