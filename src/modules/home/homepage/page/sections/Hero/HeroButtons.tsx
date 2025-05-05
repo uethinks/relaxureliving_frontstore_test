@@ -3,14 +3,6 @@ import React from "react"
 import { StyleSecondary } from "../../../../components/StyleSecondary"
 import Link from "next/link"
 
-declare global {
-  interface Window {
-    GorgiasChat: {
-      open: () => void
-    }
-  }
-}
-
 interface HeroButtonsProps {
   leftButton: string
   rightButton: string
@@ -29,7 +21,7 @@ export const HeroButtons = ({
           </button>
         </div>
       </Link>
-      <button onClick={() => window.GorgiasChat.open()}>
+      <button onClick={() => (window as any).tidioChatApi?.open()}>
         <StyleSecondary
           className="!border-[#ffffff] !rounded-[10px] !mr-[-1.00px] !mt-[-1.00px] !mb-[-1.00px] !flex-[0_0_auto]"
           divClassName="!text-[#ffffff] !tracking-[0] !text-base ![font-style:unset] !font-normal ![font-family:'Roboto',Helvetica] !leading-6"

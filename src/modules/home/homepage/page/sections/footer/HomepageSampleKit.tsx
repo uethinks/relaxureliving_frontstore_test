@@ -58,7 +58,10 @@ export const HomepageSampleKit = (): JSX.Element => {
     }
   }
   return (
-    <div className="flex flex-col justify-center w-full items-center gap-5 mt-[68px] mb-[100px] lg:px-[260px]">
+    <div
+      id="sample-kit"
+      className="flex flex-col justify-center w-full items-center gap-5 mt-[68px] mb-[100px] lg:px-[260px]"
+    >
       <div className="flex flex-col lg:flex-row justify-center items-center gap-20 relative self-stretch w-full flex-[0_0_auto]">
         <img
           className="relative max-w-[360px] aspect-[360/360] mt-[-10.00px] rounded-[30px] border-[10px] border-solid border-[#ffffff]"
