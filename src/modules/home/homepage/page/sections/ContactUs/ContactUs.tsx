@@ -145,7 +145,7 @@ export const ContactUs = ({
         />
 
         <div className="absolute bottom-10 left-0 w-[80%] lg:w-full px-4 py-2.5">
-          <p className="font-bold text-white text-[18px] lg:text-[32px] leading-[44.8px] tracking-[0]">
+          <p className="font-bold font-merriweather text-white text-[18px] lg:text-[32px] leading-[44.8px] tracking-[0]">
             {contactUs.DescriptionOnImage}
           </p>
         </div>

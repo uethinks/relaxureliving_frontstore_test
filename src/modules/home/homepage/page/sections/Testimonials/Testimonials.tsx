@@ -100,13 +100,13 @@ interface TestimonialData {
 }
 
 export const Testimonials = (): JSX.Element => {
-  const [activeId, setActiveId] = useState<number | null>(null)
+  const [activeId, setActiveId] = useState<number | null>(3)
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const testimonials: TestimonialData[] = [
     {
       id: 1,
-      image: "/img/ellipse-79-4.svg",
+      image: "/img/Lucas_Martinez.png",
       message:
         "Ordered in mid December and came quickly in January. You gotta wonder how they managed logistics. Lots of sturdy packaging. I am a doctor and hate wasting hours with mislabeled part. Thank god all their parts come with matching labels to help my contractor. Every part has sticky and plastic on it to prevent scratching. I will have more reviews later. Hopefully this is helping. No regrets so far.",
       name: "Lucas Martinez",
@@ -119,7 +119,7 @@ export const Testimonials = (): JSX.Element => {
     },
     {
       id: 2,
-      image: "/img/ellipse-79-5.svg",
+      image: "/img/Emma_Thompson.png",
       message:
         "Okay, buckle up. Their warranty is like the superhero of all warranties—15 years of total protection!",
       name: "Emma Thompson",
@@ -131,7 +131,7 @@ export const Testimonials = (): JSX.Element => {
     },
     {
       id: 3,
-      image: "/img/ellipse-79-6.svg",
+      image: "/img/Robert_L.png",
       message:
         "I was amazed at how silent the pergola stays during storms. I started wondering if it had taken a vow of silence—no creaking or rattling, just pure relaxation.",
       name: "Robert L.",
@@ -144,7 +144,7 @@ export const Testimonials = (): JSX.Element => {
     },
     {
       id: 4,
-      image: "/img/ellipse-79-7.svg",
+      image: "/img/Emily_R.png",
       message:
         "I like the offerings of this company. They have enough clearance under their pergolas. It's crazy how many are just 7 feet or so, and if you want a fan, well hope all your friends are short! In my case, 9 foot also assures I clear a window.",
       name: "Emily R.",
@@ -156,7 +156,7 @@ export const Testimonials = (): JSX.Element => {
     },
     {
       id: 5,
-      image: "/img/ellipse-80-6.svg",
+      image: "/img/Sophia_Anderson.png",
       message: `The thick posts make it feel like a permanent, solid structure, not some flimsy add-on.
 Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt look like a heavyweight champion. A strong gust of wind might just send them to early retirement! 😆🎭💨
 `,
@@ -170,7 +170,7 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
     },
     {
       id: 6,
-      image: "/img/ellipse-80-7.svg",
+      image: "/img/James_Wilson.png",
       message:
         "I love that I can keep my lights and on without freaking out about the weather….if you think about how the electric wires and directly in contact with water, there is no way you can be rest assured.. It's such a relief not having to unplug everything when it starts drizzling!!",
       name: "James Wilson",
@@ -205,8 +205,7 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
           <>
             <style>{styles}</style>
             <div className="w-[180px] h-[180px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-[#6c95d3]/30 rounded-full animate-[wave_1s_ease-out_infinite]" />
-            <div className="w-[120px] h-[120px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-[#072f6c]/30 rounded-full animate-[wave2_1.2s_ease-out_infinite]" />
-            <div className="w-[240px] h-[240px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-gradient-to-b from-[#c7d6eb]/40 to-[#c8d6ec]/5 rounded-full animate-[wave3_1.4s_ease-out_infinite]" />
+            <div className="w-[120px] h-[120px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-[#072f6c]/30 rounded-full animate-[wave2_1s_ease-out_infinite]" />
             <div className={data.bubbleClass}>
               <TestimonialBubble
                 position={data.position}
@@ -239,8 +238,7 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
         <div className="relative w-[200px] h-[200px]">
           <style>{styles}</style>
           <div className="w-[180px] h-[180px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#6c95d3]/30 rounded-full animate-[wave_1s_ease-out_infinite]" />
-          <div className="w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#072f6c]/30 rounded-full animate-[wave2_1.2s_ease-out_infinite]" />
-          <div className="w-[200px] h-[200px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-[#c7d6eb]/40 to-[#c8d6ec]/5 rounded-full animate-[wave3_1.4s_ease-out_infinite]" />
+          <div className="w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#072f6c]/30 rounded-full animate-[wave2_1s_ease-out_infinite]" />{" "}
           <img
             className="w-[100px] h-[100px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
             src={data.image}
@@ -267,7 +265,7 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
           data-property-1="Default"
           className="w-full p-10 flex justify-center items-center gap-2.5"
         >
-          <div className="self-stretch h-[711px] relative bg-white flex flex-col justify-center items-center gap-2.5 overflow-hidden">
+          <div className="self-stretch h-[711px] relative bg-white flex flex-col justify-center items-center gap-2.5">
             <div className="w-[1182px] flex flex-col justify-center items-center gap-2.5">
               <div className="w-[1182px] flex flex-col justify-start items-center gap-2.5">
                 <div className="flex flex-col justify-start items-start gap-2.5">
@@ -280,12 +278,12 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
               </div>
               <div className="p-2.5 inline-flex justify-center items-center gap-2.5">
                 <div className="text-center justify-start text-[#343a40] text-4xl font-bold font-['Merriweather'] leading-[50.40px]">
-                  What Our Customers Say
+                  Loved By Homeowners
                 </div>
               </div>
               <div className="px-2.5 inline-flex justify-center items-center gap-2.5">
                 <div className="justify-start text-[#68717a] text-lg font-medium font-['Montserrat'] leading-[27px]">
-                  Real Experiences from Happy Customers
+                  Trusted by 800+ Homeowners in the US
                 </div>
               </div>
             </div>
@@ -330,19 +328,6 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
           >
             <FaChevronRight className="text-[#072f6c]" />
           </button>
-
-          {/* Dots indicator */}
-          {/* <div className="flex justify-center gap-2 mt-6">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  currentSlide === index ? "bg-[#072f6c]" : "bg-gray-300"
-                }`}
-                onClick={() => setCurrentSlide(index)}
-              />
-            ))}
-          </div> */}
         </div>
       </div>
     </div>
