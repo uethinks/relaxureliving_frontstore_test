@@ -91,14 +91,14 @@ export const FooterDark = ({
                 <div className="hidden md:flex items-center justify-center gap-5">
                   <div className="flex items-center justify-start w-full gap-5">
                     <span className="text-white text-base tracking-[0] leading-6 whitespace-nowrap">
-                      1-672-673-0150
+                      1-213-566-8658 (Toll free phone number)
                     </span>
                   </div>
                   <div className="flex items-center justify-start w-full gap-5">
                     <a
                       href="mailto:info@relaxureliving.com"
                       className="text-white text-base tracking-[0] leading-6 whitespace-normal hover:text-blue-300 hover:underline transition-colors duration-200 cursor-pointer"
-                      title="点击发送邮件"
+                      title="click to send email"
                     >
                       info@relaxureliving.com
                     </a>
@@ -121,10 +121,10 @@ export const FooterDark = ({
                 <div className="flex flex-col md:hidden items-center justify-center gap-2">
                   <div className="flex items-center justify-center w-full gap-2">
                     <span className="text-white text-base tracking-[0] leading-6 whitespace-nowrap">
-                      1-672-673-0150
+                      1-213-566-8658 (Toll free phone number)
                     </span>
                   </div>
-                  <div className="flex items-center justify-start w-full gap-2">
+                  <div className="flex items-center justify-center w-full gap-2">
                     <a
                       href="mailto:info@relaxureliving.com"
                       className="text-white text-base tracking-[0] leading-6 whitespace-normal"
