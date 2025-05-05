@@ -15,6 +15,32 @@ export const FooterDark = ({
       <div className="relative flex flex-col justify-between gap-2  w-full 2xl:w-[1512px] px-5 md:px-20 2xl:px-[193px]">
         {isHomepage ? <HomepageSampleKit /> : <BadWeatherSection />}
         <div className="flex flex-col items-center justify-center w-full gap-5">
+          <div className="flex flex-wrap items-center justify-center gap-5 p-4 rounded-[3px] bg-white">
+            <img className="w-10" src="/img/visa.png" alt="visa" />
+            <img className="w-10" src="/img/master.png" alt="master" />
+            <img className="w-10" src="/img/Maestro.png" alt="Maestro" />
+            <img className="w-10" src="/img/JCB.png" alt="JCB" />
+            <img
+              className="w-10"
+              src="/img/American_Express.png"
+              alt="American_Express"
+            />
+            <img
+              className="w-10"
+              src="/img/Diners_Club.png"
+              alt="Diners_Club"
+            />
+            <img className="w-10" src="/img/Discover.png" alt="Discover" />
+            <img
+              className="w-10"
+              src="/img/VISA_Electron.png"
+              alt="VISA_Electron"
+            />
+            <img className="w-10" src="/img/Klarna.png" alt="Klarna" />
+            <img className="w-10" src="/img/afterpay.png" alt="afterpay" />
+            <img className="w-10" src="/img/apple_pay.png" alt="apple_pay" />
+            <img className="w-10" src="/img/google_pay.png" alt="google_pay" />
+          </div>
           <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:h-11 md:items-center md:justify-between md:lg:gap-10 relative">
             <Link href="/us/terms/terms-of-service" className="text-center">
               <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] lg:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
