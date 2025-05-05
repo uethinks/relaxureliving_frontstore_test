@@ -220,7 +220,8 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
         <img
           className="w-[127px] h-[127px] translate-x-1/2 translate-y-1/2 absolute rounded-full cursor-pointer transition-transform hover:scale-105"
           src={data.image}
-          onClick={() => handleAvatarClick(data.id)}
+          onMouseEnter={() => handleAvatarClick(data.id)}
+          onMouseLeave={() => setActiveId(null)}
           alt={`${data.name}'s testimonial`}
         />
       </div>
