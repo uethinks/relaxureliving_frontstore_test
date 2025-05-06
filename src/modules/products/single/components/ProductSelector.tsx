@@ -209,10 +209,13 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
           <div className="flex w-full flex-col items-start gap-2.5 relative">
             <div className="flex justify-between items-start gap-2.5 relative self-stretch w-full">
               <div className="flex items-center justify-center gap-2.5 py-0 relative">
-                <div className="flex flex-col items-start justify-start gap-4">
+                <div className="flex items-end justify-start gap-4">
                   <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[36px] leading-[32px] whitespace-nowrap relative tracking-[0]">
                     ${totalPrice}
                   </div>
+                  <span className="text-[16px] font-normal">
+                    with free shipping
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-2.5 relative">
@@ -238,12 +241,12 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[18px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
+              <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[24px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
                 ${totalOriginalPrice}
               </div>
               {
                 <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
-                  <span className="text-[18px] font-normal text-[red]">
+                  <span className="text-[24px] font-normal text-[red]">
                     Save{" "}
                     {Math.round(
                       ((totalOriginalPrice - totalPrice) / totalOriginalPrice) *
@@ -253,9 +256,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
                   </span>
                 </div>
               }
-              <span className="text-[16px] font-normal">
-                with free shipping
-              </span>
             </div>
           </div>
           <div className="flex flex-col w-full items-end gap-2.5 relative">

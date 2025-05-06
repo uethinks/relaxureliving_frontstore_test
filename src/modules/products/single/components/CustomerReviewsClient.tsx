@@ -6,13 +6,13 @@ import { ImageReviewModal } from "./ImageReviewModal"
 import { Image as ImageType } from "../../../../types/global"
 
 export interface ReviewType {
-  id: string
+  id: number
   stars: number
   date: string
   name: string
   title: string
   review: string
-  image?: ImageType[]
+  image: ImageType[]
   relaxure_team?: string
 }
 
@@ -155,7 +155,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
       {/* Reviews Overview Section */}
       <div className="mb-5">
         <h2 className="font-700 text-[18px] lg:text-[36px] font-bold font-merriweather text-center mb-8">
-          Love By Homeowners
+          Loved By Homeowners
         </h2>
         <p className="text-[16px] lg:text-[18px] font-medium font-relaxure-sub-heading-18 text-[#343A40] text-center mb-8">
           Star rating 98% Customer Satisfaction
@@ -205,7 +205,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
               className="min-w-[120px] h-[120px] relative rounded-lg overflow-hidden cursor-pointer"
               onClick={() => handleImageClick(index)}
             >
-              {review.image?.[0]?.formats?.small?.url && (
+              {review.image[0]?.formats?.small?.url && (
                 <img
                   src={`${strapiUrl}${review.image[0].formats.small.url}`}
                   alt="Customer review photo"
@@ -319,7 +319,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             className="w-full h-[200px] relative rounded-lg overflow-hidden group cursor-pointer mb-2"
             onClick={() => handleImageClick(0)}
           >
-            {review.image?.[0]?.formats?.small?.url && (
+            {review.image[0]?.formats?.small?.url && (
               <img
                 src={`${strapiUrl}${review.image[0].formats.small.url}`}
                 alt="Review photo"
