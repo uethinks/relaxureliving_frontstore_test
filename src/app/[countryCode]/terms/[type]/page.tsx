@@ -32,6 +32,12 @@ const termsTypes: Record<string, TermType> = {
   "refund-policy": {
     title: "Refund Policy",
   },
+  "shipping-policy": {
+    title: "Shipping Policy",
+  },
+  "intellectual-property-right": {
+    title: "Intellectual Property Rights",
+  },
 }
 
 // 错误提示组件
@@ -73,7 +79,7 @@ export async function generateMetadata({
 }: {
   params: { countryCode: string; type: string }
 }) {
-  const { type } = params
+  const { type } = await params
   if (!termsTypes[type]) {
     return {
       title: "Not Found - Relaxure Living",
@@ -127,7 +133,7 @@ export default async function TermsPage({
           <div className="bg-white rounded-lg shadow-sm p-8">
             <h1 className="text-3xl font-bold mb-8">{title}</h1>
             <div className="prose max-w-none">
-              <BlocksRenderer content={content} />
+              <div dangerouslySetInnerHTML={{ __html: content }} />
             </div>
             <AgreeButton />
           </div>
