@@ -43,7 +43,6 @@ const getCachedHomePage = unstable_cache(
   async () => {
     try {
       const { data } = await getHomePage()
-      console.log("data", data)
       return data
     } catch (error) {
       console.error("Error fetching homepage data:", error)
