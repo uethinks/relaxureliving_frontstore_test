@@ -136,8 +136,9 @@ export const FooterDark = ({
                     </a>
                   </div>
                 </div>
-                <div className="mt-2 opacity-80 [font-family:'Montserrat',Helvetica] font-normal text-white text-[14px] text-center tracking-[0] leading-[normal]">
-                  © 2025 Relaxure TM
+                <div className="flex items-start justify-center gap-2 mt-2 opacity-80 [font-family:'Montserrat',Helvetica] font-normal text-white text-[14px] text-center tracking-[0] leading-[normal]">
+                  <div>© 2025 Relaxure</div>
+                  <div className="text-[8px]">TM</div>
                 </div>
               </div>
             </div>
