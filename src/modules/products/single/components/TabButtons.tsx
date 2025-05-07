@@ -146,7 +146,7 @@ export const TabButtons = () => {
         onClick={() => handleTabClick("assembly")}
       >
         <div className="w-fit mt-[-4.00px] mb-[-2.00px] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px] text-[#343a40] transition-colors duration-300 ease-in-out">
-          Put it together
+          Setup
         </div>
       </button>
     </div>

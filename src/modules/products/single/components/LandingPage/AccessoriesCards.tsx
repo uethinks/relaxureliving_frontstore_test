@@ -41,7 +41,7 @@ export const AccessoriesCards = ({
             className="flex flex-col items-center justify-end relative w-full lg:w-1/3 h-[450px] rounded-[20px] overflow-hidden bg-cover bg-[50%_50%]"
           >
             <div className="flex justify-center items-center relative rounded-[20px] mb-10">
-              <div className="flex flex-col w-[90%] items-center gap-5 relative bg-[#ffffff3d] rounded-[20px] border border-solid border-[#ffffff70] backdrop-blur-[14.1px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.1px)_brightness(100%)]">
+              <div className="flex flex-col w-[90%] items-center gap-5 relative bg-[#00000069] rounded-[20px] border border-solid border-[#ffffff70] backdrop-blur-[14.1px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.1px)_brightness(100%)]">
                 <div className="flex flex-col items-center gap-2 p-2.5 relative self-stretch w-full">
                   <div className="flex items-center justify-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                     <div className="relative flex-1 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-bold text-[#ffffff] text-lg tracking-[0] leading-[25.2px]">

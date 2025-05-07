@@ -18,7 +18,7 @@ export const Advantage = (): JSX.Element => {
               style={{ height: "50px" }}
             >
               <img
-                className="w-5 h-5 lg:w-10 lg:h-[30px]"
+                className="w-5 lg:w-10"
                 alt="Frame"
                 src="/img/two_hours_installation.svg"
               />
@@ -41,7 +41,7 @@ export const Advantage = (): JSX.Element => {
               style={{ height: "50px" }}
             >
               <img
-                className="w-[30px] h-[34px] lg:w-10 lg:h-[62px]"
+                className="w-5 lg:w-[30px]"
                 alt="Frame"
                 src="/img/five_years_warranty.svg"
               />
@@ -51,7 +51,7 @@ export const Advantage = (): JSX.Element => {
               style={{ height: "50px" }}
             >
               <div className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
-                15 years warranty
+                15 year warranty
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@ export const Advantage = (): JSX.Element => {
               style={{ height: "50px" }}
             >
               <img
-                className="w-[30px] h-[34px] lg:w-10 lg:h-[62px]"
+                className="w-5 lg:w-[30px]"
                 alt="Frame"
                 src="/img/five_years_warranty.svg"
               />
@@ -74,7 +74,7 @@ export const Advantage = (): JSX.Element => {
               style={{ height: "50px" }}
             >
               <div className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
-                100 day risk free trail
+                100 day risk free trial
               </div>
             </div>
           </div>
@@ -87,7 +87,7 @@ export const Advantage = (): JSX.Element => {
               style={{ height: "50px" }}
             >
               <img
-                className="w-5 h-5 lg:w-10 lg:h-[30px]"
+                className="w-5 lg:w-10"
                 alt="Frame"
                 src="/img/two_months_delivery.svg"
               />
