@@ -45,7 +45,7 @@ export const PaymentFinish = ({
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.gtag("event", "conversion", {
-        send_to: "AW-17016286848/U7uBCPfngrwaEIDd_7E",
+        send_to: "AW-17039829404/1xj5CJaY5L4aEJzTnL0_",
         value: order.total,
         currency: "USD",
         transaction_id: order.id,
