@@ -66,7 +66,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             function gtag(){dataLayer.push(arguments);} 
             gtag('js', new Date()); 
             gtag('config', 'G-1DKZL3CTLM');
-            gtag('config', 'AW-17016286848');
+            gtag('config', 'AW-17039829404');
           `}
         </Script>
         {/* Google Tag Manager */}

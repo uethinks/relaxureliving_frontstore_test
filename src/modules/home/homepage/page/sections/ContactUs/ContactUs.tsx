@@ -98,7 +98,11 @@ export const ContactUs = ({
     if (!validateForm()) {
       return
     }
-
+    if (typeof window !== "undefined") {
+      window.gtag("event", "conversion", {
+        send_to: "AW-17039829404/w72TCLXX2sAaEJzTnL0_",
+      })
+    }
     setIsSubmitting(true)
     setSubmitStatus(null)
 
