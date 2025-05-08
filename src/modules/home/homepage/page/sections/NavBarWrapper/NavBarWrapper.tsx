@@ -230,11 +230,7 @@ export const NavBarWrapper = ({
           <div className="w-full mt-2 bg-[#ffffffcc] rounded-[30px] border border-solid border-[#ffffff] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
             <div className="flex flex-col items-center py-4 space-y-4">
               <a
-                href="#pergola"
-                onClick={(e) => {
-                  handleScroll(e, "pergola")
-                  setIsMenuOpen(false)
-                }}
+                href="/us/products/pergola"
                 className="w-full text-center py-2 [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base"
               >
                 Our pergola
