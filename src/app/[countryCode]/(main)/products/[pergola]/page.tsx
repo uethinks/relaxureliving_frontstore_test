@@ -93,15 +93,16 @@ export async function generateStaticParams() {
 
 export default async function ProductPage({ params }: Props) {
   try {
+    const { countryCode, pergola } = await params
     // 1. 并行获取基础数据
     const [pergolaData, region] = await Promise.all([
       getCachedPergola(),
-      getCachedRegion(params.countryCode),
+      getCachedRegion(countryCode),
     ])
 
     // 2. 获取当前产品信息
     const currentProductInfo = pergolaData.productInformations.find(
-      (product: ProductInformation) => product.urlLink === params.pergola
+      (product: ProductInformation) => product.urlLink === pergola
     )
     if (!currentProductInfo) {
       notFound()
