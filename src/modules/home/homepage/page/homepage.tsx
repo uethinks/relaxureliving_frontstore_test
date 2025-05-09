@@ -70,7 +70,7 @@ export default async function Homepage() {
 
   return (
     <>
-      <div className="w-full 2xl:w-[1910px] flex flex-col items-center gap-[10px] lg:gap-[120px] px-4 lg:px-20 py-0 relative bg-[#ffffff]">
+      <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-[120px] px-4 lg:px-20 py-0 relative bg-[#ffffff]">
         <NavBarWrapper isHomePage={true} />
         <Hero hero={data.HomepageHero} />
         <OurPergola pergola={data.OurPergola} />
@@ -85,11 +85,11 @@ export default async function Homepage() {
           } as PergolaData
         }
       />
-      <div className="w-full 2xl:w-[1910px] flex flex-col items-center gap-[10px] lg:gap-10 px-4 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
+      <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-10 px-4 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
         <Testimonials />
       </div>
       <FaqWrapper faq={data.FAQ} />
-      <div className="w-full 2xl:w-[1910px] flex flex-col items-center gap-[10px] lg:gap-10 px-4 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
+      <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-10 px-4 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
         <ContactUs contactUs={data.ContactUs} />
       </div>
       <FooterDark isHomepage={true} />
