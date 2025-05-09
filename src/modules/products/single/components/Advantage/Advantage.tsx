@@ -1,8 +1,8 @@
 export const Advantage = (): JSX.Element => {
   return (
     <div className="relative w-full flex flex-col items-start gap-2.5 px-2 lg:px-5 py-2.5 lg:py-5 self-stretch overflow-hidden">
-      <div className="absolute inset-0 w-full h-full bg-[#f3f3f3] rounded-[20px] overflow-hidden z-0" />
-      <div className="flex justify-between items-center w-full relative z-10">
+      <div className="absolute inset-0 w-full h-full bg-[#f3f3f3] rounded-[20px] overflow-hidden" />
+      <div className="flex justify-between items-center w-full relative">
         <img
           className="h-10 w-5 lg:h-[76px] lg:w-10 mr-1 lg:mr-5"
           alt="Vector"

@@ -75,9 +75,9 @@ export const NavBarWrapper = ({
     <div
       className={`w-full 2xl:w-[1512px] flex flex-col items-center gap-2.5 pb-[43px] pt-[34px]  ${
         isFixed
-          ? "lg:px-[132px] lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2"
+          ? "z-50 lg:px-[132px] lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2"
           : "lg:px-[52px]"
-      } z-50`}
+      }`}
     >
       {/* Desktop Navigation */}
       <div className="hidden xl:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 relative bg-gray-100 bg-opacity-80 rounded-[20px] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
