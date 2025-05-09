@@ -276,10 +276,12 @@ export const Checkout = () => {
         ?.data?.client_secret as string,
       currency: cart?.currency_code?.toUpperCase() || "USD",
     })
-    // 7. 挂载 Drop-in Element
-    const container = document.getElementById("airwallex-dropin-container")
-    if (container) {
-      element?.mount(container)
+    if (typeof window !== "undefined") {
+      // 7. 挂载 Drop-in Element
+      const container = document.getElementById("airwallex-dropin-container")
+      if (container) {
+        element?.mount(container)
+      }
     }
     // 8. 监听事件
     element?.on("success", (event: any) => {
