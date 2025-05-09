@@ -162,11 +162,11 @@ export const AccesorriesPopupShades = ({
     let slides = []
     if (!isSquare) {
       const numOfShortSide =
-        selectedShades.find((shade) => {
+        selectedShadesVariant.find((shade) => {
           return shade.productVarant?.length === pergolaSize.width
         })?.quantity ?? 0
       const numOfLongSide =
-        selectedShades.find((shade) => {
+        selectedShadesVariant.find((shade) => {
           return shade.productVarant?.length === pergolaSize.length
         })?.quantity ?? 0
       if (numOfShortSide === 1) {
@@ -180,7 +180,7 @@ export const AccesorriesPopupShades = ({
         slides.push("top", "bottom")
       }
     } else {
-      const numOfProducts = selectedShades[0]?.quantity ?? 0
+      const numOfProducts = selectedShadesVariant[0]?.quantity ?? 0
       slides = new Array(numOfProducts).fill("left")
     }
 

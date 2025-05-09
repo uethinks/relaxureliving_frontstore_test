@@ -169,11 +169,11 @@ export const AccesorriesPopupGlassdoor = ({
     let slides = []
     if (!isSquare) {
       const numOfShortSide =
-        selectedGlassdoor.find((glassdoor) => {
+        selectedGlassdoorVariant.find((glassdoor) => {
           return glassdoor.productVarant?.length === pergolaSize.width
         })?.quantity ?? 0
       const numOfLongSide =
-        selectedGlassdoor.find((glassdoor) => {
+        selectedGlassdoorVariant.find((glassdoor) => {
           return glassdoor.productVarant?.length === pergolaSize.length
         })?.quantity ?? 0
 
@@ -188,7 +188,7 @@ export const AccesorriesPopupGlassdoor = ({
         slides.push("top", "bottom")
       }
     } else {
-      const numOfProducts = selectedGlassdoor[0]?.quantity ?? 0
+      const numOfProducts = selectedGlassdoorVariant[0]?.quantity ?? 0
       slides = new Array(numOfProducts).fill("left")
     }
     setSelectedSides(slides)
