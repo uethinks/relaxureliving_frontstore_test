@@ -1,9 +1,13 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { BuyNowButton } from "./BuyNowButton"
 import { PergulaSizeSelector } from "./PergulaSizeSelector"
 import { AccesorriesSelector } from "./AccesorriesSelector"
-import { StoreProduct, StoreProductVariant } from "@medusajs/types"
+import {
+  StoreProduct,
+  StoreProductVariant,
+  StoreProductOptionValue,
+} from "@medusajs/types"
 import { PergolaSize, selectedProducts } from "types/global"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
@@ -11,13 +15,11 @@ import { useRouter } from "next/navigation"
 interface ProductSelectorProps {
   product: StoreProduct
   accessories: StoreProduct[]
-  isMobile?: boolean
 }
 
 export const ProductSelector: React.FC<ProductSelectorProps> = ({
   product,
   accessories,
-  isMobile = false,
 }) => {
   const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
   const [pergolaSize, setPergolaSize] = useState<PergolaSize>({
@@ -36,48 +38,79 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
   const router = useRouter()
 
-  useEffect(() => {
-    setPergolaSize({
-      width: selectedVariant?.width ?? 0,
-      length: selectedVariant?.length ?? 0,
-    })
-  }, [selectedVariant])
+  const pergolaSizes = product.options?.find(
+    (option) => option.title === "Size"
+  )
+  const pergolaColors = product.options?.find(
+    (option) => option.title === "Color"
+  )
+  const defaultSize = pergolaSizes?.values?.[0]
+  const defaultColor = pergolaColors?.values?.[0]
+
+  const [selectedSize, setSelectedSize] = useState<
+    StoreProductOptionValue | undefined
+  >(defaultSize)
+  const [selectedColor, setSelectedColor] = useState<
+    StoreProductOptionValue | undefined
+  >(defaultColor)
 
   useEffect(() => {
+    if (!selectedSize || !selectedColor) return
+
+    const variant = product.variants?.find((variant) => {
+      const matchingSize = variant?.options?.find(
+        (option) =>
+          option.option?.title === "Size" && option.value === selectedSize.value
+      )
+      const matchingColor = variant?.options?.find(
+        (option) =>
+          option.option?.title === "Color" &&
+          option.value === selectedColor.value
+      )
+      return matchingSize && matchingColor
+    })
+
+    setSelectedVariant(variant)
+    setPergolaSize({
+      width: variant?.width ?? 0,
+      length: variant?.length ?? 0,
+    })
     setTotalPrice(
-      pergolaQuantity *
-        (selectedVariant?.calculated_price?.calculated_amount ?? 0)
+      pergolaQuantity * (variant?.calculated_price?.calculated_amount ?? 0)
     )
     setTotalOriginalPrice(
-      pergolaQuantity *
-        (selectedVariant?.calculated_price?.original_amount ?? 0)
+      pergolaQuantity * (variant?.calculated_price?.original_amount ?? 0)
     )
-  }, [pergolaQuantity, selectedVariant])
-
-  useEffect(() => {
     setSelectedAccessoriesShades([])
     setSelectedAccessoriesGlassdoor([])
-  }, [selectedVariant])
+  }, [selectedSize, selectedColor, product, pergolaQuantity])
 
-  const handleVariantChange = (variant: StoreProductVariant | undefined) => {
-    setSelectedVariant(variant)
-  }
+  const handleSizeChange = useCallback((size: StoreProductOptionValue) => {
+    setSelectedSize(size)
+  }, [])
 
-  const handleAccessoryToggle = ({
-    type,
-    selectedProducts,
-  }: {
-    type: string
-    selectedProducts: selectedProducts
-  }) => {
-    if (type === "Heating") {
-      setSelectedAccessoriesHeater(selectedProducts)
-    } else if (type === "Shades") {
-      setSelectedAccessoriesShades(selectedProducts)
-    } else if (type === "Glass door") {
-      setSelectedAccessoriesGlassdoor(selectedProducts)
-    }
-  }
+  const handleColorChange = useCallback((color: StoreProductOptionValue) => {
+    setSelectedColor(color)
+  }, [])
+
+  const handleAccessoryToggle = useCallback(
+    ({
+      type,
+      selectedProducts,
+    }: {
+      type: string
+      selectedProducts: selectedProducts
+    }) => {
+      if (type === "Heating") {
+        setSelectedAccessoriesHeater(selectedProducts)
+      } else if (type === "Shades") {
+        setSelectedAccessoriesShades(selectedProducts)
+      } else if (type === "Glass door") {
+        setSelectedAccessoriesGlassdoor(selectedProducts)
+      }
+    },
+    []
+  )
 
   const handleBuyNow = async () => {
     try {
@@ -194,16 +227,10 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
     }
   }
 
-  const baseClasses = isMobile
-    ? "mt-10 flex lg:hidden flex-col w-full items-start gap-2.5 p-2 md:p-5 relative bg-[#f3f3f3] rounded-[20px]"
-    : "hidden lg:flex w-full lg:max-w-[36%] justify-end items-start gap-2.5 px-2.5 sticky top-0"
-
   return (
-    <div className={baseClasses}>
+    <div className="hidden lg:flex w-full lg:max-w-[36%] justify-end items-start gap-2.5 px-2.5 sticky top-0">
       <div
-        className={`flex flex-col w-full items-start gap-2.5 md:p-5 relative ${
-          !isMobile && "bg-[#f3f3f3] rounded-[20px]"
-        }`}
+        className={`flex flex-col w-full items-start gap-2.5 md:p-5 relative bg-[#f3f3f3] rounded-[20px]`}
       >
         <div className="flex w-full flex-col items-start gap-4 relative">
           <div className="flex w-full flex-col items-start gap-2.5 relative">
@@ -262,8 +289,10 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
             <PergulaSizeSelector
               product={product}
               className="!self-stretch !flex-[0_0_auto] !flex"
-              property1="default"
-              onVariantChange={handleVariantChange}
+              selectedSize={selectedSize}
+              selectedColor={selectedColor}
+              onSizeChange={handleSizeChange}
+              onColorChange={handleColorChange}
             />
             <AccesorriesSelector
               pergolaSize={pergolaSize}

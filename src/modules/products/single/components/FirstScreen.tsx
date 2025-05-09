@@ -8,6 +8,7 @@ import { TabButtons } from "./TabButtons"
 import { DescriptionContent } from "./DescriptionContent"
 import { AssemblyContent } from "./AssemblyContent"
 import { PergolaData, ProductInformation } from "@/types/global"
+import { ProductSelectorMobile } from "./ProductSelectorMobile"
 
 interface FirstScreenProps {
   product: StoreProduct
@@ -48,12 +49,6 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                 <div className="flex flex-row justify-between w-full">
                   <ImgContent product={product} property1="default" />
                 </div>
-                {/* Mobile View */}
-                <ProductSelector
-                  product={product}
-                  accessories={accessories}
-                  isMobile={true}
-                />
 
                 <div className="flex flex-col w-full items-start mt-5 lg:mt-[80px]">
                   <Advantage />
@@ -77,17 +72,15 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                 </div>
               </div>
               {/* Desktop View */}
-              <ProductSelector
-                product={product}
-                accessories={accessories}
-                isMobile={false}
-              />
+              <ProductSelector product={product} accessories={accessories} />
             </div>
           </div>
         </div>
         {/* Assembly Tab Content - Full Width */}
         <AssemblyContent pergolaData={pergolaData} />
       </div>
+      {/* Mobile View */}
+      <ProductSelectorMobile product={product} accessories={accessories} />
     </div>
   )
 }

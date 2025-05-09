@@ -637,8 +637,7 @@ export const Checkout = () => {
                       <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
                         ${cart?.total}
                       </div>
-                      {cart?.discount_total &&
-                        cart?.discount_total > 0 &&
+                      {(cart?.discount_total ?? 0) > 0 &&
                         cart?.original_total && (
                           <div className="flex items-center gap-2">
                             <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
