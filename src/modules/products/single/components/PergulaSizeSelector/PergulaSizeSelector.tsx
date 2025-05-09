@@ -95,9 +95,9 @@ export const PergulaSizeSelector = ({
           </p>
         </div>
 
-        <div className="relative h-12 w-full 2xl:w-auto">
+        <div className="relative h-12 2xl:w-auto">
           <div className="flex p-1 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
-            <div className="inline-flex items-center gap-1 md:gap-[18px] relative">
+            <div className="inline-flex items-center gap-1 lg:gap-0 xl:gap-[18px] relative">
               {sortedSizes?.map((size) => (
                 <button
                   key={size.id}
@@ -107,7 +107,7 @@ export const PergulaSizeSelector = ({
                   onClick={() => handleSizeClick(size)}
                 >
                   <div
-                    className={`mx-2 relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[18px] tracking-[0] leading-[27px] whitespace-nowrap ${
+                    className={`mx-2 lg:mx-0 xl:mx-2 relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[18px] tracking-[0] leading-[27px] whitespace-nowrap ${
                       selectedSize === size
                         ? "text-[#072f6c]"
                         : "text-[#69727a]"
