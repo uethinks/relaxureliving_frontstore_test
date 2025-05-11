@@ -162,7 +162,6 @@ export default async function ProductPage({ params }: Props) {
       shadesCMSData: shadesCMData,
       glassDoorCMSData: glassDoorCMData,
     }
-    console.log("accessoriesCMSData", glassDoorCMData)
     // 4. 转换数据格式
     const mainProductData = mainProduct.product as StoreProduct
     const accessoriesData = [

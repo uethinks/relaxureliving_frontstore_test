@@ -195,7 +195,6 @@ export const AccesorriesPopupGlassdoor = ({
     }
     setSelectedSides(slides)
   }, [showPopup])
-  console.log("glassdoorCMSData", glassdoorCMSData)
   return (
     <div
       className={`fixed inset-0 flex items-end md:items-center justify-center bg-black-50 z-50 ${
