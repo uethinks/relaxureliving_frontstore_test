@@ -26,6 +26,7 @@ const reviewsPopulate = {
 const pergolaPopulate = {
     "populate[productInformations]": "*",
     "populate[relatedProductIds]": "*",
+    "populate[product_images][fields][0]": "*",
     "populate[descriptionTab][populate][0]": "image",
     "populate[descriptionTab][populate][1]": "descriptions",
     "populate[putItTogether][populate][youtubeButtons]": "*",
@@ -36,6 +37,18 @@ const pergolaPopulate = {
     "populate[boringButImportantStuff][populate][Promise][populate][0]": "Icon",
     "populate[credential][populate][images][populate]": "*",
     "populate[one_hundred_day_risk_free_trial][populate]": "*"
+};
+const heaterPopulate = {
+  "populate[productInformations]": "*",
+  "populate[product_images][fields][0]": "*",
+};
+const shadesPopulate = {
+  "populate[productInformations]": "*",
+  "populate[product_images][fields][0]": "*",
+};
+const glassdoorPopulate = {
+  "populate[productInformations]": "*",
+  "populate[product_images][fields][0]": "*",
 };
 
 export const API_URLS = {
@@ -49,6 +62,9 @@ export const API_URLS = {
   getReviews: '/api/testimonials-plural',
   submitContact: '/api/contact-submissions',
   getPergola: '/api/pergola',
+  getHeater: '/api/heater',
+  getShades: '/api/shades-screen',
+  getGlassdoor: '/api/glass-door',
   sendKlaviyoTrackInfo: '/api/contact-submissions',
 };
 
@@ -117,6 +133,42 @@ export const getPergola = async () => {
   try {
     const response = await axiosInstance.get(API_URLS.getPergola, {
         params: pergolaPopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching pergola data:', error);
+    throw error;
+  }
+};
+// 获取 Pergola 数据
+export const getGlassdoor = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getGlassdoor, {
+        params: glassdoorPopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching pergola data:', error);
+    throw error;
+  }
+};
+// 获取 Pergola 数据
+export const getHeater = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getHeater, {
+        params: heaterPopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching pergola data:', error);
+    throw error;
+  }
+};
+// 获取 Pergola 数据
+export const getShades = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getShades, {
+        params: shadesPopulate
     });
     return response.data;
   } catch (error) {

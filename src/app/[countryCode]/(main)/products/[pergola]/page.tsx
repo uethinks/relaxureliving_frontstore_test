@@ -2,7 +2,12 @@ import { notFound } from "next/navigation"
 import { getProductByProductId } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { ProductItem } from "@modules/products/single"
-import { getPergola } from "@lib/cms/strapiCmsApi"
+import {
+  getGlassdoor,
+  getHeater,
+  getPergola,
+  getShades,
+} from "@lib/cms/strapiCmsApi"
 import { StoreProduct, StoreProductResponse } from "@medusajs/types"
 import { unstable_cache } from "next/cache"
 
@@ -67,6 +72,36 @@ const getCachedProduct = unstable_cache(
   { revalidate: 3600 }
 )
 
+// 缓存加热器数据获取
+const getCachedHeaterCMS = unstable_cache(
+  async () => {
+    const heaterData = await getHeater()
+    return heaterData.data
+  },
+  ["heater-data"],
+  { revalidate: 3600 }
+)
+
+// 缓存百叶窗数据获取
+const getCachedShadesCMS = unstable_cache(
+  async () => {
+    const shadesData = await getShades()
+    return shadesData.data
+  },
+  ["shades-data"],
+  { revalidate: 3600 }
+)
+
+// 缓存玻璃门数据获取
+const getCachedGlassDoorCMS = unstable_cache(
+  async () => {
+    const glassDoorData = await getGlassdoor()
+    return glassDoorData.data
+  },
+  ["glassdoor-data"],
+  { revalidate: 3600 }
+)
+
 export async function generateStaticParams() {
   try {
     // 1. 获取所有pergola数据
@@ -95,10 +130,14 @@ export default async function ProductPage({ params }: Props) {
   try {
     const { countryCode, pergola } = await params
     // 1. 并行获取基础数据
-    const [pergolaData, region] = await Promise.all([
-      getCachedPergola(),
-      getCachedRegion(countryCode),
-    ])
+    const [pergolaData, region, heaterCMData, shadesCMData, glassDoorCMData] =
+      await Promise.all([
+        getCachedPergola(),
+        getCachedRegion(countryCode),
+        getCachedHeaterCMS(),
+        getCachedShadesCMS(),
+        getCachedGlassDoorCMS(),
+      ])
 
     // 2. 获取当前产品信息
     const currentProductInfo = pergolaData.productInformations.find(
@@ -118,13 +157,19 @@ export default async function ProductPage({ params }: Props) {
         getCachedProduct(relatedProductIds.glassDoorId, region.id),
       ])
 
+    const accessoriesCMSData = {
+      heaterCMSData: heaterCMData,
+      shadesCMSData: shadesCMData,
+      glassDoorCMSData: glassDoorCMData,
+    }
+    console.log("accessoriesCMSData", glassDoorCMData)
     // 4. 转换数据格式
-    const mainProductData = mainProduct.product as unknown as StoreProduct
+    const mainProductData = mainProduct.product as StoreProduct
     const accessoriesData = [
       heaterProduct,
       shadesProduct,
       glassDoorProduct,
-    ].map((product) => product.product as unknown as StoreProduct)
+    ].map((product) => product.product as StoreProduct)
 
     // 5. 渲染页面
     return (
@@ -132,6 +177,7 @@ export default async function ProductPage({ params }: Props) {
         product={mainProductData}
         accessories={accessoriesData}
         pergolaData={pergolaData}
+        accessoriesCMSData={accessoriesCMSData}
         currentProductInfo={currentProductInfo}
       />
     )

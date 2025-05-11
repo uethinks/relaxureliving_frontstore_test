@@ -16,12 +16,14 @@ export const AccesorriesPopupHeater = ({
   addAccessoryHeater,
   selectedHeaterVariant,
   showPopup,
+  heaterCMSData,
 }: {
   accessoryHeater: StoreProduct | null
   closePopup: (type: string) => void
   addAccessoryHeater: (selectedProducts: selectedProducts) => void
   selectedHeaterVariant: selectedProducts
   showPopup: boolean
+  heaterCMSData: any
 }): JSX.Element => {
   const closePopupHeater = () => {
     closePopup("Heating")
@@ -152,7 +154,7 @@ export const AccesorriesPopupHeater = ({
               {accessoryHeater?.title}
             </h2>
             <div className="relative w-full lg:w-auto h-auto lg:h-[546px] aspect-[360/300] lg:aspect-[466/546]">
-              <ImageSlider images={accessoryHeater?.images || []} />
+              <ImageSlider images={heaterCMSData?.product_images || []} />
             </div>
 
             <div className="flex flex-col justify-between w-full h-full lg:w-1/2 items-start gap-10">

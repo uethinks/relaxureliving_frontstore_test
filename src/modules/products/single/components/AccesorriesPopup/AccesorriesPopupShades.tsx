@@ -17,6 +17,7 @@ export const AccesorriesPopupShades = ({
   selectedShadesVariant,
   pergolaSize,
   showPopup,
+  shadesCMSData,
 }: {
   accessoryShades: StoreProduct | null
   closePopup: (type: string) => void
@@ -24,6 +25,7 @@ export const AccesorriesPopupShades = ({
   selectedShadesVariant: selectedProducts
   pergolaSize: PergolaSize
   showPopup: boolean
+  shadesCMSData: any
 }): JSX.Element => {
   const closePopupShades = () => {
     closePopup("Shades")
@@ -223,7 +225,7 @@ export const AccesorriesPopupShades = ({
               {accessoryShades?.title}
             </h2>
             <div className="relative w-full lg:w-auto h-auto lg:h-[546px] aspect-[360/300] lg:aspect-[466/546]">
-              <ImageSlider images={accessoryShades?.images || []} />
+              <ImageSlider images={shadesCMSData?.product_images || []} />
             </div>
 
             <div className="flex flex-col justify-between w-full lg:w-1/2 items-start gap-10">

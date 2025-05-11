@@ -4,6 +4,7 @@ import { StoreProduct } from "@medusajs/types"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { FreeMode, Navigation, Thumbs, Pagination } from "swiper/modules"
 import type { Swiper as SwiperType } from "swiper"
+import { Image } from "@/types/global"
 
 // 导入 Swiper 样式
 import "swiper/css"
@@ -13,19 +14,17 @@ import "swiper/css/thumbs"
 import "swiper/css/pagination"
 
 interface Props {
-  product: StoreProduct
-  property1: "default"
+  productImages: Image[]
 }
 
-export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
+export const ImgContent = ({ productImages }: Props): JSX.Element => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [windowWidth, setWindowWidth] = useState<number>(0)
-  const images = product.images?.map((image) => image)
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
-
+  const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
   useEffect(() => {
     setWindowWidth(window.innerWidth)
     const handleResize = () => setWindowWidth(window.innerWidth)
@@ -42,7 +41,6 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
   }
 
   const isMobile = windowWidth < 1024
-
   return (
     <>
       <div className="flex flex-col justify-center items-center relative w-full rounded-[20px] overflow-hidden">
@@ -50,7 +48,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
         <div className="relative w-full">
           <div className="rounded-[20px] cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full overflow-hidden">
             <img
-              src={images?.[currentImageIndex]?.url}
+              src={strapiCmsUrl + productImages?.[currentImageIndex]?.url}
               alt=""
               className="w-full h-full object-cover object-center"
               onClick={handleImageClick}
@@ -78,7 +76,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                 setCurrentImageIndex(swiper.realIndex)
               }}
             >
-              {images?.map((image, index) => (
+              {productImages?.map((image, index) => (
                 <SwiperSlide
                   key={index}
                   className="cursor-pointer"
@@ -86,7 +84,7 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                 >
                   <div className="aspect-square rounded-2xl overflow-hidden">
                     <img
-                      src={image.url}
+                      src={strapiCmsUrl + image.formats.small.url}
                       alt=""
                       className="w-full h-full object-cover object-center"
                       loading="lazy"
@@ -160,13 +158,13 @@ export const ImgContent = ({ product, property1 }: Props): JSX.Element => {
                 loop={true}
                 initialSlide={currentImageIndex}
               >
-                {images?.map((image, index) => (
+                {productImages?.map((image, index) => (
                   <SwiperSlide
                     key={index}
                     className="!flex items-center justify-center h-full"
                   >
                     <img
-                      src={image.url}
+                      src={strapiCmsUrl + image.url}
                       alt=""
                       className="max-w-full max-h-full w-auto h-auto object-contain"
                       loading="lazy"

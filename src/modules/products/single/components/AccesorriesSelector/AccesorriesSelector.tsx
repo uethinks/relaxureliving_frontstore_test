@@ -21,6 +21,7 @@ interface Props {
   selectedShadesVariant: selectedProducts
   selectedGlassdoorVariant: selectedProducts
   pergolaSize: PergolaSize
+  accessoriesCMSData: any
 }
 type accessoriesIcons = {
   name: string
@@ -35,6 +36,7 @@ export const AccesorriesSelector = ({
   selectedShadesVariant,
   selectedGlassdoorVariant,
   pergolaSize,
+  accessoriesCMSData,
 }: Props): JSX.Element => {
   const [accessoriesIcons, setAccessoriesIcons] = useState<accessoriesIcons[]>([
     {
@@ -246,6 +248,7 @@ export const AccesorriesSelector = ({
           addAccessoryHeater={addAccessoryHeater}
           selectedHeaterVariant={selectedHeaterVariant}
           showPopup={isOpenHeater}
+          heaterCMSData={accessoriesCMSData?.heaterCMSData}
         />
       }
       {
@@ -256,6 +259,7 @@ export const AccesorriesSelector = ({
           selectedShadesVariant={selectedShadesVariant}
           pergolaSize={pergolaSize}
           showPopup={isOpenShade}
+          shadesCMSData={accessoriesCMSData?.shadesCMSData}
         />
       }
       {
@@ -266,6 +270,7 @@ export const AccesorriesSelector = ({
           selectedGlassdoorVariant={selectedGlassdoorVariant}
           pergolaSize={pergolaSize}
           showPopup={isOpenGlassdoor}
+          glassdoorCMSData={accessoriesCMSData?.glassDoorCMSData}
         />
       }
     </div>

@@ -17,6 +17,7 @@ interface ProductItemProps {
   accessories: StoreProduct[]
   pergolaData: PergolaData
   currentProductInfo: ProductInformation
+  accessoriesCMSData: any
 }
 
 export const ProductItem = ({
@@ -24,6 +25,7 @@ export const ProductItem = ({
   accessories,
   pergolaData,
   currentProductInfo,
+  accessoriesCMSData,
 }: ProductItemProps): JSX.Element => {
   return (
     <>
@@ -33,6 +35,7 @@ export const ProductItem = ({
           accessories={accessories}
           currentProductInfo={currentProductInfo}
           pergolaData={pergolaData}
+          accessoriesCMSData={accessoriesCMSData}
         />
 
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">

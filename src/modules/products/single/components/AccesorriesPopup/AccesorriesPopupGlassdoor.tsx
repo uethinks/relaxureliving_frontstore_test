@@ -23,6 +23,7 @@ export const AccesorriesPopupGlassdoor = ({
   selectedGlassdoorVariant,
   pergolaSize,
   showPopup,
+  glassdoorCMSData,
 }: {
   accessoryGlassdoor: StoreProduct | null
   closePopup: (type: string) => void
@@ -30,6 +31,7 @@ export const AccesorriesPopupGlassdoor = ({
   selectedGlassdoorVariant: selectedProducts
   pergolaSize: PergolaSize
   showPopup: boolean
+  glassdoorCMSData: any
 }): JSX.Element => {
   const closePopupGlassdoor = () => {
     closePopup("Glass door")
@@ -193,6 +195,7 @@ export const AccesorriesPopupGlassdoor = ({
     }
     setSelectedSides(slides)
   }, [showPopup])
+  console.log("glassdoorCMSData", glassdoorCMSData)
   return (
     <div
       className={`fixed inset-0 flex items-end md:items-center justify-center bg-black-50 z-50 ${
@@ -230,7 +233,7 @@ export const AccesorriesPopupGlassdoor = ({
               {accessoryGlassdoor?.title}
             </h2>
             <div className="relative w-full lg:w-auto h-auto lg:h-[546px] aspect-[360/300] lg:aspect-[466/546]">
-              <ImageSlider images={accessoryGlassdoor?.images || []} />
+              <ImageSlider images={glassdoorCMSData?.product_images || []} />
             </div>
 
             <div className="flex flex-col w-full lg:w-1/2 items-start gap-10">

@@ -16,11 +16,13 @@ import { FaChevronLeft } from "react-icons/fa"
 interface ProductSelectorProps {
   product: StoreProduct
   accessories: StoreProduct[]
+  accessoriesCMSData: any
 }
 
 export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
   product,
   accessories,
+  accessoriesCMSData,
 }) => {
   const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
   const [pergolaSize, setPergolaSize] = useState<PergolaSize>({
@@ -358,6 +360,7 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
                 selectedHeaterVariant={selectedAccessoriesHeater}
                 selectedShadesVariant={selectedAccessoriesShades}
                 selectedGlassdoorVariant={selectedAccessoriesGlassdoor}
+                accessoriesCMSData={accessoriesCMSData}
               />
             </div>
             <BuyNowButton

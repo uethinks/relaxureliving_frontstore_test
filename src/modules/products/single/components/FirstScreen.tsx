@@ -15,6 +15,7 @@ interface FirstScreenProps {
   accessories: StoreProduct[]
   pergolaData: PergolaData
   currentProductInfo: ProductInformation
+  accessoriesCMSData: any
 }
 
 export const FirstScreen: React.FC<FirstScreenProps> = ({
@@ -22,6 +23,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
   accessories,
   pergolaData,
   currentProductInfo,
+  accessoriesCMSData,
 }) => {
   return (
     <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full">
@@ -47,7 +49,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
             <div className="flex flex-row justify-between items-start relative w-full gap-[65px]">
               <div className="w-full lg:w-[64%] relative flex flex-col">
                 <div className="flex flex-row justify-between w-full">
-                  <ImgContent product={product} property1="default" />
+                  <ImgContent productImages={pergolaData.product_images} />
                 </div>
 
                 <div className="flex flex-col w-full items-start mt-5 lg:mt-[80px]">
@@ -72,7 +74,11 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                 </div>
               </div>
               {/* Desktop View */}
-              <ProductSelector product={product} accessories={accessories} />
+              <ProductSelector
+                product={product}
+                accessories={accessories}
+                accessoriesCMSData={accessoriesCMSData}
+              />
             </div>
           </div>
         </div>
@@ -80,7 +86,11 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
         <AssemblyContent pergolaData={pergolaData} />
       </div>
       {/* Mobile View */}
-      <ProductSelectorMobile product={product} accessories={accessories} />
+      <ProductSelectorMobile
+        product={product}
+        accessories={accessories}
+        accessoriesCMSData={accessoriesCMSData}
+      />
     </div>
   )
 }

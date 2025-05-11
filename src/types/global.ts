@@ -292,6 +292,7 @@ export type PergolaData = {
     boringButImportantStuff: BoringButImportantStuff
     credential: AwardBlockProps
     one_hundred_day_risk_free_trial: OneHundredDayRiskFreeTrial
+    product_images: Image[]
 }
 
 export type AwardBlockProps = {
