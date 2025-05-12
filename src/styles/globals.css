@@ -1,6 +1,18 @@
+@import './fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+  
+  p, span, div, button, input, textarea {
+    @apply font-sans;
+  }
+}
 
 @layer components {
   .all-\[unset\] {
@@ -505,4 +517,62 @@ You can apply the theme on any DOM node, not just the `body`
   --1-color-modes-colors-background-bg-secondary: var(
     --primitives-colors-gray-dark-mode-900
   );
+}
+
+@keyframes progress {
+  from {
+    width: 1%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progress 8s linear forwards;
+}
+
+@keyframes diagonal-movement {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(20px, -20px);
+  }
+}
+
+.animate-diagonal {
+  animation: diagonal-movement 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(249, 250, 251, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(12, 17, 29, 0.3);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(7, 47, 108, 0.5);
+}
+
+/* 移除上下箭头 */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Firefox 滚动条样式 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(12, 17, 29, 0.3) rgba(249, 250, 251, 0.3);
 }

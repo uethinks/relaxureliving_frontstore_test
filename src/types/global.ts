@@ -1,4 +1,4 @@
-import { StorePrice } from "@medusajs/types"
+import { StorePrice, StoreProductVariant } from "@medusajs/types"
 
 export type FeaturedProduct = {
   id: string
@@ -22,3 +22,286 @@ export type StoreFreeShippingPrice = StorePrice & {
   target_remaining: number
   remaining_percentage: number
 }
+// 定义 Image 类型
+export type Image = {
+  name: string;
+  url: string;
+  formats: {
+    xlarge: {
+      url: string;
+    };
+    large: {
+      url: string;
+    };
+    small: {
+      url: string;
+    };
+  };
+}
+// 定义 HeroProps 类型
+export type HeroProps = {
+  Title: string;
+  Description: string;
+  BackgroundImage: Image;
+  LeftButton: string;
+  RightButton: string;
+}
+export type UsageScenario = {
+  id: number;
+  ScenarioName: string;
+  LargeImage: Image;
+  SmallImage: Image;
+  subtitle?: string;
+  description?: string;
+  button?: string;
+}
+export type OurPergolaProps = {
+  Title: string;
+  SubTitle: string;
+  Description: string;
+  BottomButton: string;
+  UsageScenarios: UsageScenario[];
+}
+export type featureSlider = {
+  Title: string
+  subtitle: string
+  Description: string
+  Image: Image
+}
+
+export type features = {
+  Title: string
+  SubTitle: string
+  Description: string
+  FeaturesSlider: featureSlider[]
+}
+export type AccessoriesSlider = {
+  id: number
+  title: string
+  subtitle: string
+  description: string
+  largeImage: Image
+  smallImage: Image
+}
+export type Accessories = {
+  Title: string
+  Subtitle: string
+  Description: string
+  slider: AccessoriesSlider[]
+  Button: string
+}
+
+export type Blog = {
+  title: string
+  description: string
+  slug: string
+  cover: Image
+  author: {
+    avatar: Image
+    name: string
+  }
+  category: {
+    name: string
+  }
+}
+export type HomepageBlog = {
+  Title: string
+  Subtitle: string
+  Description: string
+  articles: Blog[]
+} 
+
+export type PergolaSize = {
+  width: number
+  length: number
+}
+
+export type selectedProductVariant = {
+  productVarant: StoreProductVariant | null
+  quantity: number
+}
+export type selectedProducts = selectedProductVariant[]
+
+// 产品信息类型
+export type ProductInformation = {
+  id: number
+  productTitle: string
+  productSubtitle: string
+  productDescription: string
+  urlLink: string
+}
+
+// 相关产品ID类型
+export type RelatedProductIds = {
+  id: number
+  pergolaId: string
+  heaterId: string
+  shadesId: string
+  glassDoorId: string
+}
+
+// 描述标签内容类型
+export type DescriptionContent = {
+  type: "paragraph" | "heading" | "list" | "quote" | "code" | "image"
+  children: Array<{
+    type: "text"
+    text: string
+    bold?: boolean
+    italic?: boolean
+    underline?: boolean
+    strikethrough?: boolean
+    code?: boolean
+  }>
+  level?: number
+  format?: string
+  url?: string
+  alt?: string
+  caption?: string
+  image?: {
+    url: string
+    alternativeText?: string
+    caption?: string
+  }
+}
+export type multiDescription = {
+  id: number
+  multiDescriptions: string
+}
+
+// 描述标签类型
+export type DescriptionTab = {
+  id: number
+  title: string
+  image: Image
+  descriptions: multiDescription[]
+}
+
+// 安装步骤类型
+export type InstallationStep = {
+  id: number
+  numberOfButton: string
+  tittle: string
+  description: string
+  percentage: number
+}
+
+// 组装说明类型
+export type PutItTogether = {
+  id: number
+  title: string
+  descriptions: multiDescription[]
+  youtubeCode: string
+  youtubeButtons: InstallationStep[]
+}
+
+// 产品特性类型
+export type ProductFeature = {
+  id: number
+  title: string
+  description: string
+  image: Image
+}
+
+// 产品特性部分类型
+export type ProductFeatures = {
+  id: number
+  title: string
+  description: string
+  youtubeCode: string
+  featureItem: ProductFeature[]
+}
+
+// 图标内容类型
+export type IconContent = {
+  id: number
+  content: string
+  icon: Image
+}
+
+// 特性项目类型
+export type FeatureItem = {
+  id: number
+  title: string
+  description: string
+  notJustPrettyFaceIconContent: IconContent[]
+}
+
+// 特性部分类型
+export type NotJustAPrettyFace = {
+  id: number
+  title: string
+  notJustAPrettyFaceItem: FeatureItem[]
+}
+
+// 配件项目类型
+export type ProductAccessoryItem = {
+  id: number
+  description: string
+  title: string
+  image: Image
+}
+
+// 产品配件类型
+export type ProductAccessories = {
+  id: number
+  title: string
+  subtitle: string
+  description: string
+  productAccessoryItem: ProductAccessoryItem[]
+}
+
+// 承诺项目类型
+export type PromiseItem = {
+  id: number
+  Title: string
+  Description: string
+  Icon: Image
+}
+
+// 重要事项类型
+export type BoringButImportantStuff = {
+  id: number
+  Title: string
+  Description: string
+  Promise: PromiseItem[]
+}
+
+export type OneHundredDayRiskFreeTrial = {
+  id: number
+  Title: string
+  short_description: any[]
+  popup_content: any[]
+  button: string
+}
+
+// 主数据类型
+export type PergolaData = {
+    id: number
+    documentId: string
+    createdAt: string
+    updatedAt: string
+    publishedAt: string
+    name: string
+    productInformations: ProductInformation[]
+    relatedProductIds: RelatedProductIds
+    descriptionTab: DescriptionTab
+    putItTogether: PutItTogether
+    productFeatures: ProductFeatures
+    notJustAPrettyFace: NotJustAPrettyFace
+    productAccessories: ProductAccessories
+    boringButImportantStuff: BoringButImportantStuff
+    credential: AwardBlockProps
+    one_hundred_day_risk_free_trial: OneHundredDayRiskFreeTrial
+    product_images: Image[]
+}
+
+export type AwardBlockProps = {
+  title: string
+  images: Image[]
+}
+
+export type ReviewType = {
+  id: number
+  image: Image[]
+}
+

@@ -18,6 +18,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  staticPageGenerationTimeout: 180,
+  experimental: {},
   images: {
     remotePatterns: [
       {
@@ -34,9 +36,20 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "medusa-server-testing.s3.us-east-1.amazonaws.com",
+        hostname: "relaxureliving.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cms.relaxureliving.com",
+      },
+      {
+        protocol: "https",
+        hostname: "relaxureliving-bucket.s3.us-east-1.amazonaws.com",
       },
     ],
+  },
+  env: {
+    AIRWALLEX_ENV: process.env.NEXT_PUBLIC_AIRWALLEX_ENV || "demo",
   },
 }
 

@@ -1,166 +1,137 @@
-import React from "react";
-import { IconChevronDown4 } from "../../../../icons/IconChevronDown4";
+"use client"
+import React, { useState } from "react"
+import { ExpandIcon } from "./ExpandIcon"
 
-export const FaqWrapper = (): JSX.Element => {
-  return (
-    <div className="flex flex-col w-[1512px] h-[711px] items-center justify-center gap-2.5 relative ml-[-80.00px] mr-[-80.00px] bg-[#f3f3f3]">
-      <div className="flex flex-col w-[1182px] items-center gap-10 px-0 py-10 relative flex-[0_0_auto]">
-        <div className="flex flex-col h-[143px] items-start relative self-stretch w-full">
-          <div className="flex flex-col items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-            <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="flex w-[125px] h-[41px] items-center justify-center p-2.5 bg-[#072f6c] rounded-[30px] gap-2.5 relative">
-                <div className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#ffffff] text-lg leading-[27px] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium tracking-[0]">
-                  Contact us
-                </div>
-              </div>
-            </div>
-          </div>
+interface FAQAnswer {
+  id: number
+  question: string
+  Answer: string
+}
 
-          <div className="h-[179px] items-start justify-center px-0 py-10 relative self-stretch w-full mb-[-77.00px] flex gap-2.5">
-            <div className="w-[773px] mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[length:var(--heading-2-font-size)] text-center leading-[var(--heading-2-line-height)] relative tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
-              Need to know more?
+interface FAQCategory {
+  id: number
+  Title: string
+  question_and_answer: FAQAnswer[]
+}
+
+interface FAQData {
+  id: number
+  Title: string
+  Subtitle: string
+  homepageFAQ: FAQCategory[]
+}
+
+export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
+  const [openQuestion, setOpenQuestion] = useState<{
+    level1: number
+    level2: number
+  }>({ level1: -1, level2: -1 })
+  return faq?.homepageFAQ.length > 0 ? (
+    <div className="flex flex-col w-full items-center justify-center gap-2.5 relative -mx-20 bg-[#f3f3f3] mt-10 lg:mt-[120px]">
+      <div className="flex flex-col w-full items-center gap-10 py-10 relative flex-[0_0_auto]">
+        <div className="flex flex-col h-[89px] items-start relative w-full">
+          <div className="h-[89px] items-start justify-center py-10 relative w-full -mb-[77px] flex gap-2.5">
+            <div className="w-full -mt-[1px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center leading-[var(--heading-2-line-height)] relative tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
+              {faq.Subtitle}
             </div>
           </div>
         </div>
 
-        <div className="relative w-[782px] h-[444px]">
-          <div className="absolute w-[782px] h-[127px] top-0 left-0 bg-[#ffffff] rounded-[20px] overflow-hidden">
-            <div className="flex flex-col w-[734px] items-start gap-[18px] relative top-[18px] left-6">
-              <div className="flex-[0_0_auto] flex items-start gap-2.5 relative self-stretch w-full">
-                <img
-                  className="relative w-6 h-6"
-                  alt="Frame"
-                  src="/img/frame-112.svg"
-                />
-
-                <div className="flex h-6 items-center gap-4 relative flex-1 grow">
-                  <div className="flex items-start relative flex-1 self-stretch grow">
-                    <div className="flex-1 font-semibold text-texttxt-primary text-lg leading-[21.6px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
-                      Lorem impsun text?
-                    </div>
-                  </div>
-
-                  <div className="inline-flex items-start gap-2.5 relative flex-[0_0_auto]">
-                    <IconChevronDown4
-                      className="!relative !w-4 !h-4"
-                      color="#072F6C"
-                    />
-                  </div>
+        <div className="relative w-full lg:w-[977px] flex flex-col items-center gap-2.5 px-5">
+          {faq.homepageFAQ.map((category, indexLevel1) => (
+            <div
+              key={category.id}
+              className="flex flex-col items-center w-full rounded-[20px] overflow-hidden px-4 gap-6"
+            >
+              <div className="flex flex-row items-start gap-2.5 w-full pe-5">
+                <div
+                  className="flex-1 font-semibold text-[#343A40] text-lg leading-[21.6px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0] cursor-pointer flex items-center justify-between"
+                  onClick={() =>
+                    setOpenQuestion((prev) => ({
+                      level1: prev.level1 === indexLevel1 ? -1 : indexLevel1,
+                      level2: 0,
+                    }))
+                  }
+                >
+                  {category.Title}
+                  <ExpandIcon
+                    className={`!relative !w-4 !h-4 transition-transform duration-200 ${
+                      openQuestion.level1 === indexLevel1
+                        ? "rotate-0"
+                        : "-rotate-90"
+                    }`}
+                    color="#072F6C"
+                  />
                 </div>
               </div>
+              <div className="w-full transition-all duration-300 ease-in-out">
+                {openQuestion.level1 === indexLevel1 &&
+                  category.question_and_answer.map((answer, indexLevel2) => (
+                    <div
+                      key={answer.id}
+                      className={`flex flex-col w-full items-start gap-1 p-5 ${
+                        openQuestion.level2 === indexLevel2
+                          ? "bg-white p-4 rounded-lg"
+                          : ""
+                      }`}
+                    >
+                      <div className="flex-[0_0_auto] flex items-start gap-2.5 relative w-full">
+                        <div className="flex items-center gap-4 relative flex-1 grow">
+                          <div
+                            className="flex items-start relative flex-1 grow cursor-pointer"
+                            onClick={() =>
+                              setOpenQuestion((prev) => ({
+                                level1: indexLevel1,
+                                level2:
+                                  prev.level2 === indexLevel2
+                                    ? -1
+                                    : indexLevel2,
+                              }))
+                            }
+                          >
+                            <div className="flex-1 font-semibold text-[#595c5f] text-base leading-[21.6px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0]">
+                              {answer.question}
+                            </div>
+                          </div>
 
-              <div className="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto]">
-                <p className="self-stretch font-normal text-texttxt-secondary text-base leading-[22.4px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
-                  Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel
-                  augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
-                  Etiam rhoncus. Maecenas tempus, tellus eget.
-                </p>
-              </div>
-            </div>
-          </div>
+                          <button
+                            onClick={() =>
+                              setOpenQuestion((prev) => ({
+                                level1: indexLevel1,
+                                level2:
+                                  prev.level2 === indexLevel2
+                                    ? -1
+                                    : indexLevel2,
+                              }))
+                            }
+                            className="inline-flex items-start gap-2.5 relative flex-[0_0_auto]"
+                          >
+                            <ExpandIcon
+                              className={`!relative !w-4 !h-4 transition-transform duration-200 ${
+                                openQuestion.level2 === indexLevel2
+                                  ? "rotate-0"
+                                  : "-rotate-90"
+                              }`}
+                              color="#072F6C"
+                            />
+                          </button>
+                        </div>
+                      </div>
 
-          <div className="absolute w-[782px] h-[60px] top-[167px] left-0">
-            <div className="flex flex-col w-[734px] h-8 items-start gap-[18px] relative top-[18px] left-6">
-              <div className="h-8 flex items-start gap-2.5 relative self-stretch w-full">
-                <div className="relative w-6 h-6 bg-[url(/img/on-time-1.png)] bg-[100%_100%]" />
-
-                <div className="flex h-6 items-center gap-4 relative flex-1 grow">
-                  <div className="flex items-start relative flex-1 self-stretch grow">
-                    <div className="flex-1 font-semibold text-texttxt-primary text-lg leading-[21.6px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
-                      Lorem impsun text?
+                      {openQuestion.level2 === indexLevel2 && (
+                        <div className="flex flex-col items-start gap-4 relative w-full flex-[0_0_auto]">
+                          <p className="font-normal text-texttxt-secondary text-base leading-[22.4px] relative -mt-[1px] [font-family:'Montserrat',Helvetica] tracking-[0]">
+                            {answer.Answer}
+                          </p>
+                        </div>
+                      )}
                     </div>
-                  </div>
-
-                  <div className="inline-flex items-start gap-2.5 relative flex-[0_0_auto]">
-                    <IconChevronDown4
-                      className="!relative !w-4 !h-4"
-                      color="#072F6C"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto] mb-[-62.00px]">
-                <p className="self-stretch font-normal text-texttxt-secondary text-base leading-[22.4px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
-                  Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel
-                  augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
-                  Etiam rhoncus. Maecenas tempus, tellus eget.
-                </p>
+                  ))}
               </div>
             </div>
-          </div>
-
-          <div className="absolute w-[782px] h-[60px] top-[267px] left-0">
-            <div className="flex flex-col w-[734px] h-[29px] items-start gap-[18px] relative top-[18px] left-6">
-              <div className="flex h-6 items-start gap-2.5 relative self-stretch w-full">
-                <img
-                  className="relative w-6 h-6"
-                  alt="Frame"
-                  src="/img/frame-116.svg"
-                />
-
-                <div className="flex h-6 items-center gap-4 relative flex-1 grow">
-                  <div className="flex items-start relative flex-1 self-stretch grow">
-                    <div className="flex-1 font-semibold text-texttxt-primary text-lg leading-[21.6px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
-                      Lorem impsun text?
-                    </div>
-                  </div>
-
-                  <div className="inline-flex items-start gap-2.5 relative flex-[0_0_auto]">
-                    <IconChevronDown4
-                      className="!relative !w-4 !h-4"
-                      color="#072F6C"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto] mb-[-57.00px]">
-                <p className="self-stretch font-normal text-texttxt-secondary text-base leading-[22.4px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
-                  Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel
-                  augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
-                  Etiam rhoncus. Maecenas tempus, tellus eget.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute w-[782px] h-[60px] top-[367px] left-0">
-            <div className="flex flex-col w-[734px] h-6 items-start gap-[18px] relative top-[18px] left-6">
-              <div className="flex h-6 items-start gap-2.5 relative self-stretch w-full">
-                <img
-                  className="relative w-[22px] h-6"
-                  alt="Frame"
-                  src="/img/frame-117.svg"
-                />
-
-                <div className="flex h-6 items-center gap-4 relative flex-1 grow">
-                  <div className="flex items-start relative flex-1 self-stretch grow">
-                    <div className="flex-1 font-semibold text-texttxt-primary text-lg leading-[21.6px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
-                      Lorem impsun text?
-                    </div>
-                  </div>
-
-                  <div className="inline-flex items-start gap-2.5 relative flex-[0_0_auto]">
-                    <IconChevronDown4
-                      className="!relative !w-4 !h-4"
-                      color="#072F6C"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col items-start gap-4 relative self-stretch w-full flex-[0_0_auto] mb-[-62.00px]">
-                <p className="self-stretch font-normal text-texttxt-secondary text-base leading-[22.4px] relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] tracking-[0]">
-                  Quisque rutrum. Aenean imperdi. Etiam ultricies nisi vel
-                  augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
-                  Etiam rhoncus. Maecenas tempus, tellus eget.
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
-  );
-};
+  ) : null
+}

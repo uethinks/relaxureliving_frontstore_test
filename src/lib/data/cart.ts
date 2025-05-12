@@ -40,7 +40,7 @@ export async function retrieveCart(cartId?: string) {
       method: "GET",
       query: {
         fields:
-          "*items, *region, *items.product, *items.variant, *items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name",
+          "*items, *region, *items.product, *items.variant, *items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name, *payment_collection, *payment_collection.payment_sessions",
       },
       headers,
       next,
@@ -134,7 +134,7 @@ export async function addToCart({
     ...(await getAuthHeaders()),
   }
 
-  await sdk.store.cart
+  return await sdk.store.cart
     .createLineItem(
       cart.id,
       {
@@ -144,12 +144,14 @@ export async function addToCart({
       {},
       headers
     )
-    .then(async () => {
+    .then(async (res) => {
+
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
 
       const fulfillmentCacheTag = await getCacheTag("fulfillment")
       revalidateTag(fulfillmentCacheTag)
+      return res.cart
     })
     .catch(medusaError)
 }
@@ -175,14 +177,15 @@ export async function updateLineItem({
     ...(await getAuthHeaders()),
   }
 
-  await sdk.store.cart
+  return await sdk.store.cart
     .updateLineItem(cartId, lineId, { quantity }, {}, headers)
-    .then(async () => {
+    .then(async (res) => {
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
 
       const fulfillmentCacheTag = await getCacheTag("fulfillment")
       revalidateTag(fulfillmentCacheTag)
+      return res.cart
     })
     .catch(medusaError)
 }
@@ -202,14 +205,15 @@ export async function deleteLineItem(lineId: string) {
     ...(await getAuthHeaders()),
   }
 
-  await sdk.store.cart
+  return await sdk.store.cart
     .deleteLineItem(cartId, lineId, headers)
-    .then(async () => {
+    .then(async (res) => {
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
 
       const fulfillmentCacheTag = await getCacheTag("fulfillment")
       revalidateTag(fulfillmentCacheTag)
+      return res.parent || null
     })
     .catch(medusaError)
 }
@@ -224,12 +228,12 @@ export async function setShippingMethod({
   const headers = {
     ...(await getAuthHeaders()),
   }
-
-  return sdk.store.cart
+  return await sdk.store.cart
     .addShippingMethod(cartId, { option_id: shippingMethodId }, {}, headers)
-    .then(async () => {
+    .then(async (res) => {
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
+      return res
     })
     .catch(medusaError)
 }
@@ -241,7 +245,6 @@ export async function initiatePaymentSession(
   const headers = {
     ...(await getAuthHeaders()),
   }
-
   return sdk.store.payment
     .initiatePaymentSession(cart, data, {}, headers)
     .then(async (resp) => {
@@ -412,10 +415,10 @@ export async function placeOrder(cartId?: string) {
     const countryCode =
       cartRes.order.shipping_address?.country_code?.toLowerCase()
     removeCartId()
-    redirect(`/${countryCode}/order/${cartRes?.order.id}/confirmed`)
+    // redirect(`/${countryCode}/order/${cartRes?.order.id}/confirmed`)
+    return cartRes
   }
-
-  return cartRes.cart
+  return cartRes
 }
 
 /**
@@ -447,7 +450,7 @@ export async function updateRegion(countryCode: string, currentPath: string) {
 }
 
 export async function listCartOptions() {
-  const cartId = await getCartId()
+  const cartId = await getCartId() || ""
   const headers = {
     ...(await getAuthHeaders()),
   }

@@ -1,1 +1,0 @@
-export { CurrencyDollar } from "./CurrencyDollar";

@@ -1,0 +1,1 @@
+export { AccesorriesSelector } from "./AccesorriesSelector";

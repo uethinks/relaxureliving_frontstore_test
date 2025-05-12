@@ -1,35 +1,29 @@
-import { Metadata } from "next"
-
-import FeaturedProducts from "@modules/home/components/featured-products"
-import Hero from "@modules/home/components/hero"
-import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
-import { homepage as Homepage } from "@modules/home/homepage/page"
+import { Homepage as Homepage } from "@modules/home/homepage/page"
+import { listRegions } from "@lib/data/regions"
 
-export const metadata: Metadata = {
-  title: "Medusa Next.js Starter Template",
-  description:
-    "A performant frontend ecommerce starter template with Next.js 15 and Medusa.",
+// 生成静态参数
+export async function generateStaticParams() {
+  const regions = await listRegions()
+  return regions.map((region) => ({
+    countryCode: region.countries?.[0]?.iso_2 || "us",
+  }))
 }
+
+// 配置静态生成
+export const dynamic = "force-static"
+export const revalidate = 3600 // 每小时重新验证一次
 
 export default async function Home(props: {
   params: Promise<{ countryCode: string }>
 }) {
   const params = await props.params
-
   const { countryCode } = params
-
   const region = await getRegion(countryCode)
 
-  const { collections } = await listCollections({
-    fields: "id, handle, title",
-  })
-
-  if (!collections || !region) {
+  if (!region) {
     return null
   }
 
-  return (
-    <Homepage />
-  )
+  return <Homepage />
 }

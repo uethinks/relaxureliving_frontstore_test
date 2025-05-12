@@ -1,30 +1,22 @@
-import { retrieveCart } from "@lib/data/cart"
-import { retrieveCustomer } from "@lib/data/customer"
-import PaymentWrapper from "@modules/checkout/components/payment-wrapper"
-import CheckoutForm from "@modules/checkout/templates/checkout-form"
-import CheckoutSummary from "@modules/checkout/templates/checkout-summary"
-import { Metadata } from "next"
-import { notFound } from "next/navigation"
+"use client"
+import { useCart } from "@lib/context/cartContext"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { Checkout as CheckoutComponent } from "@modules/checkout/page/Checkout"
 
-export const metadata: Metadata = {
-  title: "Checkout",
-}
+export default function CheckoutPage() {
+  const router = useRouter()
+  const { cart, isLoading } = useCart()
 
-export default async function Checkout() {
-  const cart = await retrieveCart()
+  useEffect(() => {
+    if (!cart || !cart.items || cart.items.length === 0) {
+      router.push("/")
+    }
+  }, [cart, router])
 
-  if (!cart) {
-    return notFound()
+  if (isLoading || !cart || !cart.items || cart.items.length === 0) {
+    return null
   }
 
-  const customer = await retrieveCustomer()
-
-  return (
-    <div className="grid grid-cols-1 small:grid-cols-[1fr_416px] content-container gap-x-40 py-12">
-      <PaymentWrapper cart={cart}>
-        <CheckoutForm cart={cart} customer={customer} />
-      </PaymentWrapper>
-      <CheckoutSummary cart={cart} />
-    </div>
-  )
+  return <CheckoutComponent />
 }
