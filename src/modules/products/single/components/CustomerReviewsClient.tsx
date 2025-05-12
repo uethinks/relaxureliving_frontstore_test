@@ -162,7 +162,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
         </p>
 
         {/* Flex container for rating overview and distribution */}
-        <div className="flex flex-row md:flex-row justify-center items-center gap-16 relative">
+        <div className="flex flex-row md:flex-row justify-center items-center gap-4 lg:gap-16 relative">
           {/* Rating Overview */}
           <div className="text-center">
             <div className="flex flex-col items-center gap-2">

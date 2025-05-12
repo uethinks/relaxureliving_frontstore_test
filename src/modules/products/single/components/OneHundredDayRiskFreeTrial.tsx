@@ -52,7 +52,7 @@ export const OneHundredDayRiskFreeTrial = ({
           onClick={handleClose}
         >
           <div
-            className="bg-white rounded-2xl p-6 max-w-2xl w-full mx-4 relative"
+            className="bg-white rounded-2xl p-6 lg:max-w-2xl h-[90vh] overflow-y-scroll mx-4 relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
