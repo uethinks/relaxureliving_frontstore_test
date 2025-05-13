@@ -148,7 +148,7 @@ export const getGlassdoor = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching pergola data:', error);
+    console.error('Error fetching Glassdoor data:', error);
     throw error;
   }
 };
@@ -160,7 +160,7 @@ export const getHeater = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching pergola data:', error);
+    console.error('Error fetching heater data:', error);
     throw error;
   }
 };
@@ -172,7 +172,7 @@ export const getShades = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching pergola data:', error);
+    console.error('Error fetching shades data:', error);
     throw error;
   }
 };
