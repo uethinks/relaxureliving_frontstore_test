@@ -56,15 +56,17 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     }
   }, [])
 
-  // // 初始化加载购物车数据
-  // useEffect(() => {
-  //   fetchCart()
-  // }, [fetchCart])
-
-  // 监听路由变化，在进入任何页面时都刷新数据
+  // 组件挂载时初始化购物车
   useEffect(() => {
     fetchCart()
-  }, [pathname])
+  }, [fetchCart])
+
+  // 路由变化时刷新购物车数据
+  useEffect(() => {
+    if (pathname) {
+      fetchCart()
+    }
+  }, [pathname, fetchCart])
 
   const addVariant = async (variantInfo: variantInfo) => {
     try {
