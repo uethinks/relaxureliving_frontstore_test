@@ -4,7 +4,7 @@ import { useCart } from "@lib/context/cartContext"
 import { ConfirmDialog } from "../../../../components/ConfirmDialog"
 
 export const ProductCard = (): JSX.Element | null => {
-  const { cart, removeVariant, updateVariantInfo, getCart, setCart } = useCart()
+  const { cart, removeVariant, updateVariantInfo } = useCart()
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
   const [quantities, setQuantities] = useState<{
     [key: string]: number | string
@@ -60,14 +60,12 @@ export const ProductCard = (): JSX.Element | null => {
         const timeoutId = setTimeout(async () => {
           try {
             setIsUpdating(true)
-            await updateVariantInfo({
+            const updatedCart = await updateVariantInfo({
               lineId: itemId,
               quantity: 1,
             })
             // Only update cart if the update was successful
-            const updatedCart = await getCart()
             if (updatedCart) {
-              setCart(updatedCart)
               setQuantities((prev) => ({ ...prev, [itemId]: 1 }))
             }
           } catch (error) {
@@ -109,11 +107,6 @@ export const ProductCard = (): JSX.Element | null => {
               lineId: itemId,
               quantity: numQuantity,
             })
-            // Only update cart if the update was successful
-            const updatedCart = await getCart()
-            if (updatedCart) {
-              setCart(updatedCart)
-            }
           } catch (error) {
             console.error("Failed to update quantity:", error)
             // Revert to original quantity on error
@@ -130,14 +123,7 @@ export const ProductCard = (): JSX.Element | null => {
         setUpdateTimeout((prev) => ({ ...prev, [itemId]: timeoutId }))
       }
     },
-    [
-      cart?.items,
-      updateTimeout,
-      isUpdating,
-      updateVariantInfo,
-      getCart,
-      setCart,
-    ]
+    [cart?.items, updateTimeout, isUpdating, updateVariantInfo]
   )
 
   const handleDelete = (itemId: string) => {

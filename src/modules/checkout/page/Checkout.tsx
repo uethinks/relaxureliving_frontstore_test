@@ -32,7 +32,7 @@ type FormData = {
 }
 
 export const Checkout = () => {
-  const { cart, setCart, getCart } = useCart()
+  const { cart } = useCart()
   const [order, setOrder] = useState<any>(null)
   const [formData, setFormData] = useState<FormData>({
     email: "",

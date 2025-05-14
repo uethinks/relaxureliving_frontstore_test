@@ -28,12 +28,12 @@ interface CartContextType {
   cart: StoreCart | null
   setCart: (cart: StoreCart | null) => void
   getCart: () => Promise<StoreCart | null>
-  addVariant: (variantInfo: variantInfo) => Promise<void>
-  removeVariant: (lineId: string) => Promise<void>
+  addVariant: (variantInfo: variantInfo) => Promise<StoreCart | null>
+  removeVariant: (lineId: string) => Promise<StoreCart | null>
   updateVariantInfo: (params: {
     lineId: string
     quantity: number
-  }) => Promise<void>
+  }) => Promise<StoreCart | null>
   isLoading: boolean
 }
 
@@ -49,8 +49,10 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
       setIsLoading(true)
       const cartData = await retrieveCart()
       setCart(cartData)
+      return cartData
     } catch (error) {
       console.error("Failed to fetch cart:", error)
+      return null
     } finally {
       setIsLoading(false)
     }
@@ -70,21 +72,21 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const addVariant = async (variantInfo: variantInfo) => {
     try {
-      const updatedCart = await addToCart(variantInfo)
-      setCart(updatedCart)
+      await addToCart(variantInfo)
+      return await fetchCart()
     } catch (error) {
       console.error("Failed to add variant:", error)
-      await fetchCart()
+      return await fetchCart()
     }
   }
 
   const removeVariant = async (lineId: string) => {
     try {
       await deleteLineItem(lineId)
-      await fetchCart()
+      return await fetchCart()
     } catch (error) {
       console.error("Failed to remove variant:", error)
-      await fetchCart()
+      return await fetchCart()
     }
   }
 
@@ -96,24 +98,17 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     quantity: number
   }) => {
     try {
-      const updatedCart = await updateLineItem({ lineId, quantity })
-      setCart(updatedCart)
+      await updateLineItem({ lineId, quantity })
+      return await fetchCart()
     } catch (error) {
       console.error("Failed to update variant:", error)
-      await fetchCart()
+      return await fetchCart()
     }
   }
 
   const getCart = useCallback(async () => {
-    try {
-      const cartData = await retrieveCart()
-      setCart(cartData)
-      return cartData
-    } catch (error) {
-      console.error("Failed to get cart:", error)
-      return null
-    }
-  }, [])
+    return await fetchCart()
+  }, [fetchCart])
 
   const value = useMemo(
     () => ({

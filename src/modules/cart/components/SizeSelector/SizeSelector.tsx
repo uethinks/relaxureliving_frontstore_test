@@ -12,7 +12,7 @@ import { getProductByProductId } from "@lib/data/products"
 import { useCart } from "@lib/context/cartContext"
 
 export const SizeSelector = (): JSX.Element | null => {
-  const { cart, getCart, addVariant, removeVariant } = useCart()
+  const { cart, addVariant, removeVariant } = useCart()
   const [product, setProduct] = useState<StoreProduct | null>(null)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
@@ -107,7 +107,6 @@ export const SizeSelector = (): JSX.Element | null => {
         countryCode: "us",
       })
     }
-    await getCart()
     setSelectedSize(size)
   }
 
@@ -125,7 +124,6 @@ export const SizeSelector = (): JSX.Element | null => {
         countryCode: "us",
       })
     }
-    getCart()
   }
 
   const selectedSizeClass = "rounded-[20px] bg-[#dce7f8] text-[#072f6c]"
