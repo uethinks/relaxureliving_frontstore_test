@@ -1,7 +1,7 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
 import React, { useState, useEffect, useCallback } from "react"
-import { StoreCart } from "@medusajs/types"
+import { StoreCart, StoreOrder } from "@medusajs/types"
 import {
   updateCart,
   placeOrder,
@@ -14,6 +14,7 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 import { OceanPaymentForm } from "./components/OceanPaymentForm"
+import { useRouter } from "next/navigation"
 
 type ShippingAddress = {
   first_name: string
@@ -33,6 +34,7 @@ type FormData = {
 
 export const Checkout = () => {
   const { cart } = useCart()
+  const router = useRouter()
   const [order, setOrder] = useState<any>(null)
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -214,18 +216,28 @@ export const Checkout = () => {
     return paymentSession
   }
 
-  // 修改 handlePaymentComplete 使用 ref
-  const handlePaymentComplete = async () => {
+  const updateCartDeliveryInfo = async (): Promise<StoreCart | null> => {
     if (cart) {
       // Update cart with form data before placing order
-      await updateCart({
+      return await updateCart({
         email: formData.email,
         shipping_address: formData.shipping_address,
       })
-
-      const cartRes = await placeOrder(cart.id)
-      setOrder(cartRes.type === "order" ? cartRes.order : null)
     }
+    return null
+  }
+
+  const comlpeleCartAndCreateOrder = async (): Promise<StoreOrder | null> => {
+    if (cart) {
+      const cartRes = await placeOrder(cart.id)
+      console.log("cartRes", cartRes)
+      setOrder(cartRes.type === "order" ? cartRes.order : null)
+      if (cartRes.type === "order") {
+        router.push(`/us/checkout/success?order_id=${cartRes.order.id}`)
+        return cartRes.order
+      }
+    }
+    return null
   }
 
   return (
@@ -447,9 +459,9 @@ export const Checkout = () => {
                   </div>
                   <OceanPaymentForm
                     deliveryInfo={formData}
-                    cart={cart as StoreCart}
-                    onPaymentComplete={handlePaymentComplete}
+                    updateCartDeliveryInfo={updateCartDeliveryInfo}
                     formValidation={validateForm}
+                    comlpeleCartAndCreateOrder={comlpeleCartAndCreateOrder}
                   />
                 </div>
               </div>
@@ -556,7 +568,6 @@ export const Checkout = () => {
       </div>
       {/* Footer */}
       <FooterDark />
-      {order && <PaymentFinish order={order} />}
     </div>
   )
 }

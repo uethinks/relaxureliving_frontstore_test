@@ -1,6 +1,8 @@
+"use client"
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react"
-import { StoreCart } from "@medusajs/types"
+import { StoreCart, StoreOrder } from "@medusajs/types"
+import { useCart } from "@lib/context/cartContext"
 type ShippingAddress = {
   first_name: string
   last_name: string
@@ -38,13 +40,14 @@ type OceanPaymentFormData = {
   billing_ip: string
   signValue?: string
   order_notes: string
+  billing_phone: string
 }
 
 type OceanPaymentFormProps = {
-  cart: StoreCart
-  onPaymentComplete: () => Promise<void>
   formValidation: () => boolean
   deliveryInfo: FormData
+  updateCartDeliveryInfo: () => Promise<StoreCart | null>
+  comlpeleCartAndCreateOrder: () => Promise<StoreOrder | null>
 }
 
 declare global {
@@ -55,23 +58,14 @@ declare global {
 }
 
 // 获取支付签名的函数
-const getPaymentSignature = async (cart: StoreCart, deliveryInfo: FormData) => {
+const getPaymentSignature = async (data: any) => {
   try {
     const response = await fetch("/api/payment/signature", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
-        terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_TERMINAL,
-        order_number: cart.id,
-        order_currency: "USD",
-        order_amount: cart.total?.toString(),
-        billing_firstName: deliveryInfo.shipping_address?.first_name,
-        billing_lastName: deliveryInfo.shipping_address?.last_name,
-        billing_email: deliveryInfo.email,
-      }),
+      body: JSON.stringify(data),
     })
 
     if (!response.ok) {
@@ -87,13 +81,14 @@ const getPaymentSignature = async (cart: StoreCart, deliveryInfo: FormData) => {
 }
 
 export const OceanPaymentForm = ({
-  cart,
-  onPaymentComplete,
+  comlpeleCartAndCreateOrder,
   formValidation,
   deliveryInfo,
+  updateCartDeliveryInfo,
 }: OceanPaymentFormProps) => {
   const { handleSubmit, setValue, watch } = useForm<OceanPaymentFormData>()
   const [isLoading, setIsLoading] = useState(false)
+  const { cart } = useCart()
 
   // 动态加载 OceanPayment 脚本
   useEffect(() => {
@@ -127,9 +122,8 @@ export const OceanPaymentForm = ({
 
     initOceanpayment()
   }, [])
-
-  // 定义支付回调函数
-  useEffect(() => {
+  if (typeof window !== "undefined") {
+    // 定义支付回调函数
     window.oceanpaymentCallBack = (result: any) => {
       console.log("Payment callback result:", result)
 
@@ -144,19 +138,17 @@ export const OceanPaymentForm = ({
 
       if (status === "1") {
         // 支付成功
-        // 调用父组件的回调函数
-        if (onPaymentComplete) {
-          onPaymentComplete()
-        }
+        console.log("Payment success:", xmlDoc)
+        comlpeleCartAndCreateOrder()
       } else if (status === "-1" || payUrl !== "") {
         // 需要3D认证
         window.location.href = payUrl
       } else {
         // 支付失败
-        console.log("Payment failed:", result)
+        console.log("Payment failed:", xmlDoc)
       }
     }
-  }, [onPaymentComplete])
+  }
 
   const onSubmit = async (data: OceanPaymentFormData) => {
     try {
@@ -167,9 +159,20 @@ export const OceanPaymentForm = ({
       if (!isValid) {
         return
       }
+      await updateCartDeliveryInfo()
 
       // 2. 获取支付签名
-      const signature = await getPaymentSignature(cart, deliveryInfo)
+      const data = {
+        account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
+        terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_TERMINAL,
+        order_number: cart?.id,
+        order_currency: "USD",
+        order_amount: cart?.total?.toString(),
+        billing_firstName: deliveryInfo.shipping_address?.first_name,
+        billing_lastName: deliveryInfo.shipping_address?.last_name,
+        billing_email: deliveryInfo.email,
+      }
+      const signature = await getPaymentSignature(data)
       if (!signature) {
         throw new Error("Failed to get payment signature")
       }
@@ -180,7 +183,7 @@ export const OceanPaymentForm = ({
         setValue("order_number", cart.id)
         setValue("order_currency", "USD")
         setValue("order_amount", cart.total?.toString() || "0")
-        setValue("order_notes", "")
+        setValue("order_notes", "order_notes")
         setValue("methods", "Credit Card")
         // 设置账户相关数据
         setValue("account", process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT || "")
@@ -190,16 +193,17 @@ export const OceanPaymentForm = ({
         )
         setValue("key", process.env.NEXT_PUBLIC_OCEANPAYMENT_KEY || "")
         // 设置回调URL
-        setValue("backUrl", window.location.href)
+        setValue(
+          "backUrl",
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/callback`
+        )
         setValue(
           "noticeUrl",
-          `${process.env.NEXT_PUBLIC_API_URL}/api/payment/notify`
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/notify`
         )
         // 设置产品信息
         if (cart.items && cart.items.length > 0) {
-          const skus = cart.items
-            .map((item: any) => item.variant?.sku || "")
-            .join(",")
+          const skus = "1234567890"
           const names = cart.items
             .map((item: any) => item.title || "")
             .join(",")
@@ -220,16 +224,18 @@ export const OceanPaymentForm = ({
         setValue("billing_email", deliveryInfo.email)
         setValue(
           "billing_country",
-          deliveryInfo.shipping_address.country_code || "US"
+          deliveryInfo.shipping_address.country_code?.toUpperCase() || "US"
         )
         setValue("billing_state", deliveryInfo.shipping_address.province)
         setValue("billing_ip", "0.0.0.0")
+        setValue("billing_phone", "N/A")
       }
 
       // 4. 调用 OceanPayment checkout
       if (window.Oceanpayment) {
         const formData = watch() // 获取所有表单数据
         formData.signValue = signature // 添加签名
+        console.log("formData", formData)
         window.Oceanpayment.checkout(formData)
       } else {
         throw new Error("Oceanpayment not initialized")
