@@ -208,9 +208,7 @@ export const Checkout = () => {
     const paymentSession = await initiatePaymentSession(cart as StoreCart, {
       provider_id: paymentProvider,
       data: {
-        amount: cart?.total,
-        currency: cart?.currency_code,
-        merchant_order_id: cart?.id,
+        cart_id: cart?.id,
       },
     })
     return paymentSession
@@ -230,10 +228,8 @@ export const Checkout = () => {
   const comlpeleCartAndCreateOrder = async (): Promise<StoreOrder | null> => {
     if (cart) {
       const cartRes = await placeOrder(cart.id)
-      console.log("cartRes", cartRes)
       setOrder(cartRes.type === "order" ? cartRes.order : null)
       if (cartRes.type === "order") {
-        router.push(`/us/checkout/success?order_id=${cartRes.order.id}`)
         return cartRes.order
       }
     }

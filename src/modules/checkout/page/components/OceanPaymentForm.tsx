@@ -130,7 +130,8 @@ export const OceanPaymentForm = ({
       // 解析返回的 XML 结果
       const parser = new DOMParser()
       const xmlDoc = parser.parseFromString(result, "text/xml")
-
+      const orderNumber =
+        xmlDoc.getElementsByTagName("order_number")[0]?.textContent
       // 获取支付状态
       const status = xmlDoc.getElementsByTagName("status")[0]?.textContent
       const payUrl =
@@ -138,14 +139,13 @@ export const OceanPaymentForm = ({
 
       if (status === "1") {
         // 支付成功
-        console.log("Payment success:", xmlDoc)
-        comlpeleCartAndCreateOrder()
+        window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
       } else if (status === "-1" || payUrl !== "") {
         // 需要3D认证
         window.location.href = payUrl
       } else {
         // 支付失败
-        console.log("Payment failed:", xmlDoc)
+        window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}&error=error`
       }
     }
   }
@@ -160,12 +160,15 @@ export const OceanPaymentForm = ({
         return
       }
       await updateCartDeliveryInfo()
-
+      const order = await comlpeleCartAndCreateOrder()
+      if (!order) {
+        throw new Error("Failed to create order")
+      }
       // 2. 获取支付签名
       const data = {
         account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
         terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_TERMINAL,
-        order_number: cart?.id,
+        order_number: order?.id,
         order_currency: "USD",
         order_amount: cart?.total?.toString(),
         billing_firstName: deliveryInfo.shipping_address?.first_name,
@@ -180,7 +183,7 @@ export const OceanPaymentForm = ({
       // 3. 初始化支付表单数据
       if (cart) {
         // 设置订单相关数据
-        setValue("order_number", cart.id)
+        setValue("order_number", order.id)
         setValue("order_currency", "USD")
         setValue("order_amount", cart.total?.toString() || "0")
         setValue("order_notes", "order_notes")

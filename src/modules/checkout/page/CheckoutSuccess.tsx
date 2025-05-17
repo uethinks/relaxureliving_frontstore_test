@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect } from "react"
 import { StoreOrder } from "@medusajs/types"
 import { placeOrder } from "@lib/data/cart"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation"
 export const CheckoutSuccess = () => {
   const searchParams = useSearchParams()
   const cartId = searchParams?.get("cart_id")
+  const error = searchParams?.get("error")
   const [order, setOrder] = useState<StoreOrder | null>(null)
 
   useEffect(() => {
@@ -23,7 +24,10 @@ export const CheckoutSuccess = () => {
           console.log("err", err)
         })
     }
-  }, [cartId]) // 只在 cartId 变化时执行
+    if (error === "error") {
+      console.log("error", error)
+    }
+  }, [cartId, error]) // 只在 cartId 变化时执行
 
   return (
     <div className="w-full 2xl:w-[1512px] bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex justify-center flex-col items-center">
@@ -33,7 +37,7 @@ export const CheckoutSuccess = () => {
       </div>
       {/* Footer */}
       <FooterDark />
-      {order && <PaymentFinish order={order} />}
+      {order && <PaymentFinish order={order} success={!error} />}
     </div>
   )
 }

@@ -22,9 +22,11 @@ const formatDateTime = (dateString: string | Date) => {
 
 type OrderCompletedTemplateProps = {
   order: HttpTypes.StoreOrder
+  success: boolean
 }
 export const PaymentFinish = ({
   order,
+  success,
 }: OrderCompletedTemplateProps): JSX.Element | "" => {
   const [paymentFinishShow, setPaymentFinishShow] = useState(true)
   const router = useRouter()
@@ -125,9 +127,17 @@ export const PaymentFinish = ({
                   </div>
                 </div>
 
-                <div className="inline-flex items-center justify-center gap-2.5 p-1.5 relative flex-[0_0_auto] bg-[#adebb3] rounded-[10px]">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#2c5630] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap">
-                    Successful
+                <div
+                  className={`inline-flex items-center justify-center gap-2.5 p-1.5 relative flex-[0_0_auto] ${
+                    success ? "bg-[#adebb3]" : "bg-[#ffffff]"
+                  } rounded-[10px]`}
+                >
+                  <div
+                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[21.6px] whitespace-nowrap ${
+                      success ? "text-[#2c5630]" : "text-[#ff0000]"
+                    }`}
+                  >
+                    {success ? "Successful" : "Failed"}
                   </div>
                 </div>
               </div>

@@ -110,3 +110,23 @@ export const declineTransferRequest = async (id: string, token: string) => {
     .then(({ order }) => ({ success: true, error: null, order }))
     .catch((err) => ({ success: false, error: err.message, order: null }))
 }
+
+export const captureOrderWebhook = async (paymentSessionId: string) => {
+  const authHeaders = await getAuthHeaders()
+  const baseUrl = process.env.MEDUSA_BACKEND_URL || "http://localhost:9000"
+  
+  const response = await fetch(`${baseUrl}/hooks/payment/OceanPayment_OceanPayment`, {
+    method: "POST",
+    headers: {
+      ...authHeaders,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      paymentSessionId
+    })
+  })
+  
+  return response.text()
+}
+
+
