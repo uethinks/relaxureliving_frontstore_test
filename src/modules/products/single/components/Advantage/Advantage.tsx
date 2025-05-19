@@ -51,7 +51,7 @@ export const Advantage = (): JSX.Element => {
               style={{ height: "50px" }}
             >
               <div className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
-                15 year warranty
+                lifetime warranty
               </div>
             </div>
           </div>
