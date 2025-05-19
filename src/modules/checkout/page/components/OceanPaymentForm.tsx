@@ -1,6 +1,6 @@
 "use client"
 import { useForm } from "react-hook-form"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { StoreCart, StoreOrder } from "@medusajs/types"
 import { useCart } from "@lib/context/cartContext"
 import { retrieveOrder } from "@lib/data/orders"
@@ -111,140 +111,177 @@ export const OceanPaymentForm = ({
     "credit" | "google" | "apple" | "klarna" | "afterpay"
   >("credit")
   const isSandbox = process.env.NEXT_PUBLIC_OCEANPAYMENT_ENV === "sandbox"
-  // 动态加载 OceanPayment 脚本
-  useEffect(() => {
-    const loadScript = (src: string) => {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement("script")
-        script.src = src
-        script.async = true
-        script.onload = resolve
-        script.onerror = reject
-        document.body.appendChild(script)
-      })
-    }
-    const captureOrder = async (orderId: string) => {
-      const order = await retrieveOrder(orderId)
-      const paymentSessionId =
-        order.payment_collections?.[0]?.payments?.[0]?.payment_session?.id
-      if (paymentSessionId) {
-        const captureOrder = await captureOrderWebhook(paymentSessionId)
-        console.log("captureOrder", captureOrder)
+  const [loadedScripts, setLoadedScripts] = useState<Set<string>>(new Set())
+  const googlePayRef = useRef<HTMLDivElement>(null)
+  const applePayRef = useRef<HTMLDivElement>(null)
+  const creditPayRef = useRef<HTMLDivElement>(null)
+
+  const loadScript = (src: string) => {
+    return new Promise((resolve, reject) => {
+      // 如果脚本已经加载，直接返回
+      if (loadedScripts.has(src)) {
+        resolve(true)
+        return
       }
+
+      const script = document.createElement("script")
+      script.src = src
+      script.async = true
+      script.onload = () => {
+        setLoadedScripts((prev) => {
+          const newSet = new Set(prev)
+          newSet.add(src)
+          return newSet
+        })
+        resolve(true)
+      }
+      script.onerror = reject
+      document.body.appendChild(script)
+    })
+  }
+
+  const captureOrder = async (orderId: string) => {
+    const order = await retrieveOrder(orderId)
+    const paymentSessionId =
+      order.payment_collections?.[0]?.payments?.[0]?.payment_session?.id
+    if (paymentSessionId) {
+      const captureOrder = await captureOrderWebhook(paymentSessionId)
+      console.log("captureOrder", captureOrder)
     }
-    const initOceanpayment = async () => {
-      try {
-        // 定义支付回调函数
-        window.oceanpaymentCallBack = (result: any) => {
-          console.log("Payment callback result:", result)
+  }
+  const initOceanpayment = async () => {
+    try {
+      // cleanupPaymentScripts()
+      await loadScript("https://secure.oceanpayment.com/pub/js/jquery/jq.js")
+      await loadScript(
+        "https://secure.oceanpayment.com/pages/js/oceanpayment.js"
+      )
 
-          // 解析返回的 XML 结果
-          const parser = new DOMParser()
-          const xmlDoc = parser.parseFromString(result, "text/xml")
-          const orderNumber =
-            xmlDoc.getElementsByTagName("order_number")[0]?.textContent
-          // 获取支付状态
-          const status = xmlDoc.getElementsByTagName("status")[0]?.textContent
-          const payUrl =
-            xmlDoc.getElementsByTagName("pay_url")[0]?.textContent || ""
+      window.oceanpaymentCallBack = (result: any) => {
+        console.log("Payment callback result:", result)
 
-          if (status === "1") {
-            captureOrder(orderNumber as string)
-            // 支付成功
-            window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
-          } else if (status === "-1" || payUrl !== "") {
-            // 需要3D认证
-            window.location.href = payUrl
-          } else if (status === "0") {
-            // 支付失败
-            window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}&error=error`
-          }
+        // 解析返回的 XML 结果
+        const parser = new DOMParser()
+        const xmlDoc = parser.parseFromString(result, "text/xml")
+        const orderNumber =
+          xmlDoc.getElementsByTagName("order_number")[0]?.textContent
+        // 获取支付状态
+        const status = xmlDoc.getElementsByTagName("status")[0]?.textContent
+        const payUrl =
+          xmlDoc.getElementsByTagName("pay_url")[0]?.textContent || ""
+
+        if (status === "1") {
+          captureOrder(orderNumber as string)
+          // 支付成功
+          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
+        } else if (status === "-1" || payUrl !== "") {
+          // 需要3D认证
+          window.location.href = payUrl
+        } else if (status === "0") {
+          // 支付失败
+          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}&error=error`
         }
-        window.oceanpaymentApplePayCallBack = (data: any) => {
-          console.log("Apple Pay callback result:", data)
-          if (data.code == 2) {
-            handleApplePay()
-          } else {
-            /*处理下单返回*/
-            console.log("Apple Pay callback result:", data)
-          }
-        }
-        window.oceanpaymentGooglePayCallBack = (data: any) => {
-          console.log("Google Pay callback result:", data)
-          if (data.code == 2) {
-            handleGooglePay()
-          } else {
-            /*处理下单返回*/
-            console.log("Google Pay callback result:", data)
-          }
-        }
-        // 并行加载所有脚本
-        const scripts = [
-          "https://secure.oceanpayment.com/pub/js/jquery/jq.js",
-          "https://secure.oceanpayment.com/pages/js/oceanpayment.js",
-          "https://secure.oceanpayment.com/pages/js/oceanpayment-googlepay.js",
-          "https://secure.oceanpayment.com/pages/js/oceanpayment-applepay.js",
-        ]
+      }
 
-        await Promise.all(scripts.map((script) => loadScript(script)))
-        // 初始化 Oceanpayment
-
+      if (window.Oceanpayment) {
         window.Oceanpayment.init(isSandbox, "", "")
-      } catch (error) {
-        console.error("Failed to load Oceanpayment scripts:", error)
       }
+    } catch (error) {
+      console.error("Failed to load Oceanpayment scripts:", error)
     }
-
-    initOceanpayment()
-  }, [])
-  const initApplePay = () => {
-    window.onePageApplePay.init(isSandbox, {
-      cssUrl: "" /*传入线上css样式文件地址，可以控制按钮大小*/,
-      transactionInfo: {
-        //*传入订单实际的金额，币种，国家
-        orderCurrency: "USD" /*交易币种*/,
-        orderAmount: cart?.total?.toString() || "0" /*交易金额*/,
-        billCountry: "US" /*账单国家*/,
-        orderNumber: cart?.id /*订单号*/,
-        billAddress: "" /*账单地址*/,
-      },
-      buttonStyle: {
-        buttonstyle: "" /*按钮颜色*/,
-        type: "" /*按钮类型*/,
-      },
-    })
   }
-  const initGooglePay = () => {
-    window.onePageGooglePay.init(isSandbox, {
-      cssUrl: "" /*传入线上css样式文件地址，可以控制按钮大小*/,
-      transactionInfo: {
-        //*传入订单实际的金额，币种，国家
-        orderCurrency: "USD" /*交易币种*/,
-        orderAmount: cart?.total?.toString() || "0" /*交易金额*/,
-        billCountry: "US" /*账单国家*/,
-      },
-      buttonStyle: {
-        buttonColor: "" /*按钮颜色*/,
-        buttonType: "" /*按钮类型*/,
-        buttonRadius: "" /*圆角*/,
-        buttonSizeMode: "" /*尺寸样式*/,
-        buttonLocale: "" /*按钮语言*/,
-      },
-    })
+  const initApplePay = async () => {
+    try {
+      // cleanupPaymentScripts()
+      await loadScript("https://secure.oceanpayment.com/pub/js/jquery/jq.js")
+      await loadScript(
+        "https://secure.oceanpayment.com/pages/js/oceanpayment-applepay.js"
+      )
+
+      window.oceanpaymentApplePayCallBack = (data: any) => {
+        console.log("Apple Pay callback result:", data)
+        if (data.code == 2) {
+          handleApplePay()
+        } else {
+          console.log("Apple Pay callback result:", data)
+        }
+      }
+
+      if (window.onePageApplePay) {
+        window.onePageApplePay.init(isSandbox, {
+          cssUrl: "",
+          transactionInfo: {
+            orderCurrency: "USD",
+            orderAmount: cart?.total?.toString() || "0",
+            billCountry: "US",
+            orderNumber: cart?.id,
+            billAddress: "",
+          },
+          buttonStyle: {
+            buttonstyle: "",
+            type: "",
+          },
+        })
+      }
+    } catch (error) {
+      console.error("Failed to load Apple Pay scripts:", error)
+    }
+  }
+  const initGooglePay = async () => {
+    try {
+      // cleanupPaymentScripts()
+      await loadScript("https://secure.oceanpayment.com/pub/js/jquery/jq.js")
+      await loadScript(
+        "https://secure.oceanpayment.com/pages/js/oceanpayment-googlepay.js"
+      )
+
+      window.oceanpaymentGooglePayCallBack = (data: any) => {
+        console.log("Google Pay callback result:", data)
+        if (data.code == 2) {
+          handleGooglePay()
+        } else {
+          console.log("Google Pay callback result:", data)
+        }
+      }
+
+      if (window.onePageGooglePay) {
+        window.onePageGooglePay.init(null, {
+          cssUrl: "",
+          transactionInfo: {
+            orderCurrency: "USD",
+            orderAmount: cart?.total?.toString() || "0",
+            billCountry: "US",
+          },
+          buttonStyle: {
+            buttonColor: "",
+            buttonType: "",
+            buttonRadius: "",
+            buttonSizeMode: "",
+            buttonLocale: "",
+          },
+        })
+      }
+    } catch (error) {
+      console.error("Failed to load Google Pay scripts:", error)
+    }
   }
 
-  // 切换支付方式时初始化google/apple pay
+  // 监听支付元素并初始化
   useEffect(() => {
-    if (paymentMethod === "google") {
-      const el = document.getElementById("oceanpayment-googlepayelement")
-      if (el) el.innerHTML = ""
+    if (paymentMethod === "google" && googlePayRef.current) {
       initGooglePay()
-    } else if (paymentMethod === "apple") {
-      const el = document.getElementById("oceanpayment-applepayelement")
-      if (el) el.innerHTML = ""
+    } else if (paymentMethod === "apple" && applePayRef.current) {
       initApplePay()
+    } else if (paymentMethod === "credit" && creditPayRef.current) {
+      initOceanpayment()
     }
-  }, [paymentMethod, cart])
+  }, [
+    paymentMethod,
+    googlePayRef.current,
+    applePayRef.current,
+    creditPayRef.current,
+  ])
+
   const getTerminalInfo = (terminalName: TerminalNameEnum) => {
     switch (terminalName) {
       case TerminalNameEnum.Credit:
@@ -486,7 +523,9 @@ export const OceanPaymentForm = ({
         }`}
       >
         {/* 加载Oceanpayment支付页面 */}
-        <div id="oceanpayment-element"></div>
+        {paymentMethod === "credit" && (
+          <div ref={creditPayRef} id="oceanpayment-element"></div>
+        )}
         <button
           type="submit"
           disabled={isLoading}
@@ -516,22 +555,25 @@ export const OceanPaymentForm = ({
         {isLoading ? "Processing..." : "Pay Now"}
       </button>
 
-      <button
-        onClick={handleGooglePay}
-        disabled={isLoading}
-        className={`w-full bg-[#343a40] text-white py-4 rounded-lg font-medium hover:bg-[#23272b] transition-colors disabled:opacity-50 ${
-          paymentMethod === "google" ? "flex" : "hidden"
-        }`}
-      >
-        {isLoading ? "Processing..." : "Pay Now"}
-      </button>
+      {paymentMethod === "google" && (
+        <div
+          ref={googlePayRef}
+          id="oceanpayment-googlepayelement"
+          className={`w-full flex justify-center ${
+            paymentMethod === "google" ? "flex" : "block"
+          }`}
+        ></div>
+      )}
 
-      <div
-        id="oceanpayment-applepayelement"
-        className={`w-full flex justify-center ${
-          paymentMethod === "apple" ? "flex" : "hidden"
-        }`}
-      ></div>
+      {paymentMethod === "apple" && (
+        <div
+          ref={applePayRef}
+          id="oceanpayment-applepayelement"
+          className={`w-full flex justify-center ${
+            paymentMethod === "apple" ? "flex" : "block"
+          }`}
+        ></div>
+      )}
     </>
   )
 }
