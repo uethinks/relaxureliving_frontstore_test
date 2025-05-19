@@ -6,28 +6,25 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 import { useSearchParams } from "next/navigation"
+import { retrieveOrder } from "@lib/data/orders"
 
 export const CheckoutSuccess = () => {
   const searchParams = useSearchParams()
-  const cartId = searchParams?.get("cart_id")
+  const orderId = searchParams?.get("order_id")
   const error = searchParams?.get("error")
   const [order, setOrder] = useState<StoreOrder | null>(null)
 
   useEffect(() => {
-    if (cartId) {
-      console.log("Cart ID:", cartId)
-      placeOrder(cartId)
-        .then((res) => {
-          setOrder(res.type === "order" ? res.order : null)
-        })
-        .catch((err) => {
-          console.log("err", err)
-        })
+    if (orderId) {
+      console.log("Order ID:", orderId)
+      retrieveOrder(orderId).then((res) => {
+        setOrder(res)
+      })
     }
     if (error === "error") {
       console.log("error", error)
     }
-  }, [cartId, error]) // 只在 cartId 变化时执行
+  }, [orderId, error]) // 只在 orderId 变化时执行
 
   return (
     <div className="w-full 2xl:w-[1512px] bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex justify-center flex-col items-center">
