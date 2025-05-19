@@ -438,7 +438,7 @@ export const OceanPaymentForm = ({
           onClick={() => setPaymentMethod("klarna")}
         >
           <span className="ml-1 font-medium">Klarna</span>
-          <img src="/img/klarna.png" className="w-7" alt="klarna" />
+          <img src="/img/Klarna.png" className="w-7" alt="klarna" />
         </button>
         <button
           type="button"
