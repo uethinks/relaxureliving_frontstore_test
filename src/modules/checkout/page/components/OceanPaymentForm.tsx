@@ -115,6 +115,7 @@ export const OceanPaymentForm = ({
   const googlePayRef = useRef<HTMLDivElement>(null)
   const applePayRef = useRef<HTMLDivElement>(null)
   const creditPayRef = useRef<HTMLDivElement>(null)
+  const [scriptsLoaded, setScriptsLoaded] = useState(false)
 
   const loadScript = (src: string) => {
     return new Promise((resolve, reject) => {
@@ -140,6 +141,30 @@ export const OceanPaymentForm = ({
     })
   }
 
+  const loadAllScripts = async () => {
+    try {
+      await Promise.all([
+        loadScript("https://secure.oceanpayment.com/pub/js/jquery/jq.js"),
+        loadScript("https://secure.oceanpayment.com/pages/js/oceanpayment.js"),
+        loadScript(
+          "https://secure.oceanpayment.com/pages/js/oceanpayment-googlepay.js"
+        ),
+        loadScript(
+          "https://secure.oceanpayment.com/pages/js/oceanpayment-applepay.js"
+        ),
+      ])
+    } catch (error) {
+      console.error("Failed to load payment scripts:", error)
+    } finally {
+      setScriptsLoaded(true)
+    }
+  }
+
+  // 在组件挂载时加载所有脚本
+  useEffect(() => {
+    loadAllScripts()
+  }, [])
+
   const captureOrder = async (orderId: string) => {
     const order = await retrieveOrder(orderId)
     const paymentSessionId =
@@ -151,12 +176,6 @@ export const OceanPaymentForm = ({
   }
   const initOceanpayment = async () => {
     try {
-      // cleanupPaymentScripts()
-      await loadScript("https://secure.oceanpayment.com/pub/js/jquery/jq.js")
-      await loadScript(
-        "https://secure.oceanpayment.com/pages/js/oceanpayment.js"
-      )
-
       window.oceanpaymentCallBack = (result: any) => {
         console.log("Payment callback result:", result)
 
@@ -192,12 +211,6 @@ export const OceanPaymentForm = ({
   }
   const initApplePay = async () => {
     try {
-      // cleanupPaymentScripts()
-      await loadScript("https://secure.oceanpayment.com/pub/js/jquery/jq.js")
-      await loadScript(
-        "https://secure.oceanpayment.com/pages/js/oceanpayment-applepay.js"
-      )
-
       window.oceanpaymentApplePayCallBack = (data: any) => {
         console.log("Apple Pay callback result:", data)
         if (data.code == 2) {
@@ -229,12 +242,6 @@ export const OceanPaymentForm = ({
   }
   const initGooglePay = async () => {
     try {
-      // cleanupPaymentScripts()
-      await loadScript("https://secure.oceanpayment.com/pub/js/jquery/jq.js")
-      await loadScript(
-        "https://secure.oceanpayment.com/pages/js/oceanpayment-googlepay.js"
-      )
-
       window.oceanpaymentGooglePayCallBack = (data: any) => {
         console.log("Google Pay callback result:", data)
         if (data.code == 2) {
@@ -245,7 +252,7 @@ export const OceanPaymentForm = ({
       }
 
       if (window.onePageGooglePay) {
-        window.onePageGooglePay.init(null, {
+        window.onePageGooglePay.init(isSandbox, {
           cssUrl: "",
           transactionInfo: {
             orderCurrency: "USD",
@@ -266,8 +273,10 @@ export const OceanPaymentForm = ({
     }
   }
 
-  // 监听支付元素并初始化
+  // 修改原有的支付方法初始化 useEffect
   useEffect(() => {
+    if (!scriptsLoaded) return // 如果脚本未加载完成，不执行初始化
+
     if (paymentMethod === "google" && googlePayRef.current) {
       initGooglePay()
     } else if (paymentMethod === "apple" && applePayRef.current) {
@@ -280,6 +289,7 @@ export const OceanPaymentForm = ({
     googlePayRef.current,
     applePayRef.current,
     creditPayRef.current,
+    scriptsLoaded,
   ])
 
   const getTerminalInfo = (terminalName: TerminalNameEnum) => {
@@ -323,10 +333,13 @@ export const OceanPaymentForm = ({
     const order = await comlpeleCartAndCreateOrder()
 
     const terminalInfo = getTerminalInfo(TerminalNameEnum[terminalName])
+    const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/callback`
+    const notifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/notify`
     // 2. 获取支付签名
     const data = {
       account: terminalInfo.account,
       terminal: terminalInfo.terminal,
+      baseUrl,
       order_number: order?.id,
       order_currency: "USD",
       order_amount: cart?.total?.toString(),
@@ -338,53 +351,43 @@ export const OceanPaymentForm = ({
     const signature = await getPaymentSignature(data)
 
     // 3. 初始化支付表单数据
-    if (cart) {
-      // 设置订单相关数据
-      setValue("order_number", order?.id || "")
-      setValue("order_currency", "USD")
-      setValue("order_amount", cart.total?.toString() || "0")
-      setValue("order_notes", "order_notes")
-      setValue("methods", "Credit Card")
-      // 设置账户相关数据
-      setValue("account", terminalInfo.account || "")
-      setValue("terminal", terminalInfo.terminal || "")
-      setValue("key", process.env.NEXT_PUBLIC_OCEANPAYMENT_KEY || "")
-      // 设置回调URL
-      setValue(
-        "backUrl",
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/callback`
-      )
-      setValue(
-        "noticeUrl",
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/notify`
-      )
-      // 设置产品信息
-      if (cart.items && cart.items.length > 0) {
-        const skus = "1234567890"
-        const names = cart.items.map((item: any) => item.title || "").join(",")
-        const nums = cart.items
-          .map((item: any) => item.quantity || "")
-          .join(",")
-        const prices = cart.items
-          .map((item: any) => item.unit_price || "")
-          .join(",")
-        setValue("productSku", skus)
-        setValue("productName", names)
-        setValue("productNum", nums)
-        setValue("productPrice", prices)
-      }
-      // 设置账单信息
-      setValue("billing_firstName", deliveryInfo.shipping_address.first_name)
-      setValue("billing_lastName", deliveryInfo.shipping_address.last_name)
-      setValue("billing_email", deliveryInfo.email)
-      setValue(
-        "billing_country",
-        deliveryInfo.shipping_address.country_code?.toUpperCase() || "US"
-      )
-      setValue("billing_state", deliveryInfo.shipping_address.province)
-      setValue("billing_ip", "0.0.0.0")
-      setValue("billing_phone", "N/A")
+    // 设置订单相关数据
+    setValue("order_number", order?.id || "")
+    setValue("order_currency", "USD")
+    setValue("order_amount", cart?.total?.toString() || "0")
+    setValue("order_notes", "order_notes")
+    setValue("methods", "Credit Card")
+    // 设置账户相关数据
+    setValue("account", terminalInfo.account || "")
+    setValue("terminal", terminalInfo.terminal || "")
+    setValue("key", process.env.NEXT_PUBLIC_OCEANPAYMENT_KEY || "")
+    // 设置回调URL
+    setValue("backUrl", baseUrl)
+    setValue("noticeUrl", notifyUrl)
+    // 设置产品信息
+    if (cart?.items && cart.items.length > 0) {
+      const skus = "1234567890"
+      const names = cart.items.map((item: any) => item.title || "").join(",")
+      const nums = cart.items.map((item: any) => item.quantity || "").join(",")
+      const prices = cart.items
+        .map((item: any) => item.unit_price || "")
+        .join(",")
+      setValue("productSku", skus)
+      setValue("productName", names)
+      setValue("productNum", nums)
+      setValue("productPrice", prices)
     }
+    // 设置账单信息
+    setValue("billing_firstName", deliveryInfo.shipping_address.first_name)
+    setValue("billing_lastName", deliveryInfo.shipping_address.last_name)
+    setValue("billing_email", deliveryInfo.email)
+    setValue(
+      "billing_country",
+      deliveryInfo.shipping_address.country_code?.toUpperCase() || "US"
+    )
+    setValue("billing_state", deliveryInfo.shipping_address.province)
+    setValue("billing_ip", "0.0.0.0")
+    setValue("billing_phone", "N/A")
     const formData = watch() // 获取所有表单数据
     formData.signValue = signature // 添加签名
     return formData
