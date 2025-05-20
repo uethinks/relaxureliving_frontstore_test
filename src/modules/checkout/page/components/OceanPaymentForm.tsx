@@ -298,26 +298,31 @@ export const OceanPaymentForm = ({
         return {
           account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_TERMINAL,
+          methods: "Credit Card",
         }
       case TerminalNameEnum.Google:
         return {
           account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_GOOGLE_TERMINAL,
+          methods: "GooglePay",
         }
       case TerminalNameEnum.Apple:
         return {
           account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_APPLE_TERMINAL,
+          methods: "ApplePay",
         }
       case TerminalNameEnum.Klarna:
         return {
           account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_KLARNA_TERMINAL,
+          methods: "Klarna",
         }
       case TerminalNameEnum.Afterpay:
         return {
           account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_AFTERPAY_TERMINAL,
+          methods: "Afterpay",
         }
     }
   }
@@ -356,7 +361,7 @@ export const OceanPaymentForm = ({
     setValue("order_currency", "USD")
     setValue("order_amount", cart?.total?.toString() || "0")
     setValue("order_notes", "order_notes")
-    setValue("methods", "Credit Card")
+    setValue("methods", terminalInfo.methods)
     // 设置账户相关数据
     setValue("account", terminalInfo.account || "")
     setValue("terminal", terminalInfo.terminal || "")
