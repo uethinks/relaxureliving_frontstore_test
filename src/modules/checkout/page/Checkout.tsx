@@ -191,20 +191,12 @@ export const Checkout = () => {
     }
   }, [cart])
 
-  // 监听购物车变化
-  useEffect(() => {
-    if (cart) {
-      console.log("Cart updated:", cart)
-    }
-  }, [cart])
-
   //初始化paymentSession
   const initializePaymentSession = async () => {
     const paymentProvider =
       process.env.NEXT_PUBLIC_PROVIDER_PAYMENT_ID ||
       "pp_OceanPayment_OceanPayment"
 
-    console.log("cart initiatePaymentSession", cart)
     const paymentSession = await initiatePaymentSession(cart as StoreCart, {
       provider_id: paymentProvider,
       data: {

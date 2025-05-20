@@ -7,36 +7,13 @@ enum TerminalNameEnum {
   Klarna = "Klarna",
   Afterpay = "Afterpay"
 }
-const getTerminalInfo = (terminalName: TerminalNameEnum) => {
-  switch (terminalName) {
-    case TerminalNameEnum.Credit:
-      return {
-        secureCode: process.env.OCEANPAYMENT_SECURE_CODE,
-      }
-    case TerminalNameEnum.Google:
-      return {
-        secureCode: process.env.OCEANPAYMENT_GOOGLE_SECURE_CODE,
-      }
-    case TerminalNameEnum.Apple:
-      return {
-        secureCode: process.env.OCEANPAYMENT_APPLE_SECURE_CODE,
-      }
-    case TerminalNameEnum.Klarna:
-      return {
-        secureCode: process.env.OCEANPAYMENT_KLARNA_SECURE_CODE,
-      }
-    case TerminalNameEnum.Afterpay:
-      return {
-        secureCode: process.env.OCEANPAYMENT_AFTERPAY_SECURE_CODE,
-      }
-  }
-}
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const {
       account,
       terminal,
+      baseUrl,
       order_number,
       order_currency,
       order_amount,
@@ -70,7 +47,10 @@ export async function POST(request: Request) {
     }
 
     // 生成签名
-    const signString = `${account}${terminal}${order_number}${order_currency}${order_amount}${billing_firstName}${billing_lastName}${billing_email}${secureCode}`;
+    let signString = `${account}${terminal}${order_number}${order_currency}${order_amount}${billing_firstName}${billing_lastName}${billing_email}${secureCode}`;
+    if (terminalName === TerminalNameEnum.Afterpay || terminalName === TerminalNameEnum.Klarna) {
+      signString = `${account}${terminal}${baseUrl}${order_number}${order_currency}${order_amount}${billing_firstName}${billing_lastName}${billing_email}${secureCode}`;
+    }
     const signValue = crypto
       .createHash('sha256')
       .update(signString)
