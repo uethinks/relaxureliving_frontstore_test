@@ -291,22 +291,22 @@ export const OceanPaymentForm = ({
         }
       case TerminalNameEnum.Google:
         return {
-          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_GOOGLE_ACCOUNT,
+          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_GOOGLE_TERMINAL,
         }
       case TerminalNameEnum.Apple:
         return {
-          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_APPLE_ACCOUNT,
+          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_APPLE_TERMINAL,
         }
       case TerminalNameEnum.Klarna:
         return {
-          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_KLARNA_ACCOUNT,
+          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_KLARNA_TERMINAL,
         }
       case TerminalNameEnum.Afterpay:
         return {
-          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_AFTERPAY_ACCOUNT,
+          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_AFTERPAY_TERMINAL,
         }
     }
