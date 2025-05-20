@@ -321,9 +321,7 @@ export const OceanPaymentForm = ({
     }
     await updateCartDeliveryInfo()
     const order = await comlpeleCartAndCreateOrder()
-    if (!order) {
-      throw new Error("Failed to create order")
-    }
+
     const terminalInfo = getTerminalInfo(TerminalNameEnum[terminalName])
     // 2. 获取支付签名
     const data = {
@@ -338,14 +336,11 @@ export const OceanPaymentForm = ({
       terminalName,
     }
     const signature = await getPaymentSignature(data)
-    if (!signature) {
-      throw new Error("Failed to get payment signature")
-    }
 
     // 3. 初始化支付表单数据
     if (cart) {
       // 设置订单相关数据
-      setValue("order_number", order.id)
+      setValue("order_number", order?.id || "")
       setValue("order_currency", "USD")
       setValue("order_amount", cart.total?.toString() || "0")
       setValue("order_notes", "order_notes")
@@ -423,16 +418,12 @@ export const OceanPaymentForm = ({
     const formData = await prepareFormData(TerminalNameEnum.Klarna)
     if (formData) {
       postKlarnaPayment(formData)
-    } else {
-      throw new Error("formData not initialized")
     }
   }
   const handleAfterpayPay = async () => {
     const formData = await prepareFormData(TerminalNameEnum.Afterpay)
     if (formData) {
       postAfterpayPayment(formData)
-    } else {
-      throw new Error("formData not initialized")
     }
   }
 
