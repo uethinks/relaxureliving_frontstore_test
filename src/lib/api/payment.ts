@@ -24,33 +24,56 @@ type OceanPaymentFormData = {
   order_notes: string
   billing_phone: string
 }
-export const postKlarnaPayment = async (formData:OceanPaymentFormData) => {
+export const postKlarnaPayment = async (formData: OceanPaymentFormData) => {
   const klarnaPaymentUrl = process.env.NEXT_PUBLIC_KLARNA_PAYMENT_URL as string
   console.log("klarnaPaymentUrl", klarnaPaymentUrl)
-  try {
-    const response = await axiosInstance.post(klarnaPaymentUrl, formData, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching items:', error);
-    throw error;
-  }
+  
+  // 创建一个表单元素
+  const form = document.createElement('form')
+  form.method = 'POST'
+  form.action = klarnaPaymentUrl
+  form.style.display = 'none'
+
+  // 添加所有表单字段
+  Object.entries(formData).forEach(([key, value]) => {
+    if (value !== undefined) {
+      const input = document.createElement('input')
+      input.type = 'hidden'
+      input.name = key
+      input.value = value.toString()
+      form.appendChild(input)
+    }
+  })
+
+  // 将表单添加到文档中并提交
+  document.body.appendChild(form)
+  form.submit()
+  document.body.removeChild(form)
 };
 export const postAfterpayPayment = async (formData:OceanPaymentFormData) => {
   const afterpayPaymentUrl = process.env.NEXT_PUBLIC_AFTERPAY_PAYMENT_URL as string
-  try {
-    const response = await axiosInstance.post(afterpayPaymentUrl, formData, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching items:', error);
-    throw error;
-  }
+  console.log("afterpayPaymentUrl", afterpayPaymentUrl)
+  
+  // 创建一个表单元素
+  const form = document.createElement('form')
+  form.method = 'POST'
+  form.action = afterpayPaymentUrl
+  form.style.display = 'none'
+
+  // 添加所有表单字段
+  Object.entries(formData).forEach(([key, value]) => {
+    if (value !== undefined) {
+      const input = document.createElement('input')
+      input.type = 'hidden'
+      input.name = key
+      input.value = value.toString()
+      form.appendChild(input)
+    }
+  })
+
+  // 将表单添加到文档中并提交
+  document.body.appendChild(form)
+  form.submit()
+  document.body.removeChild(form)
 };
 

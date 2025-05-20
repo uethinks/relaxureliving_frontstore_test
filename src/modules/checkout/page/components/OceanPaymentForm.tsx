@@ -351,8 +351,8 @@ export const OceanPaymentForm = ({
       setValue("order_notes", "order_notes")
       setValue("methods", "Credit Card")
       // 设置账户相关数据
-      setValue("account", process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT || "")
-      setValue("terminal", process.env.NEXT_PUBLIC_OCEANPAYMENT_TERMINAL || "")
+      setValue("account", terminalInfo.account || "")
+      setValue("terminal", terminalInfo.terminal || "")
       setValue("key", process.env.NEXT_PUBLIC_OCEANPAYMENT_KEY || "")
       // 设置回调URL
       setValue(
