@@ -5,7 +5,7 @@ import React, { useEffect, useState, useCallback } from "react"
 import { ConfirmDialog } from "../../../../components/ConfirmDialog"
 
 export const ShadesCard = (): JSX.Element | null => {
-  const { cart, getCart, removeVariant, updateVariantInfo, setCart } = useCart()
+  const { cart, removeVariant, updateVariantInfo } = useCart()
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
   const [quantities, setQuantities] = useState<{
     [key: string]: number | string
@@ -14,12 +14,6 @@ export const ShadesCard = (): JSX.Element | null => {
     [key: string]: NodeJS.Timeout
   }>({})
   const [isUpdating, setIsUpdating] = useState(false)
-
-  useEffect(() => {
-    getCart().then((cart) => {
-      setCart(cart)
-    })
-  }, [])
 
   let shadesInCart = cart?.items?.filter(
     (item) => item.product_title === "Shade Screen"
@@ -56,7 +50,6 @@ export const ShadesCard = (): JSX.Element | null => {
   const removeProduct = async (shadeId: string) => {
     if (shadeId) {
       await removeVariant(shadeId)
-      await getCart()
     }
   }
 
@@ -77,14 +70,11 @@ export const ShadesCard = (): JSX.Element | null => {
         const timeoutId = setTimeout(async () => {
           try {
             setIsUpdating(true)
-            await updateVariantInfo({
+            const updatedCart = await updateVariantInfo({
               lineId: itemId,
               quantity: 1,
             })
-            // Only update cart if the update was successful
-            const updatedCart = await getCart()
             if (updatedCart) {
-              setCart(updatedCart)
               setQuantities((prev) => ({ ...prev, [itemId]: 1 }))
             }
           } catch (error) {
@@ -126,11 +116,6 @@ export const ShadesCard = (): JSX.Element | null => {
               lineId: itemId,
               quantity: numQuantity,
             })
-            // Only update cart if the update was successful
-            const updatedCart = await getCart()
-            if (updatedCart) {
-              setCart(updatedCart)
-            }
           } catch (error) {
             console.error("Failed to update quantity:", error)
             // Revert to original quantity on error
@@ -147,14 +132,7 @@ export const ShadesCard = (): JSX.Element | null => {
         setUpdateTimeout((prev) => ({ ...prev, [itemId]: timeoutId }))
       }
     },
-    [
-      cart?.items,
-      updateTimeout,
-      isUpdating,
-      updateVariantInfo,
-      getCart,
-      setCart,
-    ]
+    [cart?.items, updateTimeout, isUpdating, updateVariantInfo]
   )
 
   // Cleanup timeouts on unmount

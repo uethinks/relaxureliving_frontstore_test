@@ -123,7 +123,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
         buyGlassdoor(),
       ])
 
-      router.push("/cart")
+      router.push("/us/cart")
     } catch (error) {
       console.error("Error adding items to cart:", error)
     }

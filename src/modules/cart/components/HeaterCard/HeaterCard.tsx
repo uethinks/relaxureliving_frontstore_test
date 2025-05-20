@@ -1,11 +1,10 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
-import { StoreCartLineItem } from "@medusajs/types"
 import React, { useMemo, useState, useCallback } from "react"
 import { ConfirmDialog } from "../../../../components/ConfirmDialog"
 
 export const HeaterCard = (): JSX.Element | null => {
-  const { cart, removeVariant, updateVariantInfo, getCart, setCart } = useCart()
+  const { cart, removeVariant, updateVariantInfo } = useCart()
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
   const [quantities, setQuantities] = useState<{
     [key: string]: number | string
@@ -73,14 +72,12 @@ export const HeaterCard = (): JSX.Element | null => {
         const timeoutId = setTimeout(async () => {
           try {
             setIsUpdating(true)
-            await updateVariantInfo({
+            const updatedCart = await updateVariantInfo({
               lineId: itemId,
               quantity: 1,
             })
             // Only update cart if the update was successful
-            const updatedCart = await getCart()
             if (updatedCart) {
-              setCart(updatedCart)
               setQuantities((prev) => ({ ...prev, [itemId]: 1 }))
             }
           } catch (error) {
@@ -123,10 +120,6 @@ export const HeaterCard = (): JSX.Element | null => {
               quantity: numQuantity,
             })
             // Only update cart if the update was successful
-            const updatedCart = await getCart()
-            if (updatedCart) {
-              setCart(updatedCart)
-            }
           } catch (error) {
             console.error("Failed to update quantity:", error)
             // Revert to original quantity on error
@@ -143,14 +136,7 @@ export const HeaterCard = (): JSX.Element | null => {
         setUpdateTimeout((prev) => ({ ...prev, [itemId]: timeoutId }))
       }
     },
-    [
-      cart?.items,
-      updateTimeout,
-      isUpdating,
-      updateVariantInfo,
-      getCart,
-      setCart,
-    ]
+    [cart?.items, updateTimeout, isUpdating, updateVariantInfo]
   )
 
   // Cleanup timeouts on unmount

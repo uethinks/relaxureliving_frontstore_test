@@ -1,7 +1,7 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
 import React, { useState, useEffect, useCallback } from "react"
-import { StoreCart } from "@medusajs/types"
+import { StoreCart, StoreOrder } from "@medusajs/types"
 import {
   updateCart,
   placeOrder,
@@ -12,14 +12,31 @@ import { listCartShippingMethods } from "@lib/data/fulfillment"
 import Link from "next/link"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
-import { init } from "@airwallex/components-sdk"
 import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
+import { OceanPaymentForm } from "./components/OceanPaymentForm"
+import { useRouter } from "next/navigation"
+
+type ShippingAddress = {
+  first_name: string
+  last_name: string
+  address_1: string
+  city: string
+  province: string
+  postal_code: string
+  phone: string
+  country_code: string
+}
+
+type FormData = {
+  email: string
+  shipping_address: ShippingAddress
+}
 
 export const Checkout = () => {
-  const { cart, setCart, getCart } = useCart()
-  const [isFormValid, setIsFormValid] = useState(false)
+  const { cart } = useCart()
+  const router = useRouter()
   const [order, setOrder] = useState<any>(null)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     email: "",
     shipping_address: {
       first_name: "",
@@ -32,8 +49,6 @@ export const Checkout = () => {
       country_code: "us",
     },
   })
-  const [validationTimeout, setValidationTimeout] =
-    useState<NodeJS.Timeout | null>(null)
   const [errors, setErrors] = useState({
     email: "",
     phone: "",
@@ -44,309 +59,181 @@ export const Checkout = () => {
     province: "",
     postalCode: "",
   })
-  const [isLoading, setIsLoading] = useState(false)
 
-  // 初始化 formData
-  useEffect(() => {
-    if (cart) {
-      setFormData({
-        email: cart.email ?? "",
-        shipping_address: {
-          first_name: cart.shipping_address?.first_name ?? "",
-          last_name: cart.shipping_address?.last_name ?? "",
-          address_1: cart.shipping_address?.address_1 ?? "",
-          city: cart.shipping_address?.city ?? "",
-          province: cart.shipping_address?.province ?? "",
-          postal_code: cart.shipping_address?.postal_code ?? "",
-          phone: cart.shipping_address?.phone ?? "",
-          country_code: cart.shipping_address?.country_code ?? "us",
-        },
+  const handleFieldChange = useCallback(
+    (field: keyof FormData | keyof ShippingAddress, value: string) => {
+      setFormData((prev) => {
+        if (field === "email") {
+          return { ...prev, email: value }
+        }
+        return {
+          ...prev,
+          shipping_address: { ...prev.shipping_address, [field]: value },
+        }
       })
-    }
-  }, [cart])
+    },
+    []
+  )
 
-  // 修改防抖验证函数
-  const debouncedValidateForm = useCallback(() => {
-    if (validationTimeout) {
-      clearTimeout(validationTimeout)
-    }
+  //提交时验证
+  const validateForm = () => {
+    const newErrors = { ...errors }
+    let hasError = false
 
-    const timeout = setTimeout(() => {
-      const newErrors = { ...errors }
-      let hasError = false
-
-      // Email validation
-      const email = formData.email?.trim() ?? ""
-      if (!email) {
-        newErrors.email = "Email is required"
+    // Email validation
+    const email = formData.email?.trim() ?? ""
+    if (!email) {
+      newErrors.email = "Email is required"
+      hasError = true
+    } else {
+      const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+      if (!emailRegex.test(email)) {
+        newErrors.email = "Please enter a valid email address"
         hasError = true
       } else {
-        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-        if (!emailRegex.test(email)) {
-          newErrors.email = "Please enter a valid email address"
-          hasError = true
-        } else {
-          newErrors.email = ""
-        }
-      }
-
-      // Phone validation
-      const phone = formData.shipping_address.phone?.trim() ?? ""
-      if (!phone) {
-        newErrors.phone = "Phone number is required"
-        hasError = true
-      } else {
-        const phoneRegex = /^\+?[1-9]\d{1,14}$/
-        if (!phoneRegex.test(phone)) {
-          newErrors.phone = "Please enter a valid phone number"
-          hasError = true
-        } else {
-          newErrors.phone = ""
-        }
-      }
-
-      // Required fields validation
-      if (!formData.shipping_address.first_name?.trim()) {
-        newErrors.firstName = "First name is required"
-        hasError = true
-      } else {
-        newErrors.firstName = ""
-      }
-
-      if (!formData.shipping_address.last_name?.trim()) {
-        newErrors.lastName = "Last name is required"
-        hasError = true
-      } else {
-        newErrors.lastName = ""
-      }
-
-      if (!formData.shipping_address.address_1?.trim()) {
-        newErrors.address = "Address is required"
-        hasError = true
-      } else {
-        newErrors.address = ""
-      }
-
-      if (!formData.shipping_address.city?.trim()) {
-        newErrors.city = "City is required"
-        hasError = true
-      } else {
-        newErrors.city = ""
-      }
-
-      if (!formData.shipping_address.province?.trim()) {
-        newErrors.province = "State is required"
-        hasError = true
-      } else {
-        newErrors.province = ""
-      }
-
-      if (!formData.shipping_address.postal_code?.trim()) {
-        newErrors.postalCode = "ZIP code is required"
-        hasError = true
-      } else {
-        newErrors.postalCode = ""
-      }
-
-      // 只在错误状态发生变化时更新状态
-      if (JSON.stringify(newErrors) !== JSON.stringify(errors)) {
-        setErrors(newErrors)
-        setIsFormValid(!hasError)
-      }
-    }, 500)
-
-    setValidationTimeout(timeout)
-  }, [formData, errors])
-
-  // 修改输入处理函数
-  const handleInputChange = useCallback((field: string, value: string) => {
-    setFormData((prevFormData) => {
-      const newFormData = { ...prevFormData }
-      if (field === "email") {
-        newFormData.email = value
-      } else if (field.startsWith("shipping_")) {
-        const addressField = field.replace("shipping_", "")
-        if (addressField in newFormData.shipping_address) {
-          ;(newFormData.shipping_address as any)[addressField] = value
-        }
-      }
-      return newFormData
-    })
-  }, [])
-
-  // 监听表单变化
-  useEffect(() => {
-    debouncedValidateForm()
-    return () => {
-      if (validationTimeout) {
-        clearTimeout(validationTimeout)
+        newErrors.email = ""
       }
     }
-  }, [formData, debouncedValidateForm])
 
-  // 组件卸载时清理定时器
-  useEffect(() => {
-    return () => {
-      if (validationTimeout) {
-        clearTimeout(validationTimeout)
+    // Phone validation
+    const phone = formData.shipping_address.phone?.trim() ?? ""
+    if (!phone) {
+      newErrors.phone = "Phone number is required"
+      hasError = true
+    } else {
+      const phoneRegex = /^\+?[1-9]\d{1,14}$/
+      if (!phoneRegex.test(phone)) {
+        newErrors.phone = "Please enter a valid phone number"
+        hasError = true
+      } else {
+        newErrors.phone = ""
       }
     }
-  }, [validationTimeout])
+
+    // Required fields validation
+    if (!formData.shipping_address.first_name?.trim()) {
+      newErrors.firstName = "First name is required"
+      hasError = true
+    } else {
+      newErrors.firstName = ""
+    }
+
+    if (!formData.shipping_address.last_name?.trim()) {
+      newErrors.lastName = "Last name is required"
+      hasError = true
+    } else {
+      newErrors.lastName = ""
+    }
+
+    if (!formData.shipping_address.address_1?.trim()) {
+      newErrors.address = "Address is required"
+      hasError = true
+    } else {
+      newErrors.address = ""
+    }
+
+    if (!formData.shipping_address.city?.trim()) {
+      newErrors.city = "City is required"
+      hasError = true
+    } else {
+      newErrors.city = ""
+    }
+
+    if (!formData.shipping_address.province?.trim()) {
+      newErrors.province = "State is required"
+      hasError = true
+    } else {
+      newErrors.province = ""
+    }
+
+    if (!formData.shipping_address.postal_code?.trim()) {
+      newErrors.postalCode = "ZIP code is required"
+      hasError = true
+    } else {
+      newErrors.postalCode = ""
+    }
+    setErrors(newErrors)
+    return !hasError
+  }
 
   // 初始化购物车
   const initializeCart = async () => {
     try {
-      // 1. 首先获取购物车
-      const currentCart = await getCart()
-      if (!currentCart) return null
+      if (!cart) {
+        console.error("Cart is not initialized")
+        return
+      }
 
-      // 2. 更新购物车状态
-      setCart(currentCart)
+      // 获取配送选项
+      const shippingMethods = await listCartShippingMethods(cart.id)
+      if (!shippingMethods?.length) {
+        console.error("No shipping methods available")
+        return
+      }
 
-      // 3. 获取配送选项
-      const shippingMethods = await listCartShippingMethods(currentCart.id)
+      // 设置配送方式
       await setShippingMethod({
-        cartId: currentCart?.id ?? "",
-        shippingMethodId: shippingMethods?.[0]?.id ?? "",
+        cartId: cart.id,
+        shippingMethodId: shippingMethods[0].id,
       })
+
+      // 初始化支付会话
+      await initializePaymentSession()
     } catch (error) {
       console.error("Error initializing cart:", error)
     }
   }
+
+  // 监听购物车变化，当购物车加载完成后初始化
+  useEffect(() => {
+    if (cart) {
+      initializeCart()
+    }
+  }, [cart])
+
+  // 监听购物车变化
+  useEffect(() => {
+    if (cart) {
+      console.log("Cart updated:", cart)
+    }
+  }, [cart])
+
   //初始化paymentSession
   const initializePaymentSession = async () => {
+    const paymentProvider =
+      process.env.NEXT_PUBLIC_PROVIDER_PAYMENT_ID ||
+      "pp_OceanPayment_OceanPayment"
+
+    console.log("cart initiatePaymentSession", cart)
     const paymentSession = await initiatePaymentSession(cart as StoreCart, {
-      provider_id: "pp_Airwallex_Airwallex",
+      provider_id: paymentProvider,
       data: {
-        amount: cart?.total,
-        currency: cart?.currency_code,
-        merchant_order_id: cart?.id,
-        customer: {
-          email: formData.email,
-          first_name: formData.shipping_address.first_name,
-          last_name: formData.shipping_address.last_name,
-          phone_number: formData.shipping_address.phone,
-        },
-        order: {
-          products: cart?.items?.map((item) => ({
-            code: item?.product?.id,
-            name: item?.product?.title,
-            quantity: item?.quantity,
-            unit_price: item?.unit_price,
-          })),
-          shipping: {
-            address: {
-              country_code: formData.shipping_address.country_code,
-              state: formData.shipping_address.province,
-              city: formData.shipping_address.city,
-              street: formData.shipping_address.address_1,
-              postcode: formData.shipping_address.postal_code,
-            },
-            first_name: formData.shipping_address.first_name,
-            last_name: formData.shipping_address.last_name,
-            email: formData.email,
-            phone_number: formData.shipping_address.phone,
-            shipping_method: "standard",
-          },
-          type: "physical_goods",
-        },
+        cart_id: cart?.id,
       },
     })
     return paymentSession
   }
-  // airwallex 初始化
-  const setupAirwallex = async (paymentSession: any) => {
-    const { payments } = await init({
-      env: process.env.NEXT_PUBLIC_AIRWALLEX_ENV as
-        | "dev"
-        | "staging"
-        | "demo"
-        | "prod",
-      enabledElements: ["payments"],
-    })
 
-    if (!payments) {
-      throw new Error("Failed to initialize Airwallex payments")
-    }
-    // 6. 创建 Drop-in Element
-    const element = await payments.createElement("dropIn", {
-      intent_id: paymentSession.payment_collection?.payment_sessions?.[0]?.data
-        ?.payment_intent_id as string,
-      client_secret: paymentSession.payment_collection?.payment_sessions?.[0]
-        ?.data?.client_secret as string,
-      currency: cart?.currency_code?.toUpperCase() || "USD",
-    })
-    if (typeof window !== "undefined") {
-      // 7. 挂载 Drop-in Element
-      const container = document.getElementById("airwallex-dropin-container")
-      if (container) {
-        element?.mount(container)
-      }
-    }
-    // 8. 监听事件
-    element?.on("success", (event: any) => {
-      handlePaymentComplete()
-    })
-
-    element?.on("error", (event: any) => {
-      console.error("Payment failed:", event)
-    })
-
-    element?.on("ready", () => {
-      console.log("Drop-in element is ready")
-    })
-  }
-  // 初始化 paymentinfo
-  const initializePaymentInfo = async () => {
-    // 4. 初始化 Airwallex SDK - 只在客户端执行
-    if (typeof window !== "undefined") {
-      // 5. 初始化支付会话
-      const paymentSession = await initializePaymentSession()
-      // airwallex 初始化
-      setupAirwallex(paymentSession)
-    }
-  }
-
-  useEffect(() => {
-    initializeCart()
-  }, [])
-
-  // 添加一个 ref 来存储最新的 formData
-  const formDataRef = React.useRef(formData)
-
-  // 更新 ref 当 formData 变化时
-  React.useEffect(() => {
-    formDataRef.current = formData
-  }, [formData])
-
-  // 修改 handlePaymentComplete 使用 ref
-  const handlePaymentComplete = async () => {
+  const updateCartDeliveryInfo = async (): Promise<StoreCart | null> => {
     if (cart) {
       // Update cart with form data before placing order
-      await updateCart({
-        email: formDataRef.current.email,
-        shipping_address: formDataRef.current.shipping_address,
+      return await updateCart({
+        email: formData.email,
+        shipping_address: formData.shipping_address,
       })
+    }
+    return null
+  }
 
+  const comlpeleCartAndCreateOrder = async (): Promise<StoreOrder | null> => {
+    if (cart) {
       const cartRes = await placeOrder(cart.id)
       setOrder(cartRes.type === "order" ? cartRes.order : null)
-    }
-  }
-  const [showPayment, setShowPayment] = useState(false)
-  const handleContinue = async () => {
-    if (isFormValid) {
-      setIsLoading(true)
-      try {
-        await initializePaymentInfo()
-        setShowPayment(true)
-      } catch (error) {
-        console.error("Error initializing payment:", error)
-      } finally {
-        setIsLoading(false)
+      if (cartRes.type === "order") {
+        return cartRes.order
       }
-    } else {
-      setShowPayment(false)
     }
+    return null
   }
 
   return (
@@ -368,14 +255,16 @@ export const Checkout = () => {
             <div className="flex flex-col lg:flex-row items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
               {/* Email Input */}
               <div className="flex flex-col w-full">
+                <div className="flex items-center gap-1 mb-1">
+                  <label className="text-sm text-gray-600">Email</label>
+                  <span className="text-red-500">*</span>
+                </div>
                 <input
-                  className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
+                  className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
                   placeholder="Email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => {
-                    handleInputChange("email", e.target.value)
-                  }}
+                  onChange={(e) => handleFieldChange("email", e.target.value)}
                 />
                 {errors.email && (
                   <div className="text-red-500 mt-1 block">{errors.email}</div>
@@ -409,13 +298,19 @@ export const Checkout = () => {
               <div className="flex items-center gap-[39px] relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col md:flex-row w-full items-start gap-5 relative">
                   <div className="flex flex-col w-full md:w-1/2">
+                    <div className="flex items-center gap-1 mb-1">
+                      <label className="text-sm text-gray-600">
+                        First name
+                      </label>
+                      <span className="text-red-500">*</span>
+                    </div>
                     <input
                       className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
                       placeholder="First name"
                       type="text"
                       value={formData.shipping_address.first_name}
                       onChange={(e) =>
-                        handleInputChange("shipping_first_name", e.target.value)
+                        handleFieldChange("first_name", e.target.value)
                       }
                     />
                     {errors.firstName && (
@@ -425,13 +320,17 @@ export const Checkout = () => {
                     )}
                   </div>
                   <div className="flex flex-col w-full md:w-1/2">
+                    <div className="flex items-center gap-1 mb-1">
+                      <label className="text-sm text-gray-600">Last name</label>
+                      <span className="text-red-500">*</span>
+                    </div>
                     <input
                       className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
                       placeholder="Last name"
                       type="text"
                       value={formData.shipping_address.last_name}
                       onChange={(e) =>
-                        handleInputChange("shipping_last_name", e.target.value)
+                        handleFieldChange("last_name", e.target.value)
                       }
                     />
                     {errors.lastName && (
@@ -444,13 +343,17 @@ export const Checkout = () => {
               </div>
               {/* Address Input */}
               <div className="flex flex-col w-full">
+                <div className="flex items-center gap-1 mb-1">
+                  <label className="text-sm text-gray-600">Address</label>
+                  <span className="text-red-500">*</span>
+                </div>
                 <input
-                  className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
+                  className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
                   placeholder="Address"
                   type="text"
                   value={formData.shipping_address.address_1}
                   onChange={(e) =>
-                    handleInputChange("shipping_address_1", e.target.value)
+                    handleFieldChange("address_1", e.target.value)
                   }
                 />
                 {errors.address && (
@@ -462,27 +365,33 @@ export const Checkout = () => {
               {/* City, State, ZIP Inputs */}
               <div className="flex w-full flex-col md:flex-row md:items-center gap-2 relative flex-[0_0_auto]">
                 <div className="flex flex-col w-full md:w-1/3">
+                  <div className="flex items-center gap-1 mb-1">
+                    <label className="text-sm text-gray-600">City</label>
+                    <span className="text-red-500">*</span>
+                  </div>
                   <input
-                    className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
+                    className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
                     placeholder="City"
                     type="text"
                     value={formData.shipping_address.city}
-                    onChange={(e) =>
-                      handleInputChange("shipping_city", e.target.value)
-                    }
+                    onChange={(e) => handleFieldChange("city", e.target.value)}
                   />
                   {errors.city && (
                     <div className="text-red-500 mt-1 block">{errors.city}</div>
                   )}
                 </div>
                 <div className="flex flex-col w-full md:w-1/3">
+                  <div className="flex items-center gap-1 mb-1">
+                    <label className="text-sm text-gray-600">State</label>
+                    <span className="text-red-500">*</span>
+                  </div>
                   <input
-                    className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
+                    className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
                     placeholder="State"
                     type="text"
                     value={formData.shipping_address.province}
                     onChange={(e) =>
-                      handleInputChange("shipping_province", e.target.value)
+                      handleFieldChange("province", e.target.value)
                     }
                   />
                   {errors.province && (
@@ -492,13 +401,17 @@ export const Checkout = () => {
                   )}
                 </div>
                 <div className="flex flex-col w-full md:w-1/3">
+                  <div className="flex items-center gap-1 mb-1">
+                    <label className="text-sm text-gray-600">ZIP code</label>
+                    <span className="text-red-500">*</span>
+                  </div>
                   <input
-                    className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
+                    className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
                     placeholder="ZIP code"
                     type="text"
                     value={formData.shipping_address.postal_code}
                     onChange={(e) =>
-                      handleInputChange("shipping_postal_code", e.target.value)
+                      handleFieldChange("postal_code", e.target.value)
                     }
                   />
                   {errors.postalCode && (
@@ -510,46 +423,26 @@ export const Checkout = () => {
               </div>
               {/* Phone Input */}
               <div className="flex flex-col w-full">
+                <div className="flex items-center gap-1 mb-1">
+                  <label className="text-sm text-gray-600">Phone</label>
+                  <span className="text-red-500">*</span>
+                </div>
                 <input
-                  className=" flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
+                  className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
                   placeholder="Phone"
                   type="tel"
                   value={formData.shipping_address.phone}
-                  onChange={(e) =>
-                    handleInputChange("shipping_phone", e.target.value)
-                  }
+                  onChange={(e) => handleFieldChange("phone", e.target.value)}
                 />
                 {errors.phone && (
                   <div className="text-red-500 mt-1 block">{errors.phone}</div>
                 )}
               </div>
-              <div className="flex flex-col w-full">
-                <button
-                  onClick={handleContinue}
-                  disabled={isLoading}
-                  className="w-full hover:bg-[#0a3980] bg-[#072f6c] all-[unset] box-border flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {isLoading ? (
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#ffffff] relative font-medium whitespace-nowrap leading-6">
-                        Processing...
-                      </span>
-                    </div>
-                  ) : (
-                    <span className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#ffffff] relative font-medium whitespace-nowrap leading-6">
-                      Continue
-                    </span>
-                  )}
-                </button>
-              </div>
             </div>
 
             {/* Payment Section */}
             <div
-              className={`flex flex-col items-start gap-[70px] relative self-stretch w-full flex-[0_0_auto] ${
-                showPayment && isFormValid ? "opacity-100" : "opacity-50"
-              }`}
+              className={`flex flex-col items-start gap-[70px] relative self-stretch w-full flex-[0_0_auto]`}
             >
               <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -560,8 +453,12 @@ export const Checkout = () => {
                       </div>
                     </div>
                   </div>
-                  {/* Airwallex Drop-in Element Container */}
-                  <div id="airwallex-dropin-container" className="w-full" />
+                  <OceanPaymentForm
+                    deliveryInfo={formData}
+                    updateCartDeliveryInfo={updateCartDeliveryInfo}
+                    formValidation={validateForm}
+                    comlpeleCartAndCreateOrder={comlpeleCartAndCreateOrder}
+                  />
                 </div>
               </div>
             </div>
@@ -667,7 +564,6 @@ export const Checkout = () => {
       </div>
       {/* Footer */}
       <FooterDark />
-      {order && <PaymentFinish order={order} />}
     </div>
   )
 }
