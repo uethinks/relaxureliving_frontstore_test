@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 enum TerminalNameEnum {
-  Credit = "Credit",
-  Google = "Google",
-  Apple = "Apple",
+  Credit = "Credit Card",
+  Google = "GooglePay",
+  Apple = "ApplePay",
   Klarna = "Klarna",
   Afterpay = "Afterpay"
 }

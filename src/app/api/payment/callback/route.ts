@@ -3,9 +3,9 @@ import crypto from "crypto"
 import {retrieveOrder, captureOrderWebhook} from "@lib/data/orders"
 
 enum TerminalNameEnum {
-  Credit = "Credit",
-  Google = "Google",
-  Apple = "Apple",
+  Credit = "Credit Card",
+  Google = "GooglePay",
+  Apple = "ApplePay",
   Klarna = "Klarna",
   Afterpay = "Afterpay",
 }
@@ -61,7 +61,13 @@ export async function POST(request: NextRequest) {
     const paymentStatus = formData.get("payment_status")?.toString() || ""
     // 获取 cart_id
     const orderId = formData.get("order_number")?.toString() || ""
-    console.log("signValue", signValue, hash)
+    console.log("---------------callback start---------------")
+    console.log("methods", methods)
+    console.log("secureCode", secureCode)
+    console.log("signString", signString)
+    console.log("hash", hash)
+    console.log("signValue", signValue)
+    console.log("---------------callback end---------------")
 
     const captureOrder = async (orderId: string) => {
       const order = await retrieveOrder(orderId)

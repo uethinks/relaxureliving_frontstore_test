@@ -47,11 +47,16 @@ type OceanPaymentFormData = {
   itemList?: string
 }
 
-type TerminalName = "Credit" | "Google" | "Apple" | "Klarna" | "Afterpay"
+type TerminalName =
+  | "Credit Card"
+  | "GooglePay"
+  | "ApplePay"
+  | "Klarna"
+  | "Afterpay"
 enum TerminalNameEnum {
-  Credit = "Credit",
-  Google = "Google",
-  Apple = "Apple",
+  Credit = "Credit Card",
+  Google = "GooglePay",
+  Apple = "ApplePay",
   Klarna = "Klarna",
   Afterpay = "Afterpay",
 }
@@ -328,7 +333,7 @@ export const OceanPaymentForm = ({
     }
   }
   const prepareFormData = async (
-    terminalName: TerminalName = "Credit"
+    terminalName: TerminalName = "Credit Card"
   ): Promise<OceanPaymentFormData | null> => {
     // 1. 首先验证表单
     const isValid = formValidation()
@@ -338,7 +343,7 @@ export const OceanPaymentForm = ({
     await updateCartDeliveryInfo()
     const order = await comlpeleCartAndCreateOrder()
 
-    const terminalInfo = getTerminalInfo(TerminalNameEnum[terminalName])
+    const terminalInfo = getTerminalInfo(terminalName as TerminalNameEnum)
     const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/callback`
     const notifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/notify`
     // 2. 获取支付签名
