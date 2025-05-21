@@ -182,7 +182,7 @@ export const OceanPaymentForm = ({
   }
   const initOceanpayment = async () => {
     try {
-      window.oceanpaymentCallBack = (result: any) => {
+      window.oceanpaymentCallBack = async (result: any) => {
         console.log("Payment callback result:", result)
 
         // 解析返回的 XML 结果
@@ -198,15 +198,28 @@ export const OceanPaymentForm = ({
 
         console.log("result xmlDoc", xmlDoc, status)
         if (status === "1") {
-          captureOrder(orderNumber as string)
-          // 支付成功
-          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
+          try {
+            await captureOrder(orderNumber as string)
+            // 支付成功，等待captureOrder完成后再跳转
+            window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
+          } catch (error) {
+            console.error("Error capturing order:", error)
+            // 如果captureOrder失败，仍然跳转到成功页面，但带上错误参数
+            window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}&error=capture_failed`
+          }
         } else if (status === "-1" && payUrl !== "") {
           // 需要3D认证
           window.location.href = payUrl
         } else if (status === "0") {
+          const paymentDetails =
+            xmlDoc.getElementsByTagName("payment_details")[0]?.textContent
+          const errorInfo = { status, paymentDetails }
           // 支付失败
-          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}&error=error`
+          window.location.href = `${
+            process.env.NEXT_PUBLIC_BASE_URL
+          }/us/checkout/success?order_id=${orderNumber}&error=${JSON.stringify(
+            errorInfo
+          )}`
         }
       }
 

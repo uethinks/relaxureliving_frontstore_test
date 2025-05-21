@@ -94,9 +94,10 @@ export async function POST(request: NextRequest) {
       })
     } else {
       // 校验失败或状态不对
-      const countryCode = "us"
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-      const errorUrl = `${baseUrl}/${countryCode}/checkout/success?order_id=${orderId}&error=error`
+      const paymentDetails = formData.get("payment_details")?.toString()
+      const errorInfo = { status: paymentStatus, paymentDetails }
+      const errorUrl = `${baseUrl}/us/checkout/success?order_id=${orderId}&error=${JSON.stringify(errorInfo)}`
       return NextResponse.redirect(errorUrl, {
         status: 302,
         headers: {
