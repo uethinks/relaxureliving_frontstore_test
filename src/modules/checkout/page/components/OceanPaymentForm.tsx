@@ -219,10 +219,19 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentApplePayCallBack = (data: any) => {
         console.log("Apple Pay callback result:", data)
-        if (data.code == 2) {
+        const { payment_status, order_number, pay_url } = data
+        if (payment_status == 2) {
           handleApplePay()
-        } else {
-          console.log("Apple Pay callback result:", data)
+        } else if (payment_status === "1") {
+          captureOrder(order_number as string)
+          // 支付成功
+          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${order_number}`
+        } else if (payment_status === "-1" || pay_url !== "") {
+          // 需要3D认证
+          window.location.href = pay_url
+        } else if (payment_status === "0") {
+          // 支付失败
+          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${order_number}&error=error`
         }
       }
 
@@ -250,10 +259,19 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentGooglePayCallBack = (data: any) => {
         console.log("Google Pay callback result:", data)
-        if (data.code == 2) {
-          handleGooglePay()
-        } else {
-          console.log("Google Pay callback result:", data)
+        const { payment_status, order_number, pay_url } = data
+        if (payment_status == 2) {
+          handleApplePay()
+        } else if (payment_status === "1") {
+          captureOrder(order_number as string)
+          // 支付成功
+          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${order_number}`
+        } else if (payment_status === "-1" || pay_url !== "") {
+          // 需要3D认证
+          window.location.href = pay_url
+        } else if (payment_status === "0") {
+          // 支付失败
+          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${order_number}&error=error`
         }
       }
 

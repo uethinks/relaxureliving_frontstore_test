@@ -55,7 +55,12 @@ export async function POST(request: Request) {
       .createHash('sha256')
       .update(signString)
       .digest('hex');
-
+        
+    console.log("---------------API signature start---------------")
+    console.log("signString", signString)
+    console.log("secureCode", secureCode)
+    console.log("signValue", signValue)
+    console.log("---------------API signature end---------------")
     return NextResponse.json({ signValue });
   } catch (error) {
     console.error('Error generating signature:', error);
