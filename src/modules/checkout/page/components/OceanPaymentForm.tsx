@@ -44,13 +44,19 @@ type OceanPaymentFormData = {
   signValue?: string
   order_notes: string
   billing_phone: string
+  itemList?: string
 }
 
-type TerminalName = "Credit" | "Google" | "Apple" | "Klarna" | "Afterpay"
+type TerminalName =
+  | "Credit Card"
+  | "GooglePay"
+  | "ApplePay"
+  | "Klarna"
+  | "Afterpay"
 enum TerminalNameEnum {
-  Credit = "Credit",
-  Google = "Google",
-  Apple = "Apple",
+  Credit = "Credit Card",
+  Google = "GooglePay",
+  Apple = "ApplePay",
   Klarna = "Klarna",
   Afterpay = "Afterpay",
 }
@@ -185,15 +191,17 @@ export const OceanPaymentForm = ({
         const orderNumber =
           xmlDoc.getElementsByTagName("order_number")[0]?.textContent
         // 获取支付状态
-        const status = xmlDoc.getElementsByTagName("status")[0]?.textContent
+        const status =
+          xmlDoc.getElementsByTagName("payment_status")[0]?.textContent
         const payUrl =
           xmlDoc.getElementsByTagName("pay_url")[0]?.textContent || ""
 
+        console.log("result xmlDoc", xmlDoc, status)
         if (status === "1") {
           captureOrder(orderNumber as string)
           // 支付成功
           window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
-        } else if (status === "-1" || payUrl !== "") {
+        } else if (status === "-1" && payUrl !== "") {
           // 需要3D认证
           window.location.href = payUrl
         } else if (status === "0") {
@@ -327,7 +335,7 @@ export const OceanPaymentForm = ({
     }
   }
   const prepareFormData = async (
-    terminalName: TerminalName = "Credit"
+    terminalName: TerminalName = "Credit Card"
   ): Promise<OceanPaymentFormData | null> => {
     // 1. 首先验证表单
     const isValid = formValidation()
@@ -337,7 +345,7 @@ export const OceanPaymentForm = ({
     await updateCartDeliveryInfo()
     const order = await comlpeleCartAndCreateOrder()
 
-    const terminalInfo = getTerminalInfo(TerminalNameEnum[terminalName])
+    const terminalInfo = getTerminalInfo(terminalName as TerminalNameEnum)
     const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/callback`
     const notifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/notify`
     // 2. 获取支付签名
@@ -425,6 +433,25 @@ export const OceanPaymentForm = ({
   const handleKlarnaPay = async () => {
     const formData = await prepareFormData(TerminalNameEnum.Klarna)
     if (formData) {
+      const items = cart?.items?.reduce(
+        (acc: any, item: any, index: number) => {
+          acc[index] = {
+            type: "1",
+            title: item.title || "",
+            sku: item.variant?.sku || `#${index + 1}`,
+            price: item.unit_price?.toString() || "0",
+            quantity: item.quantity?.toString() || "1",
+            total_amount: (
+              (item.unit_price || 0) * (item.quantity || 1)
+            ).toFixed(2),
+            taxRate: "0",
+            taxPrice: "0",
+          }
+          return acc
+        },
+        {}
+      )
+      formData.itemList = JSON.stringify(items)
       postKlarnaPayment(formData)
     }
   }

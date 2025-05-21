@@ -2,6 +2,27 @@ import { NextRequest, NextResponse } from "next/server"
 import crypto from "crypto"
 import {retrieveOrder, captureOrderWebhook} from "@lib/data/orders"
 
+enum TerminalNameEnum {
+  Credit = "Credit Card",
+  Google = "GooglePay",
+  Apple = "ApplePay",
+  Klarna = "Klarna",
+  Afterpay = "Afterpay",
+}
+const getTerminalSecureCode = (terminalName: TerminalNameEnum) => {
+  switch (terminalName) {
+    case TerminalNameEnum.Credit:
+      return process.env.OCEANPAYMENT_SECURE_CODE
+    case TerminalNameEnum.Google:
+      return process.env.OCEANPAYMENT_GOOGLE_SECURE_CODE
+    case TerminalNameEnum.Apple:
+      return process.env.OCEANPAYMENT_APPLE_SECURE_CODE
+    case TerminalNameEnum.Klarna:
+      return process.env.OCEANPAYMENT_KLARNA_SECURE_CODE
+    case TerminalNameEnum.Afterpay:
+      return process.env.OCEANPAYMENT_AFTERPAY_SECURE_CODE
+  }
+}
 export async function POST(request: NextRequest) {
     // 获取 POST 数据
     const formData = await request.formData()
@@ -27,7 +48,8 @@ export async function POST(request: NextRequest) {
       values.push(formData.get(key)?.toString() || "")
     })
     // 获取 secureCode
-    const secureCode = process.env.OCEANPAYMENT_SECURE_CODE || ""
+    const methods = formData.get("methods")?.toString() || ""
+    const secureCode = getTerminalSecureCode(methods as TerminalNameEnum) || ""
     values.push(secureCode)
     // 拼接明文
     const signString = values.join("")
@@ -39,7 +61,13 @@ export async function POST(request: NextRequest) {
     const paymentStatus = formData.get("payment_status")?.toString() || ""
     // 获取 cart_id
     const orderId = formData.get("order_number")?.toString() || ""
-    console.log("signValue", signValue, hash)
+    console.log("---------------callback start---------------")
+    console.log("methods", methods)
+    console.log("secureCode", secureCode)
+    console.log("signString", signString)
+    console.log("hash", hash)
+    console.log("signValue", signValue)
+    console.log("---------------callback end---------------")
 
     const captureOrder = async (orderId: string) => {
       const order = await retrieveOrder(orderId)
