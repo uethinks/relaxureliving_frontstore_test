@@ -44,6 +44,7 @@ type OceanPaymentFormData = {
   signValue?: string
   order_notes: string
   billing_phone: string
+  itemList?: string
 }
 
 type TerminalName = "Credit" | "Google" | "Apple" | "Klarna" | "Afterpay"
@@ -425,6 +426,25 @@ export const OceanPaymentForm = ({
   const handleKlarnaPay = async () => {
     const formData = await prepareFormData(TerminalNameEnum.Klarna)
     if (formData) {
+      const items = cart?.items?.reduce(
+        (acc: any, item: any, index: number) => {
+          acc[index] = {
+            type: "1",
+            title: item.title || "",
+            sku: item.variant?.sku || `#${index + 1}`,
+            price: item.unit_price?.toString() || "0",
+            quantity: item.quantity?.toString() || "1",
+            total_amount: (
+              (item.unit_price || 0) * (item.quantity || 1)
+            ).toFixed(2),
+            taxRate: "0",
+            taxPrice: "0",
+          }
+          return acc
+        },
+        {}
+      )
+      formData.itemList = JSON.stringify(items)
       postKlarnaPayment(formData)
     }
   }
