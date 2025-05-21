@@ -191,15 +191,17 @@ export const OceanPaymentForm = ({
         const orderNumber =
           xmlDoc.getElementsByTagName("order_number")[0]?.textContent
         // 获取支付状态
-        const status = xmlDoc.getElementsByTagName("status")[0]?.textContent
+        const status =
+          xmlDoc.getElementsByTagName("payment_status")[0]?.textContent
         const payUrl =
           xmlDoc.getElementsByTagName("pay_url")[0]?.textContent || ""
 
+        console.log("result xmlDoc", xmlDoc, status)
         if (status === "1") {
           captureOrder(orderNumber as string)
           // 支付成功
           window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
-        } else if (status === "-1" || payUrl !== "") {
+        } else if (status === "-1" && payUrl !== "") {
           // 需要3D认证
           window.location.href = payUrl
         } else if (status === "0") {
@@ -219,19 +221,10 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentApplePayCallBack = (data: any) => {
         console.log("Apple Pay callback result:", data)
-        const { payment_status, order_number, pay_url } = data
-        if (payment_status == 2) {
+        if (data.code == 2) {
           handleApplePay()
-        } else if (payment_status === "1") {
-          captureOrder(order_number as string)
-          // 支付成功
-          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${order_number}`
-        } else if (payment_status === "-1" || pay_url !== "") {
-          // 需要3D认证
-          window.location.href = pay_url
-        } else if (payment_status === "0") {
-          // 支付失败
-          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${order_number}&error=error`
+        } else {
+          console.log("Apple Pay callback result:", data)
         }
       }
 
@@ -259,19 +252,10 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentGooglePayCallBack = (data: any) => {
         console.log("Google Pay callback result:", data)
-        const { payment_status, order_number, pay_url } = data
-        if (payment_status == 2) {
+        if (data.code == 2) {
           handleGooglePay()
-        } else if (payment_status === "1") {
-          captureOrder(order_number as string)
-          // 支付成功
-          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${order_number}`
-        } else if (payment_status === "-1" || pay_url !== "") {
-          // 需要3D认证
-          window.location.href = pay_url
-        } else if (payment_status === "0") {
-          // 支付失败
-          window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${order_number}&error=error`
+        } else {
+          console.log("Google Pay callback result:", data)
         }
       }
 
