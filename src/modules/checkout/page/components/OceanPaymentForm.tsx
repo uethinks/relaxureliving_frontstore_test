@@ -261,7 +261,7 @@ export const OceanPaymentForm = ({
         console.log("Google Pay callback result:", data)
         const { payment_status, order_number, pay_url } = data
         if (payment_status == 2) {
-          handleApplePay()
+          handleGooglePay()
         } else if (payment_status === "1") {
           captureOrder(order_number as string)
           // 支付成功
