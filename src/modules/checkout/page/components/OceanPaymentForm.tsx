@@ -424,6 +424,7 @@ export const OceanPaymentForm = ({
       const formData = await prepareFormData()
       // 4. 调用 OceanPayment checkout
       if (formData) {
+        console.log("onSubmit formData", formData)
         window.Oceanpayment.checkout(formData)
       } else {
         throw new Error("formData not initialized")
@@ -437,10 +438,12 @@ export const OceanPaymentForm = ({
   }
   const handleApplePay = async () => {
     const formData = await prepareFormData(TerminalNameEnum.Apple)
+    console.log("handleApplePay formData", formData)
     window.onePageApplePay.checkout(formData)
   }
   const handleGooglePay = async () => {
     const formData = await prepareFormData(TerminalNameEnum.Google)
+    console.log("handleGooglePay formData", formData)
     window.onePageGooglePay.checkout(formData)
   }
   const handleKlarnaPay = async () => {
@@ -465,12 +468,14 @@ export const OceanPaymentForm = ({
         {}
       )
       formData.itemList = JSON.stringify(items)
+      console.log("handleKlarnaPay formData", formData)
       postKlarnaPayment(formData)
     }
   }
   const handleAfterpayPay = async () => {
     const formData = await prepareFormData(TerminalNameEnum.Afterpay)
     if (formData) {
+      console.log("handleAfterpayPay formData", formData)
       postAfterpayPayment(formData)
     }
   }

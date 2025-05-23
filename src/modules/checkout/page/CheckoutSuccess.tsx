@@ -21,7 +21,7 @@ export const CheckoutSuccess = () => {
         setOrder(res)
       })
     }
-    if (!error) {
+    if (error) {
       console.log("error", error)
     }
   }, [orderId, error]) // 只在 orderId 变化时执行
