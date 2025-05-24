@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { BuyNowButton } from "./BuyNowButton"
 import { PergulaSizeSelector } from "./PergulaSizeSelector"
 import { AccesorriesSelector } from "./AccesorriesSelector"
@@ -40,13 +40,30 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
   const router = useRouter()
 
-  const pergolaSizes = product.options?.find(
-    (option) => option.title === "Size"
-  )
   const pergolaColors = product.options?.find(
     (option) => option.title === "Color"
   )
-  const defaultSize = pergolaSizes?.values?.[0]
+
+  // 使用useMemo缓存排序后的尺寸和颜色列表
+  const sortedSizes = useMemo(() => {
+    const pergolaSizes = product.options?.find(
+      (option) => option.title === "Size"
+    )
+    return pergolaSizes?.values?.sort((a, b) => {
+      const getDimensions = (size: string) => {
+        const matches = size.match(/(\d+)["']x(\d+)["']/)
+        return matches ? [parseInt(matches[1]), parseInt(matches[2])] : [0, 0]
+      }
+
+      const [aWidth, aLength] = getDimensions(a.value)
+      const [bWidth, bLength] = getDimensions(b.value)
+
+      if (aWidth !== bWidth) return aWidth - bWidth
+      return aLength - bLength
+    })
+  }, [product.options])
+  console.log("sortedSizes", sortedSizes)
+  const defaultSize = sortedSizes?.[0]
   const defaultColor = pergolaColors?.values?.[0]
 
   const [selectedSize, setSelectedSize] = useState<
