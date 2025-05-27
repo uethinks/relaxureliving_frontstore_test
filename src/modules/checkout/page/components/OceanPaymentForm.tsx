@@ -305,13 +305,7 @@ export const OceanPaymentForm = ({
     } else if (paymentMethod === "credit" && creditPayRef.current) {
       initOceanpayment()
     }
-  }, [
-    paymentMethod,
-    googlePayRef.current,
-    applePayRef.current,
-    creditPayRef.current,
-    scriptsLoaded,
-  ])
+  }, [paymentMethod])
 
   const getTerminalInfo = (terminalName: TerminalNameEnum) => {
     switch (terminalName) {
