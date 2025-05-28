@@ -62,7 +62,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
       return aLength - bLength
     })
   }, [product.options])
-  console.log("sortedSizes", sortedSizes)
   const defaultSize = sortedSizes?.[0]
   const defaultColor = pergolaColors?.values?.[0]
 

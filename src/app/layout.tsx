@@ -7,10 +7,10 @@ import Script from "next/script"
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
   title: {
-    absolute: "Top Notch Smartest Pergola | Honest Pricing | Relaxure",
+    absolute: "Louvered Aluminum Pergola Kits | Relaxure",
   },
   description:
-    "Stop overpaying for outdoor shade. Relaxure's pergolas offer commercial-grade durability, smartest home integration, and transparent pricing. Backed by a 15-year warranty and 24/7 support.",
+    "Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability — turn any patio into a year-round living space.",
   applicationName: "Relaxure",
   keywords: ["pergola", "outdoor shade", "smart home", "relaxure"],
   authors: [{ name: "Relaxure" }],
