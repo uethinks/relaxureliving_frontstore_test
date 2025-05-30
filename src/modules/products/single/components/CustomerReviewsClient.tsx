@@ -98,7 +98,15 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   const reviewsWithImages = reviews.filter(
     (review) => review.image && review.image.length > 0
   )
-
+  const [currentImagePop, setCurrentImagePop] = useState<ReviewType>(
+    reviewsWithImages[0]
+  )
+  useEffect(() => {
+    console.log("currentReviewIndex", currentReviewIndex)
+    setCurrentImagePop(
+      reviewsWithImages[currentReviewIndex] || reviewsWithImages[0]
+    )
+  }, [currentReviewIndex])
   const handleImageClick = (reviewIndex: number) => {
     setCurrentReviewIndex(reviewIndex)
     setIsModalOpen(true)
@@ -228,7 +236,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
         <ImageReviewModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          review={reviewsWithImages[currentReviewIndex]}
+          review={currentImagePop}
           currentReviewIndex={currentReviewIndex}
           onReviewChange={setCurrentReviewIndex}
           totalReviews={reviewsWithImages.length}
