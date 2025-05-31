@@ -528,7 +528,7 @@ export const OceanPaymentForm = ({
           <span className="ml-1 font-medium">Afterpay</span>
           <img src="/img/afterpay.png" className="w-7" alt="afterpay" />
         </button>
-        <button
+        {/* <button
           type="button"
           className={`flex items-center gap-2 px-4 py-2 rounded border transition-colors duration-150 ${
             paymentMethod === "google"
@@ -551,7 +551,7 @@ export const OceanPaymentForm = ({
         >
           <span className="ml-1 font-medium">Apple Pay</span>
           <img src="/img/apple_pay.png" className="w-8" alt="apple_pay" />
-        </button>
+        </button> */}
       </div>
 
       {/* 支付内容区 */}
