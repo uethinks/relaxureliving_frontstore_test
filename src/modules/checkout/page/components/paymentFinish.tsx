@@ -54,6 +54,12 @@ export const PaymentFinish = ({
       })
     }
   }, [])
+  const failMessageTitle = "Order received"
+  const failMessage =
+    "But your payment failed. We will contact you to fix this issue within 24 hours"
+
+  const successMessage = "Payment Completed"
+
   return !paymentFinishShow ? (
     ""
   ) : (
@@ -66,10 +72,15 @@ export const PaymentFinish = ({
           <div className="relative w-[155px] h-[147px] bg-[url(https://c.animaapp.com/OZvkuZwc/img/https---lottiefiles-com-animations-item-shipped-cm0d29wrd2.gif)] bg-cover bg-[50%_50%]" />
 
           <div className="flex flex-col w-[361px] items-center gap-2 relative flex-[0_0_auto]">
-            <div className="inline-flex items-center justify-center gap-2.5 px-0 py-2.5 relative self-stretch flex-[0_0_auto]">
+            <div className="flex flex-col items-center justify-center gap-2.5 px-0 py-2.5 relative self-stretch flex-[0_0_auto]">
               <div className="relative w-[284px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#000000] text-[26px] text-center tracking-[0] leading-[normal]">
-                Payment Completed
+                {success ? successMessage : failMessageTitle}
               </div>
+              {!success && (
+                <div className="relative w-[284px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] text-[18px] text-center tracking-[0] leading-[normal]">
+                  {failMessage}
+                </div>
+              )}
             </div>
 
             <div className="flex items-center justify-center gap-2.5 p-2.5 relative self-stretch w-full flex-[0_0_auto]">
