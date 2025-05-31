@@ -296,6 +296,7 @@ export const OceanPaymentForm = ({
 
   // 修改原有的支付方法初始化 useEffect
   useEffect(() => {
+    console.log("paymentMethod", paymentMethod, scriptsLoaded)
     if (!scriptsLoaded) return // 如果脚本未加载完成，不执行初始化
 
     if (paymentMethod === "google" && googlePayRef.current) {
@@ -305,7 +306,7 @@ export const OceanPaymentForm = ({
     } else if (paymentMethod === "credit" && creditPayRef.current) {
       initOceanpayment()
     }
-  }, [paymentMethod])
+  }, [paymentMethod, scriptsLoaded])
 
   const getTerminalInfo = (terminalName: TerminalNameEnum) => {
     switch (terminalName) {
@@ -593,7 +594,7 @@ export const OceanPaymentForm = ({
         {isLoading ? "Processing..." : "Pay Now"}
       </button>
 
-      {paymentMethod === "google" && (
+      {/* {paymentMethod === "google" && (
         <div
           ref={googlePayRef}
           id="oceanpayment-googlepayelement"
@@ -601,9 +602,9 @@ export const OceanPaymentForm = ({
             paymentMethod === "google" ? "flex" : "block"
           }`}
         ></div>
-      )}
+      )} */}
 
-      {paymentMethod === "apple" && (
+      {/* {paymentMethod === "apple" && (
         <div
           ref={applePayRef}
           id="oceanpayment-applepayelement"
@@ -611,7 +612,7 @@ export const OceanPaymentForm = ({
             paymentMethod === "apple" ? "flex" : "block"
           }`}
         ></div>
-      )}
+      )} */}
     </>
   )
 }
