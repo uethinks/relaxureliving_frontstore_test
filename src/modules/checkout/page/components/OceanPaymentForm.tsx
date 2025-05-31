@@ -152,12 +152,12 @@ export const OceanPaymentForm = ({
       await Promise.all([
         loadScript("https://secure.oceanpayment.com/pub/js/jquery/jq.js"),
         loadScript("https://secure.oceanpayment.com/pages/js/oceanpayment.js"),
-        loadScript(
-          "https://secure.oceanpayment.com/pages/js/oceanpayment-googlepay.js"
-        ),
-        loadScript(
-          "https://secure.oceanpayment.com/pages/js/oceanpayment-applepay.js"
-        ),
+        // loadScript(
+        //   "https://secure.oceanpayment.com/pages/js/oceanpayment-googlepay.js"
+        // ),
+        // loadScript(
+        //   "https://secure.oceanpayment.com/pages/js/oceanpayment-applepay.js"
+        // ),
       ])
     } catch (error) {
       console.error("Failed to load payment scripts:", error)
