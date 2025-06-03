@@ -78,6 +78,19 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           })(window,document,'script','dataLayer','GTM-KM9V8LLR');`}
         </Script>
         {/* End Google Tag Manager */}
+        <Script>
+          {`
+            (function(c,s,q,u,a,r,e){
+              c.hj=c.hj||function(){(c.hj.q=c.hj.q||[]).push(arguments)};
+              c._hjSettings={hjid:a};
+              r=s.getElementsByTagName('head')[0];
+              e=s.createElement('script');
+              e.async=true;
+              e.src=q+c._hjSettings.hjid+u;
+              r.appendChild(e);
+            })(window,document,'https://static.hj.contentsquare.net/c/csq-','.js',6408012);
+          `}
+        </Script>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>

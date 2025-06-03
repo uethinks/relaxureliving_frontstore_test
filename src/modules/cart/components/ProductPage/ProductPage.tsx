@@ -97,7 +97,7 @@ export const ProductPage = ({
                 loading="lazy"
               />
               <div className="w-fit mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] lg:text-[36px] leading-[var(--heading-2-line-height)] whitespace-nowrap relative tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
-                Products
+                Shopping Cart
               </div>
             </div>
           ) : null}
