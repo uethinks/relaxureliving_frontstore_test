@@ -32,6 +32,12 @@ type FormData = {
   shipping_address: ShippingAddress
 }
 
+function reportToGA(eventName: string, value: any) {
+  if (window.gtag) {
+    window.gtag("event", eventName, value)
+  }
+}
+
 export const Checkout = () => {
   const { cart } = useCart()
   const router = useRouter()
@@ -257,6 +263,9 @@ export const Checkout = () => {
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleFieldChange("email", e.target.value)}
+                  onBlur={(e) =>
+                    reportToGA("input_email", { email: e.target.value })
+                  }
                 />
                 {errors.email && (
                   <div className="text-red-500 mt-1 block">{errors.email}</div>
@@ -420,11 +429,14 @@ export const Checkout = () => {
                   <span className="text-red-500">*</span>
                 </div>
                 <input
-                  className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
+                  className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
                   placeholder="Phone"
                   type="tel"
                   value={formData.shipping_address.phone}
                   onChange={(e) => handleFieldChange("phone", e.target.value)}
+                  onBlur={(e) =>
+                    reportToGA("input_phone", { phone: e.target.value })
+                  }
                 />
                 {errors.phone && (
                   <div className="text-red-500 mt-1 block">{errors.phone}</div>

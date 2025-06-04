@@ -152,12 +152,12 @@ export const OceanPaymentForm = ({
       await Promise.all([
         loadScript("https://secure.oceanpayment.com/pub/js/jquery/jq.js"),
         loadScript("https://secure.oceanpayment.com/pages/js/oceanpayment.js"),
-        // loadScript(
-        //   "https://secure.oceanpayment.com/pages/js/oceanpayment-googlepay.js"
-        // ),
-        // loadScript(
-        //   "https://secure.oceanpayment.com/pages/js/oceanpayment-applepay.js"
-        // ),
+        loadScript(
+          "https://secure.oceanpayment.com/pages/js/oceanpayment-googlepay.js"
+        ),
+        loadScript(
+          "https://secure.oceanpayment.com/pages/js/oceanpayment-applepay.js"
+        ),
       ])
     } catch (error) {
       console.error("Failed to load payment scripts:", error)
@@ -528,7 +528,7 @@ export const OceanPaymentForm = ({
           <span className="ml-1 font-medium">Afterpay</span>
           <img src="/img/afterpay.png" className="w-7" alt="afterpay" />
         </button>
-        {/* <button
+        <button
           type="button"
           className={`flex items-center gap-2 px-4 py-2 rounded border transition-colors duration-150 ${
             paymentMethod === "google"
@@ -551,7 +551,7 @@ export const OceanPaymentForm = ({
         >
           <span className="ml-1 font-medium">Apple Pay</span>
           <img src="/img/apple_pay.png" className="w-8" alt="apple_pay" />
-        </button> */}
+        </button>
       </div>
 
       {/* 支付内容区 */}
@@ -594,7 +594,7 @@ export const OceanPaymentForm = ({
         {isLoading ? "Processing..." : "Pay Now"}
       </button>
 
-      {/* {paymentMethod === "google" && (
+      {paymentMethod === "google" && (
         <div
           ref={googlePayRef}
           id="oceanpayment-googlepayelement"
@@ -602,9 +602,9 @@ export const OceanPaymentForm = ({
             paymentMethod === "google" ? "flex" : "block"
           }`}
         ></div>
-      )} */}
+      )}
 
-      {/* {paymentMethod === "apple" && (
+      {paymentMethod === "apple" && (
         <div
           ref={applePayRef}
           id="oceanpayment-applepayelement"
@@ -612,7 +612,7 @@ export const OceanPaymentForm = ({
             paymentMethod === "apple" ? "flex" : "block"
           }`}
         ></div>
-      )} */}
+      )}
     </>
   )
 }
