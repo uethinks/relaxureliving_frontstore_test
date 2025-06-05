@@ -180,46 +180,51 @@ export const OceanPaymentForm = ({
       console.log("captureOrder", captureOrder)
     }
   }
+  const paymentResultXmlHandler = async (result: any) => {
+    // 解析返回的 XML 结果
+    const parser = new DOMParser()
+    const xmlDoc = parser.parseFromString(result, "text/xml")
+    const orderNumber =
+      xmlDoc.getElementsByTagName("order_number")[0]?.textContent
+    // 获取支付状态
+    const status = xmlDoc.getElementsByTagName("payment_status")[0]?.textContent
+    const payUrl = xmlDoc.getElementsByTagName("pay_url")[0]?.textContent || ""
+
+    console.log("result xmlDoc", xmlDoc, status)
+    if (status === "1") {
+      try {
+        await captureOrder(orderNumber as string)
+        // 支付成功，等待captureOrder完成后再跳转
+        window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
+      } catch (error) {
+        console.error("Error capturing order:", error)
+        // 如果captureOrder失败，仍然跳转到成功页面，但带上错误参数
+        window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}&error=capture_failed`
+      }
+    } else if (status === "-1" && payUrl !== "") {
+      // 需要3D认证
+      window.location.href = payUrl
+    } else if (status === "0") {
+      const paymentDetails =
+        xmlDoc.getElementsByTagName("payment_details")[0]?.textContent
+      const errorInfo = { status, paymentDetails }
+      // 支付失败
+      window.location.href = `${
+        process.env.NEXT_PUBLIC_BASE_URL
+      }/us/checkout/success?order_id=${orderNumber}&error=${JSON.stringify(
+        errorInfo
+      )}`
+    }
+  }
   const initOceanpayment = async () => {
     try {
       window.oceanpaymentCallBack = async (result: any) => {
         console.log("Payment callback result:", result)
-
-        // 解析返回的 XML 结果
-        const parser = new DOMParser()
-        const xmlDoc = parser.parseFromString(result, "text/xml")
-        const orderNumber =
-          xmlDoc.getElementsByTagName("order_number")[0]?.textContent
-        // 获取支付状态
-        const status =
-          xmlDoc.getElementsByTagName("payment_status")[0]?.textContent
-        const payUrl =
-          xmlDoc.getElementsByTagName("pay_url")[0]?.textContent || ""
-
-        console.log("result xmlDoc", xmlDoc, status)
-        if (status === "1") {
-          try {
-            await captureOrder(orderNumber as string)
-            // 支付成功，等待captureOrder完成后再跳转
-            window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
-          } catch (error) {
-            console.error("Error capturing order:", error)
-            // 如果captureOrder失败，仍然跳转到成功页面，但带上错误参数
-            window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}&error=capture_failed`
-          }
-        } else if (status === "-1" && payUrl !== "") {
-          // 需要3D认证
-          window.location.href = payUrl
-        } else if (status === "0") {
-          const paymentDetails =
-            xmlDoc.getElementsByTagName("payment_details")[0]?.textContent
-          const errorInfo = { status, paymentDetails }
-          // 支付失败
-          window.location.href = `${
-            process.env.NEXT_PUBLIC_BASE_URL
-          }/us/checkout/success?order_id=${orderNumber}&error=${JSON.stringify(
-            errorInfo
-          )}`
+        const isXml = result.startsWith("<?xml")
+        if (isXml) {
+          await paymentResultXmlHandler(result)
+        } else {
+          console.log("Payment callback result json:", result)
         }
       }
 
@@ -234,10 +239,11 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentApplePayCallBack = (data: any) => {
         console.log("Apple Pay callback result:", data)
-        if (data.code == 2) {
+        const isXml = data.startsWith("<?xml")
+        if (isXml) {
+          paymentResultXmlHandler(data)
+        } else if (data.code == 2) {
           handleApplePay()
-        } else {
-          console.log("Apple Pay callback result:", data)
         }
       }
 
@@ -265,10 +271,11 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentGooglePayCallBack = (data: any) => {
         console.log("Google Pay callback result:", data)
-        if (data.code == 2) {
+        const isXml = data.startsWith("<?xml")
+        if (isXml) {
+          paymentResultXmlHandler(data)
+        } else if (data.code == 2) {
           handleGooglePay()
-        } else {
-          console.log("Google Pay callback result:", data)
         }
       }
 
@@ -354,7 +361,7 @@ export const OceanPaymentForm = ({
     const order = await comlpeleCartAndCreateOrder()
 
     const terminalInfo = getTerminalInfo(terminalName as TerminalNameEnum)
-    const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/callback`
+    const baseUrl = `${location.href}`
     const notifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/notify`
     // 2. 获取支付签名
     const data = {
