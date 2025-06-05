@@ -220,8 +220,7 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentCallBack = async (result: any) => {
         console.log("Payment callback result:", result)
-        const isXml = result.startsWith("<?xml")
-        if (isXml) {
+        if (!result.msg) {
           await paymentResultXmlHandler(result)
         } else {
           console.log("Payment callback result json:", result)
@@ -239,11 +238,10 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentApplePayCallBack = (data: any) => {
         console.log("Apple Pay callback result:", data)
-        const isXml = data.startsWith("<?xml")
-        if (isXml) {
-          paymentResultXmlHandler(data)
-        } else if (data.code == 2) {
+        if (data.code == 2) {
           handleApplePay()
+        } else {
+          paymentResultXmlHandler(data)
         }
       }
 
@@ -271,11 +269,10 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentGooglePayCallBack = (data: any) => {
         console.log("Google Pay callback result:", data)
-        const isXml = data.startsWith("<?xml")
-        if (isXml) {
-          paymentResultXmlHandler(data)
-        } else if (data.code == 2) {
+        if (data.code == 2) {
           handleGooglePay()
+        } else {
+          paymentResultXmlHandler(data)
         }
       }
 
