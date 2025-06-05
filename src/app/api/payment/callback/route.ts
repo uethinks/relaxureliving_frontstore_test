@@ -23,9 +23,10 @@ const getTerminalSecureCode = (terminalName: TerminalNameEnum) => {
       return process.env.OCEANPAYMENT_AFTERPAY_SECURE_CODE
   }
 }
-export async function POST(request: NextRequest) {
-    // 获取 POST 数据
-    const formData = await request.formData()
+
+export async function GET(request: NextRequest) {
+    // 获取 URL 查询参数
+    const searchParams = request.nextUrl.searchParams
     
     // 获取表单字段
     const fields = [
@@ -45,10 +46,10 @@ export async function POST(request: NextRequest) {
     
     const values: string[] = []
     fields.forEach((key) => {
-      values.push(formData.get(key)?.toString() || "")
+      values.push(searchParams.get(key) || "")
     })
     // 获取 secureCode
-    const methods = formData.get("methods")?.toString() || ""
+    const methods = searchParams.get("methods") || ""
     const secureCode = getTerminalSecureCode(methods as TerminalNameEnum) || ""
     values.push(secureCode)
     // 拼接明文
@@ -56,11 +57,11 @@ export async function POST(request: NextRequest) {
     // 生成 SHA256 签名
     const hash = crypto.createHash("sha256").update(signString).digest("hex").toUpperCase()
     // 获取 signValue
-    const signValue = formData.get("signValue")?.toString() || ""
+    const signValue = searchParams.get("signValue") || ""
     // 获取 payment_status
-    const paymentStatus = formData.get("payment_status")?.toString() || ""
+    const paymentStatus = searchParams.get("payment_status") || ""
     // 获取 cart_id
-    const orderId = formData.get("order_number")?.toString() || ""
+    const orderId = searchParams.get("order_number") || ""
     console.log("---------------callback start---------------")
     console.log("methods", methods)
     console.log("secureCode", secureCode)
@@ -95,7 +96,7 @@ export async function POST(request: NextRequest) {
     } else {
       // 校验失败或状态不对
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-      const paymentDetails = formData.get("payment_details")?.toString()
+      const paymentDetails = searchParams.get("payment_details")
       const errorInfo = { status: paymentStatus, paymentDetails }
       const errorUrl = `${baseUrl}/us/checkout/success?order_id=${orderId}&error=${JSON.stringify(errorInfo)}`
       return NextResponse.redirect(errorUrl, {
