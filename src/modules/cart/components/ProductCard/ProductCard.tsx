@@ -18,11 +18,7 @@ export const ProductCard = (): JSX.Element | null => {
     if (!cart?.items) return []
     return cart.items.filter((item) => {
       // 检查多个可能的标识
-      return (
-        item.title?.includes("Pergola") ||
-        item.product_title?.includes("Pergola") ||
-        item.product_type === "Pergola"
-      )
+      return item.product_type === "Pergola"
     })
   }, [cart?.items])
 
