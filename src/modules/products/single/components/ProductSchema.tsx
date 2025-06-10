@@ -88,7 +88,6 @@ export const ProductSchema = ({
         },
       })) || [],
   }
-  console.log("schemaData", schemaData)
   return (
     <Script
       id="product-schema"
