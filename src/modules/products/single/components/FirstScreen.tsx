@@ -33,17 +33,17 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
           <div className="flex flex-col w-full  gap-5">
             <div className="flex flex-col w-full lg:max-w-[64%] items-center gap-5 lg:pr-[65px]">
               <div className="flex flex-col items-start relative self-stretch w-full">
-                <div className="relative mb-[24px] self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] lg:text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+                <h1 className="relative mb-[24px] self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] lg:text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
                   {currentProductInfo.productTitle}
-                </div>
+                </h1>
                 <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full">
-                  <p className="w-full text-[#69727a] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[18px] lg:text-[22px] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+                  <h2 className="w-full text-[#69727a] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[18px] lg:text-[22px] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
                     {currentProductInfo.productSubtitle}
-                  </p>
+                  </h2>
                 </div>
-                <p className="w-full text-[#69727A] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[16px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+                <h3 className="w-full text-[#69727A] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[16px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
                   {currentProductInfo.productDescription}
-                </p>
+                </h3>
               </div>
             </div>
             <div className="flex flex-row justify-between items-start relative w-full gap-[65px]">
@@ -64,9 +64,9 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                       className="inline-flex items-center gap-2 px-4 py-2"
                     >
                       <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
-                      <span className="font-medium text-[#69727A] text-[14px]">
+                      <h3 className="font-medium text-[#69727A] text-[14px]">
                         Product Technical Sheet
-                      </span>
+                      </h3>
                     </a>
                   </div>
 

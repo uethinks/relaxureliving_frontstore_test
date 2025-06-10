@@ -60,9 +60,9 @@ export const PergulaSizeSelector = React.memo(
           className={`flex flex-col w-full items-start gap-5 relative ${className} mb-4`}
         >
           <div className="flex w-full items-center gap-2.5 relative">
-            <p className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
+            <h3 className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
               What size do you want for your pergola?
-            </p>
+            </h3>
           </div>
 
           <div className="relative h-12 2xl:w-auto">
@@ -98,9 +98,9 @@ export const PergulaSizeSelector = React.memo(
           className={`flex flex-col items-start gap-2.5 relative ${className}`}
         >
           <div className="flex w-full items-center gap-2.5 relative">
-            <p className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
+            <h3 className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
               What Color would you like to choose?
-            </p>
+            </h3>
           </div>
 
           <div className="relative h-12">

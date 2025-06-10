@@ -313,9 +313,9 @@ export const AccesorriesPopupShades = ({
                   className="inline-flex items-center gap-2 px-4 py-2"
                 >
                   <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
-                  <span className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
+                  <h3 className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
                     Download specs
-                  </span>
+                  </h3>
                 </a>
                 <div className="flex flex-row items-center gap-2.5 relative">
                   <button
@@ -347,9 +347,9 @@ export const AccesorriesPopupShades = ({
               className="inline-flex items-center justify-center gap-2 px-4 py-2"
             >
               <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
-              <span className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
+              <h3 className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
                 Download specs
-              </span>
+              </h3>
             </a>
             <AddAccessories
               disabled={selectedShades.length === 0}
