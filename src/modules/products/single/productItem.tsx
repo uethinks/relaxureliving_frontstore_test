@@ -12,6 +12,8 @@ import {
 import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
 import { PergolaData, ProductInformation } from "@/types/global"
 import { OneHundredDayRiskFreeTrial } from "./components/OneHundredDayRiskFreeTrial"
+import { ProductSchema } from "./components/ProductSchema"
+
 interface ProductItemProps {
   product: StoreProduct
   accessories: StoreProduct[]
@@ -29,6 +31,11 @@ export const ProductItem = ({
 }: ProductItemProps): JSX.Element => {
   return (
     <>
+      <ProductSchema
+        product={product}
+        pergolaData={pergolaData}
+        currentProductInfo={currentProductInfo}
+      />
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:max-w-[1910px] px-4 lg:px-20">
         <FirstScreen
           product={product}
