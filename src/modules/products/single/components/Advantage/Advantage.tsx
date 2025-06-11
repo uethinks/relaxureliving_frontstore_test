@@ -27,9 +27,9 @@ export const Advantage = (): JSX.Element => {
               className="flex items-start justify-center w-full"
               style={{ height: "50px" }}
             >
-              <div className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
+              <h3 className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
                 2 hour installation
-              </div>
+              </h3>
             </div>
           </div>
           <div
@@ -50,9 +50,9 @@ export const Advantage = (): JSX.Element => {
               className="flex items-start justify-center w-full"
               style={{ height: "50px" }}
             >
-              <div className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
+              <h3 className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
                 lifetime warranty
-              </div>
+              </h3>
             </div>
           </div>
           <div
@@ -73,9 +73,9 @@ export const Advantage = (): JSX.Element => {
               className="flex items-start justify-center w-full"
               style={{ height: "50px" }}
             >
-              <div className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
+              <h3 className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
                 100 day risk free trial
-              </div>
+              </h3>
             </div>
           </div>
           <div
@@ -96,10 +96,10 @@ export const Advantage = (): JSX.Element => {
               className="flex items-start justify-center w-full"
               style={{ height: "50px" }}
             >
-              <div className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
+              <h3 className="[font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base text-center tracking-[0] leading-6">
                 <p>Free delivery</p>
                 <p>Full insurance</p>
-              </div>
+              </h3>
             </div>
           </div>
         </div>

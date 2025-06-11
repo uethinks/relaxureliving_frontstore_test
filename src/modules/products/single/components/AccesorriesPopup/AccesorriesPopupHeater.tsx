@@ -225,9 +225,9 @@ export const AccesorriesPopupHeater = ({
 
                   <div className="flex items-center gap-2 self-stretch w-full lg:mt-4">
                     <div className="flex items-center justify-center gap-2.5 lg:py-2.5">
-                      <p className="text-[#343A40] text-[16px] lg:text-[18px] leading-[27px] whitespace-nowrap font-montserrat font-medium">
+                      <h3 className="text-[#343A40] text-[16px] lg:text-[18px] leading-[27px] whitespace-nowrap font-montserrat font-medium">
                         How many heaters do you need:
-                      </p>
+                      </h3>
                     </div>
 
                     <div className="flex items-center gap-1">
@@ -276,9 +276,9 @@ export const AccesorriesPopupHeater = ({
                   className="inline-flex items-center gap-2 px-4 py-2"
                 >
                   <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
-                  <span className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
+                  <h3 className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
                     Download specs
-                  </span>
+                  </h3>
                 </a>
 
                 <div className="flex flex-row items-center gap-2.5 relative">

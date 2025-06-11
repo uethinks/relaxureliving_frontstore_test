@@ -158,9 +158,9 @@ export const AccesorriesSelector = ({
 
   return (
     <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
-      <p className="relative self-stretch h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-16 tracking-[0] leading-6 whitespace-nowrap">
+      <h3 className="relative self-stretch h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-16 tracking-[0] leading-6 whitespace-nowrap">
         Add accessories to your pergola
-      </p>
+      </h3>
 
       <div className="flex flex-col w-full items-start gap-5 relative flex-[0_0_auto]">
         <div className="flex w-full items-center gap-[22px] relative flex-[0_0_auto]">
@@ -232,9 +232,9 @@ export const AccesorriesSelector = ({
               />
 
               <div className="flex h-[22px] items-start justify-center relative self-stretch w-full mb-[-10.00px]">
-                <div className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-16 tracking-[0] leading-[21.6px]">
+                <h3 className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-16 tracking-[0] leading-[21.6px]">
                   {accessory.name}
-                </div>
+                </h3>
               </div>
             </button>
           ))}

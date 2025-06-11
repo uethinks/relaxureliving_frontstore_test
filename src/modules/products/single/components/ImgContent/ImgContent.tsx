@@ -19,18 +19,50 @@ interface Props {
 
 export const ImgContent = ({ productImages }: Props): JSX.Element => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
+  const [modalSwiper, setModalSwiper] = useState<SwiperType | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [windowWidth, setWindowWidth] = useState<number>(0)
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
   const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+
+  // 处理键盘事件
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "ArrowLeft") {
+      if (isModalOpen) {
+        modalSwiper?.slidePrev()
+      } else {
+        setCurrentImageIndex((prev) =>
+          prev === 0 ? productImages.length - 1 : prev - 1
+        )
+      }
+    } else if (e.key === "ArrowRight") {
+      if (isModalOpen) {
+        modalSwiper?.slideNext()
+      } else {
+        setCurrentImageIndex((prev) =>
+          prev === productImages.length - 1 ? 0 : prev + 1
+        )
+      }
+    }
+  }
+
+  // 监听窗口大小变化
   useEffect(() => {
     setWindowWidth(window.innerWidth)
     const handleResize = () => setWindowWidth(window.innerWidth)
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
   }, [])
+
+  // 始终监听键盘事件
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown)
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [isModalOpen, modalSwiper, thumbsSwiper])
 
   const handleImageClick = () => {
     setIsModalOpen(true)
@@ -157,6 +189,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                 className="modal-swiper !static w-full h-full"
                 loop={true}
                 initialSlide={currentImageIndex}
+                onSwiper={setModalSwiper}
               >
                 {productImages?.map((image, index) => (
                   <SwiperSlide
