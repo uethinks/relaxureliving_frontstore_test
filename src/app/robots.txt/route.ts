@@ -3,8 +3,7 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const isProduction = process.env.NODE_ENV === 'production';
-  
+  const isProduction = process.env.NEXT_PUBLIC_ENV === 'production';
   const robotsTxt = isProduction
     ? `User-agent: *
 Allow: /
