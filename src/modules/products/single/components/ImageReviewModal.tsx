@@ -73,18 +73,9 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
         <div className="w-full h-full relative">
           {review.image && review.image.length > 0 && (
             <>
-              {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent"></div>
-                </div>
-              )}
-              <Image
+              <img
+                className="w-full h-full object-contain"
                 src={`${strapiUrl}${review.image[0]?.url}`}
-                alt="Review photo"
-                fill
-                className="object-contain"
-                onLoadingComplete={() => setIsLoading(false)}
-                priority
               />
               {totalReviews > 1 && (
                 <>
