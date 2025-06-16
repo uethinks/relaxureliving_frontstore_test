@@ -52,6 +52,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(9) // Default for large screens
   const [imagesToShow, setImagesToShow] = useState(7) // 默认大屏
+  const [anchorId, setAnchorId] = useState<string>("reviews-large") // 默认值，防止 SSR 不一致
 
   // Update items per page based on screen size
   useEffect(() => {
@@ -133,15 +134,20 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   }
 
   // 获取当前应该使用的锚点ID
-  const getCurrentAnchorId = () => {
-    if (typeof window === "undefined") return
-    if (window.innerWidth >= 1280) {
-      return "reviews-large"
-    } else if (window.innerWidth >= 768) {
-      return "reviews-medium"
+  useEffect(() => {
+    const getCurrentAnchorId = () => {
+      if (window.innerWidth >= 1280) {
+        return "reviews-large"
+      } else if (window.innerWidth >= 768) {
+        return "reviews-medium"
+      }
+      return "reviews-mobile"
     }
-    return "reviews-mobile"
-  }
+    setAnchorId(getCurrentAnchorId())
+    const handleResize = () => setAnchorId(getCurrentAnchorId())
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   // Pagination controls component
   const PaginationControls = () => {
@@ -152,7 +158,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
     return (
       <div className="flex justify-center items-center gap-2 mt-8">
         <a
-          href={`#${getCurrentAnchorId()}`}
+          href={`#${anchorId}`}
           onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
           className={`px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 ${
             currentPage === 1
@@ -166,7 +172,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
           Page {currentPage} of {totalPages}
         </span>
         <a
-          href={`#${getCurrentAnchorId()}`}
+          href={`#${anchorId}`}
           onClick={() =>
             handlePageChange(Math.min(currentPage + 1, totalPages))
           }
