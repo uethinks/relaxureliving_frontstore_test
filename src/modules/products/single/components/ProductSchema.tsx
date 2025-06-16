@@ -16,9 +16,11 @@ export const ProductSchema = ({
   // 从产品变体中提取尺寸和颜色选项
   const sizeOption = product.options?.find((opt) => opt.title === "Size")
   const colorOption = product.options?.find((opt) => opt.title === "Color")
+  const styleOption = product.options?.find((opt) => opt.title === "Style")
 
   const sizes = sizeOption?.values?.map((v) => v.value) || []
   const colors = colorOption?.values?.map((v) => v.value) || []
+  const styles = styleOption?.values?.map((v) => v.value) || []
 
   const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
   const productImages = pergolaData.product_images.map(
@@ -37,6 +39,7 @@ export const ProductSchema = ({
     variesBy: ["size", "color"],
     size: sizes,
     color: colors,
+    style: styles,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.9",
@@ -76,6 +79,10 @@ export const ProductSchema = ({
           : undefined,
         color: colorOption
           ? variant.options?.find((opt) => opt.option_id === colorOption.id)
+              ?.value
+          : undefined,
+        style: styleOption
+          ? variant.options?.find((opt) => opt.option_id === styleOption.id)
               ?.value
           : undefined,
         image: productImages[0],
