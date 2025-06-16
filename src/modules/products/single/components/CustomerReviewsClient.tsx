@@ -131,29 +131,51 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
     return columns
   }
 
+  // 获取当前应该使用的锚点ID
+  const getCurrentAnchorId = () => {
+    if (window.innerWidth >= 1280) {
+      return "reviews-large"
+    } else if (window.innerWidth >= 768) {
+      return "reviews-medium"
+    }
+    return "reviews-mobile"
+  }
+
   // Pagination controls component
   const PaginationControls = () => {
+    const handlePageChange = (newPage: number) => {
+      setCurrentPage(newPage)
+    }
+
     return (
       <div className="flex justify-center items-center gap-2 mt-8">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-          className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        <a
+          href={`#${getCurrentAnchorId()}`}
+          onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+          className={`px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 ${
+            currentPage === 1
+              ? "opacity-50 cursor-not-allowed pointer-events-none"
+              : ""
+          }`}
         >
           Previous
-        </button>
+        </a>
         <span className="px-4 py-2">
           Page {currentPage} of {totalPages}
         </span>
-        <button
+        <a
+          href={`#${getCurrentAnchorId()}`}
           onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            handlePageChange(Math.min(currentPage + 1, totalPages))
           }
-          disabled={currentPage === totalPages}
-          className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 ${
+            currentPage === totalPages
+              ? "opacity-50 cursor-not-allowed pointer-events-none"
+              : ""
+          }`}
         >
           Next
-        </button>
+        </a>
       </div>
     )
   }
@@ -244,7 +266,10 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
       )}
 
       {/* Review Cards - Flex Column Layout */}
-      <div className="hidden xl:flex justify-between gap-8">
+      <div
+        id="reviews-large"
+        className="reviews-section hidden xl:flex justify-between gap-8"
+      >
         {/* Large screens - 3 columns */}
         {splitReviews(currentReviews, 3).map((columnReviews, columnIndex) => (
           <div key={columnIndex} className="w-1/3 flex flex-col gap-8">
@@ -255,7 +280,10 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
         ))}
       </div>
 
-      <div className="hidden md:flex xl:hidden justify-between gap-8">
+      <div
+        id="reviews-medium"
+        className="reviews-section hidden md:flex xl:hidden justify-between gap-8"
+      >
         {/* Medium screens - 2 columns */}
         {splitReviews(currentReviews, 2).map((columnReviews, columnIndex) => (
           <div key={columnIndex} className="w-1/2 flex flex-col gap-8">
@@ -266,13 +294,14 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
         ))}
       </div>
 
-      <div className="flex md:hidden gap-8">
+      <div
+        id="reviews-mobile"
+        className="reviews-section flex md:hidden flex-col gap-8"
+      >
         {/* Small screens - 1 column */}
-        <div className="w-full flex flex-col gap-8">
-          {currentReviews.map((review: ReviewType) => (
-            <ReviewCard key={review.id} review={review} />
-          ))}
-        </div>
+        {currentReviews.map((review: ReviewType) => (
+          <ReviewCard key={review.id} review={review} />
+        ))}
       </div>
 
       {/* Add pagination controls */}
