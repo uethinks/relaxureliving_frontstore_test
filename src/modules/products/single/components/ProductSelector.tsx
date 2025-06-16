@@ -43,9 +43,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
   const pergolaColors = product.options?.find(
     (option) => option.title === "Color"
   )
-  const pergolaStyles = product.options?.find(
-    (option) => option.title === "Style"
-  )
 
   // 使用useMemo缓存排序后的尺寸和颜色列表
   const sortedSizes = useMemo(() => {
@@ -66,24 +63,17 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
     })
   }, [product.options])
   const defaultSize = sortedSizes?.[0]
-  const defaultColor = pergolaColors?.values?.find(
-    (color) => color.value === "Dark Gray"
-  )
-  const defaultStyle = pergolaStyles?.values?.find(
-    (style) => style.value === "Freestanding"
-  )
+  const defaultColor = pergolaColors?.values?.[0]
+
   const [selectedSize, setSelectedSize] = useState<
     StoreProductOptionValue | undefined
   >(defaultSize)
   const [selectedColor, setSelectedColor] = useState<
     StoreProductOptionValue | undefined
   >(defaultColor)
-  const [selectedStyle, setSelectedStyle] = useState<
-    StoreProductOptionValue | undefined
-  >(defaultStyle)
 
   useEffect(() => {
-    if (!selectedSize || !selectedColor || !selectedStyle) return
+    if (!selectedSize || !selectedColor) return
 
     const variant = product.variants?.find((variant) => {
       const matchingSize = variant?.options?.find(
@@ -95,12 +85,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
           option.option?.title === "Color" &&
           option.value === selectedColor.value
       )
-      const matchingStyle = variant?.options?.find(
-        (option) =>
-          option.option?.title === "Style" &&
-          option.value === selectedStyle.value
-      )
-      return matchingSize && matchingColor && matchingStyle
+      return matchingSize && matchingColor
     })
 
     setSelectedVariant(variant)
@@ -116,7 +101,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
     )
     setSelectedAccessoriesShades([])
     setSelectedAccessoriesGlassdoor([])
-  }, [selectedSize, selectedColor, selectedStyle, product, pergolaQuantity])
+  }, [selectedSize, selectedColor, product, pergolaQuantity])
 
   const handleSizeChange = useCallback((size: StoreProductOptionValue) => {
     setSelectedSize(size)
@@ -124,10 +109,6 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
   const handleColorChange = useCallback((color: StoreProductOptionValue) => {
     setSelectedColor(color)
-  }, [])
-
-  const handleStyleChange = useCallback((style: StoreProductOptionValue) => {
-    setSelectedStyle(style)
   }, [])
 
   const handleAccessoryToggle = useCallback(
@@ -328,10 +309,8 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
               className="!self-stretch !flex-[0_0_auto] !flex"
               selectedSize={selectedSize}
               selectedColor={selectedColor}
-              selectedStyle={selectedStyle}
               onSizeChange={handleSizeChange}
               onColorChange={handleColorChange}
-              onStyleChange={handleStyleChange}
             />
             <AccesorriesSelector
               pergolaSize={pergolaSize}
