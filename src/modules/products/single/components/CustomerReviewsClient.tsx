@@ -56,6 +56,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   // Update items per page based on screen size
   useEffect(() => {
     const handleResize = () => {
+      if (typeof window === "undefined") return
       if (window.innerWidth >= 1280) {
         setImagesToShow(7)
         setItemsPerPage(9)
@@ -133,6 +134,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
 
   // 获取当前应该使用的锚点ID
   const getCurrentAnchorId = () => {
+    if (typeof window === "undefined") return
     if (window.innerWidth >= 1280) {
       return "reviews-large"
     } else if (window.innerWidth >= 768) {
