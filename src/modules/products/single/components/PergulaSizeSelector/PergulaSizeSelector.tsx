@@ -13,8 +13,10 @@ interface Props {
   product: StoreProduct
   selectedSize?: StoreProductOptionValue
   selectedColor?: StoreProductOptionValue
+  selectedStyle?: StoreProductOptionValue
   onSizeChange: (size: StoreProductOptionValue) => void
   onColorChange: (color: StoreProductOptionValue) => void
+  onStyleChange: (style: StoreProductOptionValue) => void
 }
 
 export const PergulaSizeSelector = React.memo(
@@ -23,8 +25,10 @@ export const PergulaSizeSelector = React.memo(
     product,
     selectedSize,
     selectedColor,
+    selectedStyle,
     onSizeChange,
     onColorChange,
+    onStyleChange,
   }: Props): JSX.Element => {
     // 使用useMemo缓存排序后的尺寸和颜色列表
     const sortedSizes = useMemo(() => {
@@ -54,6 +58,14 @@ export const PergulaSizeSelector = React.memo(
       )
     }, [product.options])
 
+    const sortedStyles = useMemo(() => {
+      const pergolaStyles = product.options?.find(
+        (option) => option.title === "Style"
+      )
+      return pergolaStyles?.values?.sort((a, b) =>
+        a.value.localeCompare(b.value)
+      )
+    }, [product.options])
     return (
       <>
         <div
@@ -132,6 +144,41 @@ export const PergulaSizeSelector = React.memo(
                     >
                       {color.value}
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`flex flex-col items-start gap-2.5 relative ${className}`}
+        >
+          <div className="flex w-full items-center gap-2.5 relative">
+            <h3 className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
+              What Style would you like to choose?
+            </h3>
+          </div>
+
+          <div className="relative h-12">
+            <div className="flex px-2 h-12">
+              <div className="inline-flex items-center gap-[18px] relative">
+                {sortedStyles?.map((style) => (
+                  <div
+                    key={style.id}
+                    className="flex flex-row items-center gap-2.5 relative"
+                  >
+                    <button
+                      className={`rounded-[10px] cursor-pointer border-solid p-1 border-2 ${
+                        selectedStyle?.id === style.id ? "border-[#072F6C]" : ""
+                      }`}
+                      onClick={() => onStyleChange(style)}
+                    >
+                      <div
+                        className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
+                      >
+                        {style.value}
+                      </div>
+                    </button>
                   </div>
                 ))}
               </div>
