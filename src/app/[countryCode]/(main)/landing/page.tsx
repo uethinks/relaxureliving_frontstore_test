@@ -74,7 +74,7 @@ export default async function LandingPage() {
   if (!landingPageData) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p>please try again later</p>
+        <p>please try again later!</p>
       </div>
     )
   }
