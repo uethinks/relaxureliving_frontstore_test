@@ -126,6 +126,7 @@ export async function middleware(request: NextRequest) {
 
   // if one of the country codes is in the url and the cache id is not set, set the cache id and redirect
   if (urlHasCountryCode && !cacheIdCookie) {
+    const response = NextResponse.next()
     response.cookies.set("_medusa_cache_id", cacheId, {
       maxAge: 60 * 60 * 24,
     })
