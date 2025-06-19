@@ -50,7 +50,11 @@ const glassdoorPopulate = {
   "populate[productInformations]": "*",
   "populate[product_images][fields][0]": "*",
 };
-
+const landingPagePopulate = {
+  "populate[hero][populate][0]": "BackgroundImage",
+  "populate[landing_slider][populate][images][fields][0]": "*",
+  "populate[good_memory][populate][0]": "image",
+};
 export const API_URLS = {
   getHomePage: '/api/home-page',
   getWarranty: '/api/warranty',
@@ -66,6 +70,7 @@ export const API_URLS = {
   getShades: '/api/shades-screen',
   getGlassdoor: '/api/glass-door',
   sendKlaviyoTrackInfo: '/api/contact-submissions',
+  getLandingPage: '/api/landing',
 };
 
 // 获取所有项目
@@ -225,3 +230,14 @@ export const sendKlaviyoContactUsForm = async (info: any) => {
   }
 }
 
+export const getLandingPage = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getLandingPage, {
+      params: landingPagePopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching landing page data:', error, API_URLS.getLandingPage);
+    throw error;
+  }
+};
