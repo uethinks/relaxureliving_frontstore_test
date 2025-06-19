@@ -20,7 +20,7 @@ const GoodMemory: React.FC<{ goodMemory: GoodMemoryProps["goodMemory"] }> = ({
   return (
     <section className="w-full flex flex-col items-center justify-center py-16 bg-white mt-[120px]">
       {/* 顶部大标题 */}
-      <h2 className="text-3xl lg:text-4xl font-bold text-[#343A40] text-center max-w-4xl mb-12">
+      <h2 className="text-2xl lg:text-4xl font-bold text-[#343A40] text-center max-w-4xl mb-12">
         {goodMemory.title}
       </h2>
       {/* 主内容区 */}

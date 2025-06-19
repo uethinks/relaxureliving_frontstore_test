@@ -24,7 +24,7 @@ export const Hero = ({
               {hero.Title}
             </p>
 
-            <p className="hidden md:block self-stretch w-full lg:w-3/4 text-[#ffffff] text-[16px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+            <p className="self-stretch w-full lg:w-3/4 text-[#ffffff] text-[16px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
               {hero.Description}
             </p>
           </div>

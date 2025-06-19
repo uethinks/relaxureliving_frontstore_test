@@ -86,9 +86,9 @@ export default async function LandingPage() {
         <Hero hero={landingPageData.hero} />
       </div>
       <LandingSlider landingSlider={landingPageData.landing_slider} />
-      <GoodMemory goodMemory={landingPageData.good_memory} />
 
       <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-[120px] px-4 lg:px-20 py-0 relative bg-[#ffffff]">
+        <GoodMemory goodMemory={landingPageData.good_memory} />
         <Advantages pergolaData={pergolaPageData} />
         <AccessoriesCards pergolaData={pergolaPageData} />
       </div>
