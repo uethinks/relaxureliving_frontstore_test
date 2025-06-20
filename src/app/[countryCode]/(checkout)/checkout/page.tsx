@@ -1,11 +1,13 @@
 import { Checkout as CheckoutComponent } from "@modules/checkout/page/Checkout"
 import { redirect } from "next/navigation"
 
-export default function CheckoutPage({
+export default async function CheckoutPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+  const params = await searchParams
+
   const requiredParams = [
     "account",
     "terminal",
@@ -22,17 +24,17 @@ export default function CheckoutPage({
   ]
 
   const hasAllParams = requiredParams.every(
-    (param) => searchParams[param] !== undefined
+    (param) => params[param] !== undefined
   )
 
   if (hasAllParams) {
-    const params = new URLSearchParams()
-    Object.entries(searchParams).forEach(([key, value]) => {
+    const urlParams = new URLSearchParams()
+    Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined) {
-        params.append(key, Array.isArray(value) ? value[0] : value)
+        urlParams.append(key, Array.isArray(value) ? value[0] : value)
       }
     })
-    redirect(`/api/payment/callback?${params.toString()}`)
+    redirect(`/api/payment/callback?${urlParams.toString()}`)
   }
 
   return <CheckoutComponent />
