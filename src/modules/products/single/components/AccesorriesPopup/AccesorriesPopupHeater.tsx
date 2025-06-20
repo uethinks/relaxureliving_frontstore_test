@@ -306,7 +306,7 @@ export const AccesorriesPopupHeater = ({
         <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white px-4 pb-4 border-t">
           <div className="flex flex-col gap-0">
             <a
-              href="/upload_files/Heater_technical_sheet.pdf"
+              href="/upload_files/Heater_technical_sheet_new.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-4 py-2"
