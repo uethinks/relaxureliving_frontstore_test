@@ -4,6 +4,7 @@ import React, {
   useRef,
   useLayoutEffect,
   MutableRefObject,
+  useEffect,
 } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
@@ -77,45 +78,142 @@ const LandingSliderMobile: React.FC<{
 const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
   landingSlider,
 }) => {
-  const [displayImages, setDisplayImages] = useState(landingSlider.images)
   const [containerRef, screenWidth] = useContainerWidth()
-  const [fadingIdx, setFadingIdx] = useState<number | null>(null)
+  const [images, setImages] = useState([
+    ...landingSlider.images,
+    ...landingSlider.images,
+    ...landingSlider.images,
+  ])
+  const [activeIndex, setActiveIndex] = useState(landingSlider.images.length)
+  const [isTransitioning, setIsTransitioning] = useState(true)
+  const [isClickable, setIsClickable] = useState(true)
+  const [dragStartX, setDragStartX] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const transitionEndTimeoutRef = useRef<NodeJS.Timeout>()
+  const resetTimeoutRef = useRef<NodeJS.Timeout>()
 
   // 1. 计算inactive图片宽度
   const W = (screenWidth - GAP * 4) / 4.6
   const activeWidth = W * ACTIVE_SCALE
-  const containerWidth = screenWidth + W
 
   // 2. 计算每张图片的宽高
   const getImageSize = (idx: number) => {
-    if (idx === 2) {
+    if (idx === activeIndex) {
       return {
         width: activeWidth,
-        aspectRatio: 4 / 5,
+        aspectRatio: "4 / 5",
       }
     }
     return {
       width: W,
-      aspectRatio: 25 / 42,
+      aspectRatio: "25 / 42",
     }
   }
 
-  // 3. 点击时与中间图片交换，只做淡出动画
-  const handleClick = (idx: number) => {
-    if (idx === 2 || fadingIdx !== null) return
-    setFadingIdx(idx)
-    setTimeout(() => {
-      const newImages = [...displayImages]
-      ;[newImages[2], newImages[idx]] = [newImages[idx], newImages[2]]
-      setDisplayImages(newImages)
-      setFadingIdx(null)
-    }, 400)
+  // 3. 切换图片逻辑
+  const switchSlide = (newIndex: number) => {
+    if (!isClickable) return
+    setIsClickable(false)
+    setIsTransitioning(true)
+    setActiveIndex(newIndex)
   }
+
+  useEffect(() => {
+    // 清理旧的定时器以防冲突
+    if (transitionEndTimeoutRef.current)
+      clearTimeout(transitionEndTimeoutRef.current)
+    if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current)
+
+    const L = landingSlider.images.length
+    const transitionTime = 500 // 必须与CSS的transition时间一致
+
+    transitionEndTimeoutRef.current = setTimeout(() => {
+      const needsReset = activeIndex < L || activeIndex >= 2 * L
+
+      if (needsReset) {
+        // 如果需要重置，先禁用动画，然后瞬间跳转
+        setIsTransitioning(false)
+        const newIndex = activeIndex < L ? activeIndex + L : activeIndex - L
+        setActiveIndex(newIndex)
+
+        // 在瞬间跳转后，用一个极短的延时重新启用动画和点击
+        resetTimeoutRef.current = setTimeout(() => {
+          setIsTransitioning(true)
+          setIsClickable(true)
+        }, 50)
+      } else {
+        // 如果是正常滑动，动画结束后直接解锁点击
+        setIsClickable(true)
+      }
+    }, transitionTime)
+
+    return () => {
+      if (transitionEndTimeoutRef.current)
+        clearTimeout(transitionEndTimeoutRef.current)
+      if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current)
+    }
+  }, [activeIndex, landingSlider.images.length])
+
+  // Calculate the container's offset to center the active slide
+  const getContainerOffset = () => {
+    if (screenWidth === 0) return 0
+    let offset = screenWidth / 2 - W / 2 - activeIndex * (W + GAP)
+    // Adjust for the active slide's larger width
+    if (activeIndex > 0) {
+      offset -= (activeWidth - W) / 2
+    }
+    return offset + dragOffset
+  }
+
+  // 鼠标拖动事件处理
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!isClickable) return
+    setIsDragging(true)
+    setDragStartX(e.clientX)
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    const currentX = e.clientX
+    const offset = currentX - dragStartX
+    setDragOffset(offset)
+  }
+
+  const handleMouseUp = () => {
+    if (!isDragging) return
+    setIsDragging(false)
+
+    const threshold = W / 4
+    if (dragOffset > threshold) {
+      switchSlide(activeIndex - 1)
+    } else if (dragOffset < -threshold) {
+      switchSlide(activeIndex + 1)
+    }
+
+    setDragOffset(0)
+  }
+
+  // 键盘事件处理
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        switchSlide(activeIndex - 1)
+      } else if (e.key === "ArrowRight") {
+        switchSlide(activeIndex + 1)
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [activeIndex, isClickable])
 
   return (
     <div
       ref={containerRef}
-      className="w-full overflow-x-hidden flex flex-col items-center mb-4 mt-[120px]"
+      className="w-full overflow-hidden flex flex-col items-center mb-4 mt-[120px]"
+      onMouseLeave={handleMouseUp}
     >
       <h2 className="text-3xl lg:text-4xl font-bold text-center mb-4 mt-2">
         {landingSlider?.title}
@@ -124,53 +222,53 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
         {landingSlider?.description}
       </p>
       <div
-        className="flex justify-between items-center"
-        style={{
-          gap: GAP,
-          width: containerWidth,
-        }}
+        className="h-[550px] relative w-full cursor-grab active:cursor-grabbing"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
-        {displayImages.map((img, idx) => {
-          const { width, aspectRatio } = getImageSize(idx)
-          const isFading = fadingIdx === idx
-          return (
-            <div
-              key={img.url + idx}
-              style={{
-                width,
-                aspectRatio,
-                background: "#eee",
-                borderRadius: 20,
-                position: "relative",
-                overflow: "hidden",
-                cursor: idx === 2 ? "default" : "pointer",
-              }}
-              className={[
-                "relative flex-shrink-0 shadow-lg overflow-visible bg-center",
-                idx === 2 ? "z-20" : "z-10",
-              ].join(" ")}
-              onClick={() => handleClick(idx)}
-              title={img.name || ""}
-            >
-              <img
-                src={process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL + img.url}
-                alt={img.name || ""}
+        <div
+          className="flex items-center absolute top-1/2 -translate-y-1/2"
+          style={{
+            left: getContainerOffset(),
+            transition:
+              isTransitioning && !isDragging
+                ? "left 500ms ease-in-out"
+                : "none",
+          }}
+        >
+          {images.map((img, idx) => {
+            const { width, aspectRatio } = getImageSize(idx)
+            return (
+              <div
+                key={img.url + idx}
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: 20,
-                  transition: "opacity 0.4s",
-                  opacity: isFading ? 0 : 1,
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  zIndex: 2,
+                  width,
+                  aspectRatio,
+                  marginRight: `${GAP}px`,
+                  pointerEvents: isDragging ? "none" : "auto", // 防止拖动时意外触发点击
                 }}
-              />
-            </div>
-          )
-        })}
+                className={[
+                  "relative flex-shrink-0 shadow-lg cursor-pointer transition-all duration-500 ease-in-out",
+                  activeIndex === idx ? "z-20" : "z-10",
+                ].join(" ")}
+                onClick={() => switchSlide(idx)}
+                title={img.name || ""}
+              >
+                <img
+                  src={process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL + img.url}
+                  alt={img.name || ""}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: 20,
+                  }}
+                />
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
