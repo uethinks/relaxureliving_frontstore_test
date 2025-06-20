@@ -1,5 +1,6 @@
 import React from "react"
 import { HeroProps } from "types/global"
+import { HeroButtons } from "./HeroButtons"
 
 const cmsBaseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 
@@ -28,6 +29,10 @@ export const Hero = ({
               {hero.Description}
             </p>
           </div>
+          <HeroButtons
+            leftButton={hero.LeftButton}
+            rightButton={hero.RightButton ?? ""}
+          />
         </div>
       </div>
     </div>

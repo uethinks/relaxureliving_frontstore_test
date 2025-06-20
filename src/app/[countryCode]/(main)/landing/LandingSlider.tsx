@@ -7,7 +7,9 @@ import React, {
   useEffect,
 } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
+import { Pagination } from "swiper/modules"
 import "swiper/css"
+import "swiper/css/pagination"
 
 const GAP = 32
 const ACTIVE_SCALE = 1.6
@@ -53,6 +55,7 @@ const LandingSliderMobile: React.FC<{
       {description}
     </p>
     <Swiper
+      modules={[Pagination]}
       spaceBetween={16}
       slidesPerView={1}
       pagination={{ clickable: true }}
@@ -166,32 +169,54 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
     return offset + dragOffset
   }
 
-  // 鼠标拖动事件处理
+  // 鼠标事件处理
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!isClickable) return
-    setIsDragging(true)
+    setIsDragging(false) // 先假定不是拖拽
     setDragStartX(e.clientX)
+    setDragOffset(0)
   }
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return
+    // 如果鼠标没按下，则不处理
+    if (dragStartX === 0) return
     const currentX = e.clientX
     const offset = currentX - dragStartX
-    setDragOffset(offset)
-  }
 
-  const handleMouseUp = () => {
-    if (!isDragging) return
-    setIsDragging(false)
-
-    const threshold = W / 4
-    if (dragOffset > threshold) {
-      switchSlide(activeIndex - 1)
-    } else if (dragOffset < -threshold) {
-      switchSlide(activeIndex + 1)
+    // 只有当移动超过一个小的阈值时，才认为是拖拽
+    if (!isDragging && Math.abs(offset) > 5) {
+      setIsDragging(true)
     }
 
+    if (isDragging) {
+      setDragOffset(offset)
+    }
+  }
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (dragStartX === 0) return
+
+    if (isDragging) {
+      const threshold = W / 4
+      if (dragOffset > threshold) {
+        switchSlide(activeIndex - 1)
+      } else if (dragOffset < -threshold) {
+        switchSlide(activeIndex + 1)
+      }
+    } else {
+      // 如果不是拖拽，那就是点击
+      const slideElement = (e.target as HTMLElement).closest("[data-index]")
+      if (slideElement) {
+        const index = parseInt(slideElement.getAttribute("data-index")!, 10)
+        if (!isNaN(index)) {
+          switchSlide(index)
+        }
+      }
+    }
+
+    setDragStartX(0)
     setDragOffset(0)
+    setIsDragging(false)
   }
 
   // 键盘事件处理
@@ -242,17 +267,17 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
             return (
               <div
                 key={img.url + idx}
+                data-index={idx}
                 style={{
                   width,
                   aspectRatio,
                   marginRight: `${GAP}px`,
-                  pointerEvents: isDragging ? "none" : "auto", // 防止拖动时意外触发点击
+                  pointerEvents: "auto",
                 }}
                 className={[
                   "relative flex-shrink-0 shadow-lg cursor-pointer transition-all duration-500 ease-in-out",
                   activeIndex === idx ? "z-20" : "z-10",
                 ].join(" ")}
-                onClick={() => switchSlide(idx)}
                 title={img.name || ""}
               >
                 <img
@@ -263,6 +288,7 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
                     height: "100%",
                     objectFit: "cover",
                     borderRadius: 20,
+                    pointerEvents: "none", // 确保图片本身不会捕获事件
                   }}
                 />
               </div>
