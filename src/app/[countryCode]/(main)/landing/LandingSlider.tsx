@@ -100,6 +100,9 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
   const W = (screenWidth - GAP * 4) / 4.6
   const activeWidth = W * ACTIVE_SCALE
 
+  // 动态计算容器高度，以适应最大的图片
+  const containerHeight = (activeWidth * 5) / 4 + 40 // active slide height + padding
+
   // 2. 计算每张图片的宽高
   const getImageSize = (idx: number) => {
     if (idx === activeIndex) {
@@ -247,7 +250,8 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
         {landingSlider?.description}
       </p>
       <div
-        className="h-[550px] relative w-full cursor-grab active:cursor-grabbing"
+        className="relative w-full cursor-grab active:cursor-grabbing"
+        style={{ height: screenWidth > 0 ? `${containerHeight}px` : "550px" }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
