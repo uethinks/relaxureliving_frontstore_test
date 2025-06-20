@@ -45,6 +45,9 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
   const [selectedColor, setSelectedColor] = useState<
     StoreProductOptionValue | undefined
   >(product.options?.find((option) => option.title === "Color")?.values?.[0])
+  const [selectedStyle, setSelectedStyle] = useState<
+    StoreProductOptionValue | undefined
+  >(product.options?.find((option) => option.title === "Style")?.values?.[0])
 
   const router = useRouter()
 
@@ -58,7 +61,7 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
   const defaultColor = pergolaColors?.values?.[0]
 
   useEffect(() => {
-    if (!selectedSize || !selectedColor) return
+    if (!selectedSize || !selectedColor || !selectedStyle) return
 
     const variant = product.variants?.find((variant) => {
       const matchingSize = variant?.options?.find(
@@ -70,7 +73,12 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
           option.option?.title === "Color" &&
           option.value === selectedColor.value
       )
-      return matchingSize && matchingColor
+      const matchingStyle = variant?.options?.find(
+        (option) =>
+          option.option?.title === "Style" &&
+          option.value === selectedStyle.value
+      )
+      return matchingSize && matchingColor && matchingStyle
     })
 
     setSelectedVariant(variant)
@@ -94,6 +102,10 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
 
   const handleColorChange = useCallback((color: StoreProductOptionValue) => {
     setSelectedColor(color)
+  }, [])
+
+  const handleStyleChange = useCallback((style: StoreProductOptionValue) => {
+    setSelectedStyle(style)
   }, [])
 
   const handleAccessoryToggle = useCallback(
@@ -350,8 +362,10 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
                 className="!self-stretch !flex-[0_0_auto] !flex"
                 selectedSize={selectedSize}
                 selectedColor={selectedColor}
+                selectedStyle={selectedStyle}
                 onSizeChange={handleSizeChange}
                 onColorChange={handleColorChange}
+                onStyleChange={handleStyleChange}
               />
               <AccesorriesSelector
                 pergolaSize={pergolaSize}
