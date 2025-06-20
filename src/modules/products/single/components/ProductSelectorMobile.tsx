@@ -136,7 +136,7 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
         buyGlassdoor(),
       ])
 
-      router.push("/cart")
+      router.push("/us/checkout")
     } catch (error) {
       console.error("Error adding items to cart:", error)
     }
