@@ -63,8 +63,10 @@ export const ProductSchema = ({
         returnPolicyCategory:
           "https://schema.org/MerchantReturnFiniteReturnWindow",
         merchantReturnDays: 100,
+        applicableCountry: "US",
         returnPolicyCountry: "US",
         returnFees: "https://schema.org/FreeReturn",
+        name: `${currentProductInfo.productTitle}`,
       },
     },
     hasVariant:
