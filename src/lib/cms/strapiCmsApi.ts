@@ -55,6 +55,10 @@ const landingPagePopulate = {
   "populate[landing_slider][populate][images][fields][0]": "*",
   "populate[good_memory][populate][0]": "image",
 };
+const menuPopulate = {
+  "populate[menu_item][populate]": "sub_menu_item",
+};
+
 export const API_URLS = {
   getHomePage: '/api/home-page',
   getWarranty: '/api/warranty',
@@ -71,6 +75,7 @@ export const API_URLS = {
   getGlassdoor: '/api/glass-door',
   sendKlaviyoTrackInfo: '/api/contact-submissions',
   getLandingPage: '/api/landing',
+  getMenu: '/api/menu',
 };
 
 // 获取所有项目
@@ -238,6 +243,19 @@ export const getLandingPage = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching landing page data:', error, API_URLS.getLandingPage);
+    throw error;
+  }
+};
+
+// 获取菜单数据
+export const getMenu = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getMenu, {
+      params: menuPopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching menu data:', error, API_URLS.getMenu);
     throw error;
   }
 };
