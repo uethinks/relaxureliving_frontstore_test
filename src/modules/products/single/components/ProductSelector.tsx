@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useCallback, useMemo } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { BuyNowButton } from "./BuyNowButton"
 import { PergulaSizeSelector } from "./PergulaSizeSelector"
 import { AccesorriesSelector } from "./AccesorriesSelector"
@@ -11,6 +11,7 @@ import {
 import { PergolaSize, selectedProducts } from "types/global"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
+import { useProductSelection } from "./ProductSelectionContext"
 
 interface ProductSelectorProps {
   product: StoreProduct
@@ -40,47 +41,15 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
   const router = useRouter()
 
-  const pergolaColors = product.options?.find(
-    (option) => option.title === "Color"
-  )
-  const pergolaStyles = product.options?.find(
-    (option) => option.title === "Style"
-  )
-
-  // 使用useMemo缓存排序后的尺寸和颜色列表
-  const sortedSizes = useMemo(() => {
-    const pergolaSizes = product.options?.find(
-      (option) => option.title === "Size"
-    )
-    return pergolaSizes?.values?.sort((a, b) => {
-      const getDimensions = (size: string) => {
-        const matches = size.match(/(\d+)["']x(\d+)["']/)
-        return matches ? [parseInt(matches[1]), parseInt(matches[2])] : [0, 0]
-      }
-
-      const [aWidth, aLength] = getDimensions(a.value)
-      const [bWidth, bLength] = getDimensions(b.value)
-
-      if (aWidth !== bWidth) return aWidth - bWidth
-      return aLength - bLength
-    })
-  }, [product.options])
-  const defaultSize = sortedSizes?.[0]
-  const defaultColor = pergolaColors?.values?.find(
-    (color) => color.value === "Dark Gray"
-  )
-  const defaultStyle = pergolaStyles?.values?.find(
-    (style) => style.value === "Freestanding"
-  )
-  const [selectedSize, setSelectedSize] = useState<
-    StoreProductOptionValue | undefined
-  >(defaultSize)
-  const [selectedColor, setSelectedColor] = useState<
-    StoreProductOptionValue | undefined
-  >(defaultColor)
-  const [selectedStyle, setSelectedStyle] = useState<
-    StoreProductOptionValue | undefined
-  >(defaultStyle)
+  // 使用 Context 获取状态
+  const {
+    selectedSize,
+    selectedColor,
+    selectedStyle,
+    setSelectedSize,
+    setSelectedColor,
+    setSelectedStyle,
+  } = useProductSelection()
 
   useEffect(() => {
     if (!selectedSize || !selectedColor || !selectedStyle) return
@@ -118,17 +87,26 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
     setSelectedAccessoriesGlassdoor([])
   }, [selectedSize, selectedColor, selectedStyle, product, pergolaQuantity])
 
-  const handleSizeChange = useCallback((size: StoreProductOptionValue) => {
-    setSelectedSize(size)
-  }, [])
+  const handleSizeChange = useCallback(
+    (size: StoreProductOptionValue) => {
+      setSelectedSize(size)
+    },
+    [setSelectedSize]
+  )
 
-  const handleColorChange = useCallback((color: StoreProductOptionValue) => {
-    setSelectedColor(color)
-  }, [])
+  const handleColorChange = useCallback(
+    (color: StoreProductOptionValue) => {
+      setSelectedColor(color)
+    },
+    [setSelectedColor]
+  )
 
-  const handleStyleChange = useCallback((style: StoreProductOptionValue) => {
-    setSelectedStyle(style)
-  }, [])
+  const handleStyleChange = useCallback(
+    (style: StoreProductOptionValue) => {
+      setSelectedStyle(style)
+    },
+    [setSelectedStyle]
+  )
 
   const handleAccessoryToggle = useCallback(
     ({
