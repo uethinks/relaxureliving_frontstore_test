@@ -73,10 +73,10 @@ export default async function Homepage() {
       <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-[120px] px-4 lg:px-20 py-0 relative bg-[#ffffff]">
         <NavBarWrapper isHomePage={true} />
         <Hero hero={data.HomepageHero} />
+        <AwardBlock data={data.credential} />
         <OurPergola pergola={data.OurPergola} />
         <Features features={data.Features} />
         <Accessories accessories={data.Accessories} />
-        <AwardBlock data={data.credential} />
       </div>
       <OurPromise
         pergolaData={
