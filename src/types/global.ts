@@ -26,6 +26,7 @@ export type StoreFreeShippingPrice = StorePrice & {
 export type Image = {
   name: string;
   url: string;
+  caption?: string;
   formats: {
     xlarge: {
       url: string;

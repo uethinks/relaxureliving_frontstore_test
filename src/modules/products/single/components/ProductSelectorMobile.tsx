@@ -12,6 +12,7 @@ import { PergolaSize, selectedProducts } from "types/global"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
 import { FaChevronLeft } from "react-icons/fa"
+import { useProductSelection } from "./ProductSelectionContext"
 
 interface ProductSelectorProps {
   product: StoreProduct
@@ -39,26 +40,18 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalOriginalPrice, setTotalOriginalPrice] = useState(0)
   const [showPopup, setShowPopup] = useState(false)
-  const [selectedSize, setSelectedSize] = useState<
-    StoreProductOptionValue | undefined
-  >(product.options?.find((option) => option.title === "Size")?.values?.[0])
-  const [selectedColor, setSelectedColor] = useState<
-    StoreProductOptionValue | undefined
-  >(product.options?.find((option) => option.title === "Color")?.values?.[0])
-  const [selectedStyle, setSelectedStyle] = useState<
-    StoreProductOptionValue | undefined
-  >(product.options?.find((option) => option.title === "Style")?.values?.[0])
 
   const router = useRouter()
 
-  const pergolaSizes = product.options?.find(
-    (option) => option.title === "Size"
-  )
-  const pergolaColors = product.options?.find(
-    (option) => option.title === "Color"
-  )
-  const defaultSize = pergolaSizes?.values?.[0]
-  const defaultColor = pergolaColors?.values?.[0]
+  // 使用 Context 获取状态
+  const {
+    selectedSize,
+    selectedColor,
+    selectedStyle,
+    setSelectedSize,
+    setSelectedColor,
+    setSelectedStyle,
+  } = useProductSelection()
 
   useEffect(() => {
     if (!selectedSize || !selectedColor || !selectedStyle) return
@@ -94,19 +87,28 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
     )
     setSelectedAccessoriesShades([])
     setSelectedAccessoriesGlassdoor([])
-  }, [selectedSize, selectedColor, product, pergolaQuantity])
+  }, [selectedSize, selectedColor, selectedStyle, product, pergolaQuantity])
 
-  const handleSizeChange = useCallback((size: StoreProductOptionValue) => {
-    setSelectedSize(size)
-  }, [])
+  const handleSizeChange = useCallback(
+    (size: StoreProductOptionValue) => {
+      setSelectedSize(size)
+    },
+    [setSelectedSize]
+  )
 
-  const handleColorChange = useCallback((color: StoreProductOptionValue) => {
-    setSelectedColor(color)
-  }, [])
+  const handleColorChange = useCallback(
+    (color: StoreProductOptionValue) => {
+      setSelectedColor(color)
+    },
+    [setSelectedColor]
+  )
 
-  const handleStyleChange = useCallback((style: StoreProductOptionValue) => {
-    setSelectedStyle(style)
-  }, [])
+  const handleStyleChange = useCallback(
+    (style: StoreProductOptionValue) => {
+      setSelectedStyle(style)
+    },
+    [setSelectedStyle]
+  )
 
   const handleAccessoryToggle = useCallback(
     ({

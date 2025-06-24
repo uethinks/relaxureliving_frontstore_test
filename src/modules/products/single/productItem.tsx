@@ -70,7 +70,10 @@ export const ProductItem = ({
           </div>
         </div>
       </div>
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20">
+      <div
+        id="reviews"
+        className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20"
+      >
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
             <CustomerReviewsServer />
