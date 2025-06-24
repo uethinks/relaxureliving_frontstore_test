@@ -15,6 +15,7 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 import { OceanPaymentForm } from "./components/OceanPaymentForm"
 import { useRouter } from "next/navigation"
+import Breadcrumb from "@/components/Breadcrumb"
 
 type ShippingAddress = {
   first_name: string
@@ -246,7 +247,7 @@ export const Checkout = () => {
             Payment
           </div>
         </div>
-
+        <Breadcrumb steps={["Cart", "Information", "Payment"]} current={2} />
         <div className="mt-10 flex flex-col-reverse justify-start items-center lg:flex-row lg:justify-between lg:items-start w-full gap-5">
           {/* Payment Form */}
           <div className="w-full lg:w-3/5 flex flex-col items-start justify-end gap-10 p-5 lg:p-10 bg-[#efefef] rounded-[20px]">

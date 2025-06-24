@@ -36,7 +36,7 @@ const ArrowRight = ({ color = "#072F6C" }) => (
 export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
   // 桌面端状态
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0)
-  const [openQuestionIndex, setOpenQuestionIndex] = useState(0)
+  const [openQuestionIndex, setOpenQuestionIndex] = useState(-1)
   // 移动端状态
   const [openQuestion, setOpenQuestion] = useState<{
     level1: number
@@ -71,7 +71,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                 }`}
                 onClick={() => {
                   setSelectedCategoryIndex(idx)
-                  setOpenQuestionIndex(0)
+                  setOpenQuestionIndex(-1)
                 }}
               >
                 <span>{category.Title}</span>
@@ -97,7 +97,11 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                     >
                       <div
                         className="flex items-center justify-between cursor-pointer min-h-[56px] px-6 py-3"
-                        onClick={() => setOpenQuestionIndex(idx)}
+                        onClick={() =>
+                          setOpenQuestionIndex(
+                            openQuestionIndex === idx ? -1 : idx
+                          )
+                        }
                       >
                         <span className="text-[18px] leading-[28px] font-montserrat text-[#343A40]">
                           {answer.question}

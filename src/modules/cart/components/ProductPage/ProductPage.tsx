@@ -13,6 +13,7 @@ import { useCart } from "@lib/context/cartContext"
 import { StoreProduct } from "@medusajs/types"
 import { EmptyCart } from "../EmptyCart/EmptyCart"
 import { PergolaData, BoringButImportantStuff } from "@/types/global"
+import Breadcrumb from "@/components/Breadcrumb"
 // Lazy load only non-critical components
 const AccessoriesSection = lazy(() =>
   import("../AccessoriesSection/AccessoriesSection").then((module) => ({
@@ -101,7 +102,7 @@ export const ProductPage = ({
               </div>
             </div>
           ) : null}
-
+          <Breadcrumb steps={["Cart", "Information", "Payment"]} current={0} />
           {isCartEmpty ? (
             <EmptyCart />
           ) : (

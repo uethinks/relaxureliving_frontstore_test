@@ -299,6 +299,7 @@ export type PergolaData = {
 export type AwardBlockProps = {
   title: string
   images: Image[]
+  topDescription: string
 }
 
 export type ReviewType = {
