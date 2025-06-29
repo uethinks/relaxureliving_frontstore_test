@@ -41,7 +41,7 @@ function reportToGA(eventName: string, value: any) {
 
 export const Checkout = () => {
   const { cart } = useCart()
-  const [setOrder] = useState<any>(null)
+  const [order, setOrder] = useState<any>(null)
   const [formData, setFormData] = useState<FormData>({
     email: "",
     shipping_address: {
