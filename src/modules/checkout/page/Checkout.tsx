@@ -12,10 +12,10 @@ import { listCartShippingMethods } from "@lib/data/fulfillment"
 import Link from "next/link"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
-import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 import { OceanPaymentForm } from "./components/OceanPaymentForm"
 import { useRouter } from "next/navigation"
 import Breadcrumb from "@/components/Breadcrumb"
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 type ShippingAddress = {
   first_name: string
@@ -41,8 +41,7 @@ function reportToGA(eventName: string, value: any) {
 
 export const Checkout = () => {
   const { cart } = useCart()
-  const router = useRouter()
-  const [order, setOrder] = useState<any>(null)
+  const [setOrder] = useState<any>(null)
   const [formData, setFormData] = useState<FormData>({
     email: "",
     shipping_address: {
@@ -53,7 +52,7 @@ export const Checkout = () => {
       province: "",
       postal_code: "",
       phone: "",
-      country_code: "us",
+      country_code: defaultCountryCode,
     },
   })
   const [errors, setErrors] = useState({
@@ -480,22 +479,22 @@ export const Checkout = () => {
             </div>
             {/* Footer Links */}
             <div className="flex flex-wrap items-center justify-center gap-[34px] relative self-stretch w-full flex-[0_0_auto]">
-              <Link href="/us/terms/warranty">
+              <Link href="/terms/warranty">
                 <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
                   Warranty
                 </div>
               </Link>
-              <Link href="/us/terms/refund-policy">
+              <Link href="/terms/refund-policy">
                 <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
                   Refund policy
                 </div>
               </Link>
-              <Link href="/us/terms/terms-of-service">
+              <Link href="/terms/terms-of-service">
                 <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
                   Terms of service
                 </div>
               </Link>
-              <Link href="/us/terms/privacy-policy">
+              <Link href="/terms/privacy-policy">
                 <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
                   Privacy policy
                 </div>

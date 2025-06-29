@@ -78,7 +78,7 @@ export const OrderSummary = (): JSX.Element => {
               </div>
             </div>
           </div>
-          <Button onClick={() => router.push("/us/checkout")} text="Checkout" />
+          <Button onClick={() => router.push("/checkout")} text="Checkout" />
         </div>
       </div>
     </div>

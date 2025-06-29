@@ -12,7 +12,7 @@ import { PergolaSize, selectedProducts } from "types/global"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
 import { useProductSelection } from "./ProductSelectionContext"
-
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 interface ProductSelectorProps {
   product: StoreProduct
   accessories: StoreProduct[]
@@ -136,7 +136,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
         buyGlassdoor(),
       ])
 
-      router.push("/us/checkout")
+      router.push("/checkout")
     } catch (error) {
       console.error("Error adding items to cart:", error)
     }
@@ -149,7 +149,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
       const result = await addToCart({
         variantId: selectedVariant.id,
         quantity: pergolaQuantity,
-        countryCode: "us",
+        countryCode: defaultCountryCode,
       })
       return result
     } catch (error) {
@@ -168,7 +168,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
           const result = await addToCart({
             variantId: item?.productVarant?.id ?? "",
             quantity: item.quantity,
-            countryCode: "us",
+            countryCode: defaultCountryCode,
           })
           return result
         } catch (error) {
@@ -196,7 +196,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
           const result = await addToCart({
             variantId: item?.productVarant?.id ?? "",
             quantity: item.quantity,
-            countryCode: "us",
+            countryCode: defaultCountryCode,
           })
           return result
         } catch (error) {
@@ -224,7 +224,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
           const result = await addToCart({
             variantId: item?.productVarant?.id ?? "",
             quantity: item.quantity,
-            countryCode: "us",
+            countryCode: defaultCountryCode,
           })
           return result
         } catch (error) {

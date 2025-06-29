@@ -83,7 +83,7 @@ export const OurPergola = ({
               </div>
             </div>
 
-            <Link href="/us/products/pergola">
+            <Link href="/products/pergola">
               <Button
                 className="!flex-[0_0_auto] !inline-flex !w-[unset]"
                 property1="primary-button-l"

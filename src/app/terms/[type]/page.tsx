@@ -1,21 +1,10 @@
 import React from "react"
 import { getAllTerms } from "@lib/cms/strapiCmsApi"
-import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 import AgreeButton from "./components/AgreeButton"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
-
 interface TermType {
   title: string
-}
-
-interface TermsData {
-  data: {
-    content: Array<{
-      type: string
-      children: Array<any>
-    }>
-  }
 }
 
 // 定义所有可能的条款类型
@@ -60,7 +49,6 @@ export async function generateStaticParams() {
     )
 
     return validTypes.map((type) => ({
-      countryCode: "us",
       type,
     }))
   } catch (error) {
@@ -77,7 +65,7 @@ export const revalidate = 3600 // 每小时重新验证一次
 export async function generateMetadata({
   params,
 }: {
-  params: { countryCode: string; type: string }
+  params: { type: string }
 }) {
   const { type } = await params
   if (!termsTypes[type]) {
@@ -97,7 +85,7 @@ export async function generateMetadata({
 export default async function TermsPage({
   params,
 }: {
-  params: { type: string; countryCode: string }
+  params: { type: string }
 }) {
   const { type } = await params
 
