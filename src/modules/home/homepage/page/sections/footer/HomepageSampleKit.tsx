@@ -1,12 +1,11 @@
 "use client"
 import React, { useState, useEffect } from "react"
-import Link from "next/link"
 import { useCart } from "@lib/context/cartContext"
 import { ConfirmDialog } from "../../../../../../components/ConfirmDialog"
-import { addToCart } from "@lib/data/cart"
 import { getProductByHandle } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { HttpTypes } from "@medusajs/types"
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 export const HomepageSampleKit = (): JSX.Element => {
   const { addVariant } = useCart()
@@ -18,7 +17,7 @@ export const HomepageSampleKit = (): JSX.Element => {
   useEffect(() => {
     const fetchSampleKit = async () => {
       try {
-        const region = await getRegion("us")
+        const region = await getRegion(defaultCountryCode)
         if (!region) return
 
         const { products } = await getProductByHandle({
@@ -48,7 +47,7 @@ export const HomepageSampleKit = (): JSX.Element => {
       await addVariant({
         variantId: sampleKitProduct.variants[0].id,
         quantity: 1,
-        countryCode: "us",
+        countryCode: defaultCountryCode,
       })
       setShowSuccess(true)
       setShowDialog(false)

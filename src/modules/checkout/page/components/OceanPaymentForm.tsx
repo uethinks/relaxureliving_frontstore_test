@@ -6,6 +6,8 @@ import { useCart } from "@lib/context/cartContext"
 import { retrieveOrder } from "@lib/data/orders"
 import { captureOrderWebhook } from "@lib/data/orders"
 import { postKlarnaPayment, postAfterpayPayment } from "@lib/api/payment"
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
+
 type ShippingAddress = {
   first_name: string
   last_name: string
@@ -195,11 +197,11 @@ export const OceanPaymentForm = ({
       try {
         await captureOrder(orderNumber as string)
         // 支付成功，等待captureOrder完成后再跳转
-        window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}`
+        window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/success?order_id=${orderNumber}`
       } catch (error) {
         console.error("Error capturing order:", error)
         // 如果captureOrder失败，仍然跳转到成功页面，但带上错误参数
-        window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/us/checkout/success?order_id=${orderNumber}&error=capture_failed`
+        window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/success?order_id=${orderNumber}&error=capture_failed`
       }
     } else if (status === "-1" && payUrl !== "") {
       // 需要3D认证
@@ -211,7 +213,7 @@ export const OceanPaymentForm = ({
       // 支付失败
       window.location.href = `${
         process.env.NEXT_PUBLIC_BASE_URL
-      }/us/checkout/success?order_id=${orderNumber}&error=${JSON.stringify(
+      }/checkout/success?order_id=${orderNumber}&error=${JSON.stringify(
         errorInfo
       )}`
     }
@@ -251,7 +253,7 @@ export const OceanPaymentForm = ({
           transactionInfo: {
             orderCurrency: "USD",
             orderAmount: cart?.total?.toString() || "0",
-            billCountry: "US",
+            billCountry: defaultCountryCode.toUpperCase(),
             orderNumber: cart?.id,
             billAddress: "",
           },
@@ -282,7 +284,7 @@ export const OceanPaymentForm = ({
           transactionInfo: {
             orderCurrency: "USD",
             orderAmount: cart?.total?.toString() || "0",
-            billCountry: "US",
+            billCountry: defaultCountryCode.toUpperCase(),
           },
           buttonStyle: {
             buttonColor: "",

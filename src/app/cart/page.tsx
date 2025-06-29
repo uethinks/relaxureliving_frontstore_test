@@ -1,12 +1,11 @@
 import { getRegion } from "@lib/data/regions"
 import { ProductPage } from "@modules/cart/components/ProductPage/ProductPage"
-import { Metadata } from "next"
-import { notFound } from "next/navigation"
 import { getProductByProductType } from "@lib/data/products"
 import { StoreProductListParams } from "@medusajs/types"
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 type Props = Readonly<{
-  params: Promise<{ countryCode: string; pergola: string }>
+  params: Promise<{ pergola: string }>
 }>
 
 async function getProductsForAccessory({ regionId }: { regionId: string }) {
@@ -21,8 +20,7 @@ async function getProductsForAccessory({ regionId }: { regionId: string }) {
 }
 
 export default async function Cart(props: Props) {
-  const { countryCode } = await props.params
-  const region = await getRegion(countryCode)
+  const region = await getRegion(defaultCountryCode)
   // Get accessories data
   const accessories = await getProductsForAccessory({
     regionId: region?.id ?? "",

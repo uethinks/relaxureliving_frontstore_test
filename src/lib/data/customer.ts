@@ -133,7 +133,7 @@ export async function signout(countryCode: string) {
   const customerCacheTag = await getCacheTag("customers")
   revalidateTag(customerCacheTag)
   
-  redirect(`/${countryCode}/account`)
+  redirect(`/account`)
 }
 
 export async function transferCart() {

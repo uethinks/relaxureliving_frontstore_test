@@ -80,7 +80,7 @@ export const Accessories = ({
                 </div>
               </div>
             </div>
-            <Link href="/us/products/pergola">
+            <Link href="/products/pergola">
               <AddAccessories
                 className="!flex-[0_0_auto]"
                 property1="primary-button-l"

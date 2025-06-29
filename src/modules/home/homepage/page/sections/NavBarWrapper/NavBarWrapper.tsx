@@ -251,7 +251,7 @@ export const NavBarWrapper = ({
             <div className="flex items-center gap-4">
               <div className="flex  items-center justify-center gap-2.5 px-0 py-2.5 relative">
                 <a
-                  href="/us/cart"
+                  href="/cart"
                   className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
                 >
                   <div className="flex items-center gap-2">
@@ -271,7 +271,7 @@ export const NavBarWrapper = ({
                 </a>
               </div>
 
-              <a href="/us/#contact">
+              <a href="/#contact">
                 <Component
                   className="!mr-[-1.00px]"
                   property1="primary-button-l"
@@ -298,7 +298,7 @@ export const NavBarWrapper = ({
           <div className="flex items-center justify-end gap-10 relative">
             <div className="flex  items-center justify-center gap-2.5 px-0 py-2.5 relative">
               <a
-                href="/us/cart"
+                href="/cart"
                 className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
               >
                 <div className="flex items-center gap-2">
@@ -356,7 +356,7 @@ export const NavBarWrapper = ({
               )}
 
               <a
-                href="/us/#contact"
+                href="/#contact"
                 onClick={(e) => {
                   setIsMenuOpen(false)
                 }}

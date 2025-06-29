@@ -82,7 +82,7 @@ export const PergolaFeatures: React.FC<PergolaFeaturesProps> = ({
       </div>
       <div className="flex flex-row items-center gap-2.5 relative text-[#072F6C] mt-2">
         <a
-          href="/us#sample-kit"
+          href="/#sample-kit"
           className="text-[#072F6C] hover:text-[#0a4499] transition-colors duration-200"
         >
           I want a sample kit

@@ -13,7 +13,7 @@ export const EmptyCart = () => {
         sensors, and app connectivity for complete control over your outdoor
         environment in any season.
       </p>
-      <Link href="/us/products/pergola">
+      <Link href="/products/pergola">
         <Button
           variant="primary"
           className="h-[48px] px-8 text-[16px] text-white lg:text-[18px] font-medium font-montserrat bg-[#072F6C] hover:bg-[#0a3980] transition-colors"

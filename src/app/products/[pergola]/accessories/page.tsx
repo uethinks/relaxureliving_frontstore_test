@@ -1,44 +1,29 @@
-import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import {
-  getProductByProductType,
-  getProductByHandle,
-  getProductsListFromStoreApi,
-} from "@lib/data/products"
+import { getProductByProductType, getProductByHandle } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
-import { ProductItem } from "@modules/products/single"
 import { StoreProductListParams } from "@medusajs/types"
 import { listProductsForStaticParams } from "@lib/data/products"
 import { AccessoriesGrid } from "@modules/products/single/components/AccesorriesSelector/AccessoriesGrid"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
-import { Suspense } from "react"
-import dynamic from "next/dynamic"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
-
-const LazyOurPromise = dynamic(() =>
-  import("@modules/home/homepage/page/sections/OurPromise").then((mod) => ({
-    default: mod.OurPromise,
-  }))
-)
-
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 type Props = Readonly<{
-  params: Promise<{ countryCode: string; pergola: string }>
+  params: Promise<{ pergola: string }>
 }>
 
 export async function generateStaticParams() {
-  const region = await getRegion("us")
+  const region = await getRegion(defaultCountryCode)
 
   if (!region) {
     return []
   }
 
   const { response } = await listProductsForStaticParams({
-    countryCode: "us",
+    countryCode: defaultCountryCode,
     regionId: region.id,
   })
 
   return response.products.map((product) => ({
-    countryCode: "us",
     pergola: product.handle,
   }))
 }
@@ -54,37 +39,9 @@ async function getProductsForAccessory({ regionId }: { regionId: string }) {
   )
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params
-  const region = await getRegion(params.countryCode)
-
-  if (!region) {
-    notFound()
-  }
-  const { products } = await getProductByHandle({
-    queryParams: {
-      region_id: region.id,
-      handle: params.pergola,
-    },
-  })
-  if (!products.length) {
-    notFound()
-  }
-
-  return {
-    title: `${products[0].title} Accessories | Relaxureliving`,
-    description: `Accessories for ${products[0].title}`,
-    openGraph: {
-      title: `${products[0].title} Accessories | Relaxureliving`,
-      description: `Accessories for ${products[0].title}`,
-      images: products[0].thumbnail ? [products[0].thumbnail] : [],
-    },
-  }
-}
-
 export default async function AccessoriesPage(props: Props) {
   const params = await props.params
-  const region = await getRegion(params.countryCode)
+  const region = await getRegion(defaultCountryCode)
   if (!region) {
     notFound()
   }
@@ -122,11 +79,6 @@ export default async function AccessoriesPage(props: Props) {
         </div>
 
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative"></div>
-      </div>
-      <div className="w-full">
-        <Suspense>
-          <LazyOurPromise />
-        </Suspense>
       </div>
       <FooterDark />
     </>

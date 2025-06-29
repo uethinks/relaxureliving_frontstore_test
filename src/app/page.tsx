@@ -1,6 +1,9 @@
-import { redirect } from "next/navigation"
+import { Homepage as Homepage } from "@modules/home/homepage/page"
 
-export default function Home() {
-  redirect("/us")
-  return null
+// 配置静态生成
+export const dynamic = "force-static"
+export const revalidate = 3600 // 每小时重新验证一次
+
+export default async function Home() {
+  return <Homepage />
 }

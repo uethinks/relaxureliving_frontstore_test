@@ -10,6 +10,7 @@ import {
 } from "@medusajs/types"
 import { getProductByProductId } from "@lib/data/products"
 import { useCart } from "@lib/context/cartContext"
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 export const SizeSelector = (): JSX.Element | null => {
   const { cart, addVariant, removeVariant } = useCart()
@@ -104,7 +105,7 @@ export const SizeSelector = (): JSX.Element | null => {
       await addVariant({
         variantId: variantId,
         quantity: quantity,
-        countryCode: "us",
+        countryCode: defaultCountryCode,
       })
     }
     setSelectedSize(size)
@@ -121,7 +122,7 @@ export const SizeSelector = (): JSX.Element | null => {
       addVariant({
         variantId: variantId,
         quantity: quantity,
-        countryCode: "us",
+        countryCode: defaultCountryCode,
       })
     }
   }
