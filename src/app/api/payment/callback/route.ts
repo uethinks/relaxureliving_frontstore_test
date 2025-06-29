@@ -80,9 +80,8 @@ export async function GET(request: NextRequest) {
     }
     // 校验签名和 payment_status
     if (paymentStatus === "1" && signValue === hash) {
-      const countryCode = "us"
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-      const successUrl = `${baseUrl}/${countryCode}/checkout/success?order_id=${orderId}`
+      const successUrl = `${baseUrl}/checkout/success?order_id=${orderId}`
       captureOrder(orderId)
       return NextResponse.redirect(successUrl, {
         status: 302,
@@ -98,7 +97,7 @@ export async function GET(request: NextRequest) {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
       const paymentDetails = searchParams.get("payment_details")
       const errorInfo = { status: paymentStatus, paymentDetails }
-      const errorUrl = `${baseUrl}/us/checkout/success?order_id=${orderId}&error=${JSON.stringify(errorInfo)}`
+      const errorUrl = `${baseUrl}/checkout/success?order_id=${orderId}&error=${JSON.stringify(errorInfo)}`
       return NextResponse.redirect(errorUrl, {
         status: 302,
         headers: {

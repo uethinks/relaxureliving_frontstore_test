@@ -20,7 +20,7 @@ export default function AboutPage() {
             make their open space—it's where memories are made, connections
             flourish, and life's best moments unfold.
           </p>
-          <Link href="/us/products/pergola">
+          <Link href="/products/pergola">
             <button className="bg-blue-900 text-white px-6 py-3 rounded-md hover:bg-blue-800">
               Explore our products
             </button>

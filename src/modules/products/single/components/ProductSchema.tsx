@@ -1,6 +1,7 @@
 import { StoreProduct } from "@medusajs/types"
 import { PergolaData, ProductInformation } from "@/types/global"
 import Script from "next/script"
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 interface ProductSchemaProps {
   product: StoreProduct
@@ -30,7 +31,7 @@ export const ProductSchema = ({
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "ProductGroup",
-    "@id": `https://relaxureliving.com/us/products/${currentProductInfo.urlLink}`,
+    "@id": `https://relaxureliving.com/products/${currentProductInfo.urlLink}`,
     name: currentProductInfo.productTitle,
     description: currentProductInfo.productDescription,
     brand: { "@type": "Brand", name: "Relaxure" },
@@ -57,14 +58,14 @@ export const ProductSchema = ({
         ]?.calculated_price?.calculated_amount?.toString() || "0",
       offerCount: product.variants?.length || 0,
       availability: "https://schema.org/InStock",
-      url: `https://relaxureliving.com/us/products/${currentProductInfo.urlLink}`,
+      url: `https://relaxureliving.com/products/${currentProductInfo.urlLink}`,
       hasMerchantReturnPolicy: {
         "@type": "MerchantReturnPolicy",
         returnPolicyCategory:
           "https://schema.org/MerchantReturnFiniteReturnWindow",
         merchantReturnDays: 100,
-        applicableCountry: "US",
-        returnPolicyCountry: "US",
+        applicableCountry: defaultCountryCode.toUpperCase(),
+        returnPolicyCountry: defaultCountryCode.toUpperCase(),
         returnFees: "https://schema.org/FreeReturn",
         name: `${currentProductInfo.productTitle}`,
       },
@@ -72,7 +73,7 @@ export const ProductSchema = ({
     hasVariant:
       product.variants?.map((variant) => ({
         "@type": "Product",
-        "@id": `https://relaxureliving.com/us/products/${currentProductInfo.urlLink}#${variant.id}`,
+        "@id": `https://relaxureliving.com/products/${currentProductInfo.urlLink}#${variant.id}`,
         name: `${currentProductInfo.productTitle} – ${variant.title}`,
         sku: variant.sku,
         size: sizeOption
@@ -90,7 +91,7 @@ export const ProductSchema = ({
         image: productImages[0],
         offers: {
           "@type": "Offer",
-          url: `https://relaxureliving.com/us/products/${currentProductInfo.urlLink}?variant=${variant.id}`,
+          url: `https://relaxureliving.com/products/${currentProductInfo.urlLink}?variant=${variant.id}`,
           price: variant.calculated_price?.calculated_amount?.toString() || "0",
           priceCurrency: "USD",
           availability: "https://schema.org/InStock",

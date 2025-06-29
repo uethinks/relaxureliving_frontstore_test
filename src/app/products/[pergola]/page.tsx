@@ -10,6 +10,7 @@ import {
 } from "@lib/cms/strapiCmsApi"
 import { StoreProduct, StoreProductResponse } from "@medusajs/types"
 import { unstable_cache } from "next/cache"
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 // 强制静态生成
 export const dynamic = "force-static"
@@ -24,7 +25,7 @@ type ProductInformation = {
 }
 
 type Props = Readonly<{
-  params: { countryCode: string; pergola: string }
+  params: { pergola: string }
 }>
 
 // 缓存pergola数据获取
@@ -115,7 +116,6 @@ export async function generateStaticParams() {
     // 3. 生成所有可能的路径参数
     return pergolaData.productInformations.map(
       (product: ProductInformation) => ({
-        countryCode: "us",
         pergola: product.urlLink,
       })
     )
@@ -128,12 +128,12 @@ export async function generateStaticParams() {
 
 export default async function ProductPage({ params }: Props) {
   try {
-    const { countryCode, pergola } = await params
+    const { pergola } = await params
     // 1. 并行获取基础数据
     const [pergolaData, region, heaterCMData, shadesCMData, glassDoorCMData] =
       await Promise.all([
         getCachedPergola(),
-        getCachedRegion(countryCode),
+        getCachedRegion(defaultCountryCode),
         getCachedHeaterCMS(),
         getCachedShadesCMS(),
         getCachedGlassDoorCMS(),
