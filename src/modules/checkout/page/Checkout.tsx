@@ -614,9 +614,9 @@ export const Checkout = () => {
                       <button
                         onClick={applyPromotionCode}
                         disabled={isApplyingPromotion || !promotionCode.trim()}
-                        className="px-4 py-[16.34px] bg-[#343a40] text-white rounded-[9.08px] font-medium text-sm hover:bg-[#495057] disabled:bg-[#6c757d] disabled:cursor-not-allowed transition-colors duration-200 [font-family:'Montserrat',Helvetica]"
+                        className="p-3 bg-[#343a40] text-white rounded-[9.08px] font-medium text-sm hover:bg-[#495057] disabled:bg-[#6c757d] disabled:cursor-not-allowed transition-colors duration-200 [font-family:'Montserrat',Helvetica]"
                       >
-                        {isApplyingPromotion ? "Applying..." : "Apply"}
+                        Apply
                       </button>
                     </div>
 
