@@ -244,6 +244,13 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
     }
   }
 
+  // 金额格式化函数
+  const formatPrice = (price: number) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(price || 0)
+
   // 浮动按钮
   const FloatingBar = (props: { className?: string }) => (
     <div
@@ -304,93 +311,95 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
       {/* 组件内容 */}
       <div className="flex-1 overflow-y-auto px-2 pb-4">
         <div className="mt-2 flex flex-col w-full items-start gap-2.5 p-2 md:p-5 relative bg-[#f3f3f3] rounded-[20px]">
-          <div className="flex w-full flex-col items-start gap-4 relative">
-            <div className="flex w-full flex-col items-start gap-2.5 relative">
-              <div className="flex justify-between items-start gap-2.5 relative self-stretch w-full">
-                <div className="flex items-center justify-center gap-2.5 py-0 relative">
-                  <div className="flex items-end justify-start gap-4">
-                    <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[36px] leading-[32px] whitespace-nowrap relative tracking-[0]">
-                      ${totalPrice}
-                    </div>
-                    <span className="text-[16px] font-normal">
-                      with free shipping
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2.5 relative">
-                  <button
-                    onClick={() =>
-                      setPergolaQuantity(
-                        pergolaQuantity > 1 ? pergolaQuantity - 1 : 1
-                      )
-                    }
-                    className="w-6 h-6 bg-white rounded-full border border-[#f3f3f3] flex items-center justify-center"
-                  >
-                    <span className="text-[#343a40] text-lg -mt-0.5">-</span>
-                  </button>
-                  <div className="text-[#343a40] text-lg font-medium">
-                    {pergolaQuantity}
-                  </div>
-                  <button
-                    onClick={() => setPergolaQuantity(pergolaQuantity + 1)}
-                    className="w-6 h-6 bg-white rounded-full border border-[#f3f3f3] flex items-center justify-center"
-                  >
-                    <span className="text-[#343a40] text-lg -mt-0.5">+</span>
-                  </button>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[24px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
-                  ${totalOriginalPrice}
-                </div>
-                {
-                  <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
-                    <span className="text-[24px] font-normal text-[red]">
-                      Save{" "}
-                      {Math.round(
-                        ((totalOriginalPrice - totalPrice) /
-                          totalOriginalPrice) *
-                          100
-                      )}
-                      %
-                    </span>
-                  </div>
+          {/* Save标签 */}
+          <div className="absolute left-0 top-0 mt-4 z-10 flex gap-4">
+            <div className="bg-[#ADEBB3] text-[#0A3B5C] rounded-r-[10px] px-4 py-2 font-medium text-lg shadow">
+              Save{" "}
+              {totalOriginalPrice > 0
+                ? Math.round(
+                    ((totalOriginalPrice - totalPrice) / totalOriginalPrice) *
+                      100
+                  )
+                : 0}
+              %
+            </div>
+            <div className="flex items-end gap-4">
+              <span className="text-[#6c757d] text-[24px] line-through">
+                {formatPrice(totalOriginalPrice)}
+              </span>
+            </div>
+          </div>
+          {/* 价格和数量选择器 */}
+          <div className="flex w-full items-center justify-between mt-[64px] mb-2">
+            <div className="flex items-end gap-4">
+              <span className="font-bold text-[36px] leading-[32px]">
+                {formatPrice(totalPrice)}
+              </span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <button
+                onClick={() =>
+                  setPergolaQuantity(
+                    pergolaQuantity > 1 ? pergolaQuantity - 1 : 1
+                  )
                 }
-              </div>
+                className="w-8 h-8 bg-white rounded-full border border-[#e9ecef] flex items-center justify-center text-xl shadow"
+              >
+                -
+              </button>
+              <span className="text-[#343a40] text-lg font-medium">
+                {pergolaQuantity}
+              </span>
+              <button
+                onClick={() => setPergolaQuantity(pergolaQuantity + 1)}
+                className="w-8 h-8 bg-white rounded-full border border-[#e9ecef] flex items-center justify-center text-xl shadow"
+              >
+                +
+              </button>
             </div>
-            <div className="flex flex-col w-full items-end gap-2.5 relative">
-              <PergulaSizeSelector
-                product={product}
-                className="!self-stretch !flex-[0_0_auto] !flex"
-                selectedSize={selectedSize}
-                selectedColor={selectedColor}
-                selectedStyle={selectedStyle}
-                onSizeChange={handleSizeChange}
-                onColorChange={handleColorChange}
-                onStyleChange={handleStyleChange}
-              />
-              <AccesorriesSelector
-                pergolaSize={pergolaSize}
-                onAccessoryChange={handleAccessoryToggle}
-                accessories={accessories}
-                selectedHeaterVariant={selectedAccessoriesHeater}
-                selectedShadesVariant={selectedAccessoriesShades}
-                selectedGlassdoorVariant={selectedAccessoriesGlassdoor}
-                accessoriesCMSData={accessoriesCMSData}
-              />
-            </div>
-            <BuyNowButton
-              onClick={handleBuyNow}
-              property1="primary-button-l"
-              text="Add to cart"
-              className=""
+          </div>
+          {/* 分期付款信息 */}
+          <div className="w-full mb-4">
+            <p className="text-[#0A3B5C] text-base">
+              Pay {formatPrice(totalPrice / 24)}/mo x 24 with{" "}
+              <span className="font-bold">Klarna.</span>
+            </p>
+          </div>
+          {/* 选择器和配件 */}
+          <div className="flex flex-col w-full items-end gap-2.5 relative">
+            <PergulaSizeSelector
+              product={product}
+              className="!self-stretch !flex-[0_0_auto] !flex"
+              selectedSize={selectedSize}
+              selectedColor={selectedColor}
+              selectedStyle={selectedStyle}
+              onSizeChange={handleSizeChange}
+              onColorChange={handleColorChange}
+              onStyleChange={handleStyleChange}
             />
-            <div className="flex items-center justify-center w-full mt-2 py-3 px-4 border border-[#0A3B5C] rounded-[10px]">
-              <p className="text-[#0A3B5C] text-center text-base">
-                Pay ${Math.round(totalPrice / 24)}/mo x 24 with{" "}
-                <span className="font-bold">Klarna.</span>
-              </p>
-            </div>
+            <AccesorriesSelector
+              pergolaSize={pergolaSize}
+              onAccessoryChange={handleAccessoryToggle}
+              accessories={accessories}
+              selectedHeaterVariant={selectedAccessoriesHeater}
+              selectedShadesVariant={selectedAccessoriesShades}
+              selectedGlassdoorVariant={selectedAccessoriesGlassdoor}
+              accessoriesCMSData={accessoriesCMSData}
+            />
+          </div>
+          <BuyNowButton
+            onClick={handleBuyNow}
+            property1="primary-button-l"
+            text="Add to cart"
+            className=""
+          />
+          <div className="w-full flex flex-row justify-center items-center gap-2.5 relative text-[#072F6C] mt-2 underline">
+            <a
+              href="/#sample-kit"
+              className="text-[#072F6C] hover:text-[#0a4499] transition-colors duration-200"
+            >
+              Not ready to buy yet? Try a sample kit.
+            </a>
           </div>
         </div>
       </div>
