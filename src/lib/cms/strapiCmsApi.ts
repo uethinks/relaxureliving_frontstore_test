@@ -36,7 +36,14 @@ const pergolaPopulate = {
     "populate[productAccessories][populate][productAccessoryItem][populate][0]": "image",
     "populate[boringButImportantStuff][populate][Promise][populate][0]": "Icon",
     "populate[credential][populate][images][populate]": "*",
-    "populate[one_hundred_day_risk_free_trial][populate]": "*"
+    "populate[one_hundred_day_risk_free_trial][populate]": "*",
+    "populate[product_overview][populate][product_overview_description]": "*",
+    "populate[product_overview][populate][pergola_size_technical_specs][populate][0]": "images",
+    "populate[product_overview][populate][shipping_and_returns]": "*",
+    "populate[product_overview][populate][fast_easy_assembly][populate][youtubeButtons]": "*",
+    "populate[product_overview][populate][fast_easy_assembly][populate][descriptions]": "*",
+    "populate[product_overview][populate][onehundred_days_free_risk][populate][0]": "image",
+    "populate[product_overview][populate][lifetime_warranty]": "*"
 };
 const heaterPopulate = {
   "populate[productInformations]": "*",

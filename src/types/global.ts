@@ -294,6 +294,7 @@ export type PergolaData = {
     credential: AwardBlockProps
     one_hundred_day_risk_free_trial: OneHundredDayRiskFreeTrial
     product_images: Image[]
+    product_overview: ProductOverview
 }
 
 export type AwardBlockProps = {
@@ -307,3 +308,20 @@ export type ReviewType = {
   image: Image[]
 }
 
+export type ProductOverview = {
+  id: number
+  shot_description: string
+  title: string
+  product_overview_description: any
+  pergola_size_technical_specs: any
+  shipping_and_returns: any
+  fast_easy_assembly: {
+    title?: string
+    subtitle?: string
+    descriptions?: multiDescription[]
+    youtubeCode?: string
+    youtubeButtons?: InstallationStep[]
+  }
+  onehundred_days_free_risk: any
+  lifetime_warranty: any
+}

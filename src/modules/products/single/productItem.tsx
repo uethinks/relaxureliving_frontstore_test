@@ -13,6 +13,7 @@ import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
 import { PergolaData, ProductInformation } from "@/types/global"
 import { OneHundredDayRiskFreeTrial } from "./components/OneHundredDayRiskFreeTrial"
 import { ProductSchema } from "./components/ProductSchema"
+import { ProductOverviewAccordion } from "./components/ProductOverviewAccordion"
 
 interface ProductItemProps {
   product: StoreProduct
@@ -44,7 +45,10 @@ export const ProductItem = ({
           pergolaData={pergolaData}
           accessoriesCMSData={accessoriesCMSData}
         />
-
+        {/* product overview section */}
+        <ProductOverviewAccordion
+          productOverview={pergolaData.product_overview}
+        />
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
             <ImageOnLeft pergolaData={pergolaData} />
