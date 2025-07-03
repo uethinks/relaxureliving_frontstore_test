@@ -56,22 +56,6 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
 
                   <div className="flex flex-col w-full items-start mt-5 lg:mt-[80px]">
                     <Advantage />
-
-                    <div className="flex flex-wrap items-center justify-between w-full mt-5 mb-5 lg:mt-[60px] lg:mb-[60px]">
-                      <TabButtons />
-                      <a
-                        href="/upload_files/Pergola_technical_sheet_new.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2"
-                      >
-                        <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
-                        <h3 className="font-medium text-[#69727A] text-[14px]">
-                          Product Technical Sheet
-                        </h3>
-                      </a>
-                    </div>
-
                     <DescriptionContent pergolaData={pergolaData} />
                   </div>
                 </div>
@@ -84,8 +68,6 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
               </div>
             </div>
           </div>
-          {/* Assembly Tab Content - Full Width */}
-          <AssemblyContent pergolaData={pergolaData} />
         </div>
         {/* Mobile View */}
         <ProductSelectorMobile

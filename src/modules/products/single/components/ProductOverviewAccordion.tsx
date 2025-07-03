@@ -186,6 +186,19 @@ export const ProductOverviewAccordion: React.FC<
               <div className="text-gray-600 text-sm">
                 {productOverview.pergola_size_technical_specs?.description}
               </div>
+              <div className="flex flex-wrap items-center justify-start w-full mt-5 mb-5">
+                <a
+                  href="/upload_files/Pergola_technical_sheet_new.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 py-2"
+                >
+                  <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
+                  <h3 className="font-medium text-[#69727A] text-[14px]">
+                    Product Technical Sheet
+                  </h3>
+                </a>
+              </div>
               {/* 图片Slider */}
               {productOverview.pergola_size_technical_specs?.images?.length >
                 0 && (
