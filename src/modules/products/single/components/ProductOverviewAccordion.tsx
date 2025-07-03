@@ -53,6 +53,7 @@ export const ProductOverviewAccordion: React.FC<
   const [activeSection, setActiveSection] = useState<number | null>(null)
   const [hasAutoSeeked, setHasAutoSeeked] = useState(false)
   const [riskPopupOpen, setRiskPopupOpen] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   const handleToggle = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx)
@@ -73,6 +74,10 @@ export const ProductOverviewAccordion: React.FC<
       setHasAutoSeeked(false)
     }
   }, [openIndex, videoSections, player, hasAutoSeeked])
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // YouTube播放器准备就绪回调
   const onReady = (event: any) => {
@@ -104,12 +109,14 @@ export const ProductOverviewAccordion: React.FC<
     <>
       <div id="product-overview" className="w-full max-w-xl mx-auto my-10">
         {/* 主标题 */}
-        <h2
-          className="text-3xl font-bold text-center text-gray-800 mb-2"
-          dangerouslySetInnerHTML={{
-            __html: productOverview.shot_description,
-          }}
-        ></h2>
+        {isClient && (
+          <h2
+            className="text-3xl font-bold text-center text-gray-800 mb-2"
+            dangerouslySetInnerHTML={{
+              __html: productOverview.shot_description,
+            }}
+          ></h2>
+        )}
         {/* 副标题 */}
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
           {productOverview.title}
@@ -140,13 +147,15 @@ export const ProductOverviewAccordion: React.FC<
               }`}
             >
               {/* 这里可以自定义Description的渲染逻辑 */}
-              <div
-                className="text-gray-600 text-sm"
-                dangerouslySetInnerHTML={{
-                  __html:
-                    productOverview.product_overview_description?.description,
-                }}
-              ></div>
+              {isClient && (
+                <div
+                  className="text-gray-600 text-sm"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      productOverview.product_overview_description?.description,
+                  }}
+                ></div>
+              )}
             </div>
           </div>
           {/* Pergola Sizes & Technical Specs */}
@@ -212,12 +221,14 @@ export const ProductOverviewAccordion: React.FC<
               }`}
             >
               {/* 这里可以自定义Shipping & Returns的渲染逻辑 */}
-              <div
-                className="text-gray-600 text-sm"
-                dangerouslySetInnerHTML={{
-                  __html: productOverview.shipping_and_returns?.description,
-                }}
-              ></div>
+              {isClient && (
+                <div
+                  className="text-gray-600 text-sm"
+                  dangerouslySetInnerHTML={{
+                    __html: productOverview.shipping_and_returns?.description,
+                  }}
+                ></div>
+              )}
               {productOverview.shipping_and_returns?.link_title && (
                 <Link
                   className="text-[#F6AF1F] underline text-base mt-4 text-center"
