@@ -275,6 +275,25 @@ export type OneHundredDayRiskFreeTrial = {
   button: string
 }
 
+interface FAQData {
+  id: number
+  Title: string
+  Subtitle: string
+  homepageFAQ: FAQCategory[]
+}
+
+interface FAQCategory {
+  id: number
+  Title: string
+  question_and_answer: FAQAnswer[]
+}
+
+interface FAQAnswer {
+  id: number
+  question: string
+  Answer: string
+}
+
 // 主数据类型
 export type PergolaData = {
     id: number
@@ -295,6 +314,7 @@ export type PergolaData = {
     one_hundred_day_risk_free_trial: OneHundredDayRiskFreeTrial
     product_images: Image[]
     product_overview: ProductOverview
+    faq: FAQData
 }
 
 export type AwardBlockProps = {

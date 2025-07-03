@@ -17,17 +17,6 @@ export const AccessoriesCards = ({
               {productAccessories?.title}
             </div>
           </div>
-          <div className="flex items-center justify-center gap-2.5 px-2.5 py-0 relative self-stretch w-full flex-[0_0_auto]">
-            <div className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
-              {productAccessories?.subtitle}
-            </div>
-          </div>
-        </div>
-
-        <div className="inline-flex items-center justify-center gap-2.5 px-2.5 py-0 relative flex-[0_0_auto]">
-          <p className="w-full px-10 text-[#68717a] text-center relative mt-[-1.00px] font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
-            {productAccessories?.description}
-          </p>
         </div>
       </div>
 
@@ -59,6 +48,11 @@ export const AccessoriesCards = ({
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex items-center justify-center gap-2.5 px-2.5 py-0 relative self-stretch w-full flex-[0_0_auto]">
+        <div className="relative w-full lg:w-2/3 mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+          {productAccessories?.subtitle}
+        </div>
       </div>
     </div>
   )

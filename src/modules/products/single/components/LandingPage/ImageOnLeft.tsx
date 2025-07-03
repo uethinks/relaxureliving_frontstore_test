@@ -18,9 +18,6 @@ export const ImageOnLeft = ({
         <p className="text-[#69727a] text-[14px] lg:text-[18px] font-relaxure-sub-heading-18 font-[500]">
           {productFeatures?.description}
         </p>
-        <div className="w-full rounded-[20px] overflow-hidden">
-          {actualVideoId ? <YouTubeWrapper videoId={actualVideoId} /> : null}
-        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-x-[68px] gap-y-[40px]">

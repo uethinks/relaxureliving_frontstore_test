@@ -2,16 +2,11 @@ import React from "react"
 import { FirstScreen } from "./components/FirstScreen"
 import { StoreProduct } from "@medusajs/types"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
+import { FaqWrapper } from "@modules/home/homepage/page/sections/FaqWrapper"
 import { CustomerReviewsServer } from "./components/CustomerReviewsServer"
 import { AwardBlock } from "@modules/common/components/AwardBlock"
-import {
-  ImageOnLeft,
-  Advantages,
-  AccessoriesCards,
-} from "./components/LandingPage"
-import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
+import { ImageOnLeft, AccessoriesCards } from "./components/LandingPage"
 import { PergolaData, ProductInformation } from "@/types/global"
-import { OneHundredDayRiskFreeTrial } from "./components/OneHundredDayRiskFreeTrial"
 import { ProductSchema } from "./components/ProductSchema"
 import { ProductOverviewAccordion } from "./components/ProductOverviewAccordion"
 
@@ -51,21 +46,27 @@ export const ProductItem = ({
         />
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
           <div className="w-full">
-            <ImageOnLeft pergolaData={pergolaData} />
-          </div>
-          <div className="w-full mt-10">
-            <OneHundredDayRiskFreeTrial pergolaData={pergolaData} />
-          </div>
-          <div className="w-full">
-            <Advantages pergolaData={pergolaData} />
-          </div>
-          <div className="w-full">
             <AccessoriesCards pergolaData={pergolaData} />
+          </div>
+          <div className="w-full mt-5">
+            <FaqWrapper faq={pergolaData.faq} />
+          </div>
+        </div>
+        <div
+          id="reviews"
+          className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20"
+        >
+          <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
+            <div className="w-full">
+              <CustomerReviewsServer />
+            </div>
           </div>
         </div>
       </div>
-      <div className="w-full">
-        <OurPromise pergolaData={pergolaData} />
+      <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
+        <div className="w-full">
+          <ImageOnLeft pergolaData={pergolaData} />
+        </div>
       </div>
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20 mt-5 lg:mt-[80px]">
         <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
@@ -74,16 +75,7 @@ export const ProductItem = ({
           </div>
         </div>
       </div>
-      <div
-        id="reviews"
-        className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20"
-      >
-        <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
-          <div className="w-full">
-            <CustomerReviewsServer />
-          </div>
-        </div>
-      </div>
+
       <FooterDark />
     </>
   )
