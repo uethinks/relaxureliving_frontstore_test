@@ -40,6 +40,8 @@ const pergolaPopulate = {
     "populate[product_overview][populate][onehundred_days_free_risk][populate][0]": "image",
     "populate[product_overview][populate][lifetime_warranty]": "*",
     "populate[faq][populate][homepageFAQ][populate][0]": "question_and_answer",
+    "populate[get_in_touch]": "*",
+    "populate[sample_kit][populate][0]": "product_image",
 };
 const heaterPopulate = {
   "populate[productInformations]": "*",

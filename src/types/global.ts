@@ -293,6 +293,15 @@ interface FAQAnswer {
   question: string
   Answer: string
 }
+export type SampleKit = {
+  id: number
+  product_image: Image
+  title: string
+  description: string
+  button_name: string
+  price_info: string
+  product_id: string
+}
 
 // 主数据类型
 export type PergolaData = {
@@ -315,6 +324,11 @@ export type PergolaData = {
     product_images: Image[]
     product_overview: ProductOverview
     faq: FAQData
+    get_in_touch: {
+      title: string
+      button_name: string
+    }
+    sample_kit: SampleKit
 }
 
 export type AwardBlockProps = {

@@ -9,12 +9,12 @@ export const AwardBlock: React.FC<{ data: AwardBlockProps }> = ({ data }) => {
   const isScrollable = images.length > 4
   const cmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
   return (
-    <div className="w-full rounded-[20px] py-10 flex flex-col items-center mx-auto">
+    <div className="w-full rounded-[20px] flex flex-col items-center mx-auto">
       <div
-        className="w-full lg:w-[80%] flex flex-col items-center mb-8"
+        className="w-full lg:w-[80%] flex flex-col items-center"
         dangerouslySetInnerHTML={{ __html: topDescription }}
       />
-      <div className="w-full bg-[#f5f5f5] rounded-[20px] py-10 flex flex-col items-center mx-auto">
+      <div className="w-full bg-[#f5f5f5] border rounded-[20px] py-10 flex flex-col items-center mx-auto">
         <h2 className="text-[18px] lg:text-[36px] font-bold font-merriweather text-center mb-8">
           {title}
         </h2>

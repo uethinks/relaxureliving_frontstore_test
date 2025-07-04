@@ -9,6 +9,7 @@ import { ImageOnLeft, AccessoriesCards } from "./components/LandingPage"
 import { PergolaData, ProductInformation } from "@/types/global"
 import { ProductSchema } from "./components/ProductSchema"
 import { ProductOverviewAccordion } from "./components/ProductOverviewAccordion"
+import { ProductpageSampleKit } from "./components/ProductpageSampleKit"
 
 interface ProductItemProps {
   product: StoreProduct
@@ -48,13 +49,13 @@ export const ProductItem = ({
           <div className="w-full">
             <AccessoriesCards pergolaData={pergolaData} />
           </div>
-          <div className="w-full mt-5">
+          <div className="w-full mt-5 rounded-2xl overflow-hidden">
             <FaqWrapper faq={pergolaData.faq} />
           </div>
         </div>
         <div
           id="reviews"
-          className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20"
+          className="bg-[#ffffff] flex flex-col items-center justify-center w-full"
         >
           <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
             <div className="w-full">
@@ -62,17 +63,22 @@ export const ProductItem = ({
             </div>
           </div>
         </div>
-      </div>
-      <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
-        <div className="w-full">
+        <div className="w-full flex flex-col items-center justify-center gap-2.5 bg-[#F6AF1F] rounded-2xl mt-20 py-10">
+          <h2 className="text-[#343a40] text-[36px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+            {pergolaData.get_in_touch.title}
+          </h2>
+          <div className="flex flex-row items-center justify-center gap-2.5 border border-[#343a40] rounded-2xl px-20 py-2">
+            {pergolaData.get_in_touch.button_name}
+          </div>
+        </div>
+        <div className="w-full bg-[#F3F3F3] border rounded-2xl mt-20 px-5 lg:px-[63px]">
           <ImageOnLeft pergolaData={pergolaData} />
         </div>
-      </div>
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full md:px-5 lg:px-20 mt-5 lg:mt-[80px]">
-        <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
-          <div className="w-full">
-            <AwardBlock data={pergolaData.credential} />
-          </div>
+        <div className="w-full mt-20">
+          <AwardBlock data={pergolaData.credential} />
+        </div>
+        <div className="w-full mt-20">
+          <ProductpageSampleKit sampleKit={pergolaData.sample_kit} />
         </div>
       </div>
 
