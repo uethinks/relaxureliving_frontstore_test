@@ -10,6 +10,7 @@ import {
 } from "@lib/cms/strapiCmsApi"
 import { StoreProduct, StoreProductResponse } from "@medusajs/types"
 import { unstable_cache } from "next/cache"
+import { Metadata } from "next"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 // 强制静态生成
@@ -102,6 +103,26 @@ const getCachedGlassDoorCMS = unstable_cache(
   ["glassdoor-data"],
   { revalidate: 3600 }
 )
+
+// 生成动态 metadata
+export const metadata: Metadata = {
+  title: `Louvered Aluminum Pergola Kits | Relaxure`,
+  description: `Our aluminum pergola kits feature motorized louvers, weather sensors anc
+commercial-grade durability- turn any patio into a year-round living space`,
+  openGraph: {
+    title: `Louvered Aluminum Pergola Kits  Relaxure`,
+    description: `Our aluminum pergola kits feature motorized louvers, weather sensors anc
+commercial-grade durability- turn any patio into a year-round living space`,
+    url: "/",
+  },
+  keywords: [
+    "pergola",
+    "outdoor shade",
+    "smart home",
+    "relaxure",
+    "aluminum pergola",
+  ],
+}
 
 export async function generateStaticParams() {
   try {
