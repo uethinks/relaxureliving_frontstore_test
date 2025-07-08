@@ -108,9 +108,9 @@ export const Features = ({
     >
       <div className="flex flex-col w-full items-start gap-5">
         <div className="flex flex-col items-center justify-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-          <p className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+          <h2 className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
             {features?.Title}
-          </p>
+          </h2>
 
           <div className="px-0 py-2.5 flex items-center justify-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <p className="flex-1 mt-[-1.00px] text-[#68717a] text-center relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[16px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
@@ -142,9 +142,9 @@ export const Features = ({
                 }}
               >
                 <div className="ms-5 mt-5 inline-flex h-[41px] items-center justify-center gap-2.5 p-2.5 bg-[#ffffff73] rounded-[30px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
-                  <div className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
+                  <h3 className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
                     {slider.Title}
-                  </div>
+                  </h3>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="flex m-auto w-[90%] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative bg-[#ffffff73] rounded-[20px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
@@ -193,9 +193,9 @@ export const Features = ({
                   onMouseEnter={() => handleGroup1Click(index)}
                 >
                   <div className="ms-5 mt-5 inline-flex h-[41px] items-center justify-center gap-2.5 p-2.5 bg-[#ffffff73] rounded-[30px] border border-solid border-[#ffffffad] backdrop-blur-[14.7px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]">
-                    <div className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
+                    <h3 className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
                       {slider.Title}
-                    </div>
+                    </h3>
                   </div>
                   <div
                     className={`flex flex-col items-start gap-2.5 px-0 py-2.5 relative self-stretch w-full ${

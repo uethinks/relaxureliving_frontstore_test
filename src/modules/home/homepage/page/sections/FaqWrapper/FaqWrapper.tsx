@@ -51,9 +51,9 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
       className="flex flex-col w-full items-center justify-center min-h-[700px] bg-[#f3f3f3] py-16"
     >
       <div className="w-full max-w-[1200px] mx-auto">
-        <div className="text-[#343a40] font-merriweather text-[32px] font-bold text-center mb-12 leading-[40px]">
+        <h2 className="text-[#343a40] font-merriweather text-[32px] font-bold text-center mb-12 leading-[40px]">
           {faq.Subtitle}
-        </div>
+        </h2>
         {/* 桌面端布局 */}
         <div
           className="hidden font-[500] lg:flex flex-row justify-between w-full rounded-[24px] overflow-visible"
@@ -74,7 +74,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                   setOpenQuestionIndex(-1)
                 }}
               >
-                <span>{category.Title}</span>
+                <h3 className="font-montserrat">{category.Title}</h3>
                 <span
                   className={`ml-2 transition-transform duration-300 ${
                     selectedCategoryIndex === idx ? "rotate-90" : "rotate-0"
