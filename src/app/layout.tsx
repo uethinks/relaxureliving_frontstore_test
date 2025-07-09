@@ -91,6 +91,28 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             })(window,document,'https://static.hj.contentsquare.net/c/csq-','.js',6408012);
           `}
         </Script>
+        <Script
+          id="organization-ldjson"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              url: "https://relaxureliving.com",
+              sameAs: [
+                "https://example.net/profile/example1234",
+                "https://example.org/example1234",
+              ],
+              logo: "https://relaxureliving.com/img/logo.svg",
+              name: "Relaxureliving",
+              description:
+                "Relaxureliving is home to the world's smartest pergola, intelligently designed to enable four-season outdoor living.",
+              email: "info@relaxureliving.com",
+              telephone: "1-213-566-8658",
+            }),
+          }}
+        />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>

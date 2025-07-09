@@ -1,8 +1,28 @@
+import { Metadata } from "next"
 import { getRegion } from "@lib/data/regions"
 import { ProductPage } from "@modules/cart/components/ProductPage/ProductPage"
 import { getProductByProductType } from "@lib/data/products"
 import { StoreProductListParams } from "@medusajs/types"
+
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
+
+// 生成动态 metadata
+export const metadata: Metadata = {
+  title: `Check Out Your Cart | Relaxure`,
+  description: `N/A`,
+  openGraph: {
+    title: `Check Out Your Cart | Relaxure`,
+    description: `N/A`,
+    url: "/",
+  },
+  keywords: [
+    "pergola",
+    "outdoor shade",
+    "smart home",
+    "relaxure",
+    "aluminum pergola",
+  ],
+}
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
