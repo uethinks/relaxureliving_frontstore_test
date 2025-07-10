@@ -1,7 +1,29 @@
-"use client"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import Link from "next/link"
+import { Metadata } from "next"
+import ChatButton from "@/components/ChatButton"
+
+// 生成动态 metadata
+export const metadata: Metadata = {
+  title: `About Relaxure`,
+  description: `Relaxure is home to the world's smartest pergola, intelligently designed to
+enable four-season outdoor living.`,
+  openGraph: {
+    title: `About Relaxure`,
+    description: `Relaxure is home to the world's smartest pergola, intelligently designed to
+enable four-season outdoor living.`,
+    url: "/",
+  },
+  keywords: [
+    "pergola",
+    "outdoor shade",
+    "smart home",
+    "relaxure",
+    "aluminum pergola",
+  ],
+}
+
 export default function AboutPage() {
   return (
     <main className="w-full flex flex-col items-center">
@@ -241,12 +263,7 @@ export default function AboutPage() {
           <h2 className="text-[18px] lg:text-[36px] font-[700] mb-6 font-['Merriweather']">
             Experience the Relaxure Difference
           </h2>
-          <button
-            onClick={() => (window as any).tidioChatApi?.open()}
-            className="bg-[#072F6C] text-white px-8 py-4 rounded-md hover:bg-blue-800"
-          >
-            Meet a Relaxure Expert
-          </button>
+          <ChatButton />
         </div>
       </section>
       <FooterDark />

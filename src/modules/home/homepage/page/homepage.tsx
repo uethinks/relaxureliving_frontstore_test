@@ -63,7 +63,7 @@ export default async function Homepage() {
   if (!data) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p>页面加载失败，请稍后重试</p>
+        <p>fail to load homepage</p>
       </div>
     )
   }

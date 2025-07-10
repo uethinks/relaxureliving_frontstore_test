@@ -91,6 +91,35 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             })(window,document,'https://static.hj.contentsquare.net/c/csq-','.js',6408012);
           `}
         </Script>
+        <Script
+          id="organization-ldjson"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Relaxure Pergolas",
+              url: "https://relaxureliving.com/",
+              logo: "https://relaxureliving.com/img/logo.svg",
+              description:
+                "Relaxure is home to the world's smartest aluminium pergola, intelligently designed to enable four-season outdoor living. Lifetime Warranty, Built to Last for 30+ Years.",
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+1-213-566-8658",
+                email: "info@relaxureliving.com",
+                contactType: "Customer Service",
+                areaServed: "US",
+                availableLanguage: "English",
+              },
+              sameAs: [
+                "https://www.facebook.com/people/Relaxure/61570952814126/",
+                "https://www.instagram.com/relaxureliving/",
+                "https://www.youtube.com/@Relaxure-Pergola",
+              ],
+            }),
+          }}
+        />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
