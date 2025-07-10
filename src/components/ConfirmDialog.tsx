@@ -1,3 +1,4 @@
+"use client"
 import React from "react"
 
 interface ConfirmDialogProps {
@@ -33,13 +34,13 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           <div className="flex gap-4">
             <button
               onClick={onCancel}
-              className="flex-1 py-3 px-6 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50"
+              className="flex-1 py-3 px-6 rounded-lg text-white font-medium bg-black"
             >
               Cancel
             </button>
             <button
               onClick={onConfirm}
-              className="flex-1 py-3 px-6 rounded-lg bg-[#002D72] text-white font-medium hover:bg-[#002D72]/90"
+              className="flex-1 py-3 px-6 rounded-lg bg-[#F6AF1F] text-black font-medium"
             >
               Confirm
             </button>

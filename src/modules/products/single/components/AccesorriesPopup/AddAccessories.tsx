@@ -28,7 +28,7 @@ export const AddAccessories = ({
       className={`all-[unset] box-border flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative ${
         state.property1 === "primary-button-hover-l"
           ? "bg-[#0a3980]"
-          : "bg-[#072f6c]"
+          : "bg-[#F6AF1F]"
       } ${className}`}
       onMouseLeave={() => {
         dispatch("mouse_leave")
@@ -38,7 +38,7 @@ export const AddAccessories = ({
       }}
     >
       <span
-        className={`all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[color:var(--semantic-border-alternate)] font-medium leading-6 whitespace-nowrap relative ${buttonClassName}`}
+        className={`all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-black leading-6 whitespace-nowrap relative ${buttonClassName}`}
       >
         {text}
       </span>

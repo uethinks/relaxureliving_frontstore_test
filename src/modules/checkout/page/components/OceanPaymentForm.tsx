@@ -574,7 +574,7 @@ export const OceanPaymentForm = ({
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full bg-[#343a40] text-white py-4 rounded-lg font-medium hover:bg-[#23272b] transition-colors disabled:opacity-50"
+          className="w-full bg-[#F6AF1F] text-black py-4 rounded-lg font-medium hover:bg-[#0a3980] transition-colors disabled:opacity-50"
         >
           {isLoading ? "Processing..." : "Pay Now"}
         </button>

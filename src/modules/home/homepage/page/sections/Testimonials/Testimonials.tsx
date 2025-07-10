@@ -270,8 +270,8 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
             <div className="w-[1182px] flex flex-col justify-center items-center gap-2.5">
               <div className="w-[1182px] flex flex-col justify-start items-center gap-2.5">
                 <div className="flex flex-col justify-start items-start gap-2.5">
-                  <div className="h-[41px] p-2.5 bg-[#072f6c] rounded-[30px] outline outline-1 outline-offset-[-1px] inline-flex justify-center items-center gap-2.5">
-                    <div className="justify-start text-white text-lg font-medium font-['Montserrat'] leading-[27px]">
+                  <div className="h-[41px] p-2.5 bg-[#F6AF1F] rounded-[30px] inline-flex justify-center items-center gap-2.5">
+                    <div className="justify-start text-black text-lg font-medium font-['Montserrat'] leading-[27px]">
                       Testimonials
                     </div>
                   </div>

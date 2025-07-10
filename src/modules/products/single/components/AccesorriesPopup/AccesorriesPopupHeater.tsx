@@ -202,18 +202,18 @@ export const AccesorriesPopupHeater = ({
                           >
                             <button
                               className={`w-6 h-6 rounded-[20px] cursor-pointer border-2 border-solid ${
-                                !color.value?.toLowerCase().includes("white")
-                                  ? "bg-[#7F7F7F]"
+                                selectedColor.id == color.id
+                                  ? "bg-[#F6AF1F33]"
                                   : "bg-[#ffffff]"
                               }  ${
-                                selectedColor === color
-                                  ? "border-[#072F6C]"
+                                selectedColor.id == color.id
+                                  ? "border-[#F6AF1F]"
                                   : ""
                               }`}
                               onClick={() => handleColorClick(color)}
                             ></button>
                             <div
-                              className={`hidden lg:block relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
+                              className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
                             >
                               {color.value}
                             </div>
@@ -284,7 +284,7 @@ export const AccesorriesPopupHeater = ({
                 <div className="flex flex-row items-center gap-2.5 relative">
                   <button
                     onClick={closePopupHeater}
-                    className="border text-gray-500 hover:text-gray-700 border-gray-500 rounded-[10px] px-4 py-2"
+                    className="border text-white bg-black rounded-[10px] px-4 py-2"
                   >
                     Close
                   </button>
@@ -292,7 +292,7 @@ export const AccesorriesPopupHeater = ({
                     disabled={
                       selectedHeaterQuantity === 0 || selectedHeater === null
                     }
-                    buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-semibold"
+                    buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-medium"
                     property1="primary-button-l"
                     text="Add accesory"
                     addAccessory={addAccessoryHeaterHandler}

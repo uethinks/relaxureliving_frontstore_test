@@ -298,10 +298,10 @@ export const ContactUs = ({
               >
                 <div
                   className={`h-full flex items-center justify-center gap-[var(--3-spacing-spacing-md)] px-[12.71px] py-[9.08px] ${
-                    isSubmitting ? "bg-gray-400" : "bg-[#072f6c]"
+                    isSubmitting ? "bg-[#F6AF1F]-400" : "bg-[#F6AF1F]"
                   } rounded-[var(--2-radius-radius-md)]`}
                 >
-                  <div className="font-medium text-[16px] font-relaxure-sub-heading-18 text-variable-collection-beige-brand">
+                  <div className="font-medium text-black text-[16px] font-relaxure-sub-heading-18">
                     {isSubmitting ? "Sending..." : contactUs.SendButton}
                   </div>
                 </div>

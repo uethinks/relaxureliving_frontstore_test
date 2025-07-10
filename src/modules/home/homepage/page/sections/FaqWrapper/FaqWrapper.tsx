@@ -66,8 +66,8 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                 key={category.id}
                 className={`flex items-center text-[18px] leading-[28px] justify-between pl-8 pr-2 py-5 cursor-pointer select-none transition-all duration-150 rounded-[10px] relative ${
                   selectedCategoryIndex === idx
-                    ? "bg-[#DCE7F8] text-[#072F6C] border-[1px] border-[#072F6C]"
-                    : "text-[#343A40]"
+                    ? "bg-[#F6AF1F33] text-black border-[1px] border-[#F6AF1F]"
+                    : "text-[#69727A]"
                 }`}
                 onClick={() => {
                   setSelectedCategoryIndex(idx)
@@ -107,7 +107,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                           {answer.question}
                         </span>
                         <span
-                          className={`text-[28px] text-[#072F6C] select-none transition-transform duration-300 ${
+                          className={`text-[28px] text-[#F6AF1F] select-none transition-transform duration-300 ${
                             isOpen ? "rotate-45" : "rotate-0"
                           }`}
                           style={{
