@@ -99,17 +99,24 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              url: "https://relaxureliving.com",
-              sameAs: [
-                "https://example.net/profile/example1234",
-                "https://example.org/example1234",
-              ],
+              name: "Relaxure Pergolas",
+              url: "https://relaxureliving.com/",
               logo: "https://relaxureliving.com/img/logo.svg",
-              name: "Relaxureliving",
               description:
-                "Relaxureliving is home to the world's smartest pergola, intelligently designed to enable four-season outdoor living.",
-              email: "info@relaxureliving.com",
-              telephone: "1-213-566-8658",
+                "Relaxure is home to the world's smartest aluminium pergola, intelligently designed to enable four-season outdoor living. Lifetime Warranty, Built to Last for 30+ Years.",
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+1-213-566-8658",
+                email: "info@relaxureliving.com",
+                contactType: "Customer Service",
+                areaServed: "US",
+                availableLanguage: "English",
+              },
+              sameAs: [
+                "https://www.facebook.com/people/Relaxure/61570952814126/",
+                "https://www.instagram.com/relaxureliving/",
+                "https://www.youtube.com/@Relaxure-Pergola",
+              ],
             }),
           }}
         />
