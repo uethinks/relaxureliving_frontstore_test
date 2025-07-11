@@ -20,6 +20,7 @@ export const ProductpageSampleKit = ({
   const [sampleKitProduct, setSampleKitProduct] =
     useState<HttpTypes.StoreProduct | null>(null)
   console.log("sampleKit", sampleKit)
+
   useEffect(() => {
     const fetchSampleKit = async () => {
       try {
@@ -48,14 +49,19 @@ export const ProductpageSampleKit = ({
     }
 
     try {
+      console.log("Adding sample kit to cart...")
       await addVariant({
         variantId: sampleKitProduct.variants[0].id,
         quantity: 1,
         countryCode: defaultCountryCode,
       })
+      console.log("Sample kit added successfully, showing success message")
       setShowSuccess(true)
       setShowDialog(false)
-      setTimeout(() => setShowSuccess(false), 3000)
+      setTimeout(() => {
+        console.log("Hiding success message")
+        setShowSuccess(false)
+      }, 3000)
     } catch (error) {
       console.error("Failed to add sample kit to cart:", error)
     }
@@ -107,7 +113,7 @@ export const ProductpageSampleKit = ({
       />
 
       {showSuccess && (
-        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-fade-in">
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-fadeIn z-50">
           <div className="flex items-center gap-2">
             <svg
               className="w-5 h-5"
