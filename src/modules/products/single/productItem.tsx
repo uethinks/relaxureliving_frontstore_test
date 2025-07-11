@@ -67,9 +67,12 @@ export const ProductItem = ({
           <h2 className="text-[#343a40] text-[36px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
             {pergolaData.get_in_touch.title}
           </h2>
-          <div className="flex flex-row items-center justify-center gap-2.5 border border-[#343a40] rounded-2xl px-20 py-2">
+          <a
+            href="/#contact"
+            className="flex flex-row items-center justify-center gap-2.5 border border-[#343a40] rounded-2xl px-20 py-2"
+          >
             {pergolaData.get_in_touch.button_name}
-          </div>
+          </a>
         </div>
         <div className="w-full md:bg-[#F3F3F3] md:border rounded-2xl mt-20 md:px-[63px]">
           <ImageOnLeft pergolaData={pergolaData} />
