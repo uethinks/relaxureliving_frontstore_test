@@ -71,7 +71,7 @@ export const ProductItem = ({
             {pergolaData.get_in_touch.button_name}
           </div>
         </div>
-        <div className="w-full bg-[#F3F3F3] border rounded-2xl mt-20 px-5 lg:px-[63px]">
+        <div className="w-full md:bg-[#F3F3F3] md:border rounded-2xl mt-20 md:px-[63px]">
           <ImageOnLeft pergolaData={pergolaData} />
         </div>
         <div className="w-full mt-20">
