@@ -283,7 +283,7 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
           </div>
         </div>
         <button
-          className="w-full bg-[#0A3B5C] text-white rounded-[16px] py-3 text-lg font-medium"
+          className="w-full bg-[#F6AF1F] text-black rounded-[16px] py-3 text-lg font-medium"
           onClick={() => setShowPopup(true)}
         >
           Continue
