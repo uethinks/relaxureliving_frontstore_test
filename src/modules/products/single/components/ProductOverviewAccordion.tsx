@@ -124,13 +124,13 @@ export const ProductOverviewAccordion: React.FC<
         {/* 外边框的手风琴 */}
         <div className="border border-gray-200 rounded-xl bg-white shadow-sm overflow-hidden">
           {/* Description */}
-          <div className="border-b">
+          <div className="border-b" id="accordion-item-0">
             <button
               className="w-full flex items-center justify-between px-6 py-5 focus:outline-none transition-colors hover:bg-gray-50"
               onClick={() => handleToggle(0)}
               aria-expanded={openIndex === 0}
             >
-              <h3 className="flex items-center text-gray-700 font-medium text-base">
+              <h3 className="flex items-center text-[#69727A] text-[18px] font-medium font-montserrat">
                 {productOverview.product_overview_description?.title}
               </h3>
               <span
@@ -142,8 +142,10 @@ export const ProductOverviewAccordion: React.FC<
               </span>
             </button>
             <div
-              className={`px-6 pb-5 text-gray-600 text-sm transition-all duration-200 ease-in-out ${
-                openIndex === 0 ? "block" : "hidden"
+              className={`px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
+                openIndex === 0
+                  ? "max-h-[1000px] opacity-100"
+                  : "max-h-0 opacity-0"
               }`}
             >
               {/* 这里可以自定义Description的渲染逻辑 */}
@@ -159,13 +161,13 @@ export const ProductOverviewAccordion: React.FC<
             </div>
           </div>
           {/* Pergola Sizes & Technical Specs */}
-          <div className="border-b">
+          <div className="border-b" id="accordion-item-1">
             <button
               className="w-full flex items-center justify-between px-6 py-5 focus:outline-none transition-colors hover:bg-gray-50"
               onClick={() => handleToggle(1)}
               aria-expanded={openIndex === 1}
             >
-              <h3 className="flex items-center text-gray-700 font-medium text-base">
+              <h3 className="flex items-center text-[#69727A] text-[18px] font-medium font-montserrat">
                 {productOverview.pergola_size_technical_specs?.title ||
                   "Pergola Sizes & Technical Specs"}
               </h3>
@@ -178,8 +180,10 @@ export const ProductOverviewAccordion: React.FC<
               </span>
             </button>
             <div
-              className={`px-6 pb-5 text-gray-600 text-sm transition-all duration-200 ease-in-out ${
-                openIndex === 1 ? "block" : "hidden"
+              className={`px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
+                openIndex === 1
+                  ? "max-h-[2000px] opacity-100"
+                  : "max-h-0 opacity-0"
               }`}
             >
               {/* 文字内容 */}
@@ -211,13 +215,13 @@ export const ProductOverviewAccordion: React.FC<
             </div>
           </div>
           {/* Shipping & Returns */}
-          <div className="border-b">
+          <div className="border-b" id="accordion-item-2">
             <button
               className="w-full flex items-center justify-between px-6 py-5 focus:outline-none transition-colors hover:bg-gray-50"
               onClick={() => handleToggle(2)}
               aria-expanded={openIndex === 2}
             >
-              <h3 className="flex items-center text-gray-700 font-medium text-base">
+              <h3 className="flex items-center text-[#69727A] text-[18px] font-medium font-montserrat">
                 {productOverview.shipping_and_returns?.title}
               </h3>
               <span
@@ -229,8 +233,10 @@ export const ProductOverviewAccordion: React.FC<
               </span>
             </button>
             <div
-              className={`px-6 pb-5 flex flex-col items-center text-gray-600 text-sm transition-all duration-200 ease-in-out ${
-                openIndex === 2 ? "block" : "hidden"
+              className={`px-6 pb-5 flex flex-col items-center text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
+                openIndex === 2
+                  ? "max-h-[1000px] opacity-100"
+                  : "max-h-0 opacity-0"
               }`}
             >
               {/* 这里可以自定义Shipping & Returns的渲染逻辑 */}
@@ -253,13 +259,13 @@ export const ProductOverviewAccordion: React.FC<
             </div>
           </div>
           {/* Fast & Easy Assembly */}
-          <div className="border-b">
+          <div className="border-b" id="accordion-item-3">
             <button
               className="w-full flex items-center justify-between px-6 py-5 focus:outline-none transition-colors hover:bg-gray-50"
               onClick={() => handleToggle(3)}
               aria-expanded={openIndex === 3}
             >
-              <h3 className="flex items-center text-gray-700 font-medium text-base">
+              <h3 className="flex items-center text-[#69727A] text-[18px] font-medium font-montserrat">
                 {productOverview.fast_easy_assembly?.title}
               </h3>
               <span
@@ -271,8 +277,10 @@ export const ProductOverviewAccordion: React.FC<
               </span>
             </button>
             <div
-              className={`px-6 pb-5 text-gray-600 text-sm transition-all duration-200 ease-in-out ${
-                openIndex === 3 ? "block" : "hidden"
+              className={`px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
+                openIndex === 3
+                  ? "max-h-[3000px] opacity-100"
+                  : "max-h-0 opacity-0"
               }`}
             >
               {/* 标题和描述 */}
@@ -345,13 +353,13 @@ export const ProductOverviewAccordion: React.FC<
             </div>
           </div>
           {/* 100 Days Free Risk */}
-          <div className="border-b">
+          <div className="border-b" id="accordion-item-4">
             <button
               className="w-full flex items-center justify-between px-6 py-5 focus:outline-none transition-colors hover:bg-gray-50"
               onClick={() => handleToggle(4)}
               aria-expanded={openIndex === 4}
             >
-              <h3 className="flex items-center text-gray-700 font-medium text-base">
+              <h3 className="flex items-center text-[#69727A] text-[18px] font-medium font-montserrat">
                 {productOverview.onehundred_days_free_risk?.Title}
               </h3>
               <span
@@ -363,8 +371,10 @@ export const ProductOverviewAccordion: React.FC<
               </span>
             </button>
             <div
-              className={`px-6 pb-5 text-gray-600 text-sm transition-all duration-200 ease-in-out ${
-                openIndex === 4 ? "block" : "hidden"
+              className={`px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
+                openIndex === 4
+                  ? "max-h-[2000px] opacity-100"
+                  : "max-h-0 opacity-0"
               }`}
             >
               {/* 卡片内容 */}
@@ -448,13 +458,13 @@ export const ProductOverviewAccordion: React.FC<
             </div>
           </div>
           {/* Lifetime Warranty */}
-          <div>
+          <div id="accordion-item-5">
             <button
               className="w-full flex items-center justify-between px-6 py-5 focus:outline-none transition-colors hover:bg-gray-50"
               onClick={() => handleToggle(5)}
               aria-expanded={openIndex === 5}
             >
-              <h3 className="flex items-center text-gray-700 font-medium text-base">
+              <h3 className="flex items-center text-[#69727A] text-[18px] font-medium font-montserrat">
                 {productOverview.lifetime_warranty?.title}
               </h3>
               <span
@@ -466,8 +476,10 @@ export const ProductOverviewAccordion: React.FC<
               </span>
             </button>
             <div
-              className={`flex flex-col items-center justify-center px-6 pb-5 text-gray-600 text-sm transition-all duration-200 ease-in-out ${
-                openIndex === 5 ? "block" : "hidden"
+              className={`flex flex-col items-center justify-center px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
+                openIndex === 5
+                  ? "max-h-[1000px] opacity-100"
+                  : "max-h-0 opacity-0"
               }`}
             >
               {/* 这里可以自定义Lifetime Warranty的渲染逻辑 */}

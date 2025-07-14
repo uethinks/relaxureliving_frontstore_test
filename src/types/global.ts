@@ -335,6 +335,7 @@ export type AwardBlockProps = {
   title: string
   images: Image[]
   topDescription: string
+  showDescription: boolean
 }
 
 export type ReviewType = {
