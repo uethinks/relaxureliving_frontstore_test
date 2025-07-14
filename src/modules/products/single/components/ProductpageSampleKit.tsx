@@ -19,7 +19,6 @@ export const ProductpageSampleKit = ({
   const [showSuccess, setShowSuccess] = useState(false)
   const [sampleKitProduct, setSampleKitProduct] =
     useState<HttpTypes.StoreProduct | null>(null)
-  console.log("sampleKit", sampleKit)
 
   useEffect(() => {
     const fetchSampleKit = async () => {
