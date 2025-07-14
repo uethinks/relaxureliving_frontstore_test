@@ -29,7 +29,7 @@ export const OrderSummary = (): JSX.Element => {
                       </div>
                     </div>
                     <div className="w-fit [font-family:'Montserrat',Helvetica] font-semibold text-[#343a40] text-base leading-[22.4px] whitespace-nowrap relative tracking-[0]">
-                      $ {item.total}
+                      $ {item.total?.toFixed(2)}
                     </div>
                   </div>
                 ))}
@@ -57,12 +57,12 @@ export const OrderSummary = (): JSX.Element => {
               </div>
               <div className="flex items-end justify-start gap-4">
                 <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
-                  ${cart?.total}
+                  ${cart?.total?.toFixed(2)}
                 </div>
                 {(cart?.discount_total ?? 0) > 0 && cart?.original_total && (
                   <div className="flex items-center gap-2">
                     <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
-                      ${cart.original_total}
+                      ${cart.original_total?.toFixed(2)}
                     </div>
                     <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
                       <span className="text-[12px] font-normal text-[red]">

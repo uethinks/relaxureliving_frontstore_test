@@ -275,6 +275,34 @@ export type OneHundredDayRiskFreeTrial = {
   button: string
 }
 
+interface FAQData {
+  id: number
+  Title: string
+  Subtitle: string
+  homepageFAQ: FAQCategory[]
+}
+
+interface FAQCategory {
+  id: number
+  Title: string
+  question_and_answer: FAQAnswer[]
+}
+
+interface FAQAnswer {
+  id: number
+  question: string
+  Answer: string
+}
+export type SampleKit = {
+  id: number
+  product_image: Image
+  title: string
+  description: string
+  button_name: string
+  price_info: string
+  product_id: string
+}
+
 // 主数据类型
 export type PergolaData = {
     id: number
@@ -294,12 +322,20 @@ export type PergolaData = {
     credential: AwardBlockProps
     one_hundred_day_risk_free_trial: OneHundredDayRiskFreeTrial
     product_images: Image[]
+    product_overview: ProductOverview
+    faq: FAQData
+    get_in_touch: {
+      title: string
+      button_name: string
+    }
+    sample_kit: SampleKit
 }
 
 export type AwardBlockProps = {
   title: string
   images: Image[]
   topDescription: string
+  showDescription: boolean
 }
 
 export type ReviewType = {
@@ -307,3 +343,20 @@ export type ReviewType = {
   image: Image[]
 }
 
+export type ProductOverview = {
+  id: number
+  shot_description: string
+  title: string
+  product_overview_description: any
+  pergola_size_technical_specs: any
+  shipping_and_returns: any
+  fast_easy_assembly: {
+    title?: string
+    subtitle?: string
+    descriptions?: multiDescription[]
+    youtubeCode?: string
+    youtubeButtons?: InstallationStep[]
+  }
+  onehundred_days_free_risk: any
+  lifetime_warranty: any
+}
