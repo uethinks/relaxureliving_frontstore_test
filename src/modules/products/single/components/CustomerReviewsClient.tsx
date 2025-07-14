@@ -189,7 +189,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   }
 
   return (
-    <div className="w-full mx-auto py-16 bg-[#F3F3F3] px-5 lg:px-[63px] mt-10 lg:mt-[80px] rounded-[20px]">
+    <div className="w-full mx-auto py-16 px-5 lg:px-[63px] mt-10 lg:mt-[80px] border rounded-[20px]">
       {/* Reviews Overview Section */}
       <div className="mb-5">
         <h2 className="font-700 text-[18px] lg:text-[36px] font-bold font-merriweather text-center mb-8">

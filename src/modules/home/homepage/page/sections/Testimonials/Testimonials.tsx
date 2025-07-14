@@ -10,29 +10,7 @@ const styles = `
     opacity: 0.8;
   }
   100% {
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 0;
-  }
-}
-
-@keyframes wave2 {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.8;
-  }
-  100% {
     transform: translate(-50%, -50%) scale(1.8);
-    opacity: 0;
-  }
-}
-
-@keyframes wave3 {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2);
     opacity: 0;
   }
 }
@@ -204,8 +182,9 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
         {isActive && (
           <>
             <style>{styles}</style>
-            <div className="w-[180px] h-[180px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-[#6c95d3]/30 rounded-full animate-[wave_1s_ease-out_infinite]" />
-            <div className="w-[120px] h-[120px] translate-x-[-50%] translate-y-[-50%] left-[132.50px] top-[132.50px] absolute bg-[#072f6c]/30 rounded-full animate-[wave2_1s_ease-out_infinite]" />
+            <div className="w-[220px] h-[220px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/20 rounded-full animate-[wave_1.5s_ease-out_infinite]" />
+            <div className="w-[180px] h-[180px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/30 rounded-full animate-[wave_1.5s_ease-out_infinite]" />
+            <div className="w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/30 rounded-full animate-[wave_1.5s_ease-out_infinite]" />
             <div className={data.bubbleClass}>
               <TestimonialBubble
                 position={data.position}
@@ -238,8 +217,9 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
       >
         <div className="relative w-[200px] h-[200px]">
           <style>{styles}</style>
-          <div className="w-[180px] h-[180px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#6c95d3]/30 rounded-full animate-[wave_1s_ease-out_infinite]" />
-          <div className="w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#072f6c]/30 rounded-full animate-[wave2_1s_ease-out_infinite]" />{" "}
+          <div className="w-[220px] h-[220px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/20 rounded-full animate-[wave_1.5s_ease-out_infinite]" />
+          <div className="w-[180px] h-[180px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/30 rounded-full animate-[wave_1.5s_ease-out_infinite]" />
+          <div className="w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/30 rounded-full animate-[wave_1.5s_ease-out_infinite]" />{" "}
           <img
             className="w-[100px] h-[100px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
             src={data.image}
@@ -270,8 +250,8 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
             <div className="w-[1182px] flex flex-col justify-center items-center gap-2.5">
               <div className="w-[1182px] flex flex-col justify-start items-center gap-2.5">
                 <div className="flex flex-col justify-start items-start gap-2.5">
-                  <div className="h-[41px] p-2.5 bg-[#072f6c] rounded-[30px] outline outline-1 outline-offset-[-1px] inline-flex justify-center items-center gap-2.5">
-                    <div className="justify-start text-white text-lg font-medium font-['Montserrat'] leading-[27px]">
+                  <div className="h-[41px] p-2.5 bg-[#F6AF1F] hover:bg-[#fdce6f] rounded-[30px] inline-flex justify-center items-center gap-2.5">
+                    <div className="justify-start text-black text-lg font-medium font-['Montserrat'] leading-[27px]">
                       Testimonials
                     </div>
                   </div>
@@ -296,15 +276,15 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
       {/* Mobile Version */}
       <div className="2xl:hidden w-full py-10 px-4">
         <div className="flex flex-col items-center">
-          <div className="h-[41px] p-2.5 bg-[#072f6c] rounded-[30px] mb-4">
-            <div className="text-white text-lg font-medium font-['Montserrat']">
+          <div className="p-2.5 bg-[#F6AF1F] hover:bg-[#fdce6f] rounded-[30px] mb-4">
+            <div className="text-black text-lg font-medium font-['Montserrat']">
               Testimonials
             </div>
           </div>
-          <h2 className="text-[#343a40] text-2xl font-bold font-['Merriweather'] text-center mb-2">
+          <h2 className="text-black text-2xl font-bold font-['Merriweather'] text-center mb-2">
             What Our Customers Say
           </h2>
-          <p className="text-[#68717a] text-base font-medium font-['Montserrat'] text-center">
+          <p className="text-black text-base font-medium font-['Montserrat'] text-center">
             Real Experiences from Happy Customers
           </p>
         </div>

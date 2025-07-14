@@ -43,7 +43,7 @@ export default function AboutPage() {
             flourish, and life's best moments unfold.
           </p>
           <Link href="/products/pergola">
-            <button className="bg-blue-900 text-white px-6 py-3 rounded-md hover:bg-blue-800">
+            <button className="bg-[#F6AF1F] hover:bg-[#fdce6f] text-black px-6 py-3 rounded-md">
               Explore our products
             </button>
           </Link>

@@ -24,8 +24,8 @@ export const BuyNowButton = ({
       onClick={onClick}
       className={`all-[unset] box-border w-full flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative ${
         state.property1 === "primary-button-hover-l"
-          ? "bg-[#0a3980]"
-          : "bg-[#072f6c]"
+          ? "hover:bg-[#fdce6f]"
+          : "bg-[#F6AF1F]"
       }`}
       onMouseLeave={() => {
         dispatch("mouse_leave")
@@ -34,7 +34,7 @@ export const BuyNowButton = ({
         dispatch("mouse_enter")
       }}
     >
-      <p className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-16 text-[color:var(--semantic-border-alternate)] font-medium leading-6 whitespace-nowrap relative">
+      <p className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-16 text-black font-medium leading-6 whitespace-nowrap relative">
         {text}
       </p>
     </button>

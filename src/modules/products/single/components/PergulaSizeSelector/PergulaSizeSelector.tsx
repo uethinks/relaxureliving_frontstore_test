@@ -85,7 +85,7 @@ export const PergulaSizeSelector = React.memo(
                     key={size.id}
                     className={`inline-flex items-center justify-center gap-2.5 p-1 relative flex-[0_0_auto] cursor-pointer ${
                       selectedSize?.id === size.id
-                        ? "bg-[#dce7f8] rounded-[20px]"
+                        ? "bg-[#F6AF1F33] rounded-[20px]"
                         : ""
                     }`}
                     onClick={() => onSizeChange(size)}
@@ -126,21 +126,21 @@ export const PergulaSizeSelector = React.memo(
                     <button
                       className={`w-10 h-10 rounded-[20px] cursor-pointer border-solid p-1 ${
                         selectedColor?.id === color.id
-                          ? "border-[#072F6C] border-2"
+                          ? "border-[#F6AF1F] border-2"
                           : ""
                       }`}
                       onClick={() => onColorChange(color)}
                     >
                       <div
                         className={`w-full h-full rounded-[20px] ${
-                          color.value == "Dark Gray"
-                            ? "bg-[#7F7F7F]"
+                          selectedColor?.id === color.id
+                            ? "bg-[#F6AF1F33]"
                             : "bg-[#ffffff]"
                         }`}
                       ></div>
                     </button>
                     <div
-                      className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
+                      className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
                     >
                       {color.value}
                     </div>
@@ -169,12 +169,12 @@ export const PergulaSizeSelector = React.memo(
                   >
                     <button
                       className={`rounded-[10px] cursor-pointer border-solid p-1 border-2 ${
-                        selectedStyle?.id === style.id ? "border-[#072F6C]" : ""
+                        selectedStyle?.id === style.id ? "border-[#F6AF1F]" : ""
                       }`}
                       onClick={() => onStyleChange(style)}
                     >
                       <div
-                        className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#072f6c]`}
+                        className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
                       >
                         {style.value}
                       </div>
