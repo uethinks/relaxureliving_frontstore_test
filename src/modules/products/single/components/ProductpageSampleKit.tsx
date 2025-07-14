@@ -73,7 +73,7 @@ export const ProductpageSampleKit = ({
       id="sample-kit"
       className="flex flex-col justify-center w-full items-center gap-5 lg:px-[260px]"
     >
-      <div className="flex justify-center items-center relative self-stretch w-full flex-[0_0_auto]">
+      <div className="flex flex-col lg:flex-row justify-center items-center relative self-stretch w-full flex-[0_0_auto]">
         <img
           className="relative max-w-[360px] mt-[-10.00px] rounded-[30px] border-[10px] border-solid border-[#ffffff]"
           alt="Rectangle"
