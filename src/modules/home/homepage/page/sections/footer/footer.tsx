@@ -153,9 +153,7 @@ export const FooterDark = ({
               <Link href="/" className="mb-2">
                 <img className="w-28" src="/img/logo.svg" alt="Logo" />
               </Link>
-              <span className="text-white text-base mb-1">
-                +1 (511) 123 - 4567
-              </span>
+              <span className="text-white text-base mb-1">1-213-566-8658</span>
               <a
                 href="mailto:info@relaxureliving.com"
                 className="text-white text-base mb-1"
@@ -176,9 +174,7 @@ export const FooterDark = ({
             <HomepageSampleKit />
             {/* 底部导航和联系方式 */}
             <div className="w-full flex justify-center items-center gap-4">
-              <span className="text-white text-base mb-1">
-                +1 (511) 123 - 4567
-              </span>
+              <span className="text-white text-base mb-1">1-213-566-8658</span>
               <span className="text-white text-base mb-1">
                 <a
                   href="mailto:pergola@relaxure.com"
@@ -383,7 +379,7 @@ export const FooterDark = ({
               </Link>
               <div className="flex flex-row justify-start items-center gap-4 w-full mb-2">
                 <span className="text-white text-base mb-1">
-                  +1 (511) 123 - 4567
+                  1-213-566-8658
                 </span>
                 <a
                   href="mailto:info@relaxureliving.com"

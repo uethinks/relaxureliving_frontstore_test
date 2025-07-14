@@ -63,12 +63,6 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
         })
         return allValuesMatch
       }) || []
-
-    console.log(
-      `Filtered ${productImages?.length || 0} images to ${
-        filtered.length
-      } images`
-    )
     return filtered
   }, [productImages, selectedSize, selectedColor, selectedStyle])
 
