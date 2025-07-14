@@ -14,7 +14,7 @@ export const BadWeatherSection = (): JSX.Element => {
       </p>
 
       <Link href="/products/pergola" className="mt-2">
-        <button className="w-[271px] h-[48px] border-[#ffffff] border bg-transparent hover:bg-[#072f6c] transition-colors rounded-[10px] shadow-[0px_3px_7px_#072f6c1a] overflow-hidden">
+        <button className="w-[271px] h-[48px] border-[#ffffff] border bg-transparent hover:bg-[#fdce6f] transition-colors rounded-[10px] shadow-[0px_3px_7px_#072f6c1a] overflow-hidden">
           <div className="[font-family:'Montserrat',Helvetica] font-medium text-white text-[14px] md:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
             Explore the Corsica
           </div>

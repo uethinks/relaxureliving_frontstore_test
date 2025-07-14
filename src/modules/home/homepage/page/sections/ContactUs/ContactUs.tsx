@@ -160,19 +160,9 @@ export const ContactUs = ({
           <div className="relative w-[102px] h-[82.21px]">
             <div className="relative w-[253px] h-[232px] -top-[61px] -left-[86px]">
               <img
-                className="absolute w-[47px] h-[58px] top-[76px] left-[140px]"
-                alt="Group"
-                src="/img/group-266.png"
-              />
-              <img
                 className="absolute w-[253px] h-[232px]"
                 alt="Vector"
-                src="/img/vector-1.svg"
-              />
-              <img
-                className="absolute w-[102px] h-[111px] top-[61px] left-[71px]"
-                alt="Group"
-                src="/img/group-265.png"
+                src="/img/contact_us.png"
               />
             </div>
           </div>
@@ -298,7 +288,7 @@ export const ContactUs = ({
               >
                 <div
                   className={`h-full flex items-center justify-center gap-[var(--3-spacing-spacing-md)] px-[12.71px] py-[9.08px] ${
-                    isSubmitting ? "bg-[#F6AF1F]-400" : "bg-[#F6AF1F]"
+                    isSubmitting ? "hover:bg-[#fdce6f]" : "bg-[#F6AF1F]"
                   } rounded-[var(--2-radius-radius-md)]`}
                 >
                   <div className="font-medium text-black text-[16px] font-relaxure-sub-heading-18">

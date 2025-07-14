@@ -80,7 +80,11 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                     selectedCategoryIndex === idx ? "rotate-90" : "rotate-0"
                   }`}
                 >
-                  <ArrowRight color="#072F6C" />
+                  <ArrowRight
+                    color={
+                      selectedCategoryIndex === idx ? "#000000" : "#69727A"
+                    }
+                  />
                 </span>
               </div>
             ))}
@@ -150,8 +154,8 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                   <div
                     className={`flex-1 text-lg leading-[21.6px] relative [font-family:'Montserrat',Helvetica] tracking-[0] cursor-pointer flex items-center justify-between px-4 py-4 rounded-[10px] transition-all duration-150 ${
                       openQuestion.level1 === indexLevel1
-                        ? "bg-[#DCE7F8] text-[#072F6C] border-[1px] border-[#072F6C]"
-                        : "text-[#343A40]"
+                        ? "bg-[#F6AF1F33] text-black border-[1px] border-[#F6AF1F]"
+                        : "text-[#69727A]"
                     } `}
                     onClick={() =>
                       setOpenQuestion((prev) => ({
@@ -168,7 +172,13 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                           : "rotate-0"
                       }`}
                     >
-                      <ArrowRight color="#072F6C" />
+                      <ArrowRight
+                        color={
+                          openQuestion.level1 === indexLevel1
+                            ? "#000000"
+                            : "#69727A"
+                        }
+                      />
                     </span>
                   </div>
                 </div>
@@ -197,7 +207,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                                 {answer.question}
                               </span>
                               <span
-                                className={`text-[28px] text-[#072F6C] select-none transition-transform duration-300 ${
+                                className={`text-[28px] text-[#F6AF1F] select-none transition-transform duration-300 ${
                                   isOpen ? "rotate-45" : "rotate-0"
                                 }`}
                                 style={{

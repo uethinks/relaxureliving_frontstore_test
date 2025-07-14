@@ -303,13 +303,13 @@ export const ProductOverviewAccordion: React.FC<
                         ${
                           activeSection === section.id
                             ? "bg-[#F6AF1F] border-[#F6AF1F] text-white"
-                            : "bg-white hover:border-[#F6AF1F]"
+                            : "bg-white hover:bg-[#fdce6f]"
                         }
                       `}
                     >
                       {/* 步骤编号圆形背景 */}
                       <div
-                        className={`w-14 h-14 flex items-center justify-center rounded-full mb-4 text-lg font-bold bg-white
+                        className={`w-14 h-14 flex text-black items-center justify-center rounded-full mb-4 text-lg font-bold bg-white
                         
                       `}
                       >
@@ -398,7 +398,7 @@ export const ProductOverviewAccordion: React.FC<
                   {productOverview.onehundred_days_free_risk?.button && (
                     <button
                       onClick={() => setRiskPopupOpen(true)}
-                      className="w-fit hover:bg-yellow-500 bg-[#F6AF1F] box-border flex items-center gap-2 px-6 py-3 rounded-[10px] justify-center relative font-medium mt-2"
+                      className="w-fit hover:bg-[#fdce6f] bg-[#F6AF1F] box-border flex items-center gap-2 px-6 py-3 rounded-[10px] justify-center relative font-medium mt-2"
                     >
                       {productOverview.onehundred_days_free_risk.button}
                     </button>

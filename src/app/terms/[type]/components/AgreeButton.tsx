@@ -8,7 +8,7 @@ export default function AgreeButton() {
   return (
     <button
       onClick={() => router.back()}
-      className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+      className="bg-[#F6AF1F] hover:bg-[#fdce6f]  text-black px-4 py-2 rounded-md transition-colors"
     >
       Agree and continue
     </button>

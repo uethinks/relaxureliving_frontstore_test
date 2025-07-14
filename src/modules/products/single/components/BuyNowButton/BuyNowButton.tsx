@@ -24,7 +24,7 @@ export const BuyNowButton = ({
       onClick={onClick}
       className={`all-[unset] box-border w-full flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative ${
         state.property1 === "primary-button-hover-l"
-          ? "bg-[#0a3980]"
+          ? "hover:bg-[#fdce6f]"
           : "bg-[#F6AF1F]"
       }`}
       onMouseLeave={() => {

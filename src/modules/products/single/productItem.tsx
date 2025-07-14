@@ -69,7 +69,7 @@ export const ProductItem = ({
           </h2>
           <a
             href="/#contact"
-            className="flex flex-row items-center justify-center gap-2.5 border border-[#343a40] rounded-2xl px-20 py-2"
+            className="flex flex-row items-center justify-center gap-2.5 border border-[#343a40] rounded-2xl px-20 py-2 hover:bg-[#fdce6f]"
           >
             {pergolaData.get_in_touch.button_name}
           </a>
