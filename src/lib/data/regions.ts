@@ -4,6 +4,7 @@ import { sdk } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
 import { HttpTypes } from "@medusajs/types"
 import { getCacheOptions } from "./cookies"
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 export const listRegions = async () => {
   const next = {
     ...(await getCacheOptions("regions")),
@@ -54,10 +55,7 @@ export const getRegion = async (countryCode: string) => {
       })
     })
 
-    const region = countryCode
-      ? regionMap.get(countryCode)
-      : regionMap.get("us")
-
+    const region =  regionMap.get(countryCode)
     return region
   } catch (e: any) {
     return null

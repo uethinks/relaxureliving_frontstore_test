@@ -19,7 +19,7 @@ export const StyleSecondary = ({
 }: Props): JSX.Element => {
   return (
     <div
-      className={`inline-flex items-center justify-center gap-2 px-6 py-3 relative border border-solid border-[color:var(--primitive-color-neutral-white)] ${className}`}
+      className={`inline-flex items-center justify-center gap-2 px-6 py-3 relative ${className}`}
     >
       <div
         className={`relative w-fit font-text-regular-normal font-[number:var(--text-regular-normal-font-weight)] text-semantic-text-alternate text-[length:var(--text-regular-normal-font-size)] tracking-[var(--text-regular-normal-letter-spacing)] leading-[var(--text-regular-normal-line-height)] whitespace-nowrap [font-style:var(--text-regular-normal-font-style)] ${divClassName}`}

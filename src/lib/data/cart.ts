@@ -14,7 +14,7 @@ import {
   setCartId,
 } from "./cookies"
 import { getRegion } from "./regions"
-
+import axiosInstanceMedusa from "@lib/axiosInstanceMedusa"
 /**
  * Retrieves a cart by its ID. If no ID is provided, it will use the cart ID from the cookies.
  * @param cartId - optional - The ID of the cart to retrieve.
@@ -412,10 +412,7 @@ export async function placeOrder(cartId?: string) {
     .catch(medusaError)
 
   if (cartRes?.type === "order") {
-    const countryCode =
-      cartRes.order.shipping_address?.country_code?.toLowerCase()
     removeCartId()
-    // redirect(`/${countryCode}/order/${cartRes?.order.id}/confirmed`)
     return cartRes
   }
   return cartRes
@@ -446,7 +443,7 @@ export async function updateRegion(countryCode: string, currentPath: string) {
   const productsCacheTag = await getCacheTag("products")
   revalidateTag(productsCacheTag)
 
-  redirect(`/${countryCode}${currentPath}`)
+  redirect(`/${currentPath}`)
 }
 
 export async function listCartOptions() {
@@ -465,5 +462,16 @@ export async function listCartOptions() {
     next,
     headers,
     cache: "force-cache",
+  })
+}
+
+export async function addPromotionCode(cartId: string, promo_codes: Array<string>) {
+
+  return await axiosInstanceMedusa.post(`/store/carts/${cartId}/promotions`, {
+    promo_codes
+  }).then((res) => {
+    return res.data
+  }).catch((err) => {
+    throw err
   })
 }

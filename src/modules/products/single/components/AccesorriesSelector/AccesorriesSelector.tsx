@@ -183,7 +183,7 @@ export const AccesorriesSelector = ({
                     (sum, item) => sum + (item.quantity || 0),
                     0
                   ) > 0)
-                  ? "bg-[#dce7f8]"
+                  ? "bg-[#F6AF1F33]"
                   : "bg-[#ffffff]"
               }`}
               onClick={() => handleAccessoryClick(accessory)}
@@ -205,8 +205,8 @@ export const AccesorriesSelector = ({
                     0
                   ) > 0)) && (
                 <div className="absolute -top-3 -right-3 w-8 h-8 p-1 rounded-full bg-[#f3f3f3]">
-                  <div className="w-full h-full flex items-center justify-center bg-[#E6EEFF] rounded-full">
-                    <span className="text-[#072F6C] text-base font-semibold">
+                  <div className="w-full h-full flex items-center justify-center bg-[#F6AF1F33] rounded-full">
+                    <span className="text-[#69727a] text-base">
                       {accessory.name.toLowerCase().includes("heating")
                         ? selectedHeaterVariant?.reduce(
                             (sum, item) => sum + (item.quantity || 0),

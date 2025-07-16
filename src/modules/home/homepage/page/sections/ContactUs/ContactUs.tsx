@@ -160,28 +160,18 @@ export const ContactUs = ({
           <div className="relative w-[102px] h-[82.21px]">
             <div className="relative w-[253px] h-[232px] -top-[61px] -left-[86px]">
               <img
-                className="absolute w-[47px] h-[58px] top-[76px] left-[140px]"
-                alt="Group"
-                src="/img/group-266.png"
-              />
-              <img
                 className="absolute w-[253px] h-[232px]"
                 alt="Vector"
-                src="/img/vector-1.svg"
-              />
-              <img
-                className="absolute w-[102px] h-[111px] top-[61px] left-[71px]"
-                alt="Group"
-                src="/img/group-265.png"
+                src="/img/contact_us.png"
               />
             </div>
           </div>
 
           <div className="flex flex-col items-center gap-[52.66px] w-full">
             <div className="flex flex-col items-center gap-[18.16px] w-full">
-              <p className="font-heading-2 text-black text-[18px] lg:text-[36px] font-medium text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)]">
+              <h2 className="font-heading-2 text-black text-[18px] lg:text-[36px] font-medium text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)]">
                 {contactUs.FormDescription}
-              </p>
+              </h2>
             </div>
 
             <form
@@ -298,10 +288,10 @@ export const ContactUs = ({
               >
                 <div
                   className={`h-full flex items-center justify-center gap-[var(--3-spacing-spacing-md)] px-[12.71px] py-[9.08px] ${
-                    isSubmitting ? "bg-gray-400" : "bg-[#072f6c]"
+                    isSubmitting ? "hover:bg-[#fdce6f]" : "bg-[#F6AF1F]"
                   } rounded-[var(--2-radius-radius-md)]`}
                 >
-                  <div className="font-medium text-[16px] font-relaxure-sub-heading-18 text-variable-collection-beige-brand">
+                  <div className="font-medium text-black text-[16px] font-relaxure-sub-heading-18">
                     {isSubmitting ? "Sending..." : contactUs.SendButton}
                   </div>
                 </div>

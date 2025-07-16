@@ -49,9 +49,9 @@ export const OurPergola = ({
     <>
       <div className="flex flex-col w-full items-center gap-2.5 relative">
         <div className="flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-          <p className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+          <h2 className="relative w-full mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
             How Will You Experience Relaxure?
-          </p>
+          </h2>
         </div>
 
         <div className="justify-center flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -83,7 +83,7 @@ export const OurPergola = ({
               </div>
             </div>
 
-            <Link href="/us/products/pergola">
+            <Link href="/products/pergola">
               <Button
                 className="!flex-[0_0_auto] !inline-flex !w-[unset]"
                 property1="primary-button-l"

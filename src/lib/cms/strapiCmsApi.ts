@@ -29,14 +29,19 @@ const pergolaPopulate = {
     "populate[product_images][fields][0]": "*",
     "populate[descriptionTab][populate][0]": "image",
     "populate[descriptionTab][populate][1]": "descriptions",
-    "populate[putItTogether][populate][youtubeButtons]": "*",
-    "populate[putItTogether][populate][descriptions]": "*",
     "populate[productFeatures][populate][featureItem][populate][0]": "image",
-    "populate[notJustAPrettyFace][populate][notJustAPrettyFaceItem][populate][notJustPrettyFaceIconContent][populate][0]": "icon",
     "populate[productAccessories][populate][productAccessoryItem][populate][0]": "image",
-    "populate[boringButImportantStuff][populate][Promise][populate][0]": "Icon",
     "populate[credential][populate][images][populate]": "*",
-    "populate[one_hundred_day_risk_free_trial][populate]": "*"
+    "populate[product_overview][populate][product_overview_description]": "*",
+    "populate[product_overview][populate][pergola_size_technical_specs][populate][0]": "images",
+    "populate[product_overview][populate][shipping_and_returns]": "*",
+    "populate[product_overview][populate][fast_easy_assembly][populate][youtubeButtons]": "*",
+    "populate[product_overview][populate][fast_easy_assembly][populate][descriptions]": "*",
+    "populate[product_overview][populate][onehundred_days_free_risk][populate][0]": "image",
+    "populate[product_overview][populate][lifetime_warranty]": "*",
+    "populate[faq][populate][homepageFAQ][populate][0]": "question_and_answer",
+    "populate[get_in_touch]": "*",
+    "populate[sample_kit][populate][0]": "product_image",
 };
 const heaterPopulate = {
   "populate[productInformations]": "*",
@@ -49,6 +54,14 @@ const shadesPopulate = {
 const glassdoorPopulate = {
   "populate[productInformations]": "*",
   "populate[product_images][fields][0]": "*",
+};
+const landingPagePopulate = {
+  "populate[hero][populate][0]": "BackgroundImage",
+  "populate[landing_slider][populate][images][fields][0]": "*",
+  "populate[good_memory][populate][0]": "image",
+};
+const menuPopulate = {
+  "populate[menu_item][populate]": "sub_menu_item",
 };
 
 export const API_URLS = {
@@ -66,6 +79,8 @@ export const API_URLS = {
   getShades: '/api/shades-screen',
   getGlassdoor: '/api/glass-door',
   sendKlaviyoTrackInfo: '/api/contact-submissions',
+  getLandingPage: '/api/landing',
+  getMenu: '/api/menu',
 };
 
 // 获取所有项目
@@ -225,3 +240,27 @@ export const sendKlaviyoContactUsForm = async (info: any) => {
   }
 }
 
+export const getLandingPage = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getLandingPage, {
+      params: landingPagePopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching landing page data:', error, API_URLS.getLandingPage);
+    throw error;
+  }
+};
+
+// 获取菜单数据
+export const getMenu = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getMenu, {
+      params: menuPopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching menu data:', error, API_URLS.getMenu);
+    throw error;
+  }
+};

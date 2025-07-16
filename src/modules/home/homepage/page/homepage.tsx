@@ -63,7 +63,7 @@ export default async function Homepage() {
   if (!data) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p>页面加载失败，请稍后重试</p>
+        <p>fail to load homepage</p>
       </div>
     )
   }
@@ -73,10 +73,10 @@ export default async function Homepage() {
       <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-[120px] px-4 lg:px-20 py-0 relative bg-[#ffffff]">
         <NavBarWrapper isHomePage={true} />
         <Hero hero={data.HomepageHero} />
+        <AwardBlock data={{ ...data.credential, showDescription: true }} />
         <OurPergola pergola={data.OurPergola} />
         <Features features={data.Features} />
         <Accessories accessories={data.Accessories} />
-        <AwardBlock data={data.credential} />
       </div>
       <OurPromise
         pergolaData={

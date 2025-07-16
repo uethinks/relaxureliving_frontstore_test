@@ -164,7 +164,7 @@ export const SampleKitCard = (): JSX.Element | null => {
             </div>
             <div className="inline-flex items-center justify-center gap-2.5 px-2.5 py-0 relative flex-[0_0_auto]">
               <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-semibold text-[#343a40] text-[14px] lg:text-[22px] leading-[30.8px] whitespace-nowrap relative tracking-[0]">
-                $ {sampleKit?.total}
+                $ {sampleKit?.total?.toFixed(2)}
               </div>
             </div>
           </div>

@@ -9,7 +9,7 @@ export const DescriptionContent = ({
 }) => {
   const descriptionTab = pergolaData.descriptionTab
   return (
-    <div id="description-content" className="w-full">
+    <div id="description-content" className="w-full mt-5 lg:mt-[80px]">
       <Description pergolaData={pergolaData} />
     </div>
   )

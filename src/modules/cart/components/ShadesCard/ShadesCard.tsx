@@ -186,12 +186,12 @@ export const ShadesCard = (): JSX.Element | null => {
               </div>
               <div className="flex items-end justify-start gap-4">
                 <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
-                  ${shade?.total}
+                  ${shade?.total?.toFixed(2)}
                 </div>
                 {shade?.discount_total > 0 && (
                   <div className="flex items-center gap-2">
                     <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
-                      ${shade?.original_total}
+                      ${shade?.original_total?.toFixed(2)}
                     </div>
                     <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
                       <span className="text-[12px] font-normal text-[red]">

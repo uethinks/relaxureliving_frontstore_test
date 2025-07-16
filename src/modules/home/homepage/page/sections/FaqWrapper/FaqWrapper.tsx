@@ -36,7 +36,7 @@ const ArrowRight = ({ color = "#072F6C" }) => (
 export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
   // 桌面端状态
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0)
-  const [openQuestionIndex, setOpenQuestionIndex] = useState(0)
+  const [openQuestionIndex, setOpenQuestionIndex] = useState(-1)
   // 移动端状态
   const [openQuestion, setOpenQuestion] = useState<{
     level1: number
@@ -46,11 +46,14 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
   if (!faq?.homepageFAQ.length) return null
 
   return (
-    <div className="flex flex-col w-full items-center justify-center min-h-[700px] bg-[#f3f3f3] py-16">
+    <div
+      id="faqs"
+      className="flex flex-col w-full items-center justify-center bg-[#f3f3f3] py-16"
+    >
       <div className="w-full max-w-[1200px] mx-auto">
-        <div className="text-[#343a40] font-merriweather text-[32px] font-bold text-center mb-12 leading-[40px]">
+        <h2 className="text-[#343a40] font-merriweather text-[32px] font-bold text-center mb-12 leading-[40px]">
           {faq.Subtitle}
-        </div>
+        </h2>
         {/* 桌面端布局 */}
         <div
           className="hidden font-[500] lg:flex flex-row justify-between w-full rounded-[24px] overflow-visible"
@@ -63,21 +66,25 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                 key={category.id}
                 className={`flex items-center text-[18px] leading-[28px] justify-between pl-8 pr-2 py-5 cursor-pointer select-none transition-all duration-150 rounded-[10px] relative ${
                   selectedCategoryIndex === idx
-                    ? "bg-[#DCE7F8] text-[#072F6C] border-[1px] border-[#072F6C]"
-                    : "text-[#343A40]"
+                    ? "bg-[#F6AF1F33] text-black border-[1px] border-[#F6AF1F]"
+                    : "text-[#69727A]"
                 }`}
                 onClick={() => {
                   setSelectedCategoryIndex(idx)
-                  setOpenQuestionIndex(0)
+                  setOpenQuestionIndex(-1)
                 }}
               >
-                <span>{category.Title}</span>
+                <h3 className="font-montserrat">{category.Title}</h3>
                 <span
                   className={`ml-2 transition-transform duration-300 ${
                     selectedCategoryIndex === idx ? "rotate-90" : "rotate-0"
                   }`}
                 >
-                  <ArrowRight color="#072F6C" />
+                  <ArrowRight
+                    color={
+                      selectedCategoryIndex === idx ? "#000000" : "#69727A"
+                    }
+                  />
                 </span>
               </div>
             ))}
@@ -94,13 +101,17 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                     >
                       <div
                         className="flex items-center justify-between cursor-pointer min-h-[56px] px-6 py-3"
-                        onClick={() => setOpenQuestionIndex(idx)}
+                        onClick={() =>
+                          setOpenQuestionIndex(
+                            openQuestionIndex === idx ? -1 : idx
+                          )
+                        }
                       >
                         <span className="text-[18px] leading-[28px] font-montserrat text-[#343A40]">
                           {answer.question}
                         </span>
                         <span
-                          className={`text-[28px] text-[#072F6C] select-none transition-transform duration-300 ${
+                          className={`text-[28px] text-[#F6AF1F] select-none transition-transform duration-300 ${
                             isOpen ? "rotate-45" : "rotate-0"
                           }`}
                           style={{
@@ -143,8 +154,8 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                   <div
                     className={`flex-1 text-lg leading-[21.6px] relative [font-family:'Montserrat',Helvetica] tracking-[0] cursor-pointer flex items-center justify-between px-4 py-4 rounded-[10px] transition-all duration-150 ${
                       openQuestion.level1 === indexLevel1
-                        ? "bg-[#DCE7F8] text-[#072F6C] border-[1px] border-[#072F6C]"
-                        : "text-[#343A40]"
+                        ? "bg-[#F6AF1F33] text-black border-[1px] border-[#F6AF1F]"
+                        : "text-[#69727A]"
                     } `}
                     onClick={() =>
                       setOpenQuestion((prev) => ({
@@ -161,7 +172,13 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                           : "rotate-0"
                       }`}
                     >
-                      <ArrowRight color="#072F6C" />
+                      <ArrowRight
+                        color={
+                          openQuestion.level1 === indexLevel1
+                            ? "#000000"
+                            : "#69727A"
+                        }
+                      />
                     </span>
                   </div>
                 </div>
@@ -190,7 +207,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
                                 {answer.question}
                               </span>
                               <span
-                                className={`text-[28px] text-[#072F6C] select-none transition-transform duration-300 ${
+                                className={`text-[28px] text-[#F6AF1F] select-none transition-transform duration-300 ${
                                   isOpen ? "rotate-45" : "rotate-0"
                                 }`}
                                 style={{

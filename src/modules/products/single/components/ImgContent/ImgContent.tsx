@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { FreeMode, Navigation, Thumbs, Pagination } from "swiper/modules"
 import type { Swiper as SwiperType } from "swiper"
 import { Image } from "@/types/global"
+import { useProductSelection } from "../ProductSelectionContext"
 
 // 导入 Swiper 样式
 import "swiper/css"
@@ -26,6 +27,54 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
   const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+
+  // 使用 Context 获取状态
+  const { selectedSize, selectedColor, selectedStyle } = useProductSelection()
+
+  // 根据选中的选项筛选图片
+  const filteredImages = React.useMemo(() => {
+    if (!selectedSize && !selectedColor && !selectedStyle) {
+      return productImages
+    }
+
+    const selectedValues = [
+      selectedSize?.value,
+      selectedColor?.value,
+      selectedStyle?.value,
+    ].filter(Boolean)
+
+    const filtered =
+      productImages?.filter((image) => {
+        if (!image.caption) {
+          return false
+        }
+
+        const caption = image.caption.toLowerCase()
+        // 检查是否包含 "all"
+        if (caption.includes("all")) {
+          return true
+        }
+
+        // 检查是否同时包含所有选中的值
+        const allValuesMatch = selectedValues.every((value) => {
+          if (!value) return true // 如果没有选择该参数，则不参与过滤
+          const matchesValue = caption.includes(value.toLowerCase())
+          return matchesValue
+        })
+        return allValuesMatch
+      }) || []
+    return filtered
+  }, [productImages, selectedSize, selectedColor, selectedStyle])
+
+  // 当筛选后的图片变化时，重置当前图片索引
+  useEffect(() => {
+    if (
+      filteredImages.length > 0 &&
+      currentImageIndex >= filteredImages.length
+    ) {
+      setCurrentImageIndex(0)
+    }
+  }, [filteredImages, currentImageIndex])
 
   // 处理键盘事件
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -79,99 +128,113 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
         {/* 主图 */}
         <div className="relative w-full">
           <div className="rounded-[20px] cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full overflow-hidden">
-            <img
-              src={strapiCmsUrl + productImages?.[currentImageIndex]?.url}
-              alt=""
-              className="w-full h-full object-cover object-center"
-              onClick={handleImageClick}
-            />
+            {filteredImages.length > 0 ? (
+              <img
+                src={strapiCmsUrl + filteredImages?.[currentImageIndex]?.url}
+                alt=""
+                className="w-full h-full object-cover object-center"
+                onClick={handleImageClick}
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                <p className="text-gray-500 text-center">
+                  No images found
+                  <br />
+                  <span className="text-sm">
+                    Please select other size, color or style
+                  </span>
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
         {/* 缩略图轮播 */}
-        <div className="flex py-2 justify-center items-center px-1 w-[98%] bg-[#ffffff] rounded-[20px] overflow-hidden border border-solid border-[#ffffff87] backdrop-blur-[3.3px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(3.3px)_brightness(100%)]">
-          <div className="relative w-full">
-            <Swiper
-              onSwiper={setThumbsSwiper}
-              spaceBetween={10}
-              slidesPerView={
-                windowWidth < 1024
-                  ? MOBILE_THUMBNAILS_PER_PAGE
-                  : THUMBNAILS_PER_PAGE
-              }
-              freeMode={true}
-              watchSlidesProgress={true}
-              modules={[FreeMode, Navigation]}
-              className="thumbs-swiper"
-              loop={true}
-              onSlideChange={(swiper) => {
-                setCurrentImageIndex(swiper.realIndex)
-              }}
-            >
-              {productImages?.map((image, index) => (
-                <SwiperSlide
-                  key={index}
-                  className="cursor-pointer"
-                  onClick={() => setCurrentImageIndex(index)}
+        {filteredImages.length > 0 && (
+          <div className="flex py-2 justify-center items-center px-1 w-[98%] bg-[#ffffff] rounded-[20px] overflow-hidden border border-solid border-[#ffffff87] backdrop-blur-[3.3px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(3.3px)_brightness(100%)]">
+            <div className="relative w-full">
+              <Swiper
+                onSwiper={setThumbsSwiper}
+                spaceBetween={10}
+                slidesPerView={
+                  windowWidth < 1024
+                    ? MOBILE_THUMBNAILS_PER_PAGE
+                    : THUMBNAILS_PER_PAGE
+                }
+                freeMode={true}
+                watchSlidesProgress={true}
+                modules={[FreeMode, Navigation]}
+                className="thumbs-swiper"
+                loop={true}
+                onSlideChange={(swiper) => {
+                  setCurrentImageIndex(swiper.realIndex)
+                }}
+              >
+                {filteredImages?.map((image, index) => (
+                  <SwiperSlide
+                    key={index}
+                    className="cursor-pointer"
+                    onClick={() => setCurrentImageIndex(index)}
+                  >
+                    <div className="aspect-square rounded-2xl overflow-hidden">
+                      <img
+                        src={strapiCmsUrl + image.formats.small.url}
+                        alt=""
+                        className="w-full h-full object-cover object-center"
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* 自定义导航按钮 */}
+              <button
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
+                onClick={() => thumbsSwiper?.slidePrev()}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <div className="aspect-square rounded-2xl overflow-hidden">
-                    <img
-                      src={strapiCmsUrl + image.formats.small.url}
-                      alt=""
-                      className="w-full h-full object-cover object-center"
-                      loading="lazy"
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
 
-            {/* 自定义导航按钮 */}
-            <button
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
-              onClick={() => thumbsSwiper?.slidePrev()}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+              <button
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
+                onClick={() => thumbsSwiper?.slideNext()}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-
-            <button
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
-              onClick={() => thumbsSwiper?.slideNext()}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* 模态框 */}
-      {isModalOpen && (
+      {isModalOpen && filteredImages.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-80 z-50">
           <div className="relative w-full h-full flex items-center justify-center">
             <div className="relative w-[90vw] h-[90vh] flex items-center justify-center">
@@ -191,7 +254,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                 initialSlide={currentImageIndex}
                 onSwiper={setModalSwiper}
               >
-                {productImages?.map((image, index) => (
+                {filteredImages?.map((image, index) => (
                   <SwiperSlide
                     key={index}
                     className="!flex items-center justify-center h-full"

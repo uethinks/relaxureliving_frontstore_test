@@ -46,7 +46,7 @@ export const Accessories = ({
                     key={item.id}
                     className={`flex flex-col items-center justify-center gap-[10.47px] p-2.5 relative rounded-[44px] ${
                       selectedOption?.id === item.id
-                        ? "bg-[#ffffff] border border-solid border-[#072f6c] shadow-shadow-cards-relaxure"
+                        ? "bg-[#ffffff] border border-solid border-black shadow-shadow-cards-relaxure"
                         : "border border-solid border-[#e8e8ea]"
                     }`}
                     onClick={() => handleOptionClick(item)}
@@ -55,7 +55,7 @@ export const Accessories = ({
                       <div
                         className={`relative flex-1 mt-[-1.31px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[22px] text-center tracking-[0] leading-[30.8px] ${
                           selectedOption?.id === item.id
-                            ? "text-[#072f6c]"
+                            ? "text-black"
                             : "text-[#69727a]"
                         }`}
                       >
@@ -68,9 +68,9 @@ export const Accessories = ({
 
               <div className="flex flex-col w-full items-end gap-2.5 relative flex-[0_0_auto]">
                 <div className="flex  items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                  <div className="text-center lg:text-left mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] relative flex-1 tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
+                  <h2 className="text-center lg:text-left mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] relative flex-1 tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
                     {accessories?.Subtitle}
-                  </div>
+                  </h2>
                 </div>
 
                 <div className="flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -80,7 +80,7 @@ export const Accessories = ({
                 </div>
               </div>
             </div>
-            <Link href="/us/products/pergola">
+            <Link href="/products/pergola">
               <AddAccessories
                 className="!flex-[0_0_auto]"
                 property1="primary-button-l"
@@ -93,7 +93,7 @@ export const Accessories = ({
                   key={item.id}
                   className={`flex flex-col items-center justify-center gap-[10.47px] p-2.5 relative rounded-[44px] ${
                     selectedOption?.id === item.id
-                      ? "bg-[#ffffff] border border-solid border-[#072f6c] shadow-shadow-cards-relaxure"
+                      ? "bg-[#ffffff] border border-solid border-black shadow-shadow-cards-relaxure"
                       : "border border-solid border-[#e8e8ea]"
                   }`}
                   onClick={() => handleOptionClick(item)}
@@ -102,7 +102,7 @@ export const Accessories = ({
                     <div
                       className={`relative flex-1 mt-[-1.31px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[22px] text-center tracking-[0] leading-[30.8px] ${
                         selectedOption?.id === item.id
-                          ? "text-[#072f6c]"
+                          ? "text-black"
                           : "text-[#69727a]"
                       }`}
                     >

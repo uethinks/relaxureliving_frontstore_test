@@ -7,14 +7,16 @@ import {
   placeOrder,
   setShippingMethod,
   initiatePaymentSession,
+  addPromotionCode,
 } from "@lib/data/cart"
 import { listCartShippingMethods } from "@lib/data/fulfillment"
 import Link from "next/link"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
-import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 import { OceanPaymentForm } from "./components/OceanPaymentForm"
 import { useRouter } from "next/navigation"
+import Breadcrumb from "@/components/Breadcrumb"
+const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 type ShippingAddress = {
   first_name: string
@@ -39,9 +41,13 @@ function reportToGA(eventName: string, value: any) {
 }
 
 export const Checkout = () => {
-  const { cart } = useCart()
-  const router = useRouter()
+  const { cart, getCart } = useCart()
   const [order, setOrder] = useState<any>(null)
+  const [promotionCode, setPromotionCode] = useState("")
+  const [isApplyingPromotion, setIsApplyingPromotion] = useState(false)
+  const [promotionError, setPromotionError] = useState("")
+  const [promotionSuccess, setPromotionSuccess] = useState("")
+  const [appliedPromotions, setAppliedPromotions] = useState<string[]>([])
   const [formData, setFormData] = useState<FormData>({
     email: "",
     shipping_address: {
@@ -52,7 +58,7 @@ export const Checkout = () => {
       province: "",
       postal_code: "",
       phone: "",
-      country_code: "us",
+      country_code: defaultCountryCode,
     },
   })
   const [errors, setErrors] = useState({
@@ -197,6 +203,19 @@ export const Checkout = () => {
     }
   }, [cart])
 
+  // 初始化已应用的优惠码
+  useEffect(() => {
+    if (cart?.promotions && cart.promotions.length > 0) {
+      // 从购物车的promotions数组中提取优惠码，过滤掉undefined值
+      const promotionCodes = cart.promotions
+        .map((promo) => promo.code)
+        .filter((code): code is string => code !== undefined)
+      setAppliedPromotions(promotionCodes)
+    } else {
+      setAppliedPromotions([])
+    }
+  }, [cart?.promotions])
+
   //初始化paymentSession
   const initializePaymentSession = async () => {
     const paymentProvider =
@@ -223,6 +242,51 @@ export const Checkout = () => {
     return null
   }
 
+  const getPromotionDetails = (code: string) => {
+    if (!cart?.promotions) return null
+    return cart.promotions.find((promo) => promo.code === code)
+  }
+
+  const formatDiscountAmount = (promotion: any) => {
+    if (promotion?.application_method?.type === "fixed") {
+      return `$${promotion.application_method.value}`
+    } else if (promotion?.application_method?.type === "percentage") {
+      return `${promotion.application_method.value}%`
+    }
+    return ""
+  }
+
+  const applyPromotionCode = async () => {
+    if (!promotionCode.trim() || !cart?.id) {
+      setPromotionError("Please enter a valid promotion code")
+      return
+    }
+
+    // 检查是否已经应用过这个优惠码
+    if (appliedPromotions.includes(promotionCode.trim().toUpperCase())) {
+      setPromotionError("This promotion code has already been applied")
+      return
+    }
+
+    setIsApplyingPromotion(true)
+    setPromotionError("")
+    setPromotionSuccess("")
+
+    try {
+      await addPromotionCode(cart.id, [promotionCode.trim()])
+      setPromotionSuccess("Promotion code applied successfully!")
+      setPromotionCode("")
+      // 重新获取购物车数据以更新折扣信息和已应用的优惠码
+      await getCart()
+    } catch (error: any) {
+      setPromotionError(
+        error?.response?.data?.message || "Failed to apply promotion code"
+      )
+    } finally {
+      setIsApplyingPromotion(false)
+    }
+  }
+
   const comlpeleCartAndCreateOrder = async (): Promise<StoreOrder | null> => {
     if (cart) {
       const cartRes = await placeOrder(cart.id)
@@ -246,7 +310,7 @@ export const Checkout = () => {
             Payment
           </div>
         </div>
-
+        <Breadcrumb steps={["Cart", "Information", "Payment"]} current={2} />
         <div className="mt-10 flex flex-col-reverse justify-start items-center lg:flex-row lg:justify-between lg:items-start w-full gap-5">
           {/* Payment Form */}
           <div className="w-full lg:w-3/5 flex flex-col items-start justify-end gap-10 p-5 lg:p-10 bg-[#efefef] rounded-[20px]">
@@ -479,22 +543,22 @@ export const Checkout = () => {
             </div>
             {/* Footer Links */}
             <div className="flex flex-wrap items-center justify-center gap-[34px] relative self-stretch w-full flex-[0_0_auto]">
-              <Link href="/us/terms/warranty">
+              <Link href="/terms/warranty">
                 <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
                   Warranty
                 </div>
               </Link>
-              <Link href="/us/terms/refund-policy">
+              <Link href="/terms/refund-policy">
                 <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
                   Refund policy
                 </div>
               </Link>
-              <Link href="/us/terms/terms-of-service">
+              <Link href="/terms/terms-of-service">
                 <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
                   Terms of service
                 </div>
               </Link>
-              <Link href="/us/terms/privacy-policy">
+              <Link href="/terms/privacy-policy">
                 <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
                   Privacy policy
                 </div>
@@ -525,40 +589,121 @@ export const Checkout = () => {
                             </div>
                           </div>
                           <div className="relative  [font-family:'Montserrat',Helvetica] font-semibold text-[#343a40] text-base tracking-[0] leading-[22.4px] whitespace-nowrap">
-                            ${item.total}
+                            ${Number(item.total ?? 0).toFixed(2)}
                           </div>
                         </div>
                       </div>
                     ))}
                     <div className="relative self-stretch w-full h-0.5 bg-[#d9d9d9] rounded-[10px]" />
                   </div>
-                  <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
-                    <div className="[font-family:'Montserrat',Helvetica] font-medium text-[22px] leading-[30.8px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
-                      Total
+                  {/* Promotion Code Input */}
+                  <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
+                    <div className="flex items-center gap-2 relative self-stretch w-full flex-[0_0_auto]">
+                      <input
+                        className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#343a40] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3"
+                        placeholder="Enter promotion code"
+                        type="text"
+                        value={promotionCode}
+                        onChange={(e) => setPromotionCode(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === "Enter") {
+                            applyPromotionCode()
+                          }
+                        }}
+                      />
+                      <button
+                        onClick={applyPromotionCode}
+                        disabled={isApplyingPromotion || !promotionCode.trim()}
+                        className="p-3 bg-[#343a40] text-white rounded-[9.08px] font-medium text-sm hover:bg-[#495057] disabled:bg-[#6c757d] disabled:cursor-not-allowed transition-colors duration-200 [font-family:'Montserrat',Helvetica]"
+                      >
+                        Apply
+                      </button>
                     </div>
-                    <div className="flex items-end justify-start gap-4">
-                      <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
-                        ${cart?.total}
-                      </div>
-                      {(cart?.discount_total ?? 0) > 0 &&
-                        cart?.original_total && (
-                          <div className="flex items-center gap-2">
-                            <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
-                              ${cart.original_total}
-                            </div>
-                            <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
-                              <span className="text-[12px] font-normal text-[red]">
-                                Save{" "}
-                                {Math.round(
-                                  (cart.discount_total / cart.original_total) *
-                                    100
+
+                    {/* Applied Promotions Display */}
+                    {appliedPromotions.length > 0 && (
+                      <div className="flex flex-col gap-2 w-full">
+                        <div className="text-sm font-medium text-[#343a40] [font-family:'Montserrat',Helvetica]">
+                          Applied Promotions:
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {appliedPromotions.map((code, index) => {
+                            const promotionDetails = getPromotionDetails(code)
+                            const discountAmount = promotionDetails
+                              ? formatDiscountAmount(promotionDetails)
+                              : ""
+                            return (
+                              <div
+                                key={index}
+                                className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm [font-family:'Montserrat',Helvetica]"
+                              >
+                                <span>✓ {code}</span>
+                                {discountAmount && (
+                                  <span className="text-xs font-medium">
+                                    ({discountAmount} off)
+                                  </span>
                                 )}
-                                %
-                              </span>
-                            </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {promotionError && (
+                      <div className="text-red-500 text-sm [font-family:'Montserrat',Helvetica]">
+                        {promotionError}
+                      </div>
+                    )}
+                    {promotionSuccess && (
+                      <div className="text-green-500 text-sm [font-family:'Montserrat',Helvetica]">
+                        {promotionSuccess}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Promotion Discount Display */}
+                  {(cart?.discount_total ?? 0) > 0 && (
+                    <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
+                      <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
+                        <div className="flex w-full items-center gap-2.5 relative max-w-full">
+                          <div className="w-full break-words relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-normal overflow-wrap break-word">
+                            Promotion Discount
                           </div>
-                        )}
+                        </div>
+                        <div className="relative [font-family:'Montserrat',Helvetica] font-semibold text-[#343a40] text-base tracking-[0] leading-[22.4px] whitespace-nowrap">
+                          -${Number(cart?.discount_total ?? 0).toFixed(2)}
+                        </div>
+                      </div>
                     </div>
+                  )}
+                </div>
+                <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
+                  <div className="[font-family:'Montserrat',Helvetica] font-medium text-[22px] leading-[30.8px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
+                    Total
+                  </div>
+                  <div className="flex items-end justify-start gap-4">
+                    <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
+                      ${Number(cart?.total ?? 0).toFixed(2)}
+                    </div>
+                    {(cart?.discount_total ?? 0) > 0 &&
+                      cart?.original_total && (
+                        <div className="flex items-center gap-2">
+                          <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
+                            ${Number(cart.original_total ?? 0).toFixed(2)}
+                          </div>
+                          <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
+                            <span className="text-[12px] font-normal text-[red]">
+                              Save{" "}
+                              {Math.round(
+                                (cart.discount_total / cart.original_total) *
+                                  100
+                              )}
+                              %
+                            </span>
+                          </div>
+                        </div>
+                      )}
                   </div>
                 </div>
               </div>
