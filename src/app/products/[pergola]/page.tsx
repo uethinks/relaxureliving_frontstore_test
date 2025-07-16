@@ -107,12 +107,10 @@ const getCachedGlassDoorCMS = unstable_cache(
 // 生成动态 metadata
 export const metadata: Metadata = {
   title: `Louvered Aluminum Pergola Kits | Relaxure`,
-  description: `Our aluminum pergola kits feature motorized louvers, weather sensors anc
-commercial-grade durability- turn any patio into a year-round living space`,
+  description: `Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability. Turn any patio into a year-round living space.`,
   openGraph: {
     title: `Louvered Aluminum Pergola Kits  Relaxure`,
-    description: `Our aluminum pergola kits feature motorized louvers, weather sensors anc
-commercial-grade durability- turn any patio into a year-round living space`,
+    description: `Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability. Turn any patio into a year-round living space.`,
     url: "/",
   },
   keywords: [
