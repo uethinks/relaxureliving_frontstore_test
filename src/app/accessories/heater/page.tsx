@@ -1,9 +1,15 @@
 import { notFound } from "next/navigation"
 import { getProductByProductId } from "@lib/data/products"
 
-import { getAccessoriesPage, getHeater } from "@lib/cms/strapiCmsApi"
+import {
+  getAccessoriesPage,
+  getHeater,
+  getHomePage,
+} from "@lib/cms/strapiCmsApi"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
+import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
+import { PergolaData } from "types/global"
 import { HeaterProductPage } from "./HeaterProductPage"
 
 type Props = Readonly<{
@@ -28,6 +34,9 @@ export default async function AccessoriesPage(props: Props) {
     notFound()
   }
 
+  // 获取OurPromise数据
+  const { data } = await getHomePage()
+
   return (
     <>
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
@@ -39,6 +48,13 @@ export default async function AccessoriesPage(props: Props) {
           />
         </div>
       </div>
+      <OurPromise
+        pergolaData={
+          {
+            boringButImportantStuff: data.OurPromise,
+          } as PergolaData
+        }
+      />
       <FooterDark />
     </>
   )

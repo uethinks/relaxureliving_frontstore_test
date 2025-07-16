@@ -1,4 +1,6 @@
+"use client"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 import { getProductByProductId } from "@lib/data/products"
 import {
   getAccessoriesPage,
@@ -7,55 +9,119 @@ import {
   getHeater,
 } from "@lib/cms/strapiCmsApi"
 
-export const AccessoriesGrid = async () => {
+export const CartAccessoriesGrid = () => {
+  const [accessories, setAccessories] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 
-  // 获取配件页面数据
-  const accessoriesPage = await getAccessoriesPage()
+  useEffect(() => {
+    const fetchAccessories = async () => {
+      try {
+        setError(null)
+        // 获取配件页面数据
+        const accessoriesPage = await getAccessoriesPage()
 
-  if (!accessoriesPage?.data) {
-    throw new Error("Failed to fetch accessories page data")
+        if (!accessoriesPage?.data) {
+          throw new Error("Failed to fetch accessories page data")
+        }
+
+        // 获取各个产品的数据
+        const heater = await getProductByProductId({
+          productId: accessoriesPage?.data?.heaterId,
+          queryParams: {
+            fields: `*variants.calculated_price`,
+          },
+        })
+
+        const shades = await getProductByProductId({
+          productId: accessoriesPage?.data?.shadeId,
+          queryParams: {
+            fields: `*variants.calculated_price`,
+          },
+        })
+
+        const glassdoor = await getProductByProductId({
+          productId: accessoriesPage?.data?.glassdoorId,
+          queryParams: {
+            fields: `*variants.calculated_price`,
+          },
+        })
+
+        // 获取配件信息并合并产品数据
+        const heaterInfo = await getHeater()
+        heaterInfo.data.product = heater.product
+
+        const shadesInfo = await getShades()
+        shadesInfo.data.product = shades.product
+
+        const glassdoorInfo = await getGlassdoor()
+        glassdoorInfo.data.product = glassdoor.product
+
+        const accessoriesData = {
+          heaterInfo: heaterInfo.data,
+          shadesInfo: shadesInfo.data,
+          glassdoorInfo: glassdoorInfo.data,
+        }
+
+        setAccessories(accessoriesData)
+      } catch (error) {
+        console.error("Failed to fetch accessories:", error)
+        setError(
+          error instanceof Error ? error.message : "Failed to load accessories"
+        )
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAccessories()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="mt-10 w-full">
+        <h2 className="text-[44px] font-merriweather font-bold mb-8">
+          Add Accessories
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="p-2 relative bg-white rounded-[20px] overflow-hidden border border-[#E9E9E9] animate-pulse"
+            >
+              <div className="aspect-square bg-gray-200 rounded-[20px]"></div>
+              <div className="mt-4 h-6 bg-gray-200 rounded w-20"></div>
+              <div className="mt-4 h-8 bg-gray-200 rounded"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
   }
 
-  // 获取各个产品的数据
-  const heater = await getProductByProductId({
-    productId: accessoriesPage?.data?.heaterId,
-    queryParams: {
-      fields: `*variants.calculated_price`,
-    },
-  })
-
-  const shades = await getProductByProductId({
-    productId: accessoriesPage?.data?.shadeId,
-    queryParams: {
-      fields: `*variants.calculated_price`,
-    },
-  })
-
-  const glassdoor = await getProductByProductId({
-    productId: accessoriesPage?.data?.glassdoorId,
-    queryParams: {
-      fields: `*variants.calculated_price`,
-    },
-  })
-
-  // 获取配件信息并合并产品数据
-  const heaterInfo = await getHeater()
-  heaterInfo.data.product = heater.product
-
-  const shadesInfo = await getShades()
-  shadesInfo.data.product = shades.product
-
-  const glassdoorInfo = await getGlassdoor()
-  glassdoorInfo.data.product = glassdoor.product
-
-  const accessories = {
-    heaterInfo: heaterInfo.data,
-    shadesInfo: shadesInfo.data,
-    glassdoorInfo: glassdoorInfo.data,
+  if (error) {
+    return (
+      <div className="mt-10 w-full">
+        <h2 className="text-[44px] font-merriweather font-bold mb-8">
+          Accessories
+        </h2>
+        <div className="text-center py-8">
+          <p className="text-red-500 mb-4">Error: {error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    )
   }
 
-  console.log("accessories", accessories)
+  if (!accessories) {
+    return null
+  }
 
   return (
     <div className="mt-10 w-full">

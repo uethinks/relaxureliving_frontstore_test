@@ -1,17 +1,14 @@
-import { notFound } from "next/navigation"
+import { getProductByProductId } from "@lib/data/products"
 import {
-  getProductByProductType,
-  getProductByHandle,
-  getProductByProductId,
-} from "@lib/data/products"
-import { getRegion } from "@lib/data/regions"
-import { StoreProductListParams } from "@medusajs/types"
-import { listProductsForStaticParams } from "@lib/data/products"
-import { getAccessoriesPage, getGlassdoor } from "@lib/cms/strapiCmsApi"
+  getAccessoriesPage,
+  getGlassdoor,
+  getHomePage,
+} from "@lib/cms/strapiCmsApi"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
+import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
+import { PergolaData } from "types/global"
 import GlassdoorProductPage from "./GlassdoorProductPage"
-const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
@@ -47,6 +44,9 @@ export default async function AccessoriesPage(props: Props) {
     length: pergola.product.length || 10,
   }
 
+  // 获取OurPromise数据
+  const { data } = await getHomePage()
+
   return (
     <>
       <div className="bg-[#ffffff] flex flex-col items-start justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
@@ -63,6 +63,13 @@ export default async function AccessoriesPage(props: Props) {
           />
         </div>
       </div>
+      <OurPromise
+        pergolaData={
+          {
+            boringButImportantStuff: data.OurPromise,
+          } as PergolaData
+        }
+      />
       <FooterDark />
     </>
   )
