@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     absolute: "Louvered Aluminum Pergola Kits | Relaxure",
   },
   description:
-    "Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability — turn any patio into a year-round living space.",
+    "Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability. Turn any patio into a year-round living space.",
   applicationName: "Relaxure",
   keywords: ["pergola", "outdoor shade", "smart home", "relaxure"],
   authors: [{ name: "Relaxure" }],
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: "Relaxure",
     title: "Louvered Aluminum Pergola Kits | Relaxure",
     description:
-      "Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability — turn any patio into a year-round living space.",
+      "Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability. Turn any patio into a year-round living space.",
     url: "/",
     locale: "en_US",
   },
