@@ -72,7 +72,7 @@ const TestimonialBubble: React.FC<TestimonialBubbleProps> = ({
       <div className={`bg-[#343A40] text-white p-6 rounded-2xl ${popupClass}`}>
         <p className="text-base mb-4">{message}</p>
         <div className="space-y-1">
-          <h4 className="font-medium">{name}</h4>
+          <span className="font-medium">{name}</span>
         </div>
       </div>
       {position === "bottom" && (
