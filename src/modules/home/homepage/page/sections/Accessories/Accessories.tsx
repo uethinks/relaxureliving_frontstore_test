@@ -15,6 +15,24 @@ export const Accessories = ({
   const handleOptionClick = (option: AccessoriesSlider) => {
     setSelectedOption(option)
   }
+
+  // 根据accessory title映射到对应的路由
+  const getAccessoryRoute = (title: string): string => {
+    const titleLower = title.toLowerCase()
+    if (titleLower.includes("glass") || titleLower.includes("door")) {
+      return "/accessories/glassdoor"
+    } else if (
+      titleLower.includes("heater") ||
+      titleLower.includes("heating")
+    ) {
+      return "/accessories/heater"
+    } else if (titleLower.includes("shade") || titleLower.includes("shading")) {
+      return "/accessories/shades"
+    }
+    // 默认返回pergola页面
+    return "/products/pergola"
+  }
+
   useEffect(() => {
     setSelectedOption(accessories?.slider[0])
   }, [accessories])
@@ -80,7 +98,13 @@ export const Accessories = ({
                 </div>
               </div>
             </div>
-            <Link href="/products/pergola">
+            <Link
+              href={
+                selectedOption
+                  ? getAccessoryRoute(selectedOption.title)
+                  : "/products/pergola"
+              }
+            >
               <AddAccessories
                 className="!flex-[0_0_auto]"
                 property1="primary-button-l"
