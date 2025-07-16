@@ -41,7 +41,7 @@ export default async function AccessoriesPage(props: Props) {
     <>
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
         <NavBarWrapper isFixed={false} />
-        <div className="content-container py-6 small:py-8 w-full">
+        <div className="flex flex-col gap-4 w-full">
           <HeaterProductPage
             heaterProduct={heater.product}
             heaterCMSData={heaterInfo.data}

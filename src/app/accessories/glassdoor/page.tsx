@@ -54,7 +54,7 @@ export default async function AccessoriesPage(props: Props) {
         <div className="flex flex-col gap-4 text-[36px] font-medium text-black font-merriweather mb-5">
           Accessories
         </div>
-        <div className="content-container py-6 small:py-8">
+        <div className="flex flex-col gap-4 w-full">
           <GlassdoorProductPage
             glassdoorProduct={glassdoor.product as any}
             glassdoorCMSData={glassdoorInfo.data as any}

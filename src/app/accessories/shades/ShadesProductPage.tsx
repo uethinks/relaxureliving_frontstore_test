@@ -218,24 +218,6 @@ const ShadesProductPage = ({
                   <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[22px] lg:text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
                     {totalPrice ? "$" + totalPrice.toFixed(2) : ""}
                   </div>
-                  {totalOriginalPrice > totalPrice && (
-                    <div className="flex items-center gap-2">
-                      <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
-                        ${totalOriginalPrice.toFixed(2)}
-                      </div>
-                      <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
-                        <span className="text-[12px] font-normal text-[red]">
-                          Save{" "}
-                          {Math.round(
-                            ((totalOriginalPrice - totalPrice) /
-                              totalOriginalPrice) *
-                              100
-                          )}
-                          %
-                        </span>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
 

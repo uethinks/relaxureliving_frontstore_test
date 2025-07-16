@@ -55,8 +55,6 @@ export const AccessoriesGrid = async () => {
     glassdoorInfo: glassdoorInfo.data,
   }
 
-  console.log("accessories", accessories)
-
   return (
     <div className="mt-10 w-full">
       <h2 className="text-[44px] font-merriweather font-bold mb-8">

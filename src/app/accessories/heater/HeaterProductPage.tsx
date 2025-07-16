@@ -140,7 +140,7 @@ export const HeaterProductPage = ({
           <div className="flex flex-col items-start gap-5 self-stretch w-full">
             <div className="flex flex-col items-start lg:gap-2.5 py-2.5 self-stretch w-full">
               {/* 产品标题和价格 */}
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between w-full gap-4">
+              <div className="flex lg:items-center justify-between w-full gap-4">
                 <h2 className="self-stretch [font-family:'Merriweather',serif] text-[#343a40] text-[24px] lg:text-[28px] font-bold leading-[1.4]">
                   {heaterProduct?.title}
                 </h2>
@@ -148,24 +148,6 @@ export const HeaterProductPage = ({
                   <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[24px] lg:text-[28px] leading-[1.2] whitespace-nowrap relative tracking-[0]">
                     {totalPrice ? "$" + totalPrice : ""}
                   </div>
-                  {totalOriginalPrice > totalPrice && (
-                    <div className="flex items-center gap-2">
-                      <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
-                        ${totalOriginalPrice}
-                      </div>
-                      <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
-                        <span className="text-[12px] font-normal text-[red]">
-                          Save{" "}
-                          {Math.round(
-                            ((totalOriginalPrice - totalPrice) /
-                              totalOriginalPrice) *
-                              100
-                          )}
-                          %
-                        </span>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
 
