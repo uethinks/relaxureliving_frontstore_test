@@ -63,6 +63,9 @@ const landingPagePopulate = {
 const menuPopulate = {
   "populate[menu_item][populate]": "sub_menu_item",
 };
+const accessoriesPagePopulate = {
+  "populate[0]": "*"
+};
 
 export const API_URLS = {
   getHomePage: '/api/home-page',
@@ -81,6 +84,7 @@ export const API_URLS = {
   sendKlaviyoTrackInfo: '/api/contact-submissions',
   getLandingPage: '/api/landing',
   getMenu: '/api/menu',
+  getAccessoriesPage: '/api/accessories-page',
 };
 
 // 获取所有项目
@@ -261,6 +265,17 @@ export const getMenu = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching menu data:', error, API_URLS.getMenu);
+    throw error;
+  }
+};
+
+// 获取菜单数据
+export const getAccessoriesPage = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getAccessoriesPage);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching accessories page data:', error, API_URLS.getAccessoriesPage);
     throw error;
   }
 };
