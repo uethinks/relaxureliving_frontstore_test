@@ -1,5 +1,6 @@
 import React from "react"
 import { PergolaData } from "@/types/global"
+import Link from "next/link"
 
 export const Description = ({
   pergolaData,
@@ -36,6 +37,11 @@ export const Description = ({
               </React.Fragment>
             ))}
           </p>
+        </div>
+        <div className="flex justify-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+          <div className="w-fit bg-[#F6AF1F] hover:bg-[#fdce6f] text-black px-4 py-2 rounded-lg">
+            <Link href="/accessories">Add Accessory</Link>
+          </div>
         </div>
       </div>
     </div>

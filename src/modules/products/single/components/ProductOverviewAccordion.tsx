@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react"
 import { ProductOverview } from "@/types/global"
 import { ImageSlider } from "@modules/common/components/ImageSlider"
+import ClickableImageSlider from "./ClickableImageSlider"
 import YouTubeWrapper from "./YouTubeWrapper"
 import Link from "next/link"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
@@ -207,7 +208,7 @@ export const ProductOverviewAccordion: React.FC<
               {productOverview.pergola_size_technical_specs?.images?.length >
                 0 && (
                 <div className="mb-4">
-                  <ImageSlider
+                  <ClickableImageSlider
                     images={productOverview.pergola_size_technical_specs.images}
                   />
                 </div>

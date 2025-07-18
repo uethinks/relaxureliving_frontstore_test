@@ -14,12 +14,7 @@ import { StoreProduct } from "@medusajs/types"
 import { EmptyCart } from "../EmptyCart/EmptyCart"
 import { PergolaData, BoringButImportantStuff } from "@/types/global"
 import Breadcrumb from "@/components/Breadcrumb"
-// Lazy load only non-critical components
-const AccessoriesSection = lazy(() =>
-  import("../AccessoriesSection/AccessoriesSection").then((module) => ({
-    default: module.AccessoriesSection,
-  }))
-)
+import { CartAccessoriesGrid } from "./CartAccessoriesGrid" // Lazy load only non-critical components
 const OurPromise = lazy(() =>
   import("@modules/home/homepage/page/sections/OurPromise").then((module) => ({
     default: module.OurPromise,
@@ -120,22 +115,19 @@ export const ProductPage = ({
             </div>
           )}
         </div>
-
-        <Suspense>
-          {/* <AccessoriesSection accessories={accessories} /> */}
-        </Suspense>
+        <div className="px-5 lg:px-20">
+          <CartAccessoriesGrid />
+        </div>
       </div>
-      <Suspense>
-        <OurPromise
-          pergolaData={
-            {
-              boringButImportantStuff: ourPromise,
-            } as PergolaData
-          }
-        />
-        {faq && <FaqWrapper faq={faq} />}
-        <FooterDark />
-      </Suspense>
+      <OurPromise
+        pergolaData={
+          {
+            boringButImportantStuff: ourPromise,
+          } as PergolaData
+        }
+      />
+      {faq && <FaqWrapper faq={faq} />}
+      <FooterDark />
     </>
   )
 }
