@@ -43,9 +43,6 @@ const pergolaPopulate = {
     "populate[get_in_touch]": "*",
     "populate[sample_kit][populate][0]": "product_image",
 };
-const faqPopulate = {
-  "populate[faqs][populate][0]": "question_and_answer",
-};
 const heaterPopulate = {
   "populate[productInformations]": "*",
   "populate[product_images][fields][0]": "*",
@@ -88,7 +85,6 @@ export const API_URLS = {
   getLandingPage: '/api/landing',
   getMenu: '/api/menu',
   getAccessoriesPage: '/api/accessories-page',
-  getFaqData: '/api/faq-page',
 };
 
 // 获取所有项目
@@ -280,18 +276,6 @@ export const getAccessoriesPage = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching accessories page data:', error, API_URLS.getAccessoriesPage);
-    throw error;
-  }
-};
-
-export const getFaqData = async () => {
-  try {
-    const response = await axiosInstance.get(API_URLS.getFaqData, {
-      params: faqPopulate
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching faq data:', error, API_URLS.getFaqData);
     throw error;
   }
 };

@@ -7,11 +7,7 @@ import {
   getHeater,
 } from "@lib/cms/strapiCmsApi"
 
-export const AccessoriesGrid = async ({
-  showTitle = true,
-}: {
-  showTitle?: boolean
-}) => {
+export const AccessoriesGrid = async () => {
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 
   // 获取配件页面数据
@@ -61,11 +57,9 @@ export const AccessoriesGrid = async ({
 
   return (
     <div className="mt-10 w-full">
-      {showTitle && (
-        <h2 className="text-[44px] font-merriweather font-bold mb-8">
-          Accessories
-        </h2>
-      )}
+      <h2 className="text-[44px] font-merriweather font-bold mb-8">
+        Accessories
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="p-2 relative bg-white rounded-[20px] overflow-hidden border border-[#E9E9E9] transition-colors">
