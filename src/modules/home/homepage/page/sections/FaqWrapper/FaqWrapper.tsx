@@ -50,7 +50,7 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
       id="faqs"
       className="flex flex-col w-full items-center justify-center bg-[#f3f3f3] py-16"
     >
-      <div className="w-full max-w-[1200px] mx-auto">
+      <div className="w-full max-w-[1200px] mx-auto flex flex-col items-center justify-center">
         <h2 className="text-[#343a40] font-merriweather text-[32px] font-bold text-center mb-12 leading-[40px]">
           {faq.Subtitle}
         </h2>
@@ -240,6 +240,11 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
             ))}
           </div>
         </div>
+        <a href="/faq">
+          <button className="bg-[#F6AF1F] hover:bg-[#FDCE6F] text-black px-4 py-2 rounded-[10px]">
+            See all FAQs
+          </button>
+        </a>
       </div>
     </div>
   )
