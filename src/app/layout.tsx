@@ -1,54 +1,13 @@
 import { CartProvider } from "@lib/context/cartContext"
-import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
 import "styles/globals.css"
 import Script from "next/script"
+import { getGlobalData } from "@lib/cms/strapiCmsApi"
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getBaseURL()),
-  title: {
-    absolute: "Louvered Aluminum Pergola Kits | Relaxure",
-  },
-  description:
-    "Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability. Turn any patio into a year-round living space.",
-  applicationName: "Relaxure",
-  keywords: ["pergola", "outdoor shade", "smart home", "relaxure"],
-  authors: [{ name: "Relaxure" }],
-  creator: "Relaxure",
-  publisher: "Relaxure",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  icons: {
-    icon: [
-      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon/favicon.ico", rel: "shortcut icon" },
-    ],
-    apple: [
-      {
-        url: "/favicon/apple-touch-icon.png",
-        sizes: "180x180",
-        type: "image/png",
-      },
-    ],
-  },
-  manifest: "/favicon/site.webmanifest",
-  openGraph: {
-    type: "website",
-    siteName: "Relaxure",
-    title: "Louvered Aluminum Pergola Kits | Relaxure",
-    description:
-      "Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability. Turn any patio into a year-round living space.",
-    url: "/",
-    locale: "en_US",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+// 动态生成metadata
+export async function generateMetadata(): Promise<Metadata> {
+  const globalData = await getGlobalData()
+  return globalData?.data?.defaultSeo?.metadataInfo || {}
 }
 
 export default function RootLayout(props: { children: React.ReactNode }) {
