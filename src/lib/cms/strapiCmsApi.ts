@@ -72,6 +72,10 @@ const menuPopulate = {
 const globalPopulate = {
   "populate[0]": "defaultSeo",
 };
+
+const termsPopulate = {
+  "populate[seo][populate][0]": "shareImage"
+};
 export const API_URLS = {
   getHomePage: '/api/home-page',
   getWarranty: '/api/warranty',
@@ -113,25 +117,37 @@ export const getAllTerms = async () => {
   
   try {
     // Intellectual Property Rights
-    const intellectualPropertyRights = await axiosInstance.get(API_URLS.getIntellectualPropertyRights);
+    const intellectualPropertyRights = await axiosInstance.get(API_URLS.getIntellectualPropertyRights, {
+      params: termsPopulate
+    });
     termsData['intellectual-property-right'] = intellectualPropertyRights.data;
     // Shipping Policy 
-    const shippingPolicy = await axiosInstance.get(API_URLS.getShippingPolicy);
+    const shippingPolicy = await axiosInstance.get(API_URLS.getShippingPolicy, {
+      params: termsPopulate
+    });
     termsData['shipping-policy'] = shippingPolicy.data;
     // 获取服务条款
-    const termsOfService = await axiosInstance.get(API_URLS.getTermsOfService);
+    const termsOfService = await axiosInstance.get(API_URLS.getTermsOfService, {
+      params: termsPopulate
+    });
     termsData['terms-of-service'] = termsOfService.data;
 
     // 获取隐私政策
-    const privacyPolicy = await axiosInstance.get(API_URLS.getPrivacyPolicy);
+    const privacyPolicy = await axiosInstance.get(API_URLS.getPrivacyPolicy, {
+      params: termsPopulate
+    });
     termsData['privacy-policy'] = privacyPolicy.data;
 
     // 获取保修条款
-    const warranty = await axiosInstance.get(API_URLS.getWarranty);
+    const warranty = await axiosInstance.get(API_URLS.getWarranty, {
+      params: termsPopulate
+    });
     termsData['warranty'] = warranty.data;
 
     // 获取退货政策
-    const refundPolicy = await axiosInstance.get(API_URLS.getRefundPolicy);
+    const refundPolicy = await axiosInstance.get(API_URLS.getRefundPolicy, {
+      params: termsPopulate
+    });
     termsData['refund-policy'] = refundPolicy.data;
 
     return termsData;
