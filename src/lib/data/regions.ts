@@ -55,8 +55,7 @@ export const getRegion = async (countryCode: string) => {
       })
     })
 
-    const region =  regionMap.get(countryCode)
-    return region
+    return regionMap.get(countryCode)
   } catch (e: any) {
     return null
   }
