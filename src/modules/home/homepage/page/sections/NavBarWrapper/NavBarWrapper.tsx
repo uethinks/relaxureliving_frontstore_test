@@ -94,8 +94,12 @@ export const NavBarWrapper = ({
 
   // 获取菜单项的href
   const getMenuItemHref = (url: string | null, anchor: string | null) => {
-    if (!url) return "#"
-    if (url === "/") return anchor ? `/#${anchor}` : "/"
+    if (!url) {
+      return "#"
+    }
+    if (url === "/") {
+      return anchor ? `/#${anchor}` : "/"
+    }
     return anchor ? `/${url}#${anchor}` : `/${url}`
   }
 
@@ -142,7 +146,11 @@ export const NavBarWrapper = ({
                       handleMenuItemClick(e, subItem.url, subItem.anchor)
                       setIsMenuOpen(false)
                     }}
-                    className="block w-full text-start py-1 [font-family:'Montserrat',Helvetica] font-medium  text-[#343a40] text-sm hover:text-gray-600"
+                    className={`
+                      block w-full text-start py-1 
+                      [font-family:'Montserrat',Helvetica] font-medium 
+                      text-[#343a40] text-sm hover:text-gray-600
+                    `}
                   >
                     {subItem.name}
                   </a>
@@ -154,7 +162,13 @@ export const NavBarWrapper = ({
       } else {
         return (
           <div key={item.id} className="relative group">
-            <button className="flex items-center gap-1 px-2.5 py-2.5 relative [font-family:'Montserrat',Helvetica] font-medium  text-base tracking-[0] leading-6 hover:text-white-600 transition-colors">
+            <button
+              className={`
+                flex items-center gap-1 px-2.5 py-2.5 relative 
+                [font-family:'Montserrat',Helvetica] font-medium 
+                text-base tracking-[0] leading-6 hover:text-white-600 transition-colors
+              `}
+            >
               {item.name}
               <svg
                 className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180"
@@ -212,7 +226,11 @@ export const NavBarWrapper = ({
             key={item.id}
             href={href}
             onClick={(e) => handleMenuItemClick(e, item.url, item.anchor)}
-            className="flex items-center justify-center gap-2.5 px-2.5 py-2.5 relative [font-family:'Montserrat',Helvetica] font-medium  text-[#ffffff] text-base tracking-[0] leading-6 hover:text-white-600 transition-colors"
+            className={`
+              flex items-center justify-center gap-2.5 px-2.5 py-2.5 relative 
+              [font-family:'Montserrat',Helvetica] font-medium  text-[#ffffff] 
+              text-base tracking-[0] leading-6 hover:text-white-600 transition-colors
+            `}
           >
             {item.name}
           </a>
@@ -230,7 +248,13 @@ export const NavBarWrapper = ({
       }`}
     >
       {/* Desktop Navigation */}
-      <div className="hidden xl:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 relative bg-[#000000] rounded-[20px] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
+      <div
+        className={`
+          hidden xl:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 
+          relative bg-[#000000] rounded-[20px] backdrop-blur-[27.6px] backdrop-brightness-[100%] 
+          [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
+        `}
+      >
         <div className="justify-between self-stretch w-full flex-[0_0_auto] mt-[-4.50px] mb-[-4.50px] flex items-center relative">
           <Link href="/">
             <img
@@ -286,7 +310,13 @@ export const NavBarWrapper = ({
 
       {/* Mobile Navigation */}
       <div className="xl:hidden flex flex-col w-full items-center justify-center relative">
-        <div className="w-full h-[60px] flex items-center justify-between bg-[#ffffffcc] rounded-[30px] border border-solid border-[#ffffff] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
+        <div
+          className={`
+            w-full h-[60px] flex items-center justify-between bg-[#ffffffcc]
+            rounded-[30px] border border-solid border-[#ffffff] backdrop-blur-[27.6px] 
+            backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
+          `}
+        >
           <Link href="/">
             <img
               className="relative w-[60px] h-8"
@@ -348,7 +378,13 @@ export const NavBarWrapper = ({
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="w-full mt-2 bg-[#ffffffcc] rounded-[30px] border border-solid border-[#ffffff] backdrop-blur-[27.6px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]">
+          <div
+            className={`
+              w-full mt-2 bg-[#ffffffcc] rounded-[30px] border border-solid border-[#ffffff] 
+              backdrop-blur-[27.6px] backdrop-brightness-[100%] 
+              [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
+            `}
+          >
             <div className="flex flex-col items-start py-4 space-y-4">
               {/* 动态菜单项 */}
               {menuData?.data.menu_item.map((item) =>
