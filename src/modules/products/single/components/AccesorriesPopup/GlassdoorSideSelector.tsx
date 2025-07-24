@@ -1,5 +1,9 @@
 import React from "react"
 
+// Constants
+const SELECTED_COLOR = "#F6AF1F"
+const SELECTED_BG_COLOR = "#F6AF1F33"
+
 interface GlassdoorSideSelectorProps {
   onSideSelect: (sides: string[]) => void
   selectedSides: string[]
@@ -52,7 +56,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
               onClick={() => handleSideClick(number)}
               className={`w-10 h-10 rounded-full text-black border flex items-center justify-center transition-all ${
                 selectedSides.length === number
-                  ? "border-[#F6AF1F] bg-[#F6AF1F33]"
+                  ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
                   : "border-[#E9E9E9]"
               }`}
             >
@@ -74,7 +78,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
           onClick={() => handleSideClick("left")}
           className={`w-[65px] h-[130px] lg:w-[78px] lg:h-[139px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("left")
-              ? "border-[#F6AF1F] bg-[#F6AF1F33]"
+              ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
               : "border-[#E9E9E9]"
           }`}
         >
@@ -91,7 +95,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
             onClick={() => handleSideClick("top")}
             className={`w-[205px] h-[60px] lg:w-[225px] lg:h-[63px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("top")
-                ? "border-[#F6AF1F] bg-[#F6AF1F33]"
+                ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
                 : "border-[#E9E9E9]"
             }`}
           >
@@ -107,7 +111,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
             onClick={() => handleSideClick("bottom")}
             className={`w-[205px] h-[60px] lg:w-[225px] lg:h-[63px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("bottom")
-                ? "border-[#F6AF1F] bg-[#F6AF1F33]"
+                ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
                 : "border-[#E9E9E9]"
             }`}
           >
@@ -124,7 +128,7 @@ const GlassdoorSideSelector: React.FC<GlassdoorSideSelectorProps> = ({
           onClick={() => handleSideClick("right")}
           className={`w-[65px] h-[130px] lg:w-[78px] lg:h-[139px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("right")
-              ? "border-[#F6AF1F] bg-[#F6AF1F33]"
+              ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
               : "border-[#E9E9E9]"
           }`}
         >

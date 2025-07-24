@@ -43,7 +43,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
       selectedStyle?.value,
     ].filter(Boolean)
 
-    const filtered =
+    return (
       productImages?.filter((image) => {
         if (!image.caption) {
           return false
@@ -56,14 +56,15 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
         }
 
         // 检查是否同时包含所有选中的值
-        const allValuesMatch = selectedValues.every((value) => {
-          if (!value) return true // 如果没有选择该参数，则不参与过滤
+        return selectedValues.every((value) => {
+          if (!value) {
+            return true // 如果没有选择该参数，则不参与过滤
+          }
           const matchesValue = caption.includes(value.toLowerCase())
           return matchesValue
         })
-        return allValuesMatch
       }) || []
-    return filtered
+    )
   }, [productImages, selectedSize, selectedColor, selectedStyle])
 
   // 当筛选后的图片变化时，重置当前图片索引

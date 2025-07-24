@@ -11,7 +11,11 @@ export const ImageOnLeft = ({
   return (
     <div className="w-full inline-flex flex-col items-center gap-[60px] relative mt-10">
       <div className="flex flex-col w-full items-center justify-center gap-2.5 relative">
-        <p className="relative w-full font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+        <p
+          className={`relative w-full font-heading-2 font-[number:var(--heading-2-font-weight)]
+         text-[#343a40] text-[18px] lg:text-[36px] text-center tracking-[var(--heading-2-letter-spacing)] 
+         leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]`}
+        >
           {productFeatures?.title}
         </p>
         <p className="text-[#69727a] text-[14px] lg:text-[18px] font-relaxure-sub-heading-18 font-[500] md:text-center">
