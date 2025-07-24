@@ -272,11 +272,11 @@ export const AccesorriesPopupShades = ({
                           >
                             <button
                               className={`w-6 h-6 rounded-[20px] cursor-pointer border-2 border-solid ${
-                                selectedColor.id == color.id
+                                selectedColor.id === color.id
                                   ? "bg-[#F6AF1F33]"
                                   : "bg-[#ffffff]"
                               }  ${
-                                selectedColor.id == color.id
+                                selectedColor.id === color.id
                                   ? "border-[#F6AF1F]"
                                   : ""
                               }`}

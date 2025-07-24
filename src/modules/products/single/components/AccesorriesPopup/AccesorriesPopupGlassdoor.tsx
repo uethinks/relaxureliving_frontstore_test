@@ -279,7 +279,7 @@ export const AccesorriesPopupGlassdoor = ({
                           >
                             <button
                               className={`w-6 h-6 rounded-[20px] cursor-pointer border-2 border-solid ${
-                                selectedColor.id == color.id
+                                selectedColor.id === color.id
                                   ? "bg-[#F6AF1F33]"
                                   : "bg-[#ffffff]"
                               }  ${
@@ -290,7 +290,8 @@ export const AccesorriesPopupGlassdoor = ({
                               onClick={() => handleColorClick(color)}
                             ></button>
                             <div
-                              className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
+                              className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 
+                                tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
                             >
                               {color.value}
                             </div>
