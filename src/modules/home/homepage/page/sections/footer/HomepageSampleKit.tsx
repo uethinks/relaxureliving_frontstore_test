@@ -69,17 +69,29 @@ export const HomepageSampleKit = (): JSX.Element => {
         />
 
         <div className="flex flex-col justify-center items-center gap-5 relative self-stretch w-full flex-[0_0_auto]">
-          <h2 className="relative self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-white text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+          <h2
+            className={`relative self-stretch mt-[-1.00px] font-heading-2 
+            font-[number:var(--heading-2-font-weight)] text-white text-[18px] 
+            lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] 
+            leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]`}
+          >
             {sampleKitProduct?.title}
           </h2>
 
-          <p className="relative w-full opacity-80 font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-white text-[14px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] text-center tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+          <p
+            className={`relative w-full opacity-80 font-relaxure-sub-heading-18 
+            font-[number:var(--relaxure-sub-heading-18-font-weight)] text-white text-[14px] 
+            lg:text-[length:var(--relaxure-sub-heading-18-font-size)] text-center tracking-[var(--relaxure-sub-heading-18-letter-spacing)] 
+            leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]`}
+          >
             {sampleKitProduct?.description}
           </p>
           <div className="inline-flex flex-col items-center gap-5 relative flex-[0_0_auto]">
             <button
               onClick={() => setShowDialog(true)}
-              className="w-[271px] h-[48px] bg-[#F6AF1F] hover:bg-[#fdce6f] transition-colors border-[#ffffff] border rounded-[10px] shadow-[0px_3px_7px_#072f6c1a,0px_13px_13px_#072f6c17,0px_29px_17px_#072f6c0d,0px_51px_20px_#072f6c03,0px_80px_22px_#072f6c00] overflow-hidden"
+              className={`w-[271px] h-[48px] bg-[#F6AF1F] hover:bg-[#fdce6f] transition-colors border-[#ffffff] border rounded-[10px] 
+              shadow-[0px_3px_7px_#072f6c1a,0px_13px_13px_#072f6c17,0px_29px_17px_#072f6c0d,0px_51px_20px_#072f6c03,0px_80px_22px_#072f6c00] 
+              overflow-hidden`}
             >
               <div className="[font-family:'Montserrat',Helvetica] font-medium text-black text-[14px] md:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 {sampleKitProduct?.subtitle}
