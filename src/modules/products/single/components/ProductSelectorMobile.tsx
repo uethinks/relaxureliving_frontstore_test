@@ -54,7 +54,9 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
   } = useProductSelection()
 
   useEffect(() => {
-    if (!selectedSize || !selectedColor || !selectedStyle) return
+    if (!selectedSize || !selectedColor || !selectedStyle) {
+      return
+    }
 
     const variant = product.variants?.find((variant) => {
       const matchingSize = variant?.options?.find(
