@@ -3,10 +3,42 @@ import { useForm } from "react-hook-form"
 import { useEffect, useState, useRef } from "react"
 import { StoreCart, StoreOrder } from "@medusajs/types"
 import { useCart } from "@lib/context/cartContext"
-import { retrieveOrder } from "@lib/data/orders"
-import { captureOrderWebhook } from "@lib/data/orders"
+import { captureOrderWebhook, retrieveOrder } from "@lib/data/orders"
 import { postKlarnaPayment, postAfterpayPayment } from "@lib/api/payment"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
+
+// 支付方式常量
+const PAYMENT_METHODS = {
+  CREDIT_CARD: "Credit Card",
+  GOOGLE_PAY: "GooglePay",
+  APPLE_PAY: "ApplePay",
+  KLARNA: "Klarna",
+  AFTERPAY: "Afterpay",
+} as const
+
+// OceanPayment 账户常量
+const OCEANPAYMENT_ACCOUNT = process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT
+
+// 支付方法状态常量
+const PAYMENT_METHOD_STATES = {
+  CREDIT: "credit",
+  GOOGLE: "google",
+  APPLE: "apple",
+  KLARNA: "klarna",
+  AFTERPAY: "afterpay",
+} as const
+
+// 样式常量
+const BUTTON_STYLES = {
+  ACTIVE: "bg-gray-100 border-gray-700",
+  INACTIVE: "bg-white border-gray-300 hover:bg-gray-50",
+} as const
+
+// 按钮文本常量
+const BUTTON_TEXT = {
+  PROCESSING: "Processing...",
+  PAY_NOW: "Pay Now",
+} as const
 
 type ShippingAddress = {
   first_name: string
@@ -50,18 +82,18 @@ type OceanPaymentFormData = {
 }
 
 type TerminalName =
-  | "Credit Card"
-  | "GooglePay"
-  | "ApplePay"
-  | "Klarna"
-  | "Afterpay"
-enum TerminalNameEnum {
-  Credit = "Credit Card",
-  Google = "GooglePay",
-  Apple = "ApplePay",
-  Klarna = "Klarna",
-  Afterpay = "Afterpay",
-}
+  | typeof PAYMENT_METHODS.CREDIT_CARD
+  | typeof PAYMENT_METHODS.GOOGLE_PAY
+  | typeof PAYMENT_METHODS.APPLE_PAY
+  | typeof PAYMENT_METHODS.KLARNA
+  | typeof PAYMENT_METHODS.AFTERPAY
+const TerminalNameEnum = {
+  Credit: PAYMENT_METHODS.CREDIT_CARD,
+  Google: PAYMENT_METHODS.GOOGLE_PAY,
+  Apple: PAYMENT_METHODS.APPLE_PAY,
+  Klarna: PAYMENT_METHODS.KLARNA,
+  Afterpay: PAYMENT_METHODS.AFTERPAY,
+} as const
 
 type OceanPaymentFormProps = {
   formValidation: () => boolean
@@ -116,8 +148,8 @@ export const OceanPaymentForm = ({
   const [isLoading, setIsLoading] = useState(false)
   const { cart } = useCart()
   const [paymentMethod, setPaymentMethod] = useState<
-    "credit" | "google" | "apple" | "klarna" | "afterpay"
-  >("credit")
+    (typeof PAYMENT_METHOD_STATES)[keyof typeof PAYMENT_METHOD_STATES]
+  >(PAYMENT_METHOD_STATES.CREDIT)
   const isSandbox = process.env.NEXT_PUBLIC_OCEANPAYMENT_ENV === "sandbox"
   const [loadedScripts, setLoadedScripts] = useState<Set<string>>(new Set())
   const googlePayRef = useRef<HTMLDivElement>(null)
@@ -240,7 +272,7 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentApplePayCallBack = (data: any) => {
         console.log("Apple Pay callback result:", data)
-        if (data.code == 2) {
+        if (data.code === 2) {
           handleApplePay()
         } else {
           paymentResultXmlHandler(data)
@@ -271,7 +303,7 @@ export const OceanPaymentForm = ({
     try {
       window.oceanpaymentGooglePayCallBack = (data: any) => {
         console.log("Google Pay callback result:", data)
-        if (data.code == 2) {
+        if (data.code === 2) {
           handleGooglePay()
         } else {
           paymentResultXmlHandler(data)
@@ -303,53 +335,73 @@ export const OceanPaymentForm = ({
   // 修改原有的支付方法初始化 useEffect
   useEffect(() => {
     console.log("paymentMethod", paymentMethod, scriptsLoaded)
-    if (!scriptsLoaded) return // 如果脚本未加载完成，不执行初始化
+    if (!scriptsLoaded) {
+      console.log("scriptsLoaded", scriptsLoaded)
+      return // 如果脚本未加载完成，不执行初始化
+    }
 
-    if (paymentMethod === "google" && googlePayRef.current) {
+    if (
+      paymentMethod === PAYMENT_METHOD_STATES.GOOGLE &&
+      googlePayRef.current
+    ) {
       initGooglePay()
-    } else if (paymentMethod === "apple" && applePayRef.current) {
+    } else if (
+      paymentMethod === PAYMENT_METHOD_STATES.APPLE &&
+      applePayRef.current
+    ) {
       initApplePay()
-    } else if (paymentMethod === "credit" && creditPayRef.current) {
+    } else if (
+      paymentMethod === PAYMENT_METHOD_STATES.CREDIT &&
+      creditPayRef.current
+    ) {
       initOceanpayment()
     }
   }, [paymentMethod, scriptsLoaded])
 
-  const getTerminalInfo = (terminalName: TerminalNameEnum) => {
+  const getTerminalInfo = (
+    terminalName: (typeof TerminalNameEnum)[keyof typeof TerminalNameEnum]
+  ) => {
     switch (terminalName) {
       case TerminalNameEnum.Credit:
         return {
-          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
+          account: OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_TERMINAL,
-          methods: "Credit Card",
+          methods: PAYMENT_METHODS.CREDIT_CARD,
         }
       case TerminalNameEnum.Google:
         return {
-          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
+          account: OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_GOOGLE_TERMINAL,
-          methods: "GooglePay",
+          methods: PAYMENT_METHODS.GOOGLE_PAY,
         }
       case TerminalNameEnum.Apple:
         return {
-          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
+          account: OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_APPLE_TERMINAL,
-          methods: "ApplePay",
+          methods: PAYMENT_METHODS.APPLE_PAY,
         }
       case TerminalNameEnum.Klarna:
         return {
-          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
+          account: OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_KLARNA_TERMINAL,
-          methods: "Klarna",
+          methods: PAYMENT_METHODS.KLARNA,
         }
       case TerminalNameEnum.Afterpay:
         return {
-          account: process.env.NEXT_PUBLIC_OCEANPAYMENT_ACCOUNT,
+          account: OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_AFTERPAY_TERMINAL,
-          methods: "Afterpay",
+          methods: PAYMENT_METHODS.AFTERPAY,
+        }
+      default:
+        return {
+          account: OCEANPAYMENT_ACCOUNT,
+          terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_TERMINAL,
+          methods: PAYMENT_METHODS.CREDIT_CARD,
         }
     }
   }
   const prepareFormData = async (
-    terminalName: TerminalName = "Credit Card"
+    terminalName: TerminalName = PAYMENT_METHODS.CREDIT_CARD
   ): Promise<OceanPaymentFormData | null> => {
     // 1. 首先验证表单
     const isValid = formValidation()
@@ -359,7 +411,9 @@ export const OceanPaymentForm = ({
     await updateCartDeliveryInfo()
     const order = await comlpeleCartAndCreateOrder()
 
-    const terminalInfo = getTerminalInfo(terminalName as TerminalNameEnum)
+    const terminalInfo = getTerminalInfo(
+      terminalName as (typeof TerminalNameEnum)[keyof typeof TerminalNameEnum]
+    )
     const baseUrl = `${location.href}`
     const notifyUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/notify`
     // 2. 获取支付签名
@@ -488,11 +542,11 @@ export const OceanPaymentForm = ({
         <button
           type="button"
           className={`flex flex-wrap items-center gap-1 px-4 py-2 rounded border transition-colors duration-150 ${
-            paymentMethod === "credit"
-              ? "bg-gray-100 border-gray-700"
-              : "bg-white border-gray-300 hover:bg-gray-50"
+            paymentMethod === PAYMENT_METHOD_STATES.CREDIT
+              ? BUTTON_STYLES.ACTIVE
+              : BUTTON_STYLES.INACTIVE
           }`}
-          onClick={() => setPaymentMethod("credit")}
+          onClick={() => setPaymentMethod(PAYMENT_METHOD_STATES.CREDIT)}
         >
           <img src="/img/visa.png" className="w-7" alt="visa" />
           <img src="/img/master.png" className="w-7" alt="master" />
@@ -513,11 +567,11 @@ export const OceanPaymentForm = ({
         <button
           type="button"
           className={`flex items-center gap-2 px-4 py-2 rounded border transition-colors duration-150 ${
-            paymentMethod === "klarna"
-              ? "bg-gray-100 border-gray-700"
-              : "bg-white border-gray-300 hover:bg-gray-50"
+            paymentMethod === PAYMENT_METHOD_STATES.KLARNA
+              ? BUTTON_STYLES.ACTIVE
+              : BUTTON_STYLES.INACTIVE
           }`}
-          onClick={() => setPaymentMethod("klarna")}
+          onClick={() => setPaymentMethod(PAYMENT_METHOD_STATES.KLARNA)}
         >
           <span className="ml-1 font-medium">Klarna</span>
           <img src="/img/Klarna.png" className="w-7" alt="klarna" />
@@ -525,11 +579,11 @@ export const OceanPaymentForm = ({
         <button
           type="button"
           className={`flex items-center gap-2 px-4 py-2 rounded border transition-colors duration-150 ${
-            paymentMethod === "afterpay"
-              ? "bg-gray-100 border-gray-700"
-              : "bg-white border-gray-300 hover:bg-gray-50"
+            paymentMethod === PAYMENT_METHOD_STATES.AFTERPAY
+              ? BUTTON_STYLES.ACTIVE
+              : BUTTON_STYLES.INACTIVE
           }`}
-          onClick={() => setPaymentMethod("afterpay")}
+          onClick={() => setPaymentMethod(PAYMENT_METHOD_STATES.AFTERPAY)}
         >
           <span className="ml-1 font-medium">Afterpay</span>
           <img src="/img/afterpay.png" className="w-7" alt="afterpay" />
@@ -537,11 +591,11 @@ export const OceanPaymentForm = ({
         <button
           type="button"
           className={`flex items-center gap-2 px-4 py-2 rounded border transition-colors duration-150 ${
-            paymentMethod === "google"
-              ? "bg-gray-100 border-gray-700"
-              : "bg-white border-gray-300 hover:bg-gray-50"
+            paymentMethod === PAYMENT_METHOD_STATES.GOOGLE
+              ? BUTTON_STYLES.ACTIVE
+              : BUTTON_STYLES.INACTIVE
           }`}
-          onClick={() => setPaymentMethod("google")}
+          onClick={() => setPaymentMethod(PAYMENT_METHOD_STATES.GOOGLE)}
         >
           <span className="ml-1 font-medium">Google Pay</span>
           <img src="/img/google_pay.png" className="w-8" alt="google_pay" />
@@ -549,11 +603,11 @@ export const OceanPaymentForm = ({
         <button
           type="button"
           className={`flex items-center gap-2 px-4 py-2 rounded border transition-colors duration-150 ${
-            paymentMethod === "apple"
-              ? "bg-gray-100 border-gray-700"
-              : "bg-white border-gray-300 hover:bg-gray-50"
+            paymentMethod === PAYMENT_METHOD_STATES.APPLE
+              ? BUTTON_STYLES.ACTIVE
+              : BUTTON_STYLES.INACTIVE
           }`}
-          onClick={() => setPaymentMethod("apple")}
+          onClick={() => setPaymentMethod(PAYMENT_METHOD_STATES.APPLE)}
         >
           <span className="ml-1 font-medium">Apple Pay</span>
           <img src="/img/apple_pay.png" className="w-8" alt="apple_pay" />
@@ -564,11 +618,11 @@ export const OceanPaymentForm = ({
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`flex flex-col gap-4 w-full ${
-          paymentMethod === "credit" ? "flex" : "hidden"
+          paymentMethod === PAYMENT_METHOD_STATES.CREDIT ? "flex" : "hidden"
         }`}
       >
         {/* 加载Oceanpayment支付页面 */}
-        {paymentMethod === "credit" && (
+        {paymentMethod === PAYMENT_METHOD_STATES.CREDIT && (
           <div ref={creditPayRef} id="oceanpayment-element"></div>
         )}
         <button
@@ -576,7 +630,7 @@ export const OceanPaymentForm = ({
           disabled={isLoading}
           className="w-full bg-[#F6AF1F] text-black py-4 rounded-lg font-medium hover:bg-[#fdce6f] transition-colors disabled:opacity-50"
         >
-          {isLoading ? "Processing..." : "Pay Now"}
+          {isLoading ? BUTTON_TEXT.PROCESSING : BUTTON_TEXT.PAY_NOW}
         </button>
       </form>
 
@@ -584,38 +638,38 @@ export const OceanPaymentForm = ({
         onClick={handleKlarnaPay}
         disabled={isLoading}
         className={`w-full justify-center bg-[#343a40] text-white py-4 rounded-lg font-medium hover:bg-[#23272b] transition-colors disabled:opacity-50 ${
-          paymentMethod === "klarna" ? "flex" : "hidden"
+          paymentMethod === PAYMENT_METHOD_STATES.KLARNA ? "flex" : "hidden"
         }`}
       >
-        {isLoading ? "Processing..." : "Pay Now"}
+        {isLoading ? BUTTON_TEXT.PROCESSING : BUTTON_TEXT.PAY_NOW}
       </button>
 
       <button
         onClick={handleAfterpayPay}
         disabled={isLoading}
         className={`w-full justify-center bg-[#343a40] text-white py-4 rounded-lg font-medium hover:bg-[#23272b] transition-colors disabled:opacity-50 ${
-          paymentMethod === "afterpay" ? "flex" : "hidden"
+          paymentMethod === PAYMENT_METHOD_STATES.AFTERPAY ? "flex" : "hidden"
         }`}
       >
-        {isLoading ? "Processing..." : "Pay Now"}
+        {isLoading ? BUTTON_TEXT.PROCESSING : BUTTON_TEXT.PAY_NOW}
       </button>
 
-      {paymentMethod === "google" && (
+      {paymentMethod === PAYMENT_METHOD_STATES.GOOGLE && (
         <div
           ref={googlePayRef}
           id="oceanpayment-googlepayelement"
           className={`w-full flex justify-center ${
-            paymentMethod === "google" ? "flex" : "block"
+            paymentMethod === PAYMENT_METHOD_STATES.GOOGLE ? "flex" : "block"
           }`}
         ></div>
       )}
 
-      {paymentMethod === "apple" && (
+      {paymentMethod === PAYMENT_METHOD_STATES.APPLE && (
         <div
           ref={applePayRef}
           id="oceanpayment-applepayelement"
           className={`w-full flex justify-center ${
-            paymentMethod === "apple" ? "flex" : "block"
+            paymentMethod === PAYMENT_METHOD_STATES.APPLE ? "flex" : "block"
           }`}
         ></div>
       )}

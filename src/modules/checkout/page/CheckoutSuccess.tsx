@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react"
 import { StoreOrder } from "@medusajs/types"
-import { placeOrder } from "@lib/data/cart"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
