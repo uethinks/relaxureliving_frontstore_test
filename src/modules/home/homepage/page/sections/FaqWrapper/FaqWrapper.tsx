@@ -43,7 +43,9 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
     level2: number
   }>({ level1: -1, level2: -1 })
 
-  if (!faq?.homepageFAQ.length) return null
+  if (!faq?.homepageFAQ.length) {
+    return null
+  }
 
   return (
     <div
@@ -64,11 +66,13 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
             {faq.homepageFAQ.map((category, idx) => (
               <div
                 key={category.id}
-                className={`flex items-center text-[18px] leading-[28px] justify-between pl-8 pr-2 py-5 cursor-pointer select-none transition-all duration-150 rounded-[10px] relative ${
-                  selectedCategoryIndex === idx
-                    ? "bg-[#F6AF1F33] text-black border-[1px] border-[#F6AF1F]"
-                    : "text-[#69727A]"
-                }`}
+                className={`flex items-center text-[18px] leading-[28px] justify-between 
+                  pl-8 pr-2 py-5 cursor-pointer select-none transition-all duration-150 
+                  rounded-[10px] relative ${
+                    selectedCategoryIndex === idx
+                      ? "bg-[#F6AF1F33] text-black border-[1px] border-[#F6AF1F]"
+                      : "text-[#69727A]"
+                  }`}
                 onClick={() => {
                   setSelectedCategoryIndex(idx)
                   setOpenQuestionIndex(-1)
@@ -152,11 +156,13 @@ export const FaqWrapper = ({ faq }: { faq: FAQData }): JSX.Element | null => {
               >
                 <div className="flex flex-row items-center gap-2.5 w-full pe-5 mb-4">
                   <div
-                    className={`flex-1 text-lg leading-[21.6px] relative [font-family:'Montserrat',Helvetica] tracking-[0] cursor-pointer flex items-center justify-between px-4 py-4 rounded-[10px] transition-all duration-150 ${
-                      openQuestion.level1 === indexLevel1
-                        ? "bg-[#F6AF1F33] text-black border-[1px] border-[#F6AF1F]"
-                        : "text-[#69727A]"
-                    } `}
+                    className={`flex-1 text-lg leading-[21.6px] relative [font-family:'Montserrat',Helvetica] 
+                      tracking-[0] cursor-pointer flex items-center justify-between px-4 py-4 rounded-[10px] 
+                      transition-all duration-150 ${
+                        openQuestion.level1 === indexLevel1
+                          ? "bg-[#F6AF1F33] text-black border-[1px] border-[#F6AF1F]"
+                          : "text-[#69727A]"
+                      } `}
                     onClick={() =>
                       setOpenQuestion((prev) => ({
                         level1: prev.level1 === indexLevel1 ? -1 : indexLevel1,

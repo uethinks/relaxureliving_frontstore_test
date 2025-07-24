@@ -169,7 +169,13 @@ export const ContactUs = ({
 
           <div className="flex flex-col items-center gap-[52.66px] w-full">
             <div className="flex flex-col items-center gap-[18.16px] w-full">
-              <h2 className="font-heading-2 text-black text-[18px] lg:text-[36px] font-medium text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)]">
+              <h2
+                className={`
+                font-heading-2 text-black text-[18px] lg:text-[36px] 
+                font-medium text-center tracking-[var(--heading-2-letter-spacing)] 
+                leading-[var(--heading-2-line-height)]
+              `}
+              >
                 {contactUs.FormDescription}
               </h2>
             </div>
