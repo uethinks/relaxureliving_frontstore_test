@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, Suspense, lazy } from "react"
+import React, { useEffect, useState, lazy } from "react"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { getHomePage } from "@lib/cms/strapiCmsApi"

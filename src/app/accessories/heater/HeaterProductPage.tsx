@@ -26,7 +26,6 @@ export const HeaterProductPage = ({
     useState<StoreProductVariant | null>(heaterProduct?.variants?.[0] || null)
   const [selectedHeaterQuantity, setSelectedHeaterQuantity] = useState(1)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   const heaterSizes: StoreProductOption | undefined =
     heaterProduct?.options?.find((option) => option.title === "Watt")
@@ -80,10 +79,6 @@ export const HeaterProductPage = ({
     })
   }, [heaterProduct, selectedSize, selectedColor])
 
-  const handleSizeClick = (size: StoreProductOptionValue) => {
-    setSelectedSize(size)
-  }
-
   const handleColorClick = (color: StoreProductOptionValue) => {
     setSelectedColor(color)
   }
@@ -98,9 +93,6 @@ export const HeaterProductPage = ({
   const totalPrice = selectedHeater?.calculated_price?.calculated_amount
     ? selectedHeater?.calculated_price?.calculated_amount *
       selectedHeaterQuantity
-    : 0
-  const totalOriginalPrice = selectedHeater?.calculated_price?.original_amount
-    ? selectedHeater?.calculated_price?.original_amount * selectedHeaterQuantity
     : 0
 
   const addAccessoryHeaterHandler = async () => {
@@ -166,14 +158,14 @@ export const HeaterProductPage = ({
                         >
                           <button
                             className={`w-6 h-6 rounded-[20px] cursor-pointer border-2 border-solid transition-all duration-200 ${
-                              selectedColor.id == color.id
+                              selectedColor.id === color.id
                                 ? "bg-[#F6AF1F33] border-[#F6AF1F]"
                                 : "bg-[#ffffff] border-gray-300 hover:border-[#F6AF1F]"
                             }`}
                             onClick={() => handleColorClick(color)}
                           ></button>
                           <div
-                            className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-16 lg:text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
+                            className={`relative w-fit mt-[-1px] font-montserrat font-medium text-16 lg:text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
                           >
                             {color.value}
                           </div>

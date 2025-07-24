@@ -91,11 +91,13 @@ export const PergulaSizeSelector = React.memo(
                     onClick={() => onSizeChange(size)}
                   >
                     <div
-                      className={`mx-2 lg:mx-0 xl:mx-2 relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[18px] tracking-[0] leading-[27px] whitespace-nowrap ${
-                        selectedSize?.id === size.id
-                          ? "text-[#072f6c]"
-                          : "text-[#69727a]"
-                      }`}
+                      className={`mx-2 lg:mx-0 xl:mx-2 relative w-fit 
+                        mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium 
+                        text-[16px] lg:text-[18px] tracking-[0] leading-[27px] whitespace-nowrap ${
+                          selectedSize?.id === size.id
+                            ? "text-[#072f6c]"
+                            : "text-[#69727a]"
+                        }`}
                     >
                       {size.value}
                     </div>

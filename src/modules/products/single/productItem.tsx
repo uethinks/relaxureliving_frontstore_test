@@ -64,7 +64,11 @@ export const ProductItem = ({
           </div>
         </div>
         <div className="w-full flex flex-col items-center justify-center gap-2.5 bg-[#F6AF1F] rounded-2xl mt-20 py-10">
-          <h2 className="text-[#343a40] text-[36px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+          <h2
+            className={`text-[#343a40] text-[36px] font-heading-2 font-[number:var(--heading-2-font-weight)] 
+            text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] 
+            [font-style:var(--heading-2-font-style)]`}
+          >
             {pergolaData.get_in_touch.title}
           </h2>
           <a

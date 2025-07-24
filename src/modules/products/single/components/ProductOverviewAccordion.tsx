@@ -7,6 +7,10 @@ import YouTubeWrapper from "./YouTubeWrapper"
 import Link from "next/link"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 
+// 定义手风琴展开和收起的样式常量
+const ACCORDION_EXPANDED_STYLES = "max-h-[1000px] opacity-100"
+const ACCORDION_COLLAPSED_STYLES = "max-h-0 opacity-0"
+
 interface ProductOverviewAccordionProps {
   productOverview: ProductOverview
 }
@@ -145,8 +149,8 @@ export const ProductOverviewAccordion: React.FC<
             <div
               className={`px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
                 openIndex === 0
-                  ? "max-h-[1000px] opacity-100"
-                  : "max-h-0 opacity-0"
+                  ? ACCORDION_EXPANDED_STYLES
+                  : ACCORDION_COLLAPSED_STYLES
               }`}
             >
               {/* 这里可以自定义Description的渲染逻辑 */}
@@ -236,8 +240,8 @@ export const ProductOverviewAccordion: React.FC<
             <div
               className={`px-6 pb-5 flex flex-col items-center text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
                 openIndex === 2
-                  ? "max-h-[1000px] opacity-100"
-                  : "max-h-0 opacity-0"
+                  ? ACCORDION_EXPANDED_STYLES
+                  : ACCORDION_COLLAPSED_STYLES
               }`}
             >
               {/* 这里可以自定义Shipping & Returns的渲染逻辑 */}
@@ -479,8 +483,8 @@ export const ProductOverviewAccordion: React.FC<
             <div
               className={`flex flex-col items-center justify-center px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
                 openIndex === 5
-                  ? "max-h-[1000px] opacity-100"
-                  : "max-h-0 opacity-0"
+                  ? ACCORDION_EXPANDED_STYLES
+                  : ACCORDION_COLLAPSED_STYLES
               }`}
             >
               {/* 这里可以自定义Lifetime Warranty的渲染逻辑 */}

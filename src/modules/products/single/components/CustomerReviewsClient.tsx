@@ -57,7 +57,9 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   // Update items per page based on screen size
   useEffect(() => {
     const handleResize = () => {
-      if (typeof window === "undefined") return
+      if (typeof window === "undefined") {
+        return
+      }
       if (window.innerWidth >= 1280) {
         setImagesToShow(7)
         setItemsPerPage(9)

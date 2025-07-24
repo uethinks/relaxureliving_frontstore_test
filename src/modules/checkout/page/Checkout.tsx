@@ -14,7 +14,6 @@ import Link from "next/link"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { OceanPaymentForm } from "./components/OceanPaymentForm"
-import { useRouter } from "next/navigation"
 import Breadcrumb from "@/components/Breadcrumb"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -243,7 +242,9 @@ export const Checkout = () => {
   }
 
   const getPromotionDetails = (code: string) => {
-    if (!cart?.promotions) return null
+    if (!cart?.promotions) {
+      return null
+    }
     return cart.promotions.find((promo) => promo.code === code)
   }
 
@@ -493,7 +494,12 @@ export const Checkout = () => {
                   <span className="text-red-500">*</span>
                 </div>
                 <input
-                  className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
+                  className={`
+                    flex-1 grow focus:outline-none border border-solid border-[#d8dadc] 
+                    px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative 
+                    tracking-[0] text-base text-[#8d9299] h-[18px] font-normal 
+                    leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]
+                  `}
                   placeholder="Phone"
                   type="tel"
                   value={formData.shipping_address.phone}

@@ -1,5 +1,4 @@
 import React from "react"
-import Image from "next/image"
 import { ReviewType } from "@/types/global"
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 interface ImageReviewModalProps {
@@ -31,8 +30,6 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
   onReviewChange,
   totalReviews,
 }) => {
-  const [isLoading, setIsLoading] = React.useState(true)
-
   // Handle keyboard events
   React.useEffect(() => {
     if (!isOpen) return
@@ -88,7 +85,6 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
                           ? totalReviews - 1
                           : currentReviewIndex - 1
                       onReviewChange(newIndex)
-                      setIsLoading(true)
                     }}
                     className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white bg-opacity-75 hover:bg-opacity-100 flex items-center justify-center text-gray-800 transition-all shadow-lg z-10"
                   >
@@ -116,7 +112,6 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
                           ? 0
                           : currentReviewIndex + 1
                       onReviewChange(newIndex)
-                      setIsLoading(true)
                     }}
                     className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white bg-opacity-75 hover:bg-opacity-100 flex items-center justify-center text-gray-800 transition-all shadow-lg z-10"
                   >

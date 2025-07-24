@@ -24,7 +24,9 @@ export const ProductpageSampleKit = ({
     const fetchSampleKit = async () => {
       try {
         const region = await getRegion(defaultCountryCode)
-        if (!region) return
+        if (!region) {
+          return
+        }
 
         const { product } = await getProductByProductId({
           productId: sampleKit.product_id,
@@ -80,17 +82,27 @@ export const ProductpageSampleKit = ({
         />
 
         <div className="flex flex-col justify-center mt-5 items-center gap-5 relative self-stretch w-full flex-[0_0_auto]">
-          <div className="relative self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+          <div
+            className={`relative self-stretch mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] 
+            text-[18px] lg:text-[length:var(--heading-2-font-size)] text-center tracking-[var(--heading-2-letter-spacing)] 
+            leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]`}
+          >
             {sampleKit?.title}
           </div>
 
-          <p className="relative w-full opacity-80 font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#69727A] text-[14px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] text-center tracking-[var(--relaxure-sub-heading-18-letter-spacing)] leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+          <p
+            className={`relative w-full opacity-80 font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[#69727A] 
+            text-[14px] lg:text-[length:var(--relaxure-sub-heading-18-font-size)] text-center tracking-[var(--relaxure-sub-heading-18-letter-spacing)] 
+            leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]`}
+          >
             {sampleKit?.description}
           </p>
           <div className="inline-flex flex-col items-center gap-5 relative flex-[0_0_auto]">
             <button
               onClick={() => setShowDialog(true)}
-              className="w-[271px] h-[48px] border bg-[#F6AF1F] hover:bg-[#fdce6f] rounded-[10px] shadow-[0px_3px_7px_rgba(246,175,31,0.15),0px_13px_13px_rgba(246,175,31,0.10),0px_29px_17px_rgba(246,175,31,0.05),0px_51px_20px_rgba(246,175,31,0.03),0px_80px_22px_rgba(246,175,31,0.01)] overflow-hidden"
+              className={`w-[271px] h-[48px] border bg-[#F6AF1F] hover:bg-[#fdce6f] rounded-[10px] 
+                shadow-[0px_3px_7px_rgba(246,175,31,0.15),0px_13px_13px_rgba(246,175,31,0.10),0px_29px_17px_rgba(246,175,31,0.05),0px_51px_20px_rgba(246,175,31,0.03),0px_80px_22px_rgba(246,175,31,0.01)] 
+                overflow-hidden`}
             >
               <div className="[font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[14px] md:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 {sampleKit?.button_name}

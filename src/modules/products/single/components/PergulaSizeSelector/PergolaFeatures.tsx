@@ -10,12 +10,14 @@ interface PergolaFeaturesProps {
   selectedSize: string
 }
 
+const HIGHER_CEILING_TEXT = "Higher ceiling 8.79FT(268cm)"
+
 const FEATURES_BY_SIZE: Record<string, Feature[]> = {
   "10'x10'": [
     { icon: "/img/fits-people.png", text: "Fits 2-4 people" },
     { icon: "/img/morning-coffee.png", text: "Perfect for morning coffee" },
     { icon: "/img/small-patio.png", text: "Ideal for small patios" },
-    { icon: "/img/ceiling.png", text: "Higher ceiling 8.79FT(268cm)" },
+    { icon: "/img/ceiling.png", text: HIGHER_CEILING_TEXT },
   ],
   "10'x13'": [
     { icon: "/img/fits-people.png", text: "Fits 4-6 people" },
@@ -23,7 +25,7 @@ const FEATURES_BY_SIZE: Record<string, Feature[]> = {
     { icon: "/img/bbq.png", text: "Perfect for small BBQ" },
     { icon: "/img/sofa.png", text: "Fits a modular sofa" },
     { icon: "/img/small-patio.png", text: "Ideal for small patios" },
-    { icon: "/img/ceiling.png", text: "Higher ceiling 8.79FT(268cm)" },
+    { icon: "/img/ceiling.png", text: HIGHER_CEILING_TEXT },
   ],
   "13'x13'": [
     { icon: "/img/fits-people.png", text: "Fits 6-8 people" },
@@ -31,7 +33,7 @@ const FEATURES_BY_SIZE: Record<string, Feature[]> = {
     { icon: "/img/sofa.png", text: "Fits a modular sofa" },
     { icon: "/img/kitchen.png", text: "Fits a small kitchen set" },
     { icon: "/img/party.png", text: "Perfect for hosting parties" },
-    { icon: "/img/ceiling.png", text: "Higher ceiling 8.79FT(268cm)" },
+    { icon: "/img/ceiling.png", text: HIGHER_CEILING_TEXT },
   ],
   "13'x19'": [
     { icon: "/img/fits-people.png", text: "Fits 8-12 people" },
@@ -40,7 +42,7 @@ const FEATURES_BY_SIZE: Record<string, Feature[]> = {
     { icon: "/img/small-patio.png", text: "Ideal for multiple seating areas" },
     { icon: "/img/kitchen.png", text: "Fits a small kitchen set" },
     { icon: "/img/party.png", text: "Perfect for hosting parties" },
-    { icon: "/img/ceiling.png", text: "Higher ceiling 8.79FT(268cm)" },
+    { icon: "/img/ceiling.png", text: HIGHER_CEILING_TEXT },
   ],
 }
 

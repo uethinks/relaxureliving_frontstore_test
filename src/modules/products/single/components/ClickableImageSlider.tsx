@@ -19,7 +19,9 @@ export const ClickableImageSlider: React.FC<ClickableImageSliderProps> = ({
   const [isOpen, setIsOpen] = useState(false)
   const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 
-  if (!images || images.length === 0) return <></>
+  if (!images || images.length === 0) {
+    return <></>
+  }
 
   return (
     <>
@@ -49,7 +51,9 @@ export const ClickableImageSlider: React.FC<ClickableImageSliderProps> = ({
           {/* 关闭按钮 */}
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute top-6 right-6 z-20 w-12 h-12 bg-gray-800 bg-opacity-60 rounded-full flex items-center justify-center text-white hover:bg-gray-800 hover:bg-opacity-80 transition-colors text-xl font-bold"
+            className={`absolute top-6 right-6 z-20 w-12 h-12 bg-gray-800 bg-opacity-60 
+            rounded-full flex items-center justify-center text-white hover:bg-gray-800 
+            hover:bg-opacity-80 transition-colors text-xl font-bold`}
           >
             ✕
           </button>

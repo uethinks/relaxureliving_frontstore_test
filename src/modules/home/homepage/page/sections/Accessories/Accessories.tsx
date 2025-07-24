@@ -86,7 +86,16 @@ export const Accessories = ({
 
               <div className="flex flex-col w-full items-end gap-2.5 relative flex-[0_0_auto]">
                 <div className="flex  items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                  <h2 className="text-center lg:text-left mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] relative flex-1 tracking-[var(--heading-2-letter-spacing)] [font-style:var(--heading-2-font-style)]">
+                  <h2
+                    className={`
+                    text-center lg:text-left mt-[-1.00px] font-heading-2 
+                    font-[number:var(--heading-2-font-weight)] text-[#343a40] 
+                    text-[18px] lg:text-[length:var(--heading-2-font-size)] 
+                    leading-[var(--heading-2-line-height)] relative flex-1 
+                    tracking-[var(--heading-2-letter-spacing)] 
+                    [font-style:var(--heading-2-font-style)]
+                  `}
+                  >
                     {accessories?.Subtitle}
                   </h2>
                 </div>

@@ -455,7 +455,7 @@ export async function listCartOptions() {
     ...(await getCacheOptions("shippingOptions")),
   }
 
-  return await sdk.client.fetch<{
+  return sdk.client.fetch<{
     shipping_options: HttpTypes.StoreCartShippingOption[]
   }>("/store/shipping-options", {
     query: { cart_id: cartId },
@@ -465,10 +465,10 @@ export async function listCartOptions() {
   })
 }
 
-export async function addPromotionCode(cartId: string, promo_codes: Array<string>) {
+export async function addPromotionCode(cartId: string, promoCodes: Array<string>) {
 
-  return await axiosInstanceMedusa.post(`/store/carts/${cartId}/promotions`, {
-    promo_codes
+  return axiosInstanceMedusa.post(`/store/carts/${cartId}/promotions`, {
+    promo_codes: promoCodes
   }).then((res) => {
     return res.data
   }).catch((err) => {

@@ -39,7 +39,11 @@ export const Component = ({
       onClick={onClick}
     >
       <span
-        className={`all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-black font-medium leading-6 whitespace-nowrap relative ${buttonClassName}`}
+        className={`
+          all-[unset] box-border [font-family:'Montserrat',Helvetica] 
+          w-fit tracking-[0] text-base text-black font-medium 
+          leading-6 whitespace-nowrap relative ${buttonClassName}
+        `}
       >
         {text}
       </span>

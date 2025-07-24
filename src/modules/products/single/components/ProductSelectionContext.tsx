@@ -51,7 +51,9 @@ export const ProductSelectionProvider: React.FC<
       const [aWidth, aLength] = getDimensions(a.value)
       const [bWidth, bLength] = getDimensions(b.value)
 
-      if (aWidth !== bWidth) return aWidth - bWidth
+      if (aWidth !== bWidth) {
+        return aWidth - bWidth
+      }
       return aLength - bLength
     })
   }, [product.options])

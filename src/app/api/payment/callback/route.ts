@@ -21,6 +21,8 @@ const getTerminalSecureCode = (terminalName: TerminalNameEnum) => {
       return process.env.OCEANPAYMENT_KLARNA_SECURE_CODE
     case TerminalNameEnum.Afterpay:
       return process.env.OCEANPAYMENT_AFTERPAY_SECURE_CODE
+    default:
+      return ""
   }
 }
 

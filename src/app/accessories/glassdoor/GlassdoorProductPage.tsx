@@ -1,11 +1,7 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from "react"
-import {
-  StoreProduct,
-  StoreProductOptionValue,
-  StoreProductVariant,
-} from "@medusajs/types"
+import { StoreProduct, StoreProductOptionValue } from "@medusajs/types"
 import { ImageSlider } from "@modules/common/components/ImageSlider"
 import { useCart } from "@lib/context/cartContext"
 import { selectedProducts, PergolaSize } from "types/global"
@@ -36,7 +32,6 @@ const GlassdoorProductPage = ({
     []
   )
   const [totalPrice, setTotalPrice] = useState<number>(0)
-  const [totalOriginalPrice, setTotalOriginalPrice] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(false)
   const [shortSideLength, setShortSideLength] = useState<string>("")
   const [longSideLength, setLongSideLength] = useState<string>("")
@@ -129,15 +124,6 @@ const GlassdoorProductPage = ({
         )
       }, 0)
     )
-    setTotalOriginalPrice(
-      selectedGlassdoor.reduce((acc, glassdoor) => {
-        return (
-          acc +
-          (glassdoor.productVarant?.calculated_price?.original_amount ?? 0) *
-            glassdoor.quantity
-        )
-      }, 0)
-    )
   }, [selectedGlassdoor])
 
   // 处理颜色选择
@@ -147,7 +133,9 @@ const GlassdoorProductPage = ({
 
   // 添加到购物车
   const handleAddToCart = async () => {
-    if (selectedGlassdoor.length === 0 || isLoading) return
+    if (selectedGlassdoor.length === 0 || isLoading) {
+      return
+    }
 
     setIsLoading(true)
     try {
@@ -274,7 +262,7 @@ const GlassdoorProductPage = ({
                         }`}
                         onClick={() => handleColorClick(color)}
                       ></button>
-                      <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]">
+                      <div className="relative w-fit mt-[-1px] font-montserrat font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]">
                         {color.value}
                       </div>
                     </div>
