@@ -13,7 +13,6 @@ import "swiper/css/pagination"
 
 const GAP = 32
 const ACTIVE_SCALE = 1.6
-const IMAGE_COUNT = 5
 
 function useContainerWidth(): [
   MutableRefObject<HTMLDivElement | null>,
@@ -24,7 +23,9 @@ function useContainerWidth(): [
 
   useLayoutEffect(() => {
     function updateWidth() {
-      if (ref.current) setWidth(ref.current.offsetWidth)
+      if (ref.current) {
+        setWidth(ref.current.offsetWidth)
+      }
     }
     updateWidth()
     window.addEventListener("resize", updateWidth)

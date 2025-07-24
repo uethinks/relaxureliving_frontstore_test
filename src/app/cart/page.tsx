@@ -34,9 +34,8 @@ async function getProductsForAccessory({ regionId }: { regionId: string }) {
     region_id: regionId,
     type_id: "ptyp_01JPP7MCZ9JAQNZJ55V91XWCSY",
   }
-  return await getProductByProductType({ queryParams }).then(
-    ({ products }) => products
-  )
+  const { products } = await getProductByProductType({ queryParams })
+  return products
 }
 
 export default async function Cart(props: Props) {
