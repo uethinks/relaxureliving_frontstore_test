@@ -83,11 +83,11 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
   landingSlider,
 }) => {
   const [containerRef, screenWidth] = useContainerWidth()
-  const [images, setImages] = useState([
+  const images = [
     ...landingSlider.images,
     ...landingSlider.images,
     ...landingSlider.images,
-  ])
+  ]
   const [activeIndex, setActiveIndex] = useState(landingSlider.images.length)
   const [isTransitioning, setIsTransitioning] = useState(true)
   const [isClickable, setIsClickable] = useState(true)
@@ -120,7 +120,9 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
 
   // 3. 切换图片逻辑
   const switchSlide = (newIndex: number) => {
-    if (!isClickable) return
+    if (!isClickable) {
+      return
+    }
     setIsClickable(false)
     setIsTransitioning(true)
     setActiveIndex(newIndex)
@@ -175,7 +177,9 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
 
   // 鼠标事件处理
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (!isClickable) return
+    if (!isClickable) {
+      return
+    }
     setIsDragging(false) // 先假定不是拖拽
     setDragStartX(e.clientX)
     setDragOffset(0)
@@ -183,7 +187,9 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
 
   const handleMouseMove = (e: React.MouseEvent) => {
     // 如果鼠标没按下，则不处理
-    if (dragStartX === 0) return
+    if (dragStartX === 0) {
+      return
+    }
     const currentX = e.clientX
     const offset = currentX - dragStartX
 
@@ -198,7 +204,9 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
   }
 
   const handleMouseUp = (e: React.MouseEvent) => {
-    if (dragStartX === 0) return
+    if (dragStartX === 0) {
+      return
+    }
 
     if (isDragging) {
       const threshold = W / 4
@@ -211,7 +219,8 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
       // 如果不是拖拽，那就是点击
       const slideElement = (e.target as HTMLElement).closest("[data-index]")
       if (slideElement) {
-        const index = parseInt(slideElement.getAttribute("data-index")!, 10)
+        const dataIndex = slideElement.getAttribute("data-index")
+        const index = dataIndex ? parseInt(dataIndex, 10) : NaN
         if (!isNaN(index)) {
           switchSlide(index)
         }

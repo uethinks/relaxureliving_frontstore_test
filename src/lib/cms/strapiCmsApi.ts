@@ -1,7 +1,6 @@
 // src/lib/cms/api.ts
 import axios from 'axios';
 import axiosInstance from '../axiosInstance';
-import { unstable_cache } from 'next/cache';
 
 // 定义 API URL
 const homePagePopulate = {

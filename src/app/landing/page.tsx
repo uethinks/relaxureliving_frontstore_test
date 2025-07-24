@@ -24,7 +24,7 @@ const getCachedLandingPage = unstable_cache(
       const { data } = await getLandingPage()
       return data
     } catch (error) {
-      console.error("Error fetching homepage data:", error)
+      console.error("Error fetching landing page data:", error)
       return null
     }
   },
@@ -56,7 +56,7 @@ const getCachedPergolaPage = unstable_cache(
       const { data } = await getPergola()
       return data
     } catch (error) {
-      console.error("Error fetching homepage data:", error)
+      console.error("Error fetching pergola page data:", error)
       return null
     }
   },

@@ -73,20 +73,20 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   const addVariant = async (variantInfo: variantInfo) => {
     try {
       await addToCart(variantInfo)
-      return await fetchCart()
+      return fetchCart()
     } catch (error) {
       console.error("Failed to add variant:", error)
-      return await fetchCart()
+      return fetchCart()
     }
   }
 
   const removeVariant = async (lineId: string) => {
     try {
       await deleteLineItem(lineId)
-      return await fetchCart()
+      return fetchCart()
     } catch (error) {
       console.error("Failed to remove variant:", error)
-      return await fetchCart()
+      return fetchCart()
     }
   }
 
@@ -99,15 +99,15 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
   }) => {
     try {
       await updateLineItem({ lineId, quantity })
-      return await fetchCart()
+      return fetchCart()
     } catch (error) {
       console.error("Failed to update variant:", error)
-      return await fetchCart()
+      return fetchCart()
     }
   }
 
   const getCart = useCallback(async () => {
-    return await fetchCart()
+    return fetchCart()
   }, [fetchCart])
 
   const value = useMemo(

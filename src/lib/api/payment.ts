@@ -1,5 +1,4 @@
 // src/lib/cms/api.ts
-import axiosInstance from '../axiosInstance';
 type OceanPaymentFormData = {
   order_number: string
   order_currency: string
