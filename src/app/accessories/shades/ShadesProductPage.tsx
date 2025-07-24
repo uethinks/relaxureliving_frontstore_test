@@ -1,6 +1,5 @@
 "use client"
 
-import React from "react"
 import { useCallback, useEffect, useState } from "react"
 import {
   StoreProduct,
@@ -36,7 +35,6 @@ const ShadesProductPage = ({
   const [selectedSize, setSelectedSize] = useState<string[]>([])
   const [selectedShades, setSelectedShades] = useState<selectedProducts>([])
   const [totalPrice, setTotalPrice] = useState<number>(0)
-  const [totalOriginalPrice, setTotalOriginalPrice] = useState<number>(0)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [shortSideLength, setShortSideLength] = useState<string>("")
   const [longSideLength, setLongSideLength] = useState<string>("")
@@ -147,15 +145,6 @@ const ShadesProductPage = ({
         )
       }, 0)
     )
-    setTotalOriginalPrice(
-      selectedShades.reduce((acc, shade) => {
-        return (
-          acc +
-          (shade.productVarant?.calculated_price?.original_amount ?? 0) *
-            shade.quantity
-        )
-      }, 0)
-    )
   }, [selectedShades])
 
   // 处理颜色选择
@@ -165,7 +154,9 @@ const ShadesProductPage = ({
 
   // 添加到购物车
   const handleAddToCart = async () => {
-    if (selectedShades.length === 0 || isLoading) return
+    if (selectedShades.length === 0 || isLoading) {
+      return
+    }
 
     setIsLoading(true)
     try {
