@@ -1,6 +1,7 @@
 // src/lib/cms/api.ts
 import axios from 'axios';
 import axiosInstance from '../axiosInstance';
+import { unstable_cache } from 'next/cache';
 
 // 定义 API URL
 const homePagePopulate = {
@@ -16,7 +17,8 @@ const homePagePopulate = {
     "populate[OurBlog][populate][articles][populate][cover][populate]": "*",
     "populate[OurBlog][populate][articles][populate][author][populate]": "*",
     "populate[OurBlog][populate][articles][populate][category][populate]": "*",
-    "populate[credential][populate][images][populate]": "*"
+    "populate[credential][populate][images][populate]": "*",
+    "populate[seo][populate][0]": "shareImage"
 };
 
 const reviewsPopulate = {
@@ -42,6 +44,10 @@ const pergolaPopulate = {
     "populate[faq][populate][homepageFAQ][populate][0]": "question_and_answer",
     "populate[get_in_touch]": "*",
     "populate[sample_kit][populate][0]": "product_image",
+    "populate[seo][populate][0]": "shareImage"
+};
+const faqPopulate = {
+  "populate[faqs][populate][0]": "question_and_answer",
 };
 const heaterPopulate = {
   "populate[productInformations]": "*",
@@ -63,10 +69,13 @@ const landingPagePopulate = {
 const menuPopulate = {
   "populate[menu_item][populate]": "sub_menu_item",
 };
-const accessoriesPagePopulate = {
-  "populate[0]": "*"
+const globalPopulate = {
+  "populate[0]": "defaultSeo",
 };
 
+const termsPopulate = {
+  "populate[seo][populate][0]": "shareImage"
+};
 export const API_URLS = {
   getHomePage: '/api/home-page',
   getWarranty: '/api/warranty',
@@ -85,6 +94,8 @@ export const API_URLS = {
   getLandingPage: '/api/landing',
   getMenu: '/api/menu',
   getAccessoriesPage: '/api/accessories-page',
+  getFaqData: '/api/faq-page',
+  getGlobalData: '/api/global',
 };
 
 // 获取所有项目
@@ -106,25 +117,37 @@ export const getAllTerms = async () => {
   
   try {
     // Intellectual Property Rights
-    const intellectualPropertyRights = await axiosInstance.get(API_URLS.getIntellectualPropertyRights);
+    const intellectualPropertyRights = await axiosInstance.get(API_URLS.getIntellectualPropertyRights, {
+      params: termsPopulate
+    });
     termsData['intellectual-property-right'] = intellectualPropertyRights.data;
     // Shipping Policy 
-    const shippingPolicy = await axiosInstance.get(API_URLS.getShippingPolicy);
+    const shippingPolicy = await axiosInstance.get(API_URLS.getShippingPolicy, {
+      params: termsPopulate
+    });
     termsData['shipping-policy'] = shippingPolicy.data;
     // 获取服务条款
-    const termsOfService = await axiosInstance.get(API_URLS.getTermsOfService);
+    const termsOfService = await axiosInstance.get(API_URLS.getTermsOfService, {
+      params: termsPopulate
+    });
     termsData['terms-of-service'] = termsOfService.data;
 
     // 获取隐私政策
-    const privacyPolicy = await axiosInstance.get(API_URLS.getPrivacyPolicy);
+    const privacyPolicy = await axiosInstance.get(API_URLS.getPrivacyPolicy, {
+      params: termsPopulate
+    });
     termsData['privacy-policy'] = privacyPolicy.data;
 
     // 获取保修条款
-    const warranty = await axiosInstance.get(API_URLS.getWarranty);
+    const warranty = await axiosInstance.get(API_URLS.getWarranty, {
+      params: termsPopulate
+    });
     termsData['warranty'] = warranty.data;
 
     // 获取退货政策
-    const refundPolicy = await axiosInstance.get(API_URLS.getRefundPolicy);
+    const refundPolicy = await axiosInstance.get(API_URLS.getRefundPolicy, {
+      params: termsPopulate
+    });
     termsData['refund-policy'] = refundPolicy.data;
 
     return termsData;
@@ -276,6 +299,30 @@ export const getAccessoriesPage = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching accessories page data:', error, API_URLS.getAccessoriesPage);
+    throw error;
+  }
+};
+
+export const getFaqData = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getFaqData, {
+      params: faqPopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching faq data:', error, API_URLS.getFaqData);
+    throw error;
+  }
+};
+
+export const getGlobalData = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getGlobalData, {
+      params: globalPopulate
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching global data:', error, API_URLS.getGlobalData);
     throw error;
   }
 };

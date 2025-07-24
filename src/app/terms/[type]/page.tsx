@@ -3,6 +3,7 @@ import { getAllTerms } from "@lib/cms/strapiCmsApi"
 import AgreeButton from "./components/AgreeButton"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
+import { Metadata } from "next"
 interface TermType {
   title: string
 }
@@ -61,46 +62,15 @@ export async function generateStaticParams() {
 export const dynamic = "force-dynamic"
 export const revalidate = 3600 // 每小时重新验证一次
 
-const metaMap: Record<string, { title: string; description: string }> = {
-  "intellectual-property-right": {
-    title: "Intellectual Property Rights Disclosure",
-    description: "N/A",
-  },
-  "shipping-policy": {
-    title: "Relaxure Shipping Policy",
-    description:
-      "Learn about the shipping timeframe for your Relaxure pergola.",
-  },
-  "terms-of-service": {
-    title: "Relaxure Terms of Service",
-    description:
-      "Learn about the terms of service applicable to visitors of the https://relaxureliving.com/ website.",
-  },
-  "privacy-policy": {
-    title: "Relaxure Privacy Policy",
-    description: "Learn about Relaxure’s privacy policy.",
-  },
-  warranty: {
-    title: "Relaxure Warranty Coverage Information",
-    description: "Learn about Relaxure’s lifetime pergola warranty.",
-  },
-  "refund-policy": {
-    title: "Relaxure Refund Policy",
-    description:
-      "Learn about refund eligibility requirements for Relaxure pergolas.",
-  },
-}
-
 export async function generateMetadata({
   params,
 }: {
   params: { type: string }
-}) {
-  const meta = metaMap[params.type] || { title: "Relaxure", description: "" }
-  return {
-    title: meta.title,
-    description: meta.description,
-  }
+}): Promise<Metadata> {
+  const { type } = await params
+  const termsData = await getAllTerms()
+  const currentTermData = termsData[type]
+  return currentTermData?.data?.seo?.metadataInfo || {}
 }
 
 export default async function TermsPage({

@@ -1,57 +1,76 @@
 import { CartProvider } from "@lib/context/cartContext"
-import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
 import "styles/globals.css"
 import Script from "next/script"
+import { getGlobalData, getFaqData } from "@lib/cms/strapiCmsApi"
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getBaseURL()),
-  title: {
-    absolute: "Louvered Aluminum Pergola Kits | Relaxure",
-  },
-  description:
-    "Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability. Turn any patio into a year-round living space.",
-  applicationName: "Relaxure",
-  keywords: ["pergola", "outdoor shade", "smart home", "relaxure"],
-  authors: [{ name: "Relaxure" }],
-  creator: "Relaxure",
-  publisher: "Relaxure",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  icons: {
-    icon: [
-      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon/favicon.ico", rel: "shortcut icon" },
-    ],
-    apple: [
-      {
-        url: "/favicon/apple-touch-icon.png",
-        sizes: "180x180",
-        type: "image/png",
-      },
-    ],
-  },
-  manifest: "/favicon/site.webmanifest",
-  openGraph: {
-    type: "website",
-    siteName: "Relaxure",
-    title: "Louvered Aluminum Pergola Kits | Relaxure",
-    description:
-      "Our aluminum pergola kits feature motorized louvers, weather sensors and commercial-grade durability. Turn any patio into a year-round living space.",
-    url: "/",
-    locale: "en_US",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+// 动态生成metadata
+export async function generateMetadata(): Promise<Metadata> {
+  const globalData = await getGlobalData()
+  return globalData?.data?.defaultSeo?.metadataInfo || {}
 }
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+// 动态获取组织结构化数据
+async function getOrganizationSchema() {
+  const globalData = await getGlobalData()
+  return (
+    globalData?.data?.defaultSeo?.organizationStructureData || {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Relaxure Pergolas",
+      url: "https://relaxureliving.com/",
+      logo: "https://relaxureliving.com/img/logo.svg",
+      description:
+        "Relaxure is home to the world's smartest aluminium pergola, intelligently designed to enable four-season outdoor living. Lifetime Warranty, Built to Last for 30+ Years.",
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+1-213-566-8658",
+        email: "info@relaxureliving.com",
+        contactType: "Customer Service",
+        areaServed: "US",
+        availableLanguage: "English",
+      },
+      sameAs: [
+        "https://www.facebook.com/people/Relaxure/61570952814126/",
+        "https://www.instagram.com/relaxureliving/",
+        "https://www.youtube.com/@Relaxure-Pergola",
+      ],
+    }
+  )
+}
+
+async function getFaqSchema() {
+  const faqData = await getFaqData()
+  const faqs = faqData?.data?.faqs || []
+
+  // 提取所有问题答案对
+  const mainEntity = faqs.reduce((acc: any[], category: any) => {
+    if (
+      category.question_and_answer &&
+      Array.isArray(category.question_and_answer)
+    ) {
+      const questions = category.question_and_answer.map((qa: any) => ({
+        "@type": "Question",
+        name: qa.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: qa.Answer,
+        },
+      }))
+      acc.push(...questions)
+    }
+    return acc
+  }, [])
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: mainEntity,
+  }
+}
+export default async function RootLayout(props: { children: React.ReactNode }) {
+  const organizationSchema = await getOrganizationSchema()
+  const faqSchema = await getFaqSchema()
   return (
     <html lang="en" data-mode="light">
       <head>
@@ -96,30 +115,15 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           type="application/ld+json"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Relaxure Pergolas",
-              url: "https://relaxureliving.com/",
-              logo: "https://relaxureliving.com/img/logo.svg",
-              description:
-                "Relaxure is home to the world's smartest aluminium pergola, intelligently designed to enable four-season outdoor living. Lifetime Warranty, Built to Last for 30+ Years.",
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "+1-213-566-8658",
-                email: "info@relaxureliving.com",
-                contactType: "Customer Service",
-                areaServed: "US",
-                availableLanguage: "English",
-              },
-              sameAs: [
-                "https://www.facebook.com/people/Relaxure/61570952814126/",
-                "https://www.instagram.com/relaxureliving/",
-                "https://www.youtube.com/@Relaxure-Pergola",
-              ],
-            }),
+            __html: JSON.stringify(organizationSchema),
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqSchema),
+          }}
+        ></script>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
