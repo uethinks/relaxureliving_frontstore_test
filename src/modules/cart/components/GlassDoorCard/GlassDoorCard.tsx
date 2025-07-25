@@ -24,7 +24,9 @@ export const GlassDoorCard = (): JSX.Element | null => {
 
   // Initialize quantities from cart items
   useEffect(() => {
-    if (!glassDoor) return
+    if (!glassDoor) {
+      return
+    }
     const newQuantities: { [key: string]: number } = {}
     glassDoor.forEach((item) => {
       newQuantities[item.id] = item.quantity
@@ -55,7 +57,9 @@ export const GlassDoorCard = (): JSX.Element | null => {
 
   const handleQuantityChange = useCallback(
     (quantity: number | string, itemId: string): void => {
-      if (isUpdating) return
+      if (isUpdating) {
+        return
+      }
 
       // Allow empty input but set to 1 after debounce
       if (quantity === "") {
@@ -97,7 +101,9 @@ export const GlassDoorCard = (): JSX.Element | null => {
 
       // Only proceed with number validation if the input is not empty
       const numQuantity = Number(quantity)
-      if (isNaN(numQuantity)) return // Allow partial input like "4" when typing "41"
+      if (isNaN(numQuantity)) {
+        return // Allow partial input like "4" when typing "41"
+      }
 
       // Update local state immediately with the current input
       setQuantities((prev) => ({ ...prev, [itemId]: quantity }))

@@ -15,7 +15,9 @@ export const ProductCard = (): JSX.Element | null => {
   const [isUpdating, setIsUpdating] = useState(false)
 
   const pergola = useMemo(() => {
-    if (!cart?.items) return []
+    if (!cart?.items) {
+      return []
+    }
     return cart.items.filter((item) => {
       // 检查多个可能的标识
       return item.product_type === "Pergola"
@@ -41,7 +43,9 @@ export const ProductCard = (): JSX.Element | null => {
 
   const handleQuantityChange = useCallback(
     (quantity: number | string, itemId: string): void => {
-      if (isUpdating) return
+      if (isUpdating) {
+        return
+      }
 
       // Allow empty input but set to 1 after debounce
       if (quantity === "") {
@@ -83,7 +87,9 @@ export const ProductCard = (): JSX.Element | null => {
 
       // Only proceed with number validation if the input is not empty
       const numQuantity = Number(quantity)
-      if (isNaN(numQuantity)) return // Allow partial input like "4" when typing "41"
+      if (isNaN(numQuantity)) {
+        return // Allow partial input like "4" when typing "41"
+      }
 
       // Update local state immediately with the current input
       setQuantities((prev) => ({ ...prev, [itemId]: quantity }))

@@ -4,6 +4,8 @@ import { sdk } from "@lib/config"
 import { HttpTypes } from "@medusajs/types"
 import { getCacheOptions } from "./cookies"
 
+const CACHE_OPTION = "force-cache"
+
 export const retrieveCollection = async (id: string) => {
   const next = {
     ...(await getCacheOptions("collections")),
@@ -14,7 +16,7 @@ export const retrieveCollection = async (id: string) => {
       `/store/collections/${id}`,
       {
         next,
-        cache: "force-cache",
+        cache: CACHE_OPTION,
       }
     )
     .then(({ collection }) => collection)
@@ -36,7 +38,7 @@ export const listCollections = async (
       {
         query: queryParams,
         next,
-        cache: "force-cache",
+        cache: CACHE_OPTION,
       }
     )
     .then(({ collections }) => ({ collections, count: collections.length }))
@@ -53,7 +55,7 @@ export const getCollectionByHandle = async (
     .fetch<HttpTypes.StoreCollectionListResponse>(`/store/collections`, {
       query: { handle, fields: "*products" },
       next,
-      cache: "force-cache",
+      cache: CACHE_OPTION,
     })
     .then(({ collections }) => collections[0])
 }
