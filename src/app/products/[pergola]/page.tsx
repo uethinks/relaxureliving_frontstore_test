@@ -26,7 +26,7 @@ type ProductInformation = {
 }
 
 type Props = Readonly<{
-  params: { pergola: string }
+  params: Promise<{ pergola: string }>
 }>
 
 // 缓存pergola数据获取

@@ -361,9 +361,11 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
     } as any
 
     const sameAsBilling = formData.get("same_as_billing")
-    if (sameAsBilling === "on") data.billing_address = data.shipping_address
+    if (sameAsBilling === "on") {
+      data.billing_address = data.shipping_address
+    }
 
-    if (sameAsBilling !== "on")
+    if (sameAsBilling !== "on") {
       data.billing_address = {
         first_name: formData.get("billing_address.first_name"),
         last_name: formData.get("billing_address.last_name"),
@@ -376,6 +378,7 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
         province: formData.get("billing_address.province"),
         phone: formData.get("billing_address.phone"),
       }
+    }
     await updateCart(data)
   } catch (e: any) {
     return e.message
@@ -455,7 +458,7 @@ export async function listCartOptions() {
     ...(await getCacheOptions("shippingOptions")),
   }
 
-  return sdk.client.fetch<{
+  return await sdk.client.fetch<{
     shipping_options: HttpTypes.StoreCartShippingOption[]
   }>("/store/shipping-options", {
     query: { cart_id: cartId },
@@ -467,7 +470,7 @@ export async function listCartOptions() {
 
 export async function addPromotionCode(cartId: string, promoCodes: Array<string>) {
 
-  return axiosInstanceMedusa.post(`/store/carts/${cartId}/promotions`, {
+  return await axiosInstanceMedusa.post(`/store/carts/${cartId}/promotions`, {
     promo_codes: promoCodes
   }).then((res) => {
     return res.data
