@@ -18,7 +18,9 @@ export const SampleKitCard = (): JSX.Element | null => {
 
   // Find sample kit in cart
   useEffect(() => {
-    if (!cart?.items) return
+    if (!cart?.items) {
+      return
+    }
     const sampleKitItem = cart.items.find((item) =>
       item.product_handle?.toLowerCase().includes("sample-kit")
     )
@@ -27,7 +29,9 @@ export const SampleKitCard = (): JSX.Element | null => {
 
   // Initialize quantities from cart items
   useEffect(() => {
-    if (!sampleKit) return
+    if (!sampleKit) {
+      return
+    }
     const newQuantities: { [key: string]: number } = {}
     newQuantities[sampleKit.id] = sampleKit.quantity
     setQuantities(newQuantities)
@@ -56,7 +60,9 @@ export const SampleKitCard = (): JSX.Element | null => {
 
   const handleQuantityChange = useCallback(
     (quantity: number | string, itemId: string): void => {
-      if (isUpdating) return
+      if (isUpdating) {
+        return
+      }
 
       // Allow empty input but set to 1 after debounce
       if (quantity === "") {
@@ -98,7 +104,9 @@ export const SampleKitCard = (): JSX.Element | null => {
 
       // Only proceed with number validation if the input is not empty
       const numQuantity = Number(quantity)
-      if (isNaN(numQuantity)) return // Allow partial input like "4" when typing "41"
+      if (isNaN(numQuantity)) {
+        return // Allow partial input like "4" when typing "41"
+      }
 
       // Update local state immediately with the current input
       setQuantities((prev) => ({ ...prev, [itemId]: quantity }))
@@ -146,7 +154,9 @@ export const SampleKitCard = (): JSX.Element | null => {
     }
   }, [updateTimeout])
 
-  if (!sampleKit) return null
+  if (!sampleKit) {
+    return null
+  }
 
   return (
     <>

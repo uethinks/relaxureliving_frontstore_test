@@ -130,9 +130,12 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
 
   useEffect(() => {
     // 清理旧的定时器以防冲突
-    if (transitionEndTimeoutRef.current)
+    if (transitionEndTimeoutRef.current) {
       clearTimeout(transitionEndTimeoutRef.current)
-    if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current)
+    }
+    if (resetTimeoutRef.current) {
+      clearTimeout(resetTimeoutRef.current)
+    }
 
     const L = landingSlider.images.length
     const transitionTime = 500 // 必须与CSS的transition时间一致
@@ -158,15 +161,20 @@ const LandingSliderDesktop: React.FC<LandingSliderProps> = ({
     }, transitionTime)
 
     return () => {
-      if (transitionEndTimeoutRef.current)
+      if (transitionEndTimeoutRef.current) {
         clearTimeout(transitionEndTimeoutRef.current)
-      if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current)
+      }
+      if (resetTimeoutRef.current) {
+        clearTimeout(resetTimeoutRef.current)
+      }
     }
   }, [activeIndex, landingSlider.images.length])
 
   // Calculate the container's offset to center the active slide
   const getContainerOffset = () => {
-    if (screenWidth === 0) return 0
+    if (screenWidth === 0) {
+      return 0
+    }
     let offset = screenWidth / 2 - W / 2 - activeIndex * (W + GAP)
     // Adjust for the active slide's larger width
     if (activeIndex > 0) {

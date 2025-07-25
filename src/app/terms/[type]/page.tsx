@@ -65,7 +65,7 @@ export const revalidate = 3600 // 每小时重新验证一次
 export async function generateMetadata({
   params,
 }: {
-  params: { type: string }
+  params: Promise<{ type: string }>
 }): Promise<Metadata> {
   const { type } = await params
   const termsData = await getAllTerms()
@@ -76,7 +76,7 @@ export async function generateMetadata({
 export default async function TermsPage({
   params,
 }: {
-  params: { type: string }
+  params: Promise<{ type: string }>
 }) {
   const { type } = await params
 

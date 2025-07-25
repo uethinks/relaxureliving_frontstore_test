@@ -16,7 +16,9 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   onConfirm,
   onCancel,
 }) => {
-  if (!isOpen) return null
+  if (!isOpen) {
+    return null
+  }
 
   return (
     <>
