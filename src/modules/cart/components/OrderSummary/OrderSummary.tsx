@@ -24,7 +24,10 @@ export const OrderSummary = (): JSX.Element => {
                     className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]"
                   >
                     <div className="flex items-center gap-2.5 relative max-w-full">
-                      <div className="w-full break-words relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-normal overflow-wrap break-word">
+                      <div
+                        className={`w-full break-words relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                        font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-normal overflow-wrap break-word`}
+                      >
                         {item.quantity} x {item.title}
                       </div>
                     </div>
@@ -37,13 +40,19 @@ export const OrderSummary = (): JSX.Element => {
                 <div className="flex justify-between items-center relative self-stretch w-full flex-[0_0_auto]">
                   <div className="flex items-center justify-start relative">
                     <div className="flex h-6 items-center gap-2.5 relative">
-                      <div className="relative h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap">
+                      <div
+                        className={`relative h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                        font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap`}
+                      >
                         Delivery Fee
                       </div>
                     </div>
                   </div>
                   <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto] bg-[#a5feae8c] rounded-[10px]">
-                    <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#2c5630] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap">
+                    <div
+                      className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                        font-medium text-[#2c5630] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap`}
+                    >
                       Free Shipping
                     </div>
                   </div>
