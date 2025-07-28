@@ -34,7 +34,9 @@ export const SizeSelector = (): JSX.Element | null => {
   //set the default size and color
   useEffect(() => {
     const fetchProduct = async () => {
-      if (!defaultPergola?.product_id) return
+      if (!defaultPergola?.product_id) {
+        return
+      }
       /**
        * first get the product with all variants
        */

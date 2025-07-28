@@ -11,7 +11,9 @@ export const OneHundredDayRiskFreeTrial = ({
   const trial = pergolaData.one_hundred_day_risk_free_trial
   const [isPopupOpen, setIsPopupOpen] = useState(false)
 
-  if (!trial) return null
+  if (!trial) {
+    return null
+  }
 
   const handleClick = () => {
     setIsPopupOpen(true)

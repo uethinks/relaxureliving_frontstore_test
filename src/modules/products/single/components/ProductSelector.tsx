@@ -156,7 +156,9 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
   }
 
   const buyPergula = async () => {
-    if (!selectedVariant?.id) return null
+    if (!selectedVariant?.id) {
+      return null
+    }
 
     try {
       const result = await addToCart({
@@ -172,7 +174,9 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
   }
 
   const buyHeater = async () => {
-    if (selectedAccessoriesHeater.length === 0) return null
+    if (selectedAccessoriesHeater.length === 0) {
+      return null
+    }
 
     const addToCartPromises = selectedAccessoriesHeater
       .filter((item) => item.productVarant && item.quantity)
@@ -200,7 +204,9 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
   }
 
   const buyShades = async () => {
-    if (selectedAccessoriesShades.length === 0) return null
+    if (selectedAccessoriesShades.length === 0) {
+      return null
+    }
 
     const addToCartPromises = selectedAccessoriesShades
       .filter((item) => item.productVarant && item.quantity)
@@ -228,7 +234,9 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
   }
 
   const buyGlassdoor = async () => {
-    if (selectedAccessoriesGlassdoor.length === 0) return null
+    if (selectedAccessoriesGlassdoor.length === 0) {
+      return null
+    }
 
     const addToCartPromises = selectedAccessoriesGlassdoor
       .filter((item) => item.productVarant && item.quantity)

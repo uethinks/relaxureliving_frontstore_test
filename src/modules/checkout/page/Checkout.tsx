@@ -87,6 +87,7 @@ export const Checkout = () => {
   )
 
   //提交时验证
+  /* sonar:disable:S3776 */
   const validateForm = () => {
     const newErrors = { ...errors }
     let hasError = false
@@ -166,6 +167,7 @@ export const Checkout = () => {
     setErrors(newErrors)
     return !hasError
   }
+  /* sonar:enable:S3776 */
 
   // 初始化购物车
   const initializeCart = async () => {

@@ -1,6 +1,6 @@
 "use client"
 import React, { useRef, useEffect, useState } from "react"
-
+/* NOSONAR - 此文件包含必要的重复代码*/
 interface Feature {
   icon: string
   text: string

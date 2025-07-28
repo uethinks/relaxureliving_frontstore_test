@@ -18,7 +18,9 @@ export const HomepageSampleKit = (): JSX.Element => {
     const fetchSampleKit = async () => {
       try {
         const region = await getRegion(defaultCountryCode)
-        if (!region) return
+        if (!region) {
+          return
+        }
 
         const { products } = await getProductByHandle({
           queryParams: {

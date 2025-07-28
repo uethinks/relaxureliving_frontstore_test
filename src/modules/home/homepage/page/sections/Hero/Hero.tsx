@@ -9,7 +9,9 @@ export const Hero = ({
 }: {
   hero: HeroProps | null
 }): JSX.Element | null => {
-  if (!hero) return null
+  if (!hero) {
+    return null
+  }
 
   return (
     <div className="flex flex-col items-end gap-2 pt-2.5 px-0 relative self-stretch w-full">
