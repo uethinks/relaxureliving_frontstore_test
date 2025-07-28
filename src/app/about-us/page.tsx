@@ -136,7 +136,11 @@ export default function AboutPage() {
               shadow-[15px_25px_40px_rgba(0,0,0,0.20)] 
               shadow-[12px_20px_30px_rgba(0,0,0,0.15)]"
             />
-            <div className="lg:absolute rounded-b-[20px] lg:rounded-b-none lg:top-1/2 lg:right-0 lg:transform lg:-translate-y-1/2 bg-[#072F6C] text-white py-8 px-6 lg:px-12 lg:max-w-[600px]">
+            <div
+              className={`lg:absolute rounded-b-[20px] lg:rounded-b-none lg:top-1/2 
+            lg:right-0 lg:transform lg:-translate-y-1/2 bg-[#072F6C] text-white py-8 
+            px-6 lg:px-12 lg:max-w-[600px]`}
+            >
               <p className="text-[18px] lg:text-[28px] font-[700] leading-relaxed font-['Montserrat']">
                 "Why should creating a beautiful outdoor space require either a
                 small fortune or constant compromise?"

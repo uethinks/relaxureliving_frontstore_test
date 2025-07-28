@@ -1,6 +1,6 @@
 import { CartProvider } from "@lib/context/cartContext"
 import { Metadata } from "next"
-import "styles/globals.css"
+import "../styles/globals.css"
 import Script from "next/script"
 import { getGlobalData, getFaqData } from "@lib/cms/strapiCmsApi"
 

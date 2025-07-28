@@ -190,5 +190,6 @@ export default async function ProductPage({ params }: Props) {
   } catch (error) {
     console.error("Error rendering product page:", error)
     notFound()
+    return null // 添加明确的return语句以满足Sonar要求
   }
 }
