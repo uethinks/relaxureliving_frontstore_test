@@ -4,9 +4,8 @@ import { StoreCartLineItem } from "@medusajs/types"
 import React, { useEffect, useState, useCallback } from "react"
 import { ConfirmDialog } from "../../../../components/ConfirmDialog"
 
-export const ShadesCard = (): JSX.Element | null => {
-  const { cart, removeVariant, updateVariantInfo } = useCart()
-  const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
+// Custom hook for managing quantities
+const useQuantityManager = (cart: any, updateVariantInfo: any) => {
   const [quantities, setQuantities] = useState<{
     [key: string]: number | string
   }>({})
@@ -15,45 +14,20 @@ export const ShadesCard = (): JSX.Element | null => {
   }>({})
   const [isUpdating, setIsUpdating] = useState(false)
 
-  const shadesInCart = cart?.items?.filter(
-    (item) => item.product_title === "Shade Screen"
-  )
-  const [shades, setShades] = useState<StoreCartLineItem[] | null>(
-    shadesInCart ?? null
-  )
-
   // Initialize quantities from cart items
   useEffect(() => {
-    if (!shades) {
+    const shadesInCart = cart?.items?.filter(
+      (item: any) => item.product_title === "Shade Screen"
+    )
+    if (!shadesInCart?.length) {
       return
     }
     const newQuantities: { [key: string]: number } = {}
-    shades.forEach((item) => {
+    shadesInCart.forEach((item: any) => {
       newQuantities[item.id] = item.quantity
     })
     setQuantities(newQuantities)
-  }, [shades])
-
-  const handleDelete = (itemId: string) => {
-    setDeleteItemId(itemId)
-  }
-
-  const handleConfirmDelete = async () => {
-    if (deleteItemId) {
-      await removeProduct(deleteItemId)
-      setDeleteItemId(null)
-    }
-  }
-
-  const handleCancelDelete = () => {
-    setDeleteItemId(null)
-  }
-
-  const removeProduct = async (shadeId: string) => {
-    if (shadeId) {
-      await removeVariant(shadeId)
-    }
-  }
+  }, [cart?.items])
 
   const handleQuantityChange = useCallback(
     (quantity: number | string, itemId: string): void => {
@@ -87,7 +61,8 @@ export const ShadesCard = (): JSX.Element | null => {
             setQuantities((prev) => ({
               ...prev,
               [itemId]:
-                cart?.items?.find((item) => item.id === itemId)?.quantity || 1,
+                cart?.items?.find((item: any) => item.id === itemId)
+                  ?.quantity || 1,
             }))
           } finally {
             setIsUpdating(false)
@@ -128,7 +103,8 @@ export const ShadesCard = (): JSX.Element | null => {
             setQuantities((prev) => ({
               ...prev,
               [itemId]:
-                cart?.items?.find((item) => item.id === itemId)?.quantity || 1,
+                cart?.items?.find((item: any) => item.id === itemId)
+                  ?.quantity || 1,
             }))
           } finally {
             setIsUpdating(false)
@@ -150,17 +126,24 @@ export const ShadesCard = (): JSX.Element | null => {
     }
   }, [updateTimeout])
 
+  return { quantities, isUpdating, handleQuantityChange }
+}
+
+// Custom hook for managing shades data
+const useShadesData = (cart: any) => {
   // Memoize the shades list to prevent unnecessary re-renders
   const memoizedShades = React.useMemo(() => {
     return (
-      cart?.items?.filter((item) => item.product_title === "Shade Screen") ?? []
+      cart?.items?.filter(
+        (item: any) => item.product_title === "Shade Screen"
+      ) ?? []
     )
   }, [cart?.items])
 
   // Memoize the image URLs to prevent unnecessary re-renders
   const memoizedImageUrls = React.useMemo(() => {
     const urls: { [key: string]: string } = {}
-    memoizedShades.forEach((shade) => {
+    memoizedShades.forEach((shade: any) => {
       if (shade?.product?.thumbnail) {
         urls[shade.id] = shade.product.thumbnail
       }
@@ -168,115 +151,194 @@ export const ShadesCard = (): JSX.Element | null => {
     return urls
   }, [memoizedShades])
 
-  useEffect(() => {
-    setShades(memoizedShades)
-  }, [memoizedShades])
+  return { memoizedShades, memoizedImageUrls }
+}
 
-  return !shades?.length ? null : (
-    <>
-      {shades.map((shade) => (
+// Component for quantity controls
+const QuantityControls = ({
+  shade,
+  quantities,
+  isUpdating,
+  handleQuantityChange,
+}: {
+  shade: StoreCartLineItem
+  quantities: { [key: string]: number | string }
+  isUpdating: boolean
+  handleQuantityChange: (quantity: number | string, itemId: string) => void
+}) => (
+  <div className="flex items-center gap-2">
+    <button
+      onClick={() => {
+        const currentValue = Number(quantities[shade.id] || 1)
+        const newValue = Math.max(1, currentValue - 1)
+        handleQuantityChange(newValue.toString(), shade.id)
+      }}
+      disabled={isUpdating}
+      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <span className="text-xl font-medium">-</span>
+    </button>
+    <div className="flex w-14 h-10 items-center justify-center gap-2.5 p-2.5 relative bg-[#ffffff] rounded-[20px] border border-solid border-[#a8a8a8]">
+      <input
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        value={quantities[shade.id] ?? ""}
+        disabled={isUpdating}
+        onChange={(e) => {
+          const value = e.target.value
+          handleQuantityChange(value, shade.id)
+        }}
+        className={`text-center focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] 
+          font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap 
+          [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none 
+          [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]`}
+      />
+    </div>
+    <button
+      onClick={() => {
+        const currentValue = Number(quantities[shade.id] || 1)
+        const newValue = currentValue + 1
+        handleQuantityChange(newValue.toString(), shade.id)
+      }}
+      disabled={isUpdating}
+      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <span className="text-xl font-medium">+</span>
+    </button>
+  </div>
+)
+
+// Component for price display
+const PriceDisplay = ({ shade }: { shade: StoreCartLineItem }) => (
+  <div className="flex items-end justify-start gap-4">
+    <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
+      ${shade?.total?.toFixed(2)}
+    </div>
+    {shade?.discount_total > 0 && (
+      <div className="flex items-center gap-2">
+        <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
+          ${shade?.original_total?.toFixed(2)}
+        </div>
+        <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
+          <span className="text-[12px] font-normal text-[red]">
+            Save{" "}
+            {Math.round((shade?.discount_total / shade?.original_total) * 100)}%
+          </span>
+        </div>
+      </div>
+    )}
+  </div>
+)
+
+// Component for individual shade card
+const ShadeCardItem = ({
+  shade,
+  imageUrl,
+  quantities,
+  isUpdating,
+  handleQuantityChange,
+  onDelete,
+}: {
+  shade: StoreCartLineItem
+  imageUrl: string
+  quantities: { [key: string]: number | string }
+  isUpdating: boolean
+  handleQuantityChange: (quantity: number | string, itemId: string) => void
+  onDelete: (itemId: string) => void
+}) => (
+  <div className="full flex flex-col md:flex-row items-center gap-5 p-5 rounded-[20px] border border-solid border-[#69727a]">
+    <div
+      className="relative w-full md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 aspect-square rounded-[20px] bg-cover bg-[50%_50%]"
+      style={{
+        backgroundImage: `url("${imageUrl}")`,
+      }}
+    />
+    <div className="flex flex-col w-full md:w-2/3 items-start gap-4 relative">
+      <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
         <div
-          key={shade.id}
-          className="full flex flex-col md:flex-row items-center gap-5 p-5 rounded-[20px] border border-solid border-[#69727a]"
+          className={`w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium 
+            text-[#343a40] text-[14px] lg:text-[22px] leading-[33px] whitespace-nowrap relative tracking-[0]`}
         >
-          <div
-            className="relative w-full md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 aspect-square rounded-[20px] bg-cover bg-[50%_50%]"
-            style={{
-              backgroundImage: `url("${memoizedImageUrls[shade.id]}")`,
-            }}
-          />
-          <div className="flex flex-col w-full md:w-2/3 items-start gap-4 relative">
-            <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
-              <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[14px] lg:text-[22px] leading-[33px] whitespace-nowrap relative tracking-[0]">
-                {shade?.product_title}
-              </div>
-              <div className="flex items-end justify-start gap-4">
-                <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
-                  ${shade?.total?.toFixed(2)}
-                </div>
-                {shade?.discount_total > 0 && (
-                  <div className="flex items-center gap-2">
-                    <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
-                      ${shade?.original_total?.toFixed(2)}
-                    </div>
-                    <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
-                      <span className="text-[12px] font-normal text-[red]">
-                        Save{" "}
-                        {Math.round(
-                          (shade?.discount_total / shade?.original_total) * 100
-                        )}
-                        %
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="inline-flex flex-col items-center gap-2.5 relative flex-[0_0_auto]">
-              <div className="text-[14px] lg:text-[18px] text-[#7e7e7e]">
-                {quantities[shade.id]} x {shade?.variant_title}
-              </div>
-            </div>
-            <div className="flex justify-between items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex gap-2.5">
-                <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
-                  <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-[14px] lg:text-[16px] leading-[25.2px] whitespace-nowrap relative tracking-[0]">
-                    Quantity
-                  </div>
-                </div>
-                <div className="flex items-center gap-10 relative flex-[0_0_auto]">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => {
-                        const currentValue = Number(quantities[shade.id] || 1)
-                        const newValue = Math.max(1, currentValue - 1)
-                        handleQuantityChange(newValue.toString(), shade.id)
-                      }}
-                      disabled={isUpdating}
-                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <span className="text-xl font-medium">-</span>
-                    </button>
-                    <div className="flex w-14 h-10 items-center justify-center gap-2.5 p-2.5 relative bg-[#ffffff] rounded-[20px] border border-solid border-[#a8a8a8]">
-                      <input
-                        type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        value={quantities[shade.id] ?? ""}
-                        disabled={isUpdating}
-                        onChange={(e) => {
-                          const value = e.target.value
-                          handleQuantityChange(value, shade.id)
-                        }}
-                        className="text-center focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-                      />
-                    </div>
-                    <button
-                      onClick={() => {
-                        const currentValue = Number(quantities[shade.id] || 1)
-                        const newValue = currentValue + 1
-                        handleQuantityChange(newValue.toString(), shade.id)
-                      }}
-                      disabled={isUpdating}
-                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <span className="text-xl font-medium">+</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                onClick={() => handleDelete(shade.id)}
-                className="flex w-10 h-10 items-center gap-2.5 px-[9px] py-[7px] bg-[#ffffff] rounded-[31px] border border-solid border-[#a8a8a8]"
-              >
-                <div className="relative w-4 h-5">
-                  <img alt="Layer" src="/img/delete.png" />
-                </div>
-              </button>
+          {shade?.product_title}
+        </div>
+        <PriceDisplay shade={shade} />
+      </div>
+      <div className="inline-flex flex-col items-center gap-2.5 relative flex-[0_0_auto]">
+        <div className="text-[14px] lg:text-[18px] text-[#7e7e7e]">
+          {quantities[shade.id]} x {shade?.variant_title}
+        </div>
+      </div>
+      <div className="flex justify-between items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+        <div className="flex gap-2.5">
+          <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
+            <div
+              className={`w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium 
+                text-[#69727a] text-[14px] lg:text-[16px] leading-[25.2px] whitespace-nowrap relative tracking-[0]`}
+            >
+              Quantity
             </div>
           </div>
+          <div className="flex items-center gap-10 relative flex-[0_0_auto]">
+            <QuantityControls
+              shade={shade}
+              quantities={quantities}
+              isUpdating={isUpdating}
+              handleQuantityChange={handleQuantityChange}
+            />
+          </div>
         </div>
+
+        <button
+          onClick={() => onDelete(shade.id)}
+          className="flex w-10 h-10 items-center gap-2.5 px-[9px] py-[7px] bg-[#ffffff] rounded-[31px] border border-solid border-[#a8a8a8]"
+        >
+          <div className="relative w-4 h-5">
+            <img alt="Layer" src="/img/delete.png" />
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+)
+
+export const ShadesCard = (): JSX.Element | null => {
+  const { cart, removeVariant, updateVariantInfo } = useCart()
+  const [deleteItemId, setDeleteItemId] = useState<string | null>(null)
+
+  const { quantities, isUpdating, handleQuantityChange } = useQuantityManager(
+    cart,
+    updateVariantInfo
+  )
+  const { memoizedShades, memoizedImageUrls } = useShadesData(cart)
+
+  const handleDelete = (itemId: string) => {
+    setDeleteItemId(itemId)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (deleteItemId) {
+      await removeVariant(deleteItemId)
+      setDeleteItemId(null)
+    }
+  }
+
+  const handleCancelDelete = () => {
+    setDeleteItemId(null)
+  }
+
+  return !memoizedShades?.length ? null : (
+    <>
+      {memoizedShades.map((shade: StoreCartLineItem) => (
+        <ShadeCardItem
+          key={shade.id}
+          shade={shade}
+          imageUrl={memoizedImageUrls[shade.id]}
+          quantities={quantities}
+          isUpdating={isUpdating}
+          handleQuantityChange={handleQuantityChange}
+          onDelete={handleDelete}
+        />
       ))}
       <ConfirmDialog
         isOpen={deleteItemId !== null}

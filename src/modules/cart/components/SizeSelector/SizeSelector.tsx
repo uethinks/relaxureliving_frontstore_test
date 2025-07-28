@@ -132,8 +132,6 @@ export const SizeSelector = (): JSX.Element | null => {
   const selectedSizeClass = "rounded-[20px] bg-[#dce7f8] text-[#072f6c]"
   const unSelectedSizeClass = "text-[#69727a]"
 
-  // if (!currentPergola) return null
-
   return (
     <div className={`flex-col items-start gap-5 relative flex`}>
       <div className="flex items-center justify-center gap-2.5 h-12 relative ">
@@ -190,7 +188,11 @@ export const SizeSelector = (): JSX.Element | null => {
 
               <div className="w-[60px] flex items-start px-0 py-2.5 rounded-[20px] justify-center relative">
                 <div className="w-[61px] flex items-center mr-[-0.50px] gap-2.5 ml-[-0.50px] px-0 py-2.5 h-6 rounded-[20px] relative">
-                  <div className="[font-family:'Montserrat',Helvetica] w-[81px] mt-[-11.00px] tracking-[0] text-base mr-[-20.00px] text-[#072f6c] h-6 font-medium leading-6 whitespace-nowrap mb-[-9.00px] relative">
+                  <div
+                    className={`[font-family:'Montserrat',Helvetica] w-[81px] mt-[-11.00px] 
+                    tracking-[0] text-base mr-[-20.00px] text-[#072f6c] h-6 font-medium 
+                    leading-6 whitespace-nowrap mb-[-9.00px] relative`}
+                  >
                     {color.value}
                   </div>
                 </div>

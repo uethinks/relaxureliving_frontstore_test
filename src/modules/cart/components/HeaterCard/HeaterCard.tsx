@@ -16,7 +16,9 @@ const useQuantityUpdate = (cart: any, updateVariantInfo: any) => {
 
   const handleQuantityChange = useCallback(
     (quantity: number | string, itemId: string): void => {
-      if (isUpdating) return
+      if (isUpdating) {
+        return
+      }
 
       if (quantity === "") {
         setQuantities((prev) => ({ ...prev, [itemId]: "" }))
@@ -52,7 +54,9 @@ const useQuantityUpdate = (cart: any, updateVariantInfo: any) => {
       }
 
       const numQuantity = Number(quantity)
-      if (isNaN(numQuantity)) return
+      if (isNaN(numQuantity)) {
+        return
+      }
 
       setQuantities((prev) => ({ ...prev, [itemId]: quantity }))
 
@@ -181,7 +185,10 @@ const QuantitySelector = ({
           const value = e.target.value
           handleQuantityChange(value, item.id)
         }}
-        className="text-center focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+        className={`text-center focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] 
+          font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap 
+          [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none 
+          [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]`}
       />
     </div>
     <button
@@ -221,7 +228,11 @@ const HeaterItem = ({
     />
     <div className="flex flex-col w-full md:w-2/3 items-start gap-4 relative">
       <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
-        <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[14px] lg:text-[22px] leading-[33px] whitespace-nowrap relative tracking-[0]">
+        <div
+          className={`w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+          font-medium text-[#343a40] text-[14px] lg:text-[22px] leading-[33px] 
+          whitespace-nowrap relative tracking-[0]`}
+        >
           {item?.product_title}
         </div>
         <PriceDisplay item={item} />
@@ -234,7 +245,11 @@ const HeaterItem = ({
       <div className="flex justify-between items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
         <div className="flex gap-2.5">
           <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
-            <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-[14px] lg:text-[18px] leading-[25.2px] whitespace-nowrap relative tracking-[0]">
+            <div
+              className={`w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+              font-medium text-[#69727a] text-[14px] lg:text-[18px] leading-[25.2px] 
+              whitespace-nowrap relative tracking-[0]`}
+            >
               Quantity
             </div>
           </div>
@@ -294,7 +309,9 @@ export const HeaterCard = (): JSX.Element | null => {
     setQuantities(newQuantities)
   }, [heater, setQuantities])
 
-  if (!heater) return null
+  if (!heater) {
+    return null
+  }
 
   return (
     <>

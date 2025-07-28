@@ -162,7 +162,11 @@ export const ProductCard = (): JSX.Element | null => {
           />
           <div className="flex flex-col w-full md:w-2/3 items-start gap-4 relative">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
-              <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[14px] lg:text-[22px] leading-[33px] whitespace-nowrap relative tracking-[0]">
+              <div
+                className={`w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                  font-medium text-[#343a40] text-[14px] lg:text-[22px] leading-[33px] 
+                  whitespace-nowrap relative tracking-[0]`}
+              >
                 {item?.product_title}
               </div>
               <div className="flex items-end justify-start gap-4">
@@ -195,7 +199,11 @@ export const ProductCard = (): JSX.Element | null => {
             <div className="flex justify-between items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <div className="flex gap-2.5">
                 <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
-                  <div className="w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-[14px] lg:text-[18px] leading-[25.2px] whitespace-nowrap relative tracking-[0]">
+                  <div
+                    className={`w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                      font-medium text-[#69727a] text-[14px] lg:text-[18px] leading-[25.2px] 
+                      whitespace-nowrap relative tracking-[0]`}
+                  >
                     Quantity
                   </div>
                 </div>
@@ -208,7 +216,8 @@ export const ProductCard = (): JSX.Element | null => {
                         handleQuantityChange(newValue.toString(), item.id)
                       }}
                       disabled={isUpdating}
-                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className={`w-8 h-8 flex items-center justify-center rounded-full
+                        bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
                     >
                       <span className="text-xl font-medium">-</span>
                     </button>
@@ -223,7 +232,10 @@ export const ProductCard = (): JSX.Element | null => {
                           const value = e.target.value
                           handleQuantityChange(value, item.id)
                         }}
-                        className="text-center focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                        className={`text-center focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] 
+                          font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap 
+                          [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none 
+                          [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]`}
                       />
                     </div>
                     <button
@@ -233,7 +245,8 @@ export const ProductCard = (): JSX.Element | null => {
                         handleQuantityChange(newValue.toString(), item.id)
                       }}
                       disabled={isUpdating}
-                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className={`w-8 h-8 flex items-center justify-center rounded-full
+                        bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
                     >
                       <span className="text-xl font-medium">+</span>
                     </button>
