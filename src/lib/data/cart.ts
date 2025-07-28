@@ -40,7 +40,9 @@ export async function retrieveCart(cartId?: string) {
       method: "GET",
       query: {
         fields:
-          "*items, *region, *items.product, *items.variant, *items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name, *payment_collection, *payment_collection.payment_sessions",
+          `*items, *region, *items.product, *items.variant, *items.thumbnail, 
+          *items.metadata, +items.total, *promotions, +shipping_methods.name, 
+          *payment_collection, *payment_collection.payment_sessions`,
       },
       headers,
       next,
@@ -328,6 +330,7 @@ export async function submitPromotionForm(
   const code = formData.get("code") as string
   try {
     await applyPromotions([code])
+    return null
   } catch (e: any) {
     return e.message
   }
@@ -337,11 +340,11 @@ export async function submitPromotionForm(
 export async function setAddresses(currentState: unknown, formData: FormData) {
   try {
     if (!formData) {
-      throw new Error("No form data found when setting addresses")
+      return "No form data found when setting addresses"
     }
     const cartId = getCartId()
     if (!cartId) {
-      throw new Error("No existing cart found when setting addresses")
+      return "No existing cart found when setting addresses"
     }
 
     const data = {

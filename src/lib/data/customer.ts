@@ -126,6 +126,7 @@ export async function login(_currentState: unknown, formData: FormData) {
   } catch (error: any) {
     return error.toString()
   }
+  return null
 }
 
 export async function signout(countryCode: string) {
