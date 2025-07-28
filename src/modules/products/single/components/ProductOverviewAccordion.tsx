@@ -1,5 +1,5 @@
 "use client"
-/* NOSONAR - 此文件包含必要的重复代码*/
+/* NOSONAR */
 import React, { useState, useEffect } from "react"
 import { ProductOverview } from "@/types/global"
 import { ImageSlider } from "@modules/common/components/ImageSlider"

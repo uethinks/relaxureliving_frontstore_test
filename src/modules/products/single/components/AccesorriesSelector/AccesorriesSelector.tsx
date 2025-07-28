@@ -1,4 +1,4 @@
-/* NOSONAR - 此文件包含必要的重复代码*/
+/* NOSONAR */
 import { useState } from "react"
 import { StoreProduct, StoreProductVariant } from "@medusajs/types"
 import { AccesorriesPopupHeater } from "../AccesorriesPopup/AccesorriesPopupHeater"

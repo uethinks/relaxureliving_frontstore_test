@@ -1,5 +1,5 @@
 "use client"
-/* NOSONAR - 此文件包含必要的重复代码*/
+/* NOSONAR */
 import React, { useEffect } from "react"
 
 export const TabButtons = () => {
@@ -59,7 +59,7 @@ export const TabButtons = () => {
     }
   }, [])
 
-  /* NOSONAR cognitive-complexity - 此函数包含必要的复杂逻辑用于标签切换功能 */
+  /* NOSONAR */
   const handleTabClick = (tabName: "description" | "assembly") => {
     const assemblyContent = document.getElementById("assembly-content")
     const descriptionContent = document.getElementById("description-content")
