@@ -12,21 +12,24 @@ interface PergolaFeaturesProps {
 
 const HIGHER_CEILING_TEXT = "Higher ceiling 8.79FT(268cm)"
 
+// 定义常用的图标常量
+const FITS_PEOPLE_ICON = "/img/fits-people.png"
+
 // 定义常用的feature常量
 const FITS_PEOPLE_2_4: Feature = {
-  icon: "/img/fits-people.png",
+  icon: FITS_PEOPLE_ICON,
   text: "Fits 2-4 people",
 }
 const FITS_PEOPLE_4_6: Feature = {
-  icon: "/img/fits-people.png",
+  icon: FITS_PEOPLE_ICON,
   text: "Fits 4-6 people",
 }
 const FITS_PEOPLE_6_8: Feature = {
-  icon: "/img/fits-people.png",
+  icon: FITS_PEOPLE_ICON,
   text: "Fits 6-8 people",
 }
 const FITS_PEOPLE_8_12: Feature = {
-  icon: "/img/fits-people.png",
+  icon: FITS_PEOPLE_ICON,
   text: "Fits 8-12 people",
 }
 const MORNING_COFFEE: Feature = {
