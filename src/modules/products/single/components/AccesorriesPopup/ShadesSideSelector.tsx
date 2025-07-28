@@ -3,6 +3,7 @@ import React from "react"
 // Constants
 const SELECTED_COLOR = "#F6AF1F"
 const SELECTED_BG_COLOR = "#F6AF1F33"
+const DEFAULT_BORDER_COLOR = "#E9E9E9"
 
 interface ShadesSideSelectorProps {
   onSideSelect: (sides: string[]) => void
@@ -58,7 +59,7 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
               className={`w-10 h-10 rounded-full text-black border flex items-center justify-center transition-all ${
                 selectedSides.length === number
                   ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
-                  : "border-[#E9E9E9]"
+                  : `border-[${DEFAULT_BORDER_COLOR}]`
               }`}
             >
               {number}
@@ -80,7 +81,7 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
           className={`w-[65px] h-[130px] lg:w-[78px] lg:h-[139px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("left")
               ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
-              : "border-[#E9E9E9]"
+              : `border-[${DEFAULT_BORDER_COLOR}]`
           }`}
         >
           <div className="text-[14px] font-medium [font-family:'Montserrat',sans-serif]">
@@ -97,7 +98,7 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
             className={`w-[205px] h-[60px] lg:w-[225px] lg:h-[63px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("top")
                 ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
-                : "border-[#E9E9E9]"
+                : `border-[${DEFAULT_BORDER_COLOR}]`
             }`}
           >
             <div className="text-[14px] font-medium [font-family:'Montserrat',sans-serif]">
@@ -113,7 +114,7 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
             className={`w-[205px] h-[60px] lg:w-[225px] lg:h-[63px] border rounded transition-all flex flex-col items-center justify-center ${
               selectedSides.includes("bottom")
                 ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
-                : "border-[#E9E9E9]"
+                : `border-[${DEFAULT_BORDER_COLOR}]`
             }`}
           >
             <div className="text-[14px] font-medium [font-family:'Montserrat',sans-serif]">
@@ -130,7 +131,7 @@ const ShadesSideSelector: React.FC<ShadesSideSelectorProps> = ({
           className={`w-[65px] h-[130px] lg:w-[78px] lg:h-[139px] border rounded transition-all flex flex-col items-center justify-center ${
             selectedSides.includes("right")
               ? `border-[${SELECTED_COLOR}] bg-[${SELECTED_BG_COLOR}]`
-              : "border-[#E9E9E9]"
+              : `border-[${DEFAULT_BORDER_COLOR}]`
           }`}
         >
           <div className="text-[14px] font-medium [font-family:'Montserrat',sans-serif]">

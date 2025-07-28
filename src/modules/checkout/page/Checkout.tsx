@@ -86,88 +86,109 @@ export const Checkout = () => {
     []
   )
 
+  // 验证邮箱格式
+  const validateEmail = (email: string): string => {
+    if (!email) {
+      return "Email is required"
+    }
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    if (!emailRegex.test(email)) {
+      return "Please enter a valid email address"
+    }
+    return ""
+  }
+
+  // 验证电话号码格式
+  const validatePhone = (phone: string): string => {
+    if (!phone) {
+      return "Phone number is required"
+    }
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/
+    if (!phoneRegex.test(phone)) {
+      return "Please enter a valid phone number"
+    }
+    return ""
+  }
+
+  // 验证必填字段
+  const validateRequiredField = (value: string, fieldName: string): string => {
+    if (!value?.trim()) {
+      return `${fieldName} is required`
+    }
+    return ""
+  }
+
+  // 验证地址字段
+  const validateAddressFields = (): Record<string, string> => {
+    const addressErrors: Record<string, string> = {}
+
+    addressErrors.firstName = validateRequiredField(
+      formData.shipping_address.first_name,
+      "First name"
+    )
+    addressErrors.lastName = validateRequiredField(
+      formData.shipping_address.last_name,
+      "Last name"
+    )
+    addressErrors.address = validateRequiredField(
+      formData.shipping_address.address_1,
+      "Address"
+    )
+    addressErrors.city = validateRequiredField(
+      formData.shipping_address.city,
+      "City"
+    )
+    addressErrors.province = validateRequiredField(
+      formData.shipping_address.province,
+      "State"
+    )
+    addressErrors.postalCode = validateRequiredField(
+      formData.shipping_address.postal_code,
+      "ZIP code"
+    )
+
+    return addressErrors
+  }
+
   //提交时验证
-  /* NOSONAR */
   const validateForm = () => {
     const newErrors = { ...errors }
     let hasError = false
 
-    // Email validation
-    const email = formData.email?.trim() ?? ""
-    if (!email) {
-      newErrors.email = "Email is required"
+    // 验证邮箱
+    const emailError = validateEmail(formData.email?.trim() ?? "")
+    if (emailError) {
+      newErrors.email = emailError
       hasError = true
     } else {
-      const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-      if (!emailRegex.test(email)) {
-        newErrors.email = "Please enter a valid email address"
+      newErrors.email = ""
+    }
+
+    // 验证电话
+    const phoneError = validatePhone(
+      formData.shipping_address.phone?.trim() ?? ""
+    )
+    if (phoneError) {
+      newErrors.phone = phoneError
+      hasError = true
+    } else {
+      newErrors.phone = ""
+    }
+
+    // 验证地址字段
+    const addressErrors = validateAddressFields()
+    Object.entries(addressErrors).forEach(([key, error]) => {
+      if (error) {
+        newErrors[key as keyof typeof newErrors] = error
         hasError = true
       } else {
-        newErrors.email = ""
+        newErrors[key as keyof typeof newErrors] = ""
       }
-    }
+    })
 
-    // Phone validation
-    const phone = formData.shipping_address.phone?.trim() ?? ""
-    if (!phone) {
-      newErrors.phone = "Phone number is required"
-      hasError = true
-    } else {
-      const phoneRegex = /^\+?[1-9]\d{1,14}$/
-      if (!phoneRegex.test(phone)) {
-        newErrors.phone = "Please enter a valid phone number"
-        hasError = true
-      } else {
-        newErrors.phone = ""
-      }
-    }
-
-    // Required fields validation
-    if (!formData.shipping_address.first_name?.trim()) {
-      newErrors.firstName = "First name is required"
-      hasError = true
-    } else {
-      newErrors.firstName = ""
-    }
-
-    if (!formData.shipping_address.last_name?.trim()) {
-      newErrors.lastName = "Last name is required"
-      hasError = true
-    } else {
-      newErrors.lastName = ""
-    }
-
-    if (!formData.shipping_address.address_1?.trim()) {
-      newErrors.address = "Address is required"
-      hasError = true
-    } else {
-      newErrors.address = ""
-    }
-
-    if (!formData.shipping_address.city?.trim()) {
-      newErrors.city = "City is required"
-      hasError = true
-    } else {
-      newErrors.city = ""
-    }
-
-    if (!formData.shipping_address.province?.trim()) {
-      newErrors.province = "State is required"
-      hasError = true
-    } else {
-      newErrors.province = ""
-    }
-
-    if (!formData.shipping_address.postal_code?.trim()) {
-      newErrors.postalCode = "ZIP code is required"
-      hasError = true
-    } else {
-      newErrors.postalCode = ""
-    }
     setErrors(newErrors)
     return !hasError
   }
-  /* NOSONAR */
 
   // 初始化购物车
   const initializeCart = async () => {

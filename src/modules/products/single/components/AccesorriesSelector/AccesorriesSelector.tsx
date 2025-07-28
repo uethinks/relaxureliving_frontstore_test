@@ -9,6 +9,13 @@ import {
   selectedProductVariant,
   selectedProducts,
 } from "types/global"
+
+// Constants to avoid string duplication
+const ACCESSORY_NAMES = {
+  HEATING: "Heating",
+  SHADES: "Shades",
+  GLASS_DOOR: "Glass door",
+} as const
 interface Props {
   onAccessoryChange: ({
     type,
@@ -41,19 +48,19 @@ export const AccesorriesSelector = ({
 }: Props): JSX.Element => {
   const [accessoriesIcons, setAccessoriesIcons] = useState<accessoriesIcons[]>([
     {
-      name: "Heating",
+      name: ACCESSORY_NAMES.HEATING,
       title: "Heater",
       image: "/img/heating.svg",
       selected: false,
     },
     {
-      name: "Shades",
+      name: ACCESSORY_NAMES.SHADES,
       title: "Shade Screen",
       image: "/img/shades.svg",
       selected: false,
     },
     {
-      name: "Glass door",
+      name: ACCESSORY_NAMES.GLASS_DOOR,
       title: "Frameless Sliding Glass Door",
       image: "/img/glass-door.svg",
       selected: false,
@@ -81,36 +88,42 @@ export const AccesorriesSelector = ({
     const accessoryProduct = accessories.find(
       (product) => product.title === accessoryIcon.title
     )
-    if (accessoryIcon.name === "Heating" && accessoryProduct) {
+    if (accessoryIcon.name === ACCESSORY_NAMES.HEATING && accessoryProduct) {
       setSelectedHeater(accessoryProduct)
       setIsOpenHeater(true)
-    } else if (accessoryIcon.name === "Shades" && accessoryProduct) {
+    } else if (
+      accessoryIcon.name === ACCESSORY_NAMES.SHADES &&
+      accessoryProduct
+    ) {
       setSelectedShade(accessoryProduct)
       setIsOpenShade(true)
-    } else if (accessoryIcon.name === "Glass door" && accessoryProduct) {
+    } else if (
+      accessoryIcon.name === ACCESSORY_NAMES.GLASS_DOOR &&
+      accessoryProduct
+    ) {
       setSelectedGlassdoor(accessoryProduct)
       setIsOpenGlassdoor(true)
     }
   }
 
   const closePopup = (type: string) => {
-    if (type === "Heating") {
+    if (type === ACCESSORY_NAMES.HEATING) {
       setIsOpenHeater(false)
-    } else if (type === "Shades") {
+    } else if (type === ACCESSORY_NAMES.SHADES) {
       setIsOpenShade(false)
-    } else if (type === "Glass door") {
+    } else if (type === ACCESSORY_NAMES.GLASS_DOOR) {
       setIsOpenGlassdoor(false)
     }
   }
   const addAccessoryHeater = (selectedProducts: selectedProducts) => {
     onAccessoryChange({
-      type: "Heating",
+      type: ACCESSORY_NAMES.HEATING,
       selectedProducts: selectedProducts,
     })
     setAccessoriesIcons(
       accessoriesIcons.map((item) => {
         if (
-          item.name === "Heating" &&
+          item.name === ACCESSORY_NAMES.HEATING &&
           (selectedProducts?.[0]?.productVarant === null ||
             selectedProducts?.[0]?.quantity === 0)
         ) {
@@ -122,13 +135,13 @@ export const AccesorriesSelector = ({
   }
   const addAccessoryShades = (selectedProducts: selectedProducts) => {
     onAccessoryChange({
-      type: "Shades",
+      type: ACCESSORY_NAMES.SHADES,
       selectedProducts: selectedProducts,
     })
     setAccessoriesIcons(
       accessoriesIcons.map((item) => {
         if (
-          item.name === "Shades" &&
+          item.name === ACCESSORY_NAMES.SHADES &&
           (selectedProducts?.[0]?.productVarant === null ||
             selectedProducts?.[0]?.quantity === 0)
         ) {
@@ -140,13 +153,13 @@ export const AccesorriesSelector = ({
   }
   const addAccessoryGlassdoor = (selectedProducts: selectedProducts) => {
     onAccessoryChange({
-      type: "Glass door",
+      type: ACCESSORY_NAMES.GLASS_DOOR,
       selectedProducts: selectedProducts,
     })
     setAccessoriesIcons(
       accessoriesIcons.map((item) => {
         if (
-          item.name === "Glass door" &&
+          item.name === ACCESSORY_NAMES.GLASS_DOOR &&
           (selectedProducts?.[0]?.productVarant === null ||
             selectedProducts?.[0]?.quantity === 0)
         ) {

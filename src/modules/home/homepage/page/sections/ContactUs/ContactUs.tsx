@@ -7,6 +7,10 @@ import {
 } from "@lib/cms/strapiCmsApi"
 import { Image } from "types/global"
 
+// 定义常量以避免重复的字符串字面量
+const BORDER_ERROR_CLASS = "border-red-500"
+const BORDER_DEFAULT_CLASS = "border-[#d8dadc]"
+
 interface ContactUsProps {
   id: number
   DescriptionOnImage: string
@@ -195,8 +199,8 @@ export const ContactUs = ({
                       <input
                         className={`w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid ${
                           errors.fullName
-                            ? "border-red-500"
-                            : "border-[#d8dadc]"
+                            ? BORDER_ERROR_CLASS
+                            : BORDER_DEFAULT_CLASS
                         } focus:outline-none`}
                         id="fullName"
                         placeholder={contactUs.FullName}
@@ -235,7 +239,9 @@ export const ContactUs = ({
                       </div>
                       <input
                         className={`w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid ${
-                          errors.email ? "border-red-500" : "border-[#d8dadc]"
+                          errors.email
+                            ? BORDER_ERROR_CLASS
+                            : BORDER_DEFAULT_CLASS
                         } focus:outline-none`}
                         id="email"
                         placeholder={contactUs.Email}
@@ -258,7 +264,9 @@ export const ContactUs = ({
                       </div>
                       <textarea
                         className={`w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid ${
-                          errors.message ? "border-red-500" : "border-[#d8dadc]"
+                          errors.message
+                            ? BORDER_ERROR_CLASS
+                            : BORDER_DEFAULT_CLASS
                         } focus:outline-none resize-vertical min-h-[120px]`}
                         id="message"
                         placeholder={contactUs.Message}

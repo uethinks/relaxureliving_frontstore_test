@@ -10,6 +10,8 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 
 // 定义手风琴展开和收起的样式常量
 const ACCORDION_EXPANDED_STYLES = "max-h-[1000px] opacity-100"
+const ACCORDION_EXPANDED_STYLES_LARGE = "max-h-[2000px] opacity-100"
+const ACCORDION_EXPANDED_STYLES_XLARGE = "max-h-[3000px] opacity-100"
 const ACCORDION_COLLAPSED_STYLES = "max-h-0 opacity-0"
 
 interface ProductOverviewAccordionProps {
@@ -188,8 +190,8 @@ export const ProductOverviewAccordion: React.FC<
             <div
               className={`px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
                 openIndex === 1
-                  ? "max-h-[2000px] opacity-100"
-                  : "max-h-0 opacity-0"
+                  ? ACCORDION_EXPANDED_STYLES_LARGE
+                  : ACCORDION_COLLAPSED_STYLES
               }`}
             >
               {/* 文字内容 */}
@@ -285,8 +287,8 @@ export const ProductOverviewAccordion: React.FC<
             <div
               className={`px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
                 openIndex === 3
-                  ? "max-h-[3000px] opacity-100"
-                  : "max-h-0 opacity-0"
+                  ? ACCORDION_EXPANDED_STYLES_XLARGE
+                  : ACCORDION_COLLAPSED_STYLES
               }`}
             >
               {/* 标题和描述 */}
@@ -379,8 +381,8 @@ export const ProductOverviewAccordion: React.FC<
             <div
               className={`px-6 pb-5 text-gray-600 text-sm overflow-hidden transition-all duration-500 ease-in-out ${
                 openIndex === 4
-                  ? "max-h-[2000px] opacity-100"
-                  : "max-h-0 opacity-0"
+                  ? ACCORDION_EXPANDED_STYLES_LARGE
+                  : ACCORDION_COLLAPSED_STYLES
               }`}
             >
               {/* 卡片内容 */}
