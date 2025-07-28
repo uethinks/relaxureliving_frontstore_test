@@ -8,26 +8,6 @@ interface Props {
   videoUrl?: string // 新增：支持直接传入 YouTube URL
 }
 
-// 从 YouTube URL 提取视频 ID 的工具函数
-const extractYouTubeId = (url: string): string | null => {
-  if (!url) return null
-
-  // 处理不同格式的 YouTube URL
-  const patterns = [
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/,
-    /^[a-zA-Z0-9_-]{11}$/, // 直接输入 ID 的情况
-  ]
-
-  for (const pattern of patterns) {
-    const match = url.match(pattern)
-    if (match && match[1]) {
-      return match[1]
-    }
-  }
-
-  return null
-}
-
 export const AssemblyContainer = ({ pergolaData }: Props): JSX.Element => {
   const [player, setPlayer] = useState<any>(null)
   const [activeSection, setActiveSection] = useState(1)

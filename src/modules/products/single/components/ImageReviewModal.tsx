@@ -32,7 +32,9 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 }) => {
   // Handle keyboard events
   React.useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen) {
+      return
+    }
 
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "ArrowLeft") {
@@ -52,7 +54,9 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [isOpen, currentReviewIndex, totalReviews, onReviewChange, onClose])
 
-  if (!isOpen) return null
+  if (!isOpen) {
+    return null
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center">

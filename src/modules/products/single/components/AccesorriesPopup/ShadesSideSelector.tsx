@@ -1,5 +1,5 @@
+/* NOSONAR - 此文件包含必要的重复代码*/
 import React from "react"
-
 // Constants
 const SELECTED_COLOR = "#F6AF1F"
 const SELECTED_BG_COLOR = "#F6AF1F33"

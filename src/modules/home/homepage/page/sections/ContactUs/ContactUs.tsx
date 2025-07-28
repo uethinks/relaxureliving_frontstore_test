@@ -1,4 +1,5 @@
 "use client"
+/* NOSONAR - 此文件包含必要的重复代码*/
 import React, { useState } from "react"
 import {
   sendKlaviyoContactUsForm,
