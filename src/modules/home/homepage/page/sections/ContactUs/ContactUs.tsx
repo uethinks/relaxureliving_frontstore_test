@@ -161,7 +161,11 @@ export const ContactUs = ({
       </div>
 
       <div className="flex w-full lg:w-auto lg:h-[964px] aspect-[528/964] items-center">
-        <div className="flex flex-col w-full px-4 py-10 items-center gap-[30px] bg-[#f8f8f8] rounded-[18.16px] border border-solid border-[#ffffff6e] backdrop-blur-[32.4px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(32.4px)_brightness(100%)]">
+        <div
+          className={`flex flex-col w-full px-4 py-10 items-center gap-[30px] 
+                  bg-[#f8f8f8] rounded-[18.16px] border border-solid border-[#ffffff6e] 
+                  backdrop-blur-[32.4px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(32.4px)_brightness(100%)]`}
+        >
           <div className="relative w-[102px] h-[82.21px]">
             <div className="relative w-[253px] h-[232px] -top-[61px] -left-[86px]">
               <img

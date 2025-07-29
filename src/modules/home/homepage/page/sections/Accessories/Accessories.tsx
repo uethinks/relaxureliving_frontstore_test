@@ -40,7 +40,9 @@ export const Accessories = ({
   return (
     <div
       id="accessories"
-      className="flex flex-col-reverse lg:flex-row w-full lg:h-[785px] items-center justify-center gap-2.5 py-0 relative bg-[#ffffff] rounded-[20px] border border-solid border-transparent"
+      className={`flex flex-col-reverse lg:flex-row w-full lg:h-[785px] items-center 
+        justify-center gap-2.5 py-0 relative bg-[#ffffff] rounded-[20px] border 
+        border-solid border-transparent`}
     >
       <div className="flex w-full lg:w-3/5 justify-center gap-2.5 py-0 relative bg-[#ffffff] rounded-[20px] border border-solid border-transparent">
         {accessories?.slider?.map((item) => (
@@ -71,11 +73,12 @@ export const Accessories = ({
                   >
                     <div className="flex items-center justify-center gap-[13.09px] relative self-stretch w-full flex-[0_0_auto]">
                       <div
-                        className={`relative flex-1 mt-[-1.31px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[22px] text-center tracking-[0] leading-[30.8px] ${
-                          selectedOption?.id === item.id
-                            ? "text-black"
-                            : "text-[#69727a]"
-                        }`}
+                        className={`relative flex-1 mt-[-1.31px] [font-family:'Montserrat',Helvetica] 
+                          font-medium text-[16px] lg:text-[22px] text-center tracking-[0] leading-[30.8px] ${
+                            selectedOption?.id === item.id
+                              ? "text-black"
+                              : "text-[#69727a]"
+                          }`}
                       >
                         {item.title}
                       </div>
@@ -101,7 +104,12 @@ export const Accessories = ({
                 </div>
 
                 <div className="flex items-center gap-2.5 px-0 py-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                  <p className="w-full mt-[-1.00px] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] [font-style:var(--relaxure-sub-heading-18-font-style)]">
+                  <p
+                    className={`w-full mt-[-1.00px] text-[#68717a] text-[length:var(--relaxure-sub-heading-18-font-size)] 
+                    leading-[var(--relaxure-sub-heading-18-line-height)] relative font-relaxure-sub-heading-18 
+                    font-[number:var(--relaxure-sub-heading-18-font-weight)] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] 
+                    [font-style:var(--relaxure-sub-heading-18-font-style)]`}
+                  >
                     {accessories?.Description}
                   </p>
                 </div>
@@ -133,11 +141,12 @@ export const Accessories = ({
                 >
                   <div className="flex items-center justify-center gap-[13.09px] relative self-stretch w-full flex-[0_0_auto]">
                     <div
-                      className={`relative flex-1 mt-[-1.31px] [font-family:'Montserrat',Helvetica] font-medium text-[16px] lg:text-[22px] text-center tracking-[0] leading-[30.8px] ${
-                        selectedOption?.id === item.id
-                          ? "text-black"
-                          : "text-[#69727a]"
-                      }`}
+                      className={`relative flex-1 mt-[-1.31px] [font-family:'Montserrat',Helvetica] 
+                        font-medium text-[16px] lg:text-[22px] text-center tracking-[0] leading-[30.8px] ${
+                          selectedOption?.id === item.id
+                            ? "text-black"
+                            : "text-[#69727a]"
+                        }`}
                     >
                       {item.title}
                     </div>

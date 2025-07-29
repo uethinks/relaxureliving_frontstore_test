@@ -97,10 +97,6 @@ export const Features = ({
     )
   }
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % 6)
-  }
-
   const allSlides = [...featureSliderGroup1, ...featureSliderGroup2]
 
   return (
@@ -239,7 +235,10 @@ export const Features = ({
                     [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]
                   `}
                   >
-                    <h3 className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
+                    <h3
+                      className={`w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap 
+                      relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]`}
+                    >
                       {slider.Title}
                     </h3>
                   </div>
@@ -248,7 +247,10 @@ export const Features = ({
                       slider.expand ? "block" : "hidden"
                     }`}
                   >
-                    <div className="relative self-stretch w-full mb-[-10.00px] rounded-[0px_0px_20px_20px] [background:linear-gradient(180deg,rgba(52,58,64,0)_51%,rgba(0,0,0,0.6)_100%)]">
+                    <div
+                      className={`relative self-stretch w-full mb-[-10.00px] rounded-[0px_0px_20px_20px] 
+                        [background:linear-gradient(180deg,rgba(52,58,64,0)_51%,rgba(0,0,0,0.6)_100%)]`}
+                    >
                       <div
                         className={`
                         flex m-auto mb-10 w-[90%] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative 
@@ -302,7 +304,10 @@ export const Features = ({
                       [-webkit-backdrop-filter:blur(14.7px)_brightness(100%)]
                     `}
                     >
-                      <div className="w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]">
+                      <div
+                        className={`w-fit mt-[-4.00px] mb-[-2.00px] text-[#343a40] whitespace-nowrap 
+                        relative [font-family:'Montserrat',Helvetica] font-medium text-lg tracking-[0] leading-[27px]`}
+                      >
                         {slider.Title}
                       </div>
                     </div>
@@ -311,7 +316,10 @@ export const Features = ({
                         slider.expand ? "block" : "hidden"
                       }`}
                     >
-                      <div className="relative self-stretch w-full mb-[-10.00px] rounded-[0px_0px_20px_20px] [background:linear-gradient(180deg,rgba(52,58,64,0)_51%,rgba(0,0,0,0.6)_100%)]">
+                      <div
+                        className={`relative self-stretch w-full mb-[-10.00px] rounded-[0px_0px_20px_20px] 
+                          [background:linear-gradient(180deg,rgba(52,58,64,0)_51%,rgba(0,0,0,0.6)_100%)]`}
+                      >
                         <div
                           className={`
                           flex m-auto mb-10 w-[90%] items-start gap-4 pt-2.5 pb-[7px] px-2.5 relative 

@@ -11,7 +11,8 @@ export const Component = ({
 }: Props): JSX.Element => {
   return (
     <button
-      className={`all-[unset] box-border hover:bg-[#fdce6f] bg-[#F6AF1F] w-[200px] flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative`}
+      className={`all-[unset] box-border hover:bg-[#fdce6f] bg-[#F6AF1F] w-[200px] flex 
+        items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative`}
       onClick={onClick}
     >
       <span
