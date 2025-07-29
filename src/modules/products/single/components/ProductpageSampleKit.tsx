@@ -101,14 +101,18 @@ export const ProductpageSampleKit = ({
             <button
               onClick={() => setShowDialog(true)}
               className={`w-[271px] h-[48px] border bg-[#F6AF1F] hover:bg-[#fdce6f] rounded-[10px] 
-                shadow-[0px_3px_7px_rgba(246,175,31,0.15),0px_13px_13px_rgba(246,175,31,0.10),0px_29px_17px_rgba(246,175,31,0.05),0px_51px_20px_rgba(246,175,31,0.03),0px_80px_22px_rgba(246,175,31,0.01)] 
+                shadow-[0px_3px_7px_rgba(246,175,31,0.15),0px_13px_13px_rgba(246,175,31,0.10),0px_29px_17px_rgba(246,175,31,0.05),
+                0px_51px_20px_rgba(246,175,31,0.03),0px_80px_22px_rgba(246,175,31,0.01)] 
                 overflow-hidden`}
             >
               <div className="[font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[14px] md:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
                 {sampleKit?.button_name}
               </div>
             </button>
-            <div className="relative w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#69727A] text-[14px] md:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap">
+            <div
+              className={`relative w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#69727A] text-[14px] 
+              md:text-[16px] tracking-[0] leading-[24px] whitespace-nowrap`}
+            >
               {sampleKit?.price_info}
             </div>
           </div>

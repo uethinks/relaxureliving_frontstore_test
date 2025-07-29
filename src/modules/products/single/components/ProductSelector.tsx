@@ -142,7 +142,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
 
   const handleBuyNow = async () => {
     try {
-      const results = await Promise.all([
+      await Promise.all([
         buyPergula(),
         buyHeater(),
         buyShades(),

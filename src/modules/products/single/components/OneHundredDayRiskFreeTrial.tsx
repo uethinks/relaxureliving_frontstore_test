@@ -38,9 +38,15 @@ export const OneHundredDayRiskFreeTrial = ({
           {trial.button && (
             <button
               onClick={handleClick}
-              className={`all-[unset] w-fit hover:bg-[#0a3980] bg-[#072f6c] box-border flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative`}
+              className={`all-[unset] w-fit hover:bg-[#0a3980] bg-[#072f6c] box-border 
+                flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] 
+                justify-center relative`}
             >
-              <p className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-16 text-[color:var(--semantic-border-alternate)] font-medium leading-6 whitespace-nowrap relative">
+              <p
+                className={`all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] 
+                  text-16 text-[color:var(--semantic-border-alternate)] font-medium leading-6 whitespace-nowrap 
+                  relative`}
+              >
                 {trial.button}
               </p>
             </button>
