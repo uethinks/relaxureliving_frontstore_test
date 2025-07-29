@@ -5,10 +5,7 @@ interface Props {
   rectangle: string
 }
 
-export const FloatImage = ({
-  className,
-  rectangle = "https://c.animaapp.com/m95uxn82DoG69O/img/rectangle-1273.svg",
-}: Props): JSX.Element => {
+export const FloatImage = ({ className, rectangle }: Props): JSX.Element => {
   return (
     <div className={`w-[150px] xl:w-[270px] xl:h-[298px] ${className}`}>
       <div

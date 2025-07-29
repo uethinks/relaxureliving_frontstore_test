@@ -44,9 +44,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   productId,
   reviews: initialReviews,
 }) => {
-  const [reviews, setReviews] = useState<ReviewType[]>(initialReviews)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const reviews = initialReviews
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -85,18 +83,6 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
 
   const averageRating = 5
   const ratingDistribution = [300, 97, 0, 0, 0]
-
-  if (isLoading) {
-    return null
-  }
-
-  if (error) {
-    return (
-      <div className="w-full max-w-7xl mx-auto py-16 text-center text-red-500">
-        {error}
-      </div>
-    )
-  }
 
   // Get all reviews that have images
   const reviewsWithImages = reviews.filter(

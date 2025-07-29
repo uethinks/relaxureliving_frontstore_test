@@ -32,11 +32,7 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
 }) => {
   // Handle keyboard events
   React.useEffect(() => {
-    if (!isOpen) {
-      return
-    }
-
-    function handleKeyDown(e: KeyboardEvent) {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") {
         const newIndex =
           currentReviewIndex === 0 ? totalReviews - 1 : currentReviewIndex - 1
@@ -50,7 +46,10 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
       }
     }
 
-    document.addEventListener("keydown", handleKeyDown)
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown)
+    }
+
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [isOpen, currentReviewIndex, totalReviews, onReviewChange, onClose])
 
@@ -90,7 +89,8 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
                           : currentReviewIndex - 1
                       onReviewChange(newIndex)
                     }}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white bg-opacity-75 hover:bg-opacity-100 flex items-center justify-center text-gray-800 transition-all shadow-lg z-10"
+                    className={`absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white bg-opacity-75 
+                      hover:bg-opacity-100 flex items-center justify-center text-gray-800 transition-all shadow-lg z-10`}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +117,8 @@ export const ImageReviewModal: React.FC<ImageReviewModalProps> = ({
                           : currentReviewIndex + 1
                       onReviewChange(newIndex)
                     }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white bg-opacity-75 hover:bg-opacity-100 flex items-center justify-center text-gray-800 transition-all shadow-lg z-10"
+                    className={`absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white bg-opacity-75 
+                      hover:bg-opacity-100 flex items-center justify-center text-gray-800 transition-all shadow-lg z-10`}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
