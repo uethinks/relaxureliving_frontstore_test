@@ -87,7 +87,6 @@ export const AccesorriesPopupGlassdoor = ({
   }, [accessoryGlassdoor, selectedSize, selectedColor])
 
   useEffect(() => {
-    // if (!selectedSize?.length || !selectedColor.id) return
     const variants = getVariant()
     setSelectedGlassdoor(
       variants?.map((variant) => ({
@@ -283,7 +282,7 @@ export const AccesorriesPopupGlassdoor = ({
                                   ? "bg-[#F6AF1F33]"
                                   : "bg-[#ffffff]"
                               }  ${
-                                selectedColor.id == color.id
+                                selectedColor.id === color.id
                                   ? "border-[#F6AF1F]"
                                   : ""
                               }`}

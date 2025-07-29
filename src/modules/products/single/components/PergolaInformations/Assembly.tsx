@@ -41,7 +41,11 @@ export const AssemblyContainer = ({ pergolaData }: Props): JSX.Element => {
   return (
     <div className="flex w-full flex-col gap-4">
       <div className="flex flex-col items-start justify-center gap-2.5 px-0 relative self-stretch w-full flex-[0_0_auto]">
-        <div className="relative flex-1 mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[18px] lg:text-[36px] tracking-[var(--heading-2-letter-spacing)] leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]">
+        <div
+          className={`relative flex-1 mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] 
+          text-[#343a40] text-[18px] lg:text-[36px] tracking-[var(--heading-2-letter-spacing)] 
+          leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]`}
+        >
           {pergolaData.putItTogether.title}
         </div>
         <div className="flex flex-col items-start justify-center gap-2.5 px-0 relative self-stretch w-full flex-[0_0_auto] lg:mt-[30px]">

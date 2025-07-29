@@ -597,7 +597,7 @@ export const Checkout = () => {
               <img
                 className="relative w-6 h-6"
                 alt="Lock"
-                src="https://c.animaapp.com/m8tqwcaxIEhNf6/img/lock.png"
+                src="/img/lock.png"
               />
               <p className="relative w-full mr-[-2.00px] [font-family:'Montserrat',Helvetica] font-medium text-formash text-base tracking-[0] leading-[normal]">
                 All transactions are secure and encrypted

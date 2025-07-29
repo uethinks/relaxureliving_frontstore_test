@@ -30,7 +30,6 @@ export const AccesorriesPopupShades = ({
   const closePopupShades = () => {
     closePopup("Shades")
   }
-  const productImage = accessoryShades?.images?.[0].url
   const addAccessoryShadesHandler = () => {
     addAccessoryShades(selectedShades)
     closePopupShades()
@@ -283,7 +282,8 @@ export const AccesorriesPopupShades = ({
                               onClick={() => handleColorClick(color)}
                             ></button>
                             <div
-                              className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
+                              className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium 
+                                text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
                             >
                               {color.value}
                             </div>

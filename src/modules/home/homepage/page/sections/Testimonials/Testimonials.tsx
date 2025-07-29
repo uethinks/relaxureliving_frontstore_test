@@ -85,8 +85,11 @@ export const Testimonials = (): JSX.Element => {
     {
       id: 1,
       image: "/img/Lucas_Martinez.png",
-      message:
-        "Ordered in mid December and came quickly in January. You gotta wonder how they managed logistics. Lots of sturdy packaging. I am a doctor and hate wasting hours with mislabeled part. Thank god all their parts come with matching labels to help my contractor. Every part has sticky and plastic on it to prevent scratching. I will have more reviews later. Hopefully this is helping. No regrets so far.",
+      message: `Ordered in mid December and came quickly in January. You gotta wonder how they managed logistics. 
+        Lots of sturdy packaging. I am a doctor and hate wasting hours with mislabeled part. 
+        Thank god all their parts come with matching labels to help my contractor. 
+        Every part has sticky and plastic on it to prevent scratching. I will have more reviews later. 
+        Hopefully this is helping. No regrets so far.`,
       name: "Lucas Martinez",
       title: "Marketing Director",
       position: "top",
@@ -123,8 +126,9 @@ export const Testimonials = (): JSX.Element => {
     {
       id: 4,
       image: "/img/Emily_R.png",
-      message:
-        "I like the offerings of this company. They have enough clearance under their pergolas. It's crazy how many are just 7 feet or so, and if you want a fan, well hope all your friends are short! In my case, 9 foot also assures I clear a window.",
+      message: `I like the offerings of this company. They have enough clearance under their pergolas. 
+        It's crazy how many are just 7 feet or so, and if you want a fan, well hope all your friends are short! 
+        In my case, 9 foot also assures I clear a window.`,
       name: "Emily R.",
       title: "Project Manager",
       position: "bottom",
@@ -136,8 +140,8 @@ export const Testimonials = (): JSX.Element => {
       id: 5,
       image: "/img/Sophia_Anderson.png",
       message: `The thick posts make it feel like a permanent, solid structure, not some flimsy add-on.
-Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt look like a heavyweight champion. A strong gust of wind might just send them to early retirement! 😆🎭💨
-`,
+                Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt look like a heavyweight champion. 
+                A strong gust of wind might just send them to early retirement! 😆🎭💨`,
       name: "Sophia Anderson",
       title: "Tech Lead",
       position: "top",
@@ -149,8 +153,9 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
     {
       id: 6,
       image: "/img/James_Wilson.png",
-      message:
-        "I love that I can keep my lights and on without freaking out about the weather….if you think about how the electric wires and directly in contact with water, there is no way you can be rest assured.. It's such a relief not having to unplug everything when it starts drizzling!!",
+      message: `I love that I can keep my lights and on without freaking out about the weather….
+      if you think about how the electric wires and directly in contact with water, there is no way you can be rest assured.. 
+        It's such a relief not having to unplug everything when it starts drizzling!!`,
       name: "James Wilson",
       title: "Product Owner",
       position: "bottom",
@@ -219,7 +224,10 @@ Hanso Pergola's louvers are so thin, they make a Chinese historical drama belt l
           <style>{styles}</style>
           <div className="w-[220px] h-[220px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/20 rounded-full animate-[wave_1.5s_ease-out_infinite]" />
           <div className="w-[180px] h-[180px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/30 rounded-full animate-[wave_1.5s_ease-out_infinite]" />
-          <div className="w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/30 rounded-full animate-[wave_1.5s_ease-out_infinite]" />{" "}
+          <div
+            className={`w-[120px] h-[120px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F6AF1F]/30 
+            rounded-full animate-[wave_1.5s_ease-out_infinite]`}
+          />{" "}
           <img
             className="w-[100px] h-[100px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
             src={data.image}

@@ -152,7 +152,11 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
 
         {/* 缩略图轮播 */}
         {filteredImages.length > 0 && (
-          <div className="flex py-2 justify-center items-center px-1 w-[98%] bg-[#ffffff] rounded-[20px] overflow-hidden border border-solid border-[#ffffff87] backdrop-blur-[3.3px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(3.3px)_brightness(100%)]">
+          <div
+            className={`flex py-2 justify-center items-center px-1 w-[98%] bg-[#ffffff] 
+          rounded-[20px] overflow-hidden border border-solid border-[#ffffff87] backdrop-blur-[3.3px] 
+          backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(3.3px)_brightness(100%)]`}
+          >
             <div className="relative w-full">
               <Swiper
                 onSwiper={setThumbsSwiper}
@@ -191,7 +195,8 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
 
               {/* 自定义导航按钮 */}
               <button
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
+                  rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110`}
                 onClick={() => thumbsSwiper?.slidePrev()}
               >
                 <svg
@@ -211,7 +216,8 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
               </button>
 
               <button
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
+                  rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110`}
                 onClick={() => thumbsSwiper?.slideNext()}
               >
                 <svg
@@ -273,7 +279,10 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
               {/* 自定义导航按钮 - 仅在大屏显示 */}
               {!isMobile && (
                 <>
-                  <button className="modal-prev-button absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110">
+                  <button
+                    className={`modal-prev-button absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
+                    rounded-full p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110`}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4 text-white"
@@ -290,7 +299,10 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                     </svg>
                   </button>
 
-                  <button className="modal-next-button absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 rounded-full p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110">
+                  <button
+                    className={`modal-next-button absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
+                    rounded-full p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110`}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4 text-white"

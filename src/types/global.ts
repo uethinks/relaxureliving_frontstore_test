@@ -142,19 +142,29 @@ export type RelatedProductIds = {
 }
 
 // 描述标签内容类型
-export type DescriptionContent = {
-  type: "paragraph" | "heading" | "list" | "quote" | "code" | "image"
-  children: Array<{
-    type: "text"
-    text: string
-    bold?: boolean
-    italic?: boolean
-    underline?: boolean
-    strikethrough?: boolean
-    code?: boolean
-  }>
+export type TextContentType = "paragraph" | "heading" | "list"
+export type MediaContentType = "quote" | "code" | "image"
+
+export type TextNode = {
+  type: "text"
+  text: string
+  bold?: boolean
+  italic?: boolean
+  underline?: boolean
+  strikethrough?: boolean
+  code?: boolean
+}
+
+export type TextContent = {
+  type: TextContentType
+  children: TextNode[]
   level?: number
   format?: string
+}
+
+export type MediaContent = {
+  type: MediaContentType
+  children: TextNode[]
   url?: string
   alt?: string
   caption?: string
@@ -164,6 +174,8 @@ export type DescriptionContent = {
     caption?: string
   }
 }
+
+export type DescriptionContent = TextContent | MediaContent
 export type multiDescription = {
   id: number
   multiDescriptions: string

@@ -144,7 +144,8 @@ export const PergulaSizeSelector = React.memo(
                       ></div>
                     </button>
                     <div
-                      className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
+                      className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                        font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
                     >
                       {color.value}
                     </div>
@@ -178,7 +179,8 @@ export const PergulaSizeSelector = React.memo(
                       onClick={() => onStyleChange(style)}
                     >
                       <div
-                        className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
+                        className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium 
+                          text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
                       >
                         {style.value}
                       </div>
