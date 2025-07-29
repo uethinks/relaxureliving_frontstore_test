@@ -28,18 +28,16 @@ export const PaymentFinish = ({
   order,
   success,
 }: OrderCompletedTemplateProps): JSX.Element | "" => {
-  const [paymentFinishShow, setPaymentFinishShow] = useState(true)
+  const paymentFinishShow = true
   const router = useRouter()
   const componentRef = React.useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (paymentFinishShow && componentRef.current) {
-      componentRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      })
-    }
-  }, [paymentFinishShow])
+  if (paymentFinishShow && componentRef.current) {
+    componentRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    })
+  }
 
   const handleExploreMore = () => {
     router.push(`/`)
@@ -69,11 +67,14 @@ export const PaymentFinish = ({
     >
       <div className="flex flex-col w-full lg:w-[547px] items-center justify-start gap-5 p-5 relative bg-[#ffffff] rounded-[20px]">
         <div className="inline-flex flex-col items-center gap-5 relative flex-[0_0_auto]">
-          <div className="relative w-[155px] h-[147px] bg-[url(https://c.animaapp.com/OZvkuZwc/img/https---lottiefiles-com-animations-item-shipped-cm0d29wrd2.gif)] bg-cover bg-[50%_50%]" />
+          <div className="relative w-[155px] h-[147px] bg-[url(/img/payment_success.gif)] bg-cover bg-[50%_50%]" />
 
           <div className="flex flex-col w-[361px] items-center gap-2 relative flex-[0_0_auto]">
             <div className="flex flex-col items-center justify-center gap-2.5 px-0 py-2.5 relative self-stretch flex-[0_0_auto]">
-              <div className="relative w-[284px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#000000] text-[26px] text-center tracking-[0] leading-[normal]">
+              <div
+                className={`relative w-[284px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                font-medium text-[#000000] text-[26px] text-center tracking-[0] leading-[normal]`}
+              >
                 {success ? successMessage : failMessageTitle}
               </div>
               {!success && (
@@ -84,7 +85,10 @@ export const PaymentFinish = ({
             </div>
 
             <div className="flex items-center justify-center gap-2.5 p-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <p className="w-[323px] opacity-[0.56] text-base text-center leading-6 relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] tracking-[0]">
+              <p
+                className={`w-[323px] opacity-[0.56] text-base text-center leading-6 relative mt-[-1.00px] 
+                [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] tracking-[0]`}
+              >
                 {/* We will send you an email with the delivery details */}
               </p>
             </div>
@@ -117,7 +121,10 @@ export const PaymentFinish = ({
             <div className="flex flex-col items-center justify-center gap-2.5 p-5 relative self-stretch w-full flex-[0_0_auto] bg-[#f9f9f9] rounded-[20px_20px_0px_0px]">
               <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col items-start gap-5 relative flex-1 grow">
-                  <div className="relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
+                  <div
+                    className={`relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] 
+                    font-medium text-[#343a40] text-base tracking-[0] leading-6`}
+                  >
                     Amount
                   </div>
                 </div>
@@ -133,7 +140,10 @@ export const PaymentFinish = ({
             <div className="flex-col justify-center p-5 bg-[#f9f9f9] flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col items-start gap-5 relative flex-1 grow">
-                  <div className="relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
+                  <div
+                    className={`relative self-stretch mt-[-1.00px] opacity-[0.56] 
+                      [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6`}
+                  >
                     Payment status
                   </div>
                 </div>
@@ -157,7 +167,10 @@ export const PaymentFinish = ({
             <div className="flex flex-col items-center justify-center gap-2.5 p-5 relative self-stretch w-full flex-[0_0_auto] bg-[#f9f9f9] rounded-[0px_0px_20px_20px]">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 relative self-stretch w-full">
                 <div className="flex flex-col items-start gap-5 relative flex-shrink-0">
-                  <div className="relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
+                  <div
+                    className={`relative self-stretch mt-[-1.00px] opacity-[0.56] 
+                      [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6`}
+                  >
                     Order number
                   </div>
                 </div>
@@ -175,13 +188,19 @@ export const PaymentFinish = ({
             <div className="flex-col justify-center p-5 bg-[#f9f9f9] flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <div className="flex flex-col lg:flex-row lg:items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col items-start gap-5 relative flex-1 grow">
-                  <div className="relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6">
+                  <div
+                    className={`relative self-stretch mt-[-1.00px] opacity-[0.56] [font-family:'Montserrat',Helvetica] 
+                      font-medium text-[#343a40] text-base tracking-[0] leading-6`}
+                  >
                     Date and time
                   </div>
                 </div>
 
                 <div className="flex justify-start gap-2.5 p-1.5 relative flex-[0_0_auto] rounded-[10px]">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap">
+                  <div
+                    className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                      font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap`}
+                  >
                     {formatDateTime(order.updated_at)}
                   </div>
                 </div>
@@ -194,7 +213,10 @@ export const PaymentFinish = ({
           <div className="flex flex-col items-center justify-center gap-2.5 p-5 relative self-stretch w-full flex-[0_0_auto] bg-[#f9f9f9] rounded-[20px]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <div className="flex flex-col h-[34px] items-start gap-5 relative flex-1 grow">
-                <div className="self-stretch h-[23px] text-xl leading-[30px] whitespace-nowrap relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] tracking-[0]">
+                <div
+                  className={`self-stretch h-[23px] text-xl leading-[30px] whitespace-nowrap relative mt-[-1.00px] 
+                    [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] tracking-[0]`}
+                >
                   Total
                 </div>
               </div>
@@ -217,7 +239,10 @@ export const PaymentFinish = ({
                 self-stretch flex-[0_0_auto]
               `}
             >
-              <div className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-black relative font-medium whitespace-nowrap leading-6">
+              <div
+                className={`all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit 
+                  tracking-[0] text-base text-black relative font-medium whitespace-nowrap leading-6`}
+              >
                 Explore more
               </div>
             </button>
