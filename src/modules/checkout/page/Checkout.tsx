@@ -41,7 +41,6 @@ function reportToGA(eventName: string, value: any) {
 
 export const Checkout = () => {
   const { cart, getCart } = useCart()
-  const [order, setOrder] = useState<any>(null)
   const [promotionCode, setPromotionCode] = useState("")
   const [isApplyingPromotion, setIsApplyingPromotion] = useState(false)
   const [promotionError, setPromotionError] = useState("")
@@ -314,7 +313,6 @@ export const Checkout = () => {
   const comlpeleCartAndCreateOrder = async (): Promise<StoreOrder | null> => {
     if (cart) {
       const cartRes = await placeOrder(cart.id)
-      setOrder(cartRes.type === "order" ? cartRes.order : null)
       if (cartRes.type === "order") {
         return cartRes.order
       }
@@ -330,7 +328,12 @@ export const Checkout = () => {
 
         {/* Payment Title */}
         <div className="w-full inline-flex items-center justify-start gap-2.5 p-2.5">
-          <div className="mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] relative w-fit text-[#343a40] tracking-[var(--heading-2-letter-spacing)] whitespace-nowrap [font-style:var(--heading-2-font-style)]">
+          <div
+            className={`mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] 
+                          text-[length:var(--heading-2-font-size)] leading-[var(--heading-2-line-height)] 
+                          relative w-fit text-[#343a40] tracking-[var(--heading-2-letter-spacing)] 
+                          whitespace-nowrap [font-style:var(--heading-2-font-style)]`}
+          >
             Payment
           </div>
         </div>
@@ -346,7 +349,10 @@ export const Checkout = () => {
                   <span className="text-red-500">*</span>
                 </div>
                 <input
-                  className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Inter',Helvetica] pl-[15px]"
+                  className={`flex-1 grow focus:outline-none border border-solid border-[#d8dadc] 
+                    px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] 
+                    text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch 
+                    [font-family:'Inter',Helvetica] pl-[15px]`}
                   placeholder="Email"
                   type="email"
                   value={formData.email}
@@ -365,13 +371,19 @@ export const Checkout = () => {
             <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
               <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                 <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto]">
-                  <div className="mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-lg leading-[25.2px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
+                  <div
+                    className={`mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-lg 
+                    leading-[25.2px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap`}
+                  >
                     Delivery
                   </div>
                 </div>
                 {/* Country Selector */}
                 <div className="flex flex-col items-start gap-3 relative w-full self-stretch flex-[0_0_auto]">
-                  <div className="border-[#d8dadc] text-[#8d9299] flex flex-col items-center flex-[0_0_auto] px-[14.53px] py-[16.34px] w-full rounded-[9.08px] gap-[9.08px] bg-[#ffffff] border border-solid self-stretch">
+                  <div
+                    className={`border-[#d8dadc] text-[#8d9299] flex flex-col items-center 
+                            flex-[0_0_auto] px-[14.53px] py-[16.34px] w-full rounded-[9.08px] gap-[9.08px] bg-[#ffffff] border border-solid self-stretch`}
+                  >
                     <div className="w-full h-[13px] [font-family:'Montserrat',Helvetica] font-normal text-[#8d9299] text-xs tracking-[0] leading-[13.2px]">
                       Country
                     </div>
@@ -394,7 +406,10 @@ export const Checkout = () => {
                       <span className="text-red-500">*</span>
                     </div>
                     <input
-                      className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
+                      className={`focus:outline-none border border-solid border-[#d8dadc] 
+                        px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative 
+                        tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] 
+                        [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow`}
                       placeholder="First name"
                       type="text"
                       value={formData.shipping_address.first_name}
@@ -414,7 +429,10 @@ export const Checkout = () => {
                       <span className="text-red-500">*</span>
                     </div>
                     <input
-                      className="focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow"
+                      className={`focus:outline-none border border-solid border-[#d8dadc] 
+                        px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative 
+                        tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] 
+                        [font-family:'Montserrat',Helvetica] pl-3.5 flex-1 grow`}
                       placeholder="Last name"
                       type="text"
                       value={formData.shipping_address.last_name}
@@ -437,7 +455,10 @@ export const Checkout = () => {
                   <span className="text-red-500">*</span>
                 </div>
                 <input
-                  className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch [font-family:'Montserrat',Helvetica] pl-[15px]"
+                  className={`flex-1 grow focus:outline-none border border-solid border-[#d8dadc] 
+                    px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] 
+                    text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] w-full self-stretch 
+                    [font-family:'Montserrat',Helvetica] pl-[15px]`}
                   placeholder="Address"
                   type="text"
                   value={formData.shipping_address.address_1}
@@ -459,7 +480,10 @@ export const Checkout = () => {
                     <span className="text-red-500">*</span>
                   </div>
                   <input
-                    className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
+                    className={`flex-1 grow focus:outline-none border border-solid border-[#d8dadc] 
+                      px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] 
+                      text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] 
+                      [font-family:'Montserrat',Helvetica] pl-3.5`}
                     placeholder="City"
                     type="text"
                     value={formData.shipping_address.city}
@@ -475,7 +499,10 @@ export const Checkout = () => {
                     <span className="text-red-500">*</span>
                   </div>
                   <input
-                    className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
+                    className={`flex-1 grow focus:outline-none border border-solid border-[#d8dadc] 
+                      px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] 
+                      text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] 
+                      [font-family:'Montserrat',Helvetica] pl-3.5`}
                     placeholder="State"
                     type="text"
                     value={formData.shipping_address.province}
@@ -495,7 +522,10 @@ export const Checkout = () => {
                     <span className="text-red-500">*</span>
                   </div>
                   <input
-                    className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3.5"
+                    className={`flex-1 grow focus:outline-none border border-solid border-[#d8dadc] 
+                      px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] 
+                      text-base text-[#8d9299] h-[18px] font-normal leading-[17.6px] 
+                      [font-family:'Montserrat',Helvetica] pl-3.5`}
                     placeholder="ZIP code"
                     type="text"
                     value={formData.shipping_address.postal_code}
@@ -545,7 +575,10 @@ export const Checkout = () => {
                 <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                   <div className="flex items-center relative self-stretch w-full flex-[0_0_auto]">
                     <div className="inline-flex items-center justify-center gap-2.5 px-0 py-2.5 relative flex-[0_0_auto]">
-                      <div className="mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-lg leading-[25.2px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
+                      <div
+                        className={`mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-lg 
+                          leading-[25.2px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap`}
+                      >
                         Payment
                       </div>
                     </div>
@@ -573,22 +606,34 @@ export const Checkout = () => {
             {/* Footer Links */}
             <div className="flex flex-wrap items-center justify-center gap-[34px] relative self-stretch w-full flex-[0_0_auto]">
               <Link href="/terms/warranty">
-                <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
+                <div
+                  className={`underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                  font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap`}
+                >
                   Warranty
                 </div>
               </Link>
               <Link href="/terms/refund-policy">
-                <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
+                <div
+                  className={`underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                  font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap`}
+                >
                   Refund policy
                 </div>
               </Link>
               <Link href="/terms/terms-of-service">
-                <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
+                <div
+                  className={`underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                  font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap`}
+                >
                   Terms of service
                 </div>
               </Link>
               <Link href="/terms/privacy-policy">
-                <div className="underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap">
+                <div
+                  className={`underline relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
+                  font-normal text-[#343a40] text-sm text-center tracking-[-0.28px] leading-6 whitespace-nowrap`}
+                >
                   Privacy policy
                 </div>
               </Link>
@@ -598,7 +643,10 @@ export const Checkout = () => {
           <div className="w-full lg:max-w-[470px] flex flex-col items-start gap-5 lg:px-2.5 lg:sticky lg:top-10">
             <div className="flex flex-col items-start gap-5 p-5 relative self-stretch w-full bg-[#efefef] rounded-[20px] shadow-shadow-relaxure-button">
               <div className="inline-flex items-center relative flex-[0_0_auto]">
-                <div className="mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[22px] leading-[30.8px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap">
+                <div
+                  className={`mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[22px] 
+                  leading-[30.8px] relative w-fit text-[#343a40] tracking-[0] whitespace-nowrap`}
+                >
                   Order Summary
                 </div>
               </div>
@@ -613,7 +661,11 @@ export const Checkout = () => {
                         {/* Order items */}
                         <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
                           <div className="flex w-full items-center gap-2.5 relative max-w-full">
-                            <div className="w-full break-words relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-normal overflow-wrap break-word">
+                            <div
+                              className={`w-full break-words relative mt-[-1.00px] 
+                              [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base 
+                              tracking-[0] leading-6 whitespace-normal overflow-wrap break-word`}
+                            >
                               {item.quantity} x {item.variant_title}
                             </div>
                           </div>
@@ -629,7 +681,10 @@ export const Checkout = () => {
                   <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
                     <div className="flex items-center gap-2 relative self-stretch w-full flex-[0_0_auto]">
                       <input
-                        className="flex-1 grow focus:outline-none border border-solid border-[#d8dadc] px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] text-base text-[#343a40] h-[18px] font-normal leading-[17.6px] [font-family:'Montserrat',Helvetica] pl-3"
+                        className={`flex-1 grow focus:outline-none border border-solid border-[#d8dadc] 
+                          px-[14.53px] py-[16.34px] rounded-[9.08px] bg-[#ffffff] relative tracking-[0] 
+                          text-base text-[#343a40] h-[18px] font-normal leading-[17.6px] 
+                          [font-family:'Montserrat',Helvetica] pl-3`}
                         placeholder="Enter promotion code"
                         type="text"
                         value={promotionCode}
@@ -643,7 +698,9 @@ export const Checkout = () => {
                       <button
                         onClick={applyPromotionCode}
                         disabled={isApplyingPromotion || !promotionCode.trim()}
-                        className="p-3 bg-[#343a40] text-white rounded-[9.08px] font-medium text-sm hover:bg-[#495057] disabled:bg-[#6c757d] disabled:cursor-not-allowed transition-colors duration-200 [font-family:'Montserrat',Helvetica]"
+                        className={`p-3 bg-[#343a40] text-white rounded-[9.08px] font-medium text-sm 
+                                  hover:bg-[#495057] disabled:bg-[#6c757d] disabled:cursor-not-allowed 
+                                  transition-colors duration-200 [font-family:'Montserrat',Helvetica]`}
                       >
                         Apply
                       </button>
@@ -696,7 +753,11 @@ export const Checkout = () => {
                     <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
                       <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
                         <div className="flex w-full items-center gap-2.5 relative max-w-full">
-                          <div className="w-full break-words relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-normal overflow-wrap break-word">
+                          <div
+                            className={`w-full break-words relative mt-[-1.00px] 
+                            [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base 
+                            tracking-[0] leading-6 whitespace-normal overflow-wrap break-word`}
+                          >
                             Promotion Discount
                           </div>
                         </div>
@@ -718,7 +779,10 @@ export const Checkout = () => {
                     {(cart?.discount_total ?? 0) > 0 &&
                       cart?.original_total && (
                         <div className="flex items-center gap-2">
-                          <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
+                          <div
+                            className={`w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] 
+                            leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through`}
+                          >
                             ${Number(cart.original_total ?? 0).toFixed(2)}
                           </div>
                           <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
