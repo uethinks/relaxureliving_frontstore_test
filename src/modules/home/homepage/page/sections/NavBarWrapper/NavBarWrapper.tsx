@@ -296,12 +296,7 @@ export const NavBarWrapper = ({
               </div>
 
               <a href="/#contact">
-                <Component
-                  className="!mr-[-1.00px]"
-                  property1="primary-button-l"
-                  text="Contact us"
-                  buttonClassName="nav-contact-us"
-                />
+                <Component text="Contact us" />
               </a>
             </div>
           </div>
@@ -398,12 +393,7 @@ export const NavBarWrapper = ({
                 }}
                 className="w-full flex justify-start"
               >
-                <Component
-                  className="!mr-[-1.00px]"
-                  property1="primary-button-l"
-                  text="Contact us"
-                  buttonClassName="nav-contact-us"
-                />
+                <Component text="Contact us" />
               </a>
             </div>
           </div>

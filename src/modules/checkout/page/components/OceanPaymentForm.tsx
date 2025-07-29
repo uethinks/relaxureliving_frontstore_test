@@ -393,6 +393,10 @@ export const OceanPaymentForm = ({
           methods: PAYMENT_METHODS.AFTERPAY,
         }
       default:
+        // 默认使用信用卡支付方式，但记录未知的终端名称
+        console.warn(
+          `Unknown terminal name: ${terminalName}, falling back to credit card`
+        )
         return {
           account: OCEANPAYMENT_ACCOUNT,
           terminal: process.env.NEXT_PUBLIC_OCEANPAYMENT_TERMINAL,

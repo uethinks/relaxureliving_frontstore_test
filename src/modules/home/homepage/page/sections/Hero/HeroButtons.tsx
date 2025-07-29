@@ -22,11 +22,7 @@ export const HeroButtons = ({
         </div>
       </Link>
       <button onClick={() => (window as any).tidioChatApi?.open()}>
-        <StyleSecondary
-          className="bg-[#000000] !rounded-[10px] !mr-[-1.00px] !mt-[-1.00px] !mb-[-1.00px] !flex-[0_0_auto]"
-          divClassName="!text-[#ffffff] !tracking-[0] !text-base ![font-style:unset] !font-normal ![font-family:'Roboto',Helvetica] !leading-6"
-          text={rightButton}
-        />
+        <StyleSecondary text={rightButton} />
       </button>
     </div>
   )
