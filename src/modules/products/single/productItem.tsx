@@ -33,7 +33,7 @@ export const ProductItem = ({
         pergolaData={pergolaData}
         currentProductInfo={currentProductInfo}
       />
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:max-w-[1910px] px-4 lg:px-20">
+      <div className="bg-background flex flex-col items-center justify-center w-full 2xl:max-w-[1910px] px-4 lg:px-20">
         <FirstScreen
           product={product}
           accessories={accessories}
@@ -45,7 +45,7 @@ export const ProductItem = ({
         <ProductOverviewAccordion
           productOverview={pergolaData.product_overview}
         />
-        <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
+        <div className="lg:mx-auto flex flex-col justify-between items-start w-full relative">
           <div className="w-full">
             <AccessoriesCards pergolaData={pergolaData} />
           </div>
@@ -55,9 +55,9 @@ export const ProductItem = ({
         </div>
         <div
           id="reviews"
-          className="bg-[#ffffff] flex flex-col items-center justify-center w-full"
+          className="flex flex-col items-center justify-center w-full"
         >
-          <div className="lg:mx-auto flex flex-col justify-between items-start bg-[#ffffff] w-full relative">
+          <div className="lg:mx-auto flex flex-col justify-between items-start w-full relative">
             <div className="w-full">
               <CustomerReviewsServer />
             </div>

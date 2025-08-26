@@ -17,7 +17,7 @@ export const BuyNowButton = ({
   className,
   text = "Get started",
   onClick,
-}: Props): JSX.Element => {
+}: Props): React.JSX.Element => {
   const [state, dispatch] = useReducer(reducer, {
     property1: property1 || PRIMARY_BUTTON_L,
   })

@@ -18,59 +18,59 @@ const FITS_PEOPLE_ICON = "/img/fits-people.png"
 // 定义常用的feature常量
 const FITS_PEOPLE_2_4: Feature = {
   icon: FITS_PEOPLE_ICON,
-  text: "Fits 2-4 people",
+  text: "Fits 2-4 People",
 }
 const FITS_PEOPLE_4_6: Feature = {
   icon: FITS_PEOPLE_ICON,
-  text: "Fits 4-6 people",
+  text: "Fits 4-6 People",
 }
 const FITS_PEOPLE_6_8: Feature = {
   icon: FITS_PEOPLE_ICON,
-  text: "Fits 6-8 people",
+  text: "Fits 6-8 People",
 }
 const FITS_PEOPLE_8_12: Feature = {
   icon: FITS_PEOPLE_ICON,
-  text: "Fits 8-12 people",
+  text: "Fits 8-12 People",
 }
 const MORNING_COFFEE: Feature = {
   icon: "/img/morning-coffee.png",
-  text: "Perfect for morning coffee",
+  text: "Perfect For Morning Coffee",
 }
 const SMALL_PATIO: Feature = {
   icon: "/img/small-patio.png",
-  text: "Ideal for small patios",
+  text: "Ideal For Small Patios",
 }
 const HIGHER_CEILING: Feature = {
   icon: "/img/ceiling.png",
-  text: HIGHER_CEILING_TEXT,
+  text: "Higher Ceiling 8.29FT(268cm)",
 }
 const SMALL_BBQ: Feature = {
   icon: "/img/bbq.png",
-  text: "Perfect for small BBQ",
+  text: "Perfect For Small BBQ",
 }
 const MODULAR_SOFA: Feature = {
   icon: "/img/sofa.png",
-  text: "Fits a modular sofa",
+  text: "Fits A Modular Sofa",
 }
 const SMALL_KITCHEN: Feature = {
   icon: "/img/kitchen.png",
-  text: "Fits a small kitchen set",
+  text: "Fits A Small Kitchen Set",
 }
 const HOSTING_PARTIES: Feature = {
   icon: "/img/party.png",
-  text: "Perfect for hosting parties",
+  text: "Perfect For Hosting Parties",
 }
 const EXPANSIVE_BACKYARD: Feature = {
   icon: "/img/backyard.png",
-  text: "Ideal for expansive backyards",
+  text: "Ideal For Expansive Backyards",
 }
 const OUTDOOR_RETREATS: Feature = {
   icon: "/img/outdoor.png",
-  text: "Perfect for outdoor retreats",
+  text: "Perfect For Outdoor Retreats",
 }
 const MULTIPLE_SEATING: Feature = {
   icon: "/img/small-patio.png",
-  text: "Ideal for multiple seating areas",
+  text: "Ideal For Multiple Seating Areas",
 }
 
 const FEATURES_BY_SIZE: Record<string, Feature[]> = {
@@ -102,6 +102,18 @@ const FEATURES_BY_SIZE: Record<string, Feature[]> = {
   ],
 }
 
+// Color Dark Gray, White
+export const VALUE_BY_COLORS: Record<string, string> = {
+  "Dark Gray": "#252D35",
+  White: "#FFFFFF",
+}
+
+// style CONFIG
+export const IMG_BY_STYLE: Record<string, string> = {
+  "Wall Mounted": "/img/product_style.png",
+  "Freestanding": "/img/product_style.png",
+}
+
 export const PergolaFeatures: React.FC<PergolaFeaturesProps> = ({
   selectedSize,
 }) => {
@@ -117,31 +129,27 @@ export const PergolaFeatures: React.FC<PergolaFeaturesProps> = ({
   }, [selectedSize])
 
   return (
-    <div className="flex flex-col w-full items-start relative text-[#343A40]">
-      <div className="w-full">
+    <div className="grid grid-cols-2 gap-2 h-[160px]">
+      <div className="flex-1">
         {features.map((feature, index) => {
           const isNewFeature = !prevFeatures.has(feature.text)
           return (
             <div
               key={feature.text}
-              className={`flex flex-row items-center gap-2.5 relative mb-4 ${
+              className={`text-sm text-[#8c877c] ${
                 isNewFeature ? "animate-slideIn" : ""
               }`}
             >
-              <img src={feature.icon} alt={feature.text} className="w-5" />
-              <p>{feature.text}</p>
+              ·{feature.text}
             </div>
           )
         })}
       </div>
-      <div className="flex flex-row items-center gap-2.5 relative text-[#072F6C]">
-        <button
-          onClick={() => (window as any).tidioChatApi?.open()}
-          className="text-[#F6AF1F] transition-colors duration-200 underline"
-        >
-          I want a custom size
-        </button>
-      </div>
+      <img
+        src="/img/product_size.png"
+        alt="Relaxure Pergola Kit"
+        className="w-full h-[120px] object-contain"
+      />
     </div>
   )
 }

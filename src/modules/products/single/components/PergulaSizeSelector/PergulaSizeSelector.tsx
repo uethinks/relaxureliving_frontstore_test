@@ -6,7 +6,8 @@ import {
   StoreProductOptionValue,
   StoreProductVariant,
 } from "@medusajs/types"
-import { PergolaFeatures } from "./PergolaFeatures"
+import { IMG_BY_STYLE, PergolaFeatures, VALUE_BY_COLORS } from "./PergolaFeatures"
+import { Button } from "@/components/ui/button"
 
 interface Props {
   className: string
@@ -29,7 +30,7 @@ export const PergulaSizeSelector = React.memo(
     onSizeChange,
     onColorChange,
     onStyleChange,
-  }: Props): JSX.Element => {
+  }: Props): React.JSX.Element => {
     // 使用useMemo缓存排序后的尺寸和颜色列表
     const sortedSizes = useMemo(() => {
       const pergolaSizes = product.options?.find(
@@ -60,6 +61,8 @@ export const PergulaSizeSelector = React.memo(
       )
     }, [product.options])
 
+    // console.log('sortedColors',sortedColors)
+
     const sortedStyles = useMemo(() => {
       const pergolaStyles = product.options?.find(
         (option) => option.title === "Style"
@@ -68,128 +71,98 @@ export const PergulaSizeSelector = React.memo(
         a.value.localeCompare(b.value)
       )
     }, [product.options])
+
     return (
       <>
-        <div
-          className={`flex flex-col w-full items-start gap-5 relative ${className} mb-4`}
-        >
-          <div className="flex w-full items-center gap-2.5 relative">
-            <h3 className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
-              What size do you want for your pergola?
-            </h3>
+        {/* Size Section with new UI */}
+        <div className="mb-4">
+          <div className="text-sm font-medium text-[#000000] mb-2 flex justify-between">
+            <span> Size: {selectedSize?.value || "10'x10'"}</span>
+            <span className="text-sm text-[#8c877c] mb-3">+ $876.00</span>
           </div>
 
-          <div className="relative h-12 2xl:w-auto">
-            <div className="flex p-1 bg-[#ffffff] rounded-[20px] border border-solid border-[#e9e9e9]">
-              <div className="inline-flex items-center gap-1 lg:gap-0 xl:gap-[18px] relative">
-                {sortedSizes?.map((size) => (
-                  <button
-                    key={size.id}
-                    className={`inline-flex items-center justify-center gap-2.5 p-1 relative flex-[0_0_auto] cursor-pointer ${
-                      selectedSize?.id === size.id
-                        ? "bg-[#F6AF1F33] rounded-[20px]"
-                        : ""
-                    }`}
-                    onClick={() => onSizeChange(size)}
-                  >
-                    <div
-                      className={`mx-2 lg:mx-0 xl:mx-2 relative w-fit 
-                        mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium 
-                        text-[16px] lg:text-[18px] tracking-[0] leading-[27px] whitespace-nowrap ${
-                          selectedSize?.id === size.id
-                            ? "text-[#072f6c]"
-                            : "text-[#69727a]"
-                        }`}
-                    >
-                      {size.value}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
           <PergolaFeatures selectedSize={selectedSize?.value || "10'x10'"} />
-        </div>
-        <div
-          className={`flex flex-col items-start gap-2.5 relative ${className}`}
-        >
-          <div className="flex w-full items-center gap-2.5 relative">
-            <h3 className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
-              What Color would you like to choose?
-            </h3>
-          </div>
 
-          <div className="relative h-12">
-            <div className="flex px-2 h-12">
-              <div className="inline-flex items-center gap-[18px] relative">
-                {sortedColors?.map((color) => (
-                  <div
-                    key={color.id}
-                    className="flex flex-row items-center gap-2.5 relative"
-                  >
-                    <button
-                      className={`w-10 h-10 rounded-[20px] cursor-pointer border-solid p-1 ${
-                        selectedColor?.id === color.id
-                          ? "border-[#F6AF1F] border-2"
-                          : ""
-                      }`}
-                      onClick={() => onColorChange(color)}
-                    >
-                      <div
-                        className={`w-full h-full rounded-[20px] ${
-                          selectedColor?.id === color.id
-                            ? "bg-[#F6AF1F33]"
-                            : "bg-[#ffffff]"
-                        }`}
-                      ></div>
-                    </button>
-                    <div
-                      className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
-                        font-medium text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
-                    >
-                      {color.value}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="grid grid-cols-2 gap-2">
+            {sortedSizes?.map((size) => (
+              <Button
+                key={size.id}
+                variant={selectedSize?.id === size.id ? "default" : "outline"}
+                className={`h-12 ${
+                  selectedSize?.id === size.id
+                    ? "bg-[#ffbf3c] text-[#000000] border-[#ffbf3c]"
+                    : "bg-white border-[#d9d9d9] text-[#000000]"
+                }`}
+                onClick={() => onSizeChange(size)}
+              >
+                {size.value}
+              </Button>
+            ))}
           </div>
         </div>
-        <div
-          className={`flex flex-col items-start gap-2.5 relative ${className}`}
-        >
-          <div className="flex w-full items-center gap-2.5 relative">
-            <h3 className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[16px] tracking-[0] leading-6 whitespace-normal">
-              What Style would you like to choose?
-            </h3>
-          </div>
 
-          <div className="relative h-12">
-            <div className="flex px-2 h-12">
-              <div className="inline-flex items-center gap-[18px] relative">
-                {sortedStyles?.map((style) => (
-                  <div
-                    key={style.id}
-                    className="flex flex-row items-center gap-2.5 relative"
-                  >
-                    <button
-                      className={`rounded-[10px] cursor-pointer border-solid p-1 border-2 ${
-                        selectedStyle?.id === style.id ? "border-[#F6AF1F]" : ""
-                      }`}
-                      onClick={() => onStyleChange(style)}
-                    >
-                      <div
-                        className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium 
-                          text-16 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]`}
-                      >
-                        {style.value}
-                      </div>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
+        {/* Custom Size */}
+        <div className="mb-4">
+          <Button
+            variant="outline"
+            className="w-full border-[#d9d9d9] text-[#000000] bg-transparent"
+            onClick={() => (window as any).tidioChatApi?.open()}
+          >
+            I Want A Custom Size
+          </Button>
+          <div className="text-xs text-[#ffbf3c] mt-1">
+            📋 Download Dimensions
           </div>
+        </div>
+
+        {/* Color Section */}
+        <div className="mb-4">
+          <div className="text-sm font-medium text-[#000000] mb-3">
+            Structure Color: {selectedColor?.value || "Dark Gray"}
+          </div>
+          <div className="flex gap-2">
+            {sortedColors?.map((color) => (
+              <div
+                key={color.id}
+                className={`h-6 w-6 border-2 cursor-pointer ${
+                  selectedColor?.id === color.id
+                    ? "border-[#ffbf3c] bg-[#ffd379]"
+                    : "border-white"
+                }`}
+                style={{ backgroundColor: VALUE_BY_COLORS[color.value] }}
+                onClick={() => onColorChange(color)}
+              >
+              </div>
+            ))}
+          </div>
+          <div className="text-xs text-[#ffbf3c] mt-2">📋 Download Specs</div>
+        </div>
+
+        {/* Style Section */}
+        <div className="mb-4">
+          <div className="text-sm font-medium text-[#000000] mb-3">
+            Style: {selectedStyle?.value || "Wall Mounted"}
+          </div>
+          <div className="flex gap-2">
+            {sortedStyles?.map((style) => (
+              <div
+                key={style.id}
+                className={`px-5 w-40 h-40 border-2 cursor-pointer flex flex-col items-center justify-center ${
+                  selectedStyle?.id === style.id
+                    ? "border-[#ffbf3c] bg-[#ffd379]"
+                    : "border-[#d9d9d9]"
+                }`}
+                onClick={() => onStyleChange(style)}
+              >
+                {/* <div className="w-full h-12 bg-[#2f2a1f] border border-[#d9d9d9] rounded mb-2"></div> */}
+                <img className="h-30" src={IMG_BY_STYLE[style.value]} alt={style.value} />
+                <div className="text-base font-semibold text-center text-[#000000]">
+                  {style.value}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-xs text-[#ffbf3c] mt-2">📋 Download Specs</div>
         </div>
       </>
     )
