@@ -13,6 +13,19 @@ import { Testimonials } from "./sections/Testimonials"
 import { AwardBlock } from "@modules/common/components/AwardBlock"
 import { PergolaData } from "types/global"
 import { unstable_cache } from "next/cache"
+import V2HeroBanner from "@/components/V2HeroBanner"
+import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
+import V2HeroProductSection from "@/components/V2HeroProductSection"
+import V2PressSection from "@/components/V2PressSection"
+import { V2CraftsmanshipSection } from "@/components/V2CraftsmanshipSection"
+import { V2FeatureShowcase } from "@/components/V2FeatureShowcase"
+import { V2FeatureGridSection } from "@/components/V2FeatureGridSection"
+import { V2PromoBanner } from "@/components/V2PromoBanner"
+import V2DualOfferSection from "@/components/V2DualOfferSection"
+import V2TestimonialsSection from "@/components/V2TestimonialsSection"
+import { V2FAQSection } from "@/components/V2FAQSection"
+import { V2ContactUsSection } from "@/components/V2ContactUsSection"
+import V2OccasionsSection from "@/components/V2OccasionsSection"
 
 // 配置静态生成
 export const dynamic = "force-static"
@@ -58,6 +71,7 @@ const getCachedHomePage = unstable_cache(
 // 主页面组件
 export default async function Homepage() {
   const data = await getCachedHomePage()
+  // console.log('getCachedHomePage', data)
 
   if (!data) {
     return (
@@ -69,15 +83,46 @@ export default async function Homepage() {
 
   return (
     <>
-      <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-[120px] px-4 lg:px-20 py-0 relative bg-[#ffffff]">
+      <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper isHomePage={true} />
-        <Hero hero={data.HomepageHero} />
+        {data.sections.map((section: any) => {
+          const key = `${section.id}-${section.__component}`
+          console.log(key, section)
+          if (section.__component === "blocks.v2-hero-banner") {
+            return <V2HeroBanner key={key} data={section} />
+          } else if (section.__component === "blocks.v2-service-snapshots") {
+            return <V2ServiceSnapshots key={key} data={section} />
+          } else if (section.__component === "blocks.v2-hero-product-section") {
+            return <V2HeroProductSection key={key} data={section} />
+          } else if (section.__component === "blocks.v2-press-slider") {
+            return <V2PressSection key={key} data={section} />
+          } else if (section.__component === "blocks.v2-craftsmanship") {
+            return <V2CraftsmanshipSection key={key} data={section} />
+          } else if (section.__component === "blocks.v2-occasions") {
+            return <V2OccasionsSection key={key} data={section} />
+          } else if (section.__component === "blocks.v2-rain-resistance") {
+            return <V2FeatureShowcase key={key} data={section} />
+          } else if (section.__component === "blocks.v2-feature-grid") {
+            return <V2FeatureGridSection key={key} data={section} />
+          } else if (section.__component === "blocks.v2-promo-banner") {
+            return <V2PromoBanner key={key} data={section} />
+          } else if (section.__component === "blocks.v2-dual-offer-section") {
+            return <V2DualOfferSection key={key} data={section} />
+          } else if (section.__component === "blocks.v2-testimonials-section") {
+            return <V2TestimonialsSection key={key} data={section} />
+          } else if (section.__component === "blocks.v2-faq-section") {
+            return <V2FAQSection key={key} data={section} />
+          }
+          return null
+        })}
+        <V2ContactUsSection />
+        {/* <Hero hero={data.HomepageHero} />
         <AwardBlock data={{ ...data.credential, showDescription: true }} />
         <OurPergola pergola={data.OurPergola} />
         <Features features={data.Features} />
-        <Accessories accessories={data.Accessories} />
+        <Accessories accessories={data.Accessories} /> */}
       </div>
-      <OurPromise
+      {/* <OurPromise
         pergolaData={
           {
             boringButImportantStuff: data.OurPromise,
@@ -90,7 +135,7 @@ export default async function Homepage() {
       <FaqWrapper faq={data.FAQ} />
       <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-10 px-4 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
         <ContactUs contactUs={data.ContactUs} />
-      </div>
+      </div> */}
       <FooterDark isHomepage={true} />
     </>
   )

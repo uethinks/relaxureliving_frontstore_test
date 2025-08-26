@@ -1,5 +1,6 @@
 // src/lib/axiosInstance.ts
 import axios from 'axios';
+const qs = require('qs');
 
 // 创建 Axios 实例
 const axiosInstance = axios.create({
@@ -18,6 +19,10 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    console.log('config.paramsSerializer', config.paramsSerializer)
+    config.paramsSerializer = config.paramsSerializer
+    ? config.paramsSerializer // if you want to still be able to overwrite it on a per-request level
+    : qs.stringify;
     return config;
   },
   (error) => {

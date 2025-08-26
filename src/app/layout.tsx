@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import "../styles/globals.css"
 import Script from "next/script"
 import { getGlobalData, getFaqData } from "@lib/cms/strapiCmsApi"
+import { ReactQueryProvider } from "./providers"
 
 // 动态生成metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -72,8 +73,14 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const organizationSchema = await getOrganizationSchema()
   const faqSchema = await getFaqSchema()
   return (
-    <html lang="en" data-mode="light">
+    <html lang="en" data-mode="light" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet"
+        />
         {/* Google tag (gtag.js)>*/}
         <Script
           async
@@ -123,11 +130,12 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(faqSchema),
           }}
+          suppressHydrationWarning
         ></script>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -137,14 +145,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
-        <CartProvider>
-          <main className="w-full relative">
-            <div className="w-full flex flex-col items-center">
-              {props.children}
-            </div>
-          </main>
-        </CartProvider>
-
+        <ReactQueryProvider>
+          <CartProvider>
+            <main className="w-full relative">
+              <div className="w-full flex flex-col items-center">
+                {props.children}
+              </div>
+            </main>
+          </CartProvider>
+        </ReactQueryProvider>
         <Script
           src="//code.tidio.co/spcvp06pvbgtarykyqq2afrepjvccury.js"
           async

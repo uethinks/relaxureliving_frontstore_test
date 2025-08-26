@@ -6,10 +6,15 @@ import {
   submitContactForm,
 } from "@lib/cms/strapiCmsApi"
 import { Image } from "types/global"
+import { User, Mail, Phone, Sun, MessageCircle } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 // 定义常量以避免重复的字符串字面量
 const BORDER_ERROR_CLASS = "border-red-500"
-const BORDER_DEFAULT_CLASS = "border-[#d8dadc]"
+const BORDER_DEFAULT_CLASS = "border-[#d9d9d9]"
 
 interface ContactUsProps {
   id: number
@@ -27,6 +32,7 @@ interface FormData {
   fullName: string
   phoneNumber: string
   email: string
+  inquiry: string
   message: string
 }
 
@@ -40,11 +46,12 @@ export const ContactUs = ({
   contactUs,
 }: {
   contactUs: ContactUsProps
-}): JSX.Element => {
+}): React.JSX.Element => {
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     phoneNumber: "",
     email: "",
+    inquiry: "Sales",
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -82,18 +89,25 @@ export const ContactUs = ({
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { id, value } = e.target
+    const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
-      [id]: value,
+      [name]: value,
     }))
     // 清除对应字段的错误信息
-    if (errors[id as keyof FormErrors]) {
+    if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({
         ...prev,
-        [id]: undefined,
+        [name]: undefined,
       }))
     }
+  }
+
+  const handleSelectChange = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      inquiry: value,
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -129,6 +143,7 @@ export const ContactUs = ({
         fullName: "",
         phoneNumber: "",
         email: "",
+        inquiry: "Sales",
         message: "",
       })
     } catch (error) {
@@ -138,187 +153,166 @@ export const ContactUs = ({
       setIsSubmitting(false)
     }
   }
-  const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
-  const imageUrl = contactUs.Image?.url
 
   return (
-    <div
-      id="contact"
-      className="flex flex-col lg:flex-row w-full justify-center items-center gap-4 lg:gap-[87px]"
-    >
-      <div className="flex relative justify-center w-full lg:w-auto h-[490px] lg:h-[947px] items-center">
-        <img
-          className="h-[490px] lg:h-[947px] aspect-[695/947] w-full object-cover rounded-[20px]"
-          alt="Unsplash"
-          src={imageUrl ? `${strapiUrl}${imageUrl}` : ""}
-        />
-
-        <div className="absolute bottom-10 left-0 w-[80%] lg:w-full px-4 py-2.5">
-          <p className="font-bold font-merriweather text-white text-[18px] lg:text-[32px] leading-[44.8px] tracking-[0]">
-            {contactUs.DescriptionOnImage}
-          </p>
-        </div>
+    <div id="contact" className="max-w-4xl mx-auto px-4 py-16">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold text-[#140e02] mb-6 leading-tight">
+          {contactUs.FormDescription}
+        </h1>
+        <p className="text-[#8c877c] text-lg max-w-2xl mx-auto">
+          If you fill out the contact form below, one of our representatives will reach back out to you in a timely
+          manner.
+        </p>
       </div>
 
-      <div className="flex w-full lg:w-auto lg:h-[964px] aspect-[528/964] items-center">
-        <div
-          className={`flex flex-col w-full px-4 py-10 items-center gap-[30px] 
-                  bg-[#f8f8f8] rounded-[18.16px] border border-solid border-[#ffffff6e] 
-                  backdrop-blur-[32.4px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(32.4px)_brightness(100%)]`}
-        >
-          <div className="relative w-[102px] h-[82.21px]">
-            <div className="relative w-[253px] h-[232px] -top-[61px] -left-[86px]">
-              <img
-                className="absolute w-[253px] h-[232px]"
-                alt="Vector"
-                src="/img/contact_us.png"
-              />
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Full Name */}
+          <div className="relative h-[48px]">
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
+              <User className="w-5 h-5 text-[#ffbf3c]" />
             </div>
+            <Input
+              type="text"
+              name="fullName"
+              placeholder={contactUs.FullName}
+              value={formData.fullName}
+              onChange={handleInputChange}
+              className={`pl-12 py-4 h-full bg-white text-[#140e02] placeholder-[#8c877c] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c] ${
+                errors.fullName
+                  ? BORDER_ERROR_CLASS
+                  : BORDER_DEFAULT_CLASS
+              }`}
+              required
+            />
+            {errors.fullName && (
+              <span className="text-red-500 text-sm mt-1">
+                {errors.fullName}
+              </span>
+            )}
           </div>
 
-          <div className="flex flex-col items-center gap-[52.66px] w-full">
-            <div className="flex flex-col items-center gap-[18.16px] w-full">
-              <h2
-                className={`
-                font-heading-2 text-black text-[18px] lg:text-[36px] 
-                font-medium text-center tracking-[var(--heading-2-letter-spacing)] 
-                leading-[var(--heading-2-line-height)]
-              `}
-              >
-                {contactUs.FormDescription}
-              </h2>
+          {/* Email */}
+          <div className="relative h-[48px]">
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
+              <Mail className="w-5 h-5 text-[#ffbf3c]" />
             </div>
-
-            <form
-              onSubmit={handleSubmit}
-              className="w-full flex flex-col items-center gap-[36.32px]"
-            >
-              <div className="w-full flex flex-col items-start gap-[29.05px]">
-                <div className="w-full flex flex-col items-start gap-[29.05px]">
-                  <div className="w-full flex flex-col items-start gap-[3.63px]">
-                    <div className="w-full flex flex-col items-start gap-[5.45px]">
-                      <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
-                        {contactUs.FullName} *
-                      </div>
-                      <input
-                        className={`w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid ${
-                          errors.fullName
-                            ? BORDER_ERROR_CLASS
-                            : BORDER_DEFAULT_CLASS
-                        } focus:outline-none`}
-                        id="fullName"
-                        placeholder={contactUs.FullName}
-                        type="text"
-                        value={formData.fullName}
-                        onChange={handleInputChange}
-                      />
-                      {errors.fullName && (
-                        <span className="text-red-500 text-sm mt-1">
-                          {errors.fullName}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="w-full flex flex-col items-start gap-[3.63px]">
-                    <div className="w-full flex flex-col items-start gap-[5.45px]">
-                      <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
-                        {contactUs.PhoneNumber}
-                      </div>
-                      <input
-                        className="w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid border-[#d8dadc] focus:outline-none"
-                        id="phoneNumber"
-                        placeholder={contactUs.PhoneNumber}
-                        type="tel"
-                        value={formData.phoneNumber}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="w-full flex flex-col items-start gap-[3.63px]">
-                    <div className="w-full flex flex-col items-start gap-[5.45px]">
-                      <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
-                        {contactUs.Email} *
-                      </div>
-                      <input
-                        className={`w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid ${
-                          errors.email
-                            ? BORDER_ERROR_CLASS
-                            : BORDER_DEFAULT_CLASS
-                        } focus:outline-none`}
-                        id="email"
-                        placeholder={contactUs.Email}
-                        type="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                      />
-                      {errors.email && (
-                        <span className="text-red-500 text-sm mt-1">
-                          {errors.email}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="w-full flex flex-col items-start gap-[3.63px]">
-                    <div className="w-full flex flex-col items-start gap-[5.45px]">
-                      <div className="font-relaxure-sub-heading-18 font-normal text-sm tracking-[0] leading-[15.4px]">
-                        Message *
-                      </div>
-                      <textarea
-                        className={`w-full px-[14.53px] py-[16.34px] bg-white rounded-[9.08px] border border-solid ${
-                          errors.message
-                            ? BORDER_ERROR_CLASS
-                            : BORDER_DEFAULT_CLASS
-                        } focus:outline-none resize-vertical min-h-[120px]`}
-                        id="message"
-                        placeholder={contactUs.Message}
-                        rows={4}
-                        value={formData.message}
-                        onChange={handleInputChange}
-                      />
-                      {errors.message && (
-                        <span className="text-red-500 text-sm mt-1">
-                          {errors.message}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {submitStatus === "success" && (
-                <div className="text-[#072f6c] mt-2">
-                  Thank you for your message! We will get back to you soon.
-                </div>
-              )}
-              {submitStatus === "error" && (
-                <div className="text-red-600 mt-2">
-                  Sorry, we couldn't send your message. Please try again or
-                  contact us directly.
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full h-[43.58px]"
-              >
-                <div
-                  className={`h-full flex items-center justify-center gap-[var(--3-spacing-spacing-md)] px-[12.71px] py-[9.08px] ${
-                    isSubmitting ? "hover:bg-[#fdce6f]" : "bg-[#F6AF1F]"
-                  } rounded-[var(--2-radius-radius-md)]`}
-                >
-                  <div className="font-medium text-black text-[16px] font-relaxure-sub-heading-18">
-                    {isSubmitting ? "Sending..." : contactUs.SendButton}
-                  </div>
-                </div>
-              </button>
-            </form>
+            <Input
+              type="email"
+              name="email"
+              placeholder={contactUs.Email}
+              value={formData.email}
+              onChange={handleInputChange}
+              className={`pl-12 py-4 h-full bg-white text-[#140e02] placeholder-[#8c877c] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c] ${
+                errors.email
+                  ? BORDER_ERROR_CLASS
+                  : BORDER_DEFAULT_CLASS
+              }`}
+              required
+            />
+            {errors.email && (
+              <span className="text-red-500 text-sm mt-1">
+                {errors.email}
+              </span>
+            )}
           </div>
         </div>
-      </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Phone Number */}
+          <div className="relative h-[48px]">
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
+              <Phone className="w-5 h-5 text-[#ffbf3c]" />
+            </div>
+            <Input
+              type="tel"
+              name="phoneNumber"
+              placeholder={contactUs.PhoneNumber}
+              value={formData.phoneNumber}
+              onChange={handleInputChange}
+              className="pl-12 py-4 h-full bg-white border-[#d9d9d9] text-[#140e02] placeholder-[#8c877c] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c]"
+            />
+          </div>
+
+          {/* Inquiry About */}
+          <div className="relative h-[48px]">
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20">
+              <Sun className="w-5 h-5 text-[#ffbf3c]" />
+            </div>
+            <div className="absolute left-12 top-1/2 transform -translate-y-1/2 z-20 pointer-events-none">
+              <span className="text-[#8c877c] text-sm">Inquiry About</span>
+            </div>
+            <Select value={formData.inquiry} onValueChange={handleSelectChange}>
+              <SelectTrigger className="w-full pl-36 h-full bg-white border-[#d9d9d9] text-[#140e02] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c] flex items-center">
+                <SelectValue className="pb-0" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border-[#d9d9d9]">
+                <SelectItem value="Sales" className="text-[#140e02] focus:bg-[#ffbf3c]/10">
+                  Sales
+                </SelectItem>
+                <SelectItem value="Support" className="text-[#140e02] focus:bg-[#ffbf3c]/10">
+                  Support
+                </SelectItem>
+                <SelectItem value="General" className="text-[#140e02] focus:bg-[#ffbf3c]/10">
+                  General Inquiry
+                </SelectItem>
+                <SelectItem value="Partnership" className="text-[#140e02] focus:bg-[#ffbf3c]/10">
+                  Partnership
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Message */}
+        <div className="relative">
+          <div className="absolute left-4 top-4 z-10">
+            <MessageCircle className="w-5 h-5 text-[#ffbf3c]" />
+          </div>
+          <Textarea
+            name="message"
+            placeholder={contactUs.Message}
+            value={formData.message}
+            onChange={handleInputChange}
+            rows={6}
+            className={`pl-12 py-4 bg-white text-[#140e02] placeholder-[#8c877c] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c] resize-vertical ${
+              errors.message
+                ? BORDER_ERROR_CLASS
+                : BORDER_DEFAULT_CLASS
+            }`}
+            required
+          />
+          {errors.message && (
+            <span className="text-red-500 text-sm mt-1">
+              {errors.message}
+            </span>
+          )}
+        </div>
+
+        {submitStatus === "success" && (
+          <div className="text-[#072f6c] mt-2 text-center">
+            Thank you for your message! We will get back to you soon.
+          </div>
+        )}
+        {submitStatus === "error" && (
+          <div className="text-red-600 mt-2 text-center">
+            Sorry, we couldn't send your message. Please try again or
+            contact us directly.
+          </div>
+        )}
+
+        {/* Submit Button */}
+        <div className="flex justify-center pt-6">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-[#ffbf3c] hover:bg-[#e6ac35] text-[#140e02] font-semibold px-12 py-4 h-auto rounded-lg focus-visible:ring-2 focus-visible:ring-[#ffbf3c] focus-visible:ring-offset-2"
+          >
+            {isSubmitting ? "Sending..." : contactUs.SendButton}
+          </Button>
+        </div>
+      </form>
     </div>
   )
 }

@@ -39,7 +39,7 @@ export const NavBarWrapper = ({
 }: {
   isFixed?: boolean
   isHomePage?: boolean
-}): JSX.Element => {
+}): React.JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [menuData, setMenuData] = useState<MenuData | null>(null)
   const [openSubmenu, setOpenSubmenu] = useState<number | null>(null)
@@ -240,165 +240,225 @@ export const NavBarWrapper = ({
   }
 
   return (
-    <div
-      className={`z-50 w-full 2xl:w-[1512px] flex flex-col items-center gap-2.5 pb-[43px] pt-[34px]  ${
-        isFixed
-          ? "z-50 lg:px-[132px] lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2"
-          : "lg:px-[52px]"
-      }`}
-    >
-      {/* Desktop Navigation */}
-      <div
-        className={`
-          hidden xl:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 
-          relative bg-[#000000] rounded-[20px] backdrop-blur-[27.6px] backdrop-brightness-[100%] 
-          [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
-        `}
+    <>
+      {/* Placeholder element to prevent content from being hidden behind fixed navigation */}
+      {isFixed && (
+        <div className="hidden xl:block w-full h-[115px]"></div>
+      )}
+      
+      <header
+        className={`z-50 w-full flex flex-col items-center gap-0 ${
+          isFixed
+            ? "z-50 lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2"
+            : ""
+        }`}
+        role="banner"
       >
-        <div className="justify-between self-stretch w-full flex-[0_0_auto] mt-[-4.50px] mb-[-4.50px] flex items-center relative">
-          <Link href="/">
-            <img
-              className="relative w-[76.45px] h-12"
-              alt="Logo"
-              src="/img/logo.svg"
-            />
-          </Link>
-
-          <div className="flex items-center justify-end gap-10 relative text-[#ffffff]">
-            <div className="flex items-center justify-end gap-10 relative flex-1 grow">
-              {/* 动态菜单项 */}
-              {menuData?.data.menu_item.map((item) =>
-                renderMenuItem(item, false)
-              )}
+        {/* Top Contact Bar - Black Background */}
+        <address className="hidden xl:flex w-full h-10 bg-black items-center justify-center px-4 sm:px-6 lg:px-8 not-italic">
+          <div className="w-full max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex-1"></div>
+            <div className="flex items-center gap-6 text-white text-sm">
+              <a 
+                href="mailto:Info@Relaxureliving.Com" 
+                className="flex items-center gap-2 hover:text-gray-300 transition-colors underline"
+                aria-label="Send email to Info@Relaxureliving.Com"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Info@Relaxureliving.Com
+              </a>
+              <a 
+                href="tel:1-213-566-8658" 
+                className="flex items-center gap-2 hover:text-gray-300 transition-colors underline"
+                aria-label="Call 1-213-566-8658"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                1-213-566-8658
+              </a>
             </div>
+          </div>
+        </address>
 
-            <div className="flex items-center gap-4">
-              <div className="flex  items-center justify-center gap-2.5 px-0 py-2.5 relative">
-                <a
-                  href="/cart"
-                  className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium  text-base tracking-[0] leading-6"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="relative">
-                      <img
-                        className="w-[30px] h-[30px]"
-                        src={
-                          hasItemsInCart
-                            ? "/img/cart-with-products.png"
-                            : "/img/cart.png"
-                        }
-                        alt="cart"
-                      />
+        {/* Main Navigation Bar - Dark Brown/Black Background */}
+        <nav
+          className={`
+            hidden xl:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 
+            relative bg-[#1a1a1a] backdrop-blur-[27.6px] backdrop-brightness-[100%] 
+            [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
+          `}
+          role="navigation"
+          aria-label="Main navigation"
+        >
+          <div className="w-full max-w-7xl mx-auto flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2" aria-label="Relaxure Homepage">
+              <img className="w-32 lg:w-40 xl:w-[160px]" src="/img/logo.svg" alt="Relaxure Living Logo" />
+            </Link>
+
+            <div className="flex items-center justify-end gap-8 xl:gap-10 relative text-[#ffffff]">
+              <ul className="flex items-center justify-end gap-6 xl:gap-10 relative flex-1 grow" role="menubar" aria-label="Main menu">
+                {/* 动态菜单项 */}
+                {menuData?.data.menu_item.map((item) => (
+                  <li key={item.id} role="none">
+                    {renderMenuItem(item, false)}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex items-center gap-4">
+                <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative">
+                  <a
+                    href="/cart"
+                    className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-base tracking-[0] leading-6 text-white"
+                    aria-label={`Shopping cart with ${hasItemsInCart ? cart?.items?.length || 1 : 0} items`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="relative">
+                        <img
+                          className="w-[30px] h-[30px]"
+                          src={
+                            hasItemsInCart
+                              ? "/img/cart-with-products.png"
+                              : "/img/cart.png"
+                          }
+                          alt="Shopping cart"
+                        />
+                        {hasItemsInCart && (
+                          <span className="absolute -top-1 -right-1 bg-[#F6AF1F] text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold" aria-label={`${cart?.items?.length || 1} items in cart`}>
+                            {cart?.items?.length || 1}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <div>Cart</div>
-                  </div>
+                  </a>
+                </div>
+
+                <a href="/#contact" aria-label="Contact us">
+                  <Component text="Contact Us" />
                 </a>
               </div>
-
-              <a href="/#contact">
-                <Component text="Contact us" />
-              </a>
             </div>
           </div>
-        </div>
-      </div>
+        </nav>
 
-      {/* Mobile Navigation */}
-      <div className="xl:hidden flex flex-col w-full items-center justify-center relative">
-        <div
-          className={`
-            w-full h-[60px] flex items-center justify-between bg-[#ffffffcc]
-            rounded-[30px] border border-solid border-[#ffffff] backdrop-blur-[27.6px] 
-            backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
-          `}
-        >
-          <Link href="/">
-            <img
-              className="relative w-[60px] h-8"
-              alt="Logo"
-              src="/img/mobile_logo.svg"
-            />
-          </Link>
-
-          <div className="flex items-center justify-end gap-2 relative">
-            <div className="flex  items-center justify-center gap-2.5 px-0 py-2.5 relative">
-              <a
-                href="/cart"
-                className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-base tracking-[0] leading-6"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="relative">
-                    <img
-                      className="w-[30px]"
-                      src={
-                        hasItemsInCart
-                          ? "/img/mobile-cart-with-products.png"
-                          : "/img/mobile-cart.png"
-                      }
-                      alt="cart"
-                    />
-                  </div>
-                </div>
-              </a>
-            </div>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-[#343a40]"
+        {/* Mobile Navigation */}
+        <nav className="xl:hidden flex flex-col w-full items-center justify-center relative px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Mobile navigation">
+          <div className="w-full max-w-7xl mx-auto">
+            <div
+              className={`
+                w-full h-[60px] flex items-center justify-between bg-[#1a1a1a]
+                rounded-[30px] border border-solid border-[#333333] backdrop-blur-[27.6px] 
+                backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
+                px-4 sm:px-6
+              `}
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
+              <Link href="/" className="flex items-center gap-2" aria-label="Relaxure Homepage">
+                <div className="w-6 h-6 bg-[#F6AF1F] rounded-sm transform rotate-45" aria-hidden="true"></div>
+                <span className="text-white text-lg font-bold">Relaxure</span>
+              </Link>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div
-            className={`
-              w-full mt-2 bg-[#ffffffcc] rounded-[30px] border border-solid border-[#ffffff] 
-              backdrop-blur-[27.6px] backdrop-brightness-[100%] 
-              [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
-            `}
-          >
-            <div className="flex flex-col items-start py-4 space-y-4">
-              {/* 动态菜单项 */}
-              {menuData?.data.menu_item.map((item) =>
-                renderMenuItem(item, true)
-              )}
-
-              <a
-                href="/#contact"
-                onClick={(e) => {
-                  setIsMenuOpen(false)
-                }}
-                className="w-full flex justify-start"
-              >
-                <Component text="Contact us" />
-              </a>
+              <div className="flex items-center justify-end gap-2 relative">
+                <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative">
+                  <a
+                    href="/cart"
+                    className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-white text-base tracking-[0] leading-6"
+                    aria-label={`Shopping cart with ${hasItemsInCart ? cart?.items?.length || 1 : 0} items`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="relative">
+                        <img
+                          className="w-[30px]"
+                          src={
+                            hasItemsInCart
+                              ? "/img/mobile-cart-with-products.png"
+                              : "/img/mobile-cart.png"
+                          }
+                          alt="Shopping cart"
+                        />
+                        {hasItemsInCart && (
+                          <span className="absolute -top-1 -right-1 bg-[#F6AF1F] text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold" aria-label={`${cart?.items?.length || 1} items in cart`}>
+                            {cart?.items?.length || 1}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="p-2 text-white"
+                  aria-label={isMenuOpen ? "Close mobile menu" : "Open mobile menu"}
+                  aria-expanded={isMenuOpen}
+                  aria-controls="mobile-menu"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    {isMenuOpen ? (
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={3}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    ) : (
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={3}
+                        d="M4 12h16M4 18h16"
+                      />
+                    )}
+                  </svg>
+                </button>
+              </div>
             </div>
+
+            {/* Mobile Menu */}
+            {isMenuOpen && (
+              <div
+                id="mobile-menu"
+                className={`
+                  w-full mt-2 bg-[#1a1a1a] rounded-[30px] border border-solid border-[#333333] 
+                  backdrop-blur-[27.6px] backdrop-brightness-[100%] 
+                  [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
+                `}
+                role="menu"
+                aria-label="Mobile menu options"
+              >
+                <ul className="flex flex-col items-start py-4 px-4 sm:px-6 space-y-4">
+                  {/* 动态菜单项 */}
+                  {menuData?.data.menu_item.map((item) => (
+                    <li key={item.id} role="none">
+                      {renderMenuItem(item, true)}
+                    </li>
+                  ))}
+
+                  <li role="none">
+                    <a
+                      href="/#contact"
+                      onClick={(e) => {
+                        setIsMenuOpen(false)
+                      }}
+                      className="w-full flex justify-start"
+                      role="menuitem"
+                    >
+                      <Component text="Contact Us" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </nav>
+      </header>
+    </>
   )
 }

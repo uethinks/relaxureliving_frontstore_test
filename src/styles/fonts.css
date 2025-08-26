@@ -24,3 +24,21 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* styles/globals.css */
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/jost/Jost-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900; /* 设置字体的权重范围 */
+  font-display: swap;
+}
+
+/* 如果你想支持斜体，也可以增加类似的规则 */
+@font-face {
+  font-family: 'Jost Italic';
+  src: url('/fonts/jost/Jost-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900; /* 同样设置斜体的权重范围 */
+  font-style: italic;
+  font-display: swap;
+}
