@@ -45,6 +45,10 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
   const [totalOriginalPrice, setTotalOriginalPrice] = useState(0)
   const [isClient, setIsClient] = useState(false)
 
+  console.log('===product===', product);
+  console.log('===accessories===', accessories);
+  console.log('===accessoriesCMSData===', accessoriesCMSData);
+
   const router = useRouter()
 
   // 使用 Context 获取状态
@@ -277,40 +281,40 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
   const monthlyPayment = totalPrice / 24
 
   return (
-    <div className="hidden lg:flex w-full lg:max-w-[36%] justify-start items-start gap-2.5 px-2.5 sticky top-0">
-      <div className="max-w-md mx-auto bg-white">
+    <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 px-2.5 sticky top-0">
+      <div className="w-full bg-white">
         {/* Header */}
         <div className="p-4 border-b border-[#d9d9d9]">
-          <p className="text-[#8c8c8c] text-sm">Relaxure Corsica</p>
+          <p className="text-[#8c8c8c] text-xl">Relaxure Corsica</p>
           <h1 className="text-[#000000] text-3xl font-semibold">Relaxure Pergola Kit</h1>
         </div>
 
         {/* Sale Banner */}
         {isClient && (
-          <div className="mx-4 mt-4 p-3 border border-[#ff5f00] rounded-lg bg-[#fff5f0]">
-            <p className="text-[#000000] text-sm font-medium text-center">End Of Season Clearance Sale:</p>
-            <p className="text-[#ff5f00] text-lg font-bold text-center">Up To ${Math.round((totalOriginalPrice - totalPrice) / 100) * 100} OFF!</p>
-            <p className="text-[#ff5f00] text-sm font-medium text-center">03:21:16:57</p>
+          <div className="mt-4 p-4 border border-highlight bg-white">
+            <p className="text-black text-base font-medium text-center">End Of Season Clearance Sale:</p>
+            <p className="text-black text-2xl font-semibold text-center">Up To ${Math.round((totalOriginalPrice - totalPrice) / 100) * 100} OFF!</p>
+            <p className="text-highlight text-xl font-semibold text-center">03:21:16:57</p>
           </div>
         )}
 
         {/* Price Section */}
-        <div className="p-4">
-          <p className="text-[#8c8c8c] text-sm">Price:</p>
+        <div className="mt-4">
+          <p className="text-[#140E02] text-sm font-semibold">Price:</p>
           <div className="flex items-center gap-2">
-            <span className="text-[#000000] text-2xl font-bold">{formatPrice(totalPrice)}</span>
+            <span className="text-[#000000] text-3xl font-bold">{formatPrice(totalPrice)}</span>
             {savingsPercentage > 0 && (
-              <Badge className="bg-[#ff5f00] text-white text-xs">{savingsPercentage}% off</Badge>
+              <Badge className="bg-highlight rounded-none text-white font-bold px-6 py-2 [clip-path:polygon(15px_0,100%_0,100%_100%,15px_100%,0_50%)]">{savingsPercentage}% off</Badge>
             )}
           </div>
           {totalOriginalPrice > totalPrice && (
-            <p className="text-[#8c8c8c] text-sm">
-              <span className="line-through">{formatPrice(totalOriginalPrice)}</span> Save <span className="text-[#ff5f00]">{formatPrice(totalOriginalPrice - totalPrice)}</span>
+            <p className="text-[#8c8c8c] text-xl">
+              <span className="line-through font-semibold">{formatPrice(totalOriginalPrice)}</span> <span className="text-[#ff5f00]">Save {formatPrice(totalOriginalPrice - totalPrice)}</span>
             </p>
           )}
-          <p className="text-[#8c8c8c] text-xs mt-1">
-            <span className="text-[#ff5f00]">Klarna:</span> Pay {formatPrice(monthlyPayment)}/Mo x 24 With Klarna
-          </p>
+          <div className="text-black text-sm mt-1 p-4 border border-highlight flex items-center gap-2">
+            <img src="/img/Klarna.png" alt="Klarna" className="h-6" /> <span>Pay </span>  <span className="font-semibold">{formatPrice(monthlyPayment)}/Mo x 24</span> <span>With Klarna</span>
+          </div>
           
           {/* Quantity Controls */}
           <div className="flex items-center justify-end gap-2.5 mt-3">
