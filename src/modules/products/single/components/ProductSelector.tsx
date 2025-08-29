@@ -51,6 +51,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
     setSelectedColor,
     setSelectedStyle,
   } = useProductSelection()
+  console.log('selectedColor', selectedColor)
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("en-US", {
@@ -129,6 +130,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
       type: string
       selectedProducts: selectedProducts
     }) => {
+      console.log("handleAccessoryToggle type", type, selectedProducts)
       if (type === "Heating") {
         setSelectedAccessoriesHeater(selectedProducts)
       } else if (type === "Shades") {
@@ -330,6 +332,7 @@ export const ProductSelector: React.FC<ProductSelectorProps> = ({
           />
           <AccesorriesSelector
             pergolaSize={pergolaSize}
+            selectedColor={selectedColor}
             onAccessoryChange={handleAccessoryToggle}
             accessories={accessories}
             selectedHeaterVariant={selectedAccessoriesHeater}

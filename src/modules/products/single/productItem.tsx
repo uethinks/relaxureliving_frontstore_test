@@ -25,7 +25,7 @@ export const ProductItem = ({
   pergolaData,
   currentProductInfo,
   accessoriesCMSData,
-}: ProductItemProps): JSX.Element => {
+}: ProductItemProps): React.JSX.Element => {
   return (
     <>
       <ProductSchema

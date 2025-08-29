@@ -129,8 +129,8 @@ export const PergolaFeatures: React.FC<PergolaFeaturesProps> = ({
   }, [selectedSize])
 
   return (
-    <div className="grid grid-cols-2 gap-2 h-[160px]">
-      <div className="flex-1">
+    <div className="grid grid-cols-2 gap-2 min-h-[160px]">
+      <div className="flex-1 pb-2">
         {features.map((feature, index) => {
           const isNewFeature = !prevFeatures.has(feature.text)
           return (
@@ -140,7 +140,7 @@ export const PergolaFeatures: React.FC<PergolaFeaturesProps> = ({
                 isNewFeature ? "animate-slideIn" : ""
               }`}
             >
-              ·{feature.text}
+              · {feature.text}
             </div>
           )
         })}

@@ -8,6 +8,7 @@ import {
 } from "@medusajs/types"
 import { IMG_BY_STYLE, PergolaFeatures, VALUE_BY_COLORS } from "./PergolaFeatures"
 import { Button } from "@/components/ui/button"
+import { DownloadIcon, FileDownIcon } from "lucide-react"
 
 interface Props {
   className: string
@@ -15,9 +16,11 @@ interface Props {
   selectedSize?: StoreProductOptionValue
   selectedColor?: StoreProductOptionValue
   selectedStyle?: StoreProductOptionValue
+  selectedSlatsColor?: StoreProductOptionValue
   onSizeChange: (size: StoreProductOptionValue) => void
   onColorChange: (color: StoreProductOptionValue) => void
   onStyleChange: (style: StoreProductOptionValue) => void
+  onSlatsColorChange: (slatsColor: StoreProductOptionValue) => void
 }
 
 export const PergulaSizeSelector = React.memo(
@@ -27,9 +30,11 @@ export const PergulaSizeSelector = React.memo(
     selectedSize,
     selectedColor,
     selectedStyle,
+    selectedSlatsColor,
     onSizeChange,
     onColorChange,
     onStyleChange,
+    onSlatsColorChange,
   }: Props): React.JSX.Element => {
     // 使用useMemo缓存排序后的尺寸和颜色列表
     const sortedSizes = useMemo(() => {
@@ -72,6 +77,15 @@ export const PergulaSizeSelector = React.memo(
       )
     }, [product.options])
 
+    const sortedSlatsColors = useMemo(() => {
+      const pergolaSlatsColors = product.options?.find(
+        (option) => option.title === "Slats Color"
+      )
+      return pergolaSlatsColors?.values?.sort((a, b) =>
+        a.value.localeCompare(b.value)
+      )
+    }, [product.options])
+
     return (
       <>
         {/* Size Section with new UI */}
@@ -88,10 +102,10 @@ export const PergulaSizeSelector = React.memo(
               <Button
                 key={size.id}
                 variant={selectedSize?.id === size.id ? "default" : "outline"}
-                className={`h-12 ${
+                className={`h-12 text-base ${
                   selectedSize?.id === size.id
-                    ? "bg-[#ffbf3c] text-[#000000] border-[#ffbf3c]"
-                    : "bg-white border-[#d9d9d9] text-[#000000]"
+                    ? "bg-[#ffbf3c] font-semibold text-[#000000] border-[#ffbf3c]"
+                    : "bg-transparent border-white text-[#8C877C]"
                 }`}
                 onClick={() => onSizeChange(size)}
               >
@@ -105,19 +119,50 @@ export const PergulaSizeSelector = React.memo(
         <div className="mb-4">
           <Button
             variant="outline"
-            className="w-full border-[#d9d9d9] text-[#000000] bg-transparent"
+            className="w-full border-2 border-primary text-[#140E02] font-semibold bg-transparent"
             onClick={() => (window as any).tidioChatApi?.open()}
           >
             I Want A Custom Size
           </Button>
-          <div className="text-xs text-[#ffbf3c] mt-1">
-            📋 Download Dimensions
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1">
+            <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
+            <span className="underline">Download Dimensions</span>
+          </Button>
+        </div>
+
+        {/* Style Section */}
+        <div className="mb-4">
+          <div className="text-sm font-semibold text-[#000000] mb-3">
+            Style: {selectedStyle?.value || "Wall Mounted"}
           </div>
+          <div className="flex gap-2">
+            {sortedStyles?.map((style) => (
+              <div
+                key={style.id}
+                className={`aspect-square flex-1 px-5 border-2 cursor-pointer flex flex-col items-center justify-center ${
+                  selectedStyle?.id === style.id
+                    ? "border-[#ffbf3c] bg-[#ffd379] text-black font-semibold"
+                    : "border-white text-[#8C877C]"
+                }`}
+                onClick={() => onStyleChange(style)}
+              >
+                {/* <div className="w-full h-12 bg-[#2f2a1f] border border-[#d9d9d9] rounded mb-2"></div> */}
+                <img className="w-2/3" src={IMG_BY_STYLE[style.value]} alt={style.value} />
+                <div className="text-base text-center">
+                  {style.value}
+                </div>
+              </div>
+            ))}
+          </div>
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1">
+            <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
+            <span className="underline">Download Specs</span>
+          </Button>
         </div>
 
         {/* Color Section */}
-        <div className="mb-4">
-          <div className="text-sm font-medium text-[#000000] mb-3">
+        <div className="mb-12">
+          <div className="text-sm font-semibold text-[#000000] mb-3">
             Structure Color: {selectedColor?.value || "Dark Gray"}
           </div>
           <div className="flex gap-2">
@@ -127,7 +172,7 @@ export const PergulaSizeSelector = React.memo(
                 className={`h-6 w-6 border-2 cursor-pointer ${
                   selectedColor?.id === color.id
                     ? "border-[#ffbf3c] bg-[#ffd379]"
-                    : "border-white"
+                    : "border-none"
                 }`}
                 style={{ backgroundColor: VALUE_BY_COLORS[color.value] }}
                 onClick={() => onColorChange(color)}
@@ -135,34 +180,28 @@ export const PergulaSizeSelector = React.memo(
               </div>
             ))}
           </div>
-          <div className="text-xs text-[#ffbf3c] mt-2">📋 Download Specs</div>
         </div>
 
-        {/* Style Section */}
-        <div className="mb-4">
-          <div className="text-sm font-medium text-[#000000] mb-3">
-            Style: {selectedStyle?.value || "Wall Mounted"}
+        {/* Slats Color Section */}
+        <div className="mb-12">
+          <div className="text-sm font-semibold text-[#000000] mb-3">
+            Slats Color: {selectedSlatsColor?.value || "Dark Gray"}
           </div>
           <div className="flex gap-2">
-            {sortedStyles?.map((style) => (
+            {sortedSlatsColors?.map((slatsColor) => (
               <div
-                key={style.id}
-                className={`px-5 w-40 h-40 border-2 cursor-pointer flex flex-col items-center justify-center ${
-                  selectedStyle?.id === style.id
+                key={slatsColor.id}
+                className={`h-6 w-6 border-2 cursor-pointer ${
+                  selectedSlatsColor?.id === slatsColor.id
                     ? "border-[#ffbf3c] bg-[#ffd379]"
-                    : "border-[#d9d9d9]"
+                    : "border-none"
                 }`}
-                onClick={() => onStyleChange(style)}
+                style={{ backgroundColor: VALUE_BY_COLORS[slatsColor.value] }}
+                onClick={() => onSlatsColorChange(slatsColor)}
               >
-                {/* <div className="w-full h-12 bg-[#2f2a1f] border border-[#d9d9d9] rounded mb-2"></div> */}
-                <img className="h-30" src={IMG_BY_STYLE[style.value]} alt={style.value} />
-                <div className="text-base font-semibold text-center text-[#000000]">
-                  {style.value}
-                </div>
               </div>
             ))}
           </div>
-          <div className="text-xs text-[#ffbf3c] mt-2">📋 Download Specs</div>
         </div>
       </>
     )

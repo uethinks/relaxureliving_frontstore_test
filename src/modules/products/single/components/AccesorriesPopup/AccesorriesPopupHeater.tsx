@@ -24,7 +24,7 @@ export const AccesorriesPopupHeater = ({
   selectedHeaterVariant: selectedProducts
   showPopup: boolean
   heaterCMSData: any
-}): JSX.Element => {
+}): React.JSX.Element => {
   const closePopupHeater = () => {
     closePopup("Heating")
   }
@@ -33,6 +33,7 @@ export const AccesorriesPopupHeater = ({
       productVarant: selectedHeater,
       quantity: selectedHeaterQuantity,
     }
+    console.log("addAccessoryHeaterHandler selectedHeater", selectedHeaterProduct)
     addAccessoryHeater([selectedHeaterProduct])
     closePopupHeater()
   }

@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { BuyNowButton } from "./BuyNowButton"
 import { PergulaSizeSelector } from "./PergulaSizeSelector"
-import { AccesorriesSelector } from "./AccesorriesSelector"
 import {
   StoreProduct,
   StoreProductVariant,
@@ -12,9 +11,21 @@ import { PergolaSize, selectedProducts } from "types/global"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
 import { useProductSelection } from "./ProductSelectionContext"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Minus, Plus, ShoppingCart, MessageCircle, Phone, Mail, ChevronDown } from "lucide-react"
+import {
+  MessageCircle,
+  Phone,
+  Mail,
+  ChevronDown,
+  Truck,
+  Calendar,
+  MoveDownRight,
+} from "lucide-react"
+import {
+  AccesorriesSelector,
+  V2AccesorriesSelector,
+} from "./AccesorriesSelector"
+import { Button } from "@/components/ui/button"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -45,10 +56,9 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
   const [totalOriginalPrice, setTotalOriginalPrice] = useState(0)
   const [isClient, setIsClient] = useState(false)
 
-  console.log('===product===', product);
-  console.log('===accessories===', accessories);
-  console.log('===accessoriesCMSData===', accessoriesCMSData);
-
+  console.log("===product===", product)
+  console.log("===accessories===", accessories)
+  console.log("===accessoriesCMSData===", accessoriesCMSData)
   const router = useRouter()
 
   // 使用 Context 获取状态
@@ -56,10 +66,16 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
     selectedSize,
     selectedColor,
     selectedStyle,
+    selectedSlatsColor,
     setSelectedSize,
     setSelectedColor,
     setSelectedStyle,
+    setSelectedSlatsColor,
   } = useProductSelection()
+
+  console.log(
+    `selectedColor: ${selectedColor?.value}, selectedSlatsColor: ${selectedSlatsColor?.value}, selectedStyle: ${selectedStyle?.value}, selectedSize: ${selectedSize?.value}`
+  )
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("en-US", {
@@ -68,10 +84,16 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
     }).format(price || 0)
 
   useEffect(() => {
-    if (!selectedSize || !selectedColor || !selectedStyle) {
+    if (
+      !selectedSize ||
+      !selectedColor ||
+      !selectedStyle ||
+      !selectedSlatsColor
+    ) {
       return
     }
-
+    // console.log('===selectedSize===', selectedSize, 'variants', product.variants);
+    console.log("product: ", product.title, product.variants)
     const variant = product.variants?.find((variant) => {
       const matchingSize = variant?.options?.find(
         (option) =>
@@ -87,8 +109,27 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
           option.option?.title === "Style" &&
           option.value === selectedStyle.value
       )
-      return matchingSize && matchingColor && matchingStyle
+      const matchingSlatsColor = variant?.options?.find(
+        (option) =>
+          option.option?.title === "Slats Color" &&
+          option.value === selectedSlatsColor.value
+      )
+      console.log(
+        "size:",
+        !!matchingSize,
+        ",color:",
+        !!matchingColor,
+        ",style:",
+        !!matchingStyle,
+        ",slatsColor:",
+        !!matchingSlatsColor
+      )
+      console.log("===variant===", variant)
+      return (
+        matchingSize && matchingColor && matchingStyle && matchingSlatsColor
+      )
     })
+    console.log("===variant===", variant)
 
     setSelectedVariant(variant)
     setPergolaSize({
@@ -128,6 +169,13 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
       setSelectedStyle(style)
     },
     [setSelectedStyle]
+  )
+
+  const handleSlatsColorChange = useCallback(
+    (slatsColor: StoreProductOptionValue) => {
+      setSelectedSlatsColor(slatsColor)
+    },
+    [setSelectedSlatsColor]
   )
 
   const handleAccessoryToggle = useCallback(
@@ -273,9 +321,12 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
   }
 
   // Calculate savings percentage
-  const savingsPercentage = totalOriginalPrice > 0 
-    ? Math.round(((totalOriginalPrice - totalPrice) / totalOriginalPrice) * 100)
-    : 0
+  const savingsPercentage =
+    totalOriginalPrice > 0
+      ? Math.round(
+          ((totalOriginalPrice - totalPrice) / totalOriginalPrice) * 100
+        )
+      : 0
 
   // Calculate monthly payment
   const monthlyPayment = totalPrice / 24
@@ -286,15 +337,24 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
         {/* Header */}
         <div className="pb-4 border-b border-[#d9d9d9]">
           <p className="text-[#2F2A1E] text-xl mb-2">Relaxure Corsica</p>
-          <h1 className="text-[#2F2A1E] text-3xl font-semibold">Relaxure Pergola Kit</h1>
+          <h1 className="text-[#2F2A1E] text-3xl font-semibold">
+            Relaxure Pergola Kit
+          </h1>
         </div>
 
         {/* Sale Banner */}
         {isClient && (
           <div className="mt-4 p-4 border border-highlight bg-white">
-            <p className="text-black text-base font-medium text-center">End Of Season Clearance Sale:</p>
-            <p className="text-black text-2xl font-semibold text-center">Up To ${Math.round((totalOriginalPrice - totalPrice) / 100) * 100} OFF!</p>
-            <p className="text-highlight text-xl font-semibold text-center">03:21:16:57</p>
+            <p className="text-black text-base font-medium text-center">
+              End Of Season Clearance Sale:
+            </p>
+            <p className="text-black text-2xl font-semibold text-center">
+              Up To ${Math.round((totalOriginalPrice - totalPrice) / 100) * 100}{" "}
+              OFF!
+            </p>
+            <p className="text-highlight text-xl font-semibold text-center">
+              03:21:16:57
+            </p>
           </div>
         )}
 
@@ -302,20 +362,34 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
         <div className="mt-4">
           <p className="text-[#140E02] text-sm font-semibold">Price:</p>
           <div className="flex items-center gap-2">
-            <span className="text-[#000000] text-3xl font-bold">{formatPrice(totalPrice)}</span>
+            <span className="text-[#000000] text-3xl font-bold">
+              {formatPrice(totalPrice)}
+            </span>
             {savingsPercentage > 0 && (
-              <Badge className="bg-highlight rounded-none text-white font-bold px-6 py-2 [clip-path:polygon(15px_0,100%_0,100%_100%,15px_100%,0_50%)]">{savingsPercentage}% off</Badge>
+              <Badge className="bg-highlight rounded-none text-white font-bold px-6 py-2 [clip-path:polygon(15px_0,100%_0,100%_100%,15px_100%,0_50%)]">
+                {savingsPercentage}% off
+              </Badge>
             )}
           </div>
           {totalOriginalPrice > totalPrice && (
             <p className="text-[#8c8c8c] text-xl">
-              <span className="line-through font-semibold">{formatPrice(totalOriginalPrice)}</span> <span className="text-[#ff5f00]">Save {formatPrice(totalOriginalPrice - totalPrice)}</span>
+              <span className="line-through font-semibold">
+                {formatPrice(totalOriginalPrice)}
+              </span>{" "}
+              <span className="text-[#ff5f00]">
+                Save {formatPrice(totalOriginalPrice - totalPrice)}
+              </span>
             </p>
           )}
-          <div className="text-black text-sm mt-1 p-4 border border-highlight flex items-center gap-2">
-            <img src="/img/Klarna.png" alt="Klarna" className="h-6" /> <span>Pay </span>  <span className="font-semibold">{formatPrice(monthlyPayment)}/Mo x 24</span> <span>With Klarna</span>
+          <div className="text-black text-sm mt-1 p-4 border border-white flex items-center gap-2">
+            <img src="/img/Klarna.png" alt="Klarna" className="h-6" />{" "}
+            <span>Pay </span>{" "}
+            <span className="font-semibold">
+              {formatPrice(monthlyPayment)}/Mo x 24
+            </span>{" "}
+            <span>With Klarna</span>
           </div>
-          
+
           {/* Quantity Controls */}
           {/* <div className="flex items-center justify-end gap-2.5 mt-3">
             <Button
@@ -348,13 +422,27 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
             selectedSize={selectedSize}
             selectedColor={selectedColor}
             selectedStyle={selectedStyle}
+            selectedSlatsColor={selectedSlatsColor}
             onSizeChange={handleSizeChange}
             onColorChange={handleColorChange}
             onStyleChange={handleStyleChange}
+            onSlatsColorChange={handleSlatsColorChange}
           />
         </div>
 
         {/* Accessories Selection - Using AccesorriesSelector */}
+        <div className="mb-6">
+          <V2AccesorriesSelector
+            pergolaSize={pergolaSize}
+            selectedColor={selectedColor}
+            onAccessoryChange={handleAccessoryToggle}
+            accessories={accessories}
+            selectedHeaterVariant={selectedAccessoriesHeater}
+            selectedShadesVariant={selectedAccessoriesShades}
+            selectedGlassdoorVariant={selectedAccessoriesGlassdoor}
+            accessoriesCMSData={accessoriesCMSData}
+          />
+        </div>
         <div className="mb-6">
           <AccesorriesSelector
             pergolaSize={pergolaSize}
@@ -370,36 +458,78 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
         {/* Service Sections */}
         <div className="mt-6 space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-[#000000] font-medium">Packing & Delivery: Free</span>
-            <span className="text-[#000000]">+$999.99</span>
+            <span className="text-[#000000] font-medium">
+              Shipping: <span className="text-highlight">Free</span>
+            </span>
+            <span className="text-[#8C877C] line-through">+$999.99</span>
           </div>
-          <p className="text-[#8c8c8c] text-xs">
-            📦 Free Shipping + Insurance
-            <br />📅 Delivered In 4 Weeks
-          </p>
-
-          <div className="flex justify-between items-center">
-            <span className="text-[#000000] font-medium">Full Insurance: Free</span>
-            <span className="text-[#000000]">+$999.99</span>
-          </div>
-          <p className="text-[#8c8c8c] text-xs">
-            📋 Includes Complimentary Insurance Coverage
-            <br />📦 Your Delivery Should Arrive In About Four Weeks
-          </p>
-
-          <div className="flex justify-between items-center">
-            <span className="text-[#000000] font-medium">Warranty: Free</span>
-            <span className="text-[#000000]">+$999.99</span>
-          </div>
-          <p className="text-[#8c8c8c] text-xs">
-            ✅ 100 Day Risk-Free Trial
+          <p className="text-[#8c8c8c] text-sm">
+            <img
+              src="/img/shipping.svg"
+              alt="shipping"
+              className="w-4 h-4 inline-block mr-2 mb-1"
+            />
+            <span className="ml-2">Free Shipping + Insurance</span>
             <br />
-            🛡️ Lifetime Warranty Included
+            <img
+              src="/img/package.svg"
+              alt="package"
+              className="w-4 h-4 inline-block mr-2 mb-1"
+            />
+            <span className="ml-2">Delivered In 4 Weeks</span>
+          </p>
+
+          <div className="flex justify-between items-center">
+            <span className="text-[#000000] font-medium">
+              Full Insurance: <span className="text-highlight">Free</span>
+            </span>
+            <span className="text-[#8C877C] line-through">+$999.99</span>
+          </div>
+          <p className="text-[#8c8c8c] text-sm">
+            <img
+              src="/img/shipping.svg"
+              alt="shipping"
+              className="w-4 h-4 inline-block mr-2 mb-1"
+            />
+            <span className="ml-2">
+              Includes Complimentary Insurance Coverage
+            </span>
+            <br />
+            <img
+              src="/img/package.svg"
+              alt="package"
+              className="w-4 h-4 inline-block mr-2 mb-1"
+            />
+            <span className="ml-2">
+              Your Delivery Should Arrive In About Four Weeks
+            </span>
+          </p>
+
+          <div className="flex justify-between items-center">
+            <span className="text-[#000000] font-medium">
+              Warranty: <span className="text-highlight">Free</span>
+            </span>
+            <span className="text-[#8C877C] line-through">+$999.99</span>
+          </div>
+          <p className="text-[#8c8c8c] text-sm">
+            <img
+              src="/img/shipping.svg"
+              alt="shipping"
+              className="w-4 h-4 inline-block mr-2 mb-1"
+            />
+            <span className="ml-2">100 Day Risk-Free Trial</span>
+            <br />
+            <img
+              src="/img/warranty.svg"
+              alt="warranty"
+              className="w-4 h-4 inline-block mr-2 mb-1"
+            />
+            <span className="ml-2">Lifetime Warranty Included</span>
           </p>
         </div>
 
         {/* Add to Cart Button - Using BuyNowButton */}
-        <div className="p-4 mt-6">
+        <div className="mt-6">
           <BuyNowButton
             property1="primary-button-l"
             text="Add to Cart"
@@ -409,44 +539,32 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
         </div>
 
         {/* Support Section */}
-        <div className="pb-6">
-          <div className="bg-[#ffbf3c] rounded-lg p-3 mb-4">
-            <div className="flex items-center gap-2 mb-2">
-              <MessageCircle className="h-4 w-4 text-[#000000]" />
-              <span className="text-[#000000] font-medium">We're Here to Help</span>
-            </div>
-            <p className="text-[#000000] text-sm">Contact Our Expert</p>
-          </div>
-
-          <div className="space-y-2 text-sm">
-            <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-[#8c8c8c]" />
-              <span className="text-[#000000]">1.213.566.8658</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-[#8c8c8c]" />
-              <span className="text-[#000000]">Info@Relaxureliving.Com</span>
+        <div className="px-8 py-5 w-full mt-5 border border-[#8C877C]">
+          <div className="w-full">
+            <div className="flex items-center gap-4">
+              <span className="bg-[#ffbf3c] p-1">
+                <img src="/img/expert.svg" alt="message" className="w-7 h-7" />
+              </span>
+              <div className="text-[#000000] text-base">
+                <p className="font-medium">We're Here to Help</p>
+                <p className="font-medium text-[#8C877C] text-xs">
+                9AM to 5PM PST Mon-Fri
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-1 mt-4 text-sm text-[#8c8c8c]">
-            <MessageCircle className="h-4 w-4" />
+          <div className="text-sm flex justify-between">
+            <Button variant="link" className="underline px-0 text-black"><img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />1-213-566-8658</Button>
+            <Button variant="link" className="underline px-0 text-black"><img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />info@relaxureliving.com</Button>
+          </div>
+        </div>
+        <div className="flex items-center justify-center gap-1 mt-4 text-sm">
+            {/* <MessageCircle className="h-4 w-4" /> */}
             <span>Chat in the Corner</span>
-            <ChevronDown className="h-4 w-4" />
+            {/* <ChevronDown className="h-4 w-4" /> */}
+            <MoveDownRight className="h-4 w-4" />
           </div>
-        </div>
-
-        {/* Sample Kit Link */}
-        <div className="pb-6">
-          <div className="w-full flex flex-row justify-center items-center gap-2.5 relative text-[#072F6C] underline">
-            <a
-              href="/#sample-kit"
-              className="text-[#072F6C] hover:text-[#0a4499] transition-colors duration-200"
-            >
-              Not ready to buy yet? Try a sample kit.
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   )

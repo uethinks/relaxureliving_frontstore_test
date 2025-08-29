@@ -71,7 +71,7 @@ const getCachedProduct = unstable_cache(
     return product
   },
   ["product-data"],
-  { revalidate: 3600 }
+  { revalidate: 3600, tags: ["products"] }
 )
 
 // 缓存加热器数据获取
@@ -163,7 +163,6 @@ export default async function ProductPage({ params }: Props) {
         getCachedProduct(relatedProductIds.shadesId, region.id),
         getCachedProduct(relatedProductIds.glassDoorId, region.id),
       ])
-
     const accessoriesCMSData = {
       heaterCMSData: heaterCMData,
       shadesCMSData: shadesCMData,
