@@ -10,6 +10,7 @@ import { PergolaData, ProductInformation } from "@/types/global"
 import { ProductSchema } from "./components/ProductSchema"
 import { ProductOverviewAccordion } from "./components/ProductOverviewAccordion"
 import { ProductpageSampleKit } from "./components/ProductpageSampleKit"
+import { ProductSidebar } from "@/components/ProductSidebar"
 
 interface ProductItemProps {
   product: StoreProduct
@@ -33,6 +34,10 @@ export const ProductItem = ({
         pergolaData={pergolaData}
         currentProductInfo={currentProductInfo}
       />
+      
+      {/* Floating Sidebar */}
+      <ProductSidebar product={product} />
+      
       <div className="bg-background flex flex-col items-center justify-center w-full 2xl:max-w-[1910px] px-4 lg:px-20">
         <FirstScreen
           product={product}

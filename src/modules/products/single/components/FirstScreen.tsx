@@ -31,40 +31,8 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
         <div className="lg:mx-auto flex flex-col  w-full relative mt-5 z-10">
           <div className="flex flex-col w-full lg:flex-row justify-between items-start">
             <div className="flex flex-col w-full  gap-5">
-              <div className="flex flex-col w-full lg:max-w-[64%] items-center gap-5 lg:pr-[65px]">
-                <div className="flex flex-col items-start relative self-stretch w-full">
-                  <h1
-                    className={`relative mb-[24px] self-stretch mt-[-1.00px] font-heading-2 
-                    font-[number:var(--heading-2-font-weight)] text-[#343a40] text-[24px] 
-                    lg:text-[length:var(--heading-2-font-size)] tracking-[var(--heading-2-letter-spacing)] 
-                    leading-[var(--heading-2-line-height)] [font-style:var(--heading-2-font-style)]`}
-                  >
-                    {currentProductInfo.productTitle}
-                  </h1>
-                  <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full">
-                    <h2
-                      className={`w-full text-[#69727a] relative font-relaxure-sub-heading-18 
-                      font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[18px] 
-                      lg:text-[22px] tracking-[var(--relaxure-sub-heading-18-letter-spacing)] 
-                      leading-[var(--relaxure-sub-heading-18-line-height)] 
-                      [font-style:var(--relaxure-sub-heading-18-font-style)]`}
-                    >
-                      {currentProductInfo.productSubtitle}
-                    </h2>
-                  </div>
-                  <h3
-                    className={`w-full text-[#69727A] relative font-relaxure-sub-heading-18 
-                    font-[number:var(--relaxure-sub-heading-18-font-weight)] text-[16px] 
-                    lg:text-[length:var(--relaxure-sub-heading-18-font-size)] 
-                    tracking-[var(--relaxure-sub-heading-18-letter-spacing)] 
-                    leading-[var(--relaxure-sub-heading-18-line-height)] [font-style:var(--relaxure-sub-heading-18-font-style)]`}
-                  >
-                    {currentProductInfo.productDescription}
-                  </h3>
-                </div>
-              </div>
               <div className="flex flex-row justify-between items-start relative w-full gap-[65px]">
-                <div className="w-full lg:w-[64%] relative flex flex-col">
+                <div className="w-full lg:w-[64%] flex flex-col sticky top-0">
                   <div className="flex flex-row justify-between w-full">
                     <ImgContent productImages={pergolaData.product_images} />
                   </div>
