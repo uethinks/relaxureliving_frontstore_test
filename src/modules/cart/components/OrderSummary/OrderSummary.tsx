@@ -57,47 +57,26 @@ export const OrderSummary = (): JSX.Element => {
           </div> */}
 
           {/* Pricing Breakdown */}
-          <div className="flex flex-col gap-4 mb-6 p-4">
+          <div className="flex flex-col gap-1 mb-2 p-4">
             <div className="flex justify-between items-center">
-              <span className="text-base font-medium text-gray-800">
-                Packing & Delivery
+              <span className="text-[#000000] font-medium">
+                Packing & Delivery: <span className="text-highlight">Free</span>
               </span>
-              <div className="flex items-center gap-2">
-                <span className="text-lg line-through text-gray-400">
-                  +$999.99
-                </span>
-                <span className="text-lg font-medium text-orange-500">
-                  Free
-                </span>
-              </div>
+              <span className="text-[#8C877C] line-through">+$999.99</span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-base font-medium text-gray-800">
-                Full Insurance
+              <span className="text-[#000000] font-medium">
+                Full Insurance: <span className="text-highlight">Free</span>
               </span>
-              <div className="flex items-center gap-2">
-                <span className="text-lg line-through text-gray-400">
-                  +$999.99
-                </span>
-                <span className="text-lg font-medium text-orange-500">
-                  Free
-                </span>
-              </div>
+              <span className="text-[#8C877C] line-through">+$999.99</span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-base font-medium text-gray-800">
-                Warranty
+              <span className="text-[#000000] font-medium">
+                Warranty: <span className="text-highlight">Free</span>
               </span>
-              <div className="flex items-center gap-2">
-                <span className="text-lg line-through text-gray-400">
-                  +$999.99
-                </span>
-                <span className="text-lg font-medium text-orange-500">
-                  Free
-                </span>
-              </div>
+              <span className="text-[#8C877C] line-through">+$999.99</span>
             </div>
           </div>
 
