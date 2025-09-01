@@ -13,6 +13,7 @@ import { useCart } from "@lib/context/cartContext"
 import { StoreProduct } from "@medusajs/types"
 import { EmptyCart } from "../EmptyCart/EmptyCart"
 import { PergolaData, BoringButImportantStuff } from "@/types/global"
+import { formatCartTotal } from "@lib/util/money"
 import Breadcrumb from "@/components/Breadcrumb"
 import { CartAccessoriesGrid } from "./CartAccessoriesGrid" // Lazy load only non-critical components
 const OurPromise = lazy(() =>
@@ -77,14 +78,14 @@ export const ProductPage = ({
 
   // Check if cart is empty
   const isCartEmpty = !cart?.items || cart.items.length === 0
+  console.log('cart', cart)
 
   return (
     <>
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px]">
-        <div className="bg-[#ffffff] w-full relative flex flex-col justify-center items-center pt-0 px-5 lg:px-20">
+      <div className="bg-background flex flex-col items-center justify-center w-full 2xl:w-[1512px]">
+        <div className="bg-background w-full relative flex flex-col justify-center items-center pt-0 px-5 lg:px-20">
           <NavBarWrapper isFixed={false} />
-
-          {!isCartEmpty ? (
+          {/* {!isCartEmpty ? (
             <div className="inline-flex items-center justify-start gap-2.5 w-full">
               <img
                 className="relative w-[30px] h-[30px]"
@@ -101,13 +102,24 @@ export const ProductPage = ({
                 Shopping Cart
               </div>
             </div>
-          ) : null}
-          <Breadcrumb steps={["Cart", "Information", "Payment"]} current={0} />
+          ) : null} */}
+          {/* <Breadcrumb steps={["Cart", "Information", "Payment"]} current={0} /> */}
           {isCartEmpty ? (
             <EmptyCart />
           ) : (
-            <div className="relative flex flex-col mt-10 lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-2.5 w-full">
+            <div className="relative flex flex-col mt-10 lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-6 w-full">
               <div className="flex flex-col gap-[30px] w-full lg:w-2/3">
+                <div className="flex items-center justify-between">
+                  <h1 className="text-2xl font-bold text-[#2f2a1e]">
+                    Your Cart ({cart?.items?.length ?? 0})
+                  </h1>
+                  <div className="text-[#8c877c]">
+                    Subtotal:{" "}
+                    <span className="font-semibold text-[#8C877C]">
+                      {formatCartTotal(cart)}
+                    </span>
+                  </div>
+                </div>
                 <ProductCard />
                 <ShadesCard />
                 <HeaterCard />

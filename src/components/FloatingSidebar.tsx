@@ -25,7 +25,7 @@ export const FloatingSidebar: React.FC<FloatingSidebarProps> = ({
     <div
       className={`fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:block ${className}`}
     >
-      <div className="flex flex-col gap-[1px] p-3">
+      <div className="flex flex-col gap-[1px]">
         {icons.map((iconData, index) => (
           <SidebarButton key={index} {...iconData} />
         ))}

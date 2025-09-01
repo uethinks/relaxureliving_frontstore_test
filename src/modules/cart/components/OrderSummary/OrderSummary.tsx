@@ -1,93 +1,247 @@
 "use client"
 import React from "react"
-import { Button } from "../Button/Button"
 import { useCart } from "@lib/context/cartContext"
 import { useRouter } from "next/navigation"
+import { formatCartTotal } from "@lib/util/money"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { MoveDownRight } from "lucide-react"
+
+const formatPrice = (price: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(price || 0)
+
 export const OrderSummary = (): JSX.Element => {
   const { cart } = useCart()
   const router = useRouter()
+
+  // Calculate monthly payment for Klarna (24 months)
+  const monthlyPayment = cart?.total ? cart.total / 24 : 0
+
   return (
-    <div className="flex flex-col w-full items-start gap-2.5 px-2.5">
-      <div className="flex flex-col items-start justify-center gap-5 p-5 relative self-stretch w-full flex-[0_0_auto] bg-[#efefef] rounded-[20px] shadow-shadow-relaxure-button">
-        <div className="inline-flex items-center gap-[420px] relative flex-[0_0_auto]">
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[22px] tracking-[0] leading-[30.8px] whitespace-nowrap">
+    <div className="flex flex-col w-full items-start">
+      {/* Main Order Summary */}
+      <div className="flex flex-col items-start justify-center relative self-stretch w-full border border-gray-100">
+        <div className="w-full bg-white">
+          <div className="text-black text-sm border border-white flex items-center gap-2 px-4 py-4 bg-background">
+            <img src="/img/Klarna.png" alt="Klarna" className="h-6" />{" "}
+            <span>Pay </span>{" "}
+            <span className="font-semibold">
+              {formatPrice(monthlyPayment)}/Mo x 24
+            </span>{" "}
+            <span>With Klarna</span>
+          </div>
+          {/* <h2 className="text-2xl font-medium text-gray-800 mb-6">
             Order Summary
+          </h2> */}
+
+          {/* Cart Items */}
+          {/* <div className="flex flex-col gap-4 mb-6">
+            {cart?.items?.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between w-full"
+              >
+                <div className="flex items-center gap-3 flex-1">
+                  <div className="text-base font-medium text-gray-800">
+                    {item.quantity} x {item.title}
+                  </div>
+                </div>
+                <div className="text-base font-semibold text-gray-800">
+                  {formatCartTotal({ ...cart, total: item.total })}
+                </div>
+              </div>
+            ))}
+          </div> */}
+
+          {/* Pricing Breakdown */}
+          <div className="flex flex-col gap-4 mb-6 p-4">
+            <div className="flex justify-between items-center">
+              <span className="text-base font-medium text-gray-800">
+                Packing & Delivery
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-lg line-through text-gray-400">
+                  +$999.99
+                </span>
+                <span className="text-lg font-medium text-orange-500">
+                  Free
+                </span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <span className="text-base font-medium text-gray-800">
+                Full Insurance
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-lg line-through text-gray-400">
+                  +$999.99
+                </span>
+                <span className="text-lg font-medium text-orange-500">
+                  Free
+                </span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <span className="text-base font-medium text-gray-800">
+                Warranty
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-lg line-through text-gray-400">
+                  +$999.99
+                </span>
+                <span className="text-lg font-medium text-orange-500">
+                  Free
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature Highlights */}
+          <div className="flex flex-col gap-6 mb-20 px-4">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-5 h-5">
+                <Image
+                  src="/img/package.svg"
+                  alt="Package icon"
+                  width={20}
+                  height={20}
+                  className="w-full h-full"
+                />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-base font-bold text-gray-800 mb-2">
+                  Delivered in 4 Weeks
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Lorem
+                  Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-5 h-5">
+                <Image
+                  src="/img/shipping.svg"
+                  alt="Shipping icon"
+                  width={20}
+                  height={20}
+                  className="w-full h-full"
+                />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-base font-bold text-gray-800 mb-2">
+                  Hassle-Free Delivery
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.{" "}
+                  <span className="underline cursor-pointer text-blue-600">
+                    Shipping Policy
+                  </span>{" "}
+                  Lorem Ipsum Dolor Sit Amet, Consectetur.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-5 h-5">
+                <Image
+                  src="/img/warranty.svg"
+                  alt="Warranty icon"
+                  width={20}
+                  height={20}
+                  className="w-full h-full"
+                />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-base font-bold text-gray-800 mb-2">
+                  Industry-Leading Warranty
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Lorem Ipsum Dolor Sit Amet, Adipiscing Elit.{" "}
+                  <span className="underline cursor-pointer text-blue-600">
+                    Warranty
+                  </span>{" "}
+                  Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          {/* <div className="w-full h-px bg-gray-200 mb-6" /> */}
+
+          {/* Total */}
+          {/* <div className="flex items-center justify-between mb-6">
+            <div className="text-2xl font-medium text-gray-800">Total:</div>
+            <div className="flex items-end gap-4">
+              <div className="text-3xl font-bold text-gray-800">
+                {formatCartTotal(cart)}
+              </div>
+              {(cart?.discount_total ?? 0) > 0 && cart?.original_total && (
+                <div className="flex items-center gap-2">
+                  <div className="text-sm font-medium text-gray-400 line-through">
+                    {formatCartTotal({ ...cart, total: cart.original_total })}
+                  </div>
+                  <div className="px-2 py-1 bg-gray-100 rounded-full">
+                    <span className="text-xs font-normal text-red-500">
+                      Save{" "}
+                      {Math.round(
+                        (cart.discount_total / cart.original_total) * 100
+                      )}
+                      %
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div> */}
+
+          {/* Checkout Button */}
+          <button
+            onClick={() => router.push("/checkout")}
+            className="w-full bg-primary hover:bg-primary-light text-black text-2xl font-bold py-4 px-6 transition-colors duration-200 h-[64px]"
+          >
+            Check Out - {formatCartTotal(cart)}
+          </button>
+        </div>
+        {/* Customer Support */}
+        <div className="px-8 py-5 w-full mt-5 border border-[#8C877C]">
+          <div className="w-full">
+            <div className="flex items-center gap-4">
+              <span className="bg-[#ffbf3c] p-1">
+                <img src="/img/expert.svg" alt="message" className="w-7 h-7" />
+              </span>
+              <div className="text-[#000000] text-base">
+                <p className="font-medium">We're Here to Help</p>
+                <p className="font-medium text-[#8C877C] text-xs">
+                  9AM to 5PM PST Mon-Fri
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-sm flex justify-between">
+            <Button variant="link" className="underline px-0 text-black">
+              <img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />
+              1-213-566-8658
+            </Button>
+            <Button variant="link" className="underline px-0 text-black">
+              <img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />
+              info@relaxureliving.com
+            </Button>
           </div>
         </div>
-        <div className="flex flex-col w-full items-center gap-[35px] relative mr-[-1.00px]">
-          <div className="flex flex-col items-start gap-10 relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex flex-col items-start gap-[30px] relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex flex-col items-start gap-[30px] relative self-stretch w-full flex-[0_0_auto]">
-                {cart?.items?.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]"
-                  >
-                    <div className="flex items-center gap-2.5 relative max-w-full">
-                      <div
-                        className={`w-full break-words relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
-                        font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-normal overflow-wrap break-word`}
-                      >
-                        {item.quantity} x {item.title}
-                      </div>
-                    </div>
-                    <div className="w-fit [font-family:'Montserrat',Helvetica] font-semibold text-[#343a40] text-base leading-[22.4px] whitespace-nowrap relative tracking-[0]">
-                      $ {item.total?.toFixed(2)}
-                    </div>
-                  </div>
-                ))}
-
-                <div className="flex justify-between items-center relative self-stretch w-full flex-[0_0_auto]">
-                  <div className="flex items-center justify-start relative">
-                    <div className="flex h-6 items-center gap-2.5 relative">
-                      <div
-                        className={`relative h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
-                        font-medium text-[#343a40] text-base tracking-[0] leading-6 whitespace-nowrap`}
-                      >
-                        Delivery Fee
-                      </div>
-                    </div>
-                  </div>
-                  <div className="inline-flex items-center justify-center gap-2.5 p-2.5 relative flex-[0_0_auto] bg-[#a5feae8c] rounded-[10px]">
-                    <div
-                      className={`relative w-fit mt-[-1.00px] [font-family:'Montserrat',Helvetica] 
-                        font-medium text-[#2c5630] text-lg tracking-[0] leading-[21.6px] whitespace-nowrap`}
-                    >
-                      Free Shipping
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="relative self-stretch w-full h-0.5 bg-[#d9d9d9] rounded-[10px]" />
-            </div>
-            <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
-              <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-[22px] leading-[30.8px] whitespace-nowrap relative tracking-[0]">
-                Total:
-              </div>
-              <div className="flex items-end justify-start gap-4">
-                <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
-                  ${cart?.total?.toFixed(2)}
-                </div>
-                {(cart?.discount_total ?? 0) > 0 && cart?.original_total && (
-                  <div className="flex items-center gap-2">
-                    <div className="w-fit [font-family:'Montserrat',Helvetica] font-medium text-[12px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
-                      ${cart.original_total?.toFixed(2)}
-                    </div>
-                    <div className="[font-family:'Montserrat',Helvetica] px-2 py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
-                      <span className="text-[12px] font-normal text-[red]">
-                        Save{" "}
-                        {Math.round(
-                          (cart.discount_total / cart.original_total) * 100
-                        )}
-                        %
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-          <Button onClick={() => router.push("/checkout")} text="Checkout" />
+        <div className="flex items-center justify-center self-center gap-1 mt-4 text-sm">
+          {/* <MessageCircle className="h-4 w-4" /> */}
+          <span>Chat in the Corner</span>
+          {/* <ChevronDown className="h-4 w-4" /> */}
+          <MoveDownRight className="h-4 w-4" />
         </div>
       </div>
     </div>
