@@ -4,6 +4,7 @@ import { sdk } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
 import { getAuthHeaders, getCacheOptions } from "./cookies"
 import { HttpTypes } from "@medusajs/types"
+import axiosInstanceMedusa from "@lib/axiosInstanceMedusa"
 
 export const retrieveOrder = async (id: string) => {
   const headers = {
@@ -130,3 +131,26 @@ export const captureOrderWebhook = async (paymentSessionId: string) => {
 }
 
 
+
+//airwallex 当支付成功webhook回调后，通过payment_intent_id查询订单 需要自定义查询所有的orders下面而不是当前用户 因为order是非public
+export const retrieveOrderByPaymentIntentId = async (id: string) => {
+    const headers = {
+      ...(await getAuthHeaders()),
+    }
+    const baseUrl = process.env.MEDUSA_BACKEND_URL || "http://localhost:9000"
+    const url = `${baseUrl}/store/orders/payment-intent/${id}`
+    const response = await axiosInstanceMedusa.get(url)
+    const result = response.data    
+    return result?.orders || []
+} 
+
+export const retrieveOrderByAirwallexRequestId = async (id: string) => {
+    const headers = {
+      ...(await getAuthHeaders()),
+    }
+    const baseUrl = process.env.MEDUSA_BACKEND_URL || "http://localhost:9000"
+    const url = `${baseUrl}/store/orders/payment-request/${id}`
+    const response = await axiosInstanceMedusa.get(url)
+    const result = response.data    
+    return result?.orders || []
+} 

@@ -248,6 +248,7 @@ export async function initiatePaymentSession(
   return sdk.store.payment
     .initiatePaymentSession(cart, data, {}, headers)
     .then(async (resp) => {
+      console.log("initiatePaymentSession resp", resp)
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
       return resp
@@ -474,4 +475,10 @@ export async function addPromotionCode(cartId: string, promo_codes: Array<string
   }).catch((err) => {
     throw err
   })
+}
+
+export async function clearCartCookie() {
+  const cartCacheTag = await getCacheTag("carts")
+  revalidateTag(cartCacheTag)
+  removeCartId()
 }

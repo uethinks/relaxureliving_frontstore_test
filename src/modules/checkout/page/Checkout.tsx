@@ -1,7 +1,7 @@
 "use client"
 import { useCart } from "@lib/context/cartContext"
 import React, { useState, useEffect, useCallback } from "react"
-import { StoreCart, StoreOrder } from "@medusajs/types"
+import { HttpTypes, StoreCart, StoreOrder, StorePaymentCollectionResponse } from "@medusajs/types"
 import {
   updateCart,
   placeOrder,
@@ -9,13 +9,19 @@ import {
   initiatePaymentSession,
   addPromotionCode,
 } from "@lib/data/cart"
+// Airwallex SDK is now used in AirwallexPaymentForm component
 import { listCartShippingMethods } from "@lib/data/fulfillment"
 import Link from "next/link"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
-import { OceanPaymentForm } from "./components/OceanPaymentForm"
-import { useRouter } from "next/navigation"
-import Breadcrumb from "@/components/Breadcrumb"
+//import { OceanPaymentForm } from "./components/OceanPaymentForm"
+import Breadcrumb from "@/components/Breadcrumb" 
+import AirwallexPaymentForm, { PaymentIntentBody } from "./components/AirwallexPaymentForm"
+import { retrieveOrderByPaymentIntentId } from "@lib/data/orders"
+import { set } from "lodash"
+
+ 
+
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 type ShippingAddress = {
@@ -34,6 +40,28 @@ type FormData = {
   shipping_address: ShippingAddress
 }
 
+// Lightweight skeleton while payment intent is being prepared
+const PaymentLoadingSkeleton: React.FC = () => {
+  return (
+    <div className="w-full">
+      <div className="w-full p-10 bg-white rounded-[14px] border border-[#e5e7eb] animate-pulse">
+        {/* <div className="h-5 w-48 bg-gray-200 rounded mb-4" /> */}
+        <div className="space-y-3">
+          <div className="h-10 bg-gray-200 rounded" />
+          <div className="h-10 bg-gray-200 rounded" />
+          <div className="h-24 bg-gray-200 rounded" />
+        </div>
+        <div className="mt-6 h-12 bg-gray-300 rounded-lg" />
+        {/* <div className="mt-3 h-3 w-1/3 bg-gray-200 rounded" /> */}
+        <p className="mt-6 text-sm text-gray-500">
+          Preparing secure payment…
+        </p>
+      </div>
+      
+    </div>
+  )
+}
+
 function reportToGA(eventName: string, value: any) {
   if (window.gtag) {
     window.gtag("event", eventName, value)
@@ -41,6 +69,17 @@ function reportToGA(eventName: string, value: any) {
 }
 
 export const Checkout = () => {
+  // This check works for both Server Components and Client Components
+  if (typeof window === 'undefined') {
+    console.log('Component is rendering on the server side.');
+  } else {
+    // For client components, you might want to use useEffect to ensure
+    // the log only appears after hydration, if needed.
+    useEffect(() => {
+      console.log('Component is rendering on the client side.');
+    }, []);
+  }
+
   const { cart, getCart } = useCart()
   const [order, setOrder] = useState<any>(null)
   const [promotionCode, setPromotionCode] = useState("")
@@ -48,6 +87,9 @@ export const Checkout = () => {
   const [promotionError, setPromotionError] = useState("")
   const [promotionSuccess, setPromotionSuccess] = useState("")
   const [appliedPromotions, setAppliedPromotions] = useState<string[]>([])
+  const [paymentIntent, setPaymentIntent] = useState<PaymentIntentBody>()
+  const [isFormValid, setIsFormValid] = useState(false)
+  const [isInitializingPayment, setIsInitializingPayment] = useState(false)
   const [formData, setFormData] = useState<FormData>({
     email: "",
     shipping_address: {
@@ -75,17 +117,141 @@ export const Checkout = () => {
   const handleFieldChange = useCallback(
     (field: keyof FormData | keyof ShippingAddress, value: string) => {
       setFormData((prev) => {
-        if (field === "email") {
-          return { ...prev, email: value }
-        }
-        return {
-          ...prev,
-          shipping_address: { ...prev.shipping_address, [field]: value },
-        }
+        const newData = field === "email" 
+          ? { ...prev, email: value }
+          : { ...prev, shipping_address: { ...prev.shipping_address, [field]: value } }
+        
+        // console.log("handleFieldChange field:", field, "value:", value, "newData", newData)
+        
+        // // 实时检查表单有效性
+        // setTimeout(() => checkFormValidity(newData), 0)
+        
+        return newData
       })
     },
     []
-  )
+   )
+
+  const isFormFieldsValid = () => {
+    
+    const dataToCheck =  formData
+    
+    // 检查所有必填字段是否填写
+    const isComplete = 
+      dataToCheck.email?.trim() &&
+      dataToCheck.shipping_address.first_name?.trim() &&
+      dataToCheck.shipping_address.last_name?.trim() &&
+      dataToCheck.shipping_address.address_1?.trim() &&
+      dataToCheck.shipping_address.city?.trim() &&
+      dataToCheck.shipping_address.province?.trim() &&
+      dataToCheck.shipping_address.postal_code?.trim() &&
+      dataToCheck.shipping_address.phone?.trim()
+    
+    // 检查格式是否正确
+    const emailValid = !dataToCheck.email || validateEmail(dataToCheck.email?.trim() ?? "") === ""
+    const phoneValid = !dataToCheck.shipping_address.phone || validatePhone(dataToCheck.shipping_address.phone?.trim() ?? "") === ""
+    
+    const isValid = Boolean(isComplete && emailValid && phoneValid)
+    return isValid
+  }
+   
+
+  // 检查表单是否完整且有效
+  const checkFormValidity = useCallback(async (formDataToCheck?: FormData) => {
+
+    const dataToCheck = formDataToCheck || formData
+    const isValid = isFormFieldsValid()
+    console.log("表单验证结果 isValid", isValid)
+    setIsFormValid(isValid)
+    if (isValid) {
+      console.log("表单验证通过，开始初始化支付会话 isInitializingPayment", isInitializingPayment)
+      await updateCartDeliveryInfo(formData)
+      if (!isInitializingPayment) {
+        initializePaymentSession()
+      }      
+    } 
+    return isValid
+  }, [formData, cart])
+  
+  // // 监听购物车促销信息变化，如果表单有效则重新初始化支付会话
+  // useEffect(() => {
+  //   if (isFormValid && cart?.promotions !== undefined) {
+  //     console.log("促销信息变化，重新初始化支付会话")
+  //     setPaymentIntent(undefined) // 清除旧的paymentIntent
+  //     initializePaymentSession()
+  //   }
+  // }, [cart?.promotions, cart?.total, isFormValid])
+
+  // 监听表单数据变化，实时检查有效性
+  useEffect(() => {
+    checkFormValidity()
+  }, [formData])
+
+  // 验证邮箱格式
+  const validateEmail = (email: string): string => {
+    if (!email) {
+      return "Email is required"
+    }
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    if (!emailRegex.test(email)) {
+      return "Please enter a valid email address"
+    }
+    return ""
+  }
+
+  // 验证电话号码格式
+  //https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
+  const validatePhone = (phone: string): string => {
+    if (!phone) {
+      return "Phone number is required"
+    }
+    //const phoneRegex = /^\+?[1-9]\d{1,14}$/
+    const phoneRegex = /^[\+]?[0-9]{0,3}\W?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+    if (!phoneRegex.test(phone)) {
+      return "Please enter a valid phone number"
+    }
+    return ""
+  }
+
+  // 验证必填字段
+  const validateRequiredField = (value: string, fieldName: string): string => {
+    if (!value?.trim()) {
+      return `${fieldName} is required`
+    }
+    return ""
+  }
+
+  // 验证地址字段
+  const validateAddressFields = (): Record<string, string> => {
+    const addressErrors: Record<string, string> = {}
+
+    addressErrors.firstName = validateRequiredField(
+      formData.shipping_address.first_name,
+      "First name"
+    )
+    addressErrors.lastName = validateRequiredField(
+      formData.shipping_address.last_name,
+      "Last name"
+    )
+    addressErrors.address = validateRequiredField(
+      formData.shipping_address.address_1,
+      "Address"
+    )
+    addressErrors.city = validateRequiredField(
+      formData.shipping_address.city,
+      "City"
+    )
+    addressErrors.province = validateRequiredField(
+      formData.shipping_address.province,
+      "State"
+    )
+    addressErrors.postalCode = validateRequiredField(
+      formData.shipping_address.postal_code,
+      "ZIP code"
+    )
+
+    return addressErrors
+  }
 
   //提交时验证
   const validateForm = () => {
@@ -165,16 +331,25 @@ export const Checkout = () => {
       newErrors.postalCode = ""
     }
     setErrors(newErrors)
-    return !hasError
+    const isValid = !hasError
+    setIsFormValid(isValid)
+    
+    // 如果表单有效且没有支付会话，则初始化
+    // if (isValid && !paymentIntent && cart) {
+    //   initializePaymentSession()
+    // }
+    
+    return isValid
   }
 
-  // 初始化购物车
-  const initializeCart = async () => {
+  // 初始化购物车配送方法（不包含支付会话）
+  const initializeCartShipping = async () => {
     try {
       if (!cart) {
         console.error("Cart is not initialized")
         return
       }
+      console.log("initializeCartShipping - cart", cart, new Date().toISOString())
 
       // 获取配送选项
       const shippingMethods = await listCartShippingMethods(cart.id)
@@ -188,20 +363,72 @@ export const Checkout = () => {
         cartId: cart.id,
         shippingMethodId: shippingMethods[0].id,
       })
-
-      // 初始化支付会话
-      await initializePaymentSession()
     } catch (error) {
-      console.error("Error initializing cart:", error)
+      console.error("Error initializing cart shipping:", error)
     }
   }
 
-  // 监听购物车变化，当购物车加载完成后初始化
+  // 初始化支付会话（在表单验证通过后调用） 这个只调用一次 当所有表单字段都有填写
+  const initializePaymentSession = async () => {
+
+    if (!cart) {      
+      return
+    }
+    
+    setIsInitializingPayment(true)
+    try {
+      console.log("initializePaymentSession - start", new Date().toISOString())
+      // 先更新购物车配送信息
+      
+      
+      // 重新获取购物车以获取最新的总金额
+      const updatedCart = await getCart()
+      
+      const paymentProvider = process.env.NEXT_PUBLIC_PROVIDER_PAYMENT_ID || "pp_Airwallex_Airwallex"
+      
+      // 使用更新后的购物车数据
+      const cartToUse =  updatedCart || cart
+      console.log("initializePaymentSession - cartToUse", cartToUse, "total", cartToUse?.total, "discount_total", cartToUse?.discount_total)
+      
+      const paymentSession = await initiatePaymentSession(cartToUse as StoreCart, {
+        provider_id: paymentProvider,
+        data: {
+          cart_id: cartToUse?.id,
+          total: cartToUse?.total,
+          original_total: cartToUse?.original_total,
+          currency: cartToUse?.region?.currency_code,        
+          shipping_address: cartToUse?.shipping_address,
+          products: cartToUse?.items?.map(item => ({            
+            name: item.variant_title,
+            quantity: item.quantity,
+            unit_price: item.unit_price,
+          }) ),
+        },
+      }) as StorePaymentCollectionResponse
+      
+      console.log("initializePaymentSession - paymentSession", paymentSession, new Date().toISOString())
+      
+      let paymentSessions = paymentSession.payment_collection?.payment_sessions
+      if (paymentSessions && paymentSessions.length > 0) {
+        const sessionData = paymentSessions[0].data
+        if (sessionData && typeof sessionData === 'object' && 'amount' in sessionData) {
+          console.log("initializePaymentSession - paymentIntent sessionData ", sessionData)
+          setPaymentIntent(sessionData as PaymentIntentBody)
+        }
+      }
+    } catch (error) {
+      console.error("Error initializing payment session:", error)
+    } finally {
+      //setIsInitializingPayment(false)
+    }
+  }
+
+  // 监听购物车变化，设置配送方法但不初始化支付会话
   useEffect(() => {
     if (cart) {
-      initializeCart()
+      initializeCartShipping()
     }
-  }, [cart])
+  }, [cart?.id])
 
   // 初始化已应用的优惠码
   useEffect(() => {
@@ -216,27 +443,17 @@ export const Checkout = () => {
     }
   }, [cart?.promotions])
 
-  //初始化paymentSession
-  const initializePaymentSession = async () => {
-    const paymentProvider =
-      process.env.NEXT_PUBLIC_PROVIDER_PAYMENT_ID ||
-      "pp_OceanPayment_OceanPayment"
 
-    const paymentSession = await initiatePaymentSession(cart as StoreCart, {
-      provider_id: paymentProvider,
-      data: {
-        cart_id: cart?.id,
-      },
-    })
-    return paymentSession
-  }
 
-  const updateCartDeliveryInfo = async (): Promise<StoreCart | null> => {
+  const updateCartDeliveryInfo = async (deliveryInfo?: FormData): Promise<StoreCart | null> => {
     if (cart) {
-      // Update cart with form data before placing order
+      // Use passed deliveryInfo if provided, otherwise fall back to local formData
+      const infoToUse = deliveryInfo || formData;
+      // Update cart with delivery info before placing order
+      console.log("updateCartDeliveryInfo cart id:", cart.id, "email:", infoToUse.email, "shipping_address", infoToUse.shipping_address)
       return await updateCart({
-        email: formData.email,
-        shipping_address: formData.shipping_address,
+        email: infoToUse.email,
+        shipping_address: infoToUse.shipping_address,
       })
     }
     return null
@@ -276,8 +493,16 @@ export const Checkout = () => {
       await addPromotionCode(cart.id, [promotionCode.trim()])
       setPromotionSuccess("Promotion code applied successfully!")
       setPromotionCode("")
+      
       // 重新获取购物车数据以更新折扣信息和已应用的优惠码
       await getCart()
+      
+      // 如果表单有效，重新初始化支付会话以使用新的总金额      
+      if (isFormValid) {
+        console.log("优惠码应用成功，重新初始化支付会话")
+        setIsInitializingPayment(false)
+        await initializePaymentSession()
+      }
     } catch (error: any) {
       setPromotionError(
         error?.response?.data?.message || "Failed to apply promotion code"
@@ -288,16 +513,19 @@ export const Checkout = () => {
   }
 
   const comlpeleCartAndCreateOrder = async (): Promise<StoreOrder | null> => {
+
     if (cart) {
+      console.log("comlpeleCartAndCreateOrder cart", cart)
       const cartRes = await placeOrder(cart.id)
       setOrder(cartRes.type === "order" ? cartRes.order : null)
+      console.log("comlpeleCartAndCreateOrder cartRes", cartRes)
       if (cartRes.type === "order") {
         return cartRes.order
       }
     }
     return null
   }
-
+  
   return (
     <div className="w-full 2xl:w-[1512px] bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex justify-center flex-col items-center">
       <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full relative px-5 lg:px-20">
@@ -521,17 +749,40 @@ export const Checkout = () => {
                       </div>
                     </div>
                   </div>
-                  <OceanPaymentForm
+                  {/* <OceanPaymentForm
                     deliveryInfo={formData}
                     updateCartDeliveryInfo={updateCartDeliveryInfo}
                     formValidation={validateForm}
                     comlpeleCartAndCreateOrder={comlpeleCartAndCreateOrder}
-                  />
+                  /> */}
+
+                  {/* 支付组件条件性显示 */}
+                  
+                  {!isFormValid ? (
+                    <div className="p-8 text-center bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 w-full">
+                      <div className="text-gray-600 mb-2">
+                        Please fill in all required delivery information above to proceed with payment
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        All fields marked with * are required
+                      </div>
+                    </div>
+             
+                  ) : paymentIntent ? (
+                    <AirwallexPaymentForm
+                      paymentIntent={paymentIntent}
+                      formValidation={validateForm}
+                      deliveryInfo={formData}
+                      updateCartDeliveryInfo={updateCartDeliveryInfo}                      
+                      comlpeleCartAndCreateOrder={comlpeleCartAndCreateOrder}
+                    />                  
+                  ) : <PaymentLoadingSkeleton />}
+
                 </div>
               </div>
             </div>
             {/* Security Message */}
-            <div className="flex w-fullitems-end gap-2 relative flex-[0_0_auto]">
+            {/* <div className="flex w-fullitems-end gap-2 relative flex-[0_0_auto]">
               <img
                 className="relative w-6 h-6"
                 alt="Lock"
@@ -540,7 +791,7 @@ export const Checkout = () => {
               <p className="relative w-full mr-[-2.00px] [font-family:'Montserrat',Helvetica] font-medium text-formash text-base tracking-[0] leading-[normal]">
                 All transactions are secure and encrypted
               </p>
-            </div>
+            </div> */}
             {/* Footer Links */}
             <div className="flex flex-wrap items-center justify-center gap-[34px] relative self-stretch w-full flex-[0_0_auto]">
               <Link href="/terms/warranty">
