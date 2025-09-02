@@ -6,6 +6,7 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { PaymentFinish } from "@modules/checkout/page/components/paymentFinish"
 import { useSearchParams, useParams } from "next/navigation"
 import { retrieveOrderByAirwallexRequestId } from "@lib/data/orders"
+import { clearCartCookie } from "@lib/data/cart"
 
 export const CheckoutResult = () => {
   const params = useParams()
@@ -52,6 +53,8 @@ export const CheckoutResult = () => {
 
   useEffect(() => {
     if (requestId) {
+      //remove cartId from cookie
+      clearCartCookie()      
       pollForOrder(requestId)
     } else {
       setHasError(true)
