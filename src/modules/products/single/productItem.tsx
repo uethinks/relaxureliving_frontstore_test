@@ -16,7 +16,7 @@ interface ProductItemProps {
   product: StoreProduct
   accessories: StoreProduct[]
   pergolaData: PergolaData
-  currentProductInfo: ProductInformation
+  // currentProductInfo: ProductInformation
   accessoriesCMSData: any
 }
 
@@ -24,16 +24,16 @@ export const ProductItem = ({
   product,
   accessories,
   pergolaData,
-  currentProductInfo,
+  // currentProductInfo,
   accessoriesCMSData,
 }: ProductItemProps): React.JSX.Element => {
   return (
     <>
-      <ProductSchema
+      {/* <ProductSchema
         product={product}
         pergolaData={pergolaData}
         currentProductInfo={currentProductInfo}
-      />
+      /> */}
       
       {/* Floating Sidebar */}
       <ProductSidebar product={product} />
@@ -42,7 +42,7 @@ export const ProductItem = ({
         <FirstScreen
           product={product}
           accessories={accessories}
-          currentProductInfo={currentProductInfo}
+          // currentProductInfo={currentProductInfo}
           pergolaData={pergolaData}
           accessoriesCMSData={accessoriesCMSData}
         />

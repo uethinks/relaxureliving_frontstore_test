@@ -24,7 +24,7 @@ import { V2ContactUsSection } from "@/components/V2ContactUsSection"
 import V2OccasionsSection from "@/components/V2OccasionsSection"
 import V2FeatureCards from "@/components/V2FeatureCards"
 
-interface V2ProductItemProps {
+interface V2CustomProductItemProps {
   product: StoreProduct
   accessories: StoreProduct[]
   pergolaData: PergolaData
@@ -33,14 +33,13 @@ interface V2ProductItemProps {
   standardPergolaData: any
 }
 
-export const V2ProductItem = ({
+export const V2CustomProductItem = ({
   product,
   accessories,
   pergolaData,
-  // currentProductInfo,
   accessoriesCMSData,
   standardPergolaData,
-}: V2ProductItemProps): React.JSX.Element => {
+}: V2CustomProductItemProps): React.JSX.Element => {
   return (
     <>
       {/* <ProductSchema
@@ -56,7 +55,6 @@ export const V2ProductItem = ({
         <FirstScreen
           product={product}
           accessories={accessories}
-          // currentProductInfo={currentProductInfo}
           pergolaData={pergolaData}
           standardPergolaData={standardPergolaData}
           accessoriesCMSData={accessoriesCMSData}

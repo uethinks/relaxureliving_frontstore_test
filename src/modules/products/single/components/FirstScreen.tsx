@@ -12,16 +12,14 @@ interface FirstScreenProps {
   product: StoreProduct
   accessories: StoreProduct[]
   pergolaData: PergolaData
-  currentProductInfo: ProductInformation
   accessoriesCMSData: any
-  standardPergolaData: any
+  standardPergolaData?: any
 }
 
 export const FirstScreen: React.FC<FirstScreenProps> = ({
   product,
   accessories,
   pergolaData,
-  currentProductInfo,
   accessoriesCMSData,
   standardPergolaData,
 }) => {

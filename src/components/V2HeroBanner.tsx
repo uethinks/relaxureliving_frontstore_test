@@ -18,34 +18,6 @@ export default function V2HeroBanner({ data }: V2HeroBannerProps) {
     desktop: backgroundImage.formats.large.url,
   }
 
-  // Map button type to variant
-  const getButtonVariant = (type: string) => {
-    switch (type) {
-      case "Primary":
-        return "default"
-      case "Secondary":
-        return "secondary"
-      case "Outline":
-        return "outline"
-      default:
-        return "default"
-    }
-  }
-
-  // Map button size
-  const getButtonSize = (size: string) => {
-    switch (size) {
-      case "Small":
-        return "sm"
-      case "Medium":
-        return "default"
-      case "Large":
-        return "lg"
-      default:
-        return "default"
-    }
-  }
-
   return (
     <section className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[720px] flex items-center justify-start overflow-hidden">
       {/* Background Image */}
@@ -74,7 +46,7 @@ export default function V2HeroBanner({ data }: V2HeroBannerProps) {
             <p className="text-base font-semibold sm:text-lg md:text-xl mb-8 sm:mb-10 md:mb-12 lg:mb-16 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl text-white leading-relaxed">
               {description}
             </p>
-            <V2Button data={button as any} className="w-full" />
+            {button && <V2Button data={button as any} className="w-full" />}
           </div>
         </div>
       </div>

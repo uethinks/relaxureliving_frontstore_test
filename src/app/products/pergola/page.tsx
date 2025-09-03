@@ -159,13 +159,13 @@ export default async function ProductPage({ params }: Props) {
     
     // console.log("pergolaData", pergolaData)
     console.log("standardPergolaData", standardPergolaData)
-    // 2. 获取当前产品信息
-    const currentProductInfo = pergolaData.productInformations.find(
-      (product: ProductInformation) => product.urlLink === pergola
-    )
-    if (!currentProductInfo) {
-      notFound()
-    }
+    // // 2. 获取当前产品信息
+    // const currentProductInfo = pergolaData.productInformations.find(
+    //   (product: ProductInformation) => product.urlLink === pergola
+    // )
+    // if (!currentProductInfo) {
+    //   notFound()
+    // }
 
     // 3. 并行获取所有相关产品数据
     const { relatedProductIds } = standardPergolaData
@@ -197,7 +197,7 @@ export default async function ProductPage({ params }: Props) {
         pergolaData={pergolaData}
         standardPergolaData={standardPergolaData}
         accessoriesCMSData={accessoriesCMSData}
-        currentProductInfo={currentProductInfo}
+        // currentProductInfo={currentProductInfo}
       />
     )
   } catch (error) {
