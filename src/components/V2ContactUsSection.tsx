@@ -245,7 +245,7 @@ export const V2ContactUsSection = (): React.JSX.Element => {
   }
 
   return (
-    <div id="contact" className="max-w-7xl w-full py-16">
+    <div id="contact" className="max-w-7xl w-full py-16 mx-auto">
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-[#140e02] mb-6 leading-tight">
           Contact Us

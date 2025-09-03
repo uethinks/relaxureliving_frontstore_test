@@ -124,6 +124,14 @@ const v2FeatureItemsPopulate = {
   },
 }
 
+const v2FeatureCardsPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
 // 定义 API URL
 const homePagePopulate = {
   populate: {
@@ -183,6 +191,7 @@ const standardPergolaPopulate = {
         "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
         "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
         "blocks.v2-faq-section": v2FaqSectionPopulate,
+        "blocks.v2-feature-cards": v2FeatureCardsPopulate,
       },
     },
   },

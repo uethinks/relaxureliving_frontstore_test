@@ -82,7 +82,7 @@ export function V2FeatureGridSection({ data }: FeatureGridProps) {
         {/* Features Grid */}
         <div className="flex flex-wrap justify-center gap-3">
           {data.items.map((item) => (
-            <div key={item.id} className="w-full sm:w-auto sm:flex-1">
+            <div key={item.id} className="w-full sm:w-auto sm:flex-1 max-w-[33.33%]">
               <FeatureCard item={item} />
             </div>
           ))}
@@ -118,7 +118,7 @@ function FeatureCard({ item }: FeatureCardProps) {
         </div>
 
         {/* Feature Content */}
-        <div className="h-24">
+        <div className="h-24 mb-6">
           <p className="text-2xl font-semibold text-center">{item.title}</p>
           <p className="text-[#8c877c] text-sm mt-2 text-center">{item.description}</p>
         </div>
