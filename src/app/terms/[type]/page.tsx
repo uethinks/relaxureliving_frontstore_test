@@ -108,7 +108,7 @@ export default async function TermsPage({
     return (
       <main className="min-h-screen bg-gray-50">
         <NavBarWrapper isHomePage={false} isFixed={false} />
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="bg-white rounded-lg shadow-sm p-8">
             <h1 className="text-3xl font-bold mb-8">{title}</h1>
             <div className="prose max-w-none">

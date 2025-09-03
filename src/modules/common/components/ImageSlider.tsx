@@ -69,8 +69,8 @@ export const ImageSlider = ({
         {images.map((image, index) => (
           <SwiperSlide key={index} className="rounded-[20px] overflow-hidden">
             {!loadedImages.has(index) && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-[20px]">
-                <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent animate-spin" />
               </div>
             )}
             <div className="swiper-zoom-container h-full flex items-center justify-center">
@@ -95,17 +95,14 @@ export const ImageSlider = ({
         .swiper {
           width: 100%;
           height: 100%;
-          border-radius: 20px;
           overflow: hidden;
         }
 
         .swiper-slide {
           overflow: hidden;
-          border-radius: 20px;
         }
 
         .swiper-slide img {
-          border-radius: 20px;
         }
 
         .swiper-button-next,

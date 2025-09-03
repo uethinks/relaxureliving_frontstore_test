@@ -50,25 +50,29 @@ interface V2HeroProductSectionProps {
   image: ImageData
 }
 
-export default function V2HeroProductSection({ data }: { data: V2HeroProductSectionProps }) {
+export default function V2HeroProductSection({
+  data,
+}: {
+  data: V2HeroProductSectionProps
+}) {
   const { title, description, button, image } = data
 
   return (
     <section className="w-full h-[480px] flex items-center justify-center">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="max-w-7xl w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-16">
         {/* Left side - Pergola Image */}
-        <div className="flex justify-center">
-          <div className="relative">
-            <Image
-              src={getStrapiUrl(image.url)}
-              alt={image.alternativeText || `Modern ${title.toLowerCase()} for outdoor luxury living`}
-              width={image.width}
-              height={image.height}
-              className="object-contain"
-              priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 500px"
-            />
-          </div>
+        <div className="h-[480px] overflow-hidden">
+          <Image
+            src={getStrapiUrl(image.url)}
+            alt={
+              image.alternativeText ||
+              `Modern ${title.toLowerCase()} for outdoor luxury living`
+            }
+            width={image.width}
+            height={image.height}
+            className="object-contain h-full w-full"
+            priority
+          />
         </div>
 
         {/* Right side - Content */}
@@ -76,8 +80,10 @@ export default function V2HeroProductSection({ data }: { data: V2HeroProductSect
           <header className="space-y-4">
             <V2Headline title={title} as="h1" size="md" />
           </header>
-          <p className="text-base text-[#2f2a1e] max-w-lg whitespace-pre-line">{description}</p>
-          <V2Button data={button as any}  />
+          <p className="text-base text-[#2f2a1e] max-w-lg whitespace-pre-line">
+            {description}
+          </p>
+          <V2Button data={button as any} />
         </div>
       </div>
     </section>

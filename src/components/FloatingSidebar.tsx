@@ -5,7 +5,7 @@ import { LucideIcon } from "lucide-react"
 import { motion } from "motion/react"
 
 export interface SidebarIcon {
-  icon: LucideIcon
+  icon: React.ReactNode
   text: string
   onClick?: () => void
   href?: string
@@ -67,13 +67,13 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
           }}
         >
           {/* 文字 - 使用 CSS 类控制动画，避免嵌套 Motion */}
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-black text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out delay-100 whitespace-nowrap transform translate-x-[-10px] group-hover:translate-x-0">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-black text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out delay-100 whitespace-nowrap transform translate-x-[-10px] group-hover:translate-x-0">
             {text}
           </span>
           
           {/* 图标保持在右侧 */}
           <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
-            <Icon className="w-5 h-5 text-black" />
+            {Icon}
           </div>
         </motion.button>
       </div>

@@ -11,7 +11,7 @@ export function V2FeatureShowcase({ data }: RainResistanceBlockProps) {
       {/* Hero Section */}
       {data.title && (
         <section className="py-14 px-6">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-h2 font-bold text-[#140e02] leading-tight">
               {data.title}
             </h1>

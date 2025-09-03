@@ -83,7 +83,7 @@ export default async function Homepage() {
 
   return (
     <>
-      <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center py-0 relative bg-[#ffffff]">
+      <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper isHomePage={true} />
         {data.sections.map((section: any) => {
           const key = `${section.id}-${section.__component}`
@@ -116,26 +116,7 @@ export default async function Homepage() {
           return null
         })}
         <V2ContactUsSection />
-        {/* <Hero hero={data.HomepageHero} />
-        <AwardBlock data={{ ...data.credential, showDescription: true }} />
-        <OurPergola pergola={data.OurPergola} />
-        <Features features={data.Features} />
-        <Accessories accessories={data.Accessories} /> */}
       </div>
-      {/* <OurPromise
-        pergolaData={
-          {
-            boringButImportantStuff: data.OurPromise,
-          } as PergolaData
-        }
-      />
-      <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-10 px-4 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
-        <Testimonials />
-      </div>
-      <FaqWrapper faq={data.FAQ} />
-      <div className="w-full 2xl:max-w-[1910px] flex flex-col items-center gap-[10px] lg:gap-10 px-4 md:px-20 py-0 relative bg-[#ffffff] mt-10 lg:mt-[120px]">
-        <ContactUs contactUs={data.ContactUs} />
-      </div> */}
       <FooterDark isHomepage={true} />
     </>
   )

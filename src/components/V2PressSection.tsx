@@ -109,58 +109,62 @@ export default function V2PressSection({ data }: V2PressSectionProps) {
 
   return (
     <>
-      <section className="w-full py-5" aria-labelledby="testimonials-heading">
+      <section className="w-full" aria-labelledby="testimonials-heading">
         <div className="w-full">
           <h2 id="testimonials-heading" className="sr-only">
             Press Coverage and User Testimonials
           </h2>
 
-          <div className="flex flex-nowrap gap-16 justify-center">
+          <div className="w-full flex flex-nowrap gap-16 justify-center">
             {testimonials.map((testimonial) => (
-              <div
+              <Card
                 key={testimonial.id}
-                className="basis-full sm:basis-1/3 lg:basis-1/6 grow flex flex-col items-center"
+                className="border-none shadow-none flex-1"
+                style={{
+                  background: "linear-gradient(270deg, #FFF 0%, #EFEEEB 100%)",
+                }}
               >
-                <Card
-                  key={testimonial.id}
-                  className="border-none shadow-none"
-                  style={{
-                    background: 'linear-gradient(270deg, #FFF 0%, #EFEEEB 100%)'
-                  }}
-                >
-                  <CardContent className="p-5">
-                    <div className="flex items-stretch space-x-4">
-                      {/* Image Section */}
-                      {testimonial.image && (
-                        <div className="flex-shrink-0 ">
-                          <Image
-                            src={getStrapiUrl(
-                              testimonial.image.formats.thumbnail?.url ||
-                                testimonial.image.url
-                            )}
-                            alt={
-                              testimonial.image.alternativeText ||
-                              testimonial.title
-                            }
-                            width={150}
-                            height={150}
-                            className="w-[150px] h-[150px] object-cover"
-                          />
-                        </div>
-                      )}
-
-                      {/* Content Section */}
-                      <div className="flex-1 min-w-0 flex flex-col items-start">
-                        <p className="text-[#2f2a1e] text-sm sm:text-base leading-relaxed font-medium flex-1">
-                          {testimonial.description}
-                        </p>
-
-                        <V2Button data={{text: "Read More", link: testimonial.link, type: "Link", size: "Small"} as any} />
+                <CardContent className="p-5">
+                  <div className="flex items-stretch space-x-4">
+                    {/* Image Section */}
+                    {testimonial.image && (
+                      <div className="flex-shrink-0 ">
+                        <Image
+                          src={getStrapiUrl(
+                            testimonial.image.formats.thumbnail?.url ||
+                              testimonial.image.url
+                          )}
+                          alt={
+                            testimonial.image.alternativeText ||
+                            testimonial.title
+                          }
+                          width={150}
+                          height={150}
+                          className="w-[150px] h-[150px] object-cover"
+                        />
                       </div>
+                    )}
+
+                    {/* Content Section */}
+                    <div className="flex-1 min-w-0 flex flex-col items-start">
+                      <p className="text-[#2f2a1e] text-sm sm:text-base leading-relaxed font-medium flex-1">
+                        {testimonial.description}
+                      </p>
+
+                      <V2Button
+                        data={
+                          {
+                            text: "Read More",
+                            link: testimonial.link,
+                            type: "Link",
+                            size: "Small",
+                          } as any
+                        }
+                      />
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>

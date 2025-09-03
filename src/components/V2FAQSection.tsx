@@ -51,7 +51,7 @@ interface FAQSectionProps {
 export function V2FAQSection({ data }: FAQSectionProps) {
   return (
     <section className="py-16 px-4" itemScope itemType="https://schema.org/FAQPage">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <header className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#140e02]">{data.title}</h2>
         </header>

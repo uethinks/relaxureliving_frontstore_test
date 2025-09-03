@@ -19,7 +19,7 @@ export function V2CraftsmanshipSection({ data }: CraftsmanshipSectionProps) {
           >
             {data.title}
           </h1>
-          <div className="max-w-4xl mx-auto text-[#8C877C]">
+          <div className="max-w-7xl mx-auto text-[#8C877C]">
             <Markdown remarkPlugins={[remarkGfm]}>{data.description2}</Markdown>
           </div>
         </div>

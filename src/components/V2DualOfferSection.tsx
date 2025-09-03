@@ -70,7 +70,7 @@ export default function V2DualOfferSection({
         </header>
 
         {iconItems && iconItems.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-16 md:mb-20 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-16 md:mb-20 max-w-7xl mx-auto">
             {iconItems.map((item) => (
               <div
                 key={item.id}

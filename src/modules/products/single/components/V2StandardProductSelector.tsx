@@ -13,29 +13,22 @@ import { useRouter } from "next/navigation"
 import { useProductSelection } from "./ProductSelectionContext"
 import { Badge } from "@/components/ui/badge"
 import {
-  MessageCircle,
-  Phone,
-  Mail,
-  ChevronDown,
-  Truck,
-  Calendar,
   MoveDownRight,
 } from "lucide-react"
 import {
-  AccesorriesSelector,
   V2AccesorriesSelector,
 } from "./AccesorriesSelector"
 import { Button } from "@/components/ui/button"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
-interface V2ProductSelectorProps {
+interface V2StandardProductSelectorProps {
   product: StoreProduct
   accessories: StoreProduct[]
   accessoriesCMSData: any
 }
 
-export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
+export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps> = ({
   product,
   accessories,
   accessoriesCMSData,
@@ -114,22 +107,10 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
           option.option?.title === "Slats Color" &&
           option.value === selectedSlatsColor.value
       )
-      console.log(
-        "size:",
-        !!matchingSize,
-        ",color:",
-        !!matchingColor,
-        ",style:",
-        !!matchingStyle,
-        ",slatsColor:",
-        !!matchingSlatsColor
-      )
-      console.log("===variant===", variant)
       return (
         matchingSize && matchingColor && matchingStyle && matchingSlatsColor
       )
     })
-    console.log("===variant===", variant)
 
     setSelectedVariant(variant)
     setPergolaSize({
@@ -443,7 +424,7 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
             accessoriesCMSData={accessoriesCMSData}
           />
         </div>
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <AccesorriesSelector
             pergolaSize={pergolaSize}
             onAccessoryChange={handleAccessoryToggle}
@@ -453,7 +434,7 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
             selectedGlassdoorVariant={selectedAccessoriesGlassdoor}
             accessoriesCMSData={accessoriesCMSData}
           />
-        </div>
+        </div> */}
 
         {/* Service Sections */}
         <div className="mt-6 space-y-4">
@@ -529,7 +510,7 @@ export const V2ProductSelector: React.FC<V2ProductSelectorProps> = ({
         </div>
 
         {/* Add to Cart Button - Using BuyNowButton */}
-        <div className="mt-6">
+        <div className="mt-6 sticky bottom-0">
           <BuyNowButton
             property1="primary-button-l"
             text="Add to Cart"

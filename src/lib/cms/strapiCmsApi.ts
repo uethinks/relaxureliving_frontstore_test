@@ -2,186 +2,147 @@
 import axios from "axios"
 import axiosInstance from "../axiosInstance"
 
+const v2HeroBannerPopulate = {
+  populate: {
+    button: {
+      populate: "*",
+    },
+    backgroundImage: {
+      populate: "*",
+    },
+  },
+}
+
+const v2ServiceSnapshotsPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
+const v2HeroProductSectionPopulate = {
+  populate: {
+    button: {
+      populate: "*",
+    },
+    image: {
+      populate: "*",
+    },
+  },
+}
+
+const v2PressSliderPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
+const v2CraftsmanshipPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
+const v2OccasionsPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
+const v2RainResistancePopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
+const v2FeatureGridPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
+const v2PromoBannerPopulate = {
+  populate: {
+    content: {
+      populate: "*",
+    },
+    backgroundImage: {
+      populate: "*",
+    },
+  },
+}
+
+const v2DualOfferSectionPopulate = {
+  populate: {
+    iconItems: {
+      populate: "*",
+    },
+    cardItems: {
+      populate: "*",
+    },
+  },
+}
+
+const v2TestimonialsSectionPopulate = {
+  populate: {
+    button: {
+      populate: "*",
+    },
+    items: {
+      populate: "*",
+    },
+  },
+}
+
+const v2FaqSectionPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+    button: {
+      populate: "*",
+    },
+  },
+}
+
+const v2FeatureItemsPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
 // 定义 API URL
 const homePagePopulate = {
   populate: {
-    // HomepageHero: {
-    //   populate: ["BackgroundImage"],
-    // },
-    // OurPergola: {
-    //   populate: {
-    //     UsageScenarios: {
-    //       populate: ["LargeImage", "SmallImage"],
-    //     },
-    //   },
-    // },
-    // FAQ: {
-    //   populate: {
-    //     homepageFAQ: {
-    //       populate: ["question_and_answer"],
-    //     },
-    //   },
-    // },
-    // ContactUs: {
-    //   populate: ["Image"],
-    // },
-    // Features: {
-    //   populate: {
-    //     FeaturesSlider: {
-    //       populate: ["Image"],
-    //     },
-    //   },
-    // },
-    // Accessories: {
-    //   populate: {
-    //     slider: {
-    //       populate: ["largeImage", "smallImage"],
-    //     },
-    //   },
-    // },
-    // OurPromise: {
-    //   populate: {
-    //     Promise: {
-    //       populate: ["Icon"],
-    //     },
-    //   },
-    // },
-    // OurBlog: {
-    //   populate: {
-    //     articles: {
-    //       populate: {
-    //         cover: {
-    //           populate: "*",
-    //         },
-    //         author: {
-    //           populate: "*",
-    //         },
-    //         category: {
-    //           populate: "*",
-    //         },
-    //       },
-    //     },
-    //   },
-    // },
-    // credential: {
-    //   populate: {
-    //     images: {
-    //       populate: "*",
-    //     },
-    //   },
-    // },
-    // seo: {
-    //   populate: ["shareImage"],
-    // },
     sections: {
       // asking to populate the blocks dynamic zone
       on: {
         // using a detailed population strategy to explicitly define what you want
-        "blocks.v2-hero-banner": {
-          populate: {
-            button: {
-              populate: "*",
-            },
-            backgroundImage: {
-              populate: "*",
-            },
-          },
-        },
-        "blocks.v2-service-snapshots": {
-          populate: {
-            items: {
-              populate: "*",
-            },
-          },
-        },
-        "blocks.v2-hero-product-section": {
-          populate: {
-            button: {
-              populate: "*",
-            },
-            image: {
-              populate: "*",
-            }
-          },
-        },
-        "blocks.v2-press-slider": {
-          populate: {
-            items: {
-              populate: "*",
-            },
-          },
-        },
-        "blocks.v2-craftsmanship": {
-          populate: {
-            items: {
-              populate: "*",
-            },
-          },
-        },
-        "blocks.v2-occasions": {
-          populate: {
-            items: {
-              populate: "*",
-            },
-          },
-        },
-        "blocks.v2-rain-resistance": {
-          populate: {
-            items: {
-              populate: "*",
-            },
-          },
-        },
-        "blocks.v2-feature-grid": {
-          populate: {
-            items: {
-              populate: "*",
-            },
-          },
-        },
-        "blocks.v2-promo-banner": {
-          populate: {
-            content: {
-              populate: "*",
-            },
-            backgroundImage: {
-              populate: "*",
-            }
-          },
-        },
-        "blocks.v2-dual-offer-section": {
-          populate: {
-            iconItems: {
-              populate: "*",
-            },
-            cardItems: {
-              populate: "*",
-            },
-          }
-        },
-        "blocks.v2-testimonials-section": {
-          populate: {
-            button: {
-              populate: "*",
-            },
-            items: {
-              populate: "*",
-            }
-          }
-        },
-        "blocks.v2-faq-section": {
-          populate: {
-            items: {
-              populate: "*",
-            },
-            button: {
-              populate: "*",
-            },
-          },
-        },
-        "blocks.v2-contact-us-section": {
-          populate: "*"
-        }
+        "blocks.v2-hero-banner": v2HeroBannerPopulate,
+        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
+        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
+        "blocks.v2-press-slider": v2PressSliderPopulate,
+        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
+        "blocks.v2-occasions": v2OccasionsPopulate,
+        "blocks.v2-rain-resistance": v2RainResistancePopulate,
+        "blocks.v2-feature-grid": v2FeatureGridPopulate,
+        "blocks.v2-promo-banner": v2PromoBannerPopulate,
+        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
+        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
+        "blocks.v2-faq-section": v2FaqSectionPopulate,
       },
     },
   },
@@ -191,6 +152,38 @@ const reviewsPopulate = {
   populate: {
     testimonials_item: {
       populate: ["image"],
+    },
+  },
+}
+
+const standardPergolaPopulate = {
+  populate: {
+    relatedProductIds: "*",
+    productImages: {
+      fields: ["*"],
+    },
+    productSections: {
+      // asking to populate the blocks dynamic zone
+      on: {
+        // using a detailed population strategy to explicitly define what you want
+        "blocks.v2-feature-items": v2FeatureItemsPopulate,
+      },
+    },
+    descriptionSections: {
+      on: {
+        "blocks.v2-hero-banner": v2HeroBannerPopulate,
+        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
+        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
+        "blocks.v2-press-slider": v2PressSliderPopulate,
+        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
+        "blocks.v2-occasions": v2OccasionsPopulate,
+        "blocks.v2-rain-resistance": v2RainResistancePopulate,
+        "blocks.v2-feature-grid": v2FeatureGridPopulate,
+        "blocks.v2-promo-banner": v2PromoBannerPopulate,
+        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
+        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
+        "blocks.v2-faq-section": v2FaqSectionPopulate,
+      },
     },
   },
 }
@@ -337,6 +330,7 @@ export const API_URLS = {
   getRefundPolicy: "/api/refund-policy",
   getReviews: "/api/testimonials-plural",
   submitContact: "/api/contact-submissions",
+  getStandardPergola: "/api/v2-pdp-standardize",
   getPergola: "/api/pergola",
   getHeater: "/api/heater",
   getShades: "/api/shades-screen",
@@ -450,6 +444,20 @@ export const getPergola = async () => {
     throw error
   }
 }
+
+// 获取 Standard Pergola 数据
+export const getStandardPergola = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getStandardPergola, {
+      params: standardPergolaPopulate,
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching pergola data:", error)
+    throw error
+  }
+}
+
 // 获取 Pergola 数据
 export const getGlassdoor = async () => {
   try {

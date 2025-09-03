@@ -155,7 +155,7 @@ export const ContactUs = ({
   }
 
   return (
-    <div id="contact" className="max-w-4xl mx-auto px-4 py-16">
+    <div id="contact" className="max-w-7xl mx-auto px-4 py-16">
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-[#140e02] mb-6 leading-tight">
           {contactUs.FormDescription}

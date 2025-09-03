@@ -67,7 +67,7 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
         <div className="absolute inset-0 bg-black/40" aria-hidden="true"></div>
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full max-w-7xl mx-auto">
         <div className="max-w-2xl lg:max-w-3xl w-[436px]">
           <V2Headline title={content.title || ""} className="text-white" />
 

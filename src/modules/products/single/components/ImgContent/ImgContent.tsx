@@ -125,10 +125,10 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
   const isMobile = windowWidth < 1024
   return (
     <>
-      <div className="flex flex-col justify-center items-center relative w-full rounded-[20px] overflow-hidden">
+      <div className="flex flex-col justify-center items-center relative w-full overflow-hidden">
         {/* 主图 */}
         <div className="relative w-full">
-          <div className="rounded-[20px] cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full overflow-hidden">
+          <div className="cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full overflow-hidden">
             {filteredImages.length > 0 ? (
               <img
                 src={strapiCmsUrl + filteredImages?.[currentImageIndex]?.url}
@@ -153,8 +153,8 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
         {/* 缩略图轮播 */}
         {filteredImages.length > 0 && (
           <div
-            className={`flex py-2 justify-center items-center px-1 w-[98%] bg-[#ffffff] 
-          rounded-[20px] overflow-hidden border border-solid border-[#ffffff87] backdrop-blur-[3.3px] 
+            className={`flex py-5 justify-center items-center w-full
+          overflow-hidden backdrop-blur-[3.3px] 
           backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(3.3px)_brightness(100%)]`}
           >
             <div className="relative w-full">
@@ -181,7 +181,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                     className="cursor-pointer"
                     onClick={() => setCurrentImageIndex(index)}
                   >
-                    <div className="aspect-square rounded-2xl overflow-hidden">
+                    <div className="aspect-square overflow-hidden">
                       <img
                         src={strapiCmsUrl + image.formats.small.url}
                         alt=""
@@ -195,13 +195,13 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
 
               {/* 自定义导航按钮 */}
               <button
-                className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
-                  rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110`}
+                className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-primary hover:bg-black/50 
+                   p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110`}
                 onClick={() => thumbsSwiper?.slidePrev()}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-white"
+                  className="h-4 w-4 text-black"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -216,13 +216,13 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
               </button>
 
               <button
-                className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
-                  rounded-full p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110`}
+                className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-primary hover:bg-black/50 
+                  p-2 w-8 h-8 flex items-center justify-center transition-all duration-200 hover:scale-110`}
                 onClick={() => thumbsSwiper?.slideNext()}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-white"
+                  className="h-4 w-4 text-black"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -281,12 +281,12 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                 <>
                   <button
                     className={`modal-prev-button absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
-                    rounded-full p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110`}
+                    p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110`}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4 text-white"
-                      fill="none"
+                      fill="none" 
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
@@ -301,7 +301,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
 
                   <button
                     className={`modal-next-button absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
-                    rounded-full p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110`}
+                    p-3 w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-110`}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

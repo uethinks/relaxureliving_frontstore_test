@@ -64,7 +64,7 @@ interface V2OccasionsSectionProps {
 export default function V2OccasionsSection({ data }: V2OccasionsSectionProps) {
   return (
     <section className="w-full" style={{ background: 'linear-gradient(90deg, rgba(239, 238, 235, 0.50) 0%, rgba(255, 255, 255, 0.50) 100%)' }} aria-labelledby="features-heading">
-      <div className="max-w-6xl mx-auto px-6 py-16">
+      <div className="max-w-7xl w-full mx-auto py-14">
         {/* Header Section */}
         <header className="text-center mb-16">
           <h1 id="features-heading" className="text-foreground text-h2 font-bold mb-6 leading-tight">
