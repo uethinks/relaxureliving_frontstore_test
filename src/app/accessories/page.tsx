@@ -11,7 +11,7 @@ type Props = Readonly<{
 
 export default async function AccessoriesPage(props: Props) {
   // 获取OurPromise数据
-  const { data } = await getHomePage()
+  // const { data } = await getHomePage()
 
   return (
     <>
@@ -23,13 +23,6 @@ export default async function AccessoriesPage(props: Props) {
           </div>
         </div>
       </div>
-      <OurPromise
-        pergolaData={
-          {
-            boringButImportantStuff: data.OurPromise,
-          } as PergolaData
-        }
-      />
       <FooterDark />
     </>
   )

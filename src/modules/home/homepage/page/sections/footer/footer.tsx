@@ -251,7 +251,7 @@ export const FooterDark = ({
   ]
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#140e02] text-white mt-10 lg:mt-[120px]">
+    <div className="relative w-full overflow-hidden bg-[#140e02] text-white">
       {/* BadWeatherSection - preserved from original */}
       {/* <BadWeatherSection /> */}
 

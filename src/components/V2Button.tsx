@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
  * Standardized interface for CMS button data structure
  */
 export interface ButtonData {
-  id: number
+  id?: number
   type: "Primary" | "Secondary" | "Link"
   size: "Small" | "Medium" | "Large"
   text: string
