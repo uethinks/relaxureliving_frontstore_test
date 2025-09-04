@@ -10,12 +10,14 @@ interface V2HeroBannerProps {
 
 export default function V2HeroBanner({ data }: V2HeroBannerProps) {
   const { title, description, button, backgroundImage } = data
+  console.log('data: ', data)
+  console.log('backgroundImage: ', backgroundImage)
 
   // Get responsive image sources
   const imageSources = {
-    mobile: backgroundImage.formats.small.url,
-    tablet: backgroundImage.formats.medium.url,
-    desktop: backgroundImage.formats.large.url,
+    mobile: backgroundImage?.formats?.small?.url || backgroundImage?.url,
+    tablet: backgroundImage?.formats?.medium?.url|| backgroundImage?.url,
+    desktop: backgroundImage?.formats?.large?.url|| backgroundImage?.url,
   }
 
   return (

@@ -132,6 +132,14 @@ const v2FeatureCardsPopulate = {
   },
 }
 
+const accessoriesPagePopulate = {
+  populate: {
+    banner: {
+      populate: "*",
+    }
+  },
+}
+
 // 定义 API URL
 const homePagePopulate = {
   populate: {
@@ -223,7 +231,7 @@ const pergolaPopulate = {
   populate: {
     productInformations: "*",
     relatedProductIds: "*",
-    product_images: {
+    productImages: {
       fields: ["*"],
     },
     descriptionTab: {
@@ -295,7 +303,7 @@ const faqPopulate = {
 const heaterPopulate = {
   populate: {
     productInformations: "*",
-    product_images: {
+    productImages: {
       fields: ["*"],
     },
   },
@@ -303,7 +311,7 @@ const heaterPopulate = {
 const shadesPopulate = {
   populate: {
     productInformations: "*",
-    product_images: {
+    productImages: {
       fields: ["*"],
     },
   },
@@ -311,7 +319,7 @@ const shadesPopulate = {
 const glassdoorPopulate = {
   populate: {
     productInformations: "*",
-    product_images: {
+    productImages: {
       fields: ["*"],
     },
   },
@@ -624,7 +632,9 @@ export const getMenu = async () => {
 // 获取菜单数据
 export const getAccessoriesPage = async () => {
   try {
-    const response = await axiosInstance.get(API_URLS.getAccessoriesPage)
+    const response = await axiosInstance.get(API_URLS.getAccessoriesPage, {
+      params: accessoriesPagePopulate,
+    })
     return response.data
   } catch (error) {
     console.error(

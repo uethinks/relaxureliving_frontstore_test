@@ -15,9 +15,9 @@ export default async function AccessoriesPage(props: Props) {
 
   return (
     <>
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
+      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full">
         <NavBarWrapper isFixed={false} />
-        <div className="content-container py-6 small:py-8">
+        <div className="content-container">
           <div className="flex flex-col gap-4">
             <AccessoriesGrid />
           </div>

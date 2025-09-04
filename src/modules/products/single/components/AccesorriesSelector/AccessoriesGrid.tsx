@@ -6,6 +6,7 @@ import {
   getGlassdoor,
   getHeater,
 } from "@lib/cms/strapiCmsApi"
+import V2HeroBanner from "@/components/V2HeroBanner"
 
 export const AccessoriesGrid = async ({
   showTitle = true,
@@ -20,6 +21,9 @@ export const AccessoriesGrid = async ({
   if (!accessoriesPage?.data) {
     throw new Error("Failed to fetch accessories page data")
   }
+
+  console.log('accessoriesPage: ', accessoriesPage.data)
+  const { banner } = accessoriesPage.data
 
   // 获取各个产品的数据
   const heater = await getProductByProductId({
@@ -59,24 +63,25 @@ export const AccessoriesGrid = async ({
     glassdoorInfo: glassdoorInfo.data,
   }
 
-  return (
-    <div className="mt-10 w-full">
-      {showTitle && (
-        <h2 className="text-[44px] font-merriweather font-bold mb-8">
-          Accessories
-        </h2>
-      )}
+  console.log('accessories: ', accessories)
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="p-2 relative bg-white rounded-[20px] overflow-hidden border border-[#E9E9E9] transition-colors">
-          <div className="aspect-square overflow-hidden rounded-[20px]">
+  return (
+    <div className="w-full">
+      <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
+        {
+          banner?.length > 0 && banner[0].__component === "blocks.v2-hero-banner" && <V2HeroBanner data={banner[0]} />
+        }
+      </div>
+      <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="relative bg-white overflow-hidden border border-[#E9E9E9] transition-colors">
+          <div className="aspect-square overflow-hidden">
             <img
-              src={`${baseUrl}${accessories.heaterInfo.product_images?.[0]?.url}`}
+              src={`${baseUrl}${accessories.heaterInfo.productImages?.[0]?.url}`}
               alt={accessories.heaterInfo.name}
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="bg-[#F6AF1F] rounded-[10px] px-4 py-2 w-fit mt-4">
+          <div className="bg-[#F6AF1F] px-4 py-2 w-fit mt-4">
             Exclusive
           </div>
           <div className="mt-4">
@@ -115,15 +120,15 @@ export const AccessoriesGrid = async ({
           </div>
         </div>
 
-        <div className="p-2 relative bg-white rounded-[20px] overflow-hidden border border-[#E9E9E9] transition-colors">
-          <div className="aspect-square overflow-hidden rounded-[20px]">
+        <div className="relative bg-white overflow-hidden border border-[#E9E9E9] transition-colors">
+          <div className="aspect-square overflow-hidden">
             <img
-              src={`${baseUrl}${accessories.shadesInfo.product_images?.[0]?.url}`}
+              src={`${baseUrl}${accessories.shadesInfo.productImages?.[0]?.url}`}
               alt={accessories.shadesInfo.name}
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="bg-[#F6AF1F] rounded-[10px] px-4 py-2 w-fit mt-4">
+          <div className="bg-[#F6AF1F] px-4 py-2 w-fit mt-4">
             Exclusive
           </div>
           <div className="mt-4">
@@ -163,15 +168,15 @@ export const AccessoriesGrid = async ({
           </div>
         </div>
 
-        <div className="p-2 relative bg-white rounded-[20px] overflow-hidden border border-[#E9E9E9] transition-colors">
-          <div className="aspect-square overflow-hidden rounded-[20px]">
+        <div className="relative bg-white overflow-hidden border border-[#E9E9E9] transition-colors">
+          <div className="aspect-square overflow-hidden">
             <img
-              src={`${baseUrl}${accessories.glassdoorInfo.product_images?.[0]?.url}`}
+              src={`${baseUrl}${accessories.glassdoorInfo.productImages?.[0]?.url}`}
               alt={accessories.glassdoorInfo.name}
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="bg-[#F6AF1F] rounded-[10px] px-4 py-2 w-fit mt-4">
+          <div className="bg-[#F6AF1F] px-4 py-2 w-fit mt-4">
             Exclusive
           </div>
           <div className="mt-4">
