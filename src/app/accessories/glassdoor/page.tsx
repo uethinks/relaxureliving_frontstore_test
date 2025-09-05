@@ -3,6 +3,7 @@ import {
   getAccessoriesPage,
   getGlassdoor,
   getHomePage,
+  getPergola,
 } from "@lib/cms/strapiCmsApi"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
@@ -49,11 +50,8 @@ export default async function AccessoriesPage(props: Props) {
 
   return (
     <>
-      <div className="bg-[#ffffff] flex flex-col items-start justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
+      <div className="bg-background flex flex-col items-start justify-center w-full">
         <NavBarWrapper isFixed={false} />
-        <div className="flex flex-col gap-4 text-[36px] font-medium text-black font-merriweather mb-5">
-          Accessories
-        </div>
         <div className="flex flex-col gap-4 w-full">
           <GlassdoorProductPage
             glassdoorProduct={glassdoor.product as any}

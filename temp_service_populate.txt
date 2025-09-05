@@ -1,0 +1,10 @@
+const v2ServiceDescriptionPopulate = {
+  populate: {
+    items: {
+      populate: {
+        icon: "*",
+        secondaryIcon: "*",
+      },
+    },
+  },
+}

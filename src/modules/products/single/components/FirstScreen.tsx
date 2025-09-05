@@ -27,6 +27,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
     <ProductSelectionProvider product={product}>
       <div className="flex flex-col items-center justify-center w-full">
         <NavBarWrapper isFixed={false} />
+        {/* Content View */}
         <div className="lg:mx-auto flex flex-col  w-full relative z-10">
           <div className="flex flex-col w-full lg:flex-row justify-between items-start">
             <div className="flex flex-col max-w-7xl w-full mx-auto mt-10  gap-5">

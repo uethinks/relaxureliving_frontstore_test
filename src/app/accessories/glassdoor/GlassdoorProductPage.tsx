@@ -7,6 +7,11 @@ import { useCart } from "@lib/context/cartContext"
 import { selectedProducts, PergolaSize } from "types/global"
 import GlassdoorSideSelector from "@modules/products/single/components/AccesorriesPopup/GlassdoorSideSelector"
 import { AddAccessories } from "@modules/products/single/components/AccesorriesPopup/AddAccessories"
+import { ImgContent } from "@modules/products/single/components/ImgContent"
+import { ProductSelectionProvider } from "@modules/products/single/components/ProductSelectionContext"
+import { V2GlassDoorsSelector } from "@modules/products/single/components/V2GlassDoorsSelector"
+import remarkGfm from "remark-gfm"
+import Markdown from "react-markdown"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -186,137 +191,174 @@ const GlassdoorProductPage = ({
     )
   }
 
-  return (
-    <div className="w-full max-w-[1512px] mx-auto relative">
-      <div className="flex flex-col lg:flex-row items-start gap-5 lg:gap-[30px]">
-        {/* 左侧产品图片 */}
-        <div className="relative w-full lg:w-auto h-auto lg:h-[546px] aspect-[360/300] lg:aspect-[466/546]">
-          <ImageSlider images={glassdoorCMSData?.product_images || []} />
-        </div>
+  console.log("glassdoorProduct: ", glassdoorProduct)
+  console.log("glassdoorCMSData: ", glassdoorCMSData)
 
-        {/* 右侧产品配置 */}
-        <div className="flex flex-col justify-between w-full lg:w-1/2 items-start gap-10">
-          <div className="flex flex-col items-start gap-5 self-stretch w-full">
-            {/* 产品标题和价格 */}
-            <div className="flex flex-col items-start lg:gap-2.5 py-2.5 self-stretch w-full">
-              <div className="flex items-center justify-between w-full">
-                <h2 className="self-stretch font-merriweather text-[#343a40] text-[22px] lg:text-[28px] font-bold leading-[39.2px]">
-                  {glassdoorProduct?.title}
-                </h2>
-                <div className="flex items-end justify-start gap-4">
-                  <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[22px] lg:text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
-                    {totalPrice ? "$" + totalPrice.toFixed(2) : ""}
+  return (
+    <ProductSelectionProvider product={glassdoorProduct}>
+      <div className="w-full max-w-[1512px] mx-auto relative">
+        <div className="lg:mx-auto flex flex-col  w-full relative z-10">
+          <div className="flex flex-col w-full lg:flex-row justify-between items-start">
+            <div className="flex flex-col max-w-7xl w-full mx-auto mt-10  gap-5">
+              <div className="flex flex-row justify-between items-start relative w-full gap-[65px]">
+                {/* Left Content */}
+                <div className="w-full lg:w-[64%] flex flex-col sticky top-0">
+                  <div className="flex flex-row justify-between w-full">
+                    <ImgContent
+                      productImages={glassdoorCMSData.productImages || []}
+                    />
+                  </div>
+                  <div className="text-[#2F2A1E] text-sm mt-12 pb-12 w-full prose max-w-none">
+                    <Markdown
+                      remarkPlugins={[remarkGfm]}
+                      // rehypePlugins={[rehypeRaw]}
+                      remarkRehypeOptions={{ passThrough: ["link"] }}
+                    >
+                      {glassdoorCMSData.description}
+                    </Markdown>
                   </div>
                 </div>
-              </div>
-
-              {/* Pergola尺寸选择 */}
-              <div className="flex flex-col items-start gap-4 mt-6">
-                <h3 className="text-[#343A40] text-[16px] lg:text-[18px] [font-family:'Montserrat',sans-serif] font-medium">
-                  What size is your pergola?
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {pergolaSizes.length > 0 ? (
-                    pergolaSizes.map((size) => (
-                      <button
-                        key={size.id}
-                        onClick={() => {
-                          setSelectedPergolaSize(size.value)
-                          // 重置选择
-                          setSelectedSides([])
-                          setSelectedSize([])
-                        }}
-                        className={`px-4 py-2 rounded-[20px] border transition-all ${
-                          selectedPergolaSize === size.value
-                            ? "bg-[#F6AF1F33] text-black border-[#F6AF1F33]"
-                            : "bg-white border-[#E9E9E9] text-black"
-                        }`}
-                      >
-                        {size.value}
-                      </button>
-                    ))
-                  ) : (
-                    <p className="text-gray-500 text-sm">
-                      No pergola sizes available
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* 颜色选择 */}
-              <div className="flex flex-col items-start gap-4 mt-6">
-                <h3 className="text-[#343A40] text-[16px] lg:text-[18px] [font-family:'Montserrat',sans-serif] font-medium">
-                  What color would you like to choose?
-                </h3>
-                <div className="flex items-center gap-[18px] flex-wrap">
-                  {sortedColors?.map((color) => (
-                    <div
-                      key={color.id}
-                      className="flex flex-row items-center gap-2.5 relative"
-                    >
-                      <button
-                        className={`w-6 h-6 rounded-[20px] cursor-pointer border-2 border-solid ${
-                          selectedColor?.id === color.id
-                            ? "bg-[#F6AF1F33] border-[#F6AF1F]"
-                            : "bg-[#ffffff] border-[#E9E9E9]"
-                        }`}
-                        onClick={() => handleColorClick(color)}
-                      ></button>
-                      <div className="relative w-fit mt-[-1px] font-montserrat font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]">
-                        {color.value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 边选择器 */}
-              {selectedPergolaSize && (
-                <div className="mt-6">
-                  <GlassdoorSideSelector
-                    onSideSelect={handleSideSelect}
-                    selectedSides={selectedSides}
-                    shortSideLength={shortSideLength}
-                    longSideLength={longSideLength}
-                  />
-                </div>
-              )}
-
-              {/* 产品描述 */}
-              <div className="mt-6">
-                <p className="self-stretch text-[#68717a] leading-[22.4px] font-montserrat text-[16px] lg:text-base font-medium">
-                  {glassdoorProduct?.description}
-                </p>
+                {/* Desktop View */}
+                <V2GlassDoorsSelector
+                  glassdoorProduct={glassdoorProduct}
+                  glassdoorCMSData={glassdoorCMSData}
+                  pergolaSizes={pergolaSizes}
+                  pergolaSize={pergolaSize}
+                />
               </div>
             </div>
           </div>
+        </div>
+        <div className="flex flex-col lg:flex-row items-start gap-5 lg:gap-[30px]">
+          {/* 左侧产品图片 */}
+          <div className="relative w-full lg:w-auto h-auto lg:h-[546px] aspect-[360/300] lg:aspect-[466/546]">
+            <ImageSlider images={glassdoorCMSData?.productImages || []} />
+          </div>
 
-          {/* 底部按钮 */}
-          <div className="flex flex-col md:flex-row items-center justify-between self-stretch w-full">
-            <a
-              href="/upload_files/Frameless_sliding_glass_door_technical_sheet_new.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2"
-            >
-              <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
-              <h3 className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
-                Download specs
-              </h3>
-            </a>
-            <div className="flex flex-row items-center gap-2.5 relative">
-              <AddAccessories
-                disabled={selectedGlassdoor.length === 0 || isLoading}
-                buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-medium"
-                property1="primary-button-l"
-                text="Add Glass Door"
-                addAccessory={handleAddToCart}
-              />
+          {/* 右侧产品配置 */}
+          <div className="flex flex-col justify-between w-full lg:w-1/2 items-start gap-10">
+            <div className="flex flex-col items-start gap-5 self-stretch w-full">
+              {/* 产品标题和价格 */}
+              <div className="flex flex-col items-start lg:gap-2.5 py-2.5 self-stretch w-full">
+                <div className="flex items-center justify-between w-full">
+                  <h2 className="self-stretch font-merriweather text-[#343a40] text-[22px] lg:text-[28px] font-bold leading-[39.2px]">
+                    {glassdoorProduct?.title}
+                  </h2>
+                  <div className="flex items-end justify-start gap-4">
+                    <div className="w-fit [font-family:'Montserrat',Helvetica] font-bold text-[22px] lg:text-[28px] leading-[32px] whitespace-nowrap relative tracking-[0]">
+                      {totalPrice ? "$" + totalPrice.toFixed(2) : ""}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pergola尺寸选择 */}
+                <div className="flex flex-col items-start gap-4 mt-6">
+                  <h3 className="text-[#343A40] text-[16px] lg:text-[18px] [font-family:'Montserrat',sans-serif] font-medium">
+                    What size is your pergola?
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {pergolaSizes.length > 0 ? (
+                      pergolaSizes.map((size) => (
+                        <button
+                          key={size.id}
+                          onClick={() => {
+                            setSelectedPergolaSize(size.value)
+                            // 重置选择
+                            setSelectedSides([])
+                            setSelectedSize([])
+                          }}
+                          className={`px-4 py-2 rounded-[20px] border transition-all ${
+                            selectedPergolaSize === size.value
+                              ? "bg-[#F6AF1F33] text-black border-[#F6AF1F33]"
+                              : "bg-white border-[#E9E9E9] text-black"
+                          }`}
+                        >
+                          {size.value}
+                        </button>
+                      ))
+                    ) : (
+                      <p className="text-gray-500 text-sm">
+                        No pergola sizes available
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* 颜色选择 */}
+                <div className="flex flex-col items-start gap-4 mt-6">
+                  <h3 className="text-[#343A40] text-[16px] lg:text-[18px] [font-family:'Montserrat',sans-serif] font-medium">
+                    What color would you like to choose?
+                  </h3>
+                  <div className="flex items-center gap-[18px] flex-wrap">
+                    {sortedColors?.map((color) => (
+                      <div
+                        key={color.id}
+                        className="flex flex-row items-center gap-2.5 relative"
+                      >
+                        <button
+                          className={`w-6 h-6 rounded-[20px] cursor-pointer border-2 border-solid ${
+                            selectedColor?.id === color.id
+                              ? "bg-[#F6AF1F33] border-[#F6AF1F]"
+                              : "bg-[#ffffff] border-[#E9E9E9]"
+                          }`}
+                          onClick={() => handleColorClick(color)}
+                        ></button>
+                        <div className="relative w-fit mt-[-1px] font-montserrat font-medium text-18 tracking-[0] leading-[27px] whitespace-nowrap text-[#F6AF1F]">
+                          {color.value}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 边选择器 */}
+                {selectedPergolaSize && (
+                  <div className="mt-6">
+                    <GlassdoorSideSelector
+                      onSideSelect={handleSideSelect}
+                      selectedSides={selectedSides}
+                      shortSideLength={shortSideLength}
+                      longSideLength={longSideLength}
+                    />
+                  </div>
+                )}
+
+                {/* 产品描述 */}
+                <div className="mt-6">
+                  <p className="self-stretch text-[#68717a] leading-[22.4px] font-montserrat text-[16px] lg:text-base font-medium">
+                    {glassdoorProduct?.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 底部按钮 */}
+            <div className="flex flex-col md:flex-row items-center justify-between self-stretch w-full">
+              <a
+                href="/upload_files/Frameless_sliding_glass_door_technical_sheet_new.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2"
+              >
+                <img src="/img/pdf.png" alt="PDF" className="w-5 h-5" />
+                <h3 className="font-medium text-[#69727A] text-[14px] [font-family:'Montserrat',sans-serif]">
+                  Download specs
+                </h3>
+              </a>
+              <div className="flex flex-row items-center gap-2.5 relative">
+                <AddAccessories
+                  disabled={selectedGlassdoor.length === 0 || isLoading}
+                  buttonClassName="!text-sm !leading-[21px] !font-montserrat !font-medium"
+                  property1="primary-button-l"
+                  text="Add Glass Door"
+                  addAccessory={handleAddToCart}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </ProductSelectionProvider>
   )
 }
 

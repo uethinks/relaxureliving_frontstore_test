@@ -231,7 +231,7 @@ const pergolaPopulate = {
   populate: {
     productInformations: "*",
     relatedProductIds: "*",
-    productImages: {
+    product_images: {
       fields: ["*"],
     },
     descriptionTab: {
