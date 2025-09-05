@@ -61,13 +61,13 @@ export default async function AccessoriesPage(props: Props) {
           />
         </div>
       </div>
-      <OurPromise
+      {/* <OurPromise
         pergolaData={
           {
             boringButImportantStuff: data.OurPromise,
           } as PergolaData
         }
-      />
+      /> */}
       <FooterDark />
     </>
   )

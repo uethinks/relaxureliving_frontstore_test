@@ -18,6 +18,7 @@ import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import V2ServiceDescription from "@/components/V2ServiceDescription"
 import { freeServices } from "@lib/utils"
+import V2SupportSection from "@/components/V2SupportSection"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -168,6 +169,7 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
   const [selectedGlassdoor, setSelectedGlassdoor] = useState<selectedProducts>(
     []
   )
+  const [calculatedPrice, setCalculatedPrice] = useState<number>(0)
   const [totalPrice, setTotalPrice] = useState<number>(0)
   const [totalOriginalPrice, setTotalOriginalPrice] = useState(0)
 
@@ -216,6 +218,10 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
   // 计算价格
   useEffect(() => {
     console.log("selectedGlassdoor: ", selectedGlassdoor)
+    setCalculatedPrice(
+      selectedGlassdoor[0]?.productVarant?.calculated_price
+        ?.calculated_amount ?? 0
+    )
     setTotalPrice(
       manualQuantity *
         (selectedGlassdoor[0]?.productVarant?.calculated_price
@@ -350,7 +356,7 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
           <div className="flex flex-col items-start gap-5">
             <div className="text-sm font-medium text-[#000000] flex justify-between w-full">
               <span> Size: {selectedPergolaSize || "10'x10'"}</span>
-              <span className="text-sm text-[#8c877c] mb-3">+ $876.00</span>
+              <span className="text-sm text-[#8c877c] mb-3">+ {formatPrice(calculatedPrice)}</span>
             </div>
             {/* Quantity Selector */}
             <div className="flex justify-between items-center border border-white bg-transparent w-full">
@@ -436,39 +442,7 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
           />
         </div>
 
-        {/* Support Section */}
-        <div className="px-8 py-5 w-full mt-5 border border-[#8C877C]">
-          <div className="w-full">
-            <div className="flex items-center gap-4">
-              <span className="bg-[#ffbf3c] p-1">
-                <img src="/img/expert.svg" alt="message" className="w-7 h-7" />
-              </span>
-              <div className="text-[#000000] text-base">
-                <p className="font-medium">We're Here to Help</p>
-                <p className="font-medium text-[#8C877C] text-xs">
-                  9AM to 5PM PST Mon-Fri
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-sm flex justify-between">
-            <Button variant="link" className="underline px-0 text-black">
-              <img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />
-              1-213-566-8658
-            </Button>
-            <Button variant="link" className="underline px-0 text-black">
-              <img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />
-              info@relaxureliving.com
-            </Button>
-          </div>
-        </div>
-        <div className="flex items-center justify-center gap-1 mt-4 text-sm">
-          {/* <MessageCircle className="h-4 w-4" /> */}
-          <span>Chat in the Corner</span>
-          {/* <ChevronDown className="h-4 w-4" /> */}
-          <MoveDownRight className="h-4 w-4" />
-        </div>
+        <V2SupportSection />
       </div>
     </div>
   )

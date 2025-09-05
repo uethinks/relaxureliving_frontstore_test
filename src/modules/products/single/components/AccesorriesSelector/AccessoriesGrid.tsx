@@ -8,6 +8,73 @@ import {
 } from "@lib/cms/strapiCmsApi"
 import V2HeroBanner from "@/components/V2HeroBanner"
 import V2Button from "@/components/V2Button"
+import { formatPrice } from "@lib/utils"
+import { Badge } from "@/components/ui/badge"
+
+const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+
+  const variant = infoData.product.variants[0]
+  const originalPrice = variant?.calculated_price?.original_amount || 0
+  const calculatedPrice = variant?.calculated_price?.calculated_amount || 0
+  const savingsPercentage =
+    originalPrice > 0
+      ? Math.round(((originalPrice - calculatedPrice) / originalPrice) * 100)
+      : 0
+
+  return (
+    <div className="relative bg-white overflow-hidden transition-colors">
+      <div className="aspect-square overflow-hidden">
+        <img
+          src={`${baseUrl}${infoData.productImages?.[0]?.url}`}
+          alt={infoData.name}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="mt-4 h-[100px]">
+        <div className="flex justify-between items-start">
+          <h3 className="font-montserrat text-[22px] font-medium text-black">
+            {infoData.name}
+          </h3>
+        </div>
+        <p className="text-xs font-semibold">{infoData.description}</p>
+        <p className="text-xs text-[#8C877C] font-semibold">
+          {infoData.listDescription}
+        </p>
+      </div>
+      <div className="flex flex-col w-full mb-5">
+        <div className="flex items-center gap-2">
+          <span className="text-[#000000] text-3xl font-bold">
+            {formatPrice(calculatedPrice)}
+          </span>
+          {savingsPercentage > 0 && (
+            <Badge className="bg-highlight rounded-none text-white font-bold px-6 py-2 [clip-path:polygon(15px_0,100%_0,100%_100%,15px_100%,0_50%)]">
+              {savingsPercentage}% off
+            </Badge>
+          )}
+        </div>
+        {originalPrice > calculatedPrice && (
+          <p className="text-[#8c8c8c] text-xl">
+            <span className="line-through font-semibold">
+              {formatPrice(originalPrice)}
+            </span>{" "}
+            <span className="text-[#ff5f00]">
+              Save {formatPrice(originalPrice - calculatedPrice)}
+            </span>
+          </p>
+        )}
+      </div>
+      <V2Button
+        data={{
+          type: "Secondary",
+          link: `/accessories/${infoData.slug}`,
+          size: "Medium",
+          text: "Shop Now",
+        }}
+      />
+    </div>
+  )
+}
 
 export const AccessoriesGrid = async ({
   showTitle = true,
@@ -64,7 +131,9 @@ export const AccessoriesGrid = async ({
     glassdoorInfo: glassdoorInfo.data,
   }
 
-  console.log("accessories: ", accessories)
+  const heaterVariants = accessories.heaterInfo.product.variants[0]
+  const shadesVariants = accessories.shadesInfo.product.variants[0]
+  const glassdoorVariants = accessories.glassdoorInfo.product.variants[0]
 
   return (
     <div className="w-full pb-20">
@@ -75,100 +144,24 @@ export const AccessoriesGrid = async ({
           )}
       </div>
       <div className="mt-5 px-6 box-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="relative bg-white overflow-hidden transition-colors">
-          <div className="aspect-square overflow-hidden">
-            <img
-              src={`${baseUrl}${accessories.heaterInfo.productImages?.[0]?.url}`}
-              alt={accessories.heaterInfo.name}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="mt-4">
-            <div className="flex justify-between items-start">
-              <h3 className="font-montserrat text-[22px] font-medium text-black">
-                {accessories.heaterInfo.name}
-              </h3>
-            </div>
-          </div>
-          <div>
-            <span className="text-[24px] font-montserrat font-medium text-black">
-              $
-              {accessories.heaterInfo.product.variants?.[0]?.calculated_price
-                ?.calculated_amount ?? 0}
-            </span>
-          </div>
-          <V2Button
-            data={{
-              type: "Secondary",
-              link: "/accessories/heater",
-              size: "Medium",
-              text: "Shop Now",
-            }}
-          />
-        </div>
-        <div className="relative bg-white overflow-hidden transition-colors">
-          <div className="aspect-square overflow-hidden">
-            <img
-              src={`${baseUrl}${accessories.shadesInfo.productImages?.[0]?.url}`}
-              alt={accessories.shadesInfo.name}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="mt-4">
-            <div className="flex justify-between items-start">
-              <h3 className="font-montserrat text-[22px] font-medium text-black">
-                {accessories.shadesInfo.name}
-              </h3>
-            </div>
-          </div>
-          <div>
-            <span className="text-[24px] font-montserrat font-medium text-black">
-              $
-              {accessories.shadesInfo.product.variants?.[0]?.calculated_price
-                ?.calculated_amount ?? 0}
-            </span>
-          </div>
-          <V2Button
-            data={{
-              type: "Secondary",
-              link: "/accessories/shades",
-              size: "Medium",
-              text: "Shop Now",
-            }}
-          />
-        </div>
-
-        <div className="relative bg-white overflow-hidden transition-colors">
-          <div className="aspect-square overflow-hidden">
-            <img
-              src={`${baseUrl}${accessories.glassdoorInfo.productImages?.[0]?.url}`}
-              alt={accessories.glassdoorInfo.name}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="mt-4">
-            <div className="flex justify-between items-start">
-              <h3 className="font-montserrat text-[22px] font-medium text-black">
-                {accessories.glassdoorInfo.name}
-              </h3>
-            </div>
-          </div>
-          <div>
-            <span className="text-[24px] font-montserrat font-medium text-black">
-              $
-              {accessories.glassdoorInfo.product.variants?.[0]?.calculated_price
-                ?.calculated_amount ?? 0}
-            </span>
-          </div>
-          <V2Button
-            data={{
-              type: "Secondary",
-              link: "/accessories/glassdoor",
-              size: "Medium",
-              text: "Shop Now",
-            }}
-          />
-        </div>
+        <AccessoriesGridItem
+          infoData={{
+            ...accessories.heaterInfo,
+            slug: "heater",
+          }}
+        />
+        <AccessoriesGridItem
+          infoData={{
+            ...accessories.shadesInfo,
+            slug: "shades",
+          }}
+        />
+        <AccessoriesGridItem
+          infoData={{
+            ...accessories.glassdoorInfo,
+            slug: "glassdoor",
+          }}
+        />
       </div>
     </div>
   )

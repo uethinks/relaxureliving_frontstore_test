@@ -90,3 +90,9 @@ export function getStrapiUrl(path: string) {
   }
   return `${strapiUrl}${path}`
 }
+
+export const formatPrice = (price: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(price || 0)
