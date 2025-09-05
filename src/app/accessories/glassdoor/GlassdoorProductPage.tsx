@@ -28,18 +28,13 @@ const GlassdoorProductPage = ({
   pergolaSizes,
   pergolaSize,
 }: GlassdoorPageClientProps) => {
-  const { addVariant } = useCart()
-  const [selectedPergolaSize, setSelectedPergolaSize] = useState<string>("")
   const [selectedColor, setSelectedColor] = useState<StoreProductOptionValue>()
-  const [selectedSides, setSelectedSides] = useState<string[]>([])
   const [selectedSize, setSelectedSize] = useState<string[]>([])
   const [selectedGlassdoor, setSelectedGlassdoor] = useState<selectedProducts>(
     []
   )
   const [totalPrice, setTotalPrice] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(false)
-  const [shortSideLength, setShortSideLength] = useState<string>("")
-  const [longSideLength, setLongSideLength] = useState<string>("")
 
   // 获取颜色选项
   const glassdoorColors = glassdoorProduct?.options?.find(
@@ -49,60 +44,12 @@ const GlassdoorProductPage = ({
     a.value.localeCompare(b.value)
   )
 
-  // 初始化pergola尺寸长度
-  useEffect(() => {
-    console.log("Initial pergolaSize:", pergolaSize)
-    setShortSideLength(pergolaSize.width.toString() + '"')
-    setLongSideLength(pergolaSize.length.toString() + '"')
-  }, [pergolaSize])
-
-  // 当选择pergola尺寸时更新长度
-  useEffect(() => {
-    if (selectedPergolaSize) {
-      console.log("Selected pergola size:", selectedPergolaSize)
-      // 移除所有非数字和x的字符，然后按x分割
-      const cleanSize = selectedPergolaSize.replace(/[^\dx]/gi, "")
-      const parts = cleanSize.split("x")
-      console.log("Clean size:", cleanSize, "Parts:", parts)
-
-      if (parts.length === 2) {
-        const width = parseInt(parts[0])
-        const length = parseInt(parts[1])
-        console.log("Parsed width:", width, "length:", length)
-        if (width && length) {
-          const shortSide = Math.min(width, length)
-          const longSide = Math.max(width, length)
-          console.log("Setting shortSide:", shortSide, "longSide:", longSide)
-          setShortSideLength(shortSide.toString() + '"')
-          setLongSideLength(longSide.toString() + '"')
-        }
-      }
-    }
-  }, [selectedPergolaSize])
-
   // 初始化默认值
   useEffect(() => {
     if (sortedColors && sortedColors.length > 0 && !selectedColor) {
       setSelectedColor(sortedColors[0])
     }
   }, [sortedColors, selectedColor])
-
-  /**
-   * 根据sides选择对应的size
-   * @param sides
-   */
-  const handleSideSelect = (sides: string[]) => {
-    setSelectedSides(sides)
-    setSelectedSize(
-      sides.map((side) => {
-        if (side === "left" || side === "right") {
-          return shortSideLength
-        } else {
-          return longSideLength
-        }
-      })
-    )
-  }
 
   // 更新选中的glassdoor和价格
   useEffect(() => {
@@ -131,35 +78,6 @@ const GlassdoorProductPage = ({
     )
   }, [selectedGlassdoor])
 
-  // 处理颜色选择
-  const handleColorClick = (color: StoreProductOptionValue) => {
-    setSelectedColor(color)
-  }
-
-  // 添加到购物车
-  const handleAddToCart = async () => {
-    if (selectedGlassdoor.length === 0 || isLoading) {
-      return
-    }
-
-    setIsLoading(true)
-    try {
-      for (const glassdoor of selectedGlassdoor) {
-        if (glassdoor.productVarant) {
-          await addVariant({
-            variantId: glassdoor.productVarant.id,
-            quantity: glassdoor.quantity,
-            countryCode: defaultCountryCode,
-          })
-        }
-      }
-      window.location.href = "/cart"
-    } catch (error) {
-      console.error("Failed to add to cart:", error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
 
   // 获取变体
   const getVariant = useCallback(() => {

@@ -45,9 +45,6 @@ export default async function AccessoriesPage(props: Props) {
     length: pergola.product.length || 10,
   }
 
-  // 获取OurPromise数据
-  const { data } = await getHomePage()
-
   return (
     <>
       <div className="bg-background flex flex-col items-start justify-center w-full">

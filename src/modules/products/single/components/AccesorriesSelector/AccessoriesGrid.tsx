@@ -31,13 +31,13 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="mt-4 h-[100px]">
+      <div className="mt-4 h-[120px]">
         <div className="flex justify-between items-start">
           <h3 className="font-montserrat text-[22px] font-medium text-black">
             {infoData.name}
           </h3>
         </div>
-        <p className="text-xs font-semibold">{infoData.description}</p>
+        <p className="text-xs font-semibold">{infoData.subtitle}</p>
         <p className="text-xs text-[#8C877C] font-semibold">
           {infoData.listDescription}
         </p>
@@ -90,7 +90,7 @@ export const AccessoriesGrid = async ({
     throw new Error("Failed to fetch accessories page data")
   }
 
-  console.log("accessoriesPage: ", accessoriesPage.data)
+  // console.log("accessoriesPage: ", accessoriesPage.data)
   const { banner } = accessoriesPage.data
 
   // 获取各个产品的数据
@@ -130,10 +130,6 @@ export const AccessoriesGrid = async ({
     shadesInfo: shadesInfo.data,
     glassdoorInfo: glassdoorInfo.data,
   }
-
-  const heaterVariants = accessories.heaterInfo.product.variants[0]
-  const shadesVariants = accessories.shadesInfo.product.variants[0]
-  const glassdoorVariants = accessories.glassdoorInfo.product.variants[0]
 
   return (
     <div className="w-full pb-20">
