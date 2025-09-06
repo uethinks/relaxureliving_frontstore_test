@@ -10,6 +10,7 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
 import { PergolaData } from "types/global"
 import GlassdoorProductPage from "./GlassdoorProductPage"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
@@ -57,14 +58,8 @@ export default async function AccessoriesPage(props: Props) {
             pergolaSize={pergolaSize as any}
           />
         </div>
+        <V2SectionRenderer sections={glassdoorInfo.data?.sections || []} />
       </div>
-      {/* <OurPromise
-        pergolaData={
-          {
-            boringButImportantStuff: data.OurPromise,
-          } as PergolaData
-        }
-      /> */}
       <FooterDark />
     </>
   )

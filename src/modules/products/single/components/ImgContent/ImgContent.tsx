@@ -46,7 +46,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
     return (
       productImages?.filter((image) => {
         if (!image.caption) {
-          return false
+          return true
         }
 
         const caption = image.caption.toLowerCase()
@@ -183,7 +183,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                   >
                     <div className="aspect-square overflow-hidden">
                       <img
-                        src={strapiCmsUrl + image.formats.small.url}
+                        src={strapiCmsUrl + (image?.formats?.small?.url || image?.formats?.thumbnail?.url || image?.formats?.xsmall?.url)}
                         alt=""
                         className="w-full h-full object-cover object-center"
                         loading="lazy"

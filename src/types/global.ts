@@ -37,6 +37,12 @@ export type Image = {
     small: {
       url: string;
     };
+    xsmall: {
+      url: string;
+    };
+    thumbnail: {
+      url: string;
+    };
   };
 }
 // 定义 HeroProps 类型

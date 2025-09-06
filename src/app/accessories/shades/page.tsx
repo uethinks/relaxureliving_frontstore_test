@@ -1,14 +1,9 @@
 import { getProductByProductId } from "@lib/data/products"
-import {
-  getAccessoriesPage,
-  getShades,
-  getHomePage,
-} from "@lib/cms/strapiCmsApi"
+import { getAccessoriesPage, getShades } from "@lib/cms/strapiCmsApi"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
-import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
-import { PergolaData } from "types/global"
 import ShadesProductPage from "./ShadesProductPage"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
@@ -45,16 +40,10 @@ export default async function AccessoriesPage(props: Props) {
     length: pergola.product.length || 10,
   }
 
-  // 获取OurPromise数据
-  const { data } = await getHomePage()
-
   return (
     <>
-      <div className="bg-[#ffffff] flex flex-col items-start justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
+      <div className="bg-background flex flex-col items-start justify-center w-full">
         <NavBarWrapper isFixed={false} />
-        <div className="flex flex-col gap-4 text-[36px] font-medium text-black font-merriweather mb-5">
-          Accessories
-        </div>
         <div className="flex flex-col gap-4 w-full">
           <ShadesProductPage
             shadesProduct={shades.product as any}
@@ -63,14 +52,8 @@ export default async function AccessoriesPage(props: Props) {
             pergolaSize={pergolaSize as any}
           />
         </div>
+        <V2SectionRenderer sections={shadesInfo.data?.sections || []} />
       </div>
-      <OurPromise
-        pergolaData={
-          {
-            boringButImportantStuff: data.OurPromise,
-          } as PergolaData
-        }
-      />
       <FooterDark />
     </>
   )

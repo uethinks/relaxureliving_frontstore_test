@@ -11,6 +11,7 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
 import { PergolaData } from "types/global"
 import { HeaterProductPage } from "./HeaterProductPage"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
@@ -34,12 +35,9 @@ export default async function AccessoriesPage(props: Props) {
     notFound()
   }
 
-  // 获取OurPromise数据
-  const { data } = await getHomePage()
-
   return (
     <>
-      <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full 2xl:w-[1512px] px-5 lg:px-20">
+      <div className="bg-background flex flex-col items-center justify-center w-full">
         <NavBarWrapper isFixed={false} />
         <div className="flex flex-col gap-4 w-full">
           <HeaterProductPage
@@ -47,14 +45,8 @@ export default async function AccessoriesPage(props: Props) {
             heaterCMSData={heaterInfo.data}
           />
         </div>
+        <V2SectionRenderer sections={heaterInfo.data?.sections || []} />
       </div>
-      <OurPromise
-        pergolaData={
-          {
-            boringButImportantStuff: data.OurPromise,
-          } as PergolaData
-        }
-      />
       <FooterDark />
     </>
   )
