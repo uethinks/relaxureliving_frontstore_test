@@ -136,7 +136,7 @@ const accessoriesPagePopulate = {
   populate: {
     banner: {
       populate: "*",
-    }
+    },
   },
 }
 
@@ -350,6 +350,32 @@ const shadesPopulate = {
     },
   },
 }
+
+const sampleKitPopulate = {
+  populate: {
+    productImages: {
+      fields: ["*"],
+    },
+    sections: {
+      on: {
+        "blocks.v2-hero-banner": v2HeroBannerPopulate,
+        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
+        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
+        "blocks.v2-press-slider": v2PressSliderPopulate,
+        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
+        "blocks.v2-occasions": v2OccasionsPopulate,
+        "blocks.v2-rain-resistance": v2RainResistancePopulate,
+        "blocks.v2-feature-grid": v2FeatureGridPopulate,
+        "blocks.v2-promo-banner": v2PromoBannerPopulate,
+        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
+        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
+        "blocks.v2-faq-section": v2FaqSectionPopulate,
+        "blocks.v2-feature-cards": v2FeatureCardsPopulate,
+      },
+    },
+  },
+}
+
 const glassdoorPopulate = {
   populate: {
     productInformations: "*",
@@ -425,6 +451,7 @@ export const API_URLS = {
   getPergola: "/api/pergola",
   getHeater: "/api/heater",
   getShades: "/api/shades-screen",
+  getSampleKit: "/api/v2-pdp-sample-kit",
   getGlassdoor: "/api/glass-door",
   sendKlaviyoTrackInfo: "/api/contact-submissions",
   getLandingPage: "/api/landing",
@@ -595,6 +622,18 @@ export const getShades = async () => {
     return response.data
   } catch (error) {
     console.error("Error fetching shades data:", error)
+    throw error
+  }
+}
+// 获取 Pergola 数据
+export const getSampleKit = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getSampleKit, {
+      params: sampleKitPopulate,
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching heater data:", error)
     throw error
   }
 }
