@@ -133,7 +133,7 @@ export const CartAccessoriesGrid = () => {
         <div className="p-2 relative bg-white rounded-[20px] overflow-hidden border border-[#E9E9E9] transition-colors">
           <div className="aspect-square overflow-hidden rounded-[20px]">
             <img
-              src={`${baseUrl}${accessories.heaterInfo.product_images?.[0]?.url}`}
+              src={`${baseUrl}${accessories.heaterInfo.productImages?.[0]?.url}`}
               alt={accessories.heaterInfo.name}
               className="w-full h-full object-cover"
             />
