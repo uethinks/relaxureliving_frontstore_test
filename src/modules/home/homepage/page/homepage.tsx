@@ -87,7 +87,7 @@ export default async function Homepage() {
         <NavBarWrapper isHomePage={true} />
         {data.sections.map((section: any) => {
           const key = `${section.id}-${section.__component}`
-          console.log(key, section)
+          console.log('HomePage section', key, JSON.stringify(section))
           if (section.__component === "blocks.v2-hero-banner") {
             return <V2HeroBanner key={key} data={section} />
           } else if (section.__component === "blocks.v2-service-snapshots") {
