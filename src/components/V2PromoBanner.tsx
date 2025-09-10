@@ -56,6 +56,7 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
     <section className="relative min-h-screen w-full flex items-center" role="banner" aria-label="Hero section">
       <div className="absolute inset-0 z-0">
         <Image
+          unoptimized
           src={getStrapiUrl(backgroundImage.url)}
           alt={backgroundImage.alternativeText || "Relaxure pergola assembly process"}
           fill

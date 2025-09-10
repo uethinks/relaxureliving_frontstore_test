@@ -234,6 +234,7 @@ export default function V2TestimonialsSection({
               <CardContent className="p-4 sm:p-6">
                 <div className="flex items-start gap-3 sm:gap-4">
                   <Image
+                    unoptimized
                     src={getStrapiUrl(item.avatar.url)}
                     alt={
                       item.avatar.alternativeText ||
@@ -303,6 +304,7 @@ export default function V2TestimonialsSection({
               if (mediaType === 'image') {
                 return (
                   <Image
+                    unoptimized
                     src={mediaUrl}
                     alt={currentMedia.alternativeText || `${currentItem.author}'s outdoor space`}
                     width={currentMedia.width || 500}

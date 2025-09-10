@@ -112,6 +112,7 @@ function FeatureCard({ item }: FeatureCardProps) {
             {/* Icon */}
             <div className="mb-4 flex gap-6 items-center">
               <Image
+                unoptimized
                 src={getStrapiUrl(iconUrl)}
                 alt={iconAlt}
                 width={item.icon.width}

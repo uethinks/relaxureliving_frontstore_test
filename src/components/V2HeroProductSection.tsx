@@ -62,7 +62,8 @@ export default function V2HeroProductSection({
       <div className="max-w-7xl w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-16">
         {/* Left side - Pergola Image */}
         <div className="h-[480px] overflow-hidden">
-          <Image
+          <Image  
+            unoptimized
             src={getStrapiUrl(image.url)}
             alt={
               image.alternativeText ||
@@ -71,7 +72,7 @@ export default function V2HeroProductSection({
             width={image.width}
             height={image.height}
             className="object-contain h-full w-full"
-            priority
+            // priority -- remove it for lazy loading, as it is above the fold
           />
         </div>
 

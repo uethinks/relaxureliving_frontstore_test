@@ -68,7 +68,8 @@ export function V2FAQSection({ data }: FAQSectionProps) {
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
                     {faq.icon?.url ? (
-                      <Image
+                      <Image 
+                        unoptimized
                         src={getStrapiUrl(faq.icon.url)}
                         alt={faq.icon.alternativeText || `${faq.category} icon`}
                         width={faq.icon.width}

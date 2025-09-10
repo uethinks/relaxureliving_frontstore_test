@@ -108,6 +108,7 @@ function FeatureCard({ item }: FeatureCardProps) {
         {/* Feature Image */}
         <div className="aspect-square mb-4 overflow-hidden bg-white/50">
           <Image
+            unoptimized
             src={getStrapiUrl(imageUrl)}
             alt={imageAlt}
             width={item.image.width}

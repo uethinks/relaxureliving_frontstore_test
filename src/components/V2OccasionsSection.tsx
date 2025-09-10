@@ -80,6 +80,7 @@ export default function V2OccasionsSection({ data }: V2OccasionsSectionProps) {
               <CardContent className="p-0 space-y-6">
                 <div className="aspect-[525/262] overflow-hidden bg-muted">
                   <Image
+                    unoptimized
                     src={getStrapiUrl(item.media.url)}
                     alt={item.media.alternativeText || item.title}
                     width={item.media.width}

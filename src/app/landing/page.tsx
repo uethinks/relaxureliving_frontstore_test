@@ -71,6 +71,13 @@ export default async function LandingPage() {
   const landingPageData = await getCachedLandingPage()
   const homePageData = await getCachedHomePage()
   const pergolaPageData = await getCachedPergolaPage()
+
+  console.log("Landing page homepage data", JSON.stringify(homePageData))
+  console.log("Landing page landingPageData data", JSON.stringify(landingPageData))
+  console.log("Landing page pergolaPageData data", JSON.stringify(pergolaPageData))
+
+  console.log("Landing page landingPageData.landing_slider data", landingPageData.landing_slider)
+
   if (!landingPageData) {
     return (
       <div className="flex items-center justify-center min-h-screen">

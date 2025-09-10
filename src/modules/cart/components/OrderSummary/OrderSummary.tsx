@@ -84,7 +84,7 @@ export const OrderSummary = (): JSX.Element => {
           <div className="flex flex-col gap-6 mb-20 px-4">
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-5 h-5">
-                <Image
+                <Image                   
                   src="/img/package.svg"
                   alt="Package icon"
                   width={20}

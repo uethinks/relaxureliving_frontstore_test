@@ -130,6 +130,7 @@ export default function V2PressSection({ data }: V2PressSectionProps) {
                     {testimonial.image && (
                       <div className="flex-shrink-0 ">
                         <Image
+                          unoptimized
                           src={getStrapiUrl(
                             testimonial.image.formats.thumbnail?.url ||
                               testimonial.image.url
