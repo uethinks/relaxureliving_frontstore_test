@@ -99,14 +99,14 @@ interface FeatureCardProps {
 function FeatureCard({ item }: FeatureCardProps) {
   console.log('item:', item)
   // Use the best available image format
-  const imageUrl = item.image.formats?.thumbnail?.url || item.image.url
-  const imageAlt = item.image.alternativeText || `${item.title} feature illustration`
+  const imageUrl = item.image?.formats?.thumbnail?.url || item.image?.url
+  const imageAlt = item.image?.alternativeText || `${item.title} feature illustration`
 
   return (
     <Card className="bg-transparent border-none shadow-none">
       <CardContent className="p-0 flex flex-col h-full">
         {/* Feature Image */}
-        <div className="aspect-square mb-4 overflow-hidden bg-white/50">
+        {imageUrl && <div className="aspect-square mb-4 overflow-hidden bg-white/50">
           <Image
             unoptimized
             src={getStrapiUrl(imageUrl)}
@@ -116,7 +116,7 @@ function FeatureCard({ item }: FeatureCardProps) {
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
             loading="lazy"
           />
-        </div>
+        </div>}
 
         {/* Feature Content */}
         <div className="h-24 mb-6">

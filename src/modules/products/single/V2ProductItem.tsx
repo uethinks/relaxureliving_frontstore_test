@@ -62,7 +62,7 @@ export const V2ProductItem = ({
           standardPergolaData={standardPergolaData}
           accessoriesCMSData={accessoriesCMSData}
         />
-        <V2SectionRenderer sections={standardPergolaData?.sections || []} />
+        <V2SectionRenderer sections={standardPergolaData?.descriptionSections || []} />
 
         {/* <ProductOverviewAccordion
           productOverview={pergolaData.product_overview}
