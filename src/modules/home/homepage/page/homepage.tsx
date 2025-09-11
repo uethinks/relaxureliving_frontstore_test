@@ -11,8 +11,7 @@ import { FaqWrapper } from "./sections/FaqWrapper"
 import { ContactUs } from "./sections/ContactUs"
 import { Testimonials } from "./sections/Testimonials"
 import { AwardBlock } from "@modules/common/components/AwardBlock"
-import { PergolaData } from "types/global"
-import { unstable_cache } from "next/cache"
+import { PergolaData } from "types/global" 
 import V2HeroBanner from "@/components/V2HeroBanner"
 import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
 import V2HeroProductSection from "@/components/V2HeroProductSection"
@@ -50,28 +49,12 @@ interface FAQAnswer {
   Answer: string
 }
 
-// 缓存数据获取函数
-const getCachedHomePage = unstable_cache(
-  async () => {
-    try {
-      const { data } = await getHomePage()
-      return data
-    } catch (error) {
-      console.error("Error fetching homepage data:", error)
-      return null
-    }
-  },
-  ["homepage-data"],
-  {
-    revalidate: 3600, // 1小时缓存
-    tags: ["homepage"], // 用于手动重新验证
-  }
-)
+ 
 
 // 主页面组件
 export default async function Homepage() {
-  const data = await getCachedHomePage()
-  // console.log('getCachedHomePage', data)
+  const { data } = await getHomePage()
+  console.log('Homepage - data', data)
 
   if (!data) {
     return (

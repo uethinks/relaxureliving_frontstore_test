@@ -10,13 +10,11 @@ import {
   getStandardPergola,
 } from "@lib/cms/strapiCmsApi"
 import { StoreProduct, StoreProductResponse } from "@medusajs/types"
-import { unstable_cache } from "next/cache"
 import { Metadata } from "next"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 // 强制静态生成
 export const dynamic = "force-static"
-export const revalidate = 3600 // 1小时重新验证一次
 
 type ProductInformation = {
   id: number
@@ -30,89 +28,6 @@ type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
 
-// 缓存pergola数据获取
-const getCachedPergola = unstable_cache(
-  async () => {
-    const pergolaData = await getPergola()
-    if (!pergolaData?.data) {
-      throw new Error("Failed to fetch pergola data during build")
-    }
-    return pergolaData.data
-  },
-  ["pergola-data"],
-  { revalidate: 3600 } // 1小时后重新验证
-)
-
-const getCachedStandardPergola = unstable_cache(
-  async () => {
-    const standardPergolaData = await getStandardPergola()
-    return standardPergolaData.data
-  },
-  ["standard-pergola-data"],
-  { revalidate: 3600, tags: ["standard-pergola-data"] }
-)
-
-// 缓存region数据获取
-const getCachedRegion = unstable_cache(
-  async (countryCode: string) => {
-    const region = await getRegion(countryCode)
-    if (!region) {
-      throw new Error(`Region not found for country code: ${countryCode}`)
-    }
-    return region
-  },
-  ["region-data"],
-  { revalidate: 3600 }
-)
-
-// 缓存产品数据获取
-const getCachedProduct = unstable_cache(
-  async (productId: string, regionId: string) => {
-    const product = await getProductByProductId({
-      productId,
-      queryParams: {
-        fields: `*variants.calculated_price`,
-        region_id: regionId,
-      },
-    })
-    if (!product) {
-      throw new Error(`Product not found: ${productId}`)
-    }
-    return product
-  },
-  ["product-data"],
-  { revalidate: 3600, tags: ["products"] }
-)
-
-// 缓存加热器数据获取
-const getCachedHeaterCMS = unstable_cache(
-  async () => {
-    const heaterData = await getHeater()
-    return heaterData.data
-  },
-  ["heater-data"],
-  { revalidate: 3600 }
-)
-
-// 缓存百叶窗数据获取
-const getCachedShadesCMS = unstable_cache(
-  async () => {
-    const shadesData = await getShades()
-    return shadesData.data
-  },
-  ["shades-data"],
-  { revalidate: 3600 }
-)
-
-// 缓存玻璃门数据获取
-const getCachedGlassDoorCMS = unstable_cache(
-  async () => {
-    const glassDoorData = await getGlassdoor()
-    return glassDoorData.data
-  },
-  ["glassdoor-data"],
-  { revalidate: 3600 }
-)
 
 // 动态metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -123,7 +38,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export async function generateStaticParams() {
   try {
     // 1. 获取所有pergola数据
-    const pergolaData = await getCachedPergola()
+    const pergolaResponse = await getPergola()
+    const pergolaData = pergolaResponse.data
 
     // 2. 确保有产品信息
     if (!pergolaData.productInformations?.length) {
@@ -147,15 +63,27 @@ export default async function ProductPage({ params }: Props) {
   try {
     const { pergola } = await params
     // 1. 并行获取基础数据
-    const [pergolaData, region, heaterCMData, shadesCMData, glassDoorCMData, standardPergolaData] =
+    const [pergolaResponse, region, heaterResponse, shadesResponse, glassDoorResponse, standardPergolaResponse] =
       await Promise.all([
-        getCachedPergola(),
-        getCachedRegion(defaultCountryCode),
-        getCachedHeaterCMS(),
-        getCachedShadesCMS(),
-        getCachedGlassDoorCMS(),
-        getCachedStandardPergola(),
+        getPergola(),
+        getRegion(defaultCountryCode),
+        getHeater(),
+        getShades(),
+        getGlassdoor(),
+        getStandardPergola(),
       ])
+    
+    // Extract data from responses
+    const pergolaData = pergolaResponse.data
+    const heaterCMData = heaterResponse.data
+    const shadesCMData = shadesResponse.data
+    const glassDoorCMData = glassDoorResponse.data
+    const standardPergolaData = standardPergolaResponse.data
+    
+    // Validate region
+    if (!region) {
+      throw new Error(`Region not found for country code: ${defaultCountryCode}`)
+    }
     
     // console.log("pergolaData", pergolaData)
     console.log("standardPergolaData", standardPergolaData)
@@ -171,11 +99,49 @@ export default async function ProductPage({ params }: Props) {
     const { relatedProductIds } = standardPergolaData
     const [mainProduct, heaterProduct, shadesProduct, glassDoorProduct] =
       await Promise.all([
-        getCachedProduct(relatedProductIds.pergolaId, region.id),
-        getCachedProduct(relatedProductIds.heaterId, region.id),
-        getCachedProduct(relatedProductIds.shadesId, region.id),
-        getCachedProduct(relatedProductIds.glassDoorId, region.id),
+        getProductByProductId({
+          productId: relatedProductIds.pergolaId,
+          queryParams: {
+            fields: `*variants.calculated_price`,
+            region_id: region.id,
+          },
+        }),
+        getProductByProductId({
+          productId: relatedProductIds.heaterId,
+          queryParams: {
+            fields: `*variants.calculated_price`,
+            region_id: region.id,
+          },
+        }),
+        getProductByProductId({
+          productId: relatedProductIds.shadesId,
+          queryParams: {
+            fields: `*variants.calculated_price`,
+            region_id: region.id,
+          },
+        }),
+        getProductByProductId({
+          productId: relatedProductIds.glassDoorId,
+          queryParams: {
+            fields: `*variants.calculated_price`,
+            region_id: region.id,
+          },
+        }),
       ])
+    
+    // Validate products
+    if (!mainProduct) {
+      throw new Error(`Product not found: ${relatedProductIds.pergolaId}`)
+    }
+    if (!heaterProduct) {
+      throw new Error(`Product not found: ${relatedProductIds.heaterId}`)
+    }
+    if (!shadesProduct) {
+      throw new Error(`Product not found: ${relatedProductIds.shadesId}`)
+    }
+    if (!glassDoorProduct) {
+      throw new Error(`Product not found: ${relatedProductIds.glassDoorId}`)
+    }
     const accessoriesCMSData = {
       heaterCMSData: heaterCMData,
       shadesCMSData: shadesCMData,

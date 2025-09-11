@@ -10,8 +10,7 @@ import {
   getShades,
   getStandardPergola,
 } from "@lib/cms/strapiCmsApi"
-import { StoreProduct, StoreProductResponse } from "@medusajs/types"
-import { unstable_cache } from "next/cache"
+import { StoreProduct, StoreProductResponse } from "@medusajs/types" 
 import { Metadata } from "next"
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
@@ -45,21 +44,14 @@ type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
 
-const getCachedCustomPergola = unstable_cache(
-  async () => {
-    const customPergolaData = await getCustomPergola()
-    return customPergolaData.data
-  },
-  ["custom-pergola-data"],
-  { revalidate: 3600, tags: ["custom-pergola-data"] }
-)
+ 
 
 export default async function ProductCustomPage() {
   try {
     // 1. 并行获取基础数据
-    const [pergolaData] = await Promise.all([getCachedCustomPergola()])
+    const { data: pergolaData } = await getCustomPergola()
 
-    console.log("pergolaData", pergolaData)
+    console.log("ProductCustomPage - pergolaData", pergolaData)
 
     // 5. 渲染页面
     return (

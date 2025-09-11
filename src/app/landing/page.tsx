@@ -8,7 +8,6 @@ import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
 import { Hero } from "./Hero"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { getHomePage, getLandingPage, getPergola } from "@lib/cms/strapiCmsApi"
-import { unstable_cache } from "next/cache"
 import { PergolaData } from "types/global"
 import LandingSlider from "./LandingSlider"
 import GoodMemory from "./GoodMemory"
@@ -17,67 +16,14 @@ import GoodMemory from "./GoodMemory"
 export const dynamic = "force-static"
 export const revalidate = 3600 // 每小时重新验证一次
 
-// 缓存数据获取函数
-const getCachedLandingPage = unstable_cache(
-  async () => {
-    try {
-      const { data } = await getLandingPage()
-      return data
-    } catch (error) {
-      console.error("Error fetching landing page data:", error)
-      return null
-    }
-  },
-  ["landing-data"],
-  {
-    revalidate: 3600, // 1小时缓存
-    tags: ["landing"], // 用于手动重新验证
-  }
-)
-const getCachedHomePage = unstable_cache(
-  async () => {
-    try {
-      const { data } = await getHomePage()
-      return data
-    } catch (error) {
-      console.error("Error fetching homepage data:", error)
-      return null
-    }
-  },
-  ["homepage-data"],
-  {
-    revalidate: 3600, // 1小时缓存
-    tags: ["homepage"], // 用于手动重新验证
-  }
-)
-const getCachedPergolaPage = unstable_cache(
-  async () => {
-    try {
-      const { data } = await getPergola()
-      return data
-    } catch (error) {
-      console.error("Error fetching pergola page data:", error)
-      return null
-    }
-  },
-  ["homepage-data"],
-  {
-    revalidate: 3600, // 1小时缓存
-    tags: ["homepage"], // 用于手动重新验证
-  }
-)
+ 
+ 
 // 主页面组件
 export default async function LandingPage() {
-  const landingPageData = await getCachedLandingPage()
-  const homePageData = await getCachedHomePage()
-  const pergolaPageData = await getCachedPergolaPage()
-
-  console.log("Landing page homepage data", JSON.stringify(homePageData))
-  console.log("Landing page landingPageData data", JSON.stringify(landingPageData))
-  console.log("Landing page pergolaPageData data", JSON.stringify(pergolaPageData))
-
-  console.log("Landing page landingPageData.landing_slider data", landingPageData.landing_slider)
-
+  const { data: landingPageData} = await getLandingPage()
+  const { data: homePageData } = await getHomePage()
+  const { data: pergolaPageData} = await getPergola()
+ 
   if (!landingPageData) {
     return (
       <div className="flex items-center justify-center min-h-screen">

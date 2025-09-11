@@ -38,6 +38,8 @@ export async function POST(request: NextRequest) {
     revalidatePath("/")    
     revalidatePath("/pergola")
     revalidatePath("/products")
+    revalidatePath("/products/custom")
+    revalidatePath("/products/pergola")
     revalidatePath("/about-us")
     revalidatePath("/accessories")
     revalidatePath("/terms")
