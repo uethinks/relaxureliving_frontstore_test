@@ -35,14 +35,15 @@ export async function POST(request: NextRequest) {
 
     // 重新验证指定标签的缓存
     revalidateTag("homepage")
-    revalidatePath("/")    
-    revalidatePath("/pergola")
-    revalidatePath("/products")
+    revalidatePath("/")     
     revalidatePath("/products/custom")
     revalidatePath("/products/pergola")
     revalidatePath("/about-us")
     revalidatePath("/accessories")
-    revalidatePath("/terms")
+    revalidatePath("/terms/warranty")
+    revalidatePath("/terms/refund-policy")
+    revalidatePath("/terms/terms-of-service")
+    revalidatePath("/terms/privacy-policy")
     revalidatePath("/faq")
   
 

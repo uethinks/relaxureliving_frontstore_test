@@ -30,7 +30,7 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 
 // 强制静态生成
 export const dynamic = "force-static"
-export const revalidate = 3600 // 1小时重新验证一次
+// export const revalidate = 3600 // 1小时重新验证一次
 
 type ProductInformation = {
   id: number

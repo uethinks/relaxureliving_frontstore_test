@@ -28,7 +28,7 @@ import V2OccasionsSection from "@/components/V2OccasionsSection"
 
 // 配置静态生成
 export const dynamic = "force-static"
-export const revalidate = 3600 // 每小时重新验证一次
+// export const revalidate = 3600 // 每小时重新验证一次
 
 interface FAQData {
   id: number
