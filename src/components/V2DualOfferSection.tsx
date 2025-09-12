@@ -76,7 +76,7 @@ export default function V2DualOfferSection({
                 key={item.id}
                 className="flex items-center justify-center md:justify-center gap-3"
               >
-                <img
+                {item.icon?.url && <img
                   src={getStrapiUrl(item.icon.url)}
                   alt={item.icon.alternativeText || item.title}
                   width={item.icon.width}
@@ -84,6 +84,7 @@ export default function V2DualOfferSection({
                   className="w-6 h-6 md:w-8 md:h-8 text-[#140e02] flex-shrink-0"
                   aria-hidden="true"
                 />
+              }
                 <span className="text-[#140e02] text-base md:text-lg font-semibold text-center md:text-left">
                   {item.title}
                 </span>

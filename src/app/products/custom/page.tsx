@@ -98,7 +98,7 @@ export default async function ProductCustomPage() {
       </>
     )
   } catch (error) {
-    console.error("Error rendering product page:", error)
+    console.error("Error rendering product custom  page:", error)
     notFound()
     return null // 添加明确的return语句以满足Sonar要求
   }

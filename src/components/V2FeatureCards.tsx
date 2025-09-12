@@ -94,9 +94,10 @@ interface FeatureCardProps {
 }
 
 function FeatureCard({ item }: FeatureCardProps) {
+  console.log("V2FeatureCards item:", item)
   // Use the best available icon format
-  const iconUrl = item.icon.formats?.thumbnail?.url || item.icon.url
-  const iconAlt = item.icon.alternativeText || `${item.title} icon`
+  const iconUrl = item.icon?.formats?.thumbnail?.url || item.icon?.url
+  const iconAlt = item.icon?.alternativeText || `${item.title} icon`
 
   console.log("item:", item)
 
@@ -111,15 +112,16 @@ function FeatureCard({ item }: FeatureCardProps) {
           <div className="flex-1 flex flex-col">
             {/* Icon */}
             <div className="mb-4 flex gap-6 items-center">
-              <Image
-                unoptimized
-                src={getStrapiUrl(iconUrl)}
-                alt={iconAlt}
-                width={item.icon.width}
-                height={item.icon.height}
-                className="w-14 h-14 object-contain"
-                loading="lazy"
-              />
+              { iconUrl && <Image
+                  unoptimized
+                  src={getStrapiUrl(iconUrl)}
+                  alt={iconAlt}
+                  width={item.icon?.width}
+                  height={item.icon?.height}
+                  className="w-14 h-14 object-contain"
+                  loading="lazy"
+               />
+             }
               {/* Title */}
               <h3 className="text-xl font-bold text-[#140e02]">{item.title}</h3>
             </div>

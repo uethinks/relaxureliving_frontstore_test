@@ -54,11 +54,11 @@ export default function V2ServiceDescription({
           <p className="text-[#8c8c8c] text-sm">
             {item.icon && (
               <>
-                <img
+                {item.icon?.url && <img
                   src={getStrapiUrl(item.icon.url)}
                   alt={item.icon.alternativeText || item.title}
                   className="w-4 h-4 inline-block mr-2 mb-1"
-                />
+                />}
                 <span className="ml-2">{item.description}</span>
                 <br />
               </>
