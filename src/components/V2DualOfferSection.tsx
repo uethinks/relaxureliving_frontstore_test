@@ -108,7 +108,7 @@ export default function V2DualOfferSection({
                     {card.description}
                   </p>
                 </div>
-                <V2Button data={card.button as any} />
+                {card.button && <V2Button data={card.button as any} />}
               </CardContent>
             </Card>
           ))}
