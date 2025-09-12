@@ -421,7 +421,25 @@ const landingPagePopulate = {
 const menuPopulate = {
   populate: {
     menu_item: {
-      populate: "sub_menu_item",
+      populate: {
+        sub_menu_item: {
+          populate: "*",
+        },
+        custom_sub_menu_item: {
+          populate: {
+            banner: {
+              fields: "url",
+            },
+            iconText: {
+              populate: {
+                icon: {
+                  fields: "url",
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
 }

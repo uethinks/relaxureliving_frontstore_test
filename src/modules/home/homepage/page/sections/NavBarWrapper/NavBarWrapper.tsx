@@ -1,9 +1,9 @@
 "use client"
-import React, { useState, useEffect } from "react"
-import { Component } from "../../../../components/Component"
-import Link from "next/link"
-import { useCart } from "@lib/context/cartContext"
 import { getMenu } from "@lib/cms/strapiCmsApi"
+import { useCart } from "@lib/context/cartContext"
+import Link from "next/link"
+import React, { useEffect, useState } from "react"
+import { Component } from "../../../../components/Component"
 
 // 菜单数据类型定义
 interface SubMenuItem {
@@ -13,12 +13,32 @@ interface SubMenuItem {
   anchor: string | null
 }
 
+interface CustomSubMenuItem {
+  id: number
+  name: string
+  url: string | null
+  showLinkBtn: boolean
+  subTitle: string | null
+  description: string | null
+  banner: {
+    url: string | null
+  }
+  iconText: {
+    id: number
+    name: string
+    icon: {
+      url: string | null
+    }
+  }[]
+}
+
 interface MenuItem {
   id: number
   name: string
   url: string | null
   anchor: string | null
   sub_menu_item: SubMenuItem[]
+  custom_sub_menu_item: CustomSubMenuItem[]
 }
 
 interface MenuData {
@@ -106,6 +126,8 @@ export const NavBarWrapper = ({
   // 渲染菜单项
   const renderMenuItem = (item: MenuItem, isMobile = false) => {
     const hasSubMenu = item.sub_menu_item && item.sub_menu_item.length > 0
+    const hasCustomSubMenu =
+      item.custom_sub_menu_item && item.custom_sub_menu_item.length > 0
     const href = getMenuItemHref(item.url, item.anchor)
 
     if (hasSubMenu) {
@@ -205,6 +227,50 @@ export const NavBarWrapper = ({
           </div>
         )
       }
+    }
+    if (hasCustomSubMenu) {
+      return (
+        <div key={item.id} className="relative group">
+          <button
+            className={`
+                flex items-center gap-1 px-2.5 py-2.5 relative 
+                [font-family:'Montserrat',Helvetica] font-medium 
+                text-base tracking-[0] leading-6 hover:text-white-600 transition-colors
+              `}
+          >
+            {item.name}
+            <svg
+              className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {/* 桌面端下拉菜单 */}
+          <div className="absolute left-0 mt-2 w-56 bg-black invisible group-hover:opacity-100 group-hover:visible transition-all z-50 rounded-lg">
+            <div className="py-1">
+              {item.custom_sub_menu_item.map((subItem) => (
+                <a
+                  key={subItem.id}
+                  href={getMenuItemHref(subItem.url, "")}
+                  onClick={(e) => handleMenuItemClick(e, subItem.url, "")}
+                  className="block px-4 py-2 text-sm [font-family:'Montserrat',Helvetica] font-medium  text-white transition-colors"
+                >
+                  {subItem.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
     } else {
       if (isMobile) {
         return (
@@ -242,10 +308,8 @@ export const NavBarWrapper = ({
   return (
     <>
       {/* Placeholder element to prevent content from being hidden behind fixed navigation */}
-      {isFixed && (
-        <div className="hidden xl:block w-full h-[115px]"></div>
-      )}
-      
+      {isFixed && <div className="hidden xl:block w-full h-[115px]"></div>}
+
       <header
         className={`z-50 w-full flex flex-col items-center gap-0 ${
           isFixed
@@ -259,23 +323,45 @@ export const NavBarWrapper = ({
           <div className="w-full max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex-1"></div>
             <div className="flex items-center gap-6 text-white text-sm">
-              <a 
-                href="mailto:Info@Relaxureliving.Com" 
+              <a
+                href="mailto:Info@Relaxureliving.Com"
                 className="flex items-center gap-2 hover:text-gray-300 transition-colors underline"
                 aria-label="Send email to Info@Relaxureliving.Com"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
                 </svg>
                 Info@Relaxureliving.Com
               </a>
-              <a 
-                href="tel:1-213-566-8658" 
+              <a
+                href="tel:1-213-566-8658"
                 className="flex items-center gap-2 hover:text-gray-300 transition-colors underline"
                 aria-label="Call 1-213-566-8658"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
                 </svg>
                 1-213-566-8658
               </a>
@@ -294,12 +380,24 @@ export const NavBarWrapper = ({
           aria-label="Main navigation"
         >
           <div className="w-full max-w-7xl mx-auto flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2" aria-label="Relaxure Homepage">
-              <img className="w-32 lg:w-40 xl:w-[160px]" src="/img/logo.svg" alt="Relaxure Living Logo" />
+            <Link
+              href="/"
+              className="flex items-center gap-2"
+              aria-label="Relaxure Homepage"
+            >
+              <img
+                className="w-32 lg:w-40 xl:w-[160px]"
+                src="/img/logo.svg"
+                alt="Relaxure Living Logo"
+              />
             </Link>
 
             <div className="flex items-center justify-end gap-8 xl:gap-10 relative text-[#ffffff]">
-              <ul className="flex items-center justify-end gap-6 xl:gap-10 relative flex-1 grow" role="menubar" aria-label="Main menu">
+              <ul
+                className="flex items-center justify-end gap-6 xl:gap-10 relative flex-1 grow"
+                role="menubar"
+                aria-label="Main menu"
+              >
                 {/* 动态菜单项 */}
                 {menuData?.data.menu_item.map((item) => (
                   <li key={item.id} role="none">
@@ -313,7 +411,9 @@ export const NavBarWrapper = ({
                   <a
                     href="/cart"
                     className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-base tracking-[0] leading-6 text-white"
-                    aria-label={`Shopping cart with ${hasItemsInCart ? cart?.items?.length || 1 : 0} items`}
+                    aria-label={`Shopping cart with ${
+                      hasItemsInCart ? cart?.items?.length || 1 : 0
+                    } items`}
                   >
                     <div className="flex items-center gap-2">
                       <div className="relative">
@@ -327,7 +427,12 @@ export const NavBarWrapper = ({
                           alt="Shopping cart"
                         />
                         {hasItemsInCart && (
-                          <span className="absolute -top-1 -right-1 bg-[#F6AF1F] text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold" aria-label={`${cart?.items?.length || 1} items in cart`}>
+                          <span
+                            className="absolute -top-1 -right-1 bg-[#F6AF1F] text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+                            aria-label={`${
+                              cart?.items?.length || 1
+                            } items in cart`}
+                          >
                             {cart?.items?.length || 1}
                           </span>
                         )}
@@ -345,7 +450,11 @@ export const NavBarWrapper = ({
         </nav>
 
         {/* Mobile Navigation */}
-        <nav className="xl:hidden flex flex-col w-full items-center justify-center relative px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Mobile navigation">
+        <nav
+          className="xl:hidden flex flex-col w-full items-center justify-center relative px-4 sm:px-6 lg:px-8"
+          role="navigation"
+          aria-label="Mobile navigation"
+        >
           <div className="w-full max-w-7xl mx-auto">
             <div
               className={`
@@ -355,8 +464,15 @@ export const NavBarWrapper = ({
                 px-4 sm:px-6
               `}
             >
-              <Link href="/" className="flex items-center gap-2" aria-label="Relaxure Homepage">
-                <div className="w-6 h-6 bg-[#F6AF1F] rounded-sm transform rotate-45" aria-hidden="true"></div>
+              <Link
+                href="/"
+                className="flex items-center gap-2"
+                aria-label="Relaxure Homepage"
+              >
+                <div
+                  className="w-6 h-6 bg-[#F6AF1F] rounded-sm transform rotate-45"
+                  aria-hidden="true"
+                ></div>
                 <span className="text-white text-lg font-bold">Relaxure</span>
               </Link>
 
@@ -365,7 +481,9 @@ export const NavBarWrapper = ({
                   <a
                     href="/cart"
                     className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-white text-base tracking-[0] leading-6"
-                    aria-label={`Shopping cart with ${hasItemsInCart ? cart?.items?.length || 1 : 0} items`}
+                    aria-label={`Shopping cart with ${
+                      hasItemsInCart ? cart?.items?.length || 1 : 0
+                    } items`}
                   >
                     <div className="flex items-center gap-2">
                       <div className="relative">
@@ -379,7 +497,12 @@ export const NavBarWrapper = ({
                           alt="Shopping cart"
                         />
                         {hasItemsInCart && (
-                          <span className="absolute -top-1 -right-1 bg-[#F6AF1F] text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold" aria-label={`${cart?.items?.length || 1} items in cart`}>
+                          <span
+                            className="absolute -top-1 -right-1 bg-[#F6AF1F] text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+                            aria-label={`${
+                              cart?.items?.length || 1
+                            } items in cart`}
+                          >
                             {cart?.items?.length || 1}
                           </span>
                         )}
@@ -390,7 +513,9 @@ export const NavBarWrapper = ({
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                   className="p-2 text-white"
-                  aria-label={isMenuOpen ? "Close mobile menu" : "Open mobile menu"}
+                  aria-label={
+                    isMenuOpen ? "Close mobile menu" : "Open mobile menu"
+                  }
                   aria-expanded={isMenuOpen}
                   aria-controls="mobile-menu"
                 >
