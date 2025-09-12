@@ -44,6 +44,11 @@ export async function POST(request: NextRequest) {
     revalidatePath("/terms/refund-policy")
     revalidatePath("/terms/terms-of-service")
     revalidatePath("/terms/privacy-policy")
+    revalidatePath("/accessories")
+    revalidatePath("/accessories/glassdoor")
+    revalidatePath("/accessories/heater")
+    revalidatePath("/accessories/sample-kit")
+    revalidatePath("/accessories/shades")
     revalidatePath("/faq")
   
 
