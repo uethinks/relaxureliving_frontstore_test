@@ -267,7 +267,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                     className="!flex items-center justify-center h-full"
                   >
                     <img
-                      src={strapiCmsUrl + image.url}
+                      src={strapiCmsUrl + image?.url || ""}
                       alt=""
                       className="max-w-full max-h-full w-auto h-auto object-contain"
                       loading="lazy"

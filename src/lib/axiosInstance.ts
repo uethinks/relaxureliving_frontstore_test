@@ -19,7 +19,7 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log('config.paramsSerializer', config.paramsSerializer)
+    // console.log('config.paramsSerializer', config.paramsSerializer)
     config.paramsSerializer = config.paramsSerializer
     ? config.paramsSerializer // if you want to still be able to overwrite it on a per-request level
     : qs.stringify;

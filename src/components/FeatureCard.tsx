@@ -53,7 +53,7 @@ export function FeatureCard({ item, index }: FeatureCardProps) {
           {/* Image */}
           <div className={`relative ${isReversed ? "lg:col-start-1" : ""}`}>
             <div className="relative aspect-[6/5] w-full overflow-hidden">
-              <Image
+              { item.media && <Image
                 unoptimized
                 src={getStrapiUrl(item.media.url)}
                 alt={item.media.alternativeText || item.title}
@@ -61,7 +61,7 @@ export function FeatureCard({ item, index }: FeatureCardProps) {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                 priority={index === 0}
-              />
+              />}
             </div>
           </div>
         </div>
