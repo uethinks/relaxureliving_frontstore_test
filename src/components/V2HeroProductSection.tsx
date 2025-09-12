@@ -84,7 +84,7 @@ export default function V2HeroProductSection({
           <p className="text-base text-[#2f2a1e] max-w-lg whitespace-pre-line">
             {description}
           </p>
-          <V2Button data={button as any} />
+          {button && <V2Button data={button as any} />}
         </div>
       </div>
     </section>
