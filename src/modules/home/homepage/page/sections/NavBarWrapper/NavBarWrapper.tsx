@@ -1,6 +1,8 @@
 "use client"
+import V2Button from "@/components/V2Button"
 import { getMenu } from "@lib/cms/strapiCmsApi"
 import { useCart } from "@lib/context/cartContext"
+import { getStrapiUrl } from "@lib/utils"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { Component } from "../../../../components/Component"
@@ -32,6 +34,14 @@ interface CustomSubMenuItem {
   }[]
 }
 
+interface SubBannerMenuItem {
+  id: number
+  name: string
+  banner: {
+    url: string | null
+  }
+}
+
 interface MenuItem {
   id: number
   name: string
@@ -39,6 +49,7 @@ interface MenuItem {
   anchor: string | null
   sub_menu_item: SubMenuItem[]
   custom_sub_menu_item: CustomSubMenuItem[]
+  sub_banner_menu_item: SubBannerMenuItem[]
 }
 
 interface MenuData {
@@ -128,6 +139,8 @@ export const NavBarWrapper = ({
     const hasSubMenu = item.sub_menu_item && item.sub_menu_item.length > 0
     const hasCustomSubMenu =
       item.custom_sub_menu_item && item.custom_sub_menu_item.length > 0
+    const hasBannerMenu =
+      item.sub_banner_menu_item && item.sub_banner_menu_item.length > 0
     const href = getMenuItemHref(item.url, item.anchor)
 
     if (hasSubMenu) {
@@ -186,7 +199,7 @@ export const NavBarWrapper = ({
           <div key={item.id} className="relative group">
             <button
               className={`
-                flex items-center gap-1 px-2.5 py-2.5 relative 
+                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative 
                 [font-family:'Montserrat',Helvetica] font-medium 
                 text-base tracking-[0] leading-6 hover:text-white-600 transition-colors
               `}
@@ -208,8 +221,8 @@ export const NavBarWrapper = ({
             </button>
 
             {/* 桌面端下拉菜单 */}
-            <div className="absolute left-0 mt-2 w-56 bg-black invisible group-hover:opacity-100 group-hover:visible transition-all z-50 rounded-lg">
-              <div className="py-1">
+            <div className="absolute left-0 top-[75px] w-56 bg-white invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+              <div className="px-10 py-4">
                 {item.sub_menu_item.map((subItem) => (
                   <a
                     key={subItem.id}
@@ -217,7 +230,7 @@ export const NavBarWrapper = ({
                     onClick={(e) =>
                       handleMenuItemClick(e, subItem.url, subItem.anchor)
                     }
-                    className="block px-4 py-2 text-sm [font-family:'Montserrat',Helvetica] font-medium  text-white transition-colors"
+                    className="block py-6 text-base text-[#2F2A1E] transition-colors font-semibold hover:underline hover:font-extrabold"
                   >
                     {subItem.name}
                   </a>
@@ -227,13 +240,12 @@ export const NavBarWrapper = ({
           </div>
         )
       }
-    }
-    if (hasCustomSubMenu) {
+    } else if (hasCustomSubMenu || hasBannerMenu) {
       return (
         <div key={item.id} className="relative group">
           <button
             className={`
-                flex items-center gap-1 px-2.5 py-2.5 relative 
+                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative 
                 [font-family:'Montserrat',Helvetica] font-medium 
                 text-base tracking-[0] leading-6 hover:text-white-600 transition-colors
               `}
@@ -255,18 +267,109 @@ export const NavBarWrapper = ({
           </button>
 
           {/* 桌面端下拉菜单 */}
-          <div className="absolute left-0 mt-2 w-56 bg-black invisible group-hover:opacity-100 group-hover:visible transition-all z-50 rounded-lg">
-            <div className="py-1">
+          <div className="fixed left-0 top-[75px] max-h-[600px] py-10 w-screen bg-white invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+            <div
+              className={
+                "w-full max-w-[1074px] flex justify-center items-center gap-y-10 m-auto flex-wrap"
+              }
+            >
               {item.custom_sub_menu_item.map((subItem) => (
-                <a
+                <div
                   key={subItem.id}
-                  href={getMenuItemHref(subItem.url, "")}
-                  onClick={(e) => handleMenuItemClick(e, subItem.url, "")}
-                  className="block px-4 py-2 text-sm [font-family:'Montserrat',Helvetica] font-medium  text-white transition-colors"
+                  // href={getMenuItemHref(subItem.url, "")}
+                  // onClick={(e) => handleMenuItemClick(e, subItem.url, "")}
+                  className="flex w-full flex-grow-0 flex-shrink-0 basis-auto overflow-hidden"
                 >
-                  {subItem.name}
-                </a>
+                  <div className="w-full flex border-b">
+                    <div className="w-[159px] flex-grow-0 flex-shrink-0 basis-auto text-2xl text-[#140E02] font-semibold">
+                      {subItem.name}
+                    </div>
+
+                    {subItem?.iconText && subItem?.iconText?.length > 0 && (
+                      <div className="w-full ml-6">
+                        <div className="grid grid-cols-3 gap-x-6 gap-y-4">
+                          {subItem.iconText.map((iconText) => (
+                            <div
+                              key={iconText.id}
+                              className={"flex items-center gap-x-3"}
+                            >
+                              <img
+                                className={"w-10 h-10"}
+                                src={
+                                  iconText?.icon?.url
+                                    ? getStrapiUrl(iconText?.icon?.url)
+                                    : ""
+                                }
+                                alt={iconText.name}
+                              />
+                              <div className={"text-xs text-[#2F2A1E]"}>
+                                {iconText.name}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="py-3">
+                          <div className="text-xs text-[#8C877C] font-semibold">
+                            {subItem.subTitle}
+                          </div>
+                          <div className="text-xs text-[#8C877C]">
+                            {subItem.description}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="w-[159px] ml-6 flex-grow-0 flex-shrink-0 basis-auto">
+                    <img
+                      className="w-full h-[144px]"
+                      src={
+                        subItem?.banner?.url
+                          ? getStrapiUrl(subItem?.banner?.url)
+                          : ""
+                      }
+                      alt={subItem?.name}
+                    />
+
+                    {subItem.showLinkBtn && (
+                      <V2Button
+                        data={{
+                          text: "Shop Now",
+                          type: "Primary",
+                          size: "Small",
+                          link: "/#contact",
+                          icon: "null",
+                        }}
+                      />
+                    )}
+                  </div>
+                </div>
               ))}
+              {item.sub_banner_menu_item && (
+                <div
+                  // href={getMenuItemHref(subItem.url, "")}
+                  // onClick={(e) => handleMenuItemClick(e, subItem.url, "")}
+                  className={`grid grid-cols-${item.sub_banner_menu_item?.length} gap-x-6`}
+                >
+                  {item.sub_banner_menu_item.map((subItem) => (
+                    <div key={subItem.id} className={"flex overflow-hidden"}>
+                      <div className="w-[159px] flex-grow-0 flex-shrink-0 basis-auto text-2xl text-[#140E02] font-semibold border-b">
+                        {subItem.name}
+                      </div>
+
+                      <img
+                        className="w-full h-[114px] ml-6"
+                        src={
+                          subItem?.banner?.url
+                            ? getStrapiUrl(subItem?.banner?.url)
+                            : ""
+                        }
+                        alt={subItem?.name}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -379,7 +482,7 @@ export const NavBarWrapper = ({
           role="navigation"
           aria-label="Main navigation"
         >
-          <div className="w-full max-w-7xl mx-auto flex items-center justify-between">
+          <div className="w-full max-w-7xl mx-auto flex items-center">
             <Link
               href="/"
               className="flex items-center gap-2"
@@ -392,9 +495,9 @@ export const NavBarWrapper = ({
               />
             </Link>
 
-            <div className="flex items-center justify-end gap-8 xl:gap-10 relative text-[#ffffff]">
+            <div className="flex items-center justify-end w-full gap-8 xl:gap-10 relative text-[#ffffff]">
               <ul
-                className="flex items-center justify-end gap-6 xl:gap-10 relative flex-1 grow"
+                className="flex items-center justify-center gap-6 xl:gap-10 relative flex-1 grow"
                 role="menubar"
                 aria-label="Main menu"
               >
@@ -407,7 +510,17 @@ export const NavBarWrapper = ({
               </ul>
 
               <div className="flex items-center gap-4">
-                <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative">
+                <div className="flex items-center justify-center gap-4 px-0 py-2.5 relative">
+                  <V2Button
+                    data={{
+                      text: "Contact Us",
+                      type: "Primary",
+                      size: "Small",
+                      link: "/#contact",
+                      icon: "null",
+                    }}
+                    className={"mr-2"}
+                  />
                   <a
                     href="/cart"
                     className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-base tracking-[0] leading-6 text-white"
@@ -418,11 +531,11 @@ export const NavBarWrapper = ({
                     <div className="flex items-center gap-2">
                       <div className="relative">
                         <img
-                          className="w-[30px] h-[30px]"
+                          className="w-6 h-6"
                           src={
                             hasItemsInCart
-                              ? "/img/cart-with-products.png"
-                              : "/img/cart.png"
+                              ? "/img/v2-icon-cart.svg"
+                              : "/img/v2-icon-cart.svg"
                           }
                           alt="Shopping cart"
                         />
@@ -439,11 +552,14 @@ export const NavBarWrapper = ({
                       </div>
                     </div>
                   </a>
+                  <a href="">
+                    <img
+                      className="w-6 h-6"
+                      src={"/img/v2-icon-user.svg"}
+                      alt="Member login"
+                    />
+                  </a>
                 </div>
-
-                <a href="/#contact" aria-label="Contact us">
-                  <Component text="Contact Us" />
-                </a>
               </div>
             </div>
           </div>

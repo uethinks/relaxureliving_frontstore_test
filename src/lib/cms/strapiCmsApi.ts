@@ -439,6 +439,13 @@ const menuPopulate = {
             },
           },
         },
+        sub_banner_menu_item: {
+          populate: {
+            banner: {
+              fields: "url",
+            },
+          },
+        },
       },
     },
   },

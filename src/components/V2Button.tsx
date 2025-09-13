@@ -1,11 +1,10 @@
-'use client'
+"use client"
 
-import * as React from "react"
-import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
-import { getStrapiUrl } from "@/lib/utils"
-import { cn } from "@/lib/utils"
+import { Button, ButtonProps } from "@/components/ui/button"
+import { cn, getStrapiUrl } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
 import { useRouter } from "next/navigation"
+import * as React from "react"
 
 /**
  * Standardized interface for CMS button data structure
@@ -66,16 +65,24 @@ export const V2Button: React.FC<V2ButtonProps> = ({
       return null
     }
 
-    let iconSize = 'size-6'
+    let iconSize = "size-6"
 
     if (size === "Small") {
-      iconSize = 'size-5'
+      iconSize = "size-5"
     } else if (size === "Large") {
-      iconSize = 'size-7'
+      iconSize = "size-7"
     }
 
-    if (!icon){
-        return <ArrowRight className={`${iconSize} transition-transform duration-200 ease-in-out group-hover:translate-x-1`} />
+    if (icon === "null") {
+      return <></>
+    }
+
+    if (!icon) {
+      return (
+        <ArrowRight
+          className={`${iconSize} transition-transform duration-200 ease-in-out group-hover:translate-x-1`}
+        />
+      )
     }
 
     const iconUrl = icon?.url ? getStrapiUrl(icon?.url) : "/img/right-arrow.svg"
@@ -103,7 +110,7 @@ export const V2Button: React.FC<V2ButtonProps> = ({
     // Handle navigation automatically
     if (isExternalLink) {
       // External link - open in new tab with security attributes
-      window.open(link, '_blank', 'noopener,noreferrer')
+      window.open(link, "_blank", "noopener,noreferrer")
     } else {
       // Internal link - use Next.js router
       router.push(link)
@@ -121,22 +128,19 @@ export const V2Button: React.FC<V2ButtonProps> = ({
   let variant = "default"
   if (type === "Secondary") {
     variant = "outline"
-    variantClass = "bg-transparent hover:bg-transparent hover:text-primary border-2 border-primary"
+    variantClass =
+      "bg-transparent hover:bg-transparent hover:text-primary border-2 border-primary"
   } else if (type === "Link") {
     variant = "link"
-    variantClass = "hover:text-primary underline text-primary hover:text-primary-light p-0"
+    variantClass =
+      "hover:text-primary underline text-primary hover:text-primary-light p-0"
   }
 
   // Common button props
   const buttonProps: ButtonProps = {
     variant:
       type === "Secondary" ? "outline" : type === "Link" ? "link" : "default",
-    className: cn(
-      "text-black group gap-4",
-      sizeClass,
-      variantClass,
-      className
-    ),
+    className: cn("text-black group gap-4", sizeClass, variantClass, className),
     ...props,
   }
 
