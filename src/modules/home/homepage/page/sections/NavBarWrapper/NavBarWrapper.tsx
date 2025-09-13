@@ -199,13 +199,11 @@ export const NavBarWrapper = ({
           <div key={item.id} className="relative group">
             <button
               className={`
-                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative 
-                [font-family:'Montserrat',Helvetica] font-medium 
-                text-base tracking-[0] leading-6 hover:text-white-600 transition-colors
+                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline hover:font-extrabold font-semibold
               `}
             >
               {item.name}
-              <svg
+              {/* <svg
                 className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180"
                 fill="none"
                 stroke="currentColor"
@@ -217,11 +215,11 @@ export const NavBarWrapper = ({
                   strokeWidth={2}
                   d="M19 9l-7 7-7-7"
                 />
-              </svg>
+              </svg> */}
             </button>
 
             {/* 桌面端下拉菜单 */}
-            <div className="absolute left-0 top-[75px] w-56 bg-white invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+            <div className="fixed top-[75px] bg-white invisible group-hover:opacity-100 group-hover:visible transition-all z-50 -translate-x-6">
               <div className="px-10 py-4">
                 {item.sub_menu_item.map((subItem) => (
                   <a
@@ -245,13 +243,11 @@ export const NavBarWrapper = ({
         <div key={item.id} className="relative group">
           <button
             className={`
-                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative 
-                [font-family:'Montserrat',Helvetica] font-medium 
-                text-base tracking-[0] leading-6 hover:text-white-600 transition-colors
+                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline hover:font-extrabold font-semibold
               `}
           >
             {item.name}
-            <svg
+            {/* <svg
               className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180"
               fill="none"
               stroke="currentColor"
@@ -263,7 +259,7 @@ export const NavBarWrapper = ({
                 strokeWidth={2}
                 d="M19 9l-7 7-7-7"
               />
-            </svg>
+            </svg> */}
           </button>
 
           {/* 桌面端下拉菜单 */}
@@ -396,9 +392,8 @@ export const NavBarWrapper = ({
             href={href}
             onClick={(e) => handleMenuItemClick(e, item.url, item.anchor)}
             className={`
-              flex items-center justify-center gap-2.5 px-2.5 py-2.5 relative 
-              [font-family:'Montserrat',Helvetica] font-medium  text-[#ffffff] 
-              text-base tracking-[0] leading-6 hover:text-white-600 transition-colors
+              flex items-center justify-center gap-2.5 px-2.5 py-2.5 relative text-[#2F2A1E]
+              text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:font-extrabold font-semibold
             `}
           >
             {item.name}
