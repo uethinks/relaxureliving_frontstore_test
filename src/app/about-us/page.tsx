@@ -1,276 +1,135 @@
+import V2Button from "@/components/V2Button"
+import { V2ContactUsSection } from "@/components/V2ContactUsSection"
+import V2DualOfferSection from "@/components/V2DualOfferSection"
+import { V2FAQSection } from "@/components/V2FAQSection"
+import V2Headline from "@/components/V2Headline"
+import { V2PromoBanner } from "@/components/V2PromoBanner"
+import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
+import { getAboutUs } from "@lib/cms/strapiCmsApi"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
-import Link from "next/link"
-import { Metadata } from "next"
-import ChatButton from "@/components/ChatButton"
+import Image from "next/image"
+
+// import { Metadata } from "next"
 
 // 生成动态 metadata
-export const metadata: Metadata = {
-  title: `About Relaxure`,
-  description: `Relaxure is home to the world's smartest pergola, intelligently designed to
-enable four-season outdoor living.`,
-  openGraph: {
-    title: `About Relaxure`,
-    description: `Relaxure is home to the world's smartest pergola, intelligently designed to
-enable four-season outdoor living.`,
-    url: "/",
-  },
-  keywords: [
-    "pergola",
-    "outdoor shade",
-    "smart home",
-    "relaxure",
-    "aluminum pergola",
-  ],
-}
+// export const metadata: Metadata = {
+//   title: `About Relaxure`,
+//   description: `Relaxure is home to the world's smartest pergola, intelligently designed to
+// enable four-season outdoor living.`,
+//   openGraph: {
+//     title: `About Relaxure`,
+//     description: `Relaxure is home to the world's smartest pergola, intelligently designed to
+// enable four-season outdoor living.`,
+//     url: "/",
+//   },
+//   keywords: [
+//     "pergola",
+//     "outdoor shade",
+//     "smart home",
+//     "relaxure",
+//     "aluminum pergola",
+//   ],
+// }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { data } = await getAboutUs()
+  console.log("AboutUs - data", data)
+
+  if (!data) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>fail to load about us</p>
+      </div>
+    )
+  }
+
   return (
-    <main className="w-full flex flex-col items-center">
-      <NavBarWrapper isFixed={false} />
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 py-8 lg:py-24 flex flex-col md:flex-row items-center gap-8">
-        <div className="flex-1">
-          <h1 className="text-[18px] lg:text-[36px] font-[700] mb-6 font-['Merriweather']">
-            Creating Spaces Where Life Happens, In Every Season
-          </h1>
-          <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 mb-8 font-['Montserrat']">
-            At Relaxure, we believe exceptional seasonal spaces is extraordinary
-            outdoor living—without compromising on quality, functionality or
-            time. We're bridging the gap between overpriced luxury and
-            unreliable budget options with thoughtfully designed solutions to
-            make their open space—it's where memories are made, connections
-            flourish, and life's best moments unfold.
-          </p>
-          <Link href="/products/pergola">
-            <button className="bg-[#F6AF1F] hover:bg-[#fdce6f] text-black px-6 py-3 rounded-md">
-              Explore our products
-            </button>
-          </Link>
-        </div>
-        <div className="flex-1">
-          <img
-            src="/img/pergola-description.jpg"
-            alt="Outdoor living space"
-            className="rounded-lg w-full max-w-[600px] h-auto"
-          />
-        </div>
-      </section>
-
-      {/* Story Section */}
-      <section className="max-w-7xl mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-8">
-          <h2 className="text-[18px] lg:text-[28px] font-[700] mb-12 md:col-span-1 font-['Merriweather']">
-            Our Story: From Humble Beginnings to Outdoor Innovation
-          </h2>
-        </div>
-        <div className="grid md:grid-cols-2 gap-8 text-gray-600 font-['Montserrat']">
-          <div className="space-y-6 text-[16px] lg:text-[18px] font-[500]">
-            <p>
-              To understand what we do here at Relaxure, you need to know where
-              I come from. I spent my childhood in a small rural village, and my
-              most cherished memories from that time are simple moments
-              outdoors. I watched my grandfather work tirelessly on our small
-              farm, while I spent countless hours with my sister in our yard.
-            </p>
-            <p>
-              Those experiences of connection and freedom stayed with me. As I
-              grew older and explored entrepreneurship, I kept returning to this
-              simple truth: when we create spaces for people to come together
-              outdoors, something magical happens.
-            </p>
-            <p>
-              I was searching for my next entrepreneurial challenge when I
-              looked at the outdoor living market with fresh eyes. What I saw
-              troubled me—and might frustrate you too.
-            </p>
-            <p>
-              Premium pergolas were selling for $25,000 or more—prices out of
-              reach for most. Meanwhile, budget options from major retailers
-              were so poorly constructed that they often became disappointments
-              rather than enhancements to homes.
-            </p>
-          </div>
-          <div className="space-y-6 text-[16px] lg:text-[18px] font-[500]">
-            <p>
-              I gathered a team that shared my vision—top engineers from Fortune
-              500 companies, experienced inventors, and design specialists with
-              multicultural backgrounds. Together, we committed to a simple
-              mission: to create premium quality outdoor structures at prices
-              that wouldn't require a second mortgage.
-            </p>
-            <p>
-              When we stripped away the industry's bloated margins, eliminated
-              unnecessary middlemen, and focused on smart manufacturing, we
-              could build pergolas with commercial-grade materials, advanced
-              technology, and thoughtful design—all while keeping prices that
-              real families could afford.
-            </p>
-            <p>
-              I believe you deserve the same joy I found in those childhood
-              outdoor moments. Your backyard isn't just square footage—it's
-              where loved ones will gather over meals, where children will play,
-              and where you'll find moments of peace in our increasingly indoor
-              world.
-            </p>
-            <p>
-              That's why each Relaxure pergolas are built not just with aluminum
-              and technology but with a sense of purpose. We know we're helping
-              craft the backdrop for your life's most meaningful moments.
-            </p>
-            <p className="text-[18px] lg:text-[28px] font-[700] leading-relaxed font-['Merriweather']">
-              —Peter Y. Founder
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Quote Section */}
-      <section className="w-full mt-[60px]">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="relative rounded-2xl flex flex-col lg:block p-[2px]">
-            <img
-              src="/img/about-us.webp"
-              alt="Founder quote"
-              className="w-full rounded-t-[20px] lg:rounded-[20px] lg:max-w-[1069px] lg:max-h-[648px] object-cover
-              shadow-[15px_25px_40px_rgba(0,0,0,0.20)] 
-              shadow-[12px_20px_30px_rgba(0,0,0,0.15)]"
+    <>
+      <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
+        <NavBarWrapper />
+        <section className="grid grid-cols-2 w-full bg-[#EFEEEB]">
+          <div className="relative aspect-[6/5] w-full h-full overflow-hidden">
+            <Image
+              unoptimized
+              src="/img/about-us-banner.png"
+              alt="about us"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 680px"
             />
-            <div
-              className={`lg:absolute rounded-b-[20px] lg:rounded-b-none lg:top-1/2 
-            lg:right-0 lg:transform lg:-translate-y-1/2 bg-[#072F6C] text-white py-8 
-            px-6 lg:px-12 lg:max-w-[600px]`}
-            >
-              <p className="text-[18px] lg:text-[28px] font-[700] leading-relaxed font-['Montserrat']">
-                "Why should creating a beautiful outdoor space require either a
-                small fortune or constant compromise?"
-              </p>
+          </div>
+          <div className="w-full py-[72px] px-[100px]">
+            <div className="flex items-start gap-4 w-[436px]">
+              <div className="flex-1 flex flex-col gap-10 items-start">
+                <V2Headline title="Creating Spaces Where Life Happens, in Every Season" />
+                <div
+                  className={`leading-relaxed mb-6 prose prose-lg max-w-none`}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "At Relaxure, we believe great outdoor living should be effortless—beautiful in design, built to last, and ready for every season. Our pergolas bridge the gap between overpriced luxury and unreliable budget options, delivering exceptional quality, smart functionality, and timeless style at a fair value.<br />Picture this: a sunny afternoon with friends gathered under your pergola, laughter mingling with the aroma of a backyard barbecue. Or a quiet morning coffee as gentle rain falls above, while you stay perfectly dry and at peace.<br />This isn’t just about creating shade—it’s about creating a space where memories are made, connections flourish, and every season feels like your favorite one.",
+                  }}
+                />
+                <V2Button
+                  data={
+                    {
+                      type: "Secondary",
+                      size: "Medium",
+                      text: "Design Yours Today",
+                      link: "#",
+                      icon: null,
+                    } as any
+                  }
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="max-w-7xl mx-auto px-4 py-8 lg:mt-[140px]">
-        <div className="grid lg:grid-cols-12 gap-12">
-          {/* Left Column - Title and Description */}
-          <div className="lg:col-span-4 flex flex-col justify-center space-y-6">
-            <h2 className="text-[18px] lg:text-[36px] font-[700] font-['Merriweather']">
-              What We Stand For
-            </h2>
-            <div className="space-y-6 text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
-              <p>
-                When you choose Relaxure, you're joining a community of
-                homeowners who refuse to compromise on their outdoor dreams.
-                We're committed to transforming how you experience your home's
-                outdoor spaces—through every weather change, season, and chapter
-                of your life.
-              </p>
-              <p>
-                When you choose Relaxure, you're not just investing in aluminum
-                and technology—you're partnering with a company committed to
-                transforming how you experience your home's outdoor spaces,
-                regardless of season, weather, or budget.
-              </p>
-            </div>
+        </section>
+        <section className={"flex items-center flex-col w-full bg-white py-20"}>
+          <p
+            className={"mb-10 text-[32px] font-bold text-center text-[#140E02]"}
+          >
+            Our Story: From Humble Roots to Outdoor Innovation
+          </p>
+          <div
+            className={
+              "grid grid-cols-2 gap-x-[55px] w-full max-w-[1074px] text-[#2F2A1E] text-18"
+            }
+          >
+            <p
+              dangerouslySetInnerHTML={{
+                __html:
+                  "To understand Relaxure, you have to understand where I come from.<br />I grew up in a small rural village, where life was simple and the outdoors was our playground. My most treasured memories aren’t about things—they’re about moments: watching my grandfather work our little farm with quiet determination, and spending endless afternoons playing with my sister in the yard.<br /><br />Those moments of connection, freedom, and fresh air never left me. As I grew older and began my entrepreneurial journey, I kept coming back to a simple truth: when we create spaces that bring people together outdoors, something magical happens.<br /><br />Years later, while searching for my next big challenge, I took a fresh look at the outdoor living market. What I found was frustrating:<br />Premium pergolas priced at $25,000 or more, far beyond the reach of most families.<br /><br />Budget options from big retailers that looked appealing at first, but quickly disappointed with poor quality and short lifespans.",
+              }}
+            ></p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html:
+                  "I knew there had to be a better way. So I gathered a team of visionaries—engineers from Fortune 500 companies, seasoned inventors, and designers from diverse cultural backgrounds. Together, we set out on a mission: <span style='font-weight: 600'>to make premium-quality outdoor structures accessible to real families—without compromising on design, durability, or function.</span><br /><br />By stripping away bloated industry margins, cutting out unnecessary middlemen, and embracing smart manufacturing, we built pergolas using commercial-grade materials, advanced technology, and thoughtful details—while keeping prices fair.<br /><br />For me, it’s personal. I believe everyone deserves the kind of joy I found in my childhood yard: a place where loved ones gather for long dinners, children’s laughter fills the air, and quiet mornings bring peace in our increasingly busy, indoor lives.<br /><br />Every Relaxure pergola is crafted with more than just aluminum and technology—it’s built with a purpose: <span style='font-weight: 600'>to create the backdrop for life’s most meaningful moments.</span>",
+              }}
+            ></p>
           </div>
-
-          {/* Right Column - Features Grid */}
-          <div className="lg:col-span-8 grid md:grid-cols-2 gap-24">
-            {/* Feature 1 */}
-            <div className="bg-white rounded-xl p-8 space-y-4 border border-[#343A40] relative pt-14">
-              <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-1">
-                <img
-                  src="/img/demand-better.png"
-                  alt="Demand Better"
-                  width={160}
-                  height={160}
-                  className="mx-auto"
-                />
-              </div>
-              <h3 className="text-[18px] lg:text-[22px] font-[700] font-['Merriweather'] text-center">
-                Demand Better
-              </h3>
-              <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
-                We're not here to follow trends—we're here to redefine what's
-                possible outdoors. By integrating cutting-edge technology with
-                thoughtful design.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="bg-white rounded-xl p-8 space-y-4 border border-[#343A40] relative pt-14">
-              <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-1">
-                <img
-                  src="/img/accessable.png"
-                  alt="Accessible Excellence"
-                  width={160}
-                  height={160}
-                  className="mx-auto"
-                />
-              </div>
-              <h3 className="text-[18px] lg:text-[22px] font-[700] font-['Merriweather'] text-center">
-                Accessible Excellence
-              </h3>
-              <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
-                We're not here to follow trends—we're here to redefine what's
-                possible outdoors. By integrating cutting-edge technology with
-                thoughtful design.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="bg-white rounded-xl p-8 space-y-4 border border-[#343A40] relative pt-14">
-              <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-1">
-                <img
-                  src="/img/quantity.png"
-                  alt="Uncompromising Quality"
-                  width={160}
-                  height={160}
-                  className="mx-auto"
-                />
-              </div>
-              <h3 className="text-[18px] lg:text-[22px] font-[700] font-['Merriweather'] text-center">
-                Uncompromising Quality
-              </h3>
-              <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
-                We're not here to follow trends—we're here to redefine what's
-                possible outdoors. By integrating cutting-edge technology with
-                thoughtful design.
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="bg-white rounded-xl p-8 space-y-4 border border-[#343A40] relative pt-14">
-              <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-1">
-                <img
-                  src="/img/promise.png"
-                  alt="Our Promise to You"
-                  width={160}
-                  height={160}
-                  className="mx-auto"
-                />
-              </div>
-              <h3 className="text-[18px] lg:text-[22px] font-[700] font-['Merriweather'] text-center">
-                Our Promise to You
-              </h3>
-              <p className="text-[16px] lg:text-[18px] font-[500] text-gray-600 font-['Montserrat']">
-                What sets Relaxure apart isn't just what we make—it's why we
-                make it. While our industry focuses on exclusivity, we're driven
-                by something else:
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center mt-16">
-          <h2 className="text-[18px] lg:text-[36px] font-[700] mb-6 font-['Merriweather']">
-            Experience the Relaxure Difference
-          </h2>
-          <ChatButton />
-        </div>
-      </section>
-      <FooterDark />
-    </main>
+        </section>
+        {data.sections.map((section: any) => {
+          const key = `${section.id}-${section.__component}`
+          console.log("AboutUs section", key, section)
+          if (section.__component === "blocks.v2-promo-banner") {
+            return <V2PromoBanner key={key} data={section} />
+          } else if (section.__component === "blocks.v2-faq-section") {
+            return <V2FAQSection key={key} data={section} />
+          } else if (section.__component === "blocks.v2-service-snapshots") {
+            return <V2ServiceSnapshots key={key} data={section} />
+          } else if (section.__component === "blocks.v2-dual-offer-section") {
+            return <V2DualOfferSection key={key} data={section} />
+          }
+          return null
+        })}
+        <V2ContactUsSection
+          title="Got something specific in mind, send us a message"
+          description="If you fill out the contact form below, one of our representatives will reach back out to you in a timely manner."
+        />
+      </main>
+      <FooterDark isHomepage={true} />
+    </>
   )
 }

@@ -1,16 +1,7 @@
 "use client"
 /* NOSONAR */
-import React, { useState, useEffect } from "react"
-import {
-  getContactUs,
-  sendKlaviyoContactUsForm,
-  submitContactForm,
-} from "@lib/cms/strapiCmsApi"
-import { Image } from "types/global"
-import { User, Mail, Phone, Sun, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import {
   Select,
   SelectContent,
@@ -18,7 +9,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  getContactUs,
+  sendKlaviyoContactUsForm,
+  submitContactForm,
+} from "@lib/cms/strapiCmsApi"
 import { useQuery } from "@tanstack/react-query"
+import { Mail, MessageCircle, Phone, Sun, User } from "lucide-react"
+import React, { useEffect, useState } from "react"
 
 // 定义常量以避免重复的字符串字面量
 const BORDER_ERROR_CLASS = "border-red-500"
@@ -48,18 +47,21 @@ interface FormErrors {
   message?: string
 }
 
-export const V2ContactUsSection = (): React.JSX.Element => {
-  const { 
-    data: contactUsData, 
-    isLoading, 
-    isError, 
-    error 
+export const V2ContactUsSection = (props: {
+  title?: string
+  description?: string
+}): React.JSX.Element => {
+  const {
+    data: contactUsData,
+    isLoading,
+    isError,
+    error,
   } = useQuery({
     queryKey: ["contactUs"],
     queryFn: getContactUs,
   })
 
-  const data = contactUsData?.data;
+  const data = contactUsData?.data
 
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
@@ -77,9 +79,9 @@ export const V2ContactUsSection = (): React.JSX.Element => {
   // Update form when data loads
   useEffect(() => {
     if (data?.InquiryTypes && data.InquiryTypes.length > 0) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        inquiry: data.InquiryTypes[0]
+        inquiry: data.InquiryTypes[0],
       }))
     }
   }, [data])
@@ -247,12 +249,12 @@ export const V2ContactUsSection = (): React.JSX.Element => {
   return (
     <div id="contact" className="max-w-7xl w-full py-16 mx-auto">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-[#140e02] mb-6 leading-tight">
-          Contact Us
+        <h1 className="text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
+          {props?.title || "Got something specific in mind, send us a message"}
         </h1>
-        <p className="text-[#8c877c] text-lg max-w-2xl mx-auto">
-          If you fill out the contact form below, one of our representatives
-          will reach back out to you in a timely manner.
+        <p className="text-[#8c877c] text-base mx-auto">
+          {props?.description ||
+            "If you fill out the contact form below, one of our representatives will reach back out to you in a timely manner."}
         </p>
       </div>
 
@@ -276,7 +278,9 @@ export const V2ContactUsSection = (): React.JSX.Element => {
                     value={formData.fullName}
                     onChange={handleInputChange}
                     className={`pl-12 py-4 h-full bg-white text-[#140e02] placeholder-[#8c877c] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c] ${
-                      errors.fullName ? BORDER_ERROR_CLASS : BORDER_DEFAULT_CLASS
+                      errors.fullName
+                        ? BORDER_ERROR_CLASS
+                        : BORDER_DEFAULT_CLASS
                     }`}
                     required
                   />
@@ -304,7 +308,9 @@ export const V2ContactUsSection = (): React.JSX.Element => {
                     required
                   />
                   {errors.email && (
-                    <span className="text-red-500 text-sm mt-1">{errors.email}</span>
+                    <span className="text-red-500 text-sm mt-1">
+                      {errors.email}
+                    </span>
                   )}
                 </div>
               </div>
@@ -335,7 +341,10 @@ export const V2ContactUsSection = (): React.JSX.Element => {
                       Inquiry About
                     </span>
                   </div>
-                  <Select value={formData.inquiry} onValueChange={handleSelectChange}>
+                  <Select
+                    value={formData.inquiry}
+                    onValueChange={handleSelectChange}
+                  >
                     <SelectTrigger className="w-full pl-36 h-full bg-white border-[#d9d9d9] text-[#140e02] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c] flex items-center">
                       <SelectValue className="pb-0" />
                     </SelectTrigger>
@@ -374,7 +383,9 @@ export const V2ContactUsSection = (): React.JSX.Element => {
                   required
                 />
                 {errors.message && (
-                  <span className="text-red-500 text-sm mt-1">{errors.message}</span>
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.message}
+                  </span>
                 )}
               </div>
             </div>
@@ -422,7 +433,9 @@ export const V2ContactUsSection = (): React.JSX.Element => {
                   required
                 />
                 {errors.email && (
-                  <span className="text-red-500 text-sm mt-1">{errors.email}</span>
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.email}
+                  </span>
                 )}
               </div>
             </div>
@@ -453,7 +466,10 @@ export const V2ContactUsSection = (): React.JSX.Element => {
                     {data?.InquiryAbout || "Inquiry About"}
                   </span>
                 </div>
-                <Select value={formData.inquiry} onValueChange={handleSelectChange}>
+                <Select
+                  value={formData.inquiry}
+                  onValueChange={handleSelectChange}
+                >
                   <SelectTrigger className="w-full pl-36 h-full bg-white border-[#d9d9d9] text-[#140e02] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c] flex items-center">
                     <SelectValue className="pb-0" />
                   </SelectTrigger>
@@ -489,7 +505,9 @@ export const V2ContactUsSection = (): React.JSX.Element => {
                 required
               />
               {errors.message && (
-                <span className="text-red-500 text-sm mt-1">{errors.message}</span>
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.message}
+                </span>
               )}
             </div>
           </>

@@ -485,6 +485,7 @@ export const API_URLS = {
   getFaqData: "/api/faq-page",
   getGlobalData: "/api/global",
   getContactUs: "/api/v2-contact-us",
+  getAboutUs: "/api/about",
 }
 
 // 获取所有项目
@@ -781,6 +782,30 @@ export const getGlobalData = async () => {
     return response.data
   } catch (error) {
     console.error("Error fetching global data:", error, API_URLS.getGlobalData)
+    throw error
+  }
+}
+
+// 获取关于我们
+export const getAboutUs = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getAboutUs, {
+      params: {
+        populate: {
+          sections: {
+            on: {
+              "blocks.v2-promo-banner": v2PromoBannerPopulate,
+              "blocks.v2-faq-section": v2FaqSectionPopulate,
+              "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
+              "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
+            },
+          },
+        },
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
     throw error
   }
 }
