@@ -1,9 +1,7 @@
-import { Button } from "@/components/ui/button"
 import { getStrapiUrl } from "@lib/utils"
-import { ArrowRight } from "lucide-react"
 import Image from "next/image"
-import V2Headline from "./V2Headline"
 import V2Button from "./V2Button"
+import V2Headline from "./V2Headline"
 
 interface HeroData {
   __component: string
@@ -21,6 +19,7 @@ interface HeroData {
       link: string
     }
     image?: any
+    isReverse?: false
   }
   backgroundImage: {
     id: number
@@ -38,6 +37,7 @@ interface HeroData {
       thumbnail: { url: string; width: number; height: number }
     }
     url: string
+    isStatic?: boolean
   }
 }
 
@@ -47,18 +47,29 @@ interface HeroSectionProps {
 
 export function V2PromoBanner({ data }: HeroSectionProps) {
   const { content, backgroundImage } = data
+  const { isStatic = false } = backgroundImage
+  const { isReverse = false } = content
 
   const generateSizes = () => {
     return "(max-width: 640px) 500px, (max-width: 1024px) 750px, 1000px"
   }
 
   return (
-    <section className="relative min-h-screen w-full flex items-center" role="banner" aria-label="Hero section">
+    <section
+      className="relative min-h-screen w-full flex items-center"
+      role="banner"
+      aria-label="Hero section"
+    >
       <div className="absolute inset-0 z-0">
         <Image
           unoptimized
-          src={getStrapiUrl(backgroundImage.url)}
-          alt={backgroundImage.alternativeText || "Relaxure pergola assembly process"}
+          src={
+            isStatic ? backgroundImage.url : getStrapiUrl(backgroundImage.url)
+          }
+          alt={
+            backgroundImage.alternativeText ||
+            "Relaxure pergola assembly process"
+          }
           fill
           className="object-cover w-full"
           priority
@@ -68,7 +79,11 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
         <div className="absolute inset-0 bg-black/40" aria-hidden="true"></div>
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto">
+      <div
+        className={`flex relative z-10 w-full max-w-7xl mx-auto ${
+          isReverse ? "flex-row-reverse" : ""
+        }`}
+      >
         <div className="max-w-2xl lg:max-w-3xl w-[436px]">
           <V2Headline title={content.title || ""} className="text-white" />
 

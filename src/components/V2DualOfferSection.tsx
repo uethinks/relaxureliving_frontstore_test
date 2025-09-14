@@ -1,9 +1,7 @@
-import { ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { getStrapiUrl } from "@lib/utils"
-import V2Headline from "./V2Headline"
 import V2Button from "./V2Button"
+import V2Headline from "./V2Headline"
 
 interface ButtonData {
   id: number
@@ -76,15 +74,16 @@ export default function V2DualOfferSection({
                 key={item.id}
                 className="flex items-center justify-center md:justify-center gap-3"
               >
-                {item.icon?.url && <img
-                  src={getStrapiUrl(item.icon.url)}
-                  alt={item.icon.alternativeText || item.title}
-                  width={item.icon.width}
-                  height={item.icon.height}
-                  className="w-6 h-6 md:w-8 md:h-8 text-[#140e02] flex-shrink-0"
-                  aria-hidden="true"
-                />
-              }
+                {item.icon?.url && (
+                  <img
+                    src={getStrapiUrl(item.icon.url)}
+                    alt={item.icon.alternativeText || item.title}
+                    width={item.icon.width}
+                    height={item.icon.height}
+                    className="w-6 h-6 md:w-8 md:h-8 text-[#140e02] flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                )}
                 <span className="text-[#140e02] text-base md:text-lg font-semibold text-center md:text-left">
                   {item.title}
                 </span>
@@ -104,9 +103,10 @@ export default function V2DualOfferSection({
                 <div className="flex flex-col gap-6">
                   {card.title && <V2Headline title={card.title} />}
 
-                  <p className="text-[#140e02] text-base max-w-prose mb-4">
-                    {card.description}
-                  </p>
+                  <p
+                    className="text-[#140e02] text-base max-w-prose mb-4"
+                    dangerouslySetInnerHTML={{ __html: card.description }}
+                  ></p>
                 </div>
                 {card.button && <V2Button data={card.button as any} />}
               </CardContent>
