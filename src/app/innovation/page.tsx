@@ -45,13 +45,104 @@ export default async function InnovationPage() {
                 cardItems: [
                   {
                     title: "Learning from Customers",
-                    description:
-                      "From community forums and customer reviews, we’ve seen recurring challenges:<br /><br /><span style='font-weight: 600'>Service gaps</span> – poor communication or disappearing support.<br /><span style='font-weight: 600'>Durability issues</span> – wood pergolas rotting or warping.<br /><span style='font-weight: 600'>Complex assembly</span> – unclear instructions, missing parts.<br /><span style='font-weight: 600'>Unclear pricing</span> – confusing quotes or hidden fees.<br /><br />Instead of overlooking these concerns, we treat them as a guide for improvement.",
+                    description: (
+                      <>
+                        {[
+                          <>
+                            From community forums and customer reviews, we’ve
+                            seen recurring challenges:
+                            <br />
+                            <br />
+                          </>,
+                          <>
+                            <span className={"font-semibold"}>
+                              Service gaps –{" "}
+                            </span>
+                            poor communication or disappearing support.
+                          </>,
+                          <>
+                            <span className={"font-semibold"}>
+                              Durability issues –{" "}
+                            </span>
+                            wood pergolas rotting or warping.
+                          </>,
+                          <>
+                            <span className={"font-semibold"}>
+                              Complex assembly –{" "}
+                            </span>
+                            unclear instructions, missing parts.
+                          </>,
+                          <>
+                            <span className={"font-semibold"}>
+                              Unclear pricing –{" "}
+                            </span>
+                            confusing quotes or hidden fees.
+                          </>,
+                          <>
+                            <br />
+                            Instead of overlooking these concerns, we treat them
+                            as a guide for improvement.
+                          </>,
+                        ].map((item, itemKey) => (
+                          <p key={itemKey}>{item}</p>
+                        ))}
+                      </>
+                    ),
                   },
                   {
                     title: "How We Responded",
-                    description:
-                      "Each pain point shaped how we build Relaxure pergolas:<br /><span style='font-weight: 600'>Affordable luxury:</span> Priced between $5,000 and $14,000—accessible yet commercial-grade.<br /><br /><span style='font-weight: 600'>All-in features:</span> Motorized louvers, rain sensors, and LED lighting are standard, not add-ons.<br /><br /><span style='font-weight: 600'>Customization:</span> Flexible size, height, and colors so every pergola fits its space.<br /><br /><span style='font-weight: 600'>Durability:</span> 6063-T6 aluminum with AAMA 2605 finishes, reducing upkeep and worry.<br /><br />We know we’re not perfect, but each step helps create a better experience for our customers.  <br /><br />",
+                    description: (
+                      <>
+                        {[
+                          <>
+                            Each pain point shaped how we build Relaxure
+                            pergolas:
+                            <br />
+                            <br />
+                          </>,
+                          <>
+                            <span className={"font-semibold"}>
+                              Affordable luxury:
+                            </span>
+                            Priced between $5,000 and $14,000—accessible yet
+                            commercial-grade.
+                            <br />
+                            <br />
+                          </>,
+                          <>
+                            <span className={"font-semibold"}>
+                              All-in features:
+                            </span>
+                            Motorized louvers, rain sensors, and LED lighting
+                            are standard, not add-ons.
+                            <br />
+                            <br />
+                          </>,
+                          <>
+                            <span className={"font-semibold"}>
+                              Customization:
+                            </span>
+                            Flexible size, height, and colors so every pergola
+                            fits its space.
+                            <br />
+                            <br />
+                          </>,
+                          <>
+                            <span className={"font-semibold"}>Durability:</span>
+                            6063-T6 aluminum with AAMA 2605 finishes, reducing
+                            upkeep and worry.
+                            <br />
+                            <br />
+                          </>,
+                          <>
+                            We know we’re not perfect, but each step helps
+                            create a better experience for our customers.
+                          </>,
+                        ].map((item, itemKey) => (
+                          <p key={itemKey}>{item}</p>
+                        ))}
+                      </>
+                    ),
                   },
                 ],
               } as never

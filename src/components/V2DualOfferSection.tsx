@@ -55,10 +55,10 @@ export default function V2DualOfferSection({
   return (
     <section
       className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6"
-      style={{
-        background:
-          "linear-gradient(90deg, rgba(239, 238, 235, 0.50) 0%, rgba(255, 255, 255, 0.50) 100%)",
-      }}
+      // style={{
+      //   background:
+      //     "linear-gradient(90deg, rgba(239, 235, 235, 0.5) 0%, rgba(255, 255, 255, 0.50) 100%)",
+      // }}
       aria-labelledby="main-heading"
     >
       <div className="max-w-7xl mx-auto">
@@ -99,14 +99,18 @@ export default function V2DualOfferSection({
               key={card.id}
               className="bg-transparent border-none shadow-none w-[465px]"
             >
-              <CardContent className="p-0 space-y-6 h-[320px] flex flex-col justify-between items-start">
-                <div className="flex flex-col gap-6">
-                  {card.title && <V2Headline title={card.title} />}
+              <CardContent className="p-0 space-y-6 min-h-[320px] flex flex-col justify-between items-start">
+                <div className="flex flex-col gap-10">
+                  {card.title && (
+                    <div className={"min-h-[92px]"}>
+                      {" "}
+                      <V2Headline title={card.title} />
+                    </div>
+                  )}
 
-                  <p
-                    className="text-[#140e02] text-base max-w-prose mb-4"
-                    dangerouslySetInnerHTML={{ __html: card.description }}
-                  ></p>
+                  <p className="text-[#140e02] text-base max-w-prose mb-4">
+                    {card.description}
+                  </p>
                 </div>
                 {card.button && <V2Button data={card.button as any} />}
               </CardContent>

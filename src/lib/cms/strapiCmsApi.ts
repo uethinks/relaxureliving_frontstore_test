@@ -486,6 +486,7 @@ export const API_URLS = {
   getGlobalData: "/api/global",
   getContactUs: "/api/v2-contact-us",
   getAboutUs: "/api/about",
+  getDeliveryWarranty: "/api/v2-delivery-warranty",
 }
 
 // 获取所有项目
@@ -798,6 +799,27 @@ export const getAboutUs = async () => {
               "blocks.v2-faq-section": v2FaqSectionPopulate,
               "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
               "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
+            },
+          },
+        },
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取delivery & warranty
+export const getDeliveryWarranty = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getDeliveryWarranty, {
+      params: {
+        populate: {
+          sections: {
+            on: {
+              "blocks.v2-faq-section": v2FaqSectionPopulate,
             },
           },
         },
