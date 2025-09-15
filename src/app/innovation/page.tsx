@@ -166,7 +166,7 @@ export default async function InnovationPage() {
           }
         />
       </main>
-      <FooterDark isHomepage={true} />
+      <FooterDark />
     </>
   )
 }

@@ -49,7 +49,7 @@ export default async function AboutPage() {
           return null
         })}
       </main>
-      <FooterDark isHomepage={true} />
+      <FooterDark />
     </>
   )
 }

@@ -129,7 +129,7 @@ export default async function AboutPage() {
           description="If you fill out the contact form below, one of our representatives will reach back out to you in a timely manner."
         />
       </main>
-      <FooterDark isHomepage={true} />
+      <FooterDark />
     </>
   )
 }

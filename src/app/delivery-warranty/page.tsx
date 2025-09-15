@@ -185,7 +185,7 @@ export default async function DeliveryPage() {
           return null
         })}
       </main>
-      <FooterDark isHomepage={true} />
+      <FooterDark />
     </>
   )
 }
