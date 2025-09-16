@@ -16,11 +16,9 @@ interface Props {
   selectedSize?: StoreProductOptionValue
   selectedColor?: StoreProductOptionValue
   selectedStyle?: StoreProductOptionValue
-  selectedSlatsColor?: StoreProductOptionValue
   onSizeChange: (size: StoreProductOptionValue) => void
   onColorChange: (color: StoreProductOptionValue) => void
   onStyleChange: (style: StoreProductOptionValue) => void
-  onSlatsColorChange: (slatsColor: StoreProductOptionValue) => void
 }
 
 export const PergulaSizeSelector = React.memo(
@@ -30,11 +28,9 @@ export const PergulaSizeSelector = React.memo(
     selectedSize,
     selectedColor,
     selectedStyle,
-    selectedSlatsColor,
     onSizeChange,
     onColorChange,
     onStyleChange,
-    onSlatsColorChange,
   }: Props): React.JSX.Element => {
     // 使用useMemo缓存排序后的尺寸和颜色列表
     const sortedSizes = useMemo(() => {
@@ -77,14 +73,7 @@ export const PergulaSizeSelector = React.memo(
       )
     }, [product.options])
 
-    const sortedSlatsColors = useMemo(() => {
-      const pergolaSlatsColors = product.options?.find(
-        (option) => option.title === "Slats Color"
-      )
-      return pergolaSlatsColors?.values?.sort((a, b) =>
-        a.value.localeCompare(b.value)
-      )
-    }, [product.options])
+
 
     return (
       <>
@@ -176,28 +165,6 @@ export const PergulaSizeSelector = React.memo(
                 }`}
                 style={{ backgroundColor: VALUE_BY_COLORS[color.value] }}
                 onClick={() => onColorChange(color)}
-              >
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Slats Color Section */}
-        <div className="mb-12">
-          <div className="text-sm font-semibold text-[#000000] mb-3">
-            Slats Color: {selectedSlatsColor?.value || "Dark Gray"}
-          </div>
-          <div className="flex gap-2">
-            {sortedSlatsColors?.map((slatsColor) => (
-              <div
-                key={slatsColor.id}
-                className={`h-6 w-6 border-2 cursor-pointer ${
-                  selectedSlatsColor?.id === slatsColor.id
-                    ? "border-[#ffbf3c] bg-[#ffd379]"
-                    : "border-none"
-                }`}
-                style={{ backgroundColor: VALUE_BY_COLORS[slatsColor.value] }}
-                onClick={() => onSlatsColorChange(slatsColor)}
               >
               </div>
             ))}

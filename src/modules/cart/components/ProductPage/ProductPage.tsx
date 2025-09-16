@@ -78,7 +78,7 @@ export const ProductPage = ({
 
   // Check if cart is empty
   const isCartEmpty = !cart?.items || cart.items.length === 0
-  console.log('cart', cart)
+  console.log('ProductPage - cart', cart)
 
   return (
     <>

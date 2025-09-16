@@ -12,11 +12,9 @@ import { StoreProduct, StoreProductOptionValue } from "@medusajs/types"
 interface ProductSelectionContextType {
   selectedSize: StoreProductOptionValue | undefined
   selectedColor: StoreProductOptionValue | undefined
-  selectedSlatsColor: StoreProductOptionValue | undefined
   selectedStyle: StoreProductOptionValue | undefined
   setSelectedSize: (size: StoreProductOptionValue) => void
   setSelectedColor: (color: StoreProductOptionValue) => void
-  setSelectedSlatsColor: (slatsColor: StoreProductOptionValue) => void
   setSelectedStyle: (style: StoreProductOptionValue) => void
 }
 
@@ -32,11 +30,10 @@ interface ProductSelectionProviderProps {
 export const ProductSelectionProvider: React.FC<
   ProductSelectionProviderProps
 > = ({ children, product }) => {
+
+  console.log("product.options", product.options)
   const pergolaColors = product.options?.find(
     (option) => option.title === "Color"
-  )
-  const pergolaSlatsColors = product.options?.find(
-    (option) => option.title === "Slats Color"
   )
   const pergolaStyles = product.options?.find(
     (option) => option.title === "Style"
@@ -70,9 +67,6 @@ export const ProductSelectionProvider: React.FC<
   const defaultStyle = pergolaStyles?.values?.find(
     (style) => style.value === "Freestanding"
   )
-  const defaultSlatsColor = pergolaSlatsColors?.values?.find(
-    (color) => color.value === "Dark Gray"
-  )
 
   const [selectedSize, setSelectedSize] = useState<
     StoreProductOptionValue | undefined
@@ -83,9 +77,6 @@ export const ProductSelectionProvider: React.FC<
   const [selectedStyle, setSelectedStyle] = useState<
     StoreProductOptionValue | undefined
   >(defaultStyle)
-  const [selectedSlatsColor, setSelectedSlatsColor] = useState<
-    StoreProductOptionValue | undefined
-  >(defaultSlatsColor)
 
   const handleSizeChange = useCallback((size: StoreProductOptionValue) => {
     setSelectedSize(size)
@@ -99,19 +90,15 @@ export const ProductSelectionProvider: React.FC<
     setSelectedStyle(style)
   }, [])
 
-  const handleSlatsColorChange = useCallback((slatsColor: StoreProductOptionValue) => {
-    setSelectedSlatsColor(slatsColor)
-  }, [])
+
 
   const value = {
     selectedSize,
     selectedColor,
-    selectedSlatsColor,
     selectedStyle,
     setSelectedSize: handleSizeChange,
     setSelectedColor: handleColorChange,
     setSelectedStyle: handleStyleChange,
-    setSelectedSlatsColor: handleSlatsColorChange,
   }
 
   return (

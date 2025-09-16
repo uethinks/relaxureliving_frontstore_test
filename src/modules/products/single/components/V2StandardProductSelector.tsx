@@ -59,15 +59,13 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
     selectedSize,
     selectedColor,
     selectedStyle,
-    selectedSlatsColor,
     setSelectedSize,
     setSelectedColor,
     setSelectedStyle,
-    setSelectedSlatsColor,
   } = useProductSelection()
 
   console.log(
-    `selectedColor: ${selectedColor?.value}, selectedSlatsColor: ${selectedSlatsColor?.value}, selectedStyle: ${selectedStyle?.value}, selectedSize: ${selectedSize?.value}`
+    `selectedColor: ${selectedColor?.value}, selectedStyle: ${selectedStyle?.value}, selectedSize: ${selectedSize?.value} , product:`, product
   )
 
   const formatPrice = (price: number) =>
@@ -77,11 +75,11 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
     }).format(price || 0)
 
   useEffect(() => {
+    
     if (
       !selectedSize ||
       !selectedColor ||
-      !selectedStyle ||
-      !selectedSlatsColor
+      !selectedStyle
     ) {
       return
     }
@@ -102,13 +100,8 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
           option.option?.title === "Style" &&
           option.value === selectedStyle.value
       )
-      const matchingSlatsColor = variant?.options?.find(
-        (option) =>
-          option.option?.title === "Slats Color" &&
-          option.value === selectedSlatsColor.value
-      )
       return (
-        matchingSize && matchingColor && matchingStyle && matchingSlatsColor
+        matchingSize && matchingColor && matchingStyle
       )
     })
 
@@ -152,12 +145,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
     [setSelectedStyle]
   )
 
-  const handleSlatsColorChange = useCallback(
-    (slatsColor: StoreProductOptionValue) => {
-      setSelectedSlatsColor(slatsColor)
-    },
-    [setSelectedSlatsColor]
-  )
+
 
   const handleAccessoryToggle = useCallback(
     ({
@@ -403,11 +391,9 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
             selectedSize={selectedSize}
             selectedColor={selectedColor}
             selectedStyle={selectedStyle}
-            selectedSlatsColor={selectedSlatsColor}
             onSizeChange={handleSizeChange}
             onColorChange={handleColorChange}
             onStyleChange={handleStyleChange}
-            onSlatsColorChange={handleSlatsColorChange}
           />
         </div>
 

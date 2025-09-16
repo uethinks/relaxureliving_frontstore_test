@@ -175,7 +175,6 @@ export const V2SunshadesSelector: React.FC<V2SunshadesSelectorProps> = ({
 
   const [isLoading, setIsLoading] = useState(false)
   const [manualQuantity, setManualQuantity] = useState<number>(1)
-  const { selectedSlatsColor, setSelectedSlatsColor } = useProductSelection()
 
   // Quantity control functions
   const incrementQuantity = () => {
@@ -194,21 +193,9 @@ export const V2SunshadesSelector: React.FC<V2SunshadesSelectorProps> = ({
     a.value.localeCompare(b.value)
   )
 
-  const sortedSlatsColors = useMemo(() => {
-    const pergolaSlatsColors = shadesProduct.options?.find(
-      (option) => option.title === "Slats Color"
-    )
-    return pergolaSlatsColors?.values?.sort((a, b) =>
-      a.value.localeCompare(b.value)
-    )
-  }, [shadesProduct.options])
 
-  const handleSlatsColorChange = useCallback(
-    (slatsColor: StoreProductOptionValue) => {
-      setSelectedSlatsColor(slatsColor)
-    },
-    [setSelectedSlatsColor]
-  )
+
+
 
   // 初始化默认值
   useEffect(() => {
@@ -443,20 +430,6 @@ export const V2SunshadesSelector: React.FC<V2SunshadesSelectorProps> = ({
                     onClick={() => setSelectedColor(color)}
                   ></div>
                 ))}
-              </div>
-            </div>
-            {/* Slats Color Section */}
-            <div className="w-full">
-              <div className="text-sm font-semibold text-[#000000] mb-3">
-                Fabric Color: {selectedSlatsColor?.value || "Light Gray"}
-              </div>
-              <div className="flex gap-2">
-                <div
-                  className={`h-6 w-6 border-2 cursor-pointer border-[#ffbf3c] bg-[#ffd379]`}
-                  style={{
-                    backgroundColor: "#D7D7D7",
-                  }}
-                ></div>
               </div>
             </div>
           </div>
