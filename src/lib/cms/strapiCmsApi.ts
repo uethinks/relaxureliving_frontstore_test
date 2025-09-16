@@ -489,6 +489,7 @@ export const API_URLS = {
   getDeliveryWarranty: "/api/v2-delivery-warranty",
   getOurCollection: "/api/v2-our-collection",
   getFAQCategories: "/api/v2-faq-categories",
+  getResourceLibraries: "/api/v2-resource-libraries",
 }
 
 // 获取所有项目
@@ -868,6 +869,47 @@ export const getFAQCategories = async () => {
       },
     })
     return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取 resource library 列表
+export const getResourceLibrary = async ({
+  current = 1,
+  pageSize = 5,
+  category,
+}: {
+  current?: number
+  pageSize?: number
+  category?: string
+}) => {
+  try {
+    const { data } = await axiosInstance.get(API_URLS.getResourceLibraries, {
+      params: {
+        populate: "*",
+        pagination: {
+          page: current,
+          pageSize,
+        },
+        filters: {
+          category,
+        },
+      },
+    })
+    console.log("==== filter ====", {
+      page: current,
+      pageSize,
+      category,
+    })
+
+    console.log("==== data ====", data.data)
+
+    return {
+      data: data.data,
+      nextCursor: data.data?.length === pageSize ? current + 1 : undefined,
+    }
   } catch (error) {
     console.error("Error fetching items:", error)
     throw error

@@ -73,7 +73,7 @@ export default function FaqPage() {
 
   return (
     <>
-      <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
+      <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
         <h1
           className={
@@ -174,7 +174,7 @@ export default function FaqPage() {
         <section className={"w-full bg-[#EFEEEB80]"}>
           <V2ContactUsSection />
         </section>
-      </main>
+      </div>
       <FooterDark />
     </>
   )

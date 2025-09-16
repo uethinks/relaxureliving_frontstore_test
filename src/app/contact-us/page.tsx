@@ -3,10 +3,10 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import Image from "next/image"
 
-export default async function AboutPage() {
+export default async function ContactUsPage() {
   return (
     <>
-      <main className="w-full flex flex-col items-center py-0 relative bg-[##EFEEEB80]">
+      <div className="w-full flex flex-col items-center py-0 relative bg-[#EFEEEB80]">
         <NavBarWrapper />
 
         <section className={"max-w-7xl pt-20 pb-5"}>
@@ -74,7 +74,7 @@ export default async function AboutPage() {
           title="Have more questions about our products or services"
           description="Simply fill out the form below and our team will get back to you within 24 hours."
         />
-      </main>
+      </div>
       <FooterDark />
     </>
   )

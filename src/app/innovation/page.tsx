@@ -6,7 +6,7 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 export default async function InnovationPage() {
   return (
     <>
-      <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
+      <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
         <section className={"max-w-[1074px] py-20 m-auto"}>
           <h1
@@ -165,7 +165,7 @@ export default async function InnovationPage() {
             } as never
           }
         />
-      </main>
+      </div>
       <FooterDark />
     </>
   )

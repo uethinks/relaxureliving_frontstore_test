@@ -32,7 +32,7 @@ import Image from "next/image"
 //   ],
 // }
 
-export default async function AboutPage() {
+export default async function AboutUsPage() {
   const { data } = await getAboutUs()
   console.log("AboutUs - data", data)
 
@@ -46,7 +46,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
+      <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
         <section className="grid grid-cols-2 w-full bg-[#EFEEEB]">
           <div className="relative aspect-[6/5] w-full h-full overflow-hidden">
@@ -128,7 +128,7 @@ export default async function AboutPage() {
           title="Got something specific in mind, send us a message"
           description="If you fill out the contact form below, one of our representatives will reach back out to you in a timely manner."
         />
-      </main>
+      </div>
       <FooterDark />
     </>
   )

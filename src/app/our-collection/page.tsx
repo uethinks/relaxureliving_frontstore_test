@@ -7,7 +7,7 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
-export default async function AboutPage() {
+export default async function OurCollectionPage() {
   const { data } = await getOurCollection()
   console.log("OurCollection - data", data)
 

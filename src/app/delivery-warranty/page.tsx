@@ -5,7 +5,7 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import Image from "next/image"
 
-export default async function DeliveryPage() {
+export default async function DeliveryWarrantyPage() {
   const { data } = await getDeliveryWarranty()
   console.log("DeliveryWarranty - data", data)
 
@@ -18,7 +18,7 @@ export default async function DeliveryPage() {
   }
   return (
     <>
-      <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
+      <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
         <section className={"w-full max-w-7xl py-20"}>
           <h1
@@ -184,7 +184,7 @@ export default async function DeliveryPage() {
           }
           return null
         })}
-      </main>
+      </div>
       <FooterDark />
     </>
   )
