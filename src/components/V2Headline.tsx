@@ -42,15 +42,15 @@ export default function V2Headline({
         className
       )}
     >
-        {!iconHidden && (
-          <img
-            src="/img/icon-title.svg"
-            alt=""
-            className="w-16 h-16 flex-shrink-0 absolute -top-0 -left-8 -z-1"
-            aria-hidden="true"
-          />
-        )}
-        <span className="relative text-h2">{title}</span>
+      {!iconHidden && (
+        <img
+          src="/img/icon-title.svg"
+          alt=""
+          className="w-16 h-16 flex-shrink-0 absolute -top-0 -left-8 -z-1"
+          aria-hidden="true"
+        />
+      )}
+      <span className="relative text-h2">{title}</span>
       {children}
     </Component>
   )

@@ -488,6 +488,7 @@ export const API_URLS = {
   getAboutUs: "/api/about",
   getDeliveryWarranty: "/api/v2-delivery-warranty",
   getOurCollection: "/api/v2-our-collection",
+  getFAQCategories: "/api/v2-faq-categories",
 }
 
 // 获取所有项目
@@ -849,6 +850,21 @@ export const getOurCollection = async () => {
             },
           },
         },
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取 faq category 列表
+export const getFAQCategories = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getFAQCategories, {
+      params: {
+        populate: "*",
       },
     })
     return response.data

@@ -3,6 +3,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { getStrapiUrl } from "@lib/utils"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
+import Markdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 
 interface FAQIcon {
   id: number
@@ -17,10 +19,15 @@ interface FAQIcon {
   mime: string
 }
 
+interface FAQCategory {
+  id: number
+  name: string
+}
+
 interface FAQItem {
   id: number
   documentId: string
-  category: string
+  faq_category: FAQCategory
   title: string
   description: string
   createdAt: string
@@ -85,7 +92,10 @@ export function V2FAQSection({ data }: FAQSectionProps) {
                       <Image
                         unoptimized
                         src={getStrapiUrl(faq.icon.url)}
-                        alt={faq.icon.alternativeText || `${faq.category} icon`}
+                        alt={
+                          faq.icon.alternativeText ||
+                          `${faq?.faq_category?.name || faq?.title} icon`
+                        }
                         width={faq.icon.width}
                         height={faq.icon.height}
                         className="w-8 h-8 text-[#ffbf3c]"
@@ -111,7 +121,7 @@ export function V2FAQSection({ data }: FAQSectionProps) {
                   </div>
                   <div>
                     <span className="text-sm text-[#8c877c] font-medium uppercase tracking-wide">
-                      {faq.category}
+                      {faq?.faq_category?.name || ""}
                     </span>
                     <h3
                       className="text-lg sm:text-xl font-semibold text-[#140e02] mb-3 leading-tight"
@@ -124,10 +134,15 @@ export function V2FAQSection({ data }: FAQSectionProps) {
 
                 <div itemScope itemType="https://schema.org/Answer">
                   <p
-                    className="text-[#2f2a1e] text-sm sm:text-base leading-relaxed whitespace-pre-line"
+                    className="text-[#2f2a1e] text-sm sm:text-base leading-relaxed whitespace-break-spaces"
                     itemProp="text"
                   >
-                    {faq.description}
+                    <Markdown
+                      remarkPlugins={[remarkGfm]}
+                      remarkRehypeOptions={{ passThrough: ["link"] }}
+                    >
+                      {faq.description}
+                    </Markdown>
                   </p>
                 </div>
               </CardContent>
