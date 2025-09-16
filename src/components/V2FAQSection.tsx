@@ -133,7 +133,7 @@ export function V2FAQSection({ data }: FAQSectionProps) {
                 </div>
 
                 <div itemScope itemType="https://schema.org/Answer">
-                  <p
+                  <div
                     className="text-[#2f2a1e] text-sm sm:text-base leading-relaxed whitespace-break-spaces"
                     itemProp="text"
                   >
@@ -143,7 +143,7 @@ export function V2FAQSection({ data }: FAQSectionProps) {
                     >
                       {faq.description}
                     </Markdown>
-                  </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
