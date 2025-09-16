@@ -50,6 +50,9 @@ export async function POST(request: NextRequest) {
     revalidatePath("/accessories/sample-kit")
     revalidatePath("/accessories/shades")
     revalidatePath("/faq")
+    revalidatePath("/delivery-warranty")
+    revalidatePath("/innovation")
+    revalidatePath("/our-collection")
   
 
     return NextResponse.json({

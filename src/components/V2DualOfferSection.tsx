@@ -108,9 +108,9 @@ export default function V2DualOfferSection({
                     </div>
                   )}
 
-                  <p className="text-[#140e02] text-base max-w-prose mb-4">
+                  <div className="text-[#140e02] text-base max-w-prose mb-4">
                     {card.description}
-                  </p>
+                  </div>
                 </div>
                 {card.button && <V2Button data={card.button as any} />}
               </CardContent>
