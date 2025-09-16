@@ -39,7 +39,7 @@ export default function V2HeroBanner({ data }: V2HeroBannerProps) {
 
       {/* Content */}
       <div className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1074px] mx-auto">
           <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
             <h1 className="text-h2 font-bold text-white mb-4 sm:mb-5 md:mb-6 leading-tight">
               {title}

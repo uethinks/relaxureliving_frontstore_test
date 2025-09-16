@@ -16,6 +16,7 @@ export interface ButtonData {
   text: string
   link: string
   icon?: any
+  iconHidden?: boolean
 }
 
 /**
@@ -53,7 +54,7 @@ export const V2Button: React.FC<V2ButtonProps> = ({
   onClick,
   ...props
 }) => {
-  const { type, size, text, link, icon } = data
+  const { type, size, text, link, icon, iconHidden } = data
   const router = useRouter()
 
   // Determine if link is external
@@ -73,7 +74,7 @@ export const V2Button: React.FC<V2ButtonProps> = ({
       iconSize = "size-7"
     }
 
-    if (icon === "null") {
+    if (icon === "null" || iconHidden) {
       return <></>
     }
 

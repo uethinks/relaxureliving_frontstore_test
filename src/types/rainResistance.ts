@@ -44,12 +44,16 @@ export interface MediaFormat {
     mediaPosition: "Left" | "Right"
     media: Media
     button: any
+    rightButton?: any
+    backgroundColor?: string
   }
   
   export interface RainResistanceBlock {
     __component: string
     id: number
     title: string
+    description?: string
     items: RainResistanceItem[]
+    backgroundColor?: string
   }
   

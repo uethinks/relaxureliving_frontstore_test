@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { getStrapiUrl } from "@lib/utils"
+import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import V2Button from "./V2Button"
 import V2Headline from "./V2Headline"
 
@@ -44,6 +44,7 @@ interface DualOfferSectionProps {
   title: string
   iconItems: IconItem[]
   cardItems: CardItem[]
+  backgroundColor?: string
 }
 
 export default function V2DualOfferSection({
@@ -54,21 +55,21 @@ export default function V2DualOfferSection({
   const { title, iconItems, cardItems } = data
   return (
     <section
-      className="w-full py-12 md:py-16 lg:py-20 px-4 md:px-6"
+      className={`w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 ${getBackgroundColor(data.backgroundColor)}`}
       // style={{
       //   background:
       //     "linear-gradient(90deg, rgba(239, 235, 235, 0.5) 0%, rgba(255, 255, 255, 0.50) 100%)",
       // }}
       aria-labelledby="main-heading"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1074px] mx-auto">
         {/* Main Headline with SEO optimization */}
         <header className="text-center mb-4">
           <V2Headline title={title} iconHidden className="mx-auto" />
         </header>
 
         {iconItems && iconItems.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-16 md:mb-20 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-16 md:mb-20 max-w-[1074px] mx-auto">
             {iconItems.map((item) => (
               <div
                 key={item.id}

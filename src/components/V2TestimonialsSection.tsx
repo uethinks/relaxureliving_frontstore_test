@@ -164,7 +164,7 @@ export default function V2TestimonialsSection({
 
   if (!data || !data.items || data.items.length === 0) {
     return (
-      <section className={`max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12`}>
+      <section className={`max-w-[1074px] mx-auto px-4 sm:px-6 py-8 sm:py-12`}>
         <div className="text-center text-gray-500">
           No testimonials available
         </div>
@@ -176,7 +176,7 @@ export default function V2TestimonialsSection({
 
   return (
     <section
-      className={`max-w-7xl mx-auto py-8 sm:py-12`}
+      className={`max-w-[1074px] mx-auto py-8 sm:py-12`}
       aria-label="Customer testimonials and experiences"
     >
       {/* Arrow Navigation Container */}
@@ -344,9 +344,9 @@ export default function V2TestimonialsSection({
             {currentItem.media?.map((_, index) => (
               <button
                 key={index}
-                className={`w-3 h-3 rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 ${
+                className={`w-[10px] h-[10px] rounded-none transition-colors focus:ring-[#FFBF3C] ${
                   selectedMediaIndex === index
-                    ? "bg-yellow-400"
+                    ? "bg-[#FFBF3C]"
                     : "bg-gray-300 hover:bg-gray-400"
                 }`}
                 onClick={() => setSelectedMediaIndex(index)}
@@ -397,7 +397,7 @@ export default function V2TestimonialsSection({
       <div className="w-full flex justify-end mt-2">
       <Button
             size="lg"
-            className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold text-lg w-[525px] sm:text-xl px-6 sm:px-8 py-3 sm:py-4 h-auto"
+            className="bg-[#FFBF3C] hover:bg-primary-light text-gray-900 font-semibold text-lg w-[525px] sm:text-xl px-6 sm:px-8 py-3 sm:py-4 h-auto"
             asChild
           >
             <a href={data.button.link} className="flex items-center gap-3">

@@ -113,6 +113,9 @@ const v2FaqSectionPopulate = {
     button: {
       populate: "*",
     },
+    backgroundImage: {
+      populate: "*",
+    }
   },
 }
 

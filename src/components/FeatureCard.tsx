@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 import type { RainResistanceItem } from "@/types/rainResistance"
-import { getStrapiUrl } from "@lib/utils"
+import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import V2Headline from "./V2Headline"
 import V2Button from "./V2Button"
 
@@ -14,14 +14,14 @@ interface FeatureCardProps {
 
 export function FeatureCard({ item, index }: FeatureCardProps) {
   const isReversed = item.mediaPosition === "Left"
-  console.log('item', item)
+  console.log("item", item)
 
   return (
-    <section className={``}>
+    <section className={`${getBackgroundColor(item.backgroundColor)}`}>
       <div className="relative">
         {/* Content */}
         <div
-          className={`absolute max-w-7xl mx-auto left-0 right-0 my-auto top-0 bottom-0 grid lg:grid-cols-2 items-center ${
+          className={`absolute max-w-[1074px] mx-auto left-0 right-0 my-auto top-0 bottom-0 grid lg:grid-cols-2 items-center ${
             isReversed ? "lg:grid-flow-col-dense" : ""
           }`}
         >
@@ -37,7 +37,12 @@ export function FeatureCard({ item, index }: FeatureCardProps) {
                   className={`leading-relaxed mb-6 prose prose-lg max-w-none`}
                   dangerouslySetInnerHTML={{ __html: item.description }}
                 />
-                {item.button && <V2Button data={item.button as any} />}
+                <div className="flex justify-between gap-4">
+                  {item.button && <V2Button data={item.button as any} />}
+                  {item.rightButton && (
+                    <V2Button data={item.rightButton as any} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -52,16 +57,19 @@ export function FeatureCard({ item, index }: FeatureCardProps) {
 
           {/* Image */}
           <div className={`relative ${isReversed ? "lg:col-start-1" : ""}`}>
-            <div className="relative aspect-[6/5] w-full overflow-hidden">
-              { item.media && <Image
-                unoptimized
-                src={getStrapiUrl(item.media.url)}
-                alt={item.media.alternativeText || item.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                priority={index === 0}
-              />}
+            <div className="relative w-full h-auto overflow-hidden">
+              {item.media && (
+                <Image
+                  unoptimized
+                  src={getStrapiUrl(item.media.url)}
+                  alt={item.media.alternativeText || item.title}
+                  width={600}
+                  height={400}
+                  className="w-full h-auto object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                  priority={index === 0}
+                />
+              )}
             </div>
           </div>
         </div>

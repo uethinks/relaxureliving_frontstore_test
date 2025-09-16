@@ -59,7 +59,7 @@ export default function V2HeroProductSection({
 
   return (
     <section className="w-full h-[480px] flex items-center justify-center">
-      <div className="max-w-7xl w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div className="max-w-[1074px] w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-16">
         {/* Left side - Pergola Image */}
         <div className="h-[480px] overflow-hidden">
           <Image  
@@ -71,13 +71,13 @@ export default function V2HeroProductSection({
             }
             width={image.width}
             height={image.height}
-            className="object-contain h-full w-full"
+            className="object-cover h-full w-full"
             // priority -- remove it for lazy loading, as it is above the fold
           />
         </div>
 
         {/* Right side - Content */}
-        <div className="space-y-8">
+        <div className="space-y-8 flex flex-col justify-center items-start">
           <header className="space-y-4">
             <V2Headline title={title} as="h1" size="md" />
           </header>

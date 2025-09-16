@@ -73,7 +73,7 @@ export function V2FeatureCards({ data }: FeatureCardsProps) {
             title={data.title}
             as="h1"
             size="xl"
-            className="mb-4 max-w-7xl mx-auto"
+            className="mb-4 max-w-[1074px] mx-auto"
             iconHidden
           />
         </header>

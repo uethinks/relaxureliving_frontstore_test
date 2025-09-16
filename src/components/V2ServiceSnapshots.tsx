@@ -25,7 +25,7 @@ export default function FeaturesSection({ data }: { data: FeaturesSectionProps }
 
   return (
     <section className="w-full h-[380px] flex items-center justify-center" style={{ background: 'linear-gradient(90deg, rgba(239, 238, 235, 0.50) 0%, rgba(255, 255, 255, 0.50) 100%)' }}>
-      <div className="max-w-7xl w-full">
+      <div className="max-w-[1074px] w-full">
         <div className="flex flex-nowrap gap-16 justify-center">
           {features.map((feature) => (
             <div key={feature.id} className="basis-full sm:basis-1/3 lg:basis-1/6 grow flex flex-col items-center">

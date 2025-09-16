@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { Media } from "@/types/craftsmanship"
 import { getStrapiUrl } from "@lib/utils"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
@@ -53,17 +54,42 @@ interface FAQSectionProps {
     description?: string
     items: FAQItem[]
     button: FAQButton
+    backgroundImage?: Media
   }
 }
 
 export function V2FAQSection({ data }: FAQSectionProps) {
+  // Get responsive image sources for background
+  const imageSources = data.backgroundImage ? {
+    mobile: data.backgroundImage?.formats?.xsmall?.url || data.backgroundImage?.url,
+    tablet: data.backgroundImage?.formats?.thumbnail?.url || data.backgroundImage?.url,
+    desktop: data.backgroundImage?.formats?.thumbnail?.url || data.backgroundImage?.url,
+  } : null
+
   return (
-    <section
-      className="py-16 px-4"
-      itemScope
+    <section 
+      className={`w-full py-16 px-4 ${data.backgroundImage ? 'relative' : ''}`} 
+      itemScope 
       itemType="https://schema.org/FAQPage"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Background Image */}
+      {data.backgroundImage && imageSources && (
+        <div className="absolute inset-0 z-0">
+          <picture>
+            <source media="(min-width: 1024px)" srcSet={getStrapiUrl(imageSources.desktop)} />
+            <source media="(min-width: 768px)" srcSet={getStrapiUrl(imageSources.tablet)} />
+            <img
+              src={getStrapiUrl(imageSources.mobile) || "/placeholder.svg"}
+              alt={data.backgroundImage.alternativeText || "FAQ section background"}
+              className="w-full h-full object-cover"
+            />
+          </picture>
+          {/* Overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
+      )}
+
+      <div className={`max-w-[1074px] mx-auto ${data.backgroundImage ? 'relative z-10' : ''}`}>
         <header className="text-center mb-12">
           {data.title && (
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#140e02]">
@@ -81,7 +107,7 @@ export function V2FAQSection({ data }: FAQSectionProps) {
           {data.items.map((faq) => (
             <Card
               key={faq.id}
-              className="bg-white border-l-4 border-[#ffbf3c] shadow-sm hover:shadow-md transition-shadow duration-200"
+              className="bg-white border-0 border-l-4 border-[#ffbf3c] shadow-sm hover:shadow-md transition-shadow duration-200"
               itemScope
               itemType="https://schema.org/Question"
             >
@@ -153,7 +179,7 @@ export function V2FAQSection({ data }: FAQSectionProps) {
         {data.button && (
           <footer className="text-center">
             <Button
-              className="bg-[#ffbf3c] hover:bg-[#e6a835] text-[#140e02] font-semibold px-6 sm:px-8 py-3 rounded-lg transition-all duration-200 hover:scale-105 focus:ring-2 focus:ring-[#ffbf3c] focus:ring-offset-2"
+              className="bg-[#ffbf3c] w-[240px] hover:bg-[#e6a835] text-xl text-[#140e02] font-semibold px-6 sm:px-8 py-3 transition-all duration-200 hover:scale-105 focus:ring-2 focus:ring-[#ffbf3c] focus:ring-offset-2"
               asChild
             >
               <a

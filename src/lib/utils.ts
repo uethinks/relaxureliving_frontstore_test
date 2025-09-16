@@ -96,3 +96,18 @@ export const formatPrice = (price: number) =>
     style: "currency",
     currency: "USD",
   }).format(price || 0)
+
+
+export const getBackgroundColor = (color?: string) => {
+  switch (color) {
+    case "white":
+      return "bg-white"
+    case "gray":
+      return "bg-[#EFEEEB]"
+    case "black":
+      return "bg-black"
+    // 其他颜色
+    default:
+      return "bg-transparent"
+  }
+}

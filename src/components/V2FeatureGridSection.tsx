@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
-import { getStrapiUrl } from "@lib/utils"
+import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import V2Headline from "./V2Headline"
 import V2Button from "./V2Button"
 
@@ -57,6 +57,7 @@ interface FeatureGridData {
   title: string
   subtitle: string | null
   items: FeatureItem[]
+  backgroundColor?: string
 }
 
 interface FeatureGridProps {
@@ -65,7 +66,7 @@ interface FeatureGridProps {
 
 export function V2FeatureGridSection({ data }: FeatureGridProps) {
   return (
-    <section className="w-full bg-[#efeeeb] pt-20 pb-14 px-4" style={{ background: 'linear-gradient(90deg, rgba(239, 238, 235, 0.50) 0%, rgba(255, 255, 255, 0.50) 100%)' }} aria-labelledby="features-heading">
+    <section className={`w-full pt-20 pb-14 px-4 ${getBackgroundColor(data.backgroundColor)}`} aria-labelledby="features-heading">
       <div className="">
         {/* Main Heading */}
         <header className="text-center mb-10">
@@ -104,16 +105,16 @@ function FeatureCard({ item }: FeatureCardProps) {
 
   return (
     <Card className="bg-transparent border-none shadow-none">
-      <CardContent className="p-0 flex flex-col h-full">
+      <CardContent className="p-0 flex flex-col items-center justify-start">
         {/* Feature Image */}
-        {imageUrl && <div className="aspect-square mb-4 overflow-hidden bg-white/50">
+        {imageUrl && <div className="w-full mb-4 overflow-hidden bg-white/50">
           <Image
             unoptimized
             src={getStrapiUrl(imageUrl)}
             alt={imageAlt}
             width={item.image.width}
             height={item.image.height}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            className="w-full h-auto transition-transform duration-300 hover:scale-105"
             loading="lazy"
           />
         </div>}

@@ -82,7 +82,7 @@ export const ProductPage = ({
 
   return (
     <>
-      <div className="bg-background flex flex-col items-center justify-center w-full 2xl:w-[1512px]">
+      <div className="bg-background flex flex-col items-center justify-center w-full 2xl:w-[1074px]">
         <div className="bg-background w-full relative flex flex-col justify-center items-center pt-0 px-5 lg:px-20">
           <NavBarWrapper isFixed={false} />
           {/* {!isCartEmpty ? (

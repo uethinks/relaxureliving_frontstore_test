@@ -258,9 +258,9 @@ export const FooterDark = ({
       {/* HomepageSampleKit - only show on homepage */}
       {/* {isHomepage && <HomepageSampleKit />} */}
 
-      {/* New Footer Design with max-w-7xl container */}
+      {/* New Footer Design with max-w-[1074px] container */}
       <div className="w-full">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1074px] mx-auto">
           <FooterHeader />
 
           <div className="px-4 sm:px-0 py-8 sm:py-10 lg:py-12">

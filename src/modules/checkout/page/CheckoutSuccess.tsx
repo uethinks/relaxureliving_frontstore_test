@@ -26,7 +26,7 @@ export const CheckoutSuccess = () => {
   }, [orderId, error]) // 只在 orderId 变化时执行
 
   return (
-    <div className="w-full 2xl:w-[1512px] bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex justify-center flex-col items-center">
+    <div className="w-full 2xl:w-[1074px] bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex justify-center flex-col items-center">
       <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full relative px-5 lg:px-20">
         {/* Header */}
         <NavBarWrapper isFixed={false} />

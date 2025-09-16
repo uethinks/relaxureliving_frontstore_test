@@ -101,7 +101,7 @@ const GlassdoorProductPage = ({
   // 如果没有产品数据，显示加载或错误状态
   if (!glassdoorProduct) {
     return (
-      <div className="w-full max-w-[1512px] mx-auto relative">
+      <div className="w-full max-w-[1074px] mx-auto relative">
         <div className="flex items-center justify-center h-64">
           <p className="text-gray-500">Loading glassdoor product...</p>
         </div>
@@ -114,10 +114,10 @@ const GlassdoorProductPage = ({
 
   return (
     <ProductSelectionProvider product={glassdoorProduct}>
-      <div className="w-full max-w-[1512px] mx-auto relative">
+      <div className="w-full max-w-[1074px] mx-auto relative">
         <div className="lg:mx-auto flex flex-col  w-full relative z-10">
           <div className="flex flex-col w-full lg:flex-row justify-between items-start">
-            <div className="flex flex-col max-w-7xl w-full mx-auto mt-10  gap-5 pb-5">
+            <div className="flex flex-col max-w-[1074px] w-full mx-auto mt-10  gap-5 pb-5">
               <div className="flex flex-row justify-between items-start relative w-full gap-[65px]">
                 {/* Left Content */}
                 <div className="w-full lg:w-[64%] flex flex-col sticky top-0">

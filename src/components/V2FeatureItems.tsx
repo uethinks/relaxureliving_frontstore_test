@@ -26,7 +26,7 @@ export default function V2FeatureItems({ data }: { data: V2FeatureItemsProps }) 
 
   return (
     <section className="w-full py-12 md:py-16 lg:py-20 flex items-center justify-center">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-[1074px] mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 justify-items-center">
           {features.map((feature) => (
             <div key={feature.id} className="flex items-start gap-4">

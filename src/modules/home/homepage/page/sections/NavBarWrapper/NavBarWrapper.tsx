@@ -418,7 +418,7 @@ export const NavBarWrapper = ({
       >
         {/* Top Contact Bar - Black Background */}
         <address className="hidden xl:flex w-full h-10 bg-black items-center justify-center px-4 sm:px-6 lg:px-8 not-italic">
-          <div className="w-full max-w-7xl mx-auto flex items-center justify-between">
+          <div className="w-full max-w-[1074px] mx-auto flex items-center justify-between">
             <div className="flex-1"></div>
             <div className="flex items-center gap-6 text-white text-sm">
               <a
@@ -477,17 +477,9 @@ export const NavBarWrapper = ({
           role="navigation"
           aria-label="Main navigation"
         >
-          <div className="w-full max-w-7xl mx-auto flex items-center">
-            <Link
-              href="/"
-              className="flex items-center gap-2"
-              aria-label="Relaxure Homepage"
-            >
-              <img
-                className="w-32 lg:w-40 xl:w-[160px]"
-                src="/img/logo.svg"
-                alt="Relaxure Living Logo"
-              />
+          <div className="w-full max-w-[1074px] mx-auto flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2" aria-label="Relaxure Homepage">
+              <img className="w-32 lg:w-40 xl:w-[160px]" src="/img/logo.svg" alt="Relaxure Living Logo" />
             </Link>
 
             <div className="flex items-center justify-end w-full gap-8 xl:gap-10 relative text-[#ffffff]">
@@ -561,12 +553,8 @@ export const NavBarWrapper = ({
         </nav>
 
         {/* Mobile Navigation */}
-        <nav
-          className="xl:hidden flex flex-col w-full items-center justify-center relative px-4 sm:px-6 lg:px-8"
-          role="navigation"
-          aria-label="Mobile navigation"
-        >
-          <div className="w-full max-w-7xl mx-auto">
+        <nav className="xl:hidden flex flex-col w-full items-center justify-center relative px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Mobile navigation">
+          <div className="w-full max-w-[1074px] mx-auto">
             <div
               className={`
                 w-full h-[60px] flex items-center justify-between bg-[#1a1a1a]

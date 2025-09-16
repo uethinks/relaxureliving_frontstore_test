@@ -247,7 +247,7 @@ export const V2ContactUsSection = (props: {
   }
 
   return (
-    <div id="contact" className="max-w-7xl w-full py-16 mx-auto">
+    <div id="contact" className="max-w-[1074px] w-full py-16 mx-auto">
       <div className="text-center mb-12">
         <h1 className="text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
           {props?.title || "Got something specific in mind, send us a message"}
