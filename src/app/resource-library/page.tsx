@@ -18,7 +18,7 @@ export default function ResourceLibrary() {
 
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage, isError } =
     useInfiniteQuery({
-      queryKey: ["fetchChatList", categoryId],
+      queryKey: ["fetchList", categoryId],
       queryFn: ({ pageParam = 1 }) =>
         getResourceLibrary({
           current: pageParam,
@@ -39,7 +39,7 @@ export default function ResourceLibrary() {
       <div className="w-full flex flex-col items-center py-0 relative bg-[#fff]">
         <NavBarWrapper />
 
-        <section className={"max-w-7xl py-20"}>
+        <section className={"max-w-7xl pt-20"}>
           <div className={"mb-10 text-black text-center"}>
             <h1 className={"font-semibold text-[56px]"}>Resource Library</h1>
             <p className={"text-xl"}>
@@ -56,8 +56,12 @@ export default function ResourceLibrary() {
         </section>
 
         <section className={"relative w-full max-w-7xl pb-20"}>
-          <div className={"max-w-[1074px] m-auto sticky top-[500px] z-10]"}>
-            <div className={"flex items-center justify-center gap-12 mb-10"}>
+          <div className={"max-w-[1074px] m-auto"}>
+            <div
+              className={
+                "flex items-center justify-center gap-12 pt-20 py-10 bg-[#fff] sticky top-[115px] z-10"
+              }
+            >
               {categories.map((category, categoryKey) => (
                 <div
                   key={categoryKey}

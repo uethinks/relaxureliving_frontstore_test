@@ -124,10 +124,7 @@ export default async function AboutUsPage() {
           }
           return null
         })}
-        <V2ContactUsSection
-          title="Got something specific in mind, send us a message"
-          description="If you fill out the contact form below, one of our representatives will reach back out to you in a timely manner."
-        />
+        <V2ContactUsSection />
       </div>
       <FooterDark />
     </>
