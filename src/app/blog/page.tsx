@@ -12,7 +12,7 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import dayjs from "dayjs"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
@@ -27,6 +27,14 @@ function buildBlogUrl(page?: number, tags?: string[]) {
 }
 
 export default function PageBlog() {
+  return (
+    <Suspense>
+      <BlogContent />
+    </Suspense>
+  )
+}
+
+function BlogContent() { 
   const [tags, setTags] = useState([])
   const [currentTags, setCurrentTags] = useState<string[] | undefined>()
   const [currentPage, setCurrentPage] = useState(1)

@@ -53,6 +53,12 @@ export async function POST(request: NextRequest) {
     revalidatePath("/delivery-warranty")
     revalidatePath("/innovation")
     revalidatePath("/our-collection")
+    revalidatePath("/blog")
+    revalidatePath("/become-dealer")
+    revalidatePath("/press")
+    revalidatePath("/resource-library")
+    revalidatePath("/contact-us")
+    
   
 
     return NextResponse.json({
