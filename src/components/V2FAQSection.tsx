@@ -60,11 +60,6 @@ interface FAQSectionProps {
 
 export function V2FAQSection({ data }: FAQSectionProps) {
   // Get responsive image sources for background
-  const imageSources = data.backgroundImage ? {
-    mobile: data.backgroundImage?.formats?.xsmall?.url || data.backgroundImage?.url,
-    tablet: data.backgroundImage?.formats?.thumbnail?.url || data.backgroundImage?.url,
-    desktop: data.backgroundImage?.formats?.thumbnail?.url || data.backgroundImage?.url,
-  } : null
 
   return (
     <section 
@@ -73,13 +68,11 @@ export function V2FAQSection({ data }: FAQSectionProps) {
       itemType="https://schema.org/FAQPage"
     >
       {/* Background Image */}
-      {data.backgroundImage && imageSources && (
+      {data.backgroundImage && (
         <div className="absolute inset-0 z-0">
           <picture>
-            <source media="(min-width: 1024px)" srcSet={getStrapiUrl(imageSources.desktop)} />
-            <source media="(min-width: 768px)" srcSet={getStrapiUrl(imageSources.tablet)} />
             <img
-              src={getStrapiUrl(imageSources.mobile) || "/placeholder.svg"}
+              src={getStrapiUrl(data.backgroundImage.url) || "/placeholder.svg"}
               alt={data.backgroundImage.alternativeText || "FAQ section background"}
               className="w-full h-full object-cover"
             />

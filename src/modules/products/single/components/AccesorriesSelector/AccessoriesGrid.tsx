@@ -10,6 +10,7 @@ import V2HeroBanner from "@/components/V2HeroBanner"
 import V2Button from "@/components/V2Button"
 import { formatPrice } from "@lib/utils"
 import { Badge } from "@/components/ui/badge"
+import router from "next/router"
 
 const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
@@ -24,11 +25,16 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
 
   return (
     <div className="relative bg-white overflow-hidden transition-colors">
-      <div className="aspect-square overflow-hidden">
+      <div
+        className="aspect-square overflow-hidden"
+        onClick={() => {
+          router.push(`/accessories/${infoData.slug}`)
+        }}
+      >
         <img
           src={`${baseUrl}${infoData.productImages?.[0]?.url}`}
           alt={infoData.name}
-          className="w-full h-full object-cover"
+          className="w-full h-auto"
         />
       </div>
       <div className="mt-4 h-[120px]">
@@ -38,7 +44,7 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
           </h3>
         </div>
         <p className="text-xs font-semibold">{infoData.subtitle}</p>
-        <p className="text-xs text-[#8C877C] font-semibold">
+        <p className="text-xs text-[#8C877C] mt-1">
           {infoData.listDescription}
         </p>
       </div>
@@ -70,6 +76,7 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
           link: `/accessories/${infoData.slug}`,
           size: "Medium",
           text: "Shop Now",
+          iconHidden: true,
         }}
       />
     </div>

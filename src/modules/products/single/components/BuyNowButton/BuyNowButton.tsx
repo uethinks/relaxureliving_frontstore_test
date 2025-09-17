@@ -26,7 +26,7 @@ export const BuyNowButton = ({
   return (
     <button
       onClick={onClick}
-      className={`all-[unset] h-[64px] box-border w-full flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 justify-center relative ${
+      className={`all-[unset] h-[64px] box-border w-full flex items-center gap-2 px-6 py-3 justify-center relative ${
         state.property1 === PRIMARY_BUTTON_HOVER_L
           ? "hover:bg-[#fdce6f]"
           : "bg-[#F6AF1F]"
