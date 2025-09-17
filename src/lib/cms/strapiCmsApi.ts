@@ -494,6 +494,8 @@ export const API_URLS = {
   getFAQCategories: "/api/v2-faq-categories",
   getResourceLibraries: "/api/v2-resource-libraries",
   getPress: "/api/presses",
+  getTags: "/api/v2-tags",
+  getBlogs: "/api/v2-blogs",
 }
 
 // 获取所有项目
@@ -936,6 +938,53 @@ export const getPress = async ({
       data: data.data,
       nextCursor: data.data?.length === pageSize ? current + 1 : undefined,
     }
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取 tag 列表
+export const getTags = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getTags, {
+      params: {
+        populate: "*",
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取 blog 列表
+export const getBlogs = async ({
+  current = 1,
+  tagIds = [],
+}: {
+  current?: number
+  tagIds?: string[]
+}) => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getBlogs, {
+      params: {
+        populate: "*",
+        pagination: {
+          page: current,
+          pageSize: 6,
+        },
+        filters: {
+          tags: {
+            id: { $in: tagIds },
+          },
+        },
+      },
+    })
+
+    return response.data
   } catch (error) {
     console.error("Error fetching items:", error)
     throw error
