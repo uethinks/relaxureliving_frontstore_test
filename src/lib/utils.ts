@@ -103,7 +103,7 @@ export const getBackgroundColor = (color?: string) => {
     case "white":
       return "bg-white"
     case "gray":
-      return "bg-[#EFEEEB]"
+      return "bg-[#F7F7F5]"
     case "black":
       return "bg-black"
     // 其他颜色

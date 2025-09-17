@@ -29,7 +29,7 @@ export function V2FeatureShowcase({ data }: RainResistanceBlockProps) {
       </section>
 
       {/* Feature Sections */}
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col">
         {data.items.map((item, index) => (
           <FeatureCard
             key={item.id}

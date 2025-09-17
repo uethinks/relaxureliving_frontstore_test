@@ -37,12 +37,14 @@ export function FeatureCard({ item, index }: FeatureCardProps) {
                   className={`leading-relaxed mb-6 prose prose-lg max-w-none`}
                   dangerouslySetInnerHTML={{ __html: item.description }}
                 />
-                <div className="flex justify-between gap-4">
-                  {item.button && <V2Button data={item.button as any} />}
-                  {item.rightButton && (
-                    <V2Button data={item.rightButton as any} />
-                  )}
-                </div>
+                {item.button && (
+                  <div className="flex justify-between gap-4">
+                    {item.button && <V2Button data={item.button as any} />}
+                    {item.rightButton && (
+                      <V2Button data={item.rightButton as any} />
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

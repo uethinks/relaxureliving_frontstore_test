@@ -260,7 +260,7 @@ export default function V2TestimonialsSection({
         </div>
       </div>
 
-      <div className="flex items-start gap-6 w-[1280px]">
+      <div className="flex items-start gap-6 w-full">
         {/* Hero Video Section */}
         <div className="relative order-2 lg:order-1 flex-1">
           <div className="relative overflow-hidden shadow-lg">
@@ -337,25 +337,27 @@ export default function V2TestimonialsSection({
             )}
           </div>
 
-          <div
-            className="absolute -bottom-6 left-0 flex gap-2 mt-4 sm:mt-6 justify-center lg:justify-start"
-            role="tablist"
-          >
-            {currentItem.media?.map((_, index) => (
-              <button
-                key={index}
-                className={`w-[10px] h-[10px] rounded-none transition-colors focus:ring-[#FFBF3C] ${
-                  selectedMediaIndex === index
-                    ? "bg-[#FFBF3C]"
-                    : "bg-gray-300 hover:bg-gray-400"
-                }`}
-                onClick={() => setSelectedMediaIndex(index)}
-                role="tab"
-                aria-selected={selectedMediaIndex === index}
-                aria-label={`View media ${index + 1} for ${currentItem.author}'s testimonial`}
-              />
-            ))}
-          </div>
+          {currentItem.media?.length && currentItem.media.length > 1 && (
+            <div
+              className="absolute -bottom-6 left-0 flex gap-2 mt-4 sm:mt-6 justify-center lg:justify-start"
+              role="tablist"
+            >
+              {currentItem.media?.map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-[10px] h-[10px] rounded-none transition-colors focus:ring-[#FFBF3C] ${
+                    selectedMediaIndex === index
+                      ? "bg-[#FFBF3C]"
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  onClick={() => setSelectedMediaIndex(index)}
+                  role="tab"
+                  aria-selected={selectedMediaIndex === index}
+                  aria-label={`View media ${index + 1} for ${currentItem.author}'s testimonial`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Content Section */}
@@ -387,7 +389,7 @@ export default function V2TestimonialsSection({
           </div>
 
           <div className="">
-            <p className="text-gray-900 text-base sm:text-lg mb-4 h-[365px] overflow-hidden overflow-ellipsis">
+            <p className="text-gray-900 text-base sm:text-lg mb-4 overflow-hidden overflow-ellipsis">
               {currentItem.review}
             </p>
           </div>
