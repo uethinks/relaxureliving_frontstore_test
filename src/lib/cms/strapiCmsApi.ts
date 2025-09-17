@@ -115,7 +115,7 @@ const v2FaqSectionPopulate = {
     },
     backgroundImage: {
       populate: "*",
-    }
+    },
   },
 }
 
@@ -496,6 +496,7 @@ export const API_URLS = {
   getPress: "/api/presses",
   getTags: "/api/v2-tags",
   getBlogs: "/api/v2-blogs",
+  getBlog: "/api/v2-blogs",
 }
 
 // 获取所有项目
@@ -963,10 +964,16 @@ export const getTags = async () => {
 // 获取 blog 列表
 export const getBlogs = async ({
   current = 1,
+  pageSize = 6,
   tagIds = [],
+  sort,
+  filters,
 }: {
   current?: number
+  pageSize?: number
   tagIds?: string[]
+  sort?: any
+  filters?: any
 }) => {
   try {
     const response = await axiosInstance.get(API_URLS.getBlogs, {
@@ -974,13 +981,31 @@ export const getBlogs = async ({
         populate: "*",
         pagination: {
           page: current,
-          pageSize: 6,
+          pageSize,
         },
         filters: {
           tags: {
             id: { $in: tagIds },
           },
+          ...filters,
         },
+        sort,
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取博客详情
+export const getBlog = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`${API_URLS.getBlog}/${id}`, {
+      params: {
+        populate: "*",
       },
     })
 
