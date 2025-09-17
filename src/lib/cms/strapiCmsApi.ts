@@ -496,7 +496,7 @@ export const API_URLS = {
   getPress: "/api/presses",
   getTags: "/api/v2-tags",
   getBlogs: "/api/v2-blogs",
-  getBlog: "/api/v2-blogs",
+  getPolicies: "/api/v2-policies",
 }
 
 // 获取所有项目
@@ -1003,7 +1003,23 @@ export const getBlogs = async ({
 // 获取博客详情
 export const getBlog = async (id: string) => {
   try {
-    const response = await axiosInstance.get(`${API_URLS.getBlog}/${id}`, {
+    const response = await axiosInstance.get(`${API_URLS.getBlogs}/${id}`, {
+      params: {
+        populate: "*",
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取条款详情
+export const getPolicy = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`${API_URLS.getPolicies}/${id}`, {
       params: {
         populate: "*",
       },
