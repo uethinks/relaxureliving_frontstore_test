@@ -10,7 +10,6 @@ import V2HeroBanner from "@/components/V2HeroBanner"
 import V2Button from "@/components/V2Button"
 import { formatPrice } from "@lib/utils"
 import { Badge } from "@/components/ui/badge"
-import router from "next/router"
 
 const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
@@ -25,18 +24,15 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
 
   return (
     <div className="relative bg-white overflow-hidden transition-colors">
-      <div
-        className="aspect-square overflow-hidden"
-        onClick={() => {
-          router.push(`/accessories/${infoData.slug}`)
-        }}
-      >
-        <img
-          src={`${baseUrl}${infoData.productImages?.[0]?.url}`}
-          alt={infoData.name}
-          className="w-full h-auto"
-        />
-      </div>
+      <Link href={`/accessories/${infoData.slug}`}>
+        <div className="aspect-square overflow-hidden">
+          <img
+            src={`${baseUrl}${infoData.productImages?.[0]?.url}`}
+            alt={infoData.name}
+            className="w-full h-auto"
+          />
+        </div>
+      </Link>
       <div className="mt-4 h-[120px]">
         <div className="flex justify-between items-start">
           <h3 className="font-montserrat text-[22px] font-medium text-black">
