@@ -25,6 +25,7 @@ import V2TestimonialsSection from "@/components/V2TestimonialsSection"
 import { V2FAQSection } from "@/components/V2FAQSection"
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
 import V2OccasionsSection from "@/components/V2OccasionsSection"
+import V2GuideCardsSection from "@/components/V2GudieCardSection"
 
 // 配置静态生成
 export const dynamic = "force-static"
@@ -95,6 +96,8 @@ export default async function Homepage() {
             return <V2TestimonialsSection key={key} data={section} />
           } else if (section.__component === "blocks.v2-faq-section") {
             return <V2FAQSection key={key} data={section} />
+          } else if (section.__component === "blocks.v2-guide-cards-section") {
+            return <V2GuideCardsSection key={key} data={section} />
           }
           return null
         })}

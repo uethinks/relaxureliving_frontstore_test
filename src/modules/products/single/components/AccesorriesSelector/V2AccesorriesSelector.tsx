@@ -531,7 +531,7 @@ export const V2AccesorriesSelector = ({
             <div className="flex gap-2">
               <div
                 className={`h-6 w-6 border-2 cursor-pointer border-[#ffbf3c] bg-[#ffd379]`}
-                style={{ backgroundColor: VALUE_BY_COLORS["Dark Gray"] }}
+                style={{ backgroundColor: VALUE_BY_COLORS["Light Gray"] }}
               ></div>
             </div>
           </div>

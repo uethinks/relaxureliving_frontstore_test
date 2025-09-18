@@ -25,7 +25,7 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
   return (
     <div className="relative bg-white overflow-hidden transition-colors">
       <Link href={`/accessories/${infoData.slug}`}>
-        <div className="aspect-square overflow-hidden">
+        <div className="overflow-hidden cursor-pointer">
           <img
             src={`${baseUrl}${infoData.productImages?.[0]?.url}`}
             alt={infoData.name}
@@ -40,7 +40,7 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
           </h3>
         </div>
         <p className="text-xs font-semibold">{infoData.subtitle}</p>
-        <p className="text-xs text-[#8C877C] mt-1">
+        <p className="text-xs text-[#8C877C] mt-[10px]">
           {infoData.listDescription}
         </p>
       </div>

@@ -27,7 +27,7 @@ export const freeServices = {
         height: 16,
         alternativeText: "package",
       },
-      secondaryText: "Delivered In 4 Weeks",
+      secondaryText: "Delivered In 5 Weeks",
     },
     {
       id: 2,

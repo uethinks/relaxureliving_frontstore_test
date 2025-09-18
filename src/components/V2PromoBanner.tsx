@@ -56,35 +56,26 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
 
   return (
     <section
-      className="relative min-h-screen w-full flex items-center"
+      className="relative w-full flex items-center"
       role="banner"
       aria-label="Hero section"
     >
-      <div className="absolute inset-0 z-0">
-        <Image
-          unoptimized
-          src={
-            isStatic ? backgroundImage.url : getStrapiUrl(backgroundImage.url)
-          }
-          alt={
-            backgroundImage.alternativeText ||
-            "Relaxure pergola assembly process"
-          }
-          fill
-          className="object-cover w-full"
-          priority
-          // sizes={generateSizes()}
-          quality={85}
-        />
-        <div className="absolute inset-0 bg-black/40" aria-hidden="true"></div>
-      </div>
+      <Image
+        unoptimized
+        src={isStatic ? backgroundImage.url : getStrapiUrl(backgroundImage.url)}
+        alt={
+          backgroundImage.alternativeText || "Relaxure pergola assembly process"
+        }
+        width={backgroundImage.width}
+        height={backgroundImage.height}
+        className="w-full h-auto"
+        priority
+        // sizes={generateSizes()}
+        quality={85}
+      />
 
-      <div
-        className={`relative z-10 w-full max-w-[1074px] mx-auto flex ${
-          isReverse ? "justify-end" : ""
-        }`}
-      >
-        <div className="max-w-2xl lg:max-w-3xl w-[436px]">
+      <div className="absolute inset-0 z-10 w-full max-w-[1074px] mx-auto flex flex-col items-start justify-center">
+        <div className="w-[50%]">
           <V2Headline title={content.title || ""} className="text-white" />
 
           <div className="text-white text-base mb-8 mt-8">

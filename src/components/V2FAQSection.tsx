@@ -5,6 +5,7 @@ import { getStrapiUrl } from "@lib/utils"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Markdown from "react-markdown"
+import rehypeRaw from "rehype-raw"
 import remarkGfm from "remark-gfm"
 
 interface FAQIcon {
@@ -158,6 +159,14 @@ export function V2FAQSection({ data }: FAQSectionProps) {
                   >
                     <Markdown
                       remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeRaw]}
+                      components={{
+                        a: ({ children, href }) => (
+                          <a href={href} className="text-primary underline font-semibold px-1" target="_blank" rel="noopener noreferrer">
+                            {children}
+                          </a>
+                        ),
+                      }}
                       remarkRehypeOptions={{ passThrough: ["link"] }}
                     >
                       {faq.description}

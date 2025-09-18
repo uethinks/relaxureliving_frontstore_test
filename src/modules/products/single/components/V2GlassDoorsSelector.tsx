@@ -121,6 +121,7 @@ const FEATURES_BY_SIZE: Record<string, Feature[]> = {
 // Color Dark Gray, White
 const VALUE_BY_COLORS: Record<string, string> = {
   "Dark Gray": "#252D35",
+  "Dark Grey": "#252D35",
   White: "#FFFFFF",
 }
 
@@ -192,6 +193,7 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
   const sortedColors = glassdoorColors?.values?.sort((a, b) =>
     a.value.localeCompare(b.value)
   )
+  console.log('sortedColors: ', sortedColors)
 
   // 初始化默认值
   useEffect(() => {
@@ -287,13 +289,13 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
       : 0
 
   return (
-    <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 px-2.5 sticky top-0">
+    <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 sticky top-0">
       <div className="w-full">
         {/* Header */}
         <div className="pb-4 border-[#d9d9d9]">
           <p className="text-[#2F2A1E] text-xl mb-2">Relaxure Accessories</p>
           <h1 className="text-[#2F2A1E] text-3xl font-semibold">
-            {glassdoorProduct?.title}
+            {glassdoorCMSData?.name}
           </h1>
         </div>
         <div className="text-[#2F2A1E] text-sm">

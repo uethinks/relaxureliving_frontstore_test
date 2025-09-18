@@ -185,7 +185,7 @@ function FeaturesSection() {
   const features = [
     {
       icon: Package,
-      title: "Delivered In 4 Weeks",
+      title: "Delivered In 5 Weeks",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       iconStyle: "rounded" as const,

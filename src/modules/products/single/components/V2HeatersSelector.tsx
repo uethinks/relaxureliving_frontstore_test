@@ -156,13 +156,13 @@ export const V2HeatersSelector: React.FC<V2HeatersSelectorProps> = ({
       : 0
 
   return (
-    <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 px-2.5 sticky top-0">
+    <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 sticky top-0">
       <div className="w-full">
         {/* Header */}
         <div className="pb-4 border-[#d9d9d9]">
           <p className="text-[#2F2A1E] text-xl mb-2">Relaxure Accessories</p>
           <h1 className="text-[#2F2A1E] text-3xl font-semibold">
-            {heaterProduct?.title}
+            {heaterCMSData?.name}
           </h1>
         </div>
         <div className="text-[#2F2A1E] text-sm">
@@ -251,7 +251,7 @@ export const V2HeatersSelector: React.FC<V2HeatersSelectorProps> = ({
               <span className="underline">Download dimensions</span>
             </Button>
             {/* Color Section */}
-            <div className="w-full">
+            {/* <div className="w-full">
               <div className="text-sm font-semibold text-[#000000] mb-3">
                 Frame Color: {selectedColor?.value || "Dark Gray"}
               </div>
@@ -269,7 +269,7 @@ export const V2HeatersSelector: React.FC<V2HeatersSelectorProps> = ({
                   ></div>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

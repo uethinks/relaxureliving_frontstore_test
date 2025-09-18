@@ -121,7 +121,7 @@ export const SampleKitProductPage = ({
                       // rehypePlugins={[rehypeRaw]}
                       remarkRehypeOptions={{ passThrough: ["link"] }}
                     >
-                      {sampleKitCMSData.description}
+                      {sampleKitCMSData.detailDescription}
                     </Markdown>
                   </div>
                 </div>

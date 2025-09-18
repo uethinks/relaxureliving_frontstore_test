@@ -143,6 +143,25 @@ const accessoriesPagePopulate = {
   },
 }
 
+const v2GuideCardsPopulate = {
+  populate: {
+    items: {
+      populate: {
+        items: {
+          populate: {
+            icon: {
+              fields: "url",
+            },
+          },
+        },
+      },
+    },
+    button: {
+      populate: "*",
+    },
+  },
+}
+
 // 定义 API URL
 const homePagePopulate = {
   populate: {
@@ -162,6 +181,7 @@ const homePagePopulate = {
         "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
         "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
         "blocks.v2-faq-section": v2FaqSectionPopulate,
+        "blocks.v2-guide-cards-section": v2GuideCardsPopulate,
       },
     },
   },
@@ -203,6 +223,7 @@ const standardPergolaPopulate = {
         "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
         "blocks.v2-faq-section": v2FaqSectionPopulate,
         "blocks.v2-feature-cards": v2FeatureCardsPopulate,
+        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
       },
     },
   },
@@ -225,6 +246,7 @@ const customPergolaPopulate = {
         "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
         "blocks.v2-faq-section": v2FaqSectionPopulate,
         "blocks.v2-feature-cards": v2FeatureCardsPopulate,
+        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
       },
     },
   },
@@ -324,6 +346,7 @@ const heaterPopulate = {
         "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
         "blocks.v2-faq-section": v2FaqSectionPopulate,
         "blocks.v2-feature-cards": v2FeatureCardsPopulate,
+        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
       },
     },
   },
@@ -349,6 +372,7 @@ const shadesPopulate = {
         "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
         "blocks.v2-faq-section": v2FaqSectionPopulate,
         "blocks.v2-feature-cards": v2FeatureCardsPopulate,
+        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
       },
     },
   },
@@ -374,6 +398,7 @@ const sampleKitPopulate = {
         "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
         "blocks.v2-faq-section": v2FaqSectionPopulate,
         "blocks.v2-feature-cards": v2FeatureCardsPopulate,
+        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
       },
     },
   },
@@ -400,6 +425,7 @@ const glassdoorPopulate = {
         "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
         "blocks.v2-faq-section": v2FaqSectionPopulate,
         "blocks.v2-feature-cards": v2FeatureCardsPopulate,
+        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
       },
     },
   },

@@ -94,7 +94,7 @@ export const OrderSummary = (): JSX.Element => {
               </div>
               <div className="flex-1">
                 <h3 className="text-base font-bold text-gray-800 mb-2">
-                  Delivered in 4 Weeks
+                  Delivered in 5 Weeks
                 </h3>
                 <p className="text-sm text-gray-600">
                   Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Lorem

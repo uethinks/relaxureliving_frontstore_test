@@ -141,13 +141,13 @@ export const V2SampleKitSelector: React.FC<V2SampleKitSelectorProps> = ({
       : 0
 
   return (
-    <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 px-2.5 sticky top-0">
+    <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 sticky top-0">
       <div className="w-full">
         {/* Header */}
         <div className="pb-4 border-[#d9d9d9]">
-          <p className="text-[#2F2A1E] text-xl mb-2">Relaxure Accessories</p>
+          {/* <p className="text-[#2F2A1E] text-xl mb-2">Relaxure Accessories</p> */}
           <h1 className="text-[#2F2A1E] text-3xl font-semibold">
-            {sampleKitProduct?.title}
+            {sampleKitCMSData?.name}
           </h1>
         </div>
         <div className="text-[#2F2A1E] text-sm">

@@ -65,22 +65,22 @@ interface FeatureCardsProps {
 export function V2FeatureCards({ data }: FeatureCardsProps) {
   return (
     <section
-      className={`w-full bg-white pt-20 pb-14 px-4 ${data.backgroundColor}`}
+      className={`w-full bg-white pt-20 pb-14 px-4 ${getBackgroundColor(data.backgroundColor)}`}
       aria-labelledby="features-heading"
     >
-      <div className="w-full gap-5">
+      <div className="w-full flex flex-col gap-5">
         {/* Main Heading */}
         <header className="text-center">
           <V2Headline
             title={data.title}
             as="h1"
             size="xl"
-            className="mb-4 max-w-[1074px] mx-auto"
+            className="max-w-[1074px] mx-auto"
             iconHidden
           />
         </header>
         {data.description && (
-          <p className="text-center text-lg text-[#8C877C] whitespace-break-spaces mb-10">
+          <p className="text-center text-lg max-w-[1074px] mx-auto mb-2 text-[#8C877C]">
             {data.description}
           </p>
         )}

@@ -132,7 +132,7 @@ const GlassdoorProductPage = ({
                       // rehypePlugins={[rehypeRaw]}
                       remarkRehypeOptions={{ passThrough: ["link"] }}
                     >
-                      {glassdoorCMSData.description}
+                      {glassdoorCMSData.detailDescription}
                     </Markdown>
                   </div>
                 </div>

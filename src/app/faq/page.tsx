@@ -7,6 +7,7 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import Markdown from "react-markdown"
+import rehypeRaw from "rehype-raw"
 import remarkGfm from "remark-gfm"
 
 const IconPlus = () => (
@@ -186,6 +187,7 @@ export default function FaqPage() {
                     }`}
                   >
                     <Markdown
+                    rehypePlugins={[rehypeRaw]}
                       remarkPlugins={[remarkGfm]}
                       remarkRehypeOptions={{ passThrough: ["link"] }}
                     >

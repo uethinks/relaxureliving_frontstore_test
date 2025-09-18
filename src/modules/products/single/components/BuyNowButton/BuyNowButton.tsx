@@ -29,7 +29,7 @@ export const BuyNowButton = ({
       className={`all-[unset] h-[64px] box-border w-full flex items-center gap-2 px-6 py-3 justify-center relative ${
         state.property1 === PRIMARY_BUTTON_HOVER_L
           ? "hover:bg-[#fdce6f]"
-          : "bg-[#F6AF1F]"
+          : "bg-primary"
       }`}
       onMouseLeave={() => {
         dispatch("mouse_leave")
@@ -38,7 +38,7 @@ export const BuyNowButton = ({
         dispatch("mouse_enter")
       }}
     >
-      <p className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-2xl text-black font-semibold leading-6 whitespace-nowrap relative flex items-center gap-4">
+      <p className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0px] text-2xl text-black font-semibold leading-6 whitespace-nowrap relative flex items-center gap-4">
         {text}
         <img src="/img/cart-add.svg" alt="shopping-cart" className="w-8 h-8" />
       </p>

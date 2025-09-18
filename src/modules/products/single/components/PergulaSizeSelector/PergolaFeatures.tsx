@@ -105,6 +105,7 @@ const FEATURES_BY_SIZE: Record<string, Feature[]> = {
 // Color Dark Gray, White
 export const VALUE_BY_COLORS: Record<string, string> = {
   "Dark Gray": "#252D35",
+  "Light Gray": "#D7D7D7",
   White: "#FFFFFF",
 }
 

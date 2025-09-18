@@ -50,7 +50,7 @@ export const DirectionalSelector: React.FC<Props> = ({
                   : "border-white"
               }`}
             >
-              <div className="text-base font-semibold">Top</div>
+              <div className="text-base font-semibold">Front</div>
               <div className="text-base font-semibold text-[#69727A]">
                 {pergolaSize.length}"
               </div>
@@ -65,7 +65,7 @@ export const DirectionalSelector: React.FC<Props> = ({
                   : "border-white"
               }`}
             >
-              <div className="text-base font-semibold">Bottom</div>
+              <div className="text-base font-semibold">Back</div>
               <div className="text-base font-semibold text-[#69727A]">
                 {pergolaSize.length}"
               </div>

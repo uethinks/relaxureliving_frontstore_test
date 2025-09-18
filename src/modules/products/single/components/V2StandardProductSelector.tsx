@@ -19,6 +19,7 @@ import {
   V2AccesorriesSelector,
 } from "./AccesorriesSelector"
 import { Button } from "@/components/ui/button"
+import V2SupportSection from "@/components/V2SupportSection"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -83,8 +84,8 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
     ) {
       return
     }
-    // console.log('===selectedSize===', selectedSize, 'variants', product.variants);
-    console.log("product: ", product.title, product.variants)
+    // console.log('===selectedSize===', selectedSize, selectedColor, selectedStyle);
+    // console.log("product: ", product.title, product.variants)
     const variant = product.variants?.find((variant) => {
       const matchingSize = variant?.options?.find(
         (option) =>
@@ -100,6 +101,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
           option.option?.title === "Style" &&
           option.value === selectedStyle.value
       )
+      // console.log('matchingSize: ', matchingSize, 'matchingColor: ', matchingColor, 'matchingStyle: ', matchingStyle);
       return (
         matchingSize && matchingColor && matchingStyle
       )
@@ -302,7 +304,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
 
   return (
     <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 sticky top-0">
-      <div className="w-full">
+      <div className="w-full pb-4">
         {/* Header */}
         <div className="pb-4 border-b border-[#d9d9d9]">
           <p className="text-[#2F2A1E] text-xl mb-2">Relaxure Corsica</p>
@@ -443,7 +445,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
               alt="package"
               className="w-4 h-4 inline-block mr-2 mb-1"
             />
-            <span className="ml-2">Delivered In 4 Weeks</span>
+            <span className="ml-2">Delivered In 5 Weeks</span>
           </p>
 
           <div className="flex justify-between items-center">
@@ -506,32 +508,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
         </div>
 
         {/* Support Section */}
-        <div className="px-8 py-5 w-full mt-5 border border-[#8C877C]">
-          <div className="w-full">
-            <div className="flex items-center gap-4">
-              <span className="bg-[#ffbf3c] p-1">
-                <img src="/img/expert.svg" alt="message" className="w-7 h-7" />
-              </span>
-              <div className="text-[#000000] text-base">
-                <p className="font-medium">We're Here to Help</p>
-                <p className="font-medium text-[#8C877C] text-xs">
-                9AM to 5PM PST Mon-Fri
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-xs flex justify-between">
-            <Button variant="link" className="underline px-0 text-black"><img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />1-213-566-8658</Button>
-            <Button variant="link" className="underline px-0 text-black"><img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />info@relaxureliving.com</Button>
-          </div>
-        </div>
-        <div className="flex items-center justify-center gap-1 mt-4 text-sm">
-            {/* <MessageCircle className="h-4 w-4" /> */}
-            <span>Chat in the Corner</span>
-            {/* <ChevronDown className="h-4 w-4" /> */}
-            <MoveDownRight className="h-4 w-4" />
-          </div>
+        <V2SupportSection />
       </div>
     </div>
   )

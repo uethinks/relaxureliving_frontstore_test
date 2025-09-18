@@ -137,7 +137,7 @@ export const HeaterProductPage = ({
                       // rehypePlugins={[rehypeRaw]}
                       remarkRehypeOptions={{ passThrough: ["link"] }}
                     >
-                      {heaterCMSData.description}
+                      {heaterCMSData.detailDescription}
                     </Markdown>
                   </div>
                 </div>

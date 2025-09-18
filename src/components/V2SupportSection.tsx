@@ -31,11 +31,11 @@ export default function V2SupportSection() {
         </div>
 
         <div className="text-sm flex justify-between">
-          <Button variant="link" className="underline px-0 text-black">
+          <Button variant="link" className="underline px-0 text-black gap-1" onClick={() => window.open(`tel:${data.phoneNumber}`, '_blank')}>
             <img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />
             {data.phoneNumber}
           </Button>
-          <Button variant="link" className="underline px-0 text-black">
+          <Button variant="link" className="underline px-0 text-black gap-1" onClick={() => window.open(`mailto:${data.email}`, '_blank')}>
             <img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />
             {data.email}
           </Button>
