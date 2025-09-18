@@ -31,17 +31,30 @@ export default function V2SupportSection() {
         </div>
 
         <div className="text-sm flex justify-between">
-          <Button variant="link" className="underline px-0 text-black gap-1" onClick={() => window.open(`tel:${data.phoneNumber}`, '_blank')}>
+          <Button
+            variant="link"
+            className="underline px-0 text-black gap-1"
+            onClick={() => window.open(`tel:${data.phoneNumber}`, "_blank")}
+          >
             <img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />
             {data.phoneNumber}
           </Button>
-          <Button variant="link" className="underline px-0 text-black gap-1" onClick={() => window.open(`mailto:${data.email}`, '_blank')}>
+          <Button
+            variant="link"
+            className="underline px-0 text-black gap-1"
+            onClick={() => window.open(`mailto:${data.email}`, "_blank")}
+          >
             <img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />
             {data.email}
           </Button>
         </div>
       </div>
-      <div className="flex items-center justify-center gap-1 mt-4 text-sm">
+      <div
+        className="flex items-center justify-center gap-1 mt-4 text-sm cursor-pointer"
+        onClick={() => {
+          (window as any).tidioChatApi.open()
+        }}
+      >
         {/* <MessageCircle className="h-4 w-4" /> */}
         <span>{data.chatText}</span>
         {/* <ChevronDown className="h-4 w-4" /> */}

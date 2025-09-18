@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { getStrapiUrl } from "@lib/utils"
+import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import Image from "next/image"
 import V2Headline from "./V2Headline"
 
