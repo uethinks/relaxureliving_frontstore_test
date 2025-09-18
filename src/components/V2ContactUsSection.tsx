@@ -37,7 +37,7 @@ interface FormData {
   fullName: string
   phoneNumber: string
   email: string
-  inquiry: string
+  inquiryType: string
   message: string
 }
 
@@ -67,7 +67,7 @@ export const V2ContactUsSection = (props: {
     fullName: "",
     phoneNumber: "",
     email: "",
-    inquiry: "Sales", // Safe default value
+    inquiryType: "Sales", // Safe default value
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -81,7 +81,7 @@ export const V2ContactUsSection = (props: {
     if (data?.InquiryTypes && data.InquiryTypes.length > 0) {
       setFormData((prev) => ({
         ...prev,
-        inquiry: data.InquiryTypes[0],
+        inquiryType: data.InquiryTypes[0],
       }))
     }
   }, [data])
@@ -223,21 +223,21 @@ export const V2ContactUsSection = (props: {
         phoneNumber: formData.phoneNumber,
         email: formData.email,
         message: formData.message,
-        inquiry: formData.inquiry
+        inquiryType: formData.inquiryType
       })
       await sendKlaviyoContactUsForm({
         fullName: formData.fullName,
         phoneNumber: formData.phoneNumber,
         email: formData.email,
         message: formData.message,
-        inquiry: formData.inquiry,
+        inquiryType: formData.inquiryType,
       })
       setSubmitStatus("success")
       setFormData({
         fullName: "",
         phoneNumber: "",
         email: "",
-        inquiry: formData.inquiry,
+        inquiryType: "",
         message: "",
       })
     } catch (error) {
@@ -344,7 +344,7 @@ export const V2ContactUsSection = (props: {
                     </span>
                   </div>
                   <Select
-                    value={formData.inquiry}
+                    value={formData.inquiryType}
                     onValueChange={handleSelectChange}
                   >
                     <SelectTrigger className="w-full pl-36 h-full bg-white border-[#d9d9d9] text-[#140e02] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c] flex items-center">
@@ -469,7 +469,7 @@ export const V2ContactUsSection = (props: {
                   </span>
                 </div>
                 <Select
-                  value={formData.inquiry}
+                  value={formData.inquiryType}
                   onValueChange={handleSelectChange}
                 >
                   <SelectTrigger className="w-full pl-36 h-full bg-white border-[#d9d9d9] text-[#140e02] focus-visible:border-[#ffbf3c] focus-visible:ring-[#ffbf3c] flex items-center">

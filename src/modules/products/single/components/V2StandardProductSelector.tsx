@@ -301,7 +301,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
   const monthlyPayment = totalPrice / 24
 
   return (
-    <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 px-2.5 sticky top-0">
+    <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 sticky top-0">
       <div className="w-full">
         {/* Header */}
         <div className="pb-4 border-b border-[#d9d9d9]">
@@ -521,7 +521,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
             </div>
           </div>
 
-          <div className="text-sm flex justify-between">
+          <div className="text-xs flex justify-between">
             <Button variant="link" className="underline px-0 text-black"><img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />1-213-566-8658</Button>
             <Button variant="link" className="underline px-0 text-black"><img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />info@relaxureliving.com</Button>
           </div>
