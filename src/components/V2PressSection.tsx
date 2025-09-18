@@ -132,8 +132,7 @@ export default function V2PressSection({ data }: V2PressSectionProps) {
                         <Image
                           unoptimized
                           src={getStrapiUrl(
-                            testimonial.image.formats.thumbnail?.url ||
-                              testimonial.image.url
+                            testimonial.image.url
                           )}
                           alt={
                             testimonial.image.alternativeText ||

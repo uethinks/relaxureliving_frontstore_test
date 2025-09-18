@@ -16,7 +16,7 @@ import {
   submitContactForm,
 } from "@lib/cms/strapiCmsApi"
 import { useQuery } from "@tanstack/react-query"
-import { Mail, MessageCircle, Phone, Sun, User } from "lucide-react"
+import { ArrowRight, Mail, MessageCircle, Phone, Sun, User } from "lucide-react"
 import React, { useEffect, useState } from "react"
 
 // 定义常量以避免重复的字符串字面量
@@ -223,19 +223,21 @@ export const V2ContactUsSection = (props: {
         phoneNumber: formData.phoneNumber,
         email: formData.email,
         message: formData.message,
+        inquiry: formData.inquiry
       })
       await sendKlaviyoContactUsForm({
         fullName: formData.fullName,
         phoneNumber: formData.phoneNumber,
         email: formData.email,
         message: formData.message,
+        inquiry: formData.inquiry,
       })
       setSubmitStatus("success")
       setFormData({
         fullName: "",
         phoneNumber: "",
         email: "",
-        inquiry: data?.InquiryTypes?.[0] || "Sales",
+        inquiry: formData.inquiry,
         message: "",
       })
     } catch (error) {
@@ -530,9 +532,12 @@ export const V2ContactUsSection = (props: {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-[#ffbf3c] hover:bg-[#e6ac35] text-[#140e02] font-semibold px-12 py-4 h-auto focus-visible:ring-2 focus-visible:ring-[#ffbf3c] focus-visible:ring-offset-2"
+            className="bg-[#ffbf3c] hover:bg-[#e6ac35] text-xl text-[#140e02] font-semibold px-12 py-3 h-auto focus-visible:ring-2 focus-visible:ring-[#ffbf3c] focus-visible:ring-offset-2 flex items-center gap-3"
           >
-            {isSubmitting ? "Sending..." : "Send Message"}
+            {isSubmitting ? "Sending..." : "Send"}
+            <ArrowRight
+              className={`w-4 h-4 transition-transform duration-200 ease-in-out group-hover:translate-x-1`}
+            />
           </Button>
         </div>
       </form>

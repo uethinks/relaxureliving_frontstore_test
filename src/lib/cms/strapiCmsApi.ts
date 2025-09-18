@@ -681,6 +681,7 @@ export const submitContactForm = async (formData: {
   phoneNumber: string
   email: string
   message: string
+  inquiry: string
 }) => {
   try {
     const response = await axiosInstance.post(API_URLS.submitContact, {
@@ -689,6 +690,7 @@ export const submitContactForm = async (formData: {
         phoneNumber: formData.phoneNumber,
         email: formData.email,
         message: formData.message,
+        inquiry: formData.inquiry
       },
     })
     return response.data

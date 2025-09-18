@@ -183,7 +183,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                   >
                     <div className="aspect-square overflow-hidden">
                       <img
-                        src={strapiCmsUrl + (image?.formats?.small?.url || image?.formats?.thumbnail?.url || image?.formats?.xsmall?.url)}
+                        src={strapiCmsUrl + (image.url)}
                         alt=""
                         className="w-full h-full object-cover object-center"
                         loading="lazy"
