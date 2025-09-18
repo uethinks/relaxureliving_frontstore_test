@@ -15,7 +15,8 @@ import { EmptyCart } from "../EmptyCart/EmptyCart"
 import { PergolaData, BoringButImportantStuff } from "@/types/global"
 import { formatCartTotal } from "@lib/util/money"
 import Breadcrumb from "@/components/Breadcrumb"
-import { CartAccessoriesGrid } from "./CartAccessoriesGrid" // Lazy load only non-critical components
+import { CartAccessoriesGrid } from "./CartAccessoriesGrid"
+import CartSkeleton from "../CartSkeleton/CartSkeleton" // Lazy load only non-critical components
 const OurPromise = lazy(() =>
   import("@modules/home/homepage/page/sections/OurPromise").then((module) => ({
     default: module.OurPromise,
@@ -46,8 +47,9 @@ interface FAQAnswer {
   Answer: string
 }
 
-export const ProductPage = ({
-  accessories,
+//购物车左边的产品列表页面
+export const CartPage = ({
+    accessories
 }: {
   accessories: StoreProduct[]
 }): JSX.Element => {
@@ -55,7 +57,7 @@ export const ProductPage = ({
   const [ourPromise, setOurPromise] = useState<BoringButImportantStuff | null>(
     null
   )
-  const { cart } = useCart()
+  const { cart, isLoading } = useCart()
 
   // 初始化加载 FAQ 数据
   useEffect(() => {
@@ -82,8 +84,8 @@ export const ProductPage = ({
 
   return (
     <>
-      <div className="bg-background flex flex-col items-center justify-center w-full 2xl:w-[1074px]">
-        <div className="bg-background w-full relative flex flex-col justify-center items-center pt-0 px-5 lg:px-20">
+      <div className="w-full flex flex-col items-center py-0 relative bg-background ">
+        <div className=" w-full relative flex flex-col justify-center items-center pt-0">
           <NavBarWrapper isFixed={false} />
           {/* {!isCartEmpty ? (
             <div className="inline-flex items-center justify-start gap-2.5 w-full">
@@ -104,46 +106,48 @@ export const ProductPage = ({
             </div>
           ) : null} */}
           {/* <Breadcrumb steps={["Cart", "Information", "Payment"]} current={0} /> */}
-          {isCartEmpty ? (
+          {isLoading ? (
+            <CartSkeleton />
+          ) : isCartEmpty ? (
             <EmptyCart />
-          ) : (
-            <div className="relative flex flex-col mt-10 lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-6 w-full">
-              <div className="flex flex-col gap-[30px] w-full lg:w-2/3">
-                <div className="flex items-center justify-between">
-                  <h1 className="text-2xl font-bold text-[#2f2a1e]">
-                    Your Cart ({cart?.items?.length ?? 0})
-                  </h1>
-                  <div className="text-[#8c877c]">
-                    Subtotal:{" "}
-                    <span className="font-semibold text-[#8C877C]">
-                      {formatCartTotal(cart)}
-                    </span>
+          ) : (     
+            <div className="w-full max-w-[1074px] mx-auto">          
+              <div className="relative flex flex-col my-10 lg:flex-row items-center lg:items-start justify-start lg:justify-between gap-6 w-full">
+                <div className="flex flex-col gap-[30px] w-full lg:w-2/3">
+                  <div className="flex items-center justify-between">
+                    <h1 className="text-2xl font-bold text-[#2f2a1e]">
+                      Your Cart ({cart?.items?.length ?? 0})
+                    </h1>
+                    <div className="text-[#8c877c]">
+                      Subtotal:{" "}
+                      <span className="font-semibold text-[#8C877C]">
+                        {formatCartTotal(cart)}
+                      </span>
+                    </div>
                   </div>
+                  <ProductCard />
+                  <ShadesCard />
+                  <HeaterCard />
+                  <GlassDoorCard />
+                  <SampleKitCard />
                 </div>
-                <ProductCard />
-                <ShadesCard />
-                <HeaterCard />
-                <GlassDoorCard />
-                <SampleKitCard />
-              </div>
-              <div className="flex flex-col justify-start gap-2.5 w-full lg:w-1/3 sticky top-10">
-                <OrderSummary />
+                <div className="flex flex-col justify-start gap-2.5 w-full lg:w-1/3 sticky top-10">
+                  <OrderSummary />
+                </div>              
               </div>
             </div>
           )}
         </div>
-        <div className="px-5 lg:px-20">
-          <CartAccessoriesGrid />
-        </div>
+    
       </div>
-      <OurPromise
+      {/* <OurPromise
         pergolaData={
           {
             boringButImportantStuff: ourPromise,
           } as PergolaData
         }
       />
-      {faq && <FaqWrapper faq={faq} />}
+      {faq && <FaqWrapper faq={faq} />} */}
       <FooterDark />
     </>
   )

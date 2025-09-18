@@ -1,8 +1,9 @@
 import { Metadata } from "next"
 import { getRegion } from "@lib/data/regions"
-import { ProductPage } from "@modules/cart/components/ProductPage/ProductPage"
+
 import { getProductByProductType } from "@lib/data/products"
-import { StoreProductListParams } from "@medusajs/types"
+import { StoreProductListParams } from "@medusajs/types" 
+import { CartPage } from "@modules/cart/components/ProductPage/CartPage"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -44,5 +45,5 @@ export default async function Cart(props: Props) {
   const accessories = await getProductsForAccessory({
     regionId: region?.id ?? "",
   })
-  return <ProductPage accessories={accessories} />
+  return <CartPage accessories={accessories} />
 }
