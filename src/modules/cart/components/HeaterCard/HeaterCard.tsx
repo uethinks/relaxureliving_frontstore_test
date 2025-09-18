@@ -3,6 +3,7 @@ import { useCart } from "@lib/context/cartContext"
 import { StoreCartLineItem } from "@medusajs/types"
 import React, { useMemo, useState, useCallback } from "react"
 import { ConfirmDialog } from "../../../../components/ConfirmDialog"
+import { formatPrice } from "@lib/utils"
 
 // 自定义钩子：处理数量更新逻辑
 const useQuantityUpdate = (cart: any, updateVariantInfo: any) => {
@@ -232,25 +233,25 @@ const HeaterItem = ({
           <p className="text-[24px] font-semibold whitespace-nowrap tracking-[0]">
             {item?.product_title}
           </p>
-          <div className="flex flex-wrap gap-[1px]">
+          <div className="flex flex-wrap gap-[1px] mt-2">
             {item.variant?.options?.map((option: any) => (
               <span
                 key={option.id}
-                className="inline-flex items-center px-2 py-1.5 text-[12px] lg:text-[14px] font-medium bg-[#f8f9fa] border border-[#e9ecef] text-[#6c757d]"
+                className="inline-flex items-center px-2 py-1.5 text-[12px] lg:text-[12px] font-regular bg-[#ffffff] border border-[#e9ecef] text-gray-500"
               >
-                {option.value}
+                {option.option.title}: {option.value}
               </span>
             ))}
           </div>
         </div>
         <div className="flex flex-col items-end justify-start gap-1">
-          <div className="font-semibold text-[20px] whitespace-nowrap relative tracking-[0]">
-            ${item?.total?.toFixed(2)}
+          <div className="font-semibold text-[20px] whitespace-nowrap relative tracking-[0] py-1">
+            {formatPrice(item?.total)}
           </div>
           {item?.discount_total > 0 && (
             <div className="flex flex-col items-end">
               <div className="font-medium text-[14px] leading-[20px] whitespace-nowrap relative text-[#6c757d] line-through">
-                ${item?.original_total?.toFixed(2)}
+                {formatPrice(item?.original_total)}
               </div>
               <div className="py-0.5 bg-[#e9ecef] rounded-full flex items-center justify-center">
                 <span className="text-[14px] font-normal text-highlight">
@@ -289,7 +290,7 @@ const HeaterItem = ({
                     handleQuantityChange(value, item.id)
                   }}
                   className={`text-center bg-transparent focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] 
-                    font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap 
+                    font-medium text-black text-base tracking-[0] leading-6 whitespace-nowrap 
                     [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none 
                     [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]`}
                 />

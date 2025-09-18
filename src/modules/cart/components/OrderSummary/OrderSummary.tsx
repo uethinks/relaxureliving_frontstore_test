@@ -184,7 +184,7 @@ export const OrderSummary = (): JSX.Element => {
           {/* Checkout Button */}
           <button
             onClick={() => router.push("/checkout")}
-            className="w-full bg-primary hover:bg-primary-light text-black text-2xl font-bold py-4 px-6 transition-colors duration-200 h-[64px]"
+            className="w-full bg-primary hover:bg-primary-light text-black text-2xl font-bold py-4 px-4 transition-colors duration-200 h-[64px]"
           >
             Check Out - {formatCartTotal(cart)}
           </button>

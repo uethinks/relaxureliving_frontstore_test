@@ -153,6 +153,7 @@ export const ProductCard = (): JSX.Element | null => {
     return null
   }
 
+  console.log("item.variant?.options", pergola[0])
   return (
     <>
       {pergola.map((item) => (
@@ -167,25 +168,26 @@ export const ProductCard = (): JSX.Element | null => {
             }}
           />
           <div className="flex flex-col w-full h-[160px] items-start justify-between gap-4 relative flex-1 pt-5">
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
+            <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between relative self-stretch w-full flex-[0_0_auto]">
               <div className={`w-fit relative`}>
                 <p className="text-[24px] font-semibold whitespace-nowrap tracking-[0]">
                   {item?.product_title}
                 </p>
-                <div className="flex flex-wrap gap-[1px]">
+                
+                <div className="flex flex-wrap gap-[1px] mt-2">
                   {item.variant?.options?.map((option: any) => (
                     <span
                       key={option.id}
-                      className="inline-flex items-center px-2 py-1.5 text-[12px] lg:text-[14px] font-medium bg-[#f8f9fa] border border-[#e9ecef] text-[#6c757d]"
+                      className="inline-flex items-center px-2 py-1.5 text-[12px] lg:text-[12px] font-regular bg-[#ffffff] border border-[#e9ecef] text-gray-500"
                     >
-                      {option.value}
+                      {option.option.title}: {option.value}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="flex flex-col items-end justify-start gap-1">
-                <div className="font-semibold text-[20px] whitespace-nowrap relative tracking-[0]">
-                  ${item?.total?.toFixed(2)}
+                <div className="font-semibold text-[20px] whitespace-nowrap relative tracking-[0] py-1">
+                  {formatPrice(item?.total)}
                 </div>
                 {item?.discount_total > 0 && (
                   <div className="flex flex-col items-end">
@@ -229,7 +231,7 @@ export const ProductCard = (): JSX.Element | null => {
                           handleQuantityChange(value, item.id)
                         }}
                         className={`text-center bg-transparent focus:outline-none relative w-full [font-family:'Montserrat',Helvetica] 
-                          font-medium text-[#69727a] text-base tracking-[0] leading-6 whitespace-nowrap 
+                          font-medium text-black text-base tracking-[0] leading-6 whitespace-nowrap 
                           [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none 
                           [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]`}
                       />
