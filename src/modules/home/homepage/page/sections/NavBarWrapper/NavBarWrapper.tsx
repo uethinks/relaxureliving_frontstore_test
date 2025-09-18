@@ -4,6 +4,7 @@ import { getMenu } from "@lib/cms/strapiCmsApi"
 import { useCart } from "@lib/context/cartContext"
 import { getStrapiUrl } from "@lib/utils"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { Component } from "../../../../components/Component"
 
@@ -75,6 +76,7 @@ export const NavBarWrapper = ({
   const [menuData, setMenuData] = useState<MenuData | null>(null)
   const [openSubmenu, setOpenSubmenu] = useState<number | null>(null)
   const { cart } = useCart()
+  const router = useRouter()
 
   const hasItemsInCart = cart?.items && cart.items.length > 0
 
@@ -148,9 +150,13 @@ export const NavBarWrapper = ({
         return (
           <div key={item.id} className="w-full">
             <button
-              onClick={() =>
+              onClick={() => {
+                if (item.url) {
+                  router.push(item.url)
+                  return
+                }
                 setOpenSubmenu(openSubmenu === item.id ? null : item.id)
-              }
+              }}
               className="w-full py-2 [font-family:'Montserrat',Helvetica] font-medium  text-[#343a40] text-base flex items-center justify-start gap-2"
             >
               {item.name}
@@ -198,6 +204,12 @@ export const NavBarWrapper = ({
         return (
           <div key={item.id} className="relative group">
             <button
+              onClick={() => {
+                if (item.url) {
+                  router.push(item.url)
+                  return
+                }
+              }}
               className={`
                 flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline hover:font-extrabold font-semibold
               `}
@@ -245,6 +257,12 @@ export const NavBarWrapper = ({
             className={`
                 flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline hover:font-extrabold font-semibold
               `}
+            onClick={() => {
+              if (item.url) {
+                router.push(item.url)
+                return
+              }
+            }}
           >
             {item.name}
             {/* <svg
@@ -333,7 +351,7 @@ export const NavBarWrapper = ({
                           text: "Shop Now",
                           type: "Primary",
                           size: "Small",
-                          link: "/#contact",
+                          link: subItem.url || "",
                           icon: "null",
                         }}
                       />
@@ -361,6 +379,9 @@ export const NavBarWrapper = ({
                             : ""
                         }
                         alt={subItem?.name}
+                        onClick={() => {
+                          router.push(subItem.banner.url || "")
+                        }}
                       />
                     </div>
                   ))}
@@ -478,8 +499,16 @@ export const NavBarWrapper = ({
           aria-label="Main navigation"
         >
           <div className="w-full max-w-[1074px] mx-auto flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2" aria-label="Relaxure Homepage">
-              <img className="w-32 lg:w-40 xl:w-[160px]" src="/img/logo.svg" alt="Relaxure Living Logo" />
+            <Link
+              href="/"
+              className="flex items-center gap-2"
+              aria-label="Relaxure Homepage"
+            >
+              <img
+                className="w-32 lg:w-40 xl:w-[160px]"
+                src="/img/logo.svg"
+                alt="Relaxure Living Logo"
+              />
             </Link>
 
             <div className="flex items-center justify-end w-full gap-8 xl:gap-10 relative text-[#ffffff]">
@@ -553,7 +582,11 @@ export const NavBarWrapper = ({
         </nav>
 
         {/* Mobile Navigation */}
-        <nav className="xl:hidden flex flex-col w-full items-center justify-center relative px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Mobile navigation">
+        <nav
+          className="xl:hidden flex flex-col w-full items-center justify-center relative px-4 sm:px-6 lg:px-8"
+          role="navigation"
+          aria-label="Mobile navigation"
+        >
           <div className="w-full max-w-[1074px] mx-auto">
             <div
               className={`
