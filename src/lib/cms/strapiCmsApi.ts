@@ -691,7 +691,7 @@ export const submitContactForm = async (formData: {
         phoneNumber: formData.phoneNumber,
         email: formData.email,
         message: formData.message,
-        inquiryType: formData.inquiryType
+        inquiryType: formData.inquiryType,
       },
     })
     return response.data
@@ -1009,6 +1009,22 @@ export const getBlog = async (id: string) => {
     const response = await axiosInstance.get(`${API_URLS.getBlogs}/${id}`, {
       params: {
         populate: "*",
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取条款列表
+export const getPolicies = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getPolicies, {
+      params: {
+        fields: ["documentId", "title"],
       },
     })
 

@@ -1,22 +1,23 @@
-import React from "react"
-import Link from "next/link"
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { getPolicies } from "@lib/cms/strapiCmsApi"
 import {
   ArrowRight,
-  Linkedin,
   Facebook,
   Instagram,
-  Youtube,
+  Linkedin,
   Mail,
-  Phone,
   Package,
-  Truck,
+  Phone,
   Shield,
   Star,
+  Truck,
+  Youtube,
 } from "lucide-react"
-import { HomepageSampleKit } from "./HomepageSampleKit"
-import { BadWeatherSection } from "./BadWeatherSection"
+import Link from "next/link"
+import React, { useEffect, useState } from "react"
 
 interface FooterDarkProps {
   isHomepage?: boolean
@@ -26,7 +27,11 @@ function FooterHeader() {
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-0 py-6 border-b border-[#2f2a1e] gap-4 sm:gap-8">
       <div className="flex items-center">
-        <img className="w-[120px] sm:w-[140px] lg:w-[160px]" src="/img/logo.svg" alt="" />
+        <img
+          className="w-[120px] sm:w-[140px] lg:w-[160px]"
+          src="/img/logo.svg"
+          alt=""
+        />
       </div>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-center sm:text-right">
@@ -50,7 +55,9 @@ function FooterHeader() {
 
         <div className="text-center sm:text-right">
           <div className="text-lg sm:text-xl font-bold">15,000+</div>
-          <div className="text-xs sm:text-sm text-[#8c877c]">Satisfied Customers.</div>
+          <div className="text-xs sm:text-sm text-[#8c877c]">
+            Satisfied Customers.
+          </div>
         </div>
       </div>
     </div>
@@ -60,7 +67,9 @@ function FooterHeader() {
 function EmailSubscription() {
   return (
     <div className="space-y-4 sm:space-y-6">
-      <h3 className="text-base sm:text-lg font-semibold">Subscribe To Our Emails</h3>
+      <h3 className="text-base sm:text-lg font-semibold">
+        Subscribe To Our Emails
+      </h3>
       <div className="flex h-[40px]">
         <Input
           placeholder="Email"
@@ -160,7 +169,9 @@ function FeatureItem({
         <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
       </div>
       <div>
-        <h4 className="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">{title}</h4>
+        <h4 className="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
+          {title}
+        </h4>
         <div
           className="text-xs sm:text-sm text-[#8c877c]"
           dangerouslySetInnerHTML={{ __html: description }}
@@ -236,19 +247,26 @@ export const FooterDark = ({
 }: FooterDarkProps): React.ReactElement => {
   const companyLinks = [
     { text: "About Us", href: "/about-us" },
-    { text: "Press", href: "#" },
-    { text: "Blog", href: "#" },
-    { text: "Become A Dealer", href: "#" },
+    { text: "Press", href: "/press" },
+    { text: "Blog", href: "/blog" },
+    { text: "Become A Dealer", href: "/become-dealer" },
   ]
+  const [conditionLinks, setConditionLinks] = useState([])
 
-  const conditionLinks = [
-    { text: "Shipping Policy", href: "/terms/shipping-policy" },
-    { text: "Warranty", href: "/terms/warranty" },
-    { text: "Refund Policy", href: "/terms/refund-policy" },
-    { text: "Terms Of Service", href: "/terms/terms-of-service" },
-    { text: "Privacy Policy", href: "/terms/privacy-policy" },
-    { text: "IP Rights", href: "/terms/intellectual-property-right" },
-  ]
+  useEffect(() => {
+    getPolicies().then((res) => {
+      if (!res.data) {
+        return
+      }
+
+      setConditionLinks(
+        res.data.map((item: any) => ({
+          text: item.title,
+          href: `/policy/${item.documentId}`,
+        }))
+      )
+    })
+  }, [])
 
   return (
     <div className="relative w-full overflow-hidden bg-[#140e02] text-white">
@@ -273,7 +291,9 @@ export const FooterDark = ({
           </div>
 
           <div className="px-4 sm:px-0 py-4 sm:py-6 border-t border-[#2f2a1e] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-xs sm:text-sm text-[#8c877c] text-center sm:text-left">© 2025 Relaxure</div>
+            <div className="text-xs sm:text-sm text-[#8c877c] text-center sm:text-left">
+              © 2025 Relaxure
+            </div>
             <PaymentMethods />
           </div>
         </div>
