@@ -497,6 +497,7 @@ export const API_URLS = {
   getTags: "/api/v2-tags",
   getBlogs: "/api/v2-blogs",
   getPolicies: "/api/v2-policies",
+  submitBecomeDealer: "/api/v2-become-dealer-submissions",
 }
 
 // 获取所有项目
@@ -1030,6 +1031,27 @@ export const getPolicy = async (id: string) => {
     return response.data
   } catch (error) {
     console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 提交 become dealer
+export const submitBecomeDealer = async (formData: any) => {
+  try {
+    const response = await axiosInstance.post(API_URLS.submitBecomeDealer, {
+      data: formData,
+    })
+    return response.data
+  } catch (error: any) {
+    if (error.response?.status === 403) {
+      console.error(
+        "Permission denied. Please check Strapi CMS permissions for contact-submissions collection."
+      )
+      throw new Error(
+        "Permission denied. Please check Strapi CMS permissions for contact-submissions collection."
+      )
+    }
+    console.error("Error submitting contact form:", error)
     throw error
   }
 }
