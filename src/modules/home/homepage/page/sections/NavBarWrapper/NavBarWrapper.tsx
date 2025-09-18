@@ -211,7 +211,7 @@ export const NavBarWrapper = ({
                 }
               }}
               className={`
-                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline hover:font-extrabold font-semibold
+                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline  font-semibold
               `}
             >
               {item.name}
@@ -231,7 +231,7 @@ export const NavBarWrapper = ({
             </button>
 
             {/* 桌面端下拉菜单 */}
-            <div className="fixed top-[75px] bg-white invisible group-hover:opacity-100 group-hover:visible transition-all z-50 -translate-x-6">
+            <div className="fixed top-[75px] bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50 -translate-x-6">
               <div className="px-10 py-4">
                 {item.sub_menu_item.map((subItem) => (
                   <a
@@ -240,7 +240,7 @@ export const NavBarWrapper = ({
                     onClick={(e) =>
                       handleMenuItemClick(e, subItem.url, subItem.anchor)
                     }
-                    className="block py-6 text-base text-[#2F2A1E] transition-colors font-semibold hover:underline hover:font-extrabold"
+                    className="block py-6 text-base text-[#2F2A1E] transition-colors font-semibold hover:underline "
                   >
                     {subItem.name}
                   </a>
@@ -255,7 +255,7 @@ export const NavBarWrapper = ({
         <div key={item.id} className="relative group">
           <button
             className={`
-                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline hover:font-extrabold font-semibold
+                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline  font-semibold
               `}
             onClick={() => {
               if (item.url) {
@@ -343,6 +343,9 @@ export const NavBarWrapper = ({
                           : ""
                       }
                       alt={subItem?.name}
+                      onClick={() => {
+                        router.push(subItem.url || "")
+                      }}
                     />
 
                     {subItem.showLinkBtn && (
@@ -414,7 +417,7 @@ export const NavBarWrapper = ({
             onClick={(e) => handleMenuItemClick(e, item.url, item.anchor)}
             className={`
               flex items-center justify-center gap-2.5 px-2.5 py-2.5 relative text-[#2F2A1E]
-              text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:font-extrabold font-semibold
+              text-base tracking-[0] leading-6 hover:text-white-600 transition-colors  font-semibold
             `}
           >
             {item.name}
@@ -492,7 +495,7 @@ export const NavBarWrapper = ({
         <nav
           className={`
             hidden xl:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 
-            relative bg-[#1a1a1a] backdrop-blur-[27.6px] backdrop-brightness-[100%] 
+            relative bg-[#140E02] backdrop-blur-[27.6px] backdrop-brightness-[100%] 
             [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
           `}
           role="navigation"
@@ -532,7 +535,7 @@ export const NavBarWrapper = ({
                       text: "Contact Us",
                       type: "Primary",
                       size: "Small",
-                      link: "/#contact",
+                      link: "/contact-us",
                       icon: "null",
                     }}
                     className={"mr-2"}
@@ -568,13 +571,13 @@ export const NavBarWrapper = ({
                       </div>
                     </div>
                   </a>
-                  <a href="">
+                  {/* <a href="">
                     <img
                       className="w-6 h-6"
                       src={"/img/v2-icon-user.svg"}
                       alt="Member login"
                     />
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </div>

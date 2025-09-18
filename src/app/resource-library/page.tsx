@@ -7,14 +7,44 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useInViewport } from "ahooks"
+import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
 
-export default function ResourceLibrary() {
-  const categories = ["All", "Installation Guides", "Specs Sheets", "Education"]
-  const [categoryId, setCategoryId] = useState(0)
+function buildUrl(category?: string) {
+  const query = new URLSearchParams()
+  query.set("category", category ? `${category}` : "all")
 
+  const queryString = query.toString()
+  return queryString
+    ? `/resource-library/?${queryString}`
+    : `/resource-library/`
+}
+
+export default function ResourceLibrary() {
+  const categories = [
+    {
+      key: "all",
+      name: "All",
+    },
+    {
+      key: "installation_guides",
+      name: "Installation Guides",
+    },
+    {
+      key: "specs_sheets",
+      name: "Specs Sheets",
+    },
+    {
+      key: "education",
+      name: "Education",
+    },
+  ]
+
+  const [categoryId, setCategoryId] = useState(0)
   const scrollRef = useRef<HTMLInputElement | null>(null)
   const [inViewport] = useInViewport(scrollRef)
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage, isError } =
     useInfiniteQuery({
@@ -22,7 +52,9 @@ export default function ResourceLibrary() {
       queryFn: ({ pageParam = 1 }) =>
         getResourceLibrary({
           current: pageParam,
-          ...(categoryId === 0 ? {} : { category: categories[categoryId] }),
+          ...(categoryId === 0
+            ? {}
+            : { category: categories[categoryId]?.name }),
         }),
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       initialPageParam: 1,
@@ -34,13 +66,26 @@ export default function ResourceLibrary() {
     }
   }, [inViewport])
 
+  useEffect(() => {
+    const category = searchParams.get("category")
+    setCategoryId(category ? Number(category) : 0)
+  }, [])
+
+  useEffect(() => {
+    router.push(buildUrl(categories[categoryId]?.key))
+  }, [categoryId])
+
   return (
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#fff]">
         <NavBarWrapper />
 
-        <section className={"max-w-7xl pt-20"}>
-          <div className={"mb-10 text-black text-center"}>
+        <section className={"relative overflow-hidden w-full py-20"}>
+          <img
+            src="/img/body-mask.png"
+            className={"absolute top-0 left-0 z-0 w-full"}
+          />
+          <div className={"max-w-7xl m-auto text-black text-center"}>
             <h1 className={"font-semibold text-[56px]"}>Resource Library</h1>
             <p className={"text-xl"}>
               We are dedicated to sharing{" "}
@@ -74,7 +119,7 @@ export default function ResourceLibrary() {
                     setCategoryId(categoryKey)
                   }}
                 >
-                  {category}
+                  {category.name}
                 </div>
               ))}
             </div>
@@ -91,15 +136,23 @@ export default function ResourceLibrary() {
                           }
                           key={resourceKey}
                         >
-                          <div
-                            className={"w-[195px] h-[276px] flex items-center"}
+                          <a
+                            className={
+                              "w-[195px] h-[276px] flex items-center mb-5"
+                            }
+                            href={
+                              resource.pdf
+                                ? getStrapiUrl(resource.pdf.url)
+                                : "#"
+                            }
+                            target="_blank"
                           >
                             <img
                               src={getStrapiUrl(resource.cover.url)}
                               alt={resource.title}
                               className="object-contain w-full"
                             />
-                          </div>
+                          </a>
                           <p className={"font-semibold text-sm text-[#2F2A1E]"}>
                             {resource.title}
                           </p>

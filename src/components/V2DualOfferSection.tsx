@@ -42,6 +42,7 @@ interface CardItem {
 
 interface DualOfferSectionProps {
   title: string
+  description?: string
   iconItems: IconItem[]
   cardItems: CardItem[]
   backgroundColor?: string
@@ -55,7 +56,9 @@ export default function V2DualOfferSection({
   const { title, iconItems, cardItems } = data
   return (
     <section
-      className={`w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 ${getBackgroundColor(data.backgroundColor)}`}
+      className={`w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 ${getBackgroundColor(
+        data.backgroundColor
+      )}`}
       // style={{
       //   background:
       //     "linear-gradient(90deg, rgba(239, 235, 235, 0.5) 0%, rgba(255, 255, 255, 0.50) 100%)",
@@ -67,6 +70,11 @@ export default function V2DualOfferSection({
         <header className="text-center mb-4">
           <V2Headline title={title} iconHidden className="mx-auto" />
         </header>
+        {data.description && (
+          <p className="text-center text-lg text-[#8C877C] whitespace-break-spaces mb-10">
+            {data.description}
+          </p>
+        )}
 
         {iconItems && iconItems.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-16 md:mb-20 max-w-[1074px] mx-auto">

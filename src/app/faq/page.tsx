@@ -4,6 +4,7 @@ import { V2ContactUsSection } from "@/components/V2ContactUsSection"
 import { getFAQCategories } from "@lib/cms/strapiCmsApi"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
@@ -41,18 +42,32 @@ const IconMinus = () => (
   </svg>
 )
 
+function buildUrl(category?: string) {
+  const query = new URLSearchParams()
+  query.set("category", category ? `${category}` : "0")
+
+  const queryString = query.toString()
+  return queryString ? `/faq/?${queryString}` : `/faq/`
+}
+
 export default function FaqPage() {
   const [categories, setCategories] = useState<any>()
   const [categoryId, setCategoryId] = useState(0)
   const [faqs, setFaqs] = useState<any>()
-  const [faqId, setFaqId] = useState<any>(0)
+  const [faqId, setFaqId] = useState<any>(1)
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   async function fetchFAQCategories() {
     try {
       const { data } = await getFAQCategories()
       console.log("FAQ Categories - data", data)
       setCategories(data)
-      setFaqs(data?.[0]?.faqs)
+      const index = data.findIndex(
+        (x: any) => x.id === Number(searchParams.get("category"))
+      )
+      setFaqs(data?.[index]?.faqs)
+      setCategoryId(index)
     } catch (error) {
       console.error("Failed to fetch FAQ:", error)
     }
@@ -68,21 +83,31 @@ export default function FaqPage() {
       return
     }
     setFaqs(categories?.[categoryId]?.faqs)
-    setFaqId(0)
+    setFaqId(1)
+    router.push(buildUrl(categories[categoryId].id))
   }, [categoryId])
 
   return (
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <h1
-          className={
-            "pt-20 pb-10 text-center text-[56px] font-semibold text-[#140E02]"
-          }
+        <section className={"relative w-full"}>
+          <img
+            src="/img/body-mask.png"
+            className={"absolute top-0 left-0 z-0 w-full"}
+          />
+          <h1
+            className={
+              "pt-20 pb-10 text-center text-[56px] font-semibold text-[#140E02]"
+            }
+          >
+            FAQs
+          </h1>
+        </section>
+
+        <section
+          className={"relative w-full max-w-7xl flex flex-row gap-6 mb-20"}
         >
-          FAQs
-        </h1>
-        <section className={"relative w-full max-w-7xl flex flex-row gap-6"}>
           <div className="w-[342px] h-[calc(100vh-300px)] flex-grow-0 flex-shrink-0 basis-auto">
             <div className="overflow-hidden h-full pb-8">
               <ul className="flex pl-4 h-full flex-col gap-5 overflow-y-auto">
@@ -171,7 +196,7 @@ export default function FaqPage() {
               ))}
           </article>
         </section>
-        <section className={"w-full bg-[#EFEEEB80]"}>
+        <section className={"w-full"}>
           <V2ContactUsSection />
         </section>
       </div>

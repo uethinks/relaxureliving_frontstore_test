@@ -31,8 +31,12 @@ export default function PagePress() {
     <>
       <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className={"max-w-7xl py-20"}>
-          <div className={"mb-10 text-black text-center"}>
+        <section className={"relation overflow-hidden w-full py-20"}>
+          <img
+            src="/img/body-mask.png"
+            className={"absolute top-0 left-0 z-0 w-full"}
+          />
+          <div className={"max-w-7xl mb-10 text-black text-center m-auto"}>
             <h1 className={"font-semibold text-[56px]"}>
               Relaxure in the Press
             </h1>
@@ -42,7 +46,7 @@ export default function PagePress() {
             </p>
           </div>
         </section>
-        <section className={"w-full max-w-[1440px]"}>
+        <section className={"w-full max-w-[1440px] mb-20"}>
           <div className={"w-full"}>
             <div
               className={
@@ -70,7 +74,9 @@ export default function PagePress() {
                           }
                         >
                           <img
-                            src={getStrapiUrl(press.image.url)}
+                            src={
+                              press.image ? getStrapiUrl(press.image.url) : ""
+                            }
                             alt={press.title}
                             className="object-contain w-full"
                           />

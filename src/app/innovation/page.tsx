@@ -8,19 +8,27 @@ export default async function InnovationPage() {
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className={"max-w-[1074px] py-20 m-auto"}>
-          <h1
-            className={"mb-5 text-center text-[56px] font-semibold text-black"}
-          >
-            Innovation at Relaxure:
-            <br />
-            Listening, Learning, and Improving
-          </h1>
-          <p className={"text-center text-xl text-black"}>
-            At Relaxure, we believe innovation isn’t about flashy features or
-            bold claims. It begins with listening—understanding frustrations and
-            working patiently to make things better.
-          </p>
+        <section className={"relative w-full py-20 overflow-hidden"}>
+          <img
+            src="/img/body-mask.png"
+            className={"absolute top-0 left-0 z-0 w-full"}
+          />
+          <div className={"max-w-[1074px] m-auto"}>
+            <h1
+              className={
+                "mb-5 text-center text-[56px] font-semibold text-black"
+              }
+            >
+              Innovation at Relaxure:
+              <br />
+              Listening, Learning, and Improving
+            </h1>
+            <p className={"text-center text-xl text-black"}>
+              At Relaxure, we believe innovation isn’t about flashy features or
+              bold claims. It begins with listening—understanding frustrations
+              and working patiently to make things better.
+            </p>
+          </div>
         </section>
         <V2PromoBanner
           data={

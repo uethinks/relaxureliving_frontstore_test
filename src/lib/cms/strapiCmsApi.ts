@@ -811,7 +811,7 @@ export const getAboutUs = async () => {
               "blocks.v2-promo-banner": v2PromoBannerPopulate,
               "blocks.v2-faq-section": v2FaqSectionPopulate,
               "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
-              "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
+              "blocks.v2-feature-cards": v2FeatureCardsPopulate,
             },
           },
         },

@@ -1,6 +1,6 @@
-import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
-import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
+import { getStrapiUrl } from "@lib/utils"
+import Image from "next/image"
 import V2Headline from "./V2Headline"
 
 interface MediaFormat {
@@ -80,7 +80,7 @@ export function V2FeatureCards({ data }: FeatureCardsProps) {
           />
         </header>
         {data.description && (
-          <p className="text-center text-lg text-[#8C877C]">
+          <p className="text-center text-lg text-[#8C877C] whitespace-break-spaces mb-10">
             {data.description}
           </p>
         )}
