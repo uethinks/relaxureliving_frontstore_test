@@ -262,7 +262,7 @@ export const FooterDark = ({
       setConditionLinks(
         res.data.map((item: any) => ({
           text: item.title,
-          href: `/policy/${item.documentId}`,
+          href: `/policy/${item.slug}?id=${item.documentId}`,
         }))
       )
     })

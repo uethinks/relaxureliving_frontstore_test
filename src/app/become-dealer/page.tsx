@@ -7,8 +7,12 @@ export default async function BecomeDealer() {
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className={"max-w-[1074px] my-20"}>
-          <div className={"text-black text-center"}>
+        <section className={"relative w-full my-20 overflow-hidden"}>
+          <img
+            src="/img/body-mask.png"
+            className={"absolute top-0 left-0 z-0 w-full"}
+          />
+          <div className={"max-w-[1074px] text-black text-center m-auto"}>
             <h1 className={"font-semibold text-[56px]"}>
               Partner with Relaxure Pergola
             </h1>

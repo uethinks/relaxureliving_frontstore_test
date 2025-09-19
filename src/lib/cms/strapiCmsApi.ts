@@ -1018,7 +1018,10 @@ export const getBlogs = async ({
           },
           ...filters,
         },
-        sort,
+        sort: {
+          createdAt: "desc",
+          ...sort,
+        },
       },
     })
 
@@ -1050,7 +1053,7 @@ export const getPolicies = async () => {
   try {
     const response = await axiosInstance.get(API_URLS.getPolicies, {
       params: {
-        fields: ["documentId", "title"],
+        fields: ["slug", "title"],
       },
     })
 

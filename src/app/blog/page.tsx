@@ -8,11 +8,12 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination"
 import { getBlogs, getTags } from "@lib/cms/strapiCmsApi"
+import { getStrapiUrl } from "@lib/utils"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import dayjs from "dayjs"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState, Suspense } from "react"
+import { Suspense, useEffect, useState } from "react"
 import Markdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
 import remarkGfm from "remark-gfm"
@@ -36,7 +37,7 @@ export default function PageBlog() {
   )
 }
 
-function BlogContent() { 
+function BlogContent() {
   const [tags, setTags] = useState([])
   const [currentTags, setCurrentTags] = useState<string[] | undefined>()
   const [currentPage, setCurrentPage] = useState(1)
@@ -75,20 +76,31 @@ function BlogContent() {
     <>
       <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className={"max-w-7xl py-20"}>
-          <div className={"mb-10 text-black text-center"}>
+        <section className={"w-full relative overflow-hidden py-20"}>
+          <img
+            src="/img/body-mask.png"
+            className={"absolute top-0 left-0 z-0 w-full"}
+          />
+          <div className={"w-7xl text-black text-center"}>
             <h1 className={"font-semibold text-[56px]"}>Blog</h1>
           </div>
         </section>
         <section className={"relative w-[1074px] flex justify-between gap-6"}>
           <div className={"w-full flex flex-col items-center"}>
-            <div className={"w-full flex flex-wrap gap-6"}>
+            <div className={"w-full flex flex-wrap gap-x-6 gap-y-10"}>
               {blogs.map((blog: any) => (
                 <div className={"w-[342px]"} key={blog.documentId}>
-                  <div className={"w-full h-[244x] flex items-center mb-5"}>
+                  <div
+                    className={
+                      "w-full h-[244px] flex items-center mb-5 cursor-pointer"
+                    }
+                    onClick={() => {
+                      router.push(`/blog/${blog.slug}?id=${blog.documentId}`)
+                    }}
+                  >
                     <img
-                      src="/img/about-us-banner.png"
-                      className="object-contain w-full"
+                      src={blog.cover ? getStrapiUrl(blog.cover.url) : ""}
+                      className="object-contain w-full h-full"
                     />
                   </div>
                   <div className={"flex flex-wrap gap-4 mb-[10px]"}>
@@ -106,8 +118,11 @@ function BlogContent() {
                   </div>
                   <div
                     className={
-                      "line-clamp-2 text-[#140E02] text-2xl font-bold mb-[10px]"
+                      "line-clamp-2 text-[#140E02] text-2xl font-bold mb-[10px] cursor-pointer"
                     }
+                    onClick={() => {
+                      router.push(`/blog/${blog.slug}?id=${blog.documentId}`)
+                    }}
                   >
                     {blog.title}
                   </div>
@@ -134,7 +149,7 @@ function BlogContent() {
                     className={
                       "block w-[144px] h-8 leading-8 text-[#140E02] text-sm text-center font-semibold border border-[#FFBF3C]"
                     }
-                    href={`blog/${blog.documentId}`}
+                    href={`blog/${blog.slug}?id=${blog.documentId}`}
                   >
                     Read more
                   </a>

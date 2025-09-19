@@ -10,6 +10,10 @@ export default async function ContactUsPage() {
         <NavBarWrapper />
 
         <section className={"max-w-7xl pt-20 pb-5"}>
+          <img
+            src="/img/body-mask.png"
+            className={"absolute top-0 left-0 z-0 w-full"}
+          />
           <div className={"mb-10 text-black text-center"}>
             <h1 className={"font-semibold text-[56px]"}>Contact Us</h1>
             <p className={"text-xl"}>
@@ -54,7 +58,8 @@ export default async function ContactUsPage() {
                   width={16}
                   height={16}
                 />
-                1-213-566-8658
+
+                <a href="tel:1-213-566-8658">1-213-566-8658</a>
               </p>
               <p className={"flex items-center justify-center gap-1"}>
                 <Image
@@ -64,7 +69,9 @@ export default async function ContactUsPage() {
                   width={16}
                   height={16}
                 />
-                info@relaxureliving.com
+                <a href="mailto:info@relaxureliving.com" target="_blank">
+                  info@relaxureliving.com
+                </a>
               </p>
             </div>
           </div>

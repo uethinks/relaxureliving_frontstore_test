@@ -152,8 +152,9 @@ export const NavBarWrapper = ({
             <button
               onClick={() => {
                 if (item.url) {
-                  router.push(item.url)
-                  return
+                  router.push(
+                    item?.url.startsWith("/") ? item?.url : `/${item?.url}`
+                  )
                 }
                 setOpenSubmenu(openSubmenu === item.id ? null : item.id)
               }}
@@ -206,7 +207,9 @@ export const NavBarWrapper = ({
             <button
               onClick={() => {
                 if (item.url) {
-                  router.push(item.url)
+                  router.push(
+                    item?.url.startsWith("/") ? item?.url : `/${item?.url}`
+                  )
                   return
                 }
               }}
@@ -259,7 +262,9 @@ export const NavBarWrapper = ({
               `}
             onClick={() => {
               if (item.url) {
-                router.push(item.url)
+                router.push(
+                  item?.url.startsWith("/") ? item?.url : `/${item?.url}`
+                )
                 return
               }
             }}
@@ -344,7 +349,14 @@ export const NavBarWrapper = ({
                       }
                       alt={subItem?.name}
                       onClick={() => {
-                        router.push(subItem.url || "")
+                        if (!subItem || !subItem?.url) {
+                          return
+                        }
+                        router.push(
+                          subItem?.url.startsWith("/")
+                            ? subItem?.url
+                            : `/${subItem?.url}`
+                        )
                       }}
                     />
 
@@ -368,7 +380,7 @@ export const NavBarWrapper = ({
                   // onClick={(e) => handleMenuItemClick(e, subItem.url, "")}
                   className={`grid grid-cols-${item.sub_banner_menu_item?.length} gap-x-6`}
                 >
-                  {item.sub_banner_menu_item.map((subItem) => (
+                  {item.sub_banner_menu_item.map((subItem: any) => (
                     <div key={subItem.id} className={"flex overflow-hidden"}>
                       <div className="w-[159px] flex-grow-0 flex-shrink-0 basis-auto text-2xl text-[#140E02] font-semibold border-b">
                         {subItem.name}
@@ -383,7 +395,14 @@ export const NavBarWrapper = ({
                         }
                         alt={subItem?.name}
                         onClick={() => {
-                          router.push(subItem.banner.url || "")
+                          if (!subItem || !subItem?.url) {
+                            return
+                          }
+                          router.push(
+                            subItem?.url.startsWith("/")
+                              ? subItem?.url
+                              : `/${subItem?.url}`
+                          )
                         }}
                       />
                     </div>

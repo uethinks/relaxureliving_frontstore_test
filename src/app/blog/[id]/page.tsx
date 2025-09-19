@@ -7,54 +7,94 @@ import { getStrapiUrl } from "@lib/utils"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import dayjs from "dayjs"
-import { useParams, useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import Markdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
 import remarkGfm from "remark-gfm"
-import { IconCalendar, IconPrev } from "../svg"
+import { IconCalendar, IconNext, IconPrev } from "../svg"
 
 export default function BlogDetail() {
-  const params = useParams<{ id: string }>()
   const [blog, setBlog] = useState<any>()
   const [recentBlogs, setRecentBlogs] = useState<any>([])
   const [tags, setTags] = useState([])
   // const [currentTags, setCurrentTags] = useState<string[] | undefined>()
+  const searchParams = useSearchParams()
+  const [prevId, setPrevId] = useState<any>()
+  const [nextId, setNextId] = useState<any>()
 
   const router = useRouter()
 
   useEffect(() => {
-    if (!params || !params.id) {
-      return
-    }
-    getBlog(params.id).then((blogRes) => {
-      if (!blogRes) {
-        return
-      }
+    if (searchParams && searchParams.get("id")) {
+      const id = searchParams.get("id") || ""
+      getBlog(id).then((blogRes) => {
+        if (!blogRes) {
+          return
+        }
 
-      setBlog(blogRes.data)
-    })
+        setBlog(blogRes.data)
 
-    getBlogs({
-      pageSize: 3,
-      sort: "createdAt:desc",
-      filters: {
-        documentId: {
-          $ne: params.id,
+        getBlogs({
+          pageSize: 1,
+          filters: {
+            createdAt: {
+              $lt: blogRes.data.createdAt,
+            },
+          },
+        }).then((res) => {
+          if (!res) {
+            return
+          }
+          console.log("==== res.data prev ====", res.data)
+          if (res.data.length > 0) {
+            setPrevId({
+              slug: res.data[0].slug,
+              id: res.data[0].documentId,
+            })
+          }
+        })
+        getBlogs({
+          pageSize: 1,
+          filters: {
+            createdAt: {
+              $gt: blogRes.data.createdAt,
+            },
+          },
+        }).then((res) => {
+          if (!res) {
+            return
+          }
+          console.log("==== res.data next ====", res.data)
+          if (res.data.length > 0) {
+            setNextId({
+              slug: res.data[0].slug,
+              id: res.data[0].documentId,
+            })
+          }
+        })
+      })
+
+      getBlogs({
+        pageSize: 3,
+        filters: {
+          documentId: {
+            $ne: id,
+          },
         },
-      },
-    }).then((blogRes) => {
-      if (!blogRes) {
-        return
-      }
+      }).then((recentBlogRes) => {
+        if (!recentBlogRes) {
+          return
+        }
 
-      setRecentBlogs(blogRes.data)
-    })
+        setRecentBlogs(recentBlogRes.data)
+      })
 
-    getTags().then((tagRes) => {
-      setTags(tagRes.data)
-    })
-  }, [params.id])
+      getTags().then((tagRes) => {
+        setTags(tagRes.data)
+      })
+    }
+  }, [searchParams])
 
   return (
     <>
@@ -64,8 +104,11 @@ export default function BlogDetail() {
           <div className={"w-full"}>
             <div
               className={
-                "h-[18px] mb-7 flex gap-1 items-center text-[#8C877C] text-xs font-semibold underline"
+                "h-[18px] mb-7 flex gap-1 items-center text-[#8C877C] text-xs font-semibold underline cursor-pointer"
               }
+              onClick={() => {
+                router.push("/blog")
+              }}
             >
               <IconPrev />
               Back to list
@@ -109,6 +152,36 @@ export default function BlogDetail() {
                     {blog.content}
                   </Markdown>
                 </div>
+                <div
+                  className={"w-full mt-3 flex items-center justify-between"}
+                >
+                  <div
+                    className={`h-[18px] mb-7 flex gap-1 items-center text-[#8C877C] text-xs font-semibold underline ${
+                      prevId ? "cursor-pointer" : "opacity-50"
+                    }`}
+                    onClick={() => {
+                      if (prevId && prevId.id) {
+                        router.push(`/blog/${prevId.slug}?id=${prevId.id}`)
+                      }
+                    }}
+                  >
+                    <IconPrev />
+                    Previous
+                  </div>
+                  <div
+                    className={`h-[18px] mb-7 flex gap-1 items-center text-[#8C877C] text-xs font-semibold underline ${
+                      nextId ? "cursor-pointer" : "opacity-50"
+                    }`}
+                    onClick={() => {
+                      if (nextId && nextId.id) {
+                        router.push(`/blog/${nextId.slug}?id=${nextId.id}`)
+                      }
+                    }}
+                  >
+                    <IconNext />
+                    Next
+                  </div>
+                </div>
               </>
             )}
           </div>
@@ -122,22 +195,29 @@ export default function BlogDetail() {
                 Recent Posts
               </div>
               {recentBlogs.map((recentBlog: any) => (
-                <div
-                  className={"w-[342px]"}
-                  key={recentBlog.documentId}
-                  onClick={() => {
-                    router.push(`/blog/${recentBlog.documentId}`)
-                  }}
-                >
-                  <div className={"w-full h-[244x] flex items-center mb-5"}>
+                <div className={"w-[342px]"} key={recentBlog.documentId}>
+                  <div
+                    className={
+                      "w-full h-[244px] flex items-center mb-5 cursor-pointer"
+                    }
+                    onClick={() => {
+                      router.push(
+                        `/blog/${recentBlog.slug}?id=${recentBlog.documentId}`
+                      )
+                    }}
+                  >
                     <img
-                      src="/img/about-us-banner.png"
-                      className="object-contain w-full"
+                      src={
+                        recentBlog.cover
+                          ? getStrapiUrl(recentBlog.cover.url)
+                          : ""
+                      }
+                      className="object-contain w-full h-full"
                     />
                   </div>
                   <div className={"flex flex-wrap gap-4 mb-[10px]"}>
-                    {blog.tags &&
-                      blog.tags.map((tag: any) => (
+                    {recentBlog.tags &&
+                      recentBlog.tags.map((tag: any) => (
                         <div
                           key={tag.id}
                           className={
@@ -150,19 +230,24 @@ export default function BlogDetail() {
                   </div>
                   <div
                     className={
-                      "line-clamp-2 text-[#140E02] text-2xl font-bold mb-[10px]"
+                      "line-clamp-2 text-[#140E02] text-2xl font-bold mb-[10px] cursor-pointer"
                     }
+                    onClick={() => {
+                      router.push(
+                        `/blog/${recentBlog.slug}?id=${recentBlog.documentId}`
+                      )
+                    }}
                   >
-                    {blog.title}
+                    {recentBlog.title}
                   </div>
-                  {blog.createdAt && (
+                  {recentBlog.createdAt && (
                     <div
                       className={
                         "flex items-center text-base text-[#2F2A1E] mb-5"
                       }
                     >
                       <IconCalendar />
-                      {dayjs(blog.createdAt).format("MMM DD, YYYY")}
+                      {dayjs(recentBlog.createdAt).format("MMM DD, YYYY")}
                     </div>
                   )}
                 </div>

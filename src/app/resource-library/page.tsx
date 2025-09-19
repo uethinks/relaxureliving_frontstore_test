@@ -21,13 +21,14 @@ function buildUrl(category?: string) {
 }
 
 export default function ResourceLibraryPage() {
-  return <>
-    <Suspense>
-      <ResourceLibraryComponent />
-    </Suspense>
-  </>
+  return (
+    <>
+      <Suspense>
+        <ResourceLibraryComponent />
+      </Suspense>
+    </>
+  )
 }
-
 
 function ResourceLibraryComponent() {
   const categories = [
@@ -49,7 +50,7 @@ function ResourceLibraryComponent() {
     },
   ]
 
-  const [categoryId, setCategoryId] = useState(0)
+  const [categoryId, setCategoryId] = useState(-1)
   const scrollRef = useRef<HTMLInputElement | null>(null)
   const [inViewport] = useInViewport(scrollRef)
   const searchParams = useSearchParams()
@@ -61,7 +62,7 @@ function ResourceLibraryComponent() {
       queryFn: ({ pageParam = 1 }) =>
         getResourceLibrary({
           current: pageParam,
-          ...(categoryId === 0
+          ...(categoryId <= 0
             ? {}
             : { category: categories[categoryId]?.name }),
         }),
@@ -76,8 +77,14 @@ function ResourceLibraryComponent() {
   }, [inViewport])
 
   useEffect(() => {
-    const category = searchParams.get("category")
-    setCategoryId(category ? Number(category) : 0)
+    if (searchParams.get("category")) {
+      const index = categories.findIndex(
+        (x: any) => x.key === searchParams.get("category")
+      )
+      setCategoryId(index)
+    } else {
+      setCategoryId(0)
+    }
   }, [])
 
   useEffect(() => {
@@ -120,7 +127,7 @@ function ResourceLibraryComponent() {
                 <div
                   key={categoryKey}
                   className={`cursor-pointer font-semibold text-2xl ${
-                    categoryKey === categoryId
+                    categoryKey >= 0 && categoryKey === categoryId
                       ? "text-[#140E02] underline"
                       : "text-[#8C877C]"
                   }`}

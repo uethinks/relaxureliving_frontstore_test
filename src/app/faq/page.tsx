@@ -45,23 +45,25 @@ const IconMinus = () => (
 
 function buildUrl(category?: string) {
   const query = new URLSearchParams()
-  query.set("category", category ? `${category}` : "0")
+  query.set("category", category ? `${category}` : "")
 
   const queryString = query.toString()
   return queryString ? `/faq/?${queryString}` : `/faq/`
 }
 
 export default function FaqPage() {
-  return <>
-    <Suspense>
-      <FaqPageComponent />
-    </Suspense>
-  </>
+  return (
+    <>
+      <Suspense>
+        <FaqPageComponent />
+      </Suspense>
+    </>
+  )
 }
 
 function FaqPageComponent() {
   const [categories, setCategories] = useState<any>()
-  const [categoryId, setCategoryId] = useState(0)
+  const [categoryId, setCategoryId] = useState("")
   const [faqs, setFaqs] = useState<any>()
   const [faqId, setFaqId] = useState<any>(1)
   const searchParams = useSearchParams()
@@ -72,11 +74,6 @@ function FaqPageComponent() {
       const { data } = await getFAQCategories()
       console.log("FAQ Categories - data", data)
       setCategories(data)
-      const index = data.findIndex(
-        (x: any) => x.id === Number(searchParams.get("category"))
-      )
-      setFaqs(data?.[index]?.faqs)
-      setCategoryId(index)
     } catch (error) {
       console.error("Failed to fetch FAQ:", error)
     }
@@ -88,17 +85,23 @@ function FaqPageComponent() {
   }, [])
 
   useEffect(() => {
-    const cat = categories?.[categoryId];
-    setFaqs(cat?.faqs);
-    setFaqId(1);
-  
-    const catId = cat?.id;
-    console.log("categoryId", categoryId, "catId", catId)
-    if (catId != null) {
-      router.push(buildUrl(catId));
+    if (!categories || !categoryId) {
+      return
     }
-  }, [categoryId, categories]);
+    setFaqs(categories.find((x: any) => x.slug === categoryId)?.faqs)
+    setFaqId(1)
+    router.push(buildUrl(categoryId))
+  }, [categoryId])
 
+  useEffect(() => {
+    if (searchParams.get("category") && categories) {
+      const index = categories.findIndex(
+        (x: any) => x.slug === searchParams.get("category")
+      )
+      // setFaqs(categories?.[index]?.faqs)
+      setCategoryId(categories?.[index]?.slug)
+    }
+  }, [categories])
 
   return (
     <>
@@ -121,19 +124,19 @@ function FaqPageComponent() {
         <section
           className={"relative w-full max-w-7xl flex flex-row gap-6 mb-20"}
         >
-          <div className="w-[342px] h-[calc(100vh-300px)] flex-grow-0 flex-shrink-0 basis-auto">
-            <div className="overflow-hidden h-full pb-8">
-              <ul className="flex pl-4 h-full flex-col gap-5 overflow-y-auto">
+          <div className="w-[342px] flex-grow-0 flex-shrink-0 basis-auto">
+            <div className="pb-8">
+              <ul className="flex pl-4 flex-col gap-5">
                 {categories &&
-                  categories?.map((category: any, categoryKey: number) => (
+                  categories?.map((category: any) => (
                     <li
-                      key={category.id}
+                      key={category.documentId}
                       className={"relative text-2xl cursor-pointer"}
                       onClick={() => {
-                        setCategoryId(categoryKey)
+                        setCategoryId(category.slug)
                       }}
                     >
-                      {categoryId === categoryKey && (
+                      {categoryId === category.slug && (
                         <img
                           src="/img/icon-title.svg"
                           alt=""
@@ -143,7 +146,7 @@ function FaqPageComponent() {
                       )}
                       <span
                         className={`relative z-1 font-bold text-[${
-                          categoryId === categoryKey ? "#140E02" : "#8C877C"
+                          categoryId === category.slug ? "#140E02" : "#8C877C"
                         }]`}
                       >
                         {category.name}
@@ -199,7 +202,7 @@ function FaqPageComponent() {
                     }`}
                   >
                     <Markdown
-                    rehypePlugins={[rehypeRaw]}
+                      rehypePlugins={[rehypeRaw]}
                       remarkPlugins={[remarkGfm]}
                       remarkRehypeOptions={{ passThrough: ["link"] }}
                     >
