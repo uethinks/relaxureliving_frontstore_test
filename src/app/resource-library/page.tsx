@@ -8,7 +8,7 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useInViewport } from "ahooks"
 import { useRouter, useSearchParams } from "next/navigation"
-import React, { useEffect, useRef, useState } from "react"
+import React, { Suspense, useEffect, useRef, useState } from "react"
 
 function buildUrl(category?: string) {
   const query = new URLSearchParams()
@@ -20,7 +20,16 @@ function buildUrl(category?: string) {
     : `/resource-library/`
 }
 
-export default function ResourceLibrary() {
+export default function ResourceLibraryPage() {
+  return <>
+    <Suspense>
+      <ResourceLibraryComponent />
+    </Suspense>
+  </>
+}
+
+
+function ResourceLibraryComponent() {
   const categories = [
     {
       key: "all",
