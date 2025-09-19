@@ -65,7 +65,7 @@ interface FeatureCardsProps {
 export function V2FeatureCards({ data }: FeatureCardsProps) {
   return (
     <section
-      className={`w-full bg-white pt-20 pb-14 px-4 ${getBackgroundColor(data.backgroundColor)}`}
+      className={`w-full pt-20 pb-14 px-4 ${getBackgroundColor(data.backgroundColor)}`}
       aria-labelledby="features-heading"
     >
       <div className="w-full flex flex-col gap-5">

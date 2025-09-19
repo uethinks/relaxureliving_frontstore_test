@@ -26,7 +26,7 @@ export function V2CraftsmanshipSection({ data }: CraftsmanshipSectionProps) {
 
         {/* Subtitle */}
         <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-black">{data.subtitle}</h2>
+          <h2 className="text-2xl font-bold text-black">{data.subtitle}</h2>
         </div>
 
         {/* Feature Items */}

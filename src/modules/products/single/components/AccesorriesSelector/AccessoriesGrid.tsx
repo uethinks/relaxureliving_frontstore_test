@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge"
 
 const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
-
+  console.log('infoData', infoData)
   const variant = infoData.product.variants[0]
   const originalPrice = variant?.calculated_price?.original_amount || 0
   const calculatedPrice = variant?.calculated_price?.calculated_amount || 0
@@ -27,7 +27,7 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
       <Link href={`/accessories/${infoData.slug}`}>
         <div className="overflow-hidden cursor-pointer">
           <img
-            src={`${baseUrl}${infoData.productImages?.[0]?.url}`}
+            src={`${baseUrl}${infoData.listImage?.url}`}
             alt={infoData.name}
             className="w-full h-auto"
           />

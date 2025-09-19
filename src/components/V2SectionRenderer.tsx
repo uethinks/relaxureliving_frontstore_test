@@ -15,6 +15,7 @@ import { V2FAQSection } from "@/components/V2FAQSection"
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
 import V2OccasionsSection from "@/components/V2OccasionsSection"
 import V2FeatureCards from "@/components/V2FeatureCards"
+import V2GuideCardsSection from "@/components/V2GudieCardSection"
 
 interface Section {
   id: string | number
@@ -43,6 +44,7 @@ const sectionComponents = {
   "blocks.v2-testimonials-section": V2TestimonialsSection,
   "blocks.v2-faq-section": V2FAQSection,
   "blocks.v2-feature-cards": V2FeatureCards,
+  "blocks.v2-guide-cards-section": V2GuideCardsSection,
 } as const
 
 export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({

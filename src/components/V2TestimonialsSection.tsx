@@ -65,21 +65,24 @@ export default function V2TestimonialsSection({
   const videoRef = useRef<HTMLVideoElement>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
-  const getMediaType = (media?: TestimonialItem['media'], index: number = 0) => {
+  const getMediaType = (
+    media?: TestimonialItem["media"],
+    index: number = 0
+  ) => {
     if (!media || !media[index]) return null
-    
-    const videoExtensions = ['.mp4', '.mpv', '.webm', '.avi', '.mov']
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif']
-    
+
+    const videoExtensions = [".mp4", ".mpv", ".webm", ".avi", ".mov"]
+    const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".gif"]
+
     const extension = media[index].ext.toLowerCase()
-    
-    if (videoExtensions.includes(extension)) return 'video'
-    if (imageExtensions.includes(extension)) return 'image'
-    
+
+    if (videoExtensions.includes(extension)) return "video"
+    if (imageExtensions.includes(extension)) return "image"
+
     return null
   }
 
-  const getMediaUrl = (media?: TestimonialItem['media'], index: number = 0) => {
+  const getMediaUrl = (media?: TestimonialItem["media"], index: number = 0) => {
     if (!media || !media[index]) return null
     return getStrapiUrl(media[index].url)
   }
@@ -100,7 +103,11 @@ export default function V2TestimonialsSection({
 
   useEffect(() => {
     const video = videoRef.current
-    if (video && getMediaType(data.items[selectedIndex]?.media, selectedMediaIndex) === 'video') {
+    if (
+      video &&
+      getMediaType(data.items[selectedIndex]?.media, selectedMediaIndex) ===
+        "video"
+    ) {
       video.currentTime = 0
       setVideoProgress(0)
     } else {
@@ -113,7 +120,7 @@ export default function V2TestimonialsSection({
       const container = scrollContainerRef.current
       const currentScroll = container.scrollLeft
       const maxScroll = container.scrollWidth - container.clientWidth
-      
+
       setCanScrollLeft(currentScroll > 0)
       setCanScrollRight(currentScroll < maxScroll)
     }
@@ -123,8 +130,8 @@ export default function V2TestimonialsSection({
     const container = scrollContainerRef.current
     if (container) {
       updateScrollButtons()
-      container.addEventListener('scroll', updateScrollButtons)
-      return () => container.removeEventListener('scroll', updateScrollButtons)
+      container.addEventListener("scroll", updateScrollButtons)
+      return () => container.removeEventListener("scroll", updateScrollButtons)
     }
   }, [])
 
@@ -134,10 +141,10 @@ export default function V2TestimonialsSection({
       const cardWidth = 525 + 8 // card width + gap
       const currentScroll = container.scrollLeft
       const targetScroll = Math.max(0, currentScroll - cardWidth)
-      
+
       container.scrollTo({
         left: targetScroll,
-        behavior: 'smooth'
+        behavior: "smooth",
       })
     }
   }
@@ -149,10 +156,10 @@ export default function V2TestimonialsSection({
       const currentScroll = container.scrollLeft
       const maxScroll = container.scrollWidth - container.clientWidth
       const targetScroll = Math.min(maxScroll, currentScroll + cardWidth)
-      
+
       container.scrollTo({
         left: targetScroll,
-        behavior: 'smooth'
+        behavior: "smooth",
       })
     }
   }
@@ -176,228 +183,241 @@ export default function V2TestimonialsSection({
 
   return (
     <section
-      className={`max-w-[1074px] mx-auto py-8 sm:py-12`}
+      className={`bg-white w-full py-20`}
       aria-label="Customer testimonials and experiences"
     >
-      {/* Arrow Navigation Container */}
-      <div className="relative">
-        {/* Left Arrow */}
-        {canScrollLeft && (
-          <button
-            onClick={handleScrollLeft}
-            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-20 z-10 w-20 h-20 items-center justify-center hover:scale-110 transition-all duration-300"
-            aria-label="Scroll testimonials left"
-          >
-            <ChevronLeft className="w-12 h-12 text-gray-400 hover:text-gray-600 transition-colors duration-200" />
-          </button>
-        )}
-
-        {/* Right Arrow */}
-        {canScrollRight && (
-          <button
-            onClick={handleScrollRight}
-            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-20 z-10 w-20 h-20 items-center justify-center hover:scale-110 transition-all duration-300"
-            aria-label="Scroll testimonials right"
-          >
-            <ChevronRight className="w-12 h-12 text-gray-400 hover:text-gray-600 transition-colors duration-200" />
-          </button>
-        )}
-
-        {/* Scrollable Cards Container */}
-        <div 
-          ref={scrollContainerRef}
-          className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-hide"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          {data.items.map((item, index) => (
-            <Card
-              key={item.id}
-              className={`cursor-pointer border-t-2 w-[525px] flex-shrink-0 transition-all duration-200 hover:shadow-md ${
-                selectedIndex === index
-                  ? "bg-yellow-50 border-t-yellow-400"
-                  : "hover:bg-gray-50 border-t-transparent"
-              }`}
-              style={{
-                background: 'linear-gradient(270deg, #FFF 0%, #EFEEEB 100%)'
-              }}
-              onClick={() => setSelectedIndex(index)}
-              role="button"
-              tabIndex={0}
-              aria-pressed={selectedIndex === index}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault()
-                  setSelectedIndex(index)
-                }
-              }}
+      <div className="max-w-[1074px] mx-auto ">
+        {/* Arrow Navigation Container */}
+        <div className="relative">
+          {/* Left Arrow */}
+          {canScrollLeft && (
+            <button
+              onClick={handleScrollLeft}
+              className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-20 z-10 w-20 h-20 items-center justify-center hover:scale-110 transition-all duration-300"
+              aria-label="Scroll testimonials left"
             >
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <Image
-                    unoptimized
-                    src={getStrapiUrl(item.avatar.url)}
-                    alt={
-                      item.avatar.alternativeText ||
-                      `${item.author} profile picture`
-                    }
-                    width={48}
-                    height={48}
-                    className="rounded-full flex-shrink-0 sm:w-[60px] sm:h-[60px]"
-                    loading="lazy"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <blockquote className="text-gray-900 text-base sm:text-lg font-medium mb-2 leading-relaxed">
-                      {item.quote}
-                    </blockquote>
-                    <cite className="text-gray-600 text-sm not-italic">
-                      {item.author}
-                    </cite>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
+              <ChevronLeft className="w-12 h-12 text-gray-400 hover:text-gray-600 transition-colors duration-200" />
+            </button>
+          )}
 
-      <div className="flex items-start gap-6 w-full">
-        {/* Hero Video Section */}
-        <div className="relative order-2 lg:order-1 flex-1">
-          <div className="relative overflow-hidden shadow-lg">
-            {(() => {
-              const currentMedia = currentItem.media?.[selectedMediaIndex]
-              const mediaType = getMediaType(currentItem.media, selectedMediaIndex)
-              const mediaUrl = getMediaUrl(currentItem.media, selectedMediaIndex)
-              
-              if (!currentMedia || !mediaUrl) {
-                // Fallback to placeholder
-                return (
-                  <div 
-                    className="w-full bg-gray-200 flex items-center justify-center"
-                    style={{ aspectRatio: "708/345" }}
-                    aria-label="No media available"
-                  >
-                    <span className="text-gray-500">No media available</span>
-                  </div>
-                )
-              }
-              
-              if (mediaType === 'video') {
-                return (
-                  <video
-                    ref={videoRef}
-                    src={mediaUrl}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="w-full h-auto object-cover"
-                    style={{ aspectRatio: "708/345" }}
-                    aria-label={`Video showcasing ${currentItem.author}'s outdoor space`}
-                  >
-                    <track kind="captions" />
-                    Your browser does not support the video tag.
-                  </video>
-                )
-              }
-              
-              if (mediaType === 'image') {
-                return (
-                  <Image
-                    unoptimized
-                    src={mediaUrl}
-                    alt={currentMedia.alternativeText || `${currentItem.author}'s outdoor space`}
-                    width={currentMedia.width || 500}
-                    height={currentMedia.height || 600}
-                    className="w-full h-auto object-cover"
-                    style={{ aspectRatio: "708/345" }}
-                    loading="lazy"
-                  />
-                )
-              }
-              
-              return null
-            })()}
+          {/* Right Arrow */}
+          {canScrollRight && (
+            <button
+              onClick={handleScrollRight}
+              className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-20 z-10 w-20 h-20 items-center justify-center hover:scale-110 transition-all duration-300"
+              aria-label="Scroll testimonials right"
+            >
+              <ChevronRight className="w-12 h-12 text-gray-400 hover:text-gray-600 transition-colors duration-200" />
+            </button>
+          )}
 
-            {/* Progress bar - only show for video */}
-            {getMediaType(currentItem.media, selectedMediaIndex) === 'video' && (
-              <div
-                className="absolute bottom-0 left-0 right-0 h-1 bg-gray-300"
-                role="progressbar"
-                aria-valuenow={Math.round(videoProgress)}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-label="Video progress"
+          {/* Scrollable Cards Container */}
+          <div
+            ref={scrollContainerRef}
+            className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-hide"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {data.items.map((item, index) => (
+              <Card
+                key={item.id}
+                className={`cursor-pointer border-t-2 w-[525px] flex-shrink-0 transition-all duration-200 hover:shadow-md ${
+                  selectedIndex === index
+                    ? "bg-yellow-50 border-t-yellow-400"
+                    : "hover:bg-gray-50 border-t-transparent"
+                }`}
+                style={{
+                  background: "linear-gradient(270deg, #FFF 0%, #EFEEEB 100%)",
+                }}
+                onClick={() => setSelectedIndex(index)}
+                role="button"
+                tabIndex={0}
+                aria-pressed={selectedIndex === index}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault()
+                    setSelectedIndex(index)
+                  }
+                }}
               >
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <Image
+                      unoptimized
+                      src={getStrapiUrl(item.avatar.url)}
+                      alt={
+                        item.avatar.alternativeText ||
+                        `${item.author} profile picture`
+                      }
+                      width={48}
+                      height={48}
+                      className="rounded-full flex-shrink-0 sm:w-[60px] sm:h-[60px]"
+                      loading="lazy"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <blockquote className="text-gray-900 text-base sm:text-lg font-medium mb-2 leading-relaxed">
+                        {item.quote}
+                      </blockquote>
+                      <cite className="text-gray-600 text-sm not-italic">
+                        {item.author}
+                      </cite>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex items-start gap-6 w-full">
+          {/* Hero Video Section */}
+          <div className="relative order-2 lg:order-1 flex-1">
+            <div className="relative overflow-hidden shadow-lg">
+              {(() => {
+                const currentMedia = currentItem.media?.[selectedMediaIndex]
+                const mediaType = getMediaType(
+                  currentItem.media,
+                  selectedMediaIndex
+                )
+                const mediaUrl = getMediaUrl(
+                  currentItem.media,
+                  selectedMediaIndex
+                )
+
+                if (!currentMedia || !mediaUrl) {
+                  // Fallback to placeholder
+                  return (
+                    <div
+                      className="w-full bg-gray-200 flex items-center justify-center"
+                      style={{ aspectRatio: "708/345" }}
+                      aria-label="No media available"
+                    >
+                      <span className="text-gray-500">No media available</span>
+                    </div>
+                  )
+                }
+
+                if (mediaType === "video") {
+                  return (
+                    <video
+                      ref={videoRef}
+                      src={mediaUrl}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-auto object-cover"
+                      style={{ aspectRatio: "708/345" }}
+                      aria-label={`Video showcasing ${currentItem.author}'s outdoor space`}
+                    >
+                      <track kind="captions" />
+                      Your browser does not support the video tag.
+                    </video>
+                  )
+                }
+
+                if (mediaType === "image") {
+                  return (
+                    <Image
+                      unoptimized
+                      src={mediaUrl}
+                      alt={
+                        currentMedia.alternativeText ||
+                        `${currentItem.author}'s outdoor space`
+                      }
+                      width={currentMedia.width || 500}
+                      height={currentMedia.height || 600}
+                      className="w-full h-auto object-cover"
+                      style={{ aspectRatio: "708/345" }}
+                      loading="lazy"
+                    />
+                  )
+                }
+
+                return null
+              })()}
+
+              {/* Progress bar - only show for video */}
+              {getMediaType(currentItem.media, selectedMediaIndex) ===
+                "video" && (
                 <div
-                  className="h-full bg-red-500 transition-all duration-100"
-                  style={{ width: `${videoProgress}%` }}
-                />
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-gray-300"
+                  role="progressbar"
+                  aria-valuenow={Math.round(videoProgress)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label="Video progress"
+                >
+                  <div
+                    className="h-full bg-red-500 transition-all duration-100"
+                    style={{ width: `${videoProgress}%` }}
+                  />
+                </div>
+              )}
+            </div>
+
+            {currentItem.media?.length && currentItem.media.length > 1 && (
+              <div
+                className="absolute -bottom-6 left-0 flex gap-2 mt-4 sm:mt-6 justify-center lg:justify-start"
+                role="tablist"
+              >
+                {currentItem.media?.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`w-[10px] h-[10px] rounded-none transition-colors focus:ring-[#FFBF3C] ${
+                      selectedMediaIndex === index
+                        ? "bg-[#FFBF3C]"
+                        : "bg-gray-300 hover:bg-gray-400"
+                    }`}
+                    onClick={() => setSelectedMediaIndex(index)}
+                    role="tab"
+                    aria-selected={selectedMediaIndex === index}
+                    aria-label={`View media ${index + 1} for ${
+                      currentItem.author
+                    }'s testimonial`}
+                  />
+                ))}
               </div>
             )}
           </div>
 
-          {currentItem.media?.length && currentItem.media.length > 1 && (
-            <div
-              className="absolute -bottom-6 left-0 flex gap-2 mt-4 sm:mt-6 justify-center lg:justify-start"
-              role="tablist"
-            >
-              {currentItem.media?.map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-[10px] h-[10px] rounded-none transition-colors focus:ring-[#FFBF3C] ${
-                    selectedMediaIndex === index
-                      ? "bg-[#FFBF3C]"
-                      : "bg-gray-300 hover:bg-gray-400"
-                  }`}
-                  onClick={() => setSelectedMediaIndex(index)}
-                  role="tab"
-                  aria-selected={selectedMediaIndex === index}
-                  aria-label={`View media ${index + 1} for ${currentItem.author}'s testimonial`}
-                />
-              ))}
+          {/* Content Section */}
+          <div className="space-y-6 order-1 lg:order-2 w-[341px]">
+            <div className="flex items-center gap-2 mt-2">
+              <div
+                className="flex gap-1"
+                role="img"
+                aria-label={`${currentItem.rating} out of 5 stars`}
+              >
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="w-5 h-5 sm:w-6 sm:h-6">
+                    <Star
+                      className={`w-full h-full ${
+                        i < currentItem.rating
+                          ? "fill-green-500 text-green-500"
+                          : "fill-gray-300 text-gray-300"
+                      }`}
+                    />
+                  </div>
+                ))}
+              </div>
+              <Badge
+                variant="secondary"
+                className="ml-2 text-base sm:text-lg font-semibold"
+              >
+                {currentItem.rating.toFixed(1)}
+              </Badge>
             </div>
-          )}
-        </div>
 
-        {/* Content Section */}
-        <div className="space-y-6 order-1 lg:order-2 w-[341px]">
-          <div className="flex items-center gap-2 mt-2">
-            <div
-              className="flex gap-1"
-              role="img"
-              aria-label={`${currentItem.rating} out of 5 stars`}
-            >
-              {[...Array(5)].map((_, i) => (
-                <div key={i} className="w-5 h-5 sm:w-6 sm:h-6">
-                  <Star
-                    className={`w-full h-full ${
-                      i < currentItem.rating
-                        ? "fill-green-500 text-green-500"
-                        : "fill-gray-300 text-gray-300"
-                    }`}
-                  />
-                </div>
-              ))}
+            <div className="">
+              <p className="text-gray-900 text-base sm:text-lg mb-4 overflow-hidden overflow-ellipsis">
+                {currentItem.review}
+              </p>
             </div>
-            <Badge
-              variant="secondary"
-              className="ml-2 text-base sm:text-lg font-semibold"
-            >
-              {currentItem.rating.toFixed(1)}
-            </Badge>
-          </div>
-
-          <div className="">
-            <p className="text-gray-900 text-base sm:text-lg mb-4 overflow-hidden overflow-ellipsis">
-              {currentItem.review}
-            </p>
           </div>
         </div>
-      </div>
 
-      <div className="w-full flex justify-end mt-2">
-      <Button
+        <div className="w-full flex justify-end mt-2">
+          <Button
             size="lg"
             className="bg-[#FFBF3C] hover:bg-primary-light text-gray-900 font-semibold text-lg w-[525px] sm:text-xl px-6 sm:px-8 py-3 sm:py-4 h-auto"
             asChild
@@ -407,6 +427,7 @@ export default function V2TestimonialsSection({
               <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </a>
           </Button>
+        </div>
       </div>
     </section>
   )

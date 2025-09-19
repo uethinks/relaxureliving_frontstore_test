@@ -191,7 +191,7 @@ const ShadesProductPage = ({
   }
 
   // console.log("shadesCMSData: ", shadesCMSData)
-
+  console.log('shadesCMSData.productImages', shadesCMSData.productImages)
   return (
     <ProductSelectionProvider product={shadesProduct}>
       <div className="w-full relative">
@@ -203,7 +203,7 @@ const ShadesProductPage = ({
                 <div className="w-full lg:w-[64%] flex flex-col sticky top-0">
                   <div className="flex flex-row justify-between w-full">
                     <ImgContent
-                      productImages={shadesCMSData.productImages || []}
+                      productImages={shadesCMSData.productImages.sort((a:any, b: any) => b.id - a.id) || []}
                     />
                   </div>
                   <div className="text-[#2F2A1E] text-sm mt-12 pb-12 w-full prose max-w-none">

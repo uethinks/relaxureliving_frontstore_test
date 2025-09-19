@@ -10,7 +10,7 @@ import {
   getShades,
   getStandardPergola,
 } from "@lib/cms/strapiCmsApi"
-import { StoreProduct, StoreProductResponse } from "@medusajs/types" 
+import { StoreProduct, StoreProductResponse } from "@medusajs/types"
 import { Metadata } from "next"
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
@@ -27,6 +27,7 @@ import V2DualOfferSection from "@/components/V2DualOfferSection"
 import V2TestimonialsSection from "@/components/V2TestimonialsSection"
 import { V2FAQSection } from "@/components/V2FAQSection"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
 
 // 强制静态生成
 export const dynamic = "force-static"
@@ -44,8 +45,6 @@ type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
 
- 
-
 export default async function ProductCustomPage() {
   try {
     // 1. 并行获取基础数据
@@ -58,40 +57,7 @@ export default async function ProductCustomPage() {
       <>
         <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
           <NavBarWrapper isHomePage={true} />
-          {pergolaData.sections.map((section: any) => {
-            const key = `${section.id}-${section.__component}`
-            console.log(key, section)
-            if (section.__component === "blocks.v2-hero-banner") {
-              return <V2HeroBanner key={key} data={section} />
-            } else if (section.__component === "blocks.v2-service-snapshots") {
-              return <V2ServiceSnapshots key={key} data={section} />
-            } else if (
-              section.__component === "blocks.v2-hero-product-section"
-            ) {
-              return <V2HeroProductSection key={key} data={section} />
-            } else if (section.__component === "blocks.v2-press-slider") {
-              return <V2PressSection key={key} data={section} />
-            } else if (section.__component === "blocks.v2-craftsmanship") {
-              return <V2CraftsmanshipSection key={key} data={section} />
-            } else if (section.__component === "blocks.v2-occasions") {
-              return <V2OccasionsSection key={key} data={section} />
-            } else if (section.__component === "blocks.v2-rain-resistance") {
-              return <V2FeatureShowcase key={key} data={section} />
-            } else if (section.__component === "blocks.v2-feature-grid") {
-              return <V2FeatureGridSection key={key} data={section} />
-            } else if (section.__component === "blocks.v2-promo-banner") {
-              return <V2PromoBanner key={key} data={section} />
-            } else if (section.__component === "blocks.v2-dual-offer-section") {
-              return <V2DualOfferSection key={key} data={section} />
-            } else if (
-              section.__component === "blocks.v2-testimonials-section"
-            ) {
-              return <V2TestimonialsSection key={key} data={section} />
-            } else if (section.__component === "blocks.v2-faq-section") {
-              return <V2FAQSection key={key} data={section} />
-            }
-            return null
-          })}
+          <V2SectionRenderer sections={pergolaData.sections || []} />
           <V2ContactUsSection />
         </div>
         <FooterDark isHomepage={false} />

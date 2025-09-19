@@ -7,7 +7,7 @@ export default function V2SupportSection() {
   const data = {
     phoneNumber: "1-213-566-8658",
     email: "info@relaxureliving.com",
-    businessHours: "9AM to 5PM PST Mon-Fri",
+    businessHours: "10:00 AM – 6:00 PM EST / 6:00 AM – 2:00 PM PST (Mon–Sun)",
     chatText: "Chat in the Corner",
     helpText: "We're Here to Help",
   }

@@ -306,7 +306,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
     <div className="hidden lg:flex w-full flex-1 justify-start items-start gap-2.5 sticky top-0">
       <div className="w-full pb-4">
         {/* Header */}
-        <div className="pb-4 border-b border-[#d9d9d9]">
+        <div className="pb-2">
           <p className="text-[#2F2A1E] text-xl mb-2">Relaxure Corsica</p>
           <h1 className="text-[#2F2A1E] text-3xl font-semibold">
             Relaxure Pergola Kit

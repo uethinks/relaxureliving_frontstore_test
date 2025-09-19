@@ -78,8 +78,6 @@ export function V2FAQSection({ data }: FAQSectionProps) {
               className="w-full h-full object-cover"
             />
           </picture>
-          {/* Overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/20" />
         </div>
       )}
 

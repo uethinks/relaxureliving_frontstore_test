@@ -331,6 +331,9 @@ const heaterPopulate = {
     productImages: {
       fields: ["*"],
     },
+    listImage: {
+      fields: ["*"],
+    },
     sections: {
       on: {
         "blocks.v2-hero-banner": v2HeroBannerPopulate,
@@ -357,6 +360,9 @@ const shadesPopulate = {
     productImages: {
       fields: ["*"],
     },
+    listImage: {
+      fields: ["*"],
+    },
     sections: {
       on: {
         "blocks.v2-hero-banner": v2HeroBannerPopulate,
@@ -381,6 +387,9 @@ const shadesPopulate = {
 const sampleKitPopulate = {
   populate: {
     productImages: {
+      fields: ["*"],
+    },
+    listImage: {
       fields: ["*"],
     },
     sections: {
