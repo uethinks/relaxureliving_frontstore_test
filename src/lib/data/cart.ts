@@ -42,7 +42,7 @@ export async function retrieveCart(cartId?: string) {
         fields:
           `*items, *region, *items.product, *items.variant, *items.thumbnail, 
           *items.metadata, +items.total, *promotions, +shipping_methods.name, 
-          *payment_collection, *payment_collection.payment_sessions, *items.variant.options, *items.variant.options.option`,
+          *payment_collection, *payment_collection.payment_sessions, *items.variant.options, *items.variant.options.option, +completed_at`,
       },
       headers,
       next,
@@ -88,8 +88,8 @@ export async function getOrSetCart(countryCode: string) {
   return cart
 }
 
-export async function updateCart(data: HttpTypes.StoreUpdateCart) {
-  const cartId = await getCartId()
+export async function updateCart(data: HttpTypes.StoreUpdateCart, cartIdOverride?: string) {
+  const cartId = cartIdOverride || (await getCartId())
 
   if (!cartId) {
     throw new Error("No existing cart found, please create one before updating")
@@ -110,7 +110,11 @@ export async function updateCart(data: HttpTypes.StoreUpdateCart) {
 
       return cart
     })
-    .catch(medusaError)
+    .catch((e) => {
+      //  message: 'Customer with email: clarkhtse2@gmail.com, has_account: false, already exists.',
+      console.log("updateCart error: ", e.message, "data" , data)
+      throw e
+    })
 }
 
 export async function addToCart({
@@ -250,6 +254,7 @@ export async function initiatePaymentSession(
   return sdk.store.payment
     .initiatePaymentSession(cart, data, {}, headers)
     .then(async (resp) => {
+      console.log(`initiatePaymentSession cart: ${cart}, data: ${data}, response: ${resp}`)
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
       return resp
@@ -398,7 +403,7 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
  * @param cartId - optional - The ID of the cart to place an order for.
  * @returns The cart object if the order was successful, or null if not.
  */
-export async function placeOrder(cartId?: string) {
+export async function placeOrder(cartId?: string, is3dCheckout:Boolean=false) {
   const id = cartId || (await getCartId())
 
   if (!id) {
@@ -419,7 +424,10 @@ export async function placeOrder(cartId?: string) {
     .catch(medusaError)
 
   if (cartRes?.type === "order") {
-    removeCartId()
+    if(!is3dCheckout){
+      //确保3dcheckout不会清空cookie中的cart,这两个是单独的
+      removeCartId()
+    }    
     return cartRes
   }
   return cartRes
@@ -481,4 +489,10 @@ export async function addPromotionCode(cartId: string, promoCodes: Array<string>
   }).catch((err) => {
     throw err
   })
+}
+
+export async function clearCartCookie() {
+  const cartCacheTag = await getCacheTag("carts")
+  revalidateTag(cartCacheTag)
+  removeCartId()
 }

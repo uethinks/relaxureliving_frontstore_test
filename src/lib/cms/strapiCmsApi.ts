@@ -736,21 +736,58 @@ export const submitContactForm = async (formData: {
 }
 
 export const sendKlaviyoContactUsForm = async (info: any) => {
+
+
   try {
-    await axios.post("/api/klaviyo/track", {
-      event: "contact us submission",
-      customer_properties: {
-        $email: info.email,
-        $first_name: info.fullName,
-      },
-      properties: {
-        fullName: info.fullName,
-        phoneNumber: info.phoneNumber,
-        email: info.email,
-        message: info.message,
-      },
-    })
-    console.log("Klaviyo event sent")
+ 
+
+      let envSite = process.env.NEXT_PUBLIC_ENV_SITE
+      let isProd = envSite === 'PROD'
+      let event =  isProd ? "ContactUs" : `ContactUs-Test`
+      let send_to_email = isProd ? "support@relaxureliving.com" : info.email;
+      const [first_name, last_name] = info.fullName.split(' ');
+      console.log("sendKlaviyoContactUsForm envSite", envSite, "event", event, "sendto",send_to_email)
+   
+      const resp = await axios.post("/api/klaviyo/track", {        
+        data: {
+          type: "event",
+          attributes: {
+            metric: {
+              data: {
+                type: "metric",
+                attributes: {
+                  name: event
+                }
+              }
+            },
+            profile: {
+              data: {
+                type: "profile",
+                attributes: {
+                  email: info.email,
+                  first_name: first_name,
+                  last_name: last_name,
+                  phone_number: info.phoneNumber,
+                  properties: {
+                      email: info.email,
+                      first_name: first_name,
+                      last_name: last_name,
+                      phone_number: info.phoneNumber
+                  }
+                }
+              }
+            },
+            properties: {
+              fullName: info.fullName,
+              phoneNumber: info.phoneNumber,
+              email: send_to_email,
+              message: info.message
+            },
+            time: new Date().toISOString()
+          }
+        }
+      })       
+      console.log(`Klaviyo envSite: ${envSite} event sent contact us successfully `, info, "resp", resp.data);
   } catch (error) {
     console.error("Failed to send Klaviyo event:", error)
   }

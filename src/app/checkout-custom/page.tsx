@@ -2,9 +2,10 @@ import { useCart } from "@lib/context/cartContext"
 import CartSkeleton from "@modules/cart/components/CartSkeleton/CartSkeleton"
 import { EmptyCart } from "@modules/cart/components/EmptyCart/EmptyCart"
 import { OrderSummary } from "@modules/cart/components/OrderSummary/OrderSummary"
+
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
-import CheckoutPage from "./CheckoutPage"
+import CheckoutCustomPage from "./CheckoutCustomPage"
  
 export default async function Checkout({
   
@@ -18,7 +19,7 @@ export default async function Checkout({
       <div className="w-full flex flex-col items-center py-0 relative bg-background ">
         <div className=" w-full relative flex flex-col justify-center items-center pt-0">
           <NavBarWrapper isFixed={false} />
-          <CheckoutPage/>
+          <CheckoutCustomPage/>
         </div>
     
       </div> 

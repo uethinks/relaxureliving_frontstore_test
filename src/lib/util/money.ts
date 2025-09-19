@@ -44,3 +44,11 @@ export const formatCartTotal = (cart: any): string => {
     locale: 'en-US'
   })
 }
+
+export const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(amount);
+}
+ 

@@ -17,16 +17,7 @@ import { formatCartTotal } from "@lib/util/money"
 import Breadcrumb from "@/components/Breadcrumb"
 import { CartAccessoriesGrid } from "./CartAccessoriesGrid"
 import CartSkeleton from "../CartSkeleton/CartSkeleton" // Lazy load only non-critical components
-const OurPromise = lazy(() =>
-  import("@modules/home/homepage/page/sections/OurPromise").then((module) => ({
-    default: module.OurPromise,
-  }))
-)
-const FaqWrapper = lazy(() =>
-  import("@modules/home/homepage/page/sections/FaqWrapper").then((module) => ({
-    default: module.FaqWrapper,
-  }))
-)
+
 
 interface FAQData {
   id: number
@@ -52,35 +43,12 @@ export const CartPage = ({
     accessories
 }: {
   accessories: StoreProduct[]
-}): JSX.Element => {
-  const [faq, setFaq] = useState<FAQData | null>(null)
-  const [ourPromise, setOurPromise] = useState<BoringButImportantStuff | null>(
-    null
-  )
+}): JSX.Element => { 
   const { cart, isLoading } = useCart()
-
-  // 初始化加载 FAQ 数据
-  useEffect(() => {
-    const fetchFAQ = async () => {
-      try {
-        const { data } = await getHomePage()
-        setFaq(data.FAQ)
-        setOurPromise(data.OurPromise)
-      } catch (error) {
-        console.error("Failed to fetch FAQ:", error)
-      }
-    }
-
-    const timer = setTimeout(() => {
-      fetchFAQ()
-    }, 1000)
-
-    return () => clearTimeout(timer)
-  }, [])
 
   // Check if cart is empty
   const isCartEmpty = !cart?.items || cart.items.length === 0
-  console.log('ProductPage - cart', cart)
+ 
 
   return (
     <>

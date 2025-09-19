@@ -109,7 +109,7 @@ export const PergulaSizeSelector = React.memo(
           <Button
             variant="outline"
             className="w-full border-2 border-primary text-[#140E02] font-semibold bg-transparent"
-            onClick={() => (window as any).tidioChatApi?.open()}
+            onClick={() => window.open('/customize', '_blank', 'noopener,noreferrer')}
           >
             I Want A Custom Size
           </Button>

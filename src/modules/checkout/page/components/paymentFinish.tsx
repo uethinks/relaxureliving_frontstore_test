@@ -7,6 +7,7 @@ declare global {
 import React, { useEffect } from "react"
 import { HttpTypes } from "@medusajs/types"
 import { useRouter } from "next/navigation"
+import { formatCurrency } from "@lib/util/money"
 
 const formatDateTime = (dateString: string | Date) => {
   const date = new Date(dateString)
@@ -110,7 +111,7 @@ const OrderDetails = ({
 
             <div className="w-[119px] items-start justify-end flex gap-2.5 px-0 py-2.5 relative">
               <div className="relative w-[119px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#000000] text-lg text-right tracking-[0] leading-[normal]">
-                ${order.total}
+                {formatCurrency(order.total)}
               </div>
             </div>
           </div>
@@ -213,7 +214,7 @@ const TotalAndButton = ({
 
           <div className="items-center justify-end flex-1 grow flex gap-2.5 px-0 py-2.5 relative">
             <div className="relative w-[120px] mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#000000] text-[22px] tracking-[0] leading-[normal]">
-              ${order.total}
+              {formatCurrency(order.total)}
             </div>
           </div>
         </div>
