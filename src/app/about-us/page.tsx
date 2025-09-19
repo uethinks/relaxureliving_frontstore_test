@@ -1,6 +1,6 @@
 import V2Button from "@/components/V2Button"
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
-import { V2FAQSection } from "@/components/V2FAQSection"
+import V2DualOfferSection from "@/components/V2DualOfferSection"
 import V2FeatureCards from "@/components/V2FeatureCards"
 import V2Headline from "@/components/V2Headline"
 import { V2PromoBanner } from "@/components/V2PromoBanner"
@@ -117,10 +117,10 @@ export default async function AboutUsPage() {
             return <V2PromoBanner key={key} data={section} />
           } else if (section.__component === "blocks.v2-feature-cards") {
             return <V2FeatureCards key={key} data={section} />
-          } else if (section.__component === "blocks.v2-faq-section") {
-            return <V2FAQSection key={key} data={section} />
           } else if (section.__component === "blocks.v2-service-snapshots") {
             return <V2ServiceSnapshots key={key} data={section} />
+          } else if (section.__component === "blocks.v2-dual-offer-section") {
+            return <V2DualOfferSection key={key} data={section} />
           }
           return null
         })}

@@ -286,7 +286,7 @@ export const NavBarWrapper = ({
           </button>
 
           {/* 桌面端下拉菜单 */}
-          <div className="fixed left-0 top-[75px] max-h-[600px] py-10 w-screen bg-white invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          <div className="fixed left-0 top-[75px] max-h-[600px] py-10 w-screen bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
             <div
               className={
                 "w-full max-w-[1074px] flex justify-center items-center gap-y-10 m-auto flex-wrap"
@@ -366,7 +366,11 @@ export const NavBarWrapper = ({
                           text: "Shop Now",
                           type: "Primary",
                           size: "Small",
-                          link: subItem.url || "",
+                          link: subItem?.url
+                            ? subItem?.url.startsWith("/")
+                              ? subItem?.url
+                              : `/${subItem?.url}`
+                            : "",
                           icon: "null",
                         }}
                       />

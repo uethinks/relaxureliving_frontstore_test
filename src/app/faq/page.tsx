@@ -94,12 +94,17 @@ function FaqPageComponent() {
   }, [categoryId])
 
   useEffect(() => {
-    if (searchParams.get("category") && categories) {
+    if (!categories) {
+      return
+    }
+    if (searchParams.get("category")) {
       const index = categories.findIndex(
         (x: any) => x.slug === searchParams.get("category")
       )
       // setFaqs(categories?.[index]?.faqs)
       setCategoryId(categories?.[index]?.slug)
+    } else {
+      setCategoryId(categories?.[0]?.slug)
     }
   }, [categories])
 
@@ -107,7 +112,7 @@ function FaqPageComponent() {
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className={"relative w-full"}>
+        <section className={"relative overflow-hidden w-full"}>
           <img
             src="/img/body-mask.png"
             className={"absolute top-0 left-0 z-0 w-full"}
@@ -213,7 +218,7 @@ function FaqPageComponent() {
               ))}
           </article>
         </section>
-        <section className={"w-full"}>
+        <section className={"w-full bg-[#EFEEEB80]"}>
           <V2ContactUsSection />
         </section>
       </div>

@@ -30,13 +30,23 @@ export default function PagePolicy() {
         <NavBarWrapper />
         {policy && (
           <>
-            <section className={"max-w-7xl my-20"}>
-              <div className={"text-black text-center"}>
-                <h1 className={"mb-5 font-semibold text-[56px]"}>
+            <section className={"relative overflow-hidden w-full py-20"}>
+              <img
+                src="/img/body-mask.png"
+                className={"absolute top-0 left-0 z-0 w-full"}
+              />
+              <div
+                className={
+                  "max-w-7xl m-auto text-black flex flex-col items-center"
+                }
+              >
+                <h1 className={"mb-5 font-semibold text-[56px] text-center"}>
                   {policy.title}
                 </h1>
                 <p
-                  className={"text-xl whitespace-break-spaces prose all:unset"}
+                  className={
+                    "text-xl whitespace-break-spaces prose all:unset text-center"
+                  }
                 >
                   <Markdown
                     rehypePlugins={[rehypeRaw]}

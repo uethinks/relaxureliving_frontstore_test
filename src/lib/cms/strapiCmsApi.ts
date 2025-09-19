@@ -872,9 +872,9 @@ export const getAboutUs = async () => {
           sections: {
             on: {
               "blocks.v2-promo-banner": v2PromoBannerPopulate,
-              "blocks.v2-faq-section": v2FaqSectionPopulate,
-              "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
               "blocks.v2-feature-cards": v2FeatureCardsPopulate,
+              "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
+              "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
             },
           },
         },

@@ -278,7 +278,9 @@ export default function BlogDetail() {
           </div>
         </section>
 
-        <V2ContactUsSection />
+        <section className={"w-full bg-[#EFEEEB80]"}>
+          <V2ContactUsSection />
+        </section>
       </div>
       <FooterDark />
     </>
