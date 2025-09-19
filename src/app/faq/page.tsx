@@ -88,13 +88,17 @@ function FaqPageComponent() {
   }, [])
 
   useEffect(() => {
-    if (!categories) {
-      return
+    const cat = categories?.[categoryId];
+    setFaqs(cat?.faqs);
+    setFaqId(1);
+  
+    const catId = cat?.id;
+    console.log("categoryId", categoryId, "catId", catId)
+    if (catId != null) {
+      router.push(buildUrl(catId));
     }
-    setFaqs(categories?.[categoryId]?.faqs)
-    setFaqId(1)
-    router.push(buildUrl(categories[categoryId].id))
-  }, [categoryId])
+  }, [categoryId, categories]);
+
 
   return (
     <>
