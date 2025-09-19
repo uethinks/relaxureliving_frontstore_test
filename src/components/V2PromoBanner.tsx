@@ -60,21 +60,30 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
       role="banner"
       aria-label="Hero section"
     >
-      <Image
-        unoptimized
-        src={isStatic ? backgroundImage.url : getStrapiUrl(backgroundImage.url)}
-        alt={
-          backgroundImage.alternativeText || "Relaxure pergola assembly process"
-        }
-        width={backgroundImage.width}
-        height={backgroundImage.height}
-        className="w-full h-auto"
-        priority
-        // sizes={generateSizes()}
-        quality={85}
-      />
+      {isStatic ? (
+        <img src={backgroundImage.url} className="w-full h-auto" />
+      ) : (
+        <Image
+          unoptimized
+          src={getStrapiUrl(backgroundImage.url)}
+          alt={
+            backgroundImage.alternativeText ||
+            "Relaxure pergola assembly process"
+          }
+          width={backgroundImage.width}
+          height={backgroundImage.height}
+          className="w-full h-auto"
+          priority
+          // sizes={generateSizes()}
+          quality={85}
+        />
+      )}
 
-      <div className="absolute inset-0 z-10 w-full max-w-[1074px] mx-auto flex flex-col items-start justify-center">
+      <div
+        className={`absolute inset-0 z-10 w-full max-w-[1074px] mx-auto flex flex-col justify-center ${
+          isReverse ? "items-end" : "items-start"
+        }`}
+      >
         <div className="w-[50%]">
           <V2Headline title={content.title || ""} className="text-white" />
 

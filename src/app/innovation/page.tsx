@@ -41,7 +41,7 @@ export default async function InnovationPage() {
               },
               backgroundImage: {
                 isStatic: true,
-                url: "/img/innovation-hero.png",
+                url: "/img/innovation-hero1.png",
               },
             } as never
           }
@@ -168,7 +168,7 @@ export default async function InnovationPage() {
               },
               backgroundImage: {
                 isStatic: true,
-                url: "/img/innovation-hero.png",
+                url: "/img/innovation-hero2.png",
               },
             } as never
           }
