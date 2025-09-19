@@ -5,7 +5,7 @@ import { getFAQCategories } from "@lib/cms/strapiCmsApi"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import Markdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
 import remarkGfm from "remark-gfm"
@@ -52,6 +52,14 @@ function buildUrl(category?: string) {
 }
 
 export default function FaqPage() {
+  return <>
+    <Suspense>
+      <FaqPageComponent />
+    </Suspense>
+  </>
+}
+
+function FaqPageComponent() {
   const [categories, setCategories] = useState<any>()
   const [categoryId, setCategoryId] = useState(0)
   const [faqs, setFaqs] = useState<any>()
