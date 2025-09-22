@@ -416,6 +416,9 @@ const glassdoorPopulate = {
     productImages: {
       fields: ["*"],
     },
+    listImage: {
+      fields: ["*"],
+    },
     sections: {
       on: {
         "blocks.v2-hero-banner": v2HeroBannerPopulate,

@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge"
 
 const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
-  console.log('infoData', infoData)
+  console.log('AccessoriesGridItem - infoData', infoData)
   const variant = infoData.product.variants[0]
   const originalPrice = variant?.calculated_price?.original_amount || 0
   const calculatedPrice = variant?.calculated_price?.calculated_amount || 0
