@@ -37,7 +37,7 @@ export default function PagePolicy() {
               />
               <div
                 className={
-                  "max-w-7xl m-auto text-black flex flex-col items-center"
+                  "w-[1074px] max-w-none m-auto text-black flex flex-col items-center"
                 }
               >
                 <h1 className={"mb-5 font-semibold text-[56px] text-center"}>
@@ -59,7 +59,9 @@ export default function PagePolicy() {
               </div>
             </section>
             <section
-              className={"max-w-7xl mb-32 whitespace-break-spaces prose"}
+              className={
+                "w-[1074px] max-w-none mb-32 whitespace-break-spaces prose text-left"
+              }
             >
               <Markdown
                 rehypePlugins={[rehypeRaw]}

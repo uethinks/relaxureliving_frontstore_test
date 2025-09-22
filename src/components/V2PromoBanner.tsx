@@ -84,7 +84,7 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
           isReverse ? "items-end" : "items-start"
         }`}
       >
-        <div className="w-[50%]">
+        <div className="w-[50%] max-w-[436px]">
           <V2Headline title={content.title || ""} className="text-white" />
 
           <div className="text-white text-base mb-8 mt-8">

@@ -341,7 +341,7 @@ export const NavBarWrapper = ({
 
                   <div className="w-[159px] ml-6 flex-grow-0 flex-shrink-0 basis-auto">
                     <img
-                      className="w-full h-[144px]"
+                      className="w-full h-[144px] cursor-pointer"
                       src={
                         subItem?.banner?.url
                           ? getStrapiUrl(subItem?.banner?.url)
@@ -391,7 +391,7 @@ export const NavBarWrapper = ({
                       </div>
 
                       <img
-                        className="w-full h-[114px] ml-6"
+                        className="w-full h-[114px] ml-6 cursor-pointer"
                         src={
                           subItem?.banner?.url
                             ? getStrapiUrl(subItem?.banner?.url)
