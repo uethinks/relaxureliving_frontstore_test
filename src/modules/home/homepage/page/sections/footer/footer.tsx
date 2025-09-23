@@ -3,126 +3,13 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { getPolicies } from "@lib/cms/strapiCmsApi"
-import {
-  ArrowRight,
-  Facebook,
-  Instagram,
-  Linkedin,
-  Mail,
-  Package,
-  Phone,
-  Shield,
-  Star,
-  Truck,
-  Youtube,
-} from "lucide-react"
+import { ArrowRight, Star } from "lucide-react"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
+import { IconDelivery, IconPackage, IconWarranty } from "./icons"
 
 interface FooterDarkProps {
   isHomepage?: boolean
-}
-
-function FooterHeader() {
-  return (
-    <div className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-0 py-6 border-b border-[#2f2a1e] gap-4 sm:gap-8">
-      <div className="flex items-center">
-        <img
-          className="w-[120px] sm:w-[140px] lg:w-[160px]"
-          src="/img/logo.svg"
-          alt=""
-        />
-      </div>
-
-      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-center sm:text-right">
-        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-          <span className="text-lg sm:text-xl font-semibold">Excellent</span>
-          <div className="flex gap-1">
-            {[...Array(5)].map((_, i) => (
-              <Button
-                key={i}
-                size="sm"
-                className="w-6 h-6 p-0 bg-[#51b380] hover:bg-[#51b380]/90"
-              >
-                <Star className="w-3 h-3 fill-current" />
-              </Button>
-            ))}
-          </div>
-          <span className="text-xs sm:text-sm text-[#8c877c]">
-            TrustScore 4.9 | 15,821 Reviews
-          </span>
-        </div>
-
-        <div className="text-center sm:text-right">
-          <div className="text-lg sm:text-xl font-bold">15,000+</div>
-          <div className="text-xs sm:text-sm text-[#8c877c]">
-            Satisfied Customers.
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function EmailSubscription() {
-  return (
-    <div className="space-y-4 sm:space-y-6">
-      <h3 className="text-base sm:text-lg font-semibold">
-        Subscribe To Our Emails
-      </h3>
-      <div className="flex h-[40px]">
-        <Input
-          placeholder="Email"
-          className="bg-[#efeeeb] text-black border-none rounded-r-none flex-1 h-full text-sm sm:text-base"
-        />
-        <Button className="bg-[#ffbf3c] hover:bg-[#ffbf3c]/90 text-black px-3 sm:px-4 h-full">
-          <ArrowRight className="w-4 h-4" />
-        </Button>
-      </div>
-
-      <div className="flex gap-3 sm:gap-4 justify-center sm:justify-start">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="w-8 h-8 sm:w-10 sm:h-10 bg-[#2f2a1e] hover:bg-[#2f2a1e]/80 rounded-full"
-        >
-          <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="w-8 h-8 sm:w-10 sm:h-10 bg-[#2f2a1e] hover:bg-[#2f2a1e]/80 rounded-full"
-        >
-          <Facebook className="w-4 h-4 sm:w-5 sm:h-5" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="w-8 h-8 sm:w-10 sm:h-10 bg-[#2f2a1e] hover:bg-[#2f2a1e]/80 rounded-full"
-        >
-          <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="w-8 h-8 sm:w-10 sm:h-10 bg-[#2f2a1e] hover:bg-[#2f2a1e]/80 rounded-full"
-        >
-          <Youtube className="w-4 h-4 sm:w-5 sm:h-5" />
-        </Button>
-      </div>
-
-      <div className="space-y-2 sm:space-y-3 text-center sm:text-left">
-        <div className="flex items-center gap-2 text-xs sm:text-sm justify-center sm:justify-start">
-          <Mail className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-          <span>Info@Relaxureliving.Com</span>
-        </div>
-        <div className="flex items-center gap-2 text-xs sm:text-sm justify-center sm:justify-start">
-          <Phone className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-          <span>1-213-566-8658</span>
-        </div>
-      </div>
-    </div>
-  )
 }
 
 function NavigationLinks({
@@ -133,14 +20,14 @@ function NavigationLinks({
   links: { text: string; href: string }[]
 }) {
   return (
-    <div className="space-y-4 sm:space-y-6 text-center sm:text-left">
-      <h3 className="text-base sm:text-lg font-semibold">{title}</h3>
-      <div className="space-y-2 sm:space-y-3">
+    <div>
+      <h3 className="text-base text-[#fff] font-semibold mb-5">{title}</h3>
+      <div className="ml-3">
         {links.map((link) => (
           <Link
             key={link.text}
             href={link.href}
-            className="block text-[#8c877c] hover:text-white transition-colors text-sm sm:text-base"
+            className="block text-[#EFEEEB] hover:text-white transition-colors text-base mb-[10px]"
           >
             {link.text}
           </Link>
@@ -154,26 +41,22 @@ function FeatureItem({
   icon: Icon,
   title,
   description,
-  iconStyle = "rounded",
 }: {
   icon: any
   title: string
   description: string
-  iconStyle?: "rounded" | "rounded-full"
 }) {
   return (
-    <div className="flex gap-3 sm:gap-4">
-      <div
-        className={`w-10 h-10 sm:w-12 sm:h-12 border-2 border-[#8c877c] ${iconStyle} flex items-center justify-center flex-shrink-0`}
-      >
-        <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+    <div className="flex gap-4 mb-10">
+      <div className={`w-[56px] h-[56px] flex-grow-0 flex-shrink-0 basis-auto`}>
+        <Icon className="w-full h-full" />
       </div>
       <div>
-        <h4 className="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
+        <h4 className="font-semibold mb-[10px] sm:text-base text-[#fff]">
           {title}
         </h4>
         <div
-          className="text-xs sm:text-sm text-[#8c877c]"
+          className="lg:text-sm text-[#8c877c]"
           dangerouslySetInnerHTML={{ __html: description }}
         />
       </div>
@@ -184,35 +67,30 @@ function FeatureItem({
 function FeaturesSection() {
   const features = [
     {
-      icon: Package,
-      title: "Delivered In 5 Weeks",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      icon: IconPackage,
+      title: "Delivered in 5 Weeks",
+      description: "Fast and reliable delivery so you can enjoy it sooner.",
       iconStyle: "rounded" as const,
     },
     {
-      icon: Truck,
+      icon: IconDelivery,
       title: "Hassle-Free Delivery",
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="underline">Shipping Policy</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        "Peace of mind delivered free. We handle everything for a smooth setup.",
       iconStyle: "rounded" as const,
     },
     {
-      icon: Shield,
+      icon: IconWarranty,
       title: "Industry-Leading Warranty",
       description:
-        'Lorem ipsum dolor sit amet, adipiscing elit. <span class="underline">Warranty</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        "Built to last. Protected with one of the best warranties in the industry.",
       iconStyle: "rounded-full" as const,
     },
   ]
 
-  return (
-    <div className="space-y-6 sm:space-y-8">
-      {features.map((feature) => (
-        <FeatureItem key={feature.title} {...feature} />
-      ))}
-    </div>
-  )
+  return features.map((feature) => (
+    <FeatureItem key={feature.title} {...feature} />
+  ))
 }
 
 function PaymentMethods() {
@@ -269,31 +147,118 @@ export const FooterDark = ({
   }, [])
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#140e02] text-white">
-      {/* BadWeatherSection - preserved from original */}
-      {/* <BadWeatherSection /> */}
+    <div className="relative w-full overflow-hidden bg-[#140e02] text-white lg:h-[860px]">
+      <div className="flex justify-between w-[1074px] mx-auto mt-[97px]">
+        <div className="flex flex-col w-[342px] flex-grow-0 flex-shrink-0 basis-auto">
+          <img
+            className="w-[103px] lg:w-[160px] mb-[60px]"
+            src="/img/logo.svg"
+            alt=""
+          />
+          <h3 className="mb-[10px] text-sm lg:text-base font-semibold">
+            Subscribe To Our Emails
+          </h3>
+          <div className="flex h-[40px]">
+            <Input
+              placeholder="Email"
+              className="bg-[#efeeeb] text-black border-none rounded-r-none flex-1 h-full text-sm sm:text-base"
+            />
+            <Button className="bg-[#ffbf3c] hover:bg-[#ffbf3c]/90 text-black px-3 sm:px-4 h-full">
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
 
-      {/* HomepageSampleKit - only show on homepage */}
-      {/* {isHomepage && <HomepageSampleKit />} */}
+          <div className="flex gap-[22px] lg:gap-[25px] lg:my-10 my-5">
+            <a className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]" href="#">
+              <img
+                className={"w-full h-full"}
+                src="/img/icon-facebook.svg"
+                alt="facebook"
+              />
+            </a>
+            <a className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]" href="#">
+              <img
+                className={"w-full h-full"}
+                src="/img/icon-instagram.svg"
+                alt="instagram"
+              />
+            </a>
+            <a className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]" href="#">
+              <img
+                className={"w-full h-full"}
+                src="/img/icon-youtube.svg"
+                alt="youtube"
+              />
+            </a>
+          </div>
 
-      {/* New Footer Design with max-w-[1074px] container */}
-      <div className="w-full">
-        <div className="max-w-[1074px] mx-auto">
-          <FooterHeader />
-
-          <div className="px-4 sm:px-0 py-8 sm:py-10 lg:py-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
-              <EmailSubscription />
-              <NavigationLinks title="Company" links={companyLinks} />
-              <NavigationLinks title="Conditions" links={conditionLinks} />
-              <FeaturesSection />
+          <div className="flex flex-col gap-5 text-sm lg:text-base text-[#fff]">
+            <div className="flex items-center gap-2">
+              <img
+                src={"/img/icon-contact-email.svg"}
+                alt={"contact us email"}
+                className={"w-4 h-4 invert"}
+              />
+              <a href="mailto:info@relaxureliving.com" target="_blank">
+                info@relaxureliving.com
+              </a>
+            </div>
+            <div className="flex items-center gap-2">
+              <img
+                src={"/img/icon-contact-phone.svg"}
+                alt={"contact us phone"}
+                className={"w-4 h-4 invert"}
+              />
+              <a href="tel:1-213-566-8658">1-213-566-8658</a>
             </div>
           </div>
 
-          <div className="px-4 sm:px-0 py-4 sm:py-6 border-t border-[#2f2a1e] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-xs sm:text-sm text-[#8c877c] text-center sm:text-left">
-              © 2025 Relaxure
+          <div className="text-sm text-white mt-auto">© 2025 Relaxure</div>
+        </div>
+
+        <div>
+          <div className="flex items-center gap-6 flex-wrap mb-[57px]">
+            <span className="text-lg sm:text-xl font-semibold">Excellent</span>
+            <div className={"flex flex-col items-center"}>
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-8 h-8 flex items-center justify-center"
+                  >
+                    <div className="flex items-center justify-center w-[25px] h-[25px] bg-[#51b380] hover:bg-[#51b380]/90 rounded-sm">
+                      <Star className="w-[13px] h-[13px] fill-current" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <span className="text-[10px] text-[#EFEEEB] font-semibold">
+                TrustScore 4.9 | 15,821 Reviews
+              </span>
             </div>
+            <div className="flex items-center">
+              <div className="lg:text-xl font-bold text-[#fff] mr-1">
+                15,000+
+              </div>
+              <div className="lg:text-base text-[#EFEEEB]">
+                Satisfied Customers.
+              </div>
+            </div>
+          </div>
+          <div className={"flex gap-6"}>
+            <div
+              className={
+                "flex flex-col w-40 flex-grow-0 flex-shrink-0 basis-auto gap-y-10"
+              }
+            >
+              <NavigationLinks title="Company" links={companyLinks} />
+              <NavigationLinks title="Conditions" links={conditionLinks} />
+            </div>
+            <div className={"w-[340px]"}>
+              <FeaturesSection />
+            </div>
+          </div>
+          <div className={"mt-[95px]"}>
             <PaymentMethods />
           </div>
         </div>

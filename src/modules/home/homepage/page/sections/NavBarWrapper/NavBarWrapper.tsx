@@ -347,7 +347,7 @@ export const NavBarWrapper = ({
                             </div>
                           </div>
                         ))}
-                      <div className="mt-auto w-full h-[1px] bg-[#8C877C] self-end"></div>
+                      <div className="mt-auto w-full h-[1px] bg-[#8C877C]"></div>
                     </div>
                     <div>
                       <div
@@ -626,59 +626,45 @@ export const NavBarWrapper = ({
   return (
     <>
       {/* Placeholder element to prevent content from being hidden behind fixed navigation */}
-      {isFixed && <div className="hidden xl:block w-full h-[115px]"></div>}
+      {isFixed && <div className="w-full h-[84px] lg:h-[112px]"></div>}
 
       <header
         className={`z-50 w-full flex flex-col items-center gap-0 ${
-          isFixed
-            ? "z-50 lg:fixed lg:top-0 lg:left-1/2 lg:-translate-x-1/2"
-            : ""
+          isFixed ? "z-50 fixed top-0 left-1/2 -translate-x-1/2" : ""
         }`}
         role="banner"
       >
         {/* Top Contact Bar - Black Background */}
         <address className="flex w-full h-6 lg:h-8 bg-black lg:items-center items-end justify-center not-italic">
-          <div className="flex w-full lg:max-w-[1074px] lg:justify-end justify-center items-center gap-6 text-white text-[11px] lg:text-xs text-[#8C877C]">
+          <div className="flex w-full lg:max-w-[1074px] lg:justify-end justify-center items-center gap-6 text-[11px] lg:text-xs text-[#8C877C]">
             <a
               href="mailto:Info@Relaxureliving.Com"
-              className="flex items-center gap-2 transition-colors underline"
+              className="flex items-center gap-2 underline invert"
               aria-label="Send email to Info@Relaxureliving.Com"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-              </svg>
+              <div
+                className={"w-4 h-4"}
+                style={{
+                  mask: "url(/img/icon-contact-email.svg) no-repeat center",
+                  maskSize: "contain",
+                  backgroundColor: "#8C877C",
+                }}
+              />
               Info@Relaxureliving.Com
             </a>
             <a
               href="tel:1-213-566-8658"
-              className="flex items-center gap-2 hover:text-gray-300 transition-colors underline"
+              className="flex items-center gap-2 underline invert"
               aria-label="Call 1-213-566-8658"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
+              <div
+                className={"w-4 h-4"}
+                style={{
+                  mask: "url(/img/icon-contact-phone.svg) no-repeat center",
+                  maskSize: "contain",
+                  backgroundColor: "#8C877C",
+                }}
+              />
               1-213-566-8658
             </a>
           </div>
@@ -687,7 +673,7 @@ export const NavBarWrapper = ({
         {/* Main Navigation Bar - Dark Brown/Black Background */}
         <nav
           className={`
-            hidden lg:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 
+            hidden lg:flex flex-col w-full h-20 items-center justify-center gap-2.5 p-5 
             relative bg-[#140E02] backdrop-blur-[27.6px] backdrop-brightness-[100%] 
             [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
           `}
