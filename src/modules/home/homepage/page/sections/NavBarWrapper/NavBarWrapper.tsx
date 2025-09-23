@@ -1,8 +1,10 @@
 "use client"
+
 import V2Button from "@/components/V2Button"
 import { getMenu } from "@lib/cms/strapiCmsApi"
 import { useCart } from "@lib/context/cartContext"
 import { getStrapiUrl } from "@lib/utils"
+import { Menu, Minus, MoveRight, Plus, X } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
@@ -38,6 +40,7 @@ interface CustomSubMenuItem {
 interface SubBannerMenuItem {
   id: number
   name: string
+  url: string
   banner: {
     url: string | null
   }
@@ -148,38 +151,39 @@ export const NavBarWrapper = ({
     if (hasSubMenu) {
       if (isMobile) {
         return (
-          <div key={item.id} className="w-full">
-            <button
-              onClick={() => {
-                if (item.url) {
-                  router.push(
-                    item?.url.startsWith("/") ? item?.url : `/${item?.url}`
-                  )
-                }
-                setOpenSubmenu(openSubmenu === item.id ? null : item.id)
-              }}
-              className="w-full py-2 [font-family:'Montserrat',Helvetica] font-medium  text-[#343a40] text-base flex items-center justify-start gap-2"
-            >
-              {item.name}
-              <svg
-                className={`w-4 h-4 transition-transform duration-200 ${
-                  openSubmenu === item.id ? "rotate-180" : ""
-                }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+          <div key={item.id} className="relative w-full">
+            <div className="w-full flex items-center justify-between pb-5 border-b-[1px] border-b-[#fff] text-[#8C877C] text-base">
+              <button
+                onClick={() => {
+                  if (item.url) {
+                    router.push(
+                      item?.url.startsWith("/") ? item?.url : `/${item?.url}`
+                    )
+                    return
+                  }
+                  setOpenSubmenu(openSubmenu === item.id ? null : item.id)
+                }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
+                {item.name}
+              </button>
+              {openSubmenu === item.id ? (
+                <Minus
+                  className={"w-6 h-6 text-[#8C877C]"}
+                  onClick={() => {
+                    setOpenSubmenu(null)
+                  }}
                 />
-              </svg>
-            </button>
-
+              ) : (
+                <Plus
+                  className={"w-6 h-6 text-[#8C877C]"}
+                  onClick={() => {
+                    setOpenSubmenu(openSubmenu === item.id ? null : item.id)
+                  }}
+                />
+              )}
+            </div>
             {openSubmenu === item.id && (
-              <div className="mt-2 pl-4 space-y-2">
+              <div className={"mb-5"}>
                 {item.sub_menu_item.map((subItem) => (
                   <a
                     key={subItem.id}
@@ -188,13 +192,11 @@ export const NavBarWrapper = ({
                       handleMenuItemClick(e, subItem.url, subItem.anchor)
                       setIsMenuOpen(false)
                     }}
-                    className={`
-                      block w-full text-start py-1 
-                      [font-family:'Montserrat',Helvetica] font-medium 
-                      text-[#343a40] text-sm hover:text-gray-600
-                    `}
+                    className="flex items-center justify-between py-5 border-b-[1px] border-b-[#8C877C] font-semibold text-xl text-[#140E02]"
                   >
                     {subItem.name}
+
+                    <MoveRight className="w-4 h-4 text-[#140E02]" />
                   </a>
                 ))}
               </div>
@@ -254,12 +256,196 @@ export const NavBarWrapper = ({
         )
       }
     } else if (hasCustomSubMenu || hasBannerMenu) {
-      return (
+      return isMobile ? (
+        <div key={item.id} className="relative w-full">
+          <div
+            className={`
+            w-full flex items-center justify-between pb-5 border-b-[1px] text-[#8C877C] text-base
+            ${
+              openSubmenu === item.id
+                ? "border-b-transparent"
+                : "border-b-[#fff]"
+            }
+            `}
+          >
+            <button
+              onClick={() => {
+                if (item.url) {
+                  router.push(
+                    item?.url.startsWith("/") ? item?.url : `/${item?.url}`
+                  )
+                  return
+                }
+              }}
+            >
+              {item.name}
+            </button>
+            {openSubmenu === item.id ? (
+              <Minus
+                className={"w-6 h-6 text-[#8C877C]"}
+                onClick={() => {
+                  setOpenSubmenu(null)
+                }}
+              />
+            ) : (
+              <Plus
+                className={"w-6 h-6 text-[#8C877C]"}
+                onClick={() => {
+                  setOpenSubmenu(openSubmenu === item.id ? null : item.id)
+                }}
+              />
+            )}
+          </div>
+          {openSubmenu === item.id && (
+            <div className={"mb-5"}>
+              {item.custom_sub_menu_item.map((subItem) => (
+                <div key={subItem.id}>
+                  <div
+                    className={
+                      "flex items-center justify-between text-[#140E02] text-xl mb-[10px]"
+                    }
+                    onClick={() => {
+                      if (!subItem || !subItem?.url) {
+                        return
+                      }
+                      router.push(
+                        subItem?.url.startsWith("/")
+                          ? subItem?.url
+                          : `/${subItem?.url}`
+                      )
+                    }}
+                  >
+                    {subItem.name}
+                    <MoveRight className="w-4 h-4 text-[#140E02]" />
+                  </div>
+                  <div className={"mb-5 grid grid-cols-2 gap-2"}>
+                    <div className="flex flex-col">
+                      {subItem?.iconText &&
+                        subItem?.iconText?.length > 0 &&
+                        subItem.iconText.map((iconText) => (
+                          <div
+                            key={iconText.id}
+                            className={"flex items-center gap-2 mb-[10px]"}
+                          >
+                            <img
+                              className={
+                                "w-10 h-10 flex-grow-0 flex-shrink-0 basis-auto"
+                              }
+                              src={
+                                iconText?.icon?.url
+                                  ? getStrapiUrl(iconText?.icon?.url)
+                                  : ""
+                              }
+                              alt={iconText.name}
+                            />
+                            <div
+                              className={
+                                "text-[11px] text-[#2F2A1E] line-clamp-2"
+                              }
+                            >
+                              {iconText.name}
+                            </div>
+                          </div>
+                        ))}
+                      <div className="mt-auto w-full h-[1px] bg-[#8C877C] self-end"></div>
+                    </div>
+                    <div>
+                      <div
+                        className={
+                          "text-[11px] text-[#8C877C] line-clamp-2 font-semibold"
+                        }
+                      >
+                        {subItem.subTitle}
+                      </div>
+                      <div
+                        className={"text-[11px] text-[#8C877C] line-clamp-6"}
+                      >
+                        {subItem.description}
+                      </div>
+                      <div className={"mt-[10px]"}>
+                        <img
+                          className="w-full h-[43.5vw] object-cover"
+                          src={
+                            subItem?.banner?.url
+                              ? getStrapiUrl(subItem?.banner?.url)
+                              : ""
+                          }
+                          alt={subItem?.name}
+                          onClick={() => {
+                            if (!subItem || !subItem?.url) {
+                              return
+                            }
+                            router.push(
+                              subItem?.url.startsWith("/")
+                                ? subItem?.url
+                                : `/${subItem?.url}`
+                            )
+                          }}
+                        />
+
+                        {subItem.showLinkBtn && (
+                          <V2Button
+                            data={{
+                              text: "Shop Now",
+                              type: "Primary",
+                              size: "Small",
+                              link: subItem?.url
+                                ? subItem?.url.startsWith("/")
+                                  ? subItem?.url
+                                  : `/${subItem?.url}`
+                                : "",
+                              icon: "null",
+                            }}
+                            className="w-full"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {item.sub_banner_menu_item.map((subItem) => (
+                <div
+                  key={subItem.id}
+                  onClick={() => {
+                    if (!subItem || !subItem?.url) {
+                      return
+                    }
+                    router.push(
+                      subItem?.url.startsWith("/")
+                        ? subItem?.url
+                        : `/${subItem?.url}`
+                    )
+                  }}
+                >
+                  <div
+                    className={
+                      "flex items-center justify-between text-[#140E02] text-xl mb-[10px]"
+                    }
+                  >
+                    {subItem.name}
+                    <MoveRight className="w-4 h-4 text-[#140E02]" />
+                  </div>
+                  <img
+                    className="w-full h-[11vw] border-b-[1px] border-b-[#8C877C] object-cover"
+                    src={
+                      subItem?.banner?.url
+                        ? getStrapiUrl(subItem?.banner?.url)
+                        : ""
+                    }
+                    alt={subItem?.name}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
         <div key={item.id} className="relative group">
           <button
             className={`
-                flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline  font-semibold
-              `}
+              flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline  font-semibold
+            `}
             onClick={() => {
               if (item.url) {
                 router.push(
@@ -270,19 +456,6 @@ export const NavBarWrapper = ({
             }}
           >
             {item.name}
-            {/* <svg
-              className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg> */}
           </button>
 
           {/* 桌面端下拉菜单 */}
@@ -464,53 +637,50 @@ export const NavBarWrapper = ({
         role="banner"
       >
         {/* Top Contact Bar - Black Background */}
-        <address className="hidden xl:flex w-full h-10 bg-black items-center justify-center px-4 sm:px-6 lg:px-8 not-italic">
-          <div className="w-full max-w-[1074px] mx-auto flex items-center justify-between">
-            <div className="flex-1"></div>
-            <div className="flex items-center gap-6 text-white text-sm">
-              <a
-                href="mailto:Info@Relaxureliving.Com"
-                className="flex items-center gap-2 hover:text-gray-300 transition-colors underline"
-                aria-label="Send email to Info@Relaxureliving.Com"
+        <address className="flex w-full h-6 lg:h-8 bg-black lg:items-center items-end justify-center not-italic">
+          <div className="flex w-full lg:max-w-[1074px] lg:justify-end justify-center items-center gap-6 text-white text-[11px] lg:text-xs text-[#8C877C]">
+            <a
+              href="mailto:Info@Relaxureliving.Com"
+              className="flex items-center gap-2 transition-colors underline"
+              aria-label="Send email to Info@Relaxureliving.Com"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-                Info@Relaxureliving.Com
-              </a>
-              <a
-                href="tel:1-213-566-8658"
-                className="flex items-center gap-2 hover:text-gray-300 transition-colors underline"
-                aria-label="Call 1-213-566-8658"
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              Info@Relaxureliving.Com
+            </a>
+            <a
+              href="tel:1-213-566-8658"
+              className="flex items-center gap-2 hover:text-gray-300 transition-colors underline"
+              aria-label="Call 1-213-566-8658"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
-                </svg>
-                1-213-566-8658
-              </a>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
+              </svg>
+              1-213-566-8658
+            </a>
           </div>
         </address>
 
@@ -531,7 +701,7 @@ export const NavBarWrapper = ({
               aria-label="Relaxure Homepage"
             >
               <img
-                className="w-32 lg:w-40 xl:w-[160px]"
+                className="w-[160]"
                 src="/img/logo.svg"
                 alt="Relaxure Living Logo"
               />
@@ -609,98 +779,67 @@ export const NavBarWrapper = ({
 
         {/* Mobile Navigation */}
         <nav
-          className="xl:hidden flex flex-col w-full items-center justify-center relative px-4 sm:px-6 lg:px-8"
+          className="lg:hidden flex flex-col w-full items-center justify-center relative"
           role="navigation"
           aria-label="Mobile navigation"
         >
-          <div className="w-full max-w-[1074px] mx-auto">
-            <div
-              className={`
-                w-full h-[60px] flex items-center justify-between bg-[#1a1a1a]
-                rounded-[30px] border border-solid border-[#333333] backdrop-blur-[27.6px] 
-                backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
-                px-4 sm:px-6
-              `}
-            >
+          <div className="w-full">
+            <div className="w-full h-[60px] flex items-center justify-between bg-[#140E02] px-6">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white flex-grow-0 flex-shrink-0 basis-auto "
+                aria-label={
+                  isMenuOpen ? "Close mobile menu" : "Open mobile menu"
+                }
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-menu"
+              >
+                {isMenuOpen ? <X /> : <Menu />}
+              </button>
               <Link
                 href="/"
-                className="flex items-center gap-2"
+                className="flex items-center justify-center w-full"
                 aria-label="Relaxure Homepage"
               >
-                <div
-                  className="w-6 h-6 bg-[#F6AF1F] rounded-sm transform rotate-45"
-                  aria-hidden="true"
-                ></div>
-                <span className="text-white text-lg font-bold">Relaxure</span>
+                <img
+                  className="w-[100px]"
+                  src="/img/logo.svg"
+                  alt="Relaxure Living Logo"
+                />
               </Link>
 
-              <div className="flex items-center justify-end gap-2 relative">
-                <div className="flex items-center justify-center gap-2.5 px-0 py-2.5 relative">
-                  <a
-                    href="/cart"
-                    className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-white text-base tracking-[0] leading-6"
-                    aria-label={`Shopping cart with ${
-                      hasItemsInCart ? cart?.items?.length || 1 : 0
-                    } items`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <div className="relative">
-                        <img
-                          className="w-[30px]"
-                          src={
-                            hasItemsInCart
-                              ? "/img/mobile-cart-with-products.png"
-                              : "/img/mobile-cart.png"
-                          }
-                          alt="Shopping cart"
-                        />
-                        {hasItemsInCart && (
-                          <span
-                            className="absolute -top-1 -right-1 bg-[#F6AF1F] text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
-                            aria-label={`${
-                              cart?.items?.length || 1
-                            } items in cart`}
-                          >
-                            {cart?.items?.length || 1}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-2 text-white"
-                  aria-label={
-                    isMenuOpen ? "Close mobile menu" : "Open mobile menu"
-                  }
-                  aria-expanded={isMenuOpen}
-                  aria-controls="mobile-menu"
+              <div className="flex items-center justify-center px-0 py-2.5 relative">
+                <a
+                  href="/cart"
+                  className="flex-grow-0 flex-shrink-0 basis-auto relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-base tracking-[0] leading-6 text-white"
+                  aria-label={`Shopping cart with ${
+                    hasItemsInCart ? cart?.items?.length || 1 : 0
+                  } items`}
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    {isMenuOpen ? (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M6 18L18 6M6 6l12 12"
+                  <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <img
+                        className="w-6 h-6"
+                        src={
+                          hasItemsInCart
+                            ? "/img/v2-icon-cart.svg"
+                            : "/img/v2-icon-cart.svg"
+                        }
+                        alt="Shopping cart"
                       />
-                    ) : (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M4 12h16M4 18h16"
-                      />
-                    )}
-                  </svg>
-                </button>
+                      {hasItemsInCart && (
+                        <span
+                          className="absolute -top-1 -right-1 bg-[#F6AF1F] text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+                          aria-label={`${
+                            cart?.items?.length || 1
+                          } items in cart`}
+                        >
+                          {cart?.items?.length || 1}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </a>
               </div>
             </div>
 
@@ -708,29 +847,25 @@ export const NavBarWrapper = ({
             {isMenuOpen && (
               <div
                 id="mobile-menu"
-                className={`
-                  w-full mt-2 bg-[#1a1a1a] rounded-[30px] border border-solid border-[#333333] 
-                  backdrop-blur-[27.6px] backdrop-brightness-[100%] 
-                  [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
-                `}
+                className="bg-[#EFEEEB]"
                 role="menu"
                 aria-label="Mobile menu options"
               >
-                <ul className="flex flex-col items-start py-4 px-4 sm:px-6 space-y-4">
+                <ul className="flex flex-col items-start w-full py-5 px-6">
                   {/* 动态菜单项 */}
                   {menuData?.data.menu_item.map((item) => (
-                    <li key={item.id} role="none">
+                    <li key={item.id} role="none" className={"w-full mb-5"}>
                       {renderMenuItem(item, true)}
                     </li>
                   ))}
 
-                  <li role="none">
+                  <li role="none" className={"w-full mt-10"}>
                     <a
                       href="/#contact"
                       onClick={(e) => {
                         setIsMenuOpen(false)
                       }}
-                      className="w-full flex justify-start"
+                      className="w-full flex justify-center"
                       role="menuitem"
                     >
                       <Component text="Contact Us" />
