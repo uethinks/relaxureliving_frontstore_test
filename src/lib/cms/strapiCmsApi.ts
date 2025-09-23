@@ -162,6 +162,15 @@ const v2GuideCardsPopulate = {
   },
 }
 
+const v2TimelineSectionPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
+
 // 定义 API URL
 const homePagePopulate = {
   populate: {
@@ -246,7 +255,8 @@ const customPergolaPopulate = {
         "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
         "blocks.v2-faq-section": v2FaqSectionPopulate,
         "blocks.v2-feature-cards": v2FeatureCardsPopulate,
-        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
+        "blocks.v2-guide-cards-section": v2GuideCardsPopulate,
+        "blocks.v2-timeline-section": v2TimelineSectionPopulate,
       },
     },
   },

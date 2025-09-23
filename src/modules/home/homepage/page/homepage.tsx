@@ -25,7 +25,7 @@ import V2TestimonialsSection from "@/components/V2TestimonialsSection"
 import { V2FAQSection } from "@/components/V2FAQSection"
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
 import V2OccasionsSection from "@/components/V2OccasionsSection"
-import V2GuideCardsSection from "@/components/V2GudieCardSection"
+import V2GuideCardsSection from "@/components/V2GuideCardSection"
 import V2SectionRenderer from "@/components/V2SectionRenderer"
 
 // 配置静态生成

@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import V2Button from "./V2Button"
+import remarkGfm from "remark-gfm"
+import Markdown from "react-markdown"
 
 // 添加IconData接口
 interface IconData {
@@ -15,6 +17,7 @@ interface GuideItem {
   id: number
   title: string
   description: string | null
+  description2: string | null
   icon: IconData | null
 }
 
@@ -53,7 +56,7 @@ export default function PergolaGuide({ data }: PergolaGuideProps) {
   console.log("PergolaGuide data", data)
   return (
     <div className={`${getBackgroundColor(data.backgroundColor)} py-24 w-full`}>
-      <div className="max-w-[1074px] mx-auto"> 
+      <div className="max-w-[1074px] mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2f2a1e] mb-4 sm:mb-6 text-balance">
@@ -102,10 +105,16 @@ export default function PergolaGuide({ data }: PergolaGuideProps) {
                           {/* 默认图标fallback */}
                         </div>
                         <div className="flex-1 min-w-0 flex items-center">
-                          {item.title && (
-                            <p className="text-[#8c877c] text-sm leading-tight">
-                              {item.title}
-                            </p>
+                          {item.description2 && (
+                            <div className="text-[#8c877c] text-sm leading-tight">
+                              <Markdown
+                                remarkPlugins={[remarkGfm]}
+                                // rehypePlugins={[rehypeRaw]}
+                                remarkRehypeOptions={{ passThrough: ["link"] }}
+                              >
+                                {item.description2}
+                              </Markdown>
+                            </div>
                           )}
                         </div>
                       </div>
@@ -115,13 +124,14 @@ export default function PergolaGuide({ data }: PergolaGuideProps) {
               </CardContent>
             </Card>
           ))}
-          
         </div>
 
         {/* CTA Button */}
-        <div className="text-center">
-          <V2Button data={data.button as any} />
-        </div>
+        {data.button && (
+          <div className="text-center">
+            <V2Button data={data.button as any} />
+          </div>
+        )}
       </div>
     </div>
   )
