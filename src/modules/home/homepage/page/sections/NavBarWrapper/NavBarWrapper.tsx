@@ -687,7 +687,7 @@ export const NavBarWrapper = ({
         {/* Main Navigation Bar - Dark Brown/Black Background */}
         <nav
           className={`
-            hidden xl:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 
+            hidden lg:flex flex-col w-full h-[75px] items-center justify-center gap-2.5 p-5 
             relative bg-[#140E02] backdrop-blur-[27.6px] backdrop-brightness-[100%] 
             [-webkit-backdrop-filter:blur(27.6px)_brightness(100%)]
           `}
