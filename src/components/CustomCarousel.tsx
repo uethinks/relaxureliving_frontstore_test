@@ -92,7 +92,6 @@ export function CustomCarousel({
                 "absolute z-10 top-0 bottom-0 left-0 m-auto w-8 h-8 flex items-center justify-center bg-[#FFBF3C]"
               }
               onClick={() => {
-                console.log("==== prev ====")
                 swiperRef.current.slidePrev()
               }}
             >
@@ -103,7 +102,6 @@ export function CustomCarousel({
                 "absolute z-10 top-0 bottom-0 right-0 m-auto w-8 h-8 flex items-center justify-center bg-[#FFBF3C]"
               }
               onClick={() => {
-                console.log("==== next ====")
                 swiperRef.current.slideNext()
               }}
             >

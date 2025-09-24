@@ -15,7 +15,7 @@ import V2PressSection from "@/components/V2PressSection"
 import { V2PromoBanner } from "@/components/V2PromoBanner"
 import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
 import V2TestimonialsSection from "@/components/V2TestimonialsSection"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { V2TimelineSection } from "./V2TimelineSection"
 
 interface Section {
@@ -54,6 +54,24 @@ export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({
   showContactUs = true,
   className = "flex flex-col w-full items-start justify-center",
 }) => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024)
+    }
+
+    // 初始设置
+    handleResize()
+
+    // 监听窗口大小变化
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
   const renderSection = (section: Section) => {
     const key = `${section.id}-${section.__component}`
     const Component =
@@ -64,7 +82,7 @@ export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({
       return null
     }
 
-    return <Component key={key} data={section as any} />
+    return <Component key={key} data={section as any} isMobile={isMobile} />
   }
 
   return (

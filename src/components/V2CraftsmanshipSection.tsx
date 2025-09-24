@@ -1,6 +1,6 @@
 import type { CraftsmanshipData } from "@/types/craftsmanship"
 import { getStrapiUrl } from "@lib/utils"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { CustomCarousel } from "./CustomCarousel"
@@ -8,27 +8,14 @@ import { ImageAccordion } from "./ImageAccordion"
 
 interface CraftsmanshipSectionProps {
   data: CraftsmanshipData
+  isMobile: boolean
 }
 
-export function V2CraftsmanshipSection({ data }: CraftsmanshipSectionProps) {
-  const [isMobile, setIsMobile] = useState(false)
+export function V2CraftsmanshipSection({
+  data,
+  isMobile = false,
+}: CraftsmanshipSectionProps) {
   const [currentPage, setCurrentPage] = useState(0)
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024)
-    }
-
-    // 初始设置
-    handleResize()
-
-    // 监听窗口大小变化
-    window.addEventListener("resize", handleResize)
-
-    return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [])
 
   return (
     <section className="w-full bg-white" aria-labelledby="craftsmanship-title">
