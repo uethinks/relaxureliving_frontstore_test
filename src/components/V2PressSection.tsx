@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
-import Link from "next/link"
-import Image from "next/image"
 import { getStrapiUrl } from "@lib/utils"
+import Image from "next/image"
 import V2Button from "./V2Button"
 
 interface ImageFormat {
@@ -131,9 +130,7 @@ export default function V2PressSection({ data }: V2PressSectionProps) {
                       <div className="flex-shrink-0 ">
                         <Image
                           unoptimized
-                          src={getStrapiUrl(
-                            testimonial.image.url
-                          )}
+                          src={getStrapiUrl(testimonial.image.url)}
                           alt={
                             testimonial.image.alternativeText ||
                             testimonial.title
