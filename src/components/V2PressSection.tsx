@@ -134,7 +134,11 @@ export default function V2PressSection({ data }: V2PressSectionProps) {
           </h2>
 
           <div className="w-full flex flex-nowrap gap-16 justify-center">
-            <CustomCarousel slidesPerView={slidesPerView} data={carouselData} />
+            <CustomCarousel
+              showNav={false}
+              slidesPerView={slidesPerView}
+              data={carouselData}
+            />
           </div>
         </div>
       </section>
