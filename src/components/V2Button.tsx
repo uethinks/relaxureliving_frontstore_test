@@ -54,7 +54,7 @@ export const V2Button: React.FC<V2ButtonProps> = ({
   onClick,
   ...props
 }) => {
-  const { type, size, text, link, icon, iconHidden } = data
+  const { type, size = "Large", text, link, icon, iconHidden } = data
   const router = useRouter()
 
   // Determine if link is external
