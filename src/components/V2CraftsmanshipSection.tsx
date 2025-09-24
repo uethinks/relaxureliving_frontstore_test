@@ -8,7 +8,7 @@ import { ImageAccordion } from "./ImageAccordion"
 
 interface CraftsmanshipSectionProps {
   data: CraftsmanshipData
-  isMobile: boolean
+  isMobile?: boolean
 }
 
 export function V2CraftsmanshipSection({

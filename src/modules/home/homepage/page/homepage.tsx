@@ -1,4 +1,3 @@
-import { V2ContactUsSection } from "@/components/V2ContactUsSection"
 import V2SectionRenderer from "@/components/V2SectionRenderer"
 import { getHomePage } from "@lib/cms/strapiCmsApi"
 import { NavBarWrapper } from "./sections/NavBarWrapper"
@@ -45,7 +44,6 @@ export default async function Homepage() {
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper isHomePage={true} />
         <V2SectionRenderer sections={data.sections || []} />
-        <V2ContactUsSection />
       </div>
       <FooterDark isHomepage={true} />
     </>
