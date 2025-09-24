@@ -340,6 +340,7 @@ const heaterPopulate = {
     productInformations: "*",
     productImages: {
       fields: ["*"],
+      sort: ["createdAt:desc"] 
     },
     listImage: {
       fields: ["*"],
@@ -369,6 +370,7 @@ const shadesPopulate = {
     productInformations: "*",
     productImages: {
       fields: ["*"],
+      sort: ["createdAt:desc"] 
     },
     listImage: {
       fields: ["*"],
@@ -398,6 +400,7 @@ const sampleKitPopulate = {
   populate: {
     productImages: {
       fields: ["*"],
+      sort: ["createdAt:desc"] 
     }, 
     sections: {
       on: {
@@ -425,7 +428,7 @@ const glassdoorPopulate = {
     productInformations: "*",
     productImages: {
       fields: ["*"],
-      sort: ["createdAt:asc"] 
+      sort: ["createdAt:desc"] 
     },
     listImage: {
       fields: ["*"],
