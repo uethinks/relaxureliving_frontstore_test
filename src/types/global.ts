@@ -44,6 +44,8 @@ export type Image = {
       url: string;
     };
   };
+  createdAt: string;
+  updatedAt: string;
 }
 // 定义 HeroProps 类型
 export type HeroProps = {

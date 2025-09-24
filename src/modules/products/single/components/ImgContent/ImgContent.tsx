@@ -45,7 +45,8 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
     ].filter(Boolean)
 
     return (
-      productImages?.sort((a, b) => a.id - b.id).filter((image) => {
+      //productImages?.sort((a, b) => a.id - b.id).filter((image) => {
+      productImages?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).filter((image) => {
         if (!image.caption) {
           return true
         }
