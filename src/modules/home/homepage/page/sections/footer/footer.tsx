@@ -21,7 +21,7 @@ function NavigationLinks({
 }) {
   return (
     <div>
-      <h3 className="text-sm lg:text-base text-[#fff] font-semibold mb-5">
+      <h3 className="text-sm lg:text-base lg:leading-5 text-[#fff] font-semibold mb-5">
         {title}
       </h3>
       <div className="ml-3">
@@ -29,7 +29,7 @@ function NavigationLinks({
           <Link
             key={link.text}
             href={link.href}
-            className="block text-[#EFEEEB] hover:text-white transition-colors text-base mb-[10px]"
+            className="block text-[#EFEEEB] hover:text-white transition-colors text-base mb-[9px]"
           >
             {link.text}
           </Link>
@@ -99,15 +99,17 @@ function FeaturesSection() {
 
 function PaymentMethods() {
   const paymentMethods = [
-    { src: "/img/American_Express.png", alt: "American Express" },
-    { src: "/img/apple_pay.png", alt: "Apple Pay" },
-    { src: "/img/Diners_Club.png", alt: "Diners Club" },
-    { src: "/img/Discover.png", alt: "Discover" },
-    { src: "/img/google_pay.png", alt: "Google Pay" },
-    { src: "/img/master.png", alt: "Mastercard" },
-    { src: "/img/visa.png", alt: "Visa" },
-    { src: "/img/Klarna.png", alt: "Klarna" },
-    { src: "/img/afterpay.png", alt: "Afterpay" },
+    { src: "/img/payments/master.png", alt: "Mastercard" },
+    { src: "/img/payments/maestro.png", alt: "Maestro" },
+    { src: "/img/payments/jcb.png", alt: "JCB" },
+    { src: "/img/payments/american_express.png", alt: "American Express" },
+    { src: "/img/payments/diners_club.png", alt: "Diners Club" },
+    { src: "/img/payments/discover.png", alt: "Discover" },
+    { src: "/img/payments/visa.png", alt: "Visa" },
+    { src: "/img/payments/klarna.png", alt: "Klarna" },
+    { src: "/img/payments/afterpay.png", alt: "Afterpay" },
+    { src: "/img/payments/apple_pay.png", alt: "Apple Pay" },
+    { src: "/img/payments/google_pay.png", alt: "Google Pay" },
   ]
 
   return (
@@ -254,7 +256,7 @@ export const FooterDark = ({
           <div className={"flex gap-y-[30px] lg:gap-6 flex-wrap"}>
             <div
               className={
-                "grid grid-cols-2 lg:grid-cols-1 flex-grow-0 flex-shrink-0 basis-auto gap-y-10 gap-x-2 w-full lg:w-40"
+                "grid grid-cols-2 lg:grid-cols-1 flex-grow-0 flex-shrink-0 basis-auto gap-y-10 gap-x-2 w-full lg:w-auto"
               }
             >
               <NavigationLinks title="Company" links={companyLinks} />
