@@ -21,7 +21,9 @@ function NavigationLinks({
 }) {
   return (
     <div>
-      <h3 className="text-base text-[#fff] font-semibold mb-5">{title}</h3>
+      <h3 className="text-sm lg:text-base text-[#fff] font-semibold mb-5">
+        {title}
+      </h3>
       <div className="ml-3">
         {links.map((link) => (
           <Link
@@ -47,16 +49,18 @@ function FeatureItem({
   description: string
 }) {
   return (
-    <div className="flex gap-4 mb-10">
-      <div className={`w-[56px] h-[56px] flex-grow-0 flex-shrink-0 basis-auto`}>
+    <div className="flex gap-4 mb-5 lg:mb-10">
+      <div
+        className={`w-12 h-12 lg:w-[56px] lg:h-[56px] flex-grow-0 flex-shrink-0 basis-auto`}
+      >
         <Icon className="w-full h-full" />
       </div>
       <div>
-        <h4 className="font-semibold mb-[10px] sm:text-base text-[#fff]">
+        <h4 className="font-semibold mb-1 lg:mb-[10px] text-sm lg:text-base text-[#fff]">
           {title}
         </h4>
         <div
-          className="lg:text-sm text-[#8c877c]"
+          className="text-sm text-[#8c877c]"
           dangerouslySetInnerHTML={{ __html: description }}
         />
       </div>
@@ -107,13 +111,13 @@ function PaymentMethods() {
   ]
 
   return (
-    <div className="flex gap-1 sm:gap-2 flex-wrap justify-center sm:justify-end">
+    <div className="grid grid-cols-6 gap-2 lg:flex lg:justify-end">
       {paymentMethods.map((method) => (
         <img
           key={method.alt}
           src={method.src}
           alt={method.alt}
-          className="h-6 sm:h-8 bg-white rounded"
+          className="lg:w-[41px] lg:h-[25px] bg-white rounded"
         />
       ))}
     </div>
@@ -147,11 +151,11 @@ export const FooterDark = ({
   }, [])
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#140e02] text-white lg:h-[860px]">
-      <div className="flex justify-between w-[1074px] mx-auto mt-[97px]">
-        <div className="flex flex-col w-[342px] flex-grow-0 flex-shrink-0 basis-auto">
+    <div className="relative w-full overflow-hidden bg-[#140e02] text-white px-6 pt-10 pb-20 lg:h-[860px] lg:px-0 lg:pt-[97px]">
+      <div className="flex justify-between w-full lg:w-[1074px] mx-auto flex-wrap">
+        <div className="flex flex-col w-full lg:w-[342px] flex-grow-0 flex-shrink-0 basis-auto">
           <img
-            className="w-[103px] lg:w-[160px] mb-[60px]"
+            className="w-[103px] lg:w-[160px] mb-[52px] lg:mb-[60px]"
             src="/img/logo.svg"
             alt=""
           />
@@ -192,7 +196,7 @@ export const FooterDark = ({
             </a>
           </div>
 
-          <div className="flex flex-col gap-5 text-sm lg:text-base text-[#fff]">
+          <div className="flex flex-col gap-5 text-sm lg:text-base text-[#fff] mb-10 lg:m-0">
             <div className="flex items-center gap-2">
               <img
                 src={"/img/icon-contact-email.svg"}
@@ -213,11 +217,13 @@ export const FooterDark = ({
             </div>
           </div>
 
-          <div className="text-sm text-white mt-auto">© 2025 Relaxure</div>
+          <div className="hidden lg:block text-sm text-white mt-auto">
+            © 2025 Relaxure
+          </div>
         </div>
 
         <div>
-          <div className="flex items-center gap-6 flex-wrap mb-[57px]">
+          <div className="flex items-center gap-x-6 gap-y-[10px] lg:gap-y-6 flex-wrap mb-[57px]">
             <span className="text-lg sm:text-xl font-semibold">Excellent</span>
             <div className={"flex flex-col items-center"}>
               <div className="flex">
@@ -236,7 +242,7 @@ export const FooterDark = ({
                 TrustScore 4.9 | 15,821 Reviews
               </span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center w-full lg:w-auto">
               <div className="lg:text-xl font-bold text-[#fff] mr-1">
                 15,000+
               </div>
@@ -245,21 +251,24 @@ export const FooterDark = ({
               </div>
             </div>
           </div>
-          <div className={"flex gap-6"}>
+          <div className={"flex gap-y-[30px] lg:gap-6 flex-wrap"}>
             <div
               className={
-                "flex flex-col w-40 flex-grow-0 flex-shrink-0 basis-auto gap-y-10"
+                "grid grid-cols-2 lg:grid-cols-1 flex-grow-0 flex-shrink-0 basis-auto gap-y-10 gap-x-2 w-full lg:w-40"
               }
             >
               <NavigationLinks title="Company" links={companyLinks} />
               <NavigationLinks title="Conditions" links={conditionLinks} />
             </div>
-            <div className={"w-[340px]"}>
+            <div className={"w-full lg:w-[340px]"}>
               <FeaturesSection />
             </div>
           </div>
-          <div className={"mt-[95px]"}>
+          <div className={"mt-10 lg:mt-[95px]"}>
             <PaymentMethods />
+          </div>
+          <div className="lg:hidden text-sm text-white mt-10">
+            © 2025 Relaxure
           </div>
         </div>
       </div>
