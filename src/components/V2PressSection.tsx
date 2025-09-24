@@ -1,7 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card"
 import { getStrapiUrl } from "@lib/utils"
-import Image from "next/image"
-import V2Button from "./V2Button"
+import { useEffect, useState } from "react"
+import { CustomCarousel } from "./CustomCarousel"
+import V2PressItem from "./V2PressItem"
 
 interface ImageFormat {
   ext: string
@@ -62,49 +62,68 @@ interface V2PressSectionProps {
 }
 
 export default function V2PressSection({ data }: V2PressSectionProps) {
-  const testimonials = data?.items || [
-    {
-      id: 1,
-      title: "Media praises the innovative features of our software...",
-      description: "Media praises the innovative features of our software...",
-      link: "https://relaxureliving.com/",
-    },
-    {
-      id: 2,
-      title:
-        "Users commend the seamless experience provided by our platform...",
-      description:
-        "Users commend the seamless experience provided by our platform...",
-      link: "https://relaxureliving.com/",
-    },
-    {
-      id: 3,
-      title:
-        "Users commend the seamless experience provided by our platform...",
-      description:
-        "Users commend the seamless experience provided by our platform...",
-      link: "https://relaxureliving.com/",
-    },
-  ]
+  const testimonials = data?.items || []
+  const [carouselData, setCarouselData] = useState<React.ReactNode[]>([])
+  const [slidesPerView, setSlidesPerView] = useState(1)
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Press Coverage and User Testimonials",
-    description:
-      "Media coverage and user testimonials about our software platform",
-    itemListElement: testimonials.map((testimonial, index) => ({
-      "@type": "Review",
-      position: index + 1,
-      name: testimonial.title,
-      reviewBody: testimonial.description,
-      author: {
-        "@type": "Organization",
-        name: "USA TODAY",
-      },
-      url: testimonial.link,
-    })),
-  }
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 1024
+
+      if (isMobile) {
+        // 屏幕宽度小于1024px时，将两个item包裹在一个div中
+        const groupedData: React.ReactNode[] = []
+        for (let i = 0; i < testimonials.length; i += 2) {
+          const pair = testimonials.slice(i, i + 2)
+          groupedData.push(
+            <div key={i} className="flex flex-col gap-4">
+              {pair.map((testimonial, index) => (
+                <V2PressItem
+                  key={i + index}
+                  item={{
+                    url: testimonial.image
+                      ? getStrapiUrl(testimonial.image.url)
+                      : "",
+                    title: testimonial.title,
+                    link: testimonial.link,
+                  }}
+                />
+              ))}
+            </div>
+          )
+        }
+        setCarouselData(groupedData)
+        setSlidesPerView(1)
+      } else {
+        // 屏幕宽度大于等于1024px时，每个item单独包裹在一个div中
+        const singleData = testimonials.map((testimonial, key) => (
+          <div key={key}>
+            <V2PressItem
+              item={{
+                url: testimonial.image
+                  ? getStrapiUrl(testimonial.image.url)
+                  : "",
+                title: testimonial.title,
+                link: testimonial.link,
+              }}
+            />
+          </div>
+        ))
+        setCarouselData(singleData)
+        setSlidesPerView(3)
+      }
+    }
+
+    // 初始设置
+    handleResize()
+
+    // 监听窗口大小变化
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [testimonials])
 
   return (
     <>
@@ -115,54 +134,7 @@ export default function V2PressSection({ data }: V2PressSectionProps) {
           </h2>
 
           <div className="w-full flex flex-nowrap gap-16 justify-center">
-            {testimonials.map((testimonial) => (
-              <Card
-                key={testimonial.id}
-                className="border-none shadow-none flex-1"
-                style={{
-                  background: "linear-gradient(270deg, #FFF 0%, #EFEEEB 100%)",
-                }}
-              >
-                <CardContent className="p-5">
-                  <div className="flex items-stretch space-x-4">
-                    {/* Image Section */}
-                    {testimonial.image && (
-                      <div className="flex-shrink-0 ">
-                        <Image
-                          unoptimized
-                          src={getStrapiUrl(testimonial.image.url)}
-                          alt={
-                            testimonial.image.alternativeText ||
-                            testimonial.title
-                          }
-                          width={150}
-                          height={150}
-                          className="w-[150px] h-[150px] object-cover"
-                        />
-                      </div>
-                    )}
-
-                    {/* Content Section */}
-                    <div className="flex-1 min-w-0 flex flex-col items-start">
-                      <p className="text-[#2f2a1e] text-sm sm:text-base leading-relaxed font-medium flex-1">
-                        {testimonial.description}
-                      </p>
-
-                      <V2Button
-                        data={
-                          {
-                            text: "Read More",
-                            link: testimonial.link,
-                            type: "Link",
-                            size: "Small",
-                          } as any
-                        }
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            <CustomCarousel slidesPerView={slidesPerView} data={carouselData} />
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 "use client"
 
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
+import V2PressItem from "@/components/V2PressItem"
 import { getPress } from "@lib/cms/strapiCmsApi"
 import { getStrapiUrl } from "@lib/utils"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
@@ -58,53 +59,14 @@ export default function PagePress() {
                 data.pages.map((page, pageNum) => (
                   <React.Fragment key={pageNum}>
                     {page.data.map((press: any, pressKey: number) => (
-                      <div
-                        className={
-                          "flex items-center gap-x-5 p-5 flex-grow-1 flex-shrink-1 basis-auto w-[464px]"
-                        }
-                        style={{
-                          background:
-                            "linear-gradient(270deg, #FFFFFF 0%, #EFEEEB 100%)",
-                        }}
+                      <V2PressItem
                         key={pressKey}
-                      >
-                        <div
-                          className={
-                            "w-40 h-40 flex items-center flex-grow-0 flex-shrink-0 basis-auto"
-                          }
-                        >
-                          <img
-                            src={
-                              press.image ? getStrapiUrl(press.image.url) : ""
-                            }
-                            alt={press.title}
-                            className="object-contain w-full"
-                          />
-                        </div>
-                        <div
-                          className={
-                            "flex flex-col justify-between h-[107px] pr-5"
-                          }
-                        >
-                          <p
-                            className={
-                              "text-[#2F2A1E] text-base font-semibold line-clamp-3"
-                            }
-                          >
-                            <span className={"text-[#FFBF3C]"}>"</span>
-                            {press.title}
-                            <span className={"text-[#FFBF3C]"}>"</span>
-                          </p>
-                          <a
-                            href={press.link}
-                            className={
-                              "underline text-[#FFBF3C] text-xs font-semibold"
-                            }
-                          >
-                            Read more
-                          </a>
-                        </div>
-                      </div>
+                        item={{
+                          url: press.image ? getStrapiUrl(press.image.url) : "",
+                          title: press.title,
+                          link: press.link,
+                        }}
+                      />
                     ))}
                   </React.Fragment>
                 ))}
