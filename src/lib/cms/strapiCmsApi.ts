@@ -425,6 +425,7 @@ const glassdoorPopulate = {
     productInformations: "*",
     productImages: {
       fields: ["*"],
+      sort: ["createdAt:asc"] 
     },
     listImage: {
       fields: ["*"],

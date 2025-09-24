@@ -188,7 +188,7 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
 
   // 获取颜色选项
   const glassdoorColors = glassdoorProduct?.options?.find(
-    (option) => option.title === "Color"
+    (option) => option.title === "Frame Color"
   )
   const sortedColors = glassdoorColors?.values?.sort((a, b) =>
     a.value.localeCompare(b.value)

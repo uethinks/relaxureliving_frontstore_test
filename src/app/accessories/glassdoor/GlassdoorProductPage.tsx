@@ -35,21 +35,7 @@ const GlassdoorProductPage = ({
   )
   const [totalPrice, setTotalPrice] = useState<number>(0)
   const [isLoading, setIsLoading] = useState(false)
-
-  // 获取颜色选项
-  const glassdoorColors = glassdoorProduct?.options?.find(
-    (option) => option.title === "Color"
-  )
-  const sortedColors = glassdoorColors?.values?.sort((a, b) =>
-    a.value.localeCompare(b.value)
-  )
-
-  // 初始化默认值
-  useEffect(() => {
-    if (sortedColors && sortedColors.length > 0 && !selectedColor) {
-      setSelectedColor(sortedColors[0])
-    }
-  }, [sortedColors, selectedColor])
+ 
 
   // 更新选中的glassdoor和价格
   useEffect(() => {
