@@ -60,7 +60,7 @@ interface V2OccasionsSectionData {
 
 interface V2OccasionsSectionProps {
   data: V2OccasionsSectionData
-  isMobile: boolean
+  isMobile?: boolean
 }
 
 export default function V2OccasionsSection({

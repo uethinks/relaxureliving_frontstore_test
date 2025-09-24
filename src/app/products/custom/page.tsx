@@ -58,7 +58,6 @@ export default async function ProductCustomPage() {
         <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
           <NavBarWrapper isHomePage={true} />
           <V2SectionRenderer sections={pergolaData.sections || []} />
-          <V2ContactUsSection />
         </div>
         <FooterDark isHomepage={false} />
       </>

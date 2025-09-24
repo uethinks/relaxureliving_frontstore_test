@@ -170,28 +170,31 @@ const v2TimelineSectionPopulate = {
   },
 }
 
+const blocksAllPopulate = {
+  // using a detailed population strategy to explicitly define what you want
+  "blocks.v2-hero-banner": v2HeroBannerPopulate,
+  "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
+  "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
+  "blocks.v2-press-slider": v2PressSliderPopulate,
+  "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
+  "blocks.v2-occasions": v2OccasionsPopulate,
+  "blocks.v2-rain-resistance": v2RainResistancePopulate,
+  "blocks.v2-feature-grid": v2FeatureGridPopulate,
+  "blocks.v2-promo-banner": v2PromoBannerPopulate,
+  "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
+  "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
+  "blocks.v2-faq-section": v2FaqSectionPopulate,
+  "blocks.v2-feature-cards": v2FeatureCardsPopulate,
+  "blocks.v2-guide-cards-section": v2GuideCardsPopulate,
+  "blocks.v2-timeline-section": v2TimelineSectionPopulate,
+}
 
 // 定义 API URL
 const homePagePopulate = {
   populate: {
     sections: {
       // asking to populate the blocks dynamic zone
-      on: {
-        // using a detailed population strategy to explicitly define what you want
-        "blocks.v2-hero-banner": v2HeroBannerPopulate,
-        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
-        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
-        "blocks.v2-press-slider": v2PressSliderPopulate,
-        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
-        "blocks.v2-occasions": v2OccasionsPopulate,
-        "blocks.v2-rain-resistance": v2RainResistancePopulate,
-        "blocks.v2-feature-grid": v2FeatureGridPopulate,
-        "blocks.v2-promo-banner": v2PromoBannerPopulate,
-        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
-        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
-        "blocks.v2-faq-section": v2FaqSectionPopulate,
-        "blocks.v2-guide-cards-section": v2GuideCardsPopulate,
-      },
+      on: blocksAllPopulate,
     },
   },
 }
@@ -218,22 +221,7 @@ const standardPergolaPopulate = {
       },
     },
     descriptionSections: {
-      on: {
-        "blocks.v2-hero-banner": v2HeroBannerPopulate,
-        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
-        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
-        "blocks.v2-press-slider": v2PressSliderPopulate,
-        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
-        "blocks.v2-occasions": v2OccasionsPopulate,
-        "blocks.v2-rain-resistance": v2RainResistancePopulate,
-        "blocks.v2-feature-grid": v2FeatureGridPopulate,
-        "blocks.v2-promo-banner": v2PromoBannerPopulate,
-        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
-        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
-        "blocks.v2-faq-section": v2FaqSectionPopulate,
-        "blocks.v2-feature-cards": v2FeatureCardsPopulate,
-        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
-      },
+      on: blocksAllPopulate,
     },
   },
 }
@@ -241,23 +229,7 @@ const standardPergolaPopulate = {
 const customPergolaPopulate = {
   populate: {
     sections: {
-      on: {
-        "blocks.v2-hero-banner": v2HeroBannerPopulate,
-        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
-        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
-        "blocks.v2-press-slider": v2PressSliderPopulate,
-        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
-        "blocks.v2-occasions": v2OccasionsPopulate,
-        "blocks.v2-rain-resistance": v2RainResistancePopulate,
-        "blocks.v2-feature-grid": v2FeatureGridPopulate,
-        "blocks.v2-promo-banner": v2PromoBannerPopulate,
-        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
-        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
-        "blocks.v2-faq-section": v2FaqSectionPopulate,
-        "blocks.v2-feature-cards": v2FeatureCardsPopulate,
-        "blocks.v2-guide-cards-section": v2GuideCardsPopulate,
-        "blocks.v2-timeline-section": v2TimelineSectionPopulate,
-      },
+      on: blocksAllPopulate,
     },
   },
 }
@@ -346,22 +318,7 @@ const heaterPopulate = {
       fields: ["*"],
     },
     sections: {
-      on: {
-        "blocks.v2-hero-banner": v2HeroBannerPopulate,
-        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
-        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
-        "blocks.v2-press-slider": v2PressSliderPopulate,
-        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
-        "blocks.v2-occasions": v2OccasionsPopulate,
-        "blocks.v2-rain-resistance": v2RainResistancePopulate,
-        "blocks.v2-feature-grid": v2FeatureGridPopulate,
-        "blocks.v2-promo-banner": v2PromoBannerPopulate,
-        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
-        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
-        "blocks.v2-faq-section": v2FaqSectionPopulate,
-        "blocks.v2-feature-cards": v2FeatureCardsPopulate,
-        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
-      },
+      on: blocksAllPopulate,
     },
   },
 }
@@ -376,22 +333,7 @@ const shadesPopulate = {
       fields: ["*"],
     },
     sections: {
-      on: {
-        "blocks.v2-hero-banner": v2HeroBannerPopulate,
-        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
-        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
-        "blocks.v2-press-slider": v2PressSliderPopulate,
-        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
-        "blocks.v2-occasions": v2OccasionsPopulate,
-        "blocks.v2-rain-resistance": v2RainResistancePopulate,
-        "blocks.v2-feature-grid": v2FeatureGridPopulate,
-        "blocks.v2-promo-banner": v2PromoBannerPopulate,
-        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
-        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
-        "blocks.v2-faq-section": v2FaqSectionPopulate,
-        "blocks.v2-feature-cards": v2FeatureCardsPopulate,
-        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
-      },
+      on: blocksAllPopulate,
     },
   },
 }
@@ -403,22 +345,7 @@ const sampleKitPopulate = {
       sort: ["createdAt:desc"] 
     }, 
     sections: {
-      on: {
-        "blocks.v2-hero-banner": v2HeroBannerPopulate,
-        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
-        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
-        "blocks.v2-press-slider": v2PressSliderPopulate,
-        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
-        "blocks.v2-occasions": v2OccasionsPopulate,
-        "blocks.v2-rain-resistance": v2RainResistancePopulate,
-        "blocks.v2-feature-grid": v2FeatureGridPopulate,
-        "blocks.v2-promo-banner": v2PromoBannerPopulate,
-        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
-        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
-        "blocks.v2-faq-section": v2FaqSectionPopulate,
-        "blocks.v2-feature-cards": v2FeatureCardsPopulate,
-        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
-      },
+      on: blocksAllPopulate,
     },
   },
 }
@@ -434,22 +361,7 @@ const glassdoorPopulate = {
       fields: ["*"],
     },
     sections: {
-      on: {
-        "blocks.v2-hero-banner": v2HeroBannerPopulate,
-        "blocks.v2-service-snapshots": v2ServiceSnapshotsPopulate,
-        "blocks.v2-hero-product-section": v2HeroProductSectionPopulate,
-        "blocks.v2-press-slider": v2PressSliderPopulate,
-        "blocks.v2-craftsmanship": v2CraftsmanshipPopulate,
-        "blocks.v2-occasions": v2OccasionsPopulate,
-        "blocks.v2-rain-resistance": v2RainResistancePopulate,
-        "blocks.v2-feature-grid": v2FeatureGridPopulate,
-        "blocks.v2-promo-banner": v2PromoBannerPopulate,
-        "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
-        "blocks.v2-testimonials-section": v2TestimonialsSectionPopulate,
-        "blocks.v2-faq-section": v2FaqSectionPopulate,
-        "blocks.v2-feature-cards": v2FeatureCardsPopulate,
-        // "blocks.v2-guide-cards": v2GuideCardsPopulate,
-      },
+      on: blocksAllPopulate,
     },
   },
 }

@@ -48,7 +48,7 @@ export function V2TimelineSection({ data }: V2TimelineSectionProps) {
                   <div className="text-[32px] font-bold text-[#2F2A1E] mb-5">
                     {item.number}
                   </div>
-                  <div className="size-2 bg-orange-400 border-[1px] border-[#706C63] rounded-full"></div>
+                  <div className="size-2 bg-primary border-[1px] border-[#706C63] rounded-full"></div>
                 </div>
 
                 {/* Step Content */}

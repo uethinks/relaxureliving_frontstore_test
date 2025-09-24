@@ -13,20 +13,20 @@ export default function V2HeroBanner({ data }: V2HeroBannerProps) {
   console.log("backgroundImage: ", backgroundImage)
 
   return (
-    <section className="relative w-full lg:min-h-[720px] flex flex-wrap lg:items-center justify-start overflow-hidden">
+    <section className="relative w-full overflow-hidden">
       {/* Background Image */}
-      <div className="lg:absolute inset-0 z-0 flex-grow-0 flex-shrink-0 basis-auto w-full">
+      <div className="w-full">
         <img
           src={getStrapiUrl(backgroundImage.url) || "/placeholder.svg"}
           alt="Outdoor living space with pergola"
-          className="w-full lg:h-full object-cover"
+          className="w-full h-auto"
         />
         {/* Overlay for better text readability */}
         <div className="hidden lg:block absolute inset-0 bg-black/20" />
       </div>
 
       {/* Content */}
-      <div className="relative w-full lg:w-[1074px] mx-auto bg-[#140E02] lg:bg-transparent p-6 pb-12 lg:p-0">
+      <div className="relative lg:absolute lg:inset-0 w-full lg:w-[1074px] lg:mx-auto bg-[#140E02] lg:bg-transparent p-6 pb-12 lg:p-0 lg:flex lg:items-center lg:justify-center">
         <div className="w-full lg:w-[525px] text-white">
           <h1 className="text-2xl lg:text-h2 font-bold mb-5 lg:mb-10 leading-normal">
             {title}

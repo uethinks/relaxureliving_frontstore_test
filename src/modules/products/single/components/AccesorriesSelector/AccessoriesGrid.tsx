@@ -8,7 +8,7 @@ import {
 } from "@lib/cms/strapiCmsApi"
 import V2HeroBanner from "@/components/V2HeroBanner"
 import V2Button from "@/components/V2Button"
-import { formatPrice } from "@lib/utils"
+import { formatPrice, getBackgroundColor } from "@lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
@@ -23,7 +23,7 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
       : 0
 
   return (
-    <div className="relative bg-white overflow-hidden transition-colors">
+    <div className="relative overflow-hidden transition-colors">
       <Link href={`/accessories/${infoData.slug}`}>
         <div className="overflow-hidden cursor-pointer">
           <img
@@ -33,7 +33,7 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
           />
         </div>
       </Link>
-      <div className="mt-4 h-[120px]">
+      <div className="mt-4 h-[120px] mb-4">
         <div className="flex justify-between items-start">
           <h3 className="font-montserrat text-[22px] font-medium text-black">
             {infoData.name}
@@ -135,14 +135,14 @@ export const AccessoriesGrid = async ({
   }
 
   return (
-    <div className="w-full pb-20">
-      <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
+    <div className="w-full">
+      <div className="w-full flex flex-col items-center py-0 relative">
         {banner?.length > 0 &&
           banner[0].__component === "blocks.v2-hero-banner" && (
             <V2HeroBanner data={banner[0]} />
           )}
       </div>
-      <div className="mt-5 px-6 box-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className={`px-6 pb-20 pt-5 box-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${getBackgroundColor("gray")}`}>
         <AccessoriesGridItem
           infoData={{
             ...accessories.heaterInfo,
