@@ -26,7 +26,7 @@ export default function V2HeroBanner({ data }: V2HeroBannerProps) {
       </div>
 
       {/* Content */}
-      <div className="relative lg:absolute lg:inset-0 w-full lg:w-[1074px] lg:mx-auto bg-[#140E02] lg:bg-transparent p-6 pb-12 lg:p-0 lg:flex lg:items-center lg:justify-center">
+      <div className="relative lg:absolute lg:inset-0 w-full lg:w-[1074px] lg:mx-auto bg-[#140E02] lg:bg-transparent p-6 pb-12 lg:p-0 lg:flex lg:items-center lg:justify-start">
         <div className="w-full lg:w-[525px] text-white">
           <h1 className="text-2xl lg:text-h2 font-bold mb-5 lg:mb-10 leading-normal">
             {title}
