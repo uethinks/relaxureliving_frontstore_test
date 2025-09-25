@@ -188,16 +188,12 @@ export const V2SunshadesSelector: React.FC<V2SunshadesSelectorProps> = ({
 
   // 获取颜色选项
   const shadesColors = shadesProduct?.options?.find(
-    (option) => option.title === "Color"
+    (option) => option.title === "Frame Color"
   )
   const sortedColors = shadesColors?.values?.sort((a, b) =>
     a.value.localeCompare(b.value)
   )
-
-
-
-
-
+ 
   // 初始化默认值
   useEffect(() => {
     if (sortedColors && sortedColors.length > 0 && !selectedColor) {
