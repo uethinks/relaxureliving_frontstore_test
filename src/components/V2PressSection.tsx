@@ -59,71 +59,64 @@ interface V2PressSectionProps {
     id?: number
     items: TestimonialItem[]
   }
+  isMobile?: boolean
 }
 
-export default function V2PressSection({ data }: V2PressSectionProps) {
+export default function V2PressSection({
+  data,
+  isMobile = false,
+}: V2PressSectionProps) {
   const testimonials = data?.items || []
   const [carouselData, setCarouselData] = useState<React.ReactNode[]>([])
   const [slidesPerView, setSlidesPerView] = useState(1)
 
   useEffect(() => {
-    const handleResize = () => {
-      const isMobile = window.innerWidth < 1024
-
-      if (isMobile) {
-        // 屏幕宽度小于1024px时，将两个item包裹在一个div中
-        const groupedData: React.ReactNode[] = []
-        for (let i = 0; i < testimonials.length; i += 2) {
-          const pair = testimonials.slice(i, i + 2)
-          groupedData.push(
-            <div key={i} className="flex flex-col gap-4">
-              {pair.map((testimonial, index) => (
-                <V2PressItem
-                  key={i + index}
-                  item={{
-                    url: testimonial.image
-                      ? getStrapiUrl(testimonial.image.url)
-                      : "",
-                    title: testimonial.title,
-                    link: testimonial.link,
-                  }}
-                />
-              ))}
-            </div>
-          )
-        }
-        setCarouselData(groupedData)
-        setSlidesPerView(1)
-      } else {
-        // 屏幕宽度大于等于1024px时，每个item单独包裹在一个div中
-        const singleData = testimonials.map((testimonial, key) => (
-          <div key={key}>
-            <V2PressItem
-              item={{
-                url: testimonial.image
-                  ? getStrapiUrl(testimonial.image.url)
-                  : "",
-                title: testimonial.title,
-                link: testimonial.link,
-              }}
-            />
+    if (!testimonials) {
+      return
+    }
+    if (isMobile) {
+      // 屏幕宽度小于1024px时，将两个item包裹在一个div中
+      const groupedData: React.ReactNode[] = []
+      for (let i = 0; i < testimonials.length; i += 2) {
+        const pair = testimonials.slice(i, i + 2)
+        groupedData.push(
+          <div key={i} className="flex flex-col gap-4">
+            {pair.map((testimonial, index) => (
+              <V2PressItem
+                key={i + index}
+                item={{
+                  url: testimonial.image
+                    ? getStrapiUrl(testimonial.image.url)
+                    : "",
+                  title: testimonial.title,
+                  link: testimonial.link,
+                }}
+              />
+            ))}
           </div>
-        ))
-        setCarouselData(singleData)
-        setSlidesPerView(3)
+        )
       }
+      setCarouselData(groupedData)
+      setSlidesPerView(1)
+    } else {
+      // 屏幕宽度大于等于1024px时，每个item单独包裹在一个div中
+      const singleData = testimonials.map((testimonial, key) => (
+        <div key={key}>
+          <V2PressItem
+            item={{
+              url: testimonial.image ? getStrapiUrl(testimonial.image.url) : "",
+              title: testimonial.title,
+              link: testimonial.link,
+            }}
+          />
+        </div>
+      ))
+      setCarouselData(singleData)
+      setSlidesPerView(3)
     }
 
     // 初始设置
-    handleResize()
-
-    // 监听窗口大小变化
-    window.addEventListener("resize", handleResize)
-
-    return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [testimonials])
+  }, [testimonials, isMobile])
 
   return (
     <>
