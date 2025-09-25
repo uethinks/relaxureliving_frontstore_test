@@ -1,9 +1,7 @@
 import type { CraftsmanshipData } from "@/types/craftsmanship"
-import { getStrapiUrl } from "@lib/utils"
-import { useState } from "react"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-import { CustomCarousel } from "./CustomCarousel"
+import { GalleryCarousel } from "./GalleryCarousel"
 import { ImageAccordion } from "./ImageAccordion"
 
 interface CraftsmanshipSectionProps {
@@ -15,8 +13,6 @@ export function V2CraftsmanshipSection({
   data,
   isMobile = false,
 }: CraftsmanshipSectionProps) {
-  const [currentPage, setCurrentPage] = useState(0)
-
   return (
     <section className="w-full bg-white" aria-labelledby="craftsmanship-title">
       <div className="w-full">
@@ -50,40 +46,14 @@ export function V2CraftsmanshipSection({
         {/* Feature Items */}
         {isMobile ? (
           /* Mobile - 屏幕宽度小于1024px */
-          <>
-            <img
-              className={"w-full h-[83.2vw] object-contain"}
-              src={getStrapiUrl(data.items[currentPage].media.url)}
-              alt={
-                data.items[currentPage].media.alternativeText ||
-                data.items[currentPage].title
-              }
-            />
-            <CustomCarousel
-              slidesPerView={3}
-              autoPlay={false}
-              spaceBetween={8}
-              showDots={false}
-              data={data.items.map((item, key) => (
-                <div
-                  key={key}
-                  className="flex items-center justify-center w-full h-[26.667vw]"
-                >
-                  <img
-                    className={"w-full"}
-                    src={getStrapiUrl(item.media.url)}
-                    alt={item.media.alternativeText || item.title}
-                  />
-                </div>
-              ))}
-              onChange={(i) => {
-                setCurrentPage(i)
-              }}
-            />
-            <div className={"w-full px-6 pt-9 pb-6 text-[#8C877C] text-sm"}>
-              {data.items[currentPage].description}
-            </div>
-          </>
+          <GalleryCarousel
+            items={data.items.map((item) => ({
+              mediaUrl: item.media.url,
+              mediaAlternativeText: item.media.alternativeText,
+              title: item.title,
+              description: item.description,
+            }))}
+          />
         ) : (
           /* PC - 屏幕宽度大于等于1024px */
           <ImageAccordion items={data.items} />
