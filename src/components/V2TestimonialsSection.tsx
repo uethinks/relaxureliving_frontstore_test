@@ -1,12 +1,13 @@
 "use client"
 
-import Image from "next/image"
-import { ArrowRight, Star, ChevronLeft, ChevronRight } from "lucide-react"
-import { useState, useRef, useEffect } from "react"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { getStrapiUrl } from "@lib/utils"
+import { ArrowRight, ChevronLeft, ChevronRight, Star } from "lucide-react"
+import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
+import { CustomCarousel } from "./CustomCarousel"
 
 interface Avatar {
   id: number
@@ -51,12 +52,24 @@ interface TestimonialSectionData {
   button: ButtonData
   items: TestimonialItem[]
 }
+const getMediaType = (media?: TestimonialItem["media"], index: number = 0) => {
+  if (!media || !media[index]) return null
 
-export default function V2TestimonialsSection({
-  data,
-}: {
-  data: TestimonialSectionData
-}) {
+  const videoExtensions = [".mp4", ".mpv", ".webm", ".avi", ".mov"]
+  const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".gif"]
+
+  const extension = media[index].ext.toLowerCase()
+
+  if (videoExtensions.includes(extension)) return "video"
+  if (imageExtensions.includes(extension)) return "image"
+
+  return null
+}
+const getMediaUrl = (media?: TestimonialItem["media"], index: number = 0) => {
+  if (!media || !media[index]) return null
+  return getStrapiUrl(media[index].url)
+}
+function PCVersion({ data }: { data: TestimonialSectionData }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [selectedMediaIndex, setSelectedMediaIndex] = useState(0)
   const [videoProgress, setVideoProgress] = useState(0)
@@ -64,28 +77,6 @@ export default function V2TestimonialsSection({
   const [canScrollRight, setCanScrollRight] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-
-  const getMediaType = (
-    media?: TestimonialItem["media"],
-    index: number = 0
-  ) => {
-    if (!media || !media[index]) return null
-
-    const videoExtensions = [".mp4", ".mpv", ".webm", ".avi", ".mov"]
-    const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".gif"]
-
-    const extension = media[index].ext.toLowerCase()
-
-    if (videoExtensions.includes(extension)) return "video"
-    if (imageExtensions.includes(extension)) return "image"
-
-    return null
-  }
-
-  const getMediaUrl = (media?: TestimonialItem["media"], index: number = 0) => {
-    if (!media || !media[index]) return null
-    return getStrapiUrl(media[index].url)
-  }
 
   useEffect(() => {
     const video = videoRef.current
@@ -389,14 +380,17 @@ export default function V2TestimonialsSection({
                 aria-label={`${currentItem.rating} out of 5 stars`}
               >
                 {[...Array(5)].map((_, i) => (
-                  <div key={i} className="w-5 h-5 sm:w-6 sm:h-6">
-                    <Star
-                      className={`w-full h-full ${
-                        i < currentItem.rating
-                          ? "fill-green-500 text-green-500"
-                          : "fill-gray-300 text-gray-300"
-                      }`}
-                    />
+                  <div
+                    key={i}
+                    className={`w-8 h-8 flex items-center justify-center ${
+                      i < currentItem.rating ? "block" : "hidden"
+                    }`}
+                  >
+                    <div className="flex items-center justify-center w-[25px] h-[25px] bg-[#51b380] hover:bg-[#51b380]/90 rounded-sm">
+                      <Star
+                        className={`w-[13px] h-[13px] fill-white text-white`}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -431,4 +425,230 @@ export default function V2TestimonialsSection({
       </div>
     </section>
   )
+}
+
+function MobileVersion({ data }: { data: TestimonialSectionData }) {
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedMediaIndex, setSelectedMediaIndex] = useState(0)
+  const [videoProgress, setVideoProgress] = useState(0)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const currentItem = data.items[selectedIndex]
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const updateProgress = () => {
+      if (video.duration) {
+        setVideoProgress((video.currentTime / video.duration) * 100)
+      }
+    }
+
+    video.addEventListener("timeupdate", updateProgress)
+    return () => video.removeEventListener("timeupdate", updateProgress)
+  }, [selectedIndex])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (
+      video &&
+      getMediaType(data.items[selectedIndex]?.media, selectedMediaIndex) ===
+        "video"
+    ) {
+      video.currentTime = 0
+      setVideoProgress(0)
+    } else {
+      setVideoProgress(0)
+    }
+  }, [selectedIndex, selectedMediaIndex, data.items])
+
+  // Reset media index when testimonial changes
+  useEffect(() => {
+    setSelectedMediaIndex(0)
+  }, [selectedIndex])
+
+  return (
+    <div className={"w-full mt-8 mb-12"}>
+      <CustomCarousel
+        onChange={(i) => {
+          setSelectedIndex(i)
+        }}
+        showNav={false}
+        autoPlay={false}
+        data={data.items.map((item, index) => (
+          <div key={item.id}>
+            <div
+              className={`border-t-[1px] px-6 py-5 w-full bg-yellow-50 border-t-yellow-400 }`}
+              style={{
+                background: "linear-gradient(270deg, #FFF 0%, #EFEEEB 100%)",
+              }}
+              role="button"
+              tabIndex={0}
+              aria-pressed={selectedIndex === index}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault()
+                  setSelectedIndex(index)
+                }
+              }}
+            >
+              <div className="flex flex-col items-start gap-2">
+                <div className={"flex items-center gap-2"}>
+                  <Image
+                    unoptimized
+                    src={getStrapiUrl(item.avatar.url)}
+                    alt={
+                      item.avatar.alternativeText ||
+                      `${item.author} profile picture`
+                    }
+                    width={42}
+                    height={42}
+                    className="rounded-full flex-grow-0 flex-shrink-0 basis-auto w-[42px] h-[42px]"
+                    loading="lazy"
+                  />
+                  <div className="w-full">
+                    <blockquote className="text-[#140E02] text-xl font-semibold leading-7">
+                      <span className={"text-[#FFBF3C]"}>"</span>
+                      {item.quote}
+                      <span className={"text-[#FFBF3C]"}>"</span>
+                    </blockquote>
+                  </div>
+                </div>
+                <cite className="text-[#2F2A1E] text-sm">{item.author}</cite>
+              </div>
+            </div>
+            <div className={"w-full h-[48.8vw]"}>
+              {(() => {
+                const currentMedia = currentItem.media?.[selectedMediaIndex]
+                const mediaType = getMediaType(
+                  currentItem.media,
+                  selectedMediaIndex
+                )
+                const mediaUrl = getMediaUrl(
+                  currentItem.media,
+                  selectedMediaIndex
+                )
+
+                if (!currentMedia || !mediaUrl) {
+                  // Fallback to placeholder
+                  return (
+                    <div
+                      className="w-full bg-gray-200 flex items-center justify-center"
+                      style={{ aspectRatio: "708/345" }}
+                      aria-label="No media available"
+                    >
+                      <span className="text-gray-500">No media available</span>
+                    </div>
+                  )
+                }
+
+                if (mediaType === "video") {
+                  return (
+                    <video
+                      ref={videoRef}
+                      src={mediaUrl}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-auto object-cover"
+                      style={{ aspectRatio: "708/345" }}
+                      aria-label={`Video showcasing ${currentItem.author}'s outdoor space`}
+                    >
+                      <track kind="captions" />
+                      Your browser does not support the video tag.
+                    </video>
+                  )
+                }
+
+                if (mediaType === "image") {
+                  return (
+                    <Image
+                      unoptimized
+                      src={mediaUrl}
+                      alt={
+                        currentMedia.alternativeText ||
+                        `${currentItem.author}'s outdoor space`
+                      }
+                      width={currentMedia.width || 500}
+                      height={currentMedia.height || 600}
+                      className="w-full h-auto object-cover"
+                      style={{ aspectRatio: "708/345" }}
+                      loading="lazy"
+                    />
+                  )
+                }
+
+                return null
+              })()}
+
+              {/* Progress bar - only show for video */}
+              {getMediaType(currentItem.media, selectedMediaIndex) ===
+                "video" && (
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-gray-300"
+                  role="progressbar"
+                  aria-valuenow={Math.round(videoProgress)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label="Video progress"
+                >
+                  <div
+                    className="h-full bg-red-500 transition-all duration-100"
+                    style={{ width: `${videoProgress}%` }}
+                  />
+                </div>
+              )}
+            </div>
+            <div className={"p-6 pb-0"}>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-8 h-8 flex items-center justify-center ${
+                        i < currentItem.rating ? "block" : "hidden"
+                      }`}
+                    >
+                      <div className="flex items-center justify-center w-[25px] h-[25px] bg-[#51b380] hover:bg-[#51b380]/90 rounded-sm">
+                        <Star
+                          className={`w-[13px] h-[13px] fill-white text-white`}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="text-[#140E02] text-base font-semibold">
+                  {currentItem.rating.toFixed(1)}
+                </div>
+              </div>
+              <p className="text-[#2F2A1E] text-sm">{currentItem.review}</p>
+            </div>
+          </div>
+        ))}
+      />
+      <div className="px-6">
+        <Button
+          className="bg-[#FFBF3C] hover:bg-primary-light text-gray-900 font-semibold text-lg w-full"
+          asChild
+        >
+          <a href={data.button.link} className="flex items-center gap-3">
+            {data.button.text}
+            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </a>
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+export default function V2TestimonialsSection({
+  data,
+  isMobile = false,
+}: {
+  data: TestimonialSectionData
+  isMobile?: boolean
+}) {
+  return isMobile ? <MobileVersion data={data} /> : <PCVersion data={data} />
 }

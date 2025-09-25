@@ -113,7 +113,6 @@ export default function V2DualOfferSection({
         {/* Two Column Content - Responsive Cards */}
         {isMobile ? (
           <CustomCarousel
-            autoPlay={false}
             showNav={false}
             data={cardItems.map((card, index) => (
               <div key={card.id} className={"w-full px-6"}>
