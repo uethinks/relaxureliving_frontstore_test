@@ -1,3 +1,4 @@
+'use client'
 import { getStrapiUrl } from "@lib/utils"
 import { useState } from "react"
 import { CustomCarousel } from "./CustomCarousel"

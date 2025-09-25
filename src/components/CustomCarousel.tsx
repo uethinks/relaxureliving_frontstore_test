@@ -1,3 +1,4 @@
+'use client'
 import { MoveLeft, MoveRight } from "lucide-react"
 import { ReactNode, useEffect, useRef, useState } from "react"
 import { Autoplay } from "swiper/modules"
