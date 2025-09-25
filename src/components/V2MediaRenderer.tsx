@@ -1,3 +1,4 @@
+"use client"
 import React, { useRef, useEffect, useState } from "react"
 import Image from "next/image"
 import { getStrapiUrl } from "@lib/utils"
