@@ -88,7 +88,7 @@ export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({
   return (
     <div className={className}>
       {sections.map(renderSection)}
-      {showContactUs && <V2ContactUsSection />}
+      {showContactUs && <V2ContactUsSection isMobile={isMobile} />}
     </div>
   )
 }

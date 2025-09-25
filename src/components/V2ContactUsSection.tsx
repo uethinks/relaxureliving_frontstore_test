@@ -51,6 +51,7 @@ interface FormErrors {
 export const V2ContactUsSection = (props: {
   title?: string
   description?: string
+  isMobile?: boolean
 }): React.JSX.Element => {
   const {
     data: contactUsData,
@@ -89,7 +90,7 @@ export const V2ContactUsSection = (props: {
 
   // Skeleton loading component
   const FormSkeleton = () => (
-    <div className="space-y-6 animate-pulse">
+    <div className="pt-8 pb-12 px-6 lg:p-0 space-y-6 animate-pulse">
       <div className="grid md:grid-cols-2 gap-6">
         {/* Full Name Skeleton */}
         <div className="relative h-[48px]">
@@ -250,14 +251,17 @@ export const V2ContactUsSection = (props: {
   }
 
   return (
-    <div className={`w-full ${getBackgroundColor("gray")}`}>
-      <div id="contact" className="max-w-[1074px] w-full py-16 mx-auto">
+    <div
+      className={`w-full pt-8 pb-12 px-6 lg:p-0 lg:py-16 
+        ${getBackgroundColor("gray")}`}
+    >
+      <div id="contact" className="max-w-[1074px] w-full mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
+          <h1 className="text-2xl lg:text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
             {props?.title ||
               "Got something specific in mind, send us a message"}
           </h1>
-          <p className="text-[#8c877c] text-base mx-auto">
+          <p className="text-[#8c877c] text-sm lg:text-base mx-auto">
             {props?.description ||
               "If you fill out the contact form below, one of our representatives will reach back out to you in a timely manner."}
           </p>
@@ -537,7 +541,8 @@ export const V2ContactUsSection = (props: {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-[#ffbf3c] hover:bg-[#e6ac35] text-xl text-[#140e02] font-semibold px-12 py-3 h-auto focus-visible:ring-2 focus-visible:ring-[#ffbf3c] focus-visible:ring-offset-2 flex items-center gap-3"
+              className={`${props.isMobile ? "w-full" : ""} 
+                bg-[#ffbf3c] hover:bg-[#e6ac35] text-xl text-[#140e02] font-semibold px-12 py-3 h-auto focus-visible:ring-2 focus-visible:ring-[#ffbf3c] focus-visible:ring-offset-2 flex items-center gap-3`}
             >
               {isSubmitting ? "Sending..." : "Send"}
               <ArrowRight
