@@ -49,8 +49,7 @@ export function V2CraftsmanshipSection({
           <GalleryCarousel
             items={data.items.map((item) => ({
               mediaUrl: item.media.url,
-              mediaAlternativeText: item.media.alternativeText,
-              title: item.title,
+              mediaAlternativeText: item.media.alternativeText || item.title,
               description: item.description,
             }))}
           />

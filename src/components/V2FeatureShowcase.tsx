@@ -43,6 +43,7 @@ export function V2FeatureShowcase({
             mediaAlternativeText: item.media.alternativeText,
             title: item.title,
             description: item.description,
+            button: item.button,
           }))}
         />
       ) : (
