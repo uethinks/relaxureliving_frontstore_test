@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
-import Image from "next/image"
 import type { RainResistanceItem } from "@/types/rainResistance"
 import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import V2Headline from "./V2Headline"
 import V2Button from "./V2Button"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface FeatureCardProps {
   item: RainResistanceItem
@@ -61,15 +61,15 @@ export function FeatureCard({ item, index }: FeatureCardProps) {
           <div className={`relative ${isReversed ? "lg:col-start-1" : ""}`}>
             <div className="relative w-full h-auto overflow-hidden">
               {item.media && (
-                <Image
-                  unoptimized
-                  src={getStrapiUrl(item.media.url)}
-                  alt={item.media.alternativeText || item.title}
-                  width={600}
-                  height={400}
-                  className="w-full h-auto object-contain"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                  priority={index === 0}
+                <V2MediaRenderer
+                  media={item.media}
+                  options={{
+                    objectFit: "cover",
+                    imageOptions: {
+                      priority: index === 0,
+                      sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                    }
+                  }}
                 />
               )}
             </div>

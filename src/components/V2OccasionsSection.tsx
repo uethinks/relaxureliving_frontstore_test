@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { getStrapiUrl } from "@lib/utils"
 import Image from "next/image"
 import { CustomCarousel } from "./CustomCarousel"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface MediaFormat {
   ext: string
@@ -22,13 +23,13 @@ interface Media {
   name: string
   alternativeText: string | null
   caption: string | null
-  width: number
-  height: number
+  width: number | null
+  height: number | null
   formats: {
     small?: MediaFormat
     xsmall?: MediaFormat
     thumbnail?: MediaFormat
-  }
+  } | null
   hash: string
   ext: string
   mime: string
@@ -96,10 +97,12 @@ export default function V2OccasionsSection({
             showNav={false}
             data={data.items.map((item, key) => (
               <div key={key} className={"w-full px-6"}>
-                <img
-                  src={getStrapiUrl(item.media.url)}
-                  alt={item.media.alternativeText || item.title}
-                  className="w-full h-[43.467vw] object-cover mb-5"
+                <V2MediaRenderer
+                  media={item.media}
+                  options={{
+                    aspectRatio: "525/262",
+                    className: "mb-5"
+                  }}
                 />
                 <h3 className="text-base font-semibold mb-[10px] text-[#2F2A1E] text-center">
                   {item.title}
@@ -116,18 +119,16 @@ export default function V2OccasionsSection({
                 className="border-0 shadow-none bg-transparent"
               >
                 <CardContent className="p-0 space-y-6">
-                  <div className="aspect-[525/262] overflow-hidden bg-muted">
-                    <Image
-                      unoptimized
-                      src={getStrapiUrl(item.media.url)}
-                      alt={item.media.alternativeText || item.title}
-                      width={item.media.width}
-                      height={item.media.height}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                      priority={item.id <= 2} // Prioritize first two images
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </div>
+                  <V2MediaRenderer
+                    media={item.media}
+                    options={{
+                      aspectRatio: "525/262",
+                      imageOptions: {
+                        priority: item.id <= 2,
+                        sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      }
+                    }}
+                  />
                   <div>
                     <h3 className="text-foreground text-2xl font-semibold mb-3">
                       {item.title}

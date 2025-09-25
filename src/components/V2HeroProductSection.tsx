@@ -2,6 +2,7 @@ import { getStrapiUrl } from "@lib/utils"
 import Image from "next/image"
 import V2Button from "./V2Button"
 import V2Headline from "./V2Headline"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface ButtonData {
   id: number
@@ -60,17 +61,16 @@ export default function V2HeroProductSection({
       <div className="max-w-[1074px] w-full h-auto lg:h-full grid grid-cols-1 lg:grid-cols-2 lg:gap-16">
         {/* Left side - Pergola Image */}
         <div className="w-full h-auto lg:h-[480px] overflow-hidden">
-          <Image
-            unoptimized
-            src={getStrapiUrl(image.url)}
-            alt={
-              image.alternativeText ||
-              `Modern ${title.toLowerCase()} for outdoor luxury living`
-            }
-            width={image.width}
-            height={image.height}
-            className="w-full h-auto lg:h-full object-cover"
-            // priority -- remove it for lazy loading, as it is above the fold
+          <V2MediaRenderer
+            media={image as any}
+            options={{
+              // aspectRatio: "525/262",
+              imageOptions: {
+                priority: image.id <= 2,
+                sizes:
+                  "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+              },
+            }}
           />
         </div>
 

@@ -130,7 +130,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
       <div className="flex flex-col justify-center items-center relative w-full overflow-hidden">
         {/* 主图 */}
         <div className="relative w-full">
-          <div className="cursor-pointer aspect-[360/504] lg:aspect-[817/558] w-full overflow-hidden">
+          <div className="cursor-pointer aspect-[360/504] lg:aspect-[708/354] w-full overflow-hidden">
             {filteredImages.length > 0 ? (
               <img
                 src={strapiCmsUrl + filteredImages?.[currentImageIndex]?.url}

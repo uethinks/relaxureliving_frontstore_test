@@ -13,7 +13,7 @@ export interface ButtonData {
   id?: number
   type: "Primary" | "Secondary" | "Link"
   size: "Small" | "Medium" | "Large"
-  sizeMobile: "Small" | "Medium" | "Large"
+  sizeMobile?: "Small" | "Medium" | "Large"
   text: string
   link: string
   icon?: any

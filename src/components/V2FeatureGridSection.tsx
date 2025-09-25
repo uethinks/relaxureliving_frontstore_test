@@ -4,6 +4,7 @@ import Image from "next/image"
 import { CustomCarousel } from "./CustomCarousel"
 import V2Button from "./V2Button"
 import V2Headline from "./V2Headline"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface MediaFormat {
   ext: string
@@ -141,34 +142,37 @@ function FeatureCard({ item }: FeatureCardProps) {
     item.image?.alternativeText || `${item.title} feature illustration`
 
   return (
-    <Card className="bg-transparent border-none shadow-none">
-      <CardContent className="p-0 flex flex-col items-center justify-start">
+    <Card className="bg-transparent border-none shadow-none h-full">
+      <CardContent className="p-0 flex flex-col items-center justify-between h-full">
         {/* Feature Image */}
         {imageUrl && (
-          <div className="w-full mb-4 overflow-hidden bg-white/50">
-            <Image
-              unoptimized
-              src={getStrapiUrl(imageUrl)}
-              alt={imageAlt}
-              width={item.image.width}
-              height={item.image.height}
-              className="w-full h-auto transition-transform duration-300 hover:scale-105"
-              loading="lazy"
+          <div className="w-full h-auto mb-4 overflow-hidden bg-white/50">
+            <V2MediaRenderer
+              media={item.image}
+              options={{
+                objectFit: "cover",
+                imageOptions: {
+                  sizes:
+                    "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px",
+                },
+              }}
             />
           </div>
         )}
 
         {/* Feature Content */}
-        <div className="h-24 mb-6">
-          <p className="text-2xl font-semibold text-center">{item.title}</p>
-          <p className="text-[#8c877c] text-sm mt-2 text-center">
-            {item.description}
-          </p>
-        </div>
+        <div className="flex flex-col items-center">
+          <div className="h-24 mb-6">
+            <p className="text-2xl font-semibold text-center">{item.title}</p>
+            <p className="text-[#8c877c] text-sm mt-2 text-center text-pretty">
+              {item.description}
+            </p>
+          </div>
 
-        {item.button && (
-          <V2Button data={item.button as any} className="self-center" />
-        )}
+          {item.button && (
+            <V2Button data={item.button as any} className="self-center" />
+          )}
+        </div>
       </CardContent>
     </Card>
   )

@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import Image from "next/image"
 import V2Headline from "./V2Headline"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface MediaFormat {
   ext: string
@@ -144,13 +145,15 @@ function FeatureCard({ item }: FeatureCardProps) {
 
           {item.image && (
             <div className="h-full aspect-square">
-              <img
-                src={getStrapiUrl(item.image.url)}
-                alt={item.image.alternativeText || ""}
-                className="h-full object-cover"
-                width={item.image.width}
-                height={item.image.height}
-              />
+              <V2MediaRenderer
+                  media={item.image}
+                  options={{
+                    objectFit: "cover",
+                    imageOptions: {
+                      sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                    }
+                  }}
+                />
             </div>
           )}
         </div>
