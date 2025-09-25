@@ -56,41 +56,63 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
 
   return (
     <section
-      className="relative w-full flex items-center"
+      className="relative w-full flex flex-col lg:flex-row lg:items-center"
       role="banner"
       aria-label="Hero section"
     >
-      {isStatic ? (
-        <img src={backgroundImage.url} className="w-full h-auto" />
-      ) : (
-        <Image
-          unoptimized
-          src={getStrapiUrl(backgroundImage.url)}
-          alt={
-            backgroundImage.alternativeText ||
-            "Relaxure pergola assembly process"
-          }
-          width={backgroundImage.width}
-          height={backgroundImage.height}
-          className="w-full h-auto"
-          priority
-          // sizes={generateSizes()}
-          quality={85}
-        />
-      )}
+      {/* Image Wrap */}
+      <div className="w-full lg:relative">
+        {isStatic ? (
+          <img
+            src={backgroundImage.url}
+            className="w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
+          />
+        ) : (
+          <Image
+            unoptimized
+            src={getStrapiUrl(backgroundImage.url)}
+            alt={
+              backgroundImage.alternativeText ||
+              "Relaxure pergola assembly process"
+            }
+            width={backgroundImage.width}
+            height={backgroundImage.height}
+            className="w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
+            priority
+            // sizes={generateSizes()}
+            quality={85}
+          />
+        )}
+      </div>
 
+      {/* Content Wrap */}
       <div
-        className={`absolute inset-0 z-10 w-full max-w-[1074px] mx-auto flex flex-col justify-center ${
-          isReverse ? "items-end" : "items-start"
+        className={`bg-black lg:bg-transparent w-full px-6 pt-6 pb-12 lg:absolute lg:inset-0 lg:z-10 lg:max-w-[1074px] lg:mx-auto lg:flex lg:flex-col lg:justify-center ${
+          isReverse ? "lg:items-end" : "lg:items-start"
         }`}
       >
-        <div className="w-[50%] max-w-[436px]">
-          <V2Headline title={content.title || ""} className="text-white" />
+        <div className="w-full lg:w-[50%] lg:max-w-[436px]">
+          {/* title wrap */}
+          <V2Headline
+            title={content.title || ""}
+            className="text-white text-2xl lg:text-4xl"
+          />
 
-          <div className="text-white text-base mb-8 mt-8">
+          {/* description wrap */}
+          <div className="text-white text-sm lg:text-base mt-5 mb-6 lg:mb-8 lg:mt-8">
             <p className="max-w-prose">{content.description}</p>
           </div>
-          {content.button && <V2Button data={content.button as any} />}
+
+          {/* button wrap */}
+          {content.button && (
+            <V2Button
+              data={{
+                ...(content.button as any),
+                size: "Medium",
+              }}
+              className={"w-full"}
+            />
+          )}
         </div>
       </div>
     </section>
