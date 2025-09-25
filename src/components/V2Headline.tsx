@@ -50,7 +50,7 @@ export default function V2Headline({
           aria-hidden="true"
         />
       )}
-      <span className="relative text-h2">{title}</span>
+      <span className="relative w-full block">{title}</span>
       {children}
     </Component>
   )

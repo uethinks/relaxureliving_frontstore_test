@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
+import { CustomCarousel } from "./CustomCarousel"
 import V2Button from "./V2Button"
 import V2Headline from "./V2Headline"
 
@@ -50,13 +51,15 @@ interface DualOfferSectionProps {
 
 export default function V2DualOfferSection({
   data,
+  isMobile = false,
 }: {
   data: DualOfferSectionProps
+  isMobile?: boolean
 }) {
   const { title, iconItems, cardItems } = data
   return (
     <section
-      className={`w-full py-12 md:py-16 lg:py-20 px-4 md:px-6 ${getBackgroundColor(
+      className={`w-full lg:pt-20 lg:pb-16 ${getBackgroundColor(
         data.backgroundColor
       )}`}
       // style={{
@@ -65,23 +68,29 @@ export default function V2DualOfferSection({
       // }}
       aria-labelledby="main-heading"
     >
-      <div className="max-w-[1074px] mx-auto">
+      <div className="lg:max-w-[1074px] mx-auto">
         {/* Main Headline with SEO optimization */}
-        <header className="text-center mb-4">
-          <V2Headline title={title} iconHidden className="mx-auto" />
-        </header>
-        {data.description && (
-          <p className="text-center text-lg text-[#8C877C] whitespace-break-spaces mb-10">
-            {data.description}
-          </p>
-        )}
+        <div className={"px-6 pt-8 lg:p-0"}>
+          <header className="text-center mb-5">
+            <V2Headline
+              title={title}
+              iconHidden
+              className="mx-auto text-2xl lg:text-[32px] w-full"
+            />
+          </header>
+          {data.description && (
+            <p className="text-center text-lg text-[#8C877C] whitespace-break-spaces mb-10">
+              {data.description}
+            </p>
+          )}
+        </div>
 
         {iconItems && iconItems.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-16 md:mb-20 max-w-[1074px] mx-auto">
+          <div className="flex items-center justify-center gap-6 mb-8 lg:mb-20 max-w-[1074px] mx-auto">
             {iconItems.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-center md:justify-center gap-3"
+                className="flex flex-col max-w-[30vw] lg:max-w-[33%] lg:flex-row items-center justify-center gap-2 flex-shrink-0 flex-grow-0 basis-auto"
               >
                 {item.icon?.url && (
                   <img
@@ -89,11 +98,11 @@ export default function V2DualOfferSection({
                     alt={item.icon.alternativeText || item.title}
                     width={item.icon.width}
                     height={item.icon.height}
-                    className="w-6 h-6 md:w-8 md:h-8 text-[#140e02] flex-shrink-0"
+                    className="w-6 h-6 text-[#140e02] flex-shrink-0"
                     aria-hidden="true"
                   />
                 )}
-                <span className="text-[#140e02] text-base md:text-lg font-semibold text-center md:text-left">
+                <span className="text-[#140e02] text-xs lg:text-base font-semibold text-center lg:text-left">
                   {item.title}
                 </span>
               </div>
@@ -102,30 +111,52 @@ export default function V2DualOfferSection({
         )}
 
         {/* Two Column Content - Responsive Cards */}
-        <div className="grid lg:grid-cols-2 gap-16">
-          {cardItems.map((card, index) => (
-            <Card
-              key={card.id}
-              className="bg-transparent border-none shadow-none w-[465px]"
-            >
-              <CardContent className="p-0 space-y-6 min-h-[320px] flex flex-col justify-between items-start">
-                <div className="flex flex-col gap-10">
-                  {card.title && (
-                    <div className={"min-h-[92px]"}>
-                      {" "}
-                      <V2Headline title={card.title} />
-                    </div>
-                  )}
-
-                  <div className="text-[#140e02] text-base max-w-prose mb-4">
-                    {card.description}
-                  </div>
+        {isMobile ? (
+          <CustomCarousel
+            autoPlay={false}
+            showNav={false}
+            data={cardItems.map((card, index) => (
+              <div key={card.id} className={"w-full px-6"}>
+                {card.title && (
+                  <V2Headline
+                    title={card.title}
+                    className={"w-full text-2xl mb-5"}
+                  />
+                )}
+                <div className="text-[#2F2A1E] text-sm max-w-prose mb-10">
+                  {card.description}
                 </div>
-                {card.button && <V2Button data={card.button as any} />}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                {card.button && (
+                  <V2Button data={card.button as any} className={"w-full"} />
+                )}
+              </div>
+            ))}
+          />
+        ) : (
+          <div className="grid lg:grid-cols-2 gap-16">
+            {cardItems.map((card, index) => (
+              <Card
+                key={card.id}
+                className="bg-transparent border-none shadow-none w-[465px]"
+              >
+                <CardContent className="p-0 space-y-6 min-h-[320px] flex flex-col justify-between items-start">
+                  <div className="flex flex-col gap-10">
+                    {card.title && (
+                      <div className={"min-h-[92px]"}>
+                        <V2Headline title={card.title} />
+                      </div>
+                    )}
+
+                    <div className="text-[#140e02] text-base max-w-prose mb-4">
+                      {card.description}
+                    </div>
+                  </div>
+                  {card.button && <V2Button data={card.button as any} />}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
