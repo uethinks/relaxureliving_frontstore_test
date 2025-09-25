@@ -101,7 +101,7 @@ export default function V2OccasionsSection({
                   alt={item.media.alternativeText || item.title}
                   className="w-full h-[43.467vw] object-cover mb-5"
                 />
-                <h3 className="text-base font-semibold mb-[10px] text-[#2F2A1E]">
+                <h3 className="text-base font-semibold mb-[10px] text-[#2F2A1E] text-center">
                   {item.title}
                 </h3>
                 <p className="text-sm text-[#8C877C]">{item.description}</p>
