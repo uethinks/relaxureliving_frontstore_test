@@ -83,12 +83,12 @@ export function V2FeatureGridSection({
           <V2Headline
             title={data.title}
             as="h1"
-            size="xl"
+            size={isMobile ? "md" : "xl"}
             className="mb-4 w-full"
             iconHidden
           />
           {data.subtitle && (
-            <p className="text-xl text-[#8c877c] max-w-2xl mx-auto">
+            <p className="text-sm lg:text-lg text-[#8c877c] max-w-2xl mx-auto">
               {data.subtitle}
             </p>
           )}
