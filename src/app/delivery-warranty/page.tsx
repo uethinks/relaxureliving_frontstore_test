@@ -28,7 +28,7 @@ export default async function DeliveryWarrantyPage() {
               Simple, Caring, and Hassle-Free
             </>
           }
-          titleClassName={"pb-3"}
+          sectionClassName={"pb-3 lg:py-20"}
         />
         <DeliveryProcess />
 
