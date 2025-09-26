@@ -1,5 +1,6 @@
 import V2Button from "@/components/V2Button"
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
+import { V2FAQSection } from "@/components/V2FAQSection"
 import V2Headline from "@/components/V2Headline"
 import V2SectionRenderer from "@/components/V2SectionRenderer"
 import { getAboutUs } from "@lib/cms/strapiCmsApi"
@@ -132,7 +133,12 @@ export default async function AboutUsPage() {
           </div>
         </section>
 
-        <V2SectionRenderer sections={data.sections || []} />
+        <V2SectionRenderer
+          sections={data.sections || []}
+          customComponents={{
+            "blocks.v2-feature-cards": V2FAQSection,
+          }}
+        />
         <V2ContactUsSection />
       </div>
       <FooterDark />

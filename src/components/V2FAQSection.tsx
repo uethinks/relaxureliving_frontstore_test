@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Media } from "@/types/craftsmanship"
@@ -202,7 +202,11 @@ export function V2FAQSection({ data, isMobile = false }: FAQSectionProps) {
             </h2>
           )}
           {data.description && (
-            <p className={"mt-10 text-lg text-[#8C877C] whitespace-pre-line"}>
+            <p
+              className={
+                "px-6 mt-10 text-lg text-[#8C877C] whitespace-pre-line"
+              }
+            >
               {data.description}
             </p>
           )}

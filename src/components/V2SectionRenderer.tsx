@@ -25,6 +25,7 @@ interface Section {
 }
 
 interface V2SectionRendererProps {
+  customComponents?: any
   sections: Section[]
   showContactUs?: boolean
   className?: string
@@ -50,6 +51,7 @@ const sectionComponents = {
 } as const
 
 export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({
+  customComponents = {},
   sections = [],
   showContactUs = true,
   className = "flex flex-col w-full items-start justify-center",
@@ -73,9 +75,13 @@ export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({
   }, [])
 
   const renderSection = (section: Section) => {
+    const mergedComponents = {
+      ...sectionComponents,
+      ...customComponents,
+    }
     const key = `${section.id}-${section.__component}`
     const Component =
-      sectionComponents[section.__component as keyof typeof sectionComponents]
+      mergedComponents[section.__component as keyof typeof sectionComponents]
 
     if (!Component) {
       console.warn(`Unknown section component: ${section.__component}`)
