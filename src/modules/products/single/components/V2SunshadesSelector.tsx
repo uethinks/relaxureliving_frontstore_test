@@ -356,7 +356,7 @@ export const V2SunshadesSelector: React.FC<V2SunshadesSelectorProps> = ({
           {/* Size Section with new UI */}
           <div className="flex flex-col items-start gap-5">
             <div className="text-sm font-medium text-[#000000] flex justify-between w-full">
-              <span> Size: {selectedPergolaSize || "'"}</span>
+              <span> Size: {selectedPergolaSize}</span>
               <span className="text-sm text-[#8c877c] mb-3">
                 + {formatPrice(calculatedPrice)}
               </span>
