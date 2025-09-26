@@ -1,5 +1,5 @@
-import V2DualOfferSection from "@/components/V2DualOfferSection"
 import { V2PromoBanner } from "@/components/V2PromoBanner"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 
@@ -8,22 +8,26 @@ export default async function InnovationPage() {
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className={"relative w-full py-20 overflow-hidden"}>
+        <section
+          className={
+            "relative w-full px-6 pt-8 pb-12 lg:px-0 lg:py-20 overflow-hidden"
+          }
+        >
           <img
             src="/img/body-mask.png"
             className={"absolute top-0 left-0 z-0 w-full"}
           />
-          <div className={"max-w-[1074px] m-auto"}>
+          <div className={"lg:max-w-[1074px] m-auto"}>
             <h1
               className={
-                "mb-5 text-center text-[56px] font-semibold text-black"
+                "mb-5 text-center text-6 lg:text-[56px] font-semibold text-black"
               }
             >
               Innovation at Relaxure:
               <br />
               Listening, Learning, and Improving
             </h1>
-            <p className={"text-center text-xl text-black"}>
+            <p className={"text-center text-sm lg:text-xl text-black"}>
               At Relaxure, we believe innovation isn’t about flashy features or
               bold claims. It begins with listening—understanding frustrations
               and working patiently to make things better.
@@ -46,10 +50,12 @@ export default async function InnovationPage() {
             } as never
           }
         />
-        <section className={"mb-24"}>
-          <V2DualOfferSection
-            data={
+        <section className={"w-full mb-5 lg:mb-24"}>
+          <V2SectionRenderer
+            sections={[
               {
+                __component: "blocks.v2-dual-offer-section",
+                id: 40,
                 cardItems: [
                   {
                     title: "Learning from Customers",
@@ -153,8 +159,9 @@ export default async function InnovationPage() {
                     ),
                   },
                 ],
-              } as never
-            }
+              },
+            ]}
+            showContactUs={false}
           />
         </section>
         <V2PromoBanner

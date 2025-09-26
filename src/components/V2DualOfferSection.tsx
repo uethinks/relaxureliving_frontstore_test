@@ -71,13 +71,15 @@ export default function V2DualOfferSection({
       <div className="lg:max-w-[1074px] mx-auto">
         {/* Main Headline with SEO optimization */}
         <div className={"px-6 pt-8 lg:p-0"}>
-          <header className="text-center mb-5">
-            <V2Headline
-              title={title}
-              iconHidden
-              className="mx-auto text-2xl lg:text-[32px] w-full"
-            />
-          </header>
+          {title && (
+            <header className="text-center mb-5">
+              <V2Headline
+                title={title}
+                iconHidden
+                className="mx-auto text-2xl lg:text-[32px] w-full"
+              />
+            </header>
+          )}
           {data.description && (
             <p className="text-center text-lg text-[#8C877C] whitespace-break-spaces mb-10">
               {data.description}
