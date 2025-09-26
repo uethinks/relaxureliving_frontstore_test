@@ -204,7 +204,7 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
   // 更新选中的glassdoor和价格
   useEffect(() => {
     const variants = getVariant()
-    console.log("variants: ", variants)
+    console.log("selectedPergolaSize : ", selectedPergolaSize, "selectedColor:" ,selectedColor, ", variants: ", variants)
     setSelectedGlassdoor(
       variants?.map((variant) => ({
         productVarant: variant,
@@ -272,7 +272,7 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
       )
       const matchingColor = variant?.options?.find(
         (option) =>
-          option.option?.title === "Color" &&
+          option.option?.title === "Frame Color" &&
           option.value === selectedColor?.value
       )
       return matchingSize && matchingColor
@@ -357,7 +357,7 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
           {/* Size Section with new UI */}
           <div className="flex flex-col items-start gap-5">
             <div className="text-sm font-medium text-[#000000] flex justify-between w-full">
-              <span> Size: {selectedPergolaSize || "10'x10'"}</span>
+              <span> Size: {selectedPergolaSize}</span>
               <span className="text-sm text-[#8c877c] mb-3">+ {formatPrice(calculatedPrice)}</span>
             </div>
             {/* Quantity Selector */}
