@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Media } from "@/types/craftsmanship"
-import { getStrapiUrl } from "@lib/utils"
+import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -59,6 +59,7 @@ interface FAQSectionProps {
     items: FAQItem[]
     button: FAQButton
     backgroundImage?: Media
+    backgroundColor?: string
   }
   isMobile?: boolean
 }
@@ -175,7 +176,9 @@ export function V2FAQSection({ data, isMobile = false }: FAQSectionProps) {
 
   return (
     <section
-      className={`w-full pt-8 pb-12 lg:py-16 lg:px-4`}
+      className={`w-full pt-8 pb-12 lg:py-16 lg:px-4 ${getBackgroundColor(
+        data.backgroundColor
+      )}`}
       itemScope
       itemType="https://schema.org/FAQPage"
     >
