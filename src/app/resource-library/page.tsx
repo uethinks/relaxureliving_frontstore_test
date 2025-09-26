@@ -1,6 +1,7 @@
 "use client"
 
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
+import V2MaskHeader from "@/components/V2MaskHeader"
 import { getResourceLibrary } from "@lib/cms/strapiCmsApi"
 import { getStrapiUrl } from "@lib/utils"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
@@ -95,15 +96,11 @@ function ResourceLibraryComponent() {
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#fff]">
         <NavBarWrapper />
-
-        <section className={"relative overflow-hidden w-full py-20"}>
-          <img
-            src="/img/body-mask.png"
-            className={"absolute top-0 left-0 z-0 w-full"}
-          />
-          <div className={"max-w-7xl m-auto text-black text-center"}>
-            <h1 className={"font-semibold text-[56px]"}>Resource Library</h1>
-            <p className={"text-xl"}>
+        <V2MaskHeader
+          title={"Resource Library"}
+          sectionClassName={"pb-0 lg:pb-10"}
+          description={
+            <>
               We are dedicated to sharing{" "}
               <span className={"font-semibold"}>
                 useful insights and practical tips
@@ -112,21 +109,21 @@ function ResourceLibraryComponent() {
               inspiration. Our Relaxure team is continuously creating content to
               make your pergola experience safer, easier, and more enjoyable all
               year round
-            </p>
-          </div>
-        </section>
+            </>
+          }
+        />
 
-        <section className={"relative w-full max-w-7xl pb-20"}>
-          <div className={"max-w-[1074px] m-auto"}>
+        <section className={"relative w-full lg:max-w-7xl px-6 pb-20"}>
+          <div className={"lg:max-w-[1074px] m-auto"}>
             <div
               className={
-                "flex items-center justify-center gap-12 pt-20 py-10 bg-[#fff] sticky top-[115px] z-10"
+                "flex items-center lg:justify-center gap-12 pt-8 pb-5 lg:py-10 bg-[#fff] sticky top-[84px] lg:top-[110px] z-10 overflow-auto"
               }
             >
               {categories.map((category, categoryKey) => (
                 <div
                   key={categoryKey}
-                  className={`cursor-pointer font-semibold text-2xl ${
+                  className={`flex-shrink-0 flex-grow-0 basis-auto cursor-pointer font-semibold text-base lg:text-2xl ${
                     categoryKey >= 0 && categoryKey === categoryId
                       ? "text-[#140E02] underline"
                       : "text-[#8C877C]"
@@ -140,7 +137,11 @@ function ResourceLibraryComponent() {
               ))}
             </div>
             <div className={"w-full"}>
-              <div className={"flex flex-wrap gap-x-6 gap-y-10 mb-10 w-full"}>
+              <div
+                className={
+                  "flex flex-wrap justify-between gap-y-5 lg:gap-x-6 lg:gap-y-10 mb-10 w-full"
+                }
+              >
                 {!isError &&
                   data &&
                   data.pages.map((page, pageNum) => (
@@ -148,13 +149,13 @@ function ResourceLibraryComponent() {
                       {page.data.map((resource: any, resourceKey: number) => (
                         <div
                           className={
-                            "flex-grow-0 flex-shrink-0 basis-auto w-[195px]"
+                            "flex-grow-0 flex-shrink-0 basis-auto w-[42vw] lg:w-[195px]"
                           }
                           key={resourceKey}
                         >
                           <a
                             className={
-                              "w-[195px] h-[276px] flex items-center mb-5"
+                              "w-full h-[60vw] lg:h-[276px] flex items-center mb-5"
                             }
                             href={
                               resource.pdf
