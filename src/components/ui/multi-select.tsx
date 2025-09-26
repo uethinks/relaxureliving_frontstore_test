@@ -1001,7 +1001,13 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                 </div>
               ) : (
                 <div className="flex items-center justify-between w-full mx-auto">
-                  <span className="text-[#8c877c] text-sm font-normal">
+                  <span
+                    className={`text-[#8c877c] text-sm font-normal ${
+                      singleLine
+                        ? "overflow-x-auto multiselect-singleline-scroll"
+                        : "flex-wrap"
+                    }`}
+                  >
                     {placeholder}
                   </span>
                   <svg

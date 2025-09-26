@@ -209,12 +209,15 @@ export const V2BecomeDealerForm = (): React.JSX.Element => {
   }
 
   return (
-    <div id="contact" className="max-w-[1074px] w-full py-16 mx-auto">
+    <div
+      id="contact"
+      className="lg:max-w-[1074px] w-full lg:py-16 lg:px-0 px-6 pt-8 pb-12 mx-auto"
+    >
       <div className="text-center mb-12">
-        <h1 className="text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
+        <h1 className="text-2xl lg:text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
           Become a Dealer
         </h1>
-        <p className="text-[#8c877c] text-base mx-auto">
+        <p className="text-[#8c877c] text-sm lg:text-base mx-auto">
           Fill in the information below and one of our representatives will be
           in touch shortly.
         </p>
@@ -488,6 +491,7 @@ export const V2BecomeDealerForm = (): React.JSX.Element => {
                 options={sourceOptions}
                 onValueChange={setSourceValues}
                 defaultValue={sourceValues}
+                singleLine={true}
               />
               {errors.source && (
                 <span className="text-red-500 text-sm mt-1">
@@ -509,6 +513,7 @@ export const V2BecomeDealerForm = (): React.JSX.Element => {
                 options={intentionOptions}
                 onValueChange={setIntentionValues}
                 defaultValue={intentionValues}
+                singleLine={true}
               />
               {errors.intention && (
                 <span className="text-red-500 text-sm mt-1">
