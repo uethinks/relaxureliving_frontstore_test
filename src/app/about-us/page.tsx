@@ -1,10 +1,7 @@
 import V2Button from "@/components/V2Button"
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
-import V2DualOfferSection from "@/components/V2DualOfferSection"
-import V2FeatureCards from "@/components/V2FeatureCards"
 import V2Headline from "@/components/V2Headline"
-import { V2PromoBanner } from "@/components/V2PromoBanner"
-import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
 import { getAboutUs } from "@lib/cms/strapiCmsApi"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
@@ -48,7 +45,7 @@ export default async function AboutUsPage() {
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className="grid grid-cols-2 w-full bg-[#EFEEEB]">
+        <section className="grid grid-cols-1 lg:grid-cols-2 w-full bg-[#EFEEEB]">
           <div className="relative aspect-[6/5] w-full h-full overflow-hidden">
             <Image
               unoptimized
@@ -59,41 +56,65 @@ export default async function AboutUsPage() {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 680px"
             />
           </div>
-          <div className="w-full py-[72px] px-[100px]">
-            <div className="flex items-start gap-4 w-[436px]">
-              <div className="flex-1 flex flex-col gap-10 items-start">
-                <V2Headline title="Creating Spaces Where Life Happens, in Every Season" />
-                <div
-                  className={`leading-relaxed mb-6 prose prose-lg max-w-none`}
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      "At Relaxure, we believe great outdoor living should be effortless—beautiful in design, built to last, and ready for every season. Our pergolas bridge the gap between overpriced luxury and unreliable budget options, delivering exceptional quality, smart functionality, and timeless style at a fair value.<br />Picture this: a sunny afternoon with friends gathered under your pergola, laughter mingling with the aroma of a backyard barbecue. Or a quiet morning coffee as gentle rain falls above, while you stay perfectly dry and at peace.<br />This isn’t just about creating shade—it’s about creating a space where memories are made, connections flourish, and every season feels like your favorite one.",
-                  }}
-                />
-                <V2Button
-                  data={
-                    {
-                      type: "Secondary",
-                      size: "Medium",
-                      text: "Design Yours Today",
-                      link: "#",
-                      icon: null,
-                    } as any
-                  }
-                />
+          <div className="w-full lg:py-[72px] lg:px-[100px] px-6 mt-10 mb-[48px] lg:mt-0 lg:mb-0">
+            <div className="w-full lg:w-[436px] flex-1 flex flex-col items-start">
+              <V2Headline
+                title="Creating Spaces Where Life Happens, in Every Season"
+                className={"lg:text-[32px] lg:leading-[46px]"}
+              />
+              <div className="mt-5 mb-10 lg:mt-10 lg:mb-20 w-full text-[#2F2A1E] text-sm lg:text-base">
+                <p>
+                  At Relaxure, we believe great outdoor living should be
+                  effortless—beautiful in design, built to last, and ready for
+                  every season. Our pergolas bridge the gap between overpriced
+                  luxury and unreliable budget options, delivering exceptional
+                  quality, smart functionality, and timeless style at a fair
+                  value.
+                </p>
+                <p>
+                  Picture this: a sunny afternoon with friends gathered under
+                  your pergola, laughter mingling with the aroma of a backyard
+                  barbecue. Or a quiet morning coffee as gentle rain falls
+                  above, while you stay perfectly dry and at peace.
+                </p>
+                <p>
+                  This isn’t just about creating shade—it’s about creating a
+                  space where memories are made, connections flourish, and every
+                  season feels like your favorite one.
+                </p>
               </div>
+
+              {/* Button wrap */}
+              <V2Button
+                data={
+                  {
+                    type: "Secondary",
+                    size: "Medium",
+                    text: "Design Yours Today",
+                    link: "#",
+                    icon: null,
+                  } as any
+                }
+                className={"w-full lg:w-auto"}
+              />
             </div>
           </div>
         </section>
-        <section className={"flex items-center flex-col w-full bg-white py-20"}>
+        <section
+          className={
+            "flex items-center flex-col w-full bg-white pt-8 pb-12 lg:py-20"
+          }
+        >
           <p
-            className={"mb-10 text-[32px] font-bold text-center text-[#140E02]"}
+            className={
+              "px-6 mb-5 text-2xl lg:mb-10 lg:text-[32px] font-bold text-center text-[#140E02]"
+            }
           >
             Our Story: From Humble Roots to Outdoor Innovation
           </p>
           <div
             className={
-              "grid grid-cols-2 gap-x-[55px] w-full max-w-[1074px] text-[#2F2A1E] text-18"
+              "px-6 lg:p-0 lg:grid lg:grid-cols-2 lg:gap-x-[55px] overflow-auto lg:overflow-visible h-[480px] lg:h-auto w-full lg:max-w-[1074px] text-[#2F2A1E]text-sm lg:text-18"
             }
           >
             <p
@@ -110,20 +131,8 @@ export default async function AboutUsPage() {
             ></p>
           </div>
         </section>
-        {data.sections.map((section: any) => {
-          const key = `${section.id}-${section.__component}`
-          console.log("AboutUs section", key, section)
-          if (section.__component === "blocks.v2-promo-banner") {
-            return <V2PromoBanner key={key} data={section} />
-          } else if (section.__component === "blocks.v2-feature-cards") {
-            return <V2FeatureCards key={key} data={section} />
-          } else if (section.__component === "blocks.v2-service-snapshots") {
-            return <V2ServiceSnapshots key={key} data={section} />
-          } else if (section.__component === "blocks.v2-dual-offer-section") {
-            return <V2DualOfferSection key={key} data={section} />
-          }
-          return null
-        })}
+
+        <V2SectionRenderer sections={data.sections || []} />
         <V2ContactUsSection />
       </div>
       <FooterDark />

@@ -175,9 +175,7 @@ export function V2FAQSection({ data, isMobile = false }: FAQSectionProps) {
 
   return (
     <section
-      className={`w-full pt-8 pb-12 lg:py-16 lg:px-4 ${
-        data.backgroundImage ? "relative" : ""
-      }`}
+      className={`w-full pt-8 pb-12 lg:py-16 lg:px-4`}
       itemScope
       itemType="https://schema.org/FAQPage"
     >
@@ -196,11 +194,7 @@ export function V2FAQSection({ data, isMobile = false }: FAQSectionProps) {
         </div>
       )}
 
-      <div
-        className={`w-full lg:max-w-[1074px] mx-auto ${
-          data.backgroundImage ? "relative z-10" : ""
-        }`}
-      >
+      <div className={`w-full lg:max-w-[1074px] mx-auto`}>
         <header className="text-center mb-8 lg:mb-12">
           {data.title && (
             <h2 className="text-2xl lg:text-4xl font-semibold text-[#140e02]">

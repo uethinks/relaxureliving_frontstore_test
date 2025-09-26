@@ -47,7 +47,7 @@ export default function FeaturesSection({
                 alt={feature.icon.alternativeText || feature.title}
                 width={feature.icon.width}
                 height={feature.icon.height}
-                className="w-14 h-14 object-contain flex-shrink-0 flex-grow-0 basis-auto"
+                className="w-[16vw] h-[16vw] lg:w-14 lg:h-14 object-contain flex-shrink-0 flex-grow-0 basis-auto"
               />
             )}
             <div

@@ -1,4 +1,5 @@
-'use client'
+"use client"
+
 import { MoveLeft, MoveRight } from "lucide-react"
 import { ReactNode, useEffect, useRef, useState } from "react"
 import { Autoplay } from "swiper/modules"
@@ -63,7 +64,7 @@ export function CustomCarousel({
         {data.map((val, key) => (
           <SwiperSlide key={key}>{val}</SwiperSlide>
         ))}
-        {showDots && (
+        {data.length > 1 && showDots && (
           <div
             className={
               "flex flex-grow-0 flex-shrink-0 basis-auto justify-center items-center gap-2 mt-5 mb-7"
