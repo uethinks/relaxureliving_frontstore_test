@@ -1,6 +1,7 @@
 "use client"
 
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
+import V2MaskHeader from "@/components/V2MaskHeader"
 import V2PressItem from "@/components/V2PressItem"
 import { getPress } from "@lib/cms/strapiCmsApi"
 import { getStrapiUrl } from "@lib/utils"
@@ -32,22 +33,13 @@ export default function PagePress() {
     <>
       <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className={"relation overflow-hidden w-full py-20"}>
-          <img
-            src="/img/body-mask.png"
-            className={"absolute top-0 left-0 z-0 w-full"}
-          />
-          <div className={"max-w-7xl mb-10 text-black text-center m-auto"}>
-            <h1 className={"font-semibold text-[56px]"}>
-              Relaxure in the Press
-            </h1>
-            <p className={"text-xl"}>
-              Discover articles showcasing Relaxure’s pergolas, outdoor living
-              inspirations, and expert reviews.
-            </p>
-          </div>
-        </section>
-        <section className={"w-full max-w-[1440px] mb-20"}>
+        <V2MaskHeader
+          title={"Relaxure in the Press"}
+          description={
+            "   Discover articles showcasing Relaxure’s pergolas, outdoor living inspirations, and expert reviews."
+          }
+        />
+        <section className={"w-full lg:max-w-[1440px] mb-12 lg:mb-20"}>
           <div className={"w-full"}>
             <div
               className={
