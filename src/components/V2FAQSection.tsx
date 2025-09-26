@@ -176,13 +176,13 @@ export function V2FAQSection({ data, isMobile = false }: FAQSectionProps) {
 
   return (
     <section
-      className={`w-full pt-8 pb-12 lg:py-16 lg:px-4 ${getBackgroundColor(
+      className={`relative w-full pt-8 pb-12 lg:py-16 lg:px-4 ${getBackgroundColor(
         data.backgroundColor
       )}`}
       itemScope
       itemType="https://schema.org/FAQPage"
     >
-      {/* Background Image */}
+      {/* Background Image - positioned relative to this section */}
       {data.backgroundImage && (
         <div className="absolute inset-0 z-0">
           <picture>
@@ -197,7 +197,7 @@ export function V2FAQSection({ data, isMobile = false }: FAQSectionProps) {
         </div>
       )}
 
-      <div className={`w-full lg:max-w-[1074px] mx-auto`}>
+      <div className={`relative z-10 w-full lg:max-w-[1074px] mx-auto`}>
         <header className="text-center mb-8 lg:mb-12">
           {data.title && (
             <h2 className="text-2xl lg:text-4xl font-semibold text-[#140e02]">
