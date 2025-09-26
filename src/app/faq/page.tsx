@@ -1,6 +1,7 @@
 "use client"
 
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
+import V2MaskHeader from "@/components/V2MaskHeader"
 import { getFAQCategories } from "@lib/cms/strapiCmsApi"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
@@ -112,54 +113,42 @@ function FaqPageComponent() {
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className={"relative overflow-hidden w-full"}>
-          <img
-            src="/img/body-mask.png"
-            className={"absolute top-0 left-0 z-0 w-full"}
-          />
-          <h1
-            className={
-              "pt-20 pb-10 text-center text-[56px] font-semibold text-[#140E02]"
-            }
-          >
-            FAQs
-          </h1>
-        </section>
+        <V2MaskHeader title={"FAQs"} />
 
         <section
-          className={"relative w-full max-w-7xl flex flex-row gap-6 mb-20"}
+          className={
+            "relative w-full px-6 lg:px-0 lg:max-w-7xl flex gap-5 lg:gap-6 mb-20"
+          }
         >
-          <div className="w-[342px] flex-grow-0 flex-shrink-0 basis-auto">
-            <div className="pb-8">
-              <ul className="flex pl-4 flex-col gap-5">
-                {categories &&
-                  categories?.map((category: any) => (
-                    <li
-                      key={category.documentId}
-                      className={"relative text-2xl cursor-pointer"}
-                      onClick={() => {
-                        setCategoryId(category.slug)
-                      }}
+          <div className="w-[27vw] lg:w-[342px] flex-grow-0 flex-shrink-0 basis-auto">
+            <ul className="flex pb-8 flex-col gap-5">
+              {categories &&
+                categories?.map((category: any) => (
+                  <li
+                    key={category.documentId}
+                    className={"relative text-base lg:text-2xl cursor-pointer"}
+                    onClick={() => {
+                      setCategoryId(category.slug)
+                    }}
+                  >
+                    {categoryId === category.slug && (
+                      <img
+                        src="/img/icon-title.svg"
+                        alt=""
+                        className="w-8 h-8 flex-shrink-0 absolute top-0 -left-4 -z-1"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span
+                      className={`break-words whitespace-normal relative z-1 font-bold text-[${
+                        categoryId === category.slug ? "#140E02" : "#8C877C"
+                      }]`}
                     >
-                      {categoryId === category.slug && (
-                        <img
-                          src="/img/icon-title.svg"
-                          alt=""
-                          className="w-8 h-8 flex-shrink-0 absolute top-0 -left-4 -z-1"
-                          aria-hidden="true"
-                        />
-                      )}
-                      <span
-                        className={`relative z-1 font-bold text-[${
-                          categoryId === category.slug ? "#140E02" : "#8C877C"
-                        }]`}
-                      >
-                        {category.name}
-                      </span>
-                    </li>
-                  ))}
-              </ul>
-            </div>
+                      {category.name}
+                    </span>
+                  </li>
+                ))}
+            </ul>
           </div>
           <article className={"w-full flex flex-col gap-[1px]"}>
             {faqs &&
@@ -170,7 +159,7 @@ function FaqPageComponent() {
                   }] px-4`}
                 >
                   <div
-                    className={`flex flex-row items-center justify-between py-4 font-semibold text-base text-[#8C877C] ${
+                    className={`flex flex-row items-center justify-between py-4 font-semibold text-sm lg:text-base text-[#8C877C] ${
                       faq.description && "cursor-pointer"
                     }`}
                     onClick={() => {
@@ -200,7 +189,7 @@ function FaqPageComponent() {
                   </div>
 
                   <div
-                    className={`whitespace-break-spaces text-xs mb-4 text-[#2F2A1E] ${
+                    className={`whitespace-break-spaces text-[10px] lg:text-xs mb-4 text-[#2F2A1E] ${
                       faq.description && faqId === faqKey + 1
                         ? "block"
                         : "hidden"
