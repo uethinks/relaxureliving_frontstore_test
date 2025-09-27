@@ -170,6 +170,14 @@ const v2TimelineSectionPopulate = {
   },
 }
 
+const v2ComparisonSectionPopulate = {
+  populate: {
+    items: {
+      populate: "*",
+    },
+  },
+}
+
 const blocksAllPopulate = {
   // using a detailed population strategy to explicitly define what you want
   "blocks.v2-hero-banner": v2HeroBannerPopulate,
@@ -187,6 +195,7 @@ const blocksAllPopulate = {
   "blocks.v2-feature-cards": v2FeatureCardsPopulate,
   "blocks.v2-guide-cards-section": v2GuideCardsPopulate,
   "blocks.v2-timeline-section": v2TimelineSectionPopulate,
+  "blocks.v2-comparison-section": v2ComparisonSectionPopulate,
 }
 
 // 定义 API URL

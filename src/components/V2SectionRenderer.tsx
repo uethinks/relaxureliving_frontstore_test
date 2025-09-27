@@ -18,6 +18,7 @@ import V2TestimonialsSection from "@/components/V2TestimonialsSection"
 import { useIsMobile } from "@/lib/hooks/useScreenSize"
 import React from "react"
 import { V2TimelineSection } from "./V2TimelineSection"
+import { V2PergolasComparisonTable } from "./V2ComparisonSection"
 
 interface Section {
   id: string | number
@@ -49,6 +50,7 @@ const sectionComponents = {
   "blocks.v2-feature-cards": V2FeatureCards,
   "blocks.v2-guide-cards-section": V2GuideCardsSection,
   "blocks.v2-timeline-section": V2TimelineSection,
+  "blocks.v2-comparison-section": V2PergolasComparisonTable,
 } as const
 
 export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({
