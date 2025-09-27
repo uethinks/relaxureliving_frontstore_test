@@ -1,6 +1,7 @@
 "use client"
 
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
+import V2MaskHeader from "@/components/V2MaskHeader"
 import {
   Pagination,
   PaginationContent,
@@ -8,16 +9,12 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination"
 import { getBlogs, getTags } from "@lib/cms/strapiCmsApi"
-import { getStrapiUrl } from "@lib/utils"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
-import dayjs from "dayjs"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useState } from "react"
-import Markdown from "react-markdown"
-import rehypeRaw from "rehype-raw"
-import remarkGfm from "remark-gfm"
-import { IconCalendar, IconNext, IconPrev } from "./svg"
+import BlogCard from "./BlogCard"
+import { IconNext, IconPrev } from "./svg"
 
 function buildBlogUrl(page?: number, tags?: string[]) {
   const query = new URLSearchParams()
@@ -76,88 +73,20 @@ function BlogContent() {
     <>
       <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className={"w-full relative overflow-hidden py-20"}>
-          <img
-            src="/img/body-mask.png"
-            className={"absolute top-0 left-0 z-0 w-full"}
-          />
-          <div className={"w-7xl text-black text-center"}>
-            <h1 className={"font-semibold text-[56px]"}>Blog</h1>
-          </div>
-        </section>
-        <section className={"relative w-[1074px] flex justify-between gap-6"}>
+        <V2MaskHeader title="Blog" sectionClassName={"pt-8 pb-5 lg:py-20"} />
+        <section
+          className={
+            "relative w-full px-6 pb-12 lg:pb-0 lg:px-0 lg:w-[1074px] flex flex-col lg:flex-row justify-between gap-10 lg:gap-6"
+          }
+        >
           <div className={"w-full flex flex-col items-center"}>
-            <div className={"w-full flex flex-wrap gap-x-6 gap-y-10"}>
+            <div className={"w-full flex flex-wrap lg:gap-x-6 gap-y-10"}>
               {blogs.map((blog: any) => (
-                <div className={"w-[342px]"} key={blog.documentId}>
-                  <div
-                    className={
-                      "w-full h-[244px] flex items-center mb-5 cursor-pointer"
-                    }
-                    onClick={() => {
-                      router.push(`/blog/${blog.slug}?id=${blog.documentId}`)
-                    }}
-                  >
-                    <img
-                      src={blog.cover ? getStrapiUrl(blog.cover.url) : ""}
-                      className="object-contain w-full h-full"
-                    />
-                  </div>
-                  <div className={"flex flex-wrap gap-4 mb-[10px]"}>
-                    {blog.tags &&
-                      blog.tags.map((tag: any) => (
-                        <div
-                          key={tag.id}
-                          className={
-                            "py-[3px] px-[5px] bg-[#2F2A1E] text-[#fff] font-semibold text-xs"
-                          }
-                        >
-                          {tag.title}
-                        </div>
-                      ))}
-                  </div>
-                  <div
-                    className={
-                      "line-clamp-2 text-[#140E02] text-2xl font-bold mb-[10px] cursor-pointer"
-                    }
-                    onClick={() => {
-                      router.push(`/blog/${blog.slug}?id=${blog.documentId}`)
-                    }}
-                  >
-                    {blog.title}
-                  </div>
-                  {blog.createdAt && (
-                    <div
-                      className={
-                        "flex items-center text-base text-[#2F2A1E] mb-5"
-                      }
-                    >
-                      <IconCalendar />
-                      {dayjs(blog.createdAt).format("MMM DD, YYYY")}
-                    </div>
-                  )}
-                  <div className="text-[#8C877C] line-clamp-3 mb-10 whitespace-break-spaces prose">
-                    <Markdown
-                      rehypePlugins={[rehypeRaw]}
-                      remarkPlugins={[remarkGfm]}
-                      remarkRehypeOptions={{ passThrough: ["link"] }}
-                    >
-                      {blog.content}
-                    </Markdown>
-                  </div>
-                  <a
-                    className={
-                      "block w-[144px] h-8 leading-8 text-[#140E02] text-sm text-center font-semibold border border-[#FFBF3C]"
-                    }
-                    href={`blog/${blog.slug}?id=${blog.documentId}`}
-                  >
-                    Read more
-                  </a>
-                </div>
+                <BlogCard blog={blog} key={blog.documentId} />
               ))}
             </div>
-            <div className={"mt-10 mb-20"}>
-              {total > 1 && (
+            {total > 1 && (
+              <div className={"mt-5 mb-10 lg:mt-10 lg:mb-20"}>
                 <Pagination>
                   <PaginationContent>
                     {currentPage > 1 && (
@@ -203,38 +132,38 @@ function BlogContent() {
                     )}
                   </PaginationContent>
                 </Pagination>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-          <div>
-            <div className={"w-[342px] sticky top-[120px] z-10"}>
-              <div className={"mb-5 text-[#140E02] font-semibold text-2xl"}>
-                Popular Tags
-              </div>
-              <div className={"flex flex-wrap gap-4 "}>
-                {tags &&
-                  tags?.map((tag: any) => (
-                    <div
-                      key={tag.id}
-                      className={`py-[3px] px-[5px]  font-semibold text-xs cursor-pointer ${
-                        currentTags && currentTags.includes(`${tag.id}`)
-                          ? "bg-[#ffb521] text-[#181a1b]"
-                          : "bg-[#2F2A1E] text-[#fff]"
-                      }`}
-                      onClick={() => {
-                        setCurrentTags((prev) =>
-                          prev
-                            ? prev.includes(`${tag.id}`)
-                              ? prev.filter((x) => x !== `${tag.id}`)
-                              : [...prev, `${tag.id}`]
-                            : [`${tag.id}`]
-                        )
-                      }}
-                    >
-                      {tag.title}
-                    </div>
-                  ))}
-              </div>
+          <div
+            className={"w-full lg:w-[342px] lg:sticky lg:top-[120px] lg:z-10"}
+          >
+            <div className={"mb-5 text-[#140E02] font-semibold text-2xl"}>
+              Popular Tags
+            </div>
+            <div className={"flex flex-wrap gap-4"}>
+              {tags &&
+                tags?.map((tag: any) => (
+                  <div
+                    key={tag.id}
+                    className={`py-[3px] px-[5px] font-semibold text-xs cursor-pointer ${
+                      currentTags && currentTags.includes(`${tag.id}`)
+                        ? "bg-[#ffb521] text-[#181a1b]"
+                        : "bg-[#2F2A1E] text-[#fff]"
+                    }`}
+                    onClick={() => {
+                      setCurrentTags((prev) =>
+                        prev
+                          ? prev.includes(`${tag.id}`)
+                            ? prev.filter((x) => x !== `${tag.id}`)
+                            : [...prev, `${tag.id}`]
+                          : [`${tag.id}`]
+                      )
+                    }}
+                  >
+                    {tag.title}
+                  </div>
+                ))}
             </div>
           </div>
         </section>
