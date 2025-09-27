@@ -1,5 +1,6 @@
 "use client"
 
+import V2MaskHeader from "@/components/V2MaskHeader"
 import { getPolicy } from "@lib/cms/strapiCmsApi"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
@@ -30,37 +31,24 @@ export default function PagePolicy() {
         <NavBarWrapper />
         {policy && (
           <>
-            <section className={"relative overflow-hidden w-full py-20"}>
-              <img
-                src="/img/body-mask.png"
-                className={"absolute top-0 left-0 z-0 w-full"}
-              />
-              <div
+            <V2MaskHeader title={policy.title}>
+              <p
                 className={
-                  "w-[1074px] max-w-none m-auto text-black flex flex-col items-center"
+                  "text-xl whitespace-break-spaces prose all:unset text-center"
                 }
               >
-                <h1 className={"mb-5 font-semibold text-[56px] text-center"}>
-                  {policy.title}
-                </h1>
-                <p
-                  className={
-                    "text-xl whitespace-break-spaces prose all:unset text-center"
-                  }
+                <Markdown
+                  rehypePlugins={[rehypeRaw]}
+                  remarkPlugins={[remarkGfm]}
+                  remarkRehypeOptions={{ passThrough: ["link"] }}
                 >
-                  <Markdown
-                    rehypePlugins={[rehypeRaw]}
-                    remarkPlugins={[remarkGfm]}
-                    remarkRehypeOptions={{ passThrough: ["link"] }}
-                  >
-                    {policy.description}
-                  </Markdown>
-                </p>
-              </div>
-            </section>
+                  {policy.description}
+                </Markdown>
+              </p>
+            </V2MaskHeader>
             <section
               className={
-                "w-[1074px] max-w-none mb-32 whitespace-break-spaces prose text-left"
+                "w-full lg:w-[1074px] max-w-none max-lg:px-6 mb-12 lg:mb-32 whitespace-break-spaces prose text-left"
               }
             >
               <Markdown
