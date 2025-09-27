@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { BuyNowButton } from "./BuyNowButton"
 import { PergulaSizeSelector } from "./PergulaSizeSelector"
 import {
@@ -7,7 +7,7 @@ import {
   StoreProductVariant,
   StoreProductOptionValue,
 } from "@medusajs/types"
-import { PergolaSize, selectedProducts } from "types/global"
+import { PergolaData, PergolaSize, RelatedProductIds, selectedProducts, Image } from "types/global"
 import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
 import { useProductSelection } from "./ProductSelectionContext"
@@ -21,17 +21,22 @@ import {
 import { Button } from "@/components/ui/button"
 import V2SupportSection from "@/components/V2SupportSection"
 
+
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 interface V2StandardProductSelectorProps {
   product: StoreProduct
   accessories: StoreProduct[]
+  selectorData: any
   accessoriesCMSData: any
 }
+
+
 
 export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps> = ({
   product,
   accessories,
+  selectorData,
   accessoriesCMSData,
 }) => {
   const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
@@ -51,6 +56,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
   const [isClient, setIsClient] = useState(false)
 
   console.log("===product===", product)
+  console.log("===selectorData2", selectorData)
   console.log("===accessories===", accessories)
   console.log("===accessoriesCMSData===", accessoriesCMSData)
   const router = useRouter()
@@ -390,6 +396,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
           <PergulaSizeSelector
             product={product}
             className="w-full"
+            selectorData={selectorData}
             selectedSize={selectedSize}
             selectedColor={selectedColor}
             selectedStyle={selectedStyle}
@@ -403,6 +410,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
         <div className="mb-6">
           <V2AccesorriesSelector
             pergolaSize={pergolaSize}
+            selectorData={selectorData}
             selectedColor={selectedColor}
             onAccessoryChange={handleAccessoryToggle}
             accessories={accessories}

@@ -14,7 +14,6 @@ interface FeatureCardProps {
 
 export function FeatureCard({ item, index }: FeatureCardProps) {
   const isReversed = item.mediaPosition === "Left"
-  console.log("item", item)
 
   return (
     <section className={`${getBackgroundColor(item.backgroundColor)}`}>

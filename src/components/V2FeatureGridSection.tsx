@@ -135,7 +135,6 @@ interface FeatureCardProps {
 }
 
 function FeatureCard({ item }: FeatureCardProps) {
-  console.log("item:", item)
   // Use the best available image format
   const imageUrl = item.image?.url
   const imageAlt =

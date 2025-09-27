@@ -140,6 +140,8 @@ export type ProductInformation = {
   urlLink: string
 }
 
+
+
 // 相关产品ID类型
 export type RelatedProductIds = {
   id: number
@@ -147,6 +149,18 @@ export type RelatedProductIds = {
   heaterId: string
   shadesId: string
   glassDoorId: string
+  PDF_Link_glassdoor: string
+  PDF_Link_sunshade: string
+  PDF_Link_heater: string
+  PDF_Link_pergola: string
+  sizeDescription_10x10: string
+  sizeDescription_10x13: string
+  sizeDescription_13x13: string
+  sizeDescription_13x19: string
+  sizeImage_10x10: Image
+  sizeImage_10x13: Image
+  sizeImage_13x13: Image
+  sizeImage_13x19: Image
 }
 
 // 描述标签内容类型

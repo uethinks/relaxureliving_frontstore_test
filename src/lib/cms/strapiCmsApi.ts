@@ -209,7 +209,9 @@ const reviewsPopulate = {
 
 const standardPergolaPopulate = {
   populate: {
-    relatedProductIds: "*",
+    relatedProductIds: {
+      populate: ["sizeImage_10x10", "sizeImage_10x13", "sizeImage_13x13", "sizeImage_13x19"],
+    },
     productImages: {
       fields: ["*"],
     },
@@ -237,7 +239,9 @@ const customPergolaPopulate = {
 const pergolaPopulate = {
   populate: {
     productInformations: "*",
-    relatedProductIds: "*",
+    relatedProductIds: {
+      populate: ["sizeImage_10x10", "sizeImage_10x13", "sizeImage_13x13", "sizeImage_13x19"],
+    },
     product_images: {
       fields: ["*"],
     },

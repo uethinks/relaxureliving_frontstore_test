@@ -643,6 +643,10 @@ You can apply the theme on any DOM node, not just the `body`
 .animate-diagonal {
   animation: diagonal-movement 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+ul {
+  list-style: disc;
+  padding-left: 1rem;
+}
 
 /*
 

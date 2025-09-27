@@ -1,4 +1,5 @@
 import { CartProvider } from "@lib/context/cartContext"
+import { ImageGalleryProvider } from "@lib/context/imageZoomContext"
 import { Metadata } from "next"
 import "../styles/globals.css"
 import Script from "next/script"
@@ -147,11 +148,13 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         </noscript>
         <ReactQueryProvider>
           <CartProvider>
-            <main className="w-full relative">
-              <div className="w-full flex flex-col items-center">
-                {props.children}
-              </div>
-            </main>
+            <ImageGalleryProvider>
+              <main className="w-full relative">
+                <div className="w-full flex flex-col items-center">
+                  {props.children}
+                </div>
+              </main>
+            </ImageGalleryProvider>
           </CartProvider>
         </ReactQueryProvider>
         <Script

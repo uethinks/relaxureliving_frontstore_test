@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { ImgContent } from "./ImgContent"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
 import { StoreProduct } from "@medusajs/types"
@@ -7,6 +7,7 @@ import { PergolaData, ProductInformation } from "@/types/global"
 import { ProductSelectorMobile } from "./ProductSelectorMobile"
 import { ProductSelectionProvider } from "./ProductSelectionContext"
 import V2FeatureItems from "@/components/V2FeatureItems"
+import { convertSelectorData } from "@lib/util/selector"
 
 interface FirstScreenProps {
   product: StoreProduct
@@ -23,6 +24,14 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
   accessoriesCMSData,
   standardPergolaData,
 }) => {
+
+  const selectorData = useMemo(() => {
+    if (!standardPergolaData?.relatedProductIds) return {}
+    return convertSelectorData(standardPergolaData.relatedProductIds)
+  }, [standardPergolaData])
+
+  console.log('selectorData1',selectorData)
+  
   return (
     <ProductSelectionProvider product={product}>
       <div className="flex flex-col items-center justify-center w-full">
@@ -56,6 +65,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                 {/* Desktop View */}
                 <V2StandardProductSelector
                   product={product}
+                  selectorData={selectorData}
                   accessories={accessories}
                   accessoriesCMSData={accessoriesCMSData}
                 />
@@ -66,6 +76,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
         {/* Mobile View */}
         <ProductSelectorMobile
           product={product}
+          selectorData={selectorData}
           accessories={accessories}
           accessoriesCMSData={accessoriesCMSData}
         />

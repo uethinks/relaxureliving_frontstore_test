@@ -1,5 +1,9 @@
 "use client"
+import V2MediaRenderer from "@/components/V2MediaRenderer"
 import React, { useRef, useEffect, useState } from "react"
+import Markdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+
 /* NOSONAR */
 interface Feature {
   icon: string
@@ -8,6 +12,7 @@ interface Feature {
 
 interface PergolaFeaturesProps {
   selectedSize: string
+  selectorData: any
 }
 
 const HIGHER_CEILING_TEXT = "Higher ceiling 8.79FT(268cm)"
@@ -112,14 +117,17 @@ export const VALUE_BY_COLORS: Record<string, string> = {
 // style CONFIG
 export const IMG_BY_STYLE: Record<string, string> = {
   "Wall Mounted": "/img/product_style.png",
-  "Freestanding": "/img/product_style.png",
+  Freestanding: "/img/product_style.png",
 }
 
 export const PergolaFeatures: React.FC<PergolaFeaturesProps> = ({
   selectedSize,
+  selectorData,
 }) => {
   const [prevFeatures, setPrevFeatures] = useState<Set<string>>(new Set())
   const features = FEATURES_BY_SIZE[selectedSize] || FEATURES_BY_SIZE["10'x10'"]
+  const sizeDescription =
+    selectorData?.sizeData[selectedSize]?.description || ""
 
   useEffect(() => {
     // 延迟更新prevFeatures，以便动画完成后再更新
@@ -131,26 +139,33 @@ export const PergolaFeatures: React.FC<PergolaFeaturesProps> = ({
 
   return (
     <div className="grid grid-cols-2 gap-2 min-h-[160px]">
-      <div className="flex-1 pb-2">
-        {features.map((feature, index) => {
-          const isNewFeature = !prevFeatures.has(feature.text)
-          return (
-            <div
-              key={feature.text}
-              className={`text-sm text-[#8c877c] ${
-                isNewFeature ? "animate-slideIn" : ""
-              }`}
-            >
-              · {feature.text}
-            </div>
-          )
-        })}
+      <div className="flex-1 pb-2 text-xs">
+        <Markdown
+          remarkPlugins={[remarkGfm]}
+          // rehypePlugins={[rehypeRaw]}
+          remarkRehypeOptions={{ passThrough: ["link"] }}
+        >
+          {sizeDescription}
+        </Markdown>
       </div>
-      <img
-        src="/img/product_size.png"
+      <V2MediaRenderer
+        media={selectorData?.sizeData[selectedSize]?.image}
+        options={{
+          enableZoom: true,
+          objectFit: "contain",
+          imageOptions: {
+            sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px",
+          },
+        }}
+      />
+      {/* <img
+        src={
+          selectorData?.sizeData[selectedSize]?.image?.url ||
+          "/img/product_size.png"
+        }
         alt="Relaxure Pergola Kit"
         className="w-full h-[120px] object-contain"
-      />
+      /> */}
     </div>
   )
 }

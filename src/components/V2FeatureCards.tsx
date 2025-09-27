@@ -102,12 +102,9 @@ interface FeatureCardProps {
 }
 
 function FeatureCard({ item }: FeatureCardProps) {
-  console.log("V2FeatureCards item:", item)
   // Use the best available icon format
   const iconUrl = item.icon?.url
   const iconAlt = item.icon?.alternativeText || `${item.title} icon`
-
-  console.log("item:", item)
 
   return (
     <Card className={`bg-transparent border-none shadow-none`}>

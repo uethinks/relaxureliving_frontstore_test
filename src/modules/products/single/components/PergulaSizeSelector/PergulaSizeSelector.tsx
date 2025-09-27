@@ -9,10 +9,12 @@ import {
 import { IMG_BY_STYLE, PergolaFeatures, VALUE_BY_COLORS } from "./PergolaFeatures"
 import { Button } from "@/components/ui/button"
 import { DownloadIcon, FileDownIcon } from "lucide-react"
+import { handleDownloadPDF } from "@lib/util/selector"
 
 interface Props {
   className: string
   product: StoreProduct
+  selectorData?: any
   selectedSize?: StoreProductOptionValue
   selectedColor?: StoreProductOptionValue
   selectedStyle?: StoreProductOptionValue
@@ -84,7 +86,7 @@ export const PergulaSizeSelector = React.memo(
             <span className="text-sm text-[#8c877c] mb-3">+ $876.00</span>
           </div>
 
-          <PergolaFeatures selectedSize={selectedSize?.value || "10'x10'"} />
+          <PergolaFeatures selectedSize={selectedSize?.value || "10'x10'"} selectorData={selectorData} />
 
           <div className="grid grid-cols-2 gap-2">
             {sortedSizes?.map((size) => (
@@ -113,7 +115,7 @@ export const PergulaSizeSelector = React.memo(
           >
             I Want A Custom Size
           </Button>
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1">
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_pergola)}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Dimensions</span>
           </Button>
@@ -143,7 +145,7 @@ export const PergulaSizeSelector = React.memo(
               </div>
             ))}
           </div>
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1">
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_pergola)}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Specs</span>
           </Button>

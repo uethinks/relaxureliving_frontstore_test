@@ -18,12 +18,14 @@ interface ProductSelectorProps {
   product: StoreProduct
   accessories: StoreProduct[]
   accessoriesCMSData: any
+  selectorData: any
 }
 
 export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
   product,
   accessories,
   accessoriesCMSData,
+  selectorData,
 }) => {
   const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
   const [pergolaSize, setPergolaSize] = useState<PergolaSize>({
@@ -380,6 +382,7 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
             <PergulaSizeSelector
               product={product}
               className="!self-stretch !flex-[0_0_auto] !flex"
+              selectorData={selectorData}
               selectedSize={selectedSize}
               selectedColor={selectedColor}
               selectedStyle={selectedStyle}
@@ -390,6 +393,7 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
             <AccesorriesSelector
               pergolaSize={pergolaSize}
               onAccessoryChange={handleAccessoryToggle}
+              selectorData={selectorData}
               accessories={accessories}
               selectedHeaterVariant={selectedAccessoriesHeater}
               selectedShadesVariant={selectedAccessoriesShades}

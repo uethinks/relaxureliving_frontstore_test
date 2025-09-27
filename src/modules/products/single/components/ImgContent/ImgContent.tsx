@@ -33,7 +33,6 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
 
   // 根据选中的选项筛选图片
   const filteredImages = React.useMemo(() => {
-    console.log('productImages', productImages)
     if (!selectedSize && !selectedColor && !selectedStyle) {
       return productImages
     }

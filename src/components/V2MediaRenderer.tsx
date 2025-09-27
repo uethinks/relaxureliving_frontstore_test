@@ -2,6 +2,7 @@
 import React, { useRef, useEffect, useState } from "react"
 import Image from "next/image"
 import { getStrapiUrl } from "@lib/utils"
+import { useImageGallery } from "@lib/context/imageZoomContext"
 
 interface MediaFormat {
   ext: string
@@ -55,6 +56,7 @@ interface MediaRendererOptions {
     priority?: boolean
     sizes?: string
   }
+  enableZoom?: boolean // 是否启用图片放大功能
   className?: string
 }
 
@@ -70,6 +72,7 @@ export default function MediaRenderer({
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isInView, setIsInView] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const { openImageGallery } = useImageGallery()
 
   const {
     aspectRatio = undefined,
@@ -84,6 +87,7 @@ export default function MediaRenderer({
       priority: false,
       sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
     },
+    enableZoom = false,
     className = ""
   } = options
 
@@ -131,10 +135,15 @@ export default function MediaRenderer({
   // 计算宽高比
   const aspectRatioValue = aspectRatio ? aspectRatio.split("/").map(Number).reduce((a, b) => a / b) : undefined
 
+  // 处理放大功能
+  const handleZoomClick = () => {
+    openImageGallery([media], 0)
+  }
+
   if (hasError) {
     return (
       <div 
-        className={`bg-muted flex items-center justify-center ${className}`}
+        className={`flex items-center justify-center ${className}`}
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
         <span className="text-muted-foreground text-sm">媒体加载失败</span>
@@ -145,7 +154,7 @@ export default function MediaRenderer({
   if (isVideo) {
     return (
       <div 
-        className={`w-full h-full overflow-hidden bg-muted ${className}`}
+        className={`w-full h-full overflow-hidden ${className}`}
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
         <video
@@ -166,7 +175,7 @@ export default function MediaRenderer({
   if (isImage) {
     return (
       <div 
-        className={`w-full h-full overflow-hidden bg-muted ${className}`}
+        className={`w-full h-full overflow-hidden relative ${className}`}
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
         <Image
@@ -180,6 +189,22 @@ export default function MediaRenderer({
           sizes={imageOptions.sizes}
           onError={handleError}
         />
+        
+        {/* 放大按钮 */}
+        {enableZoom && (
+          <button
+            onClick={handleZoomClick}
+            className="absolute bottom-2 right-0 p-2 w-8 h-8 hover:bg-opacity-70 rounded-full flex items-center justify-center transition-all duration-200 z-10"
+            aria-label="放大图片"
+          >
+            <Image
+              src="/img/zoom-in.png"
+              alt="放大"
+              width={16}
+              height={16}
+            />
+          </button>
+        )}
       </div>
     )
   }
@@ -187,7 +212,7 @@ export default function MediaRenderer({
   // 不支持的媒体类型
   return (
     <div 
-      className={`bg-muted flex items-center justify-center ${className}`}
+      className={`flex items-center justify-center ${className}`}
       style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
     >
       <span className="text-muted-foreground text-sm">不支持的媒体类型</span>

@@ -7,6 +7,7 @@ import {
 } from "@medusajs/types"
 // Using simple button elements instead of Button component to avoid import issues
 import {
+  PergolaData,
   PergolaSize,
   selectedProductVariant,
   selectedProducts,
@@ -15,6 +16,7 @@ import { DirectionalSelector } from "./DirectionalSelector"
 import { FileDownIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { VALUE_BY_COLORS } from "../PergulaSizeSelector/PergolaFeatures"
+import { handleDownloadPDF } from "@lib/util/selector"
 
 // Constants to avoid string duplication
 const ACCESSORY_NAMES = {
@@ -37,6 +39,7 @@ interface Props {
   selectedShadesVariant: selectedProducts
   selectedGlassdoorVariant: selectedProducts
   pergolaSize: PergolaSize
+  selectorData: any
   accessoriesCMSData: any
 }
 
@@ -55,6 +58,7 @@ export const V2AccesorriesSelector = ({
   selectedShadesVariant,
   selectedGlassdoorVariant,
   pergolaSize,
+  selectorData,
   accessoriesCMSData,
 }: Props): React.JSX.Element => {
   const [accessoriesIcons, setAccessoriesIcons] = useState<accessoriesIcons[]>([
@@ -84,9 +88,6 @@ export const V2AccesorriesSelector = ({
   const [selectedGlassdoorSides, setSelectedGlassdoorSides] = useState<
     string[]
   >([])
-  console.log("selectedHeaterSides", selectedHeaterSides)
-  console.log("selectedGlassdoorSides", selectedGlassdoorSides)
-  console.log("pergolaSize", pergolaSize)
 
   // Calculate quantities and prices for each accessory
   const getHeaterQuantity = () =>
@@ -536,7 +537,7 @@ export const V2AccesorriesSelector = ({
             </div>
           </div>
 
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1">
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_sunshade)}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Specs</span>
           </Button>
@@ -563,7 +564,7 @@ export const V2AccesorriesSelector = ({
             accessoryType={ACCESSORY_NAMES.GLASS_DOOR}
           />
 
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1">
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_glassdoor)}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Specs</span>
           </Button>
@@ -590,7 +591,7 @@ export const V2AccesorriesSelector = ({
             accessoryType={ACCESSORY_NAMES.HEATING}
           />
 
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1">
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_heater)}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Specs</span>
           </Button>

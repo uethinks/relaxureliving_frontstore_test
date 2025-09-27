@@ -52,6 +52,8 @@ interface Props {
   pergolaSize: PergolaSize
   /** 配件相关的CMS数据 */
   accessoriesCMSData: any
+  /** 选择器相关的CMS数据 */
+  selectorData: any
 }
 
 /**
@@ -68,6 +70,7 @@ export const AccesorriesSelector = ({
   onAccessoryChange,
   accessories,
   selectedColor,
+  selectorData,
   selectedHeaterVariant,
   selectedShadesVariant,
   selectedGlassdoorVariant,

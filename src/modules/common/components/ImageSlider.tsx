@@ -63,7 +63,7 @@ export const ImageSlider = ({
           minRatio: 1,
           toggle: true,
         }}
-        loop={true}
+        loop={images.length >= 6}
         className="h-full rounded-[20px] select-none"
       >
         {images.map((image, index) => (
