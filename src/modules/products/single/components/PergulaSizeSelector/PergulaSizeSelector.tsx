@@ -27,6 +27,7 @@ export const PergulaSizeSelector = React.memo(
   ({
     className,
     product,
+    selectorData,
     selectedSize,
     selectedColor,
     selectedStyle,
