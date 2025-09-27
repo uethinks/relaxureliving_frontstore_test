@@ -3,6 +3,7 @@
 import V2Button from "@/components/V2Button"
 import { getMenu } from "@lib/cms/strapiCmsApi"
 import { useCart } from "@lib/context/cartContext"
+import { useIsMobile } from "@lib/hooks/useScreenSize"
 import { getStrapiUrl } from "@lib/utils"
 import { Menu, Minus, MoveRight, Plus, X } from "lucide-react"
 import Link from "next/link"
@@ -82,6 +83,7 @@ export const NavBarWrapper = ({
   const router = useRouter()
 
   const hasItemsInCart = cart?.items && cart.items.length > 0
+  const isMobile = useIsMobile(1024)
 
   // 从API获取菜单数据
   useEffect(() => {
@@ -95,6 +97,12 @@ export const NavBarWrapper = ({
     }
     fetchMenuData()
   }, [])
+
+  useEffect(() => {
+    if (menuData && isMobile) {
+      setOpenSubmenu(menuData.data.menu_item[0].id)
+    }
+  }, [isMobile, menuData])
 
   // 处理菜单项点击
   const handleMenuItemClick = (
@@ -236,7 +244,7 @@ export const NavBarWrapper = ({
             </button>
 
             {/* 桌面端下拉菜单 */}
-            <div className="fixed top-[75px] bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50 -translate-x-6">
+            <div className="fixed top-20 bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50 -translate-x-6">
               <div className="px-10 py-4">
                 {item.sub_menu_item.map((subItem) => (
                   <a
@@ -459,7 +467,7 @@ export const NavBarWrapper = ({
           </button>
 
           {/* 桌面端下拉菜单 */}
-          <div className="fixed left-0 top-[75px] max-h-[600px] py-10 w-screen bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          <div className="fixed left-0 top-20 max-h-[600px] py-10 w-screen bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
             <div
               className={
                 "w-full max-w-[1074px] flex justify-center items-center gap-y-10 m-auto flex-wrap"

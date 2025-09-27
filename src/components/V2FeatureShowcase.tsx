@@ -19,18 +19,18 @@ export function V2FeatureShowcase({
     <div className={`w-full ${getBackgroundColor(data.backgroundColor)}`}>
       {/* Section Body */}
       {(data.title || data.description) && (
-        <div className="px-6 lg:px-0 py-8 lg:py-0">
+        <div className="px-6 lg:px-0 py-8 lg:py-20">
           {/* Hero Content */}
-          <div className="text-center mt-8 lg:mt-16 mb-3 lg:mb-5">
+          <div className="text-center">
             {/* Hero title */}
             <h1
               id="craftsmanship-title"
-              className="text-2xl lg:text-h2 font-bold text-black mb-2.5 lg:mb-6 leading-tight"
+              className="w-full lg:max-w-[1074px] lg:mx-auto text-2xl lg:text-h2 font-bold text-black leading-tight"
             >
               {data.title}
             </h1>
             {/* Hero description */}
-            <div className="w-full lg:max-w-[1074px] lg:mx-auto text-[#8C877C] text-sm lg:text-lg mb-2.5 lg:mb-0">
+            <div className="w-full lg:max-w-[1074px] lg:mx-auto text-[#8C877C] text-sm lg:text-lg mt-[10px] lg:mt-5">
               <Markdown remarkPlugins={[remarkGfm]}>
                 {data.description}
               </Markdown>

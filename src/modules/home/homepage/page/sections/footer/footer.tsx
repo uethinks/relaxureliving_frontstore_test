@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { getPolicies } from "@lib/cms/strapiCmsApi"
-import { ArrowRight, Star } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { IconDelivery, IconPackage, IconWarranty } from "./icons"
@@ -175,21 +175,30 @@ export const FooterDark = ({
           </div>
 
           <div className="flex gap-[22px] lg:gap-[25px] lg:my-10 my-5">
-            <a className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]" href="#">
+            <a
+              className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]"
+              href="https://www.facebook.com/people/Relaxure/61570952814126/?mibextid=wwXIfr"
+            >
               <img
                 className={"w-full h-full"}
                 src="/img/icon-facebook.svg"
                 alt="facebook"
               />
             </a>
-            <a className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]" href="#">
+            <a
+              className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]"
+              href="https://www.instagram.com/relaxureliving/"
+            >
               <img
                 className={"w-full h-full"}
                 src="/img/icon-instagram.svg"
                 alt="instagram"
               />
             </a>
-            <a className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]" href="#">
+            <a
+              className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]"
+              href="https://www.youtube.com/@Relaxure-Pergola"
+            >
               <img
                 className={"w-full h-full"}
                 src="/img/icon-youtube.svg"
@@ -225,7 +234,7 @@ export const FooterDark = ({
         </div>
 
         <div>
-          <div className="flex items-center gap-x-6 gap-y-[10px] lg:gap-y-6 flex-wrap mb-[57px]">
+          {/* <div className="flex items-center gap-x-6 gap-y-[10px] lg:gap-y-6 flex-wrap mb-[57px]">
             <span className="text-lg sm:text-xl font-semibold">Excellent</span>
             <div className={"flex flex-col items-center"}>
               <div className="flex">
@@ -252,7 +261,7 @@ export const FooterDark = ({
                 Satisfied Customers.
               </div>
             </div>
-          </div>
+          </div> */}
           <div className={"flex gap-y-[30px] lg:gap-6 flex-wrap"}>
             <div
               className={

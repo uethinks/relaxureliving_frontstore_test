@@ -7,7 +7,9 @@ import remarkGfm from "remark-gfm"
 export function CollectionContent({ data }: { data: any }) {
   return (
     <section
-      className={"w-full pt-[18px] pb-12 px-6 lg:max-w-7xl lg:py-28 lg:px-0"}
+      className={
+        "w-full pt-[18px] pb-12 px-6 lg:max-w-[1074px] lg:m-auto lg:py-28 lg:px-0"
+      }
     >
       <V2Headline title={data.title} />
       <div className="mt-10 whitespace-break-spaces">
