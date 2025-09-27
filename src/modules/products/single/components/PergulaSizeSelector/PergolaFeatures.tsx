@@ -144,6 +144,9 @@ export const PergolaFeatures: React.FC<PergolaFeaturesProps> = ({
           remarkPlugins={[remarkGfm]}
           // rehypePlugins={[rehypeRaw]}
           remarkRehypeOptions={{ passThrough: ["link"] }}
+          components={{
+            ul: ({ children }) => <ul className="list-disc pl-3">{children}</ul>,
+          }}
         >
           {sizeDescription}
         </Markdown>
