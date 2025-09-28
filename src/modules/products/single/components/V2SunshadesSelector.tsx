@@ -281,7 +281,7 @@ export const V2SunshadesSelector: React.FC<V2SunshadesSelectorProps> = ({
       : 0
 
   return (
-    <div className="flex w-full flex-1 justify-start items-start gap-2.5 sticky top-0">
+    <div className="flex w-full flex-1 justify-start items-start gap-2.5 lg:sticky lg:top-0">
       <div className="w-full">
         {/* Header */}
         <div className={"max-lg:hidden"}>
