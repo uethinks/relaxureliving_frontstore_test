@@ -18,7 +18,7 @@ const useQuantityManager = (cart: any, updateVariantInfo: any) => {
   // Initialize quantities from cart items
   useEffect(() => {
     const shadesInCart = cart?.items?.filter(
-      (item: any) => item.product_title === "Shade Screen"
+      (item: any) => item.product_handle === "sunshades"
     )
     if (!shadesInCart?.length) {
       return
@@ -136,7 +136,7 @@ const useShadesData = (cart: any) => {
   const memoizedShades = React.useMemo(() => {
     return (
       cart?.items?.filter(
-        (item: any) => item.product_title === "Shade Screen"
+        (item: any) => item.product_handle === "sunshades"
       ) ?? []
     )
   }, [cart?.items])

@@ -281,7 +281,7 @@ export const GlassDoorCard = (): JSX.Element | null => {
   } = useDeleteHandler(removeVariant)
 
   let glassDoorInCart = cart?.items?.filter(
-    (item) => item.product_title === "Frameless Sliding Glass Door"
+    (item) => item.product_handle === "frameless-glass-door"
   )
   const [glassDoor, setGlassDoor] = useState<StoreCartLineItem[] | null>(
     glassDoorInCart ?? null
@@ -301,7 +301,7 @@ export const GlassDoorCard = (): JSX.Element | null => {
 
   useEffect(() => {
     glassDoorInCart = cart?.items?.filter(
-      (item) => item.product_title === "Frameless Sliding Glass Door"
+      (item) => item.product_handle === "frameless-glass-door"
     )
     setGlassDoor(glassDoorInCart ?? [])
   }, [cart])

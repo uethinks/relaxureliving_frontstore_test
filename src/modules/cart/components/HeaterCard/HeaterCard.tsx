@@ -339,7 +339,7 @@ export const HeaterCard = (): JSX.Element | null => {
       return null
     }
     const heaterItems = cart.items.filter(
-      (item) => item.product_title === "Heater"
+      (item) => item.product_handle === "heaters"
     )
     return heaterItems.length > 0 ? heaterItems : null
   }, [cart?.items])
