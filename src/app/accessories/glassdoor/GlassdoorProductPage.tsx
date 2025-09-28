@@ -106,7 +106,7 @@ const GlassdoorProductPage = ({
             <div className="flex flex-col max-w-[1074px] w-full mx-auto mt-10  gap-5 pb-5">
               <div className="flex flex-row justify-between items-start relative w-full gap-[24px]">
                 {/* Left Content */}
-                <div className="w-full lg:w-[64%] flex flex-col sticky top-0">
+                <div className="w-full lg:w-[708px] flex flex-col sticky top-0">
                   <div className="flex flex-row justify-between w-full">
                     <ImgContent
                       productImages={glassdoorCMSData.productImages || []}

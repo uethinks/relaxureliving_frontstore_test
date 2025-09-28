@@ -537,7 +537,7 @@ export const V2AccesorriesSelector = ({
             </div>
           </div>
 
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_sunshade)}>
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_sunshade, "sunshade")}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Specs</span>
           </Button>
@@ -564,7 +564,7 @@ export const V2AccesorriesSelector = ({
             accessoryType={ACCESSORY_NAMES.GLASS_DOOR}
           />
 
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_glassdoor)}>
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_glassdoor, "glassdoor")}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Specs</span>
           </Button>
@@ -591,7 +591,7 @@ export const V2AccesorriesSelector = ({
             accessoryType={ACCESSORY_NAMES.HEATING}
           />
 
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_heater)}>
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_heater, "heater")}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Specs</span>
           </Button>

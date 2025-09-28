@@ -116,8 +116,8 @@ export const VALUE_BY_COLORS: Record<string, string> = {
 
 // style CONFIG
 export const IMG_BY_STYLE: Record<string, string> = {
-  "Wall Mounted": "/img/product_style.png",
-  Freestanding: "/img/product_style.png",
+  "Wall Mounted": "/img/product_style_wall_mounted.png",
+  Freestanding: "/img/product_style_freestanding.png",
 }
 
 export const PergolaFeatures: React.FC<PergolaFeaturesProps> = ({

@@ -30,10 +30,10 @@ export default function V2SupportSection() {
           </div>
         </div>
 
-        <div className="text-sm flex justify-between">
+        <div className="text-xs flex justify-between">
           <Button
             variant="link"
-            className="underline px-0 text-black gap-1"
+            className="underline px-0 text-black gap-1 text-xs"
             onClick={() => window.open(`tel:${data.phoneNumber}`, "_blank")}
           >
             <img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />
@@ -41,7 +41,7 @@ export default function V2SupportSection() {
           </Button>
           <Button
             variant="link"
-            className="underline px-0 text-black gap-1"
+            className="underline px-0 text-black gap-1 text-xs"
             onClick={() => window.open(`mailto:${data.email}`, "_blank")}
           >
             <img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />

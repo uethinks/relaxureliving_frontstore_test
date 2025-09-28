@@ -1,10 +1,10 @@
 import { RelatedProductIds, Image } from "@/types/global"
 
-export const handleDownloadPDF = (PDF_Link: string) => {
+export const handleDownloadPDF = (PDF_Link: string, name: string) => {
   if (PDF_Link) {
     const link = document.createElement("a")
     link.href = PDF_Link
-    link.download = "dimensions.pdf"
+    link.download = `${name || "demo"}.pdf`
     link.target = "_blank"
 
     document.body.appendChild(link)

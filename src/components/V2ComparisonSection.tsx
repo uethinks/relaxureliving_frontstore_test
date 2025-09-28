@@ -102,21 +102,241 @@ const getCellBg = (item: ComparisonItem, index: number, rowKey: string, rowIndex
   }
 }
 
+const MOCK_DATA = {
+  "__component": "blocks.v2-comparison-section",
+  "id": 13,
+  "title": "Relaxure VS. Others",
+  "backgroundColor": "white",
+  "items": [
+      {
+          "id": 8,
+          "documentId": "b5qx7ihv3wv0tu7cpi7ikre3",
+          "name": "Relaxure Corsica (Light-Duty)",
+          "price": "$5,297 - $11,858",
+          "included_technology": "Motorized Louvers, Automatic Rain Sensors, LED & RGB Lighting, App & Remote Control",
+          "customization_available": "**Fully Customizable** –  size, height, color",
+          "quality": "Extremely High",
+          "warranty": "Lifetime",
+          "expected_longevity": "40+ Years",
+          "wind_rating": "130 MPH",
+          "snow_load_capacity": "35lbs / sqft",
+          "frame_material": "Commercial grade **6063-T6** Aluminum",
+          "steel_reinforced_baseplates": "Yes",
+          "coating_standard": "AAMA-2605 powder-coated – highest U.S. architectural standard",
+          "shipping_insurance": "Included (Free Door-to-Door, Full Insurance)",
+          "maintenance": "Maintenance-free",
+          "factory_direct": "Direct from factory",
+          "estimated_delivery": "5-7 Weeks",
+          "isHighlight": true,
+          "category": "High Quality Pergolas",
+          "createdAt": "2025-09-28T04:35:50.864Z",
+          "updatedAt": "2025-09-28T04:41:58.513Z",
+          "publishedAt": "2025-09-28T04:41:58.544Z"
+      },
+      {
+          "id": 9,
+          "documentId": "kqpcdg8bfir0bm6m9sxei18p",
+          "name": "Relaxure Capri (Heavy-Duty)",
+          "price": "$6,463 - $14,467",
+          "included_technology": "Motorized Louvers, Automatic Rain Sensors, LED & RGB Lighting, App & Remote Control",
+          "customization_available": "**Fully Customizable** – size, height, color",
+          "quality": "Extremely High",
+          "warranty": "Lifetime",
+          "expected_longevity": "35+ Years",
+          "wind_rating": "165 MPH",
+          "snow_load_capacity": "65lbs / sqft",
+          "frame_material": "Commercial grade **6063-T6** Aluminum",
+          "steel_reinforced_baseplates": "Yes",
+          "coating_standard": "AAMA-2605 powder-coated – highest U.S. architectural standard",
+          "shipping_insurance": "Included (Free Door-to-Door, Full Insurance)",
+          "maintenance": "Maintenance-free",
+          "factory_direct": "Direct from factory",
+          "estimated_delivery": "5-7 Weeks",
+          "isHighlight": true,
+          "category": "High Quality Pergolas",
+          "createdAt": "2025-09-28T04:39:13.955Z",
+          "updatedAt": "2025-09-28T04:42:05.538Z",
+          "publishedAt": "2025-09-28T04:42:05.565Z"
+      },
+      {
+          "id": 7,
+          "documentId": "xuuz5hjytzg78i4msgjz2xc0",
+          "name": "Hanso",
+          "price": "$5,997 - $11,997",
+          "included_technology": "None (Extra Charge)",
+          "customization_available": "**No Customization** – standard sizes only",
+          "quality": "Extremely High",
+          "warranty": "10 Years",
+          "expected_longevity": "30+ Years",
+          "wind_rating": "72 - 120 MPH",
+          "snow_load_capacity": "25lbs / sqft",
+          "frame_material": "100% **6063-T5** Aluminum",
+          "steel_reinforced_baseplates": "No",
+          "coating_standard": "Standard powder-coating (lower grade)",
+          "shipping_insurance": "Shipping & Insurance Extra",
+          "maintenance": "Maintenance-free",
+          "factory_direct": "Middlemen",
+          "estimated_delivery": "10-14 Weeks",
+          "isHighlight": false,
+          "category": "High Quality Pergolas",
+          "createdAt": "2025-09-28T04:41:48.987Z",
+          "updatedAt": "2025-09-28T04:41:48.987Z",
+          "publishedAt": "2025-09-28T04:41:49.016Z"
+      },
+      {
+          "id": 11,
+          "documentId": "tcl5q4wx52zzsqpkl14npo2l",
+          "name": "Renson",
+          "price": "$40,000 - $180,000",
+          "included_technology": "None (Extra Charge)",
+          "customization_available": "**Fully Customizable** – size, height, color",
+          "quality": "Extremely High",
+          "warranty": "10 Years",
+          "expected_longevity": "30+ Years",
+          "wind_rating": "165 MPH",
+          "snow_load_capacity": "41lbs / sqft",
+          "frame_material": "Commercial grade **6063-T6** Aluminum",
+          "steel_reinforced_baseplates": "Yes",
+          "coating_standard": "AAMA-2605 powder-coated – highest U.S. architectural standard",
+          "shipping_insurance": "Shipping & Insurance Extra",
+          "maintenance": "Yearly cleaning",
+          "factory_direct": "Direct from factory",
+          "estimated_delivery": "8-12 Weeks (Plus a few visits)",
+          "isHighlight": false,
+          "category": "High Quality Pergolas",
+          "createdAt": "2025-09-28T04:52:59.655Z",
+          "updatedAt": "2025-09-28T04:52:59.655Z",
+          "publishedAt": "2025-09-28T04:52:59.678Z"
+      },
+      {
+          "id": 13,
+          "documentId": "l329csc70jxgs2oabbsjefg1",
+          "name": "Struxure",
+          "price": "$25,000 - $80,000",
+          "included_technology": "None (Extra Charge)",
+          "customization_available": "**Fully Customizable** – size, height, color",
+          "quality": "High",
+          "warranty": "10 Years",
+          "expected_longevity": "20 - 30 Years",
+          "wind_rating": "165 MPH",
+          "snow_load_capacity": "50lbs / sqft",
+          "frame_material": "100% **6063-T5** Aluminum",
+          "steel_reinforced_baseplates": "Yes",
+          "coating_standard": "AAMA-2605 powder-coated – highest U.S. architectural standard",
+          "shipping_insurance": "Shipping & Insurance Extra",
+          "maintenance": "Yearly cleaning",
+          "factory_direct": "Through dealers",
+          "estimated_delivery": "6-8 Weeks (Plus a few visits)",
+          "isHighlight": false,
+          "category": "High Quality Pergolas",
+          "createdAt": "2025-09-28T04:54:53.948Z",
+          "updatedAt": "2025-09-28T04:54:53.948Z",
+          "publishedAt": "2025-09-28T04:54:53.972Z"
+      },
+      {
+          "id": 15,
+          "documentId": "fwxss77rqoncw01heplssbip",
+          "name": "Purple Leaf",
+          "price": "$2,500 - $8,000",
+          "included_technology": "None",
+          "customization_available": "**No Customization** – standard sizes only",
+          "quality": "Medium",
+          "warranty": "None",
+          "expected_longevity": "2 - 3 Years",
+          "wind_rating": "60 - 70 MPH (Dangerous)",
+          "snow_load_capacity": "20lbs / sqft",
+          "frame_material": "Cheap Aluminum Alloy",
+          "steel_reinforced_baseplates": "No",
+          "coating_standard": "Standard powder-coating (lower grade)",
+          "shipping_insurance": "Free Shipping, Insurance Extra",
+          "maintenance": "Yearly cleaning",
+          "factory_direct": "Middlemen",
+          "estimated_delivery": "7-15 Days",
+          "isHighlight": false,
+          "category": "Cheap Aluminum Pergola",
+          "createdAt": "2025-09-28T05:00:12.157Z",
+          "updatedAt": "2025-09-28T05:00:12.157Z",
+          "publishedAt": "2025-09-28T05:00:12.178Z"
+      },
+      {
+          "id": 17,
+          "documentId": "b98pqvtke0ox3j44g9kz20iz",
+          "name": "Mirador",
+          "price": "$3,300 - $6,000",
+          "included_technology": "None",
+          "customization_available": "**No Customization** – standard sizes only",
+          "quality": "Medium",
+          "warranty": "2 Years",
+          "expected_longevity": "5 Years",
+          "wind_rating": "75 MPH",
+          "snow_load_capacity": "13-18lbs / sqft (Dangerous)",
+          "frame_material": "Cheap Aluminum Alloy",
+          "steel_reinforced_baseplates": "No",
+          "coating_standard": "Standard powder-coating (lower grade)",
+          "shipping_insurance": "Free Shipping, Insurance Extra",
+          "maintenance": "Yearly cleaning",
+          "factory_direct": "Middlemen",
+          "estimated_delivery": "7-15 Days",
+          "isHighlight": false,
+          "category": "Cheap Aluminum Pergola",
+          "createdAt": "2025-09-28T05:01:50.216Z",
+          "updatedAt": "2025-09-28T05:01:50.216Z",
+          "publishedAt": "2025-09-28T05:01:50.233Z"
+      },
+      {
+          "id": 19,
+          "documentId": "ejglk7vh3rgn3ueb25vv6ic2",
+          "name": "Yardistry",
+          "price": "$1,500 - $8,000",
+          "included_technology": "None",
+          "customization_available": "**No Customization** – standard sizes only",
+          "quality": "Good",
+          "warranty": "1 Year",
+          "expected_longevity": "2 - 5 Years",
+          "wind_rating": "50 - 70 MPH (Dangerous)",
+          "snow_load_capacity": "Varies",
+          "frame_material": "Wood",
+          "steel_reinforced_baseplates": "No",
+          "coating_standard": "/",
+          "shipping_insurance": "Free Shipping, Insurance Extra",
+          "maintenance": "Regular cleaning + Painting",
+          "factory_direct": "Middlemen",
+          "estimated_delivery": "3-8 Weeks",
+          "isHighlight": false,
+          "category": "Cheap Aluminum Pergola",
+          "createdAt": "2025-09-28T05:04:33.450Z",
+          "updatedAt": "2025-09-28T05:04:33.450Z",
+          "publishedAt": "2025-09-28T05:04:33.471Z"
+      }
+  ]
+}
+
 export const V2PergolasComparisonTable = ({
   data,
 }: {
   data: ComparisonData
 }) => {
   console.log("data", data)
-  const highQualityItems = data.items.filter(
-    (item) => item.category === "High Quality Pergolas"
-  )
-  const cheapItems = data.items.filter(
-    (item) => item.category === "Cheap Aluminum Pergolas"
-  )
+  data = MOCK_DATA
+  
+  // 动态提取所有唯一分类并排序
+  const categories = Array.from(
+    new Set(data.items.map(item => item.category).filter(Boolean))
+  ).sort((a:any, b:any) => {
+    // 确保 "High Quality Pergolas" 排在前面
+    if (a === "High Quality Pergolas") return -1
+    if (b === "High Quality Pergolas") return 1
+    return a.localeCompare(b)
+  })
 
-  // 创建排序后的数据数组，确保高质量产品在前，便宜产品在后
-  const sortedItems = [...highQualityItems, ...cheapItems]
+  // 按分类分组数据
+  const groupedItems = categories.map(category => ({
+    category,
+    items: data.items.filter(item => item.category === category)
+  }))
+
+  // 获取所有项目用于渲染
+  const allItems = data.items
 
   return (
     <div className={`w-full ${getBackgroundColor(data.backgroundColor)}`}>
@@ -126,33 +346,34 @@ export const V2PergolasComparisonTable = ({
         </h1>
 
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse bg-[#ffffff] shadow-lg overflow-hidden">
+          <table className="w-full border-collapse bg-[#ffffff] shadow-lg overflow-hidden table-fixed" style={{ minWidth: '1200px' }}>
             {/* Header */}
             <thead>
               <tr>
                 <th className="bg-[#2f2a1e] w-[150px] p-4 text-left font-medium text-[#000000] border-[#8c877c]"></th>
-                <th
-                  className="bg-[#2f2a1e] p-4 text-center font-medium text-[#ffffff] border-r border-[#8c877c]"
-                  colSpan={highQualityItems.length}
-                >
-                  High Quality Pergolas
-                </th>
-                <th
-                  className="bg-[#57554f] p-4 text-center font-medium text-[#ffffff]"
-                  colSpan={cheapItems.length}
-                >
-                  Cheap Aluminum Pergolas
-                </th>
+                {groupedItems.map((group, groupIndex) => (
+                  <th
+                    key={group.category}
+                    className={`${
+                      group.category === "High Quality Pergolas" 
+                        ? "bg-[#2f2a1e]" 
+                        : "bg-[#57554f]"
+                    } p-4 text-center font-medium text-[#ffffff] border-r border-[#8c877c]`}
+                    colSpan={group.items.length}
+                  >
+                    {group.category}
+                  </th>
+                ))}
               </tr>
               <tr>
-                <th className="bg-white w-[160px] p-3 text-left font-medium text-[#000000] border-r border-[#8c877c]"></th>
-                {sortedItems.map((item, index) => (
+                <th className="bg-white w-[150px] p-3 text-left font-medium text-[#000000] border-r border-[#8c877c]"></th>
+                {allItems.map((item, index) => (
                   <th
                     key={item.id}
                     className={`${getColumnBg(
                       item,
                       index
-                    )} p-3 text-center w-[160px] font-medium text-[#000000] border-r border-[#8c877c] text-sm last:border-r-0`}
+                    )} p-3 text-center w-[150px] font-medium text-[#000000] border-r border-[#8c877c] text-sm last:border-r-0`}
                   >
                     {item.name}
                   </th>
@@ -166,13 +387,13 @@ export const V2PergolasComparisonTable = ({
                   key={row.key}
                   className="border-b border-[#8c877c] last:border-b-0"
                 >
-                  <td className="bg-white p-4 font-medium text-[#000000] border-r border-[#8c877c] whitespace-pre-line">
+                  <td className="bg-white p-4 font-medium text-[#000000] border-r border-[#8c877c] whitespace-pre-line w-[150px]">
                     {row.label}
                   </td>
-                  {sortedItems.map((item, index) => (
+                  {allItems.map((item, index) => (
                     <td
                       key={item.id}
-                      className={`${getCellBg(item, index, row.key, rowIndex)} p-4 text-center ${
+                      className={`${getCellBg(item, index, row.key, rowIndex)} p-4 text-center w-[150px] ${
                         row.key === "included_technology" ||
                         row.key === "customization_available" ||
                         row.key === "frame_material" ||

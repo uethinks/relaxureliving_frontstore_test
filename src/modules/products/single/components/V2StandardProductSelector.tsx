@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button"
 import V2SupportSection from "@/components/V2SupportSection"
 import { useCart } from "@lib/context/cartContext"
+import V2ServiceSection from "@/components/V2ServiceSection"
 
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
@@ -440,77 +441,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
         </div> */}
 
         {/* Service Sections */}
-        <div className="mt-6 space-y-4">
-          <div className="flex justify-between items-center">
-            <span className="text-[#000000] font-medium">
-              Shipping: <span className="text-highlight">Free</span>
-            </span>
-            <span className="text-[#8C877C] line-through">+$999.99</span>
-          </div>
-          <p className="text-[#8c8c8c] text-sm">
-            <img
-              src="/img/shipping.svg"
-              alt="shipping"
-              className="w-4 h-4 inline-block mr-2 mb-1"
-            />
-            <span className="ml-2">Free Shipping + Insurance</span>
-            <br />
-            <img
-              src="/img/package.svg"
-              alt="package"
-              className="w-4 h-4 inline-block mr-2 mb-1"
-            />
-            <span className="ml-2">Delivered In 5 Weeks</span>
-          </p>
-
-          <div className="flex justify-between items-center">
-            <span className="text-[#000000] font-medium">
-              Full Insurance: <span className="text-highlight">Free</span>
-            </span>
-            <span className="text-[#8C877C] line-through">+$999.99</span>
-          </div>
-          <p className="text-[#8c8c8c] text-sm">
-            <img
-              src="/img/shipping.svg"
-              alt="shipping"
-              className="w-4 h-4 inline-block mr-2 mb-1"
-            />
-            <span className="ml-2">
-              Includes Complimentary Insurance Coverage
-            </span>
-            <br />
-            <img
-              src="/img/package.svg"
-              alt="package"
-              className="w-4 h-4 inline-block mr-2 mb-1"
-            />
-            <span className="ml-2">
-              Your Delivery Should Arrive In About Four Weeks
-            </span>
-          </p>
-
-          <div className="flex justify-between items-center">
-            <span className="text-[#000000] font-medium">
-              Warranty: <span className="text-highlight">Free</span>
-            </span>
-            <span className="text-[#8C877C] line-through">+$999.99</span>
-          </div>
-          <p className="text-[#8c8c8c] text-sm">
-            <img
-              src="/img/shipping.svg"
-              alt="shipping"
-              className="w-4 h-4 inline-block mr-2 mb-1"
-            />
-            <span className="ml-2">100 Day Risk-Free Trial</span>
-            <br />
-            <img
-              src="/img/warranty.svg"
-              alt="warranty"
-              className="w-4 h-4 inline-block mr-2 mb-1"
-            />
-            <span className="ml-2">Lifetime Warranty Included</span>
-          </p>
-        </div>
+        <V2ServiceSection/>
 
         {/* Add to Cart Button - Using BuyNowButton */}
         <div className="mt-6 sticky bottom-0">

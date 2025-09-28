@@ -84,7 +84,7 @@ export const PergulaSizeSelector = React.memo(
         <div className="mb-4">
           <div className="text-sm font-medium text-[#000000] mb-2 flex justify-between">
             <span> Size: {selectedSize?.value || "10'x10'"}</span>
-            <span className="text-sm text-[#8c877c] mb-3">+ $876.00</span>
+            {/* <span className="text-sm text-[#8c877c] mb-3">+ $876.00</span> */}
           </div>
 
           <PergolaFeatures selectedSize={selectedSize?.value || "10'x10'"} selectorData={selectorData} />
@@ -116,7 +116,7 @@ export const PergulaSizeSelector = React.memo(
           >
             I Want A Custom Size
           </Button>
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_pergola)}>
+          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_pergola, "dimensions")}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Dimensions</span>
           </Button>
@@ -146,10 +146,10 @@ export const PergulaSizeSelector = React.memo(
               </div>
             ))}
           </div>
-          <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_pergola)}>
+          {/* <Button variant="link" className="text-xs px-0 text-[#2F2A1E] mt-1" onClick={() => handleDownloadPDF(selectorData?.PDF_Link_pergola, "specs")}>
             <FileDownIcon className="w-4 h-4" color="#FFBF3C" />
             <span className="underline">Download Specs</span>
-          </Button>
+          </Button> */}
         </div>
 
         {/* Color Section */}

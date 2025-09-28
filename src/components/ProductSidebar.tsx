@@ -4,12 +4,14 @@ import React from "react"
 import { FloatingSidebar, SidebarIcon } from "./FloatingSidebar"
 import { ArrowUp, Ruler, Package } from "lucide-react"
 import { StoreProduct } from "@medusajs/types"
+import { useRouter } from "next/navigation"
 
 interface ProductSidebarProps {
   product: StoreProduct
 }
 
 export const ProductSidebar: React.FC<ProductSidebarProps> = ({ product }) => {
+  const router = useRouter()
   const sidebarIcons: SidebarIcon[] = [
     {
       icon: <ArrowUp strokeWidth={1.5} />,
@@ -21,16 +23,16 @@ export const ProductSidebar: React.FC<ProductSidebarProps> = ({ product }) => {
     {
       icon: <img src="/img/custom_size.svg" alt="custom size" />,
       text: "Custom Size",
-      onClick: () => (window as any).tidioChatApi?.open(),
+      onClick: () => {
+        // /customize
+        router.push('/customize')
+      },
     },
     {
       icon: <img src="/img/try_a_sample_kit.svg" alt="try_a_sample_kit" />,
       text: "Try A Sample Kit",
       onClick: () => {
-        const sampleKitElement = document.getElementById('sample-kit')
-        if (sampleKitElement) {
-          sampleKitElement.scrollIntoView({ behavior: 'smooth' })
-        }
+        router.push('/products/sample-kit')
       },
     },
   ]
