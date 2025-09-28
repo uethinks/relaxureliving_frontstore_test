@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import Image from "next/image"
+import { CustomCarousel } from "./CustomCarousel"
 import V2Headline from "./V2Headline"
 import V2MediaRenderer from "./V2MediaRenderer"
 
@@ -61,36 +62,48 @@ interface FeatureCardsData {
 
 interface FeatureCardsProps {
   data: FeatureCardsData
+  isMobile?: boolean
 }
 
-export function V2FeatureCards({ data }: FeatureCardsProps) {
+export function V2FeatureCards({ data, isMobile = false }: FeatureCardsProps) {
   return (
     <section
-      className={`w-full pt-20 pb-14 px-4 ${getBackgroundColor(data.backgroundColor)}`}
+      className={`w-full pt-8 pb-5 lg:pt-20 lg:pb-14 max-lg lg:px-4 ${getBackgroundColor(
+        data.backgroundColor
+      )}`}
       aria-labelledby="features-heading"
     >
       <div className="w-full flex flex-col gap-5">
         {/* Main Heading */}
-        <header className="text-center">
-          <V2Headline
-            title={data.title}
-            as="h1"
-            size="xl"
-            className="max-w-[1074px] mx-auto"
-            iconHidden
-          />
-        </header>
-        {data.description && (
-          <p className="text-center text-lg max-w-[1074px] mx-auto mb-2 text-[#8C877C]">
-            {data.description}
-          </p>
-        )}
+        <div className={"max-lg:px-6"}>
+          <header className="text-center">
+            <V2Headline
+              title={data.title}
+              as="h1"
+              size="xl"
+              className="w-full lg:max-w-[1074px] mx-auto max-lg:text-2xl"
+              iconHidden
+            />
+          </header>
+          {data.description && (
+            <p className="text-center text-sm lg:text-lg lg:max-w-[1074px] mx-auto mb-2 text-[#8C877C]">
+              {data.description}
+            </p>
+          )}
+        </div>
 
         {/* Features Grid - 2x2 layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-          {data.items.map((item) => (
-            <FeatureCard key={item.id} item={item} />
-          ))}
+          {isMobile ? (
+            <CustomCarousel
+              data={data.items.map((item) => (
+                <FeatureCard key={item.id} item={item} />
+              ))}
+              showNav={false}
+            />
+          ) : (
+            data.items.map((item) => <FeatureCard key={item.id} item={item} />)
+          )}
         </div>
       </div>
     </section>
@@ -108,12 +121,13 @@ function FeatureCard({ item }: FeatureCardProps) {
 
   return (
     <Card className={`bg-transparent border-none shadow-none`}>
-      <CardContent className="p-0 flex h-[224px]">
+      <CardContent className="p-0 flex max-lg:flex-col lg:h-[224px] max-lg:px-6">
         {/* Yellow vertical line */}
-        <div className="w-[1px] bg-[#f4d03f] mr-6 flex-shrink-0"></div>
+        <div className="hidden w-[1px] bg-[#f4d03f] mr-6 flex-shrink-0"></div>
+        <div className="lg:hidden w-full h-[1px] bg-[#f4d03f] mr-6 flex-grow-0 basis-auto flex-shrink-0 mb-8"></div>
 
         {/* Content */}
-        <div className="flex w-full justify-between gap-12">
+        <div className="flex w-full max-lg:flex-col justify-between gap-12">
           <div className="flex-1 flex flex-col">
             {/* Icon */}
             <div className="mb-4 flex gap-6 items-center">
@@ -141,16 +155,17 @@ function FeatureCard({ item }: FeatureCardProps) {
           </div>
 
           {item.image && (
-            <div className="h-full aspect-square">
+            <div className="lg:h-full aspect-square">
               <V2MediaRenderer
-                  media={item.image}
-                  options={{
-                    objectFit: "cover",
-                    imageOptions: {
-                      sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                    }
-                  }}
-                />
+                media={item.image}
+                options={{
+                  objectFit: "cover",
+                  imageOptions: {
+                    sizes:
+                      "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px",
+                  },
+                }}
+              />
             </div>
           )}
         </div>

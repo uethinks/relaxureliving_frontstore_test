@@ -17,8 +17,8 @@ import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
 import V2TestimonialsSection from "@/components/V2TestimonialsSection"
 import { useIsMobile } from "@/lib/hooks/useScreenSize"
 import React from "react"
-import { V2TimelineSection } from "./V2TimelineSection"
 import { V2PergolasComparisonTable } from "./V2ComparisonSection"
+import { V2TimelineSection } from "./V2TimelineSection"
 
 interface Section {
   id: string | number
