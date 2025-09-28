@@ -30,7 +30,7 @@ export const BuyNowButton = ({
         state.property1 === PRIMARY_BUTTON_HOVER_L
           ? "hover:bg-[#fdce6f]"
           : "bg-primary"
-      }`}
+      } ${className}` }
       onMouseLeave={() => {
         dispatch("mouse_leave")
       }}

@@ -20,6 +20,7 @@ import {
 } from "./AccesorriesSelector"
 import { Button } from "@/components/ui/button"
 import V2SupportSection from "@/components/V2SupportSection"
+import { useCart } from "@lib/context/cartContext"
 
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
@@ -39,6 +40,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
   selectorData,
   accessoriesCMSData,
 }) => {
+  const { cart } = useCart()
   const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
   const [pergolaSize, setPergolaSize] = useState<PergolaSize>({
     width: 0,
@@ -54,6 +56,7 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalOriginalPrice, setTotalOriginalPrice] = useState(0)
   const [isClient, setIsClient] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   console.log("===product===", product)
   console.log("===selectorData2", selectorData)
@@ -175,17 +178,21 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
   )
 
   const handleBuyNow = async () => {
+    let hasCartAlready = cart != null && (cart?.items?.length ?? 0) > 0    
+    setIsLoading(true)
     try {
+      
       await Promise.all([
         buyPergula(),
         buyHeater(),
         buyShades(),
         buyGlassdoor(),
-      ])
-
-      router.push("/checkout")
+      ])      
+      router.push( hasCartAlready ? "/cart" : "/checkout")
+      // setIsLoading(false)
     } catch (error) {
-      console.error("Error adding items to cart:", error)
+      console.error("handleBuyNow Error adding items to cart:", error)
+      setIsLoading(false)
     }
   }
 
@@ -509,9 +516,9 @@ export const V2StandardProductSelector: React.FC<V2StandardProductSelectorProps>
         <div className="mt-6 sticky bottom-0">
           <BuyNowButton
             property1="primary-button-l"
-            text="Add to Cart"
-            className="w-full"
-            onClick={handleBuyNow}
+            text={isLoading ? "Adding to Cart..." : "Add to Cart"}
+            className={`w-full ${isLoading ? 'opacity-50 cursor-not-allowed ' : ''}`}
+            onClick={isLoading ? undefined : handleBuyNow}
           />
         </div>
 
