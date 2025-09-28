@@ -72,14 +72,14 @@ export function V2FeatureGridSection({
 }: FeatureGridProps) {
   return (
     <section
-      className={`w-full pt-8 pb-12 lg:pt-20 lg:pb-14 lg:px-4 ${getBackgroundColor(
+      className={`w-full py-8 lg:pt-20 lg:pb-14 lg:px-4 ${getBackgroundColor(
         data.backgroundColor
       )}`}
       aria-labelledby="features-heading"
     >
       <div className="px-6 lg:px-0">
         {/* Main Heading */}
-        <header className="text-center mb-10">
+        <header className="text-center">
           <V2Headline
             title={data.title}
             as="h1"
@@ -96,52 +96,55 @@ export function V2FeatureGridSection({
       </div>
 
       {/* Features Grid */}
-      {isMobile ? (
-        <CustomCarousel
-          showNav={false}
-          data={data.items.map((item, key) => {
-            const isVideo = item.image?.mime.startsWith("video/")
+      {data.items.length > 0 &&
+        (isMobile ? (
+          <div className={"w-full mt-10"}>
+            <CustomCarousel
+              showNav={false}
+              data={data.items.map((item, key) => {
+                const isVideo = item.image?.mime.startsWith("video/")
 
-            return (
-              <div key={key} className={"w-full px-6"}>
-                {isVideo ? (
-                  <V2MediaRenderer
-                    media={item.image}
-                    options={{
-                      objectFit: "cover",
-                      imageOptions: {
-                        sizes:
-                          "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px",
-                      },
-                    }}
-                  />
-                ) : (
-                  <img
-                    src={getStrapiUrl(item.image.url)}
-                    alt={item.image.alternativeText || item.title}
-                    className="w-full object-cover mb-5"
-                  />
-                )}
-                <h3 className="text-base font-semibold mb-[10px] text-[#2F2A1E] text-center">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-[#8C877C]">{item.description}</p>
+                return (
+                  <div key={key} className={"w-full px-6"}>
+                    {isVideo ? (
+                      <V2MediaRenderer
+                        media={item.image}
+                        options={{
+                          objectFit: "cover",
+                          imageOptions: {
+                            sizes:
+                              "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px",
+                          },
+                        }}
+                      />
+                    ) : (
+                      <img
+                        src={getStrapiUrl(item.image.url)}
+                        alt={item.image.alternativeText || item.title}
+                        className="w-full object-cover mb-5"
+                      />
+                    )}
+                    <h3 className="text-base font-semibold mb-[10px] text-[#2F2A1E] text-center">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-[#8C877C]">{item.description}</p>
+                  </div>
+                )
+              })}
+            />
+          </div>
+        ) : (
+          <div className="flex flex-wrap justify-center gap-3 mt-10">
+            {data.items.map((item) => (
+              <div
+                key={item.id}
+                className="w-full sm:w-auto sm:flex-1 max-w-[33.33%]"
+              >
+                <FeatureCard item={item} />
               </div>
-            )
-          })}
-        />
-      ) : (
-        <div className="flex flex-wrap justify-center gap-3">
-          {data.items.map((item) => (
-            <div
-              key={item.id}
-              className="w-full sm:w-auto sm:flex-1 max-w-[33.33%]"
-            >
-              <FeatureCard item={item} />
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        ))}
     </section>
   )
 }

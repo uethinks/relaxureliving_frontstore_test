@@ -174,7 +174,7 @@ function PCVersion({ data }: { data: TestimonialSectionData }) {
 
   return (
     <section
-      className={`bg-white w-full py-20`}
+      className={`bg-white w-full pt-10 pb-20`}
       aria-label="Customer testimonials and experiences"
     >
       <div className="max-w-[1074px] mx-auto ">
@@ -468,7 +468,7 @@ function MobileVersion({ data }: { data: TestimonialSectionData }) {
   }, [selectedIndex])
 
   return (
-    <div className={"w-full mt-8 mb-12"}>
+    <div className={"w-full mb-12"}>
       <CustomCarousel
         onChange={(i) => {
           setSelectedIndex(i)

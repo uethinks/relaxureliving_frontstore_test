@@ -32,7 +32,7 @@ export default async function DeliveryWarrantyPage() {
         />
         <DeliveryProcess />
 
-        <section className={"w-full max-w-7xl mb-20"}>
+        <section className={"w-full bg-white"}>
           <V2SectionRenderer
             sections={[
               {
