@@ -650,11 +650,15 @@ export const NavBarWrapper = ({
   return (
     <>
       {/* Placeholder element to prevent content from being hidden behind fixed navigation */}
-      {isFixed && <div className="w-full h-[84px] lg:h-[112px]"></div>}
+      {(isFixed || isMobile) && (
+        <div className="w-full h-[84px] lg:h-[112px]"></div>
+      )}
 
       <header
         className={`z-50 w-full flex flex-col items-center gap-0 ${
-          isFixed ? "z-50 fixed top-0 left-1/2 -translate-x-1/2" : ""
+          isFixed || isMobile
+            ? "z-50 fixed top-0 left-1/2 -translate-x-1/2"
+            : ""
         }`}
         role="banner"
       >

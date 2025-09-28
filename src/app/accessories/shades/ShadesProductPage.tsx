@@ -1,18 +1,18 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCart } from "@lib/context/cartContext"
 import {
   StoreProduct,
   StoreProductOption,
   StoreProductOptionValue,
 } from "@medusajs/types"
-import { useCart } from "@lib/context/cartContext"
-import { selectedProducts, PergolaSize } from "types/global"
 import { ImgContent } from "@modules/products/single/components/ImgContent"
-import remarkGfm from "remark-gfm"
-import { V2SunshadesSelector } from "@modules/products/single/components/V2SunshadesSelector"
-import Markdown from "react-markdown"
 import { ProductSelectionProvider } from "@modules/products/single/components/ProductSelectionContext"
+import { V2SunshadesSelector } from "@modules/products/single/components/V2SunshadesSelector"
+import { useCallback, useEffect, useState } from "react"
+import Markdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+import { PergolaSize, selectedProducts } from "types/global"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 interface ShadesPageClientProps {
@@ -191,22 +191,37 @@ const ShadesProductPage = ({
   }
 
   // console.log("shadesCMSData: ", shadesCMSData)
-  console.log('shadesCMSData.productImages', shadesCMSData.productImages)
+  console.log("shadesCMSData.productImages", shadesCMSData.productImages)
   return (
     <ProductSelectionProvider product={shadesProduct}>
       <div className="w-full relative">
-        <div className="lg:mx-auto flex flex-col  w-full relative z-10">
+        <div className="lg:mx-auto flex flex-col w-full relative z-10">
           <div className="flex flex-col w-full lg:flex-row justify-between items-start">
-            <div className="flex flex-col max-w-[1074px] w-full mx-auto mt-10  gap-5 pb-5">
-              <div className="flex flex-row justify-between items-start relative w-full gap-[29px]">
+            <div className="flex flex-col max-w-[1074px] w-full mx-auto lg:mt-10 gap-5 pb-5">
+              <div className="flex flex-row justify-between items-start relative w-full lg:gap-[29px] max-lg:flex-wrap">
                 {/* Left Content */}
-                <div className="w-full lg:w-[708px] flex flex-col sticky top-0">
+                <div className="w-full lg:w-[708px] flex flex-col lg:sticky top-0">
                   <div className="flex flex-row justify-between w-full">
                     <ImgContent
                       productImages={shadesCMSData.productImages || []}
                     />
                   </div>
-                  <div className="text-[#2F2A1E] text-sm mt-12 pb-12 w-full prose max-w-none">
+                  <div className={"lg:hidden px-6"}>
+                    <div className="pb-4 border-[#d9d9d9]">
+                      <p className="text-[#2F2A1E] text-xl mb-2">
+                        Relaxure Accessories
+                      </p>
+                      <h1 className="text-[#2F2A1E] text-3xl font-semibold">
+                        {shadesCMSData?.name}
+                      </h1>
+                    </div>
+                    <div className="text-[#2F2A1E] text-sm">
+                      <Markdown remarkPlugins={[remarkGfm]}>
+                        {shadesCMSData.shortDescription}
+                      </Markdown>
+                    </div>
+                  </div>
+                  <div className="text-[#2F2A1E] text-sm lg:mt-12 lg:pb-12 w-full prose max-w-none max-lg:px-6">
                     <Markdown
                       remarkPlugins={[remarkGfm]}
                       // rehypePlugins={[rehypeRaw]}
