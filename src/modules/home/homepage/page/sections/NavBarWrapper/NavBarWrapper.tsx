@@ -104,6 +104,16 @@ export const NavBarWrapper = ({
     }
   }, [isMobile, menuData])
 
+  useEffect(() => {
+    if (isMobile) {
+      if (isMenuOpen) {
+        document.body.classList.add("overflow-hidden")
+      } else {
+        document.body.classList.remove("overflow-hidden")
+      }
+    }
+  }, [isMobile, isMenuOpen])
+
   // 处理菜单项点击
   const handleMenuItemClick = (
     e: React.MouseEvent,
@@ -847,7 +857,7 @@ export const NavBarWrapper = ({
             {isMenuOpen && (
               <div
                 id="mobile-menu"
-                className="bg-[#EFEEEB]"
+                className="bg-[#EFEEEB] max-lg:h-[calc(100vh-80px)] max-lg:overflow-auto"
                 role="menu"
                 aria-label="Mobile menu options"
               >
