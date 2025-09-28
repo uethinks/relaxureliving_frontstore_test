@@ -176,6 +176,7 @@ export const FooterDark = ({
 
           <div className="flex gap-[22px] lg:gap-[25px] lg:my-10 my-5">
             <a
+              target="_blank"
               className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]"
               href="https://www.facebook.com/people/Relaxure/61570952814126/?mibextid=wwXIfr"
             >
@@ -186,6 +187,7 @@ export const FooterDark = ({
               />
             </a>
             <a
+              target="_blank"
               className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]"
               href="https://www.instagram.com/relaxureliving/"
             >
@@ -196,6 +198,7 @@ export const FooterDark = ({
               />
             </a>
             <a
+              target="_blank"
               className="lg:w-[45px] lg:h-[45px] w-[39px] h-[39px]"
               href="https://www.youtube.com/@Relaxure-Pergola"
             >

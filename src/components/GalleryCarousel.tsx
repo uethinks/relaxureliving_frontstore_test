@@ -1,11 +1,14 @@
-'use client'
+"use client"
+import { useIsMobile } from "@lib/hooks/useScreenSize"
 import { getStrapiUrl } from "@lib/utils"
 import { useState } from "react"
 import { CustomCarousel } from "./CustomCarousel"
 import V2Button, { ButtonData } from "./V2Button"
 import V2Headline from "./V2Headline"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface GalleryItem {
+  media?: any
   mediaUrl: string
   mediaAlternativeText: string | null
   title?: string
@@ -23,37 +26,66 @@ export function GalleryCarousel({
   slidesNum = 3,
 }: GalleryCarouselProps) {
   const [current, setCurrent] = useState(0)
+  const isMobile = useIsMobile(1024)
 
   return (
     <>
       {/* Main Image Display */}
-      <img
-        className="w-full object-contain"
-        src={getStrapiUrl(items[current].mediaUrl)}
-        alt={items[current].mediaAlternativeText || items[current].title}
+      <V2MediaRenderer
+        media={items[current].media}
+        options={{
+          objectFit: "cover",
+          imageOptions: {
+            sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px",
+          },
+        }}
       />
 
       {/* Thumbnail Carousel */}
       <div className={"w-full mt-2 mb-10"}>
         {items.length > 1 && (
           <CustomCarousel
-            slidesPerView={slidesNum}
-            autoPlay={items.length > slidesNum}
+            slidesPerView={items.length > 3 ? slidesNum : items.length}
+            autoPlay={false}
             spaceBetween={8}
             showDots={false}
             showNav={items.length > slidesNum}
-            data={items.map((item, key) => (
-              <div
-                key={key}
-                className="flex items-center justify-center w-full h-[26.667vw]"
-              >
-                <img
-                  className="w-full h-full"
-                  src={getStrapiUrl(item.mediaUrl)}
-                  alt={item.mediaAlternativeText || item.title}
-                />
-              </div>
-            ))}
+            data={items.map((item, key) => {
+              const isVideo = item.media?.mime.startsWith("video/")
+
+              return (
+                <div
+                  key={key}
+                  className="flex items-center justify-center w-full h-[26.667vw]"
+                  onClick={() => {
+                    setCurrent(key)
+                  }}
+                >
+                  {isVideo ? (
+                    <V2MediaRenderer
+                      media={item.media}
+                      options={{
+                        objectFit: "cover",
+                        imageOptions: {
+                          priority: key === 0,
+                          sizes:
+                            "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px",
+                        },
+                        videoOptions: {
+                          autoplay: false,
+                        },
+                      }}
+                    />
+                  ) : (
+                    <img
+                      className="w-full object-cover"
+                      src={getStrapiUrl(item.mediaUrl)}
+                      alt={item.mediaAlternativeText || item.title}
+                    />
+                  )}
+                </div>
+              )
+            })}
             onChange={(i) => {
               setCurrent(i)
             }}
@@ -82,9 +114,9 @@ export function GalleryCarousel({
             data={
               {
                 ...items[current].button,
-                size:
-                  items[current]?.button?.sizeMobile ||
-                  items[current]?.button?.size,
+                size: isMobile
+                  ? items[current]?.button?.sizeMobile || "Medium"
+                  : items[current]?.button?.size,
               } as any
             }
             className="w-full"

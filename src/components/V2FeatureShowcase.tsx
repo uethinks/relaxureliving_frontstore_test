@@ -43,6 +43,7 @@ export function V2FeatureShowcase({
       {isMobile ? (
         <GalleryCarousel
           items={data.items.map((item) => ({
+            media: item.media,
             mediaUrl: item.media.url,
             mediaAlternativeText: item.media.alternativeText,
             title: item.title,

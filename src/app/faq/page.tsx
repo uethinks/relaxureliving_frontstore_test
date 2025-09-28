@@ -199,6 +199,18 @@ function FaqPageComponent() {
                       rehypePlugins={[rehypeRaw]}
                       remarkPlugins={[remarkGfm]}
                       remarkRehypeOptions={{ passThrough: ["link"] }}
+                      components={{
+                        a: ({ children, href }) => (
+                          <a
+                            href={href}
+                            className="text-primary underline decoration-[#8C877C] font-semibold"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {children}
+                          </a>
+                        ),
+                      }}
                     >
                       {faq.description}
                     </Markdown>

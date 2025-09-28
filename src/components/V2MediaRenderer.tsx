@@ -1,9 +1,9 @@
 "use client"
-import React, { useRef, useEffect, useState } from "react"
-import Image from "next/image"
-import { getStrapiUrl } from "@lib/utils"
 import { useImageGallery } from "@lib/context/imageZoomContext"
+import { getStrapiUrl } from "@lib/utils"
 import { FileX } from "lucide-react"
+import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
 
 interface MediaFormat {
   ext: string
@@ -176,6 +176,7 @@ export default function MediaRenderer({
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
         <video
+          autoPlay={videoOptions.autoplay}
           ref={videoRef}
           src={getStrapiUrl(media.url)}
           className={`w-full h-full object-${objectFit} transition-transform duration-300 hover:scale-105`}

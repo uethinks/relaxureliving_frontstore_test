@@ -47,7 +47,9 @@ export default function V2HeroBanner({ data }: V2HeroBannerProps) {
               {/* 移动端按钮 */}
               <div className="block lg:hidden">
                 <V2Button
-                  data={{ ...button, size: button.sizeMobile } as any}
+                  data={
+                    { ...button, size: button.sizeMobile || "Medium" } as any
+                  }
                   className="w-full mt-12 lg:mt-20"
                 />
               </div>

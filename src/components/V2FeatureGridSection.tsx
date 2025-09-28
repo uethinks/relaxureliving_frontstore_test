@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
-import Image from "next/image"
 import { CustomCarousel } from "./CustomCarousel"
 import V2Button from "./V2Button"
 import V2Headline from "./V2Headline"
@@ -100,19 +99,36 @@ export function V2FeatureGridSection({
       {isMobile ? (
         <CustomCarousel
           showNav={false}
-          data={data.items.map((item, key) => (
-            <div key={key} className={"w-full px-6"}>
-              <img
-                src={getStrapiUrl(item.image.url)}
-                alt={item.image.alternativeText || item.title}
-                className="w-full h-[43.467vw] object-cover mb-5"
-              />
-              <h3 className="text-base font-semibold mb-[10px] text-[#2F2A1E] text-center">
-                {item.title}
-              </h3>
-              <p className="text-sm text-[#8C877C]">{item.description}</p>
-            </div>
-          ))}
+          data={data.items.map((item, key) => {
+            const isVideo = item.image?.mime.startsWith("video/")
+
+            return (
+              <div key={key} className={"w-full px-6"}>
+                {isVideo ? (
+                  <V2MediaRenderer
+                    media={item.image}
+                    options={{
+                      objectFit: "cover",
+                      imageOptions: {
+                        sizes:
+                          "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px",
+                      },
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={getStrapiUrl(item.image.url)}
+                    alt={item.image.alternativeText || item.title}
+                    className="w-full object-cover mb-5"
+                  />
+                )}
+                <h3 className="text-base font-semibold mb-[10px] text-[#2F2A1E] text-center">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-[#8C877C]">{item.description}</p>
+              </div>
+            )
+          })}
         />
       ) : (
         <div className="flex flex-wrap justify-center gap-3">

@@ -48,7 +48,7 @@ export default function PagePolicy() {
             </V2MaskHeader>
             <section
               className={
-                "w-full lg:w-[1074px] max-w-none max-lg:px-6 mb-12 lg:mb-32 whitespace-break-spaces prose text-left"
+                "w-full lg:w-[1074px] max-w-none max-lg:px-6 mb-12 lg:mb-32 whitespace-normal prose text-left"
               }
             >
               <Markdown

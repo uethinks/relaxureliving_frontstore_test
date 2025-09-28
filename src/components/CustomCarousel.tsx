@@ -24,7 +24,7 @@ export function CustomCarousel({
   data = [],
   loop = true,
   slidesPerView = 1,
-  autoPlay = true,
+  autoPlay = false,
   delay = 3000,
   spaceBetween = 0,
   showDots = true,

@@ -247,16 +247,22 @@ export const NavBarWrapper = ({
             <div className="fixed top-20 bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50 -translate-x-6">
               <div className="px-10 py-4">
                 {item.sub_menu_item.map((subItem) => (
-                  <a
+                  <div
                     key={subItem.id}
-                    href={getMenuItemHref(subItem.url, subItem.anchor)}
-                    onClick={(e) =>
-                      handleMenuItemClick(e, subItem.url, subItem.anchor)
-                    }
-                    className="block py-6 text-base text-[#2F2A1E] transition-colors font-semibold hover:underline "
+                    onClick={() => {
+                      if (!subItem || !subItem?.url) {
+                        return
+                      }
+                      router.push(
+                        subItem?.url.startsWith("/")
+                          ? subItem?.url
+                          : `/${subItem?.url}`
+                      )
+                    }}
+                    className="block py-6 text-base text-[#2F2A1E] transition-colors font-semibold hover:underline cursor-pointer"
                   >
                     {subItem.name}
-                  </a>
+                  </div>
                 ))}
               </div>
             </div>

@@ -48,6 +48,7 @@ export function V2CraftsmanshipSection({
           /* Mobile - 屏幕宽度小于1024px */
           <GalleryCarousel
             items={data.items.map((item) => ({
+              media: item.media,
               mediaUrl: item.media.url,
               mediaAlternativeText: item.media.alternativeText || item.title,
               description: item.description,
