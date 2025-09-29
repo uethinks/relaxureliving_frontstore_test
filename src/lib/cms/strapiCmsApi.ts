@@ -696,7 +696,8 @@ export const sendKlaviyoContactUsForm = async (info: any) => {
       const [first_name, last_name] = info.fullName.split(' ');
       console.log("sendKlaviyoContactUsForm envSite", envSite, "event", event, "sendto",send_to_email)
    
-      const resp = await axios.post("/api/klaviyo/track", {        
+      const resp = await axios.post("/api/klaviyo/track", {     
+        apiEndPoint: "/api/events",
         data: {
           type: "event",
           attributes: {
@@ -740,6 +741,30 @@ export const sendKlaviyoContactUsForm = async (info: any) => {
     console.error("Failed to send Klaviyo event:", error)
   }
 }
+
+export const sendKlaviyoSubscribeProfile = async (email:string) => {
+  try {
+      let envSite = process.env.NEXT_PUBLIC_ENV_SITE
+      let isProd = envSite === 'PROD'      
+      let prefixedEmail = isProd ? email : `[TEST]+${email}`;
+      console.log("sendKlaviyoSubscribeProfile envSite", envSite, "info.email", email, "prefixedEmail",prefixedEmail)
+   
+      const resp = await axios.post("/api/klaviyo/track", {        
+        apiEndPoint: "/api/profiles",
+        data: {
+          type: "profile",
+          attributes: {
+            email: prefixedEmail
+          }
+        }
+      })       
+      console.log(`Klaviyo envSite: ${envSite} event send subscrbe email event `,email, "resp", resp.data);
+  } catch (error) {
+    console.error("Failed to send Klaviyo event:", error)
+  }
+}
+
+
 
 export const getLandingPage = async () => {
   try {

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { getPolicies } from "@lib/cms/strapiCmsApi"
+import { getPolicies, sendKlaviyoSubscribeProfile } from "@lib/cms/strapiCmsApi"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
@@ -136,6 +136,9 @@ export const FooterDark = ({
     { text: "Become A Dealer", href: "/become-dealer" },
   ]
   const [conditionLinks, setConditionLinks] = useState([])
+  const [email, setEmail] = useState("")
+  const [isSubscribing, setIsSubscribing] = useState(false)
+  const [subscriptionSuccess, setSubscriptionSuccess] = useState(false)
 
   useEffect(() => {
     getPolicies().then((res) => {
@@ -152,6 +155,25 @@ export const FooterDark = ({
     })
   }, [])
 
+  const handleEmailSubscription = async () => {
+    if (!email || !email.includes("@")) {
+      return
+    }
+
+    setIsSubscribing(true)
+    try {
+      console.log("Subscription send", email)
+      await sendKlaviyoSubscribeProfile(email)
+      console.log("Subscription successful")
+      setSubscriptionSuccess(true)
+      setEmail("")
+    } catch (error) {
+      console.log("Failed to subscribe:", error)
+    } finally {
+      setIsSubscribing(false)
+    }
+  }
+
   return (
     <div className="relative w-full overflow-hidden bg-[#140e02] text-white px-6 pt-10 pb-20 lg:h-[860px] lg:px-0 lg:pt-[97px]">
       <div className="flex justify-between w-full lg:w-[1074px] mx-auto flex-wrap">
@@ -167,12 +189,25 @@ export const FooterDark = ({
           <div className="flex h-[40px]">
             <Input
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleEmailSubscription()}
+              disabled={isSubscribing}
               className="bg-[#efeeeb] text-black border-none rounded-r-none flex-1 h-full text-sm sm:text-base"
             />
-            <Button className="bg-[#ffbf3c] hover:bg-[#ffbf3c]/90 text-black px-3 sm:px-4 h-full">
+            <Button 
+              onClick={handleEmailSubscription}
+              disabled={isSubscribing}
+              className="bg-[#ffbf3c] hover:bg-[#ffbf3c]/90 text-black px-3 sm:px-4 h-full disabled:opacity-50"
+            >
               <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
+          {subscriptionSuccess && (
+            <div className="mt-2 text-sm text-[#ffbf3c]">
+              You have subscribed, thanks!
+            </div>
+          )}
 
           <div className="flex gap-[22px] lg:gap-[25px] lg:my-10 my-5">
             <a
