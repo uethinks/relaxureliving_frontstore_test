@@ -14,6 +14,7 @@ interface GalleryItem {
   title?: string
   description?: string
   button?: ButtonData
+  rightButton?: ButtonData
 }
 
 interface GalleryCarouselProps {
@@ -121,6 +122,19 @@ export function GalleryCarousel({
             }
             className="w-full"
           />
+          {items[current]?.rightButton && (
+            <V2Button
+              data={
+                {
+                  ...items[current].rightButton,
+                  size: isMobile
+                    ? items[current]?.rightButton?.sizeMobile || "Medium"
+                    : items[current]?.rightButton?.size,
+                } as any
+              }
+              className="w-full mt-4"
+            />
+          )}
         </div>
       )}
     </>

@@ -45,10 +45,6 @@ function ResourceLibraryComponent() {
       key: "specs_sheets",
       name: "Specs Sheets",
     },
-    {
-      key: "education",
-      name: "Education",
-    },
   ]
 
   const [categoryId, setCategoryId] = useState(-1)

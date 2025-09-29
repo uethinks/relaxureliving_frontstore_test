@@ -49,6 +49,7 @@ export function V2FeatureShowcase({
             title: item.title,
             description: item.description,
             button: item.button,
+            ...(item?.rightButton ? { rightButton: item?.rightButton } : {}),
           }))}
         />
       ) : (

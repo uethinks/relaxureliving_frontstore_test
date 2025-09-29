@@ -148,7 +148,7 @@ export default function BlogDetail() {
                     <V2Headline title={blog.title} />
                   </div>
 
-                  <div className="text-[#000] prose max-lg:text-sm text-xl whitespace-break-spaces">
+                  <div className="text-[#000] prose max-lg:text-sm text-xl whitespace-normal">
                     <Markdown
                       rehypePlugins={[rehypeRaw]}
                       remarkPlugins={[remarkGfm]}

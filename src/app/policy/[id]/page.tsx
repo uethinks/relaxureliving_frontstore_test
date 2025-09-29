@@ -34,7 +34,7 @@ export default function PagePolicy() {
             <V2MaskHeader title={policy.title}>
               <p
                 className={
-                  "text-xl whitespace-break-spaces prose all:unset text-center"
+                  "text-xl whitespace-normal prose all:unset text-center mx-auto"
                 }
               >
                 <Markdown
