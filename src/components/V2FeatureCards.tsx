@@ -120,10 +120,10 @@ function FeatureCard({ item }: FeatureCardProps) {
   const iconAlt = item.icon?.alternativeText || `${item.title} icon`
 
   return (
-    <Card className={`bg-transparent border-none shadow-none`}>
+    <Card className={`bg-transparent lg:bg-white border-none shadow-none`}>
       <CardContent className="p-0 flex max-lg:flex-col lg:h-[224px] max-lg:px-6">
         {/* Yellow vertical line */}
-        <div className="hidden w-[1px] bg-[#f4d03f] mr-6 flex-shrink-0"></div>
+        <div className="hidden lg:block w-[1px] bg-[#f4d03f] mr-6 flex-shrink-0"></div>
         <div className="lg:hidden w-full h-[1px] bg-[#f4d03f] mr-6 flex-grow-0 basis-auto flex-shrink-0 mb-8"></div>
 
         {/* Content */}
