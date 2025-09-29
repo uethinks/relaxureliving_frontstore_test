@@ -149,7 +149,7 @@ export const CheckoutOrderSummary = ({
                   {/* Price */}
                   <div className="flex flex-col items-end">
                     <div className="font-semibold text-[14px] text-gray-800">
-                      {formatPrice(item?.original_total)}
+                      {formatPrice(item?.original_total || 0)}
                     </div>
                     {/* {item?.discount_total > 0 && (
                       <div className="flex flex-col items-end">

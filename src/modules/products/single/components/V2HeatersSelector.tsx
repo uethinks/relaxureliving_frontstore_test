@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import V2ServiceDescription from "@/components/V2ServiceDescription"
 import V2SupportSection from "@/components/V2SupportSection"
 import { useCart } from "@lib/context/cartContext"
-import { freeServices } from "@lib/utils"
 import {
   StoreProduct,
   StoreProductOptionValue,

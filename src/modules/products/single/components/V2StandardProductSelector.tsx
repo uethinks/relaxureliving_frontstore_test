@@ -1,6 +1,5 @@
 "use client"
 import { Badge } from "@/components/ui/badge"
-import V2ServiceSection from "@/components/V2ServiceSection"
 import V2SupportSection from "@/components/V2SupportSection"
 import { useCart } from "@lib/context/cartContext"
 import { addToCart } from "@lib/data/cart"
@@ -16,16 +15,6 @@ import { V2AccesorriesSelector } from "./AccesorriesSelector"
 import { BuyNowButton } from "./BuyNowButton"
 import { PergulaSizeSelector } from "./PergulaSizeSelector"
 import { useProductSelection } from "./ProductSelectionContext"
-import { Badge } from "@/components/ui/badge"
-import {
-  MoveDownRight,
-} from "lucide-react"
-import {
-  V2AccesorriesSelector,
-} from "./AccesorriesSelector"
-import { Button } from "@/components/ui/button"
-import V2SupportSection from "@/components/V2SupportSection"
-import { useCart } from "@lib/context/cartContext"
 import V2ServiceDescription from "@/components/V2ServiceDescription"
 import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
 
