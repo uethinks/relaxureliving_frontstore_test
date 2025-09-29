@@ -8,10 +8,9 @@ import { freeServices } from "@lib/utils"
 import { StoreProduct, StoreProductOptionValue } from "@medusajs/types"
 import { FileDownIcon } from "lucide-react"
 import React, { useCallback, useEffect, useState } from "react"
-import Markdown from "react-markdown"
-import remarkGfm from "remark-gfm"
 import { PergolaSize, selectedProducts } from "types/global"
 import { BuyNowButton } from "./BuyNowButton"
+import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -293,17 +292,13 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
       <div className="w-full">
         {/* Header */}
         <div className={"max-lg:hidden"}>
-          <div className="pb-4 border-[#d9d9d9]">
-            <p className="text-[#2F2A1E] text-xl mb-2">Relaxure Accessories</p>
-            <h1 className="text-[#2F2A1E] text-3xl font-semibold">
-              {glassdoorCMSData?.name}
-            </h1>
-          </div>
-          <div className="text-[#2F2A1E] text-sm">
-            <Markdown remarkPlugins={[remarkGfm]}>
-              {glassdoorCMSData.shortDescription}
-            </Markdown>
-          </div>
+          <V2ProductSelectorHeader
+            data={{
+              category: glassdoorCMSData.category,
+              name: glassdoorCMSData?.name,
+              description: glassdoorCMSData.shortDescription,
+            }}
+          />
         </div>
         {/* Sale Banner */}
         {/* {(

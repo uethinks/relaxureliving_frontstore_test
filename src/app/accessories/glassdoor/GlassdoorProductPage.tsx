@@ -1,11 +1,11 @@
 "use client"
 
+import V2ProductPage from "@/modules/products/single/components/V2ProductPage"
 import { StoreProduct, StoreProductOptionValue } from "@medusajs/types"
 import { ProductSelectionProvider } from "@modules/products/single/components/ProductSelectionContext"
 import { V2GlassDoorsSelector } from "@modules/products/single/components/V2GlassDoorsSelector"
 import { useCallback, useEffect, useState } from "react"
 import { PergolaSize, selectedProducts } from "types/global"
-import ProductPage from "../ProductPage"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -92,14 +92,14 @@ const GlassdoorProductPage = ({
 
   return (
     <ProductSelectionProvider product={glassdoorProduct}>
-      <ProductPage cmsData={glassdoorCMSData}>
+      <V2ProductPage cmsData={glassdoorCMSData}>
         <V2GlassDoorsSelector
           glassdoorProduct={glassdoorProduct}
           glassdoorCMSData={glassdoorCMSData}
           pergolaSizes={pergolaSizes}
           pergolaSize={pergolaSize}
         />
-      </ProductPage>
+      </V2ProductPage>
     </ProductSelectionProvider>
   )
 }

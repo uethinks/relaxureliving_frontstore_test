@@ -3,8 +3,9 @@
 import { ImgContent } from "@modules/products/single/components/ImgContent"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
+import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
 
-export default function ProductPage({
+export default function V2ProductPage({
   cmsData,
   children,
 }: {
@@ -23,19 +24,13 @@ export default function ProductPage({
                   <ImgContent productImages={cmsData.productImages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || []} />
                 </div>
                 <div className={"lg:hidden px-6"}>
-                  <div className="pb-4 border-[#d9d9d9]">
-                    <p className="text-[#2F2A1E] text-xl mb-2">
-                      Relaxure Accessories
-                    </p>
-                    <h1 className="text-[#2F2A1E] text-3xl font-semibold">
-                      {cmsData?.name}
-                    </h1>
-                  </div>
-                  <div className="text-[#2F2A1E] text-sm">
-                    <Markdown remarkPlugins={[remarkGfm]}>
-                      {cmsData.shortDescription}
-                    </Markdown>
-                  </div>
+                  <V2ProductSelectorHeader
+                    data={{
+                      category: cmsData?.category,
+                      name: cmsData?.name,
+                      description: cmsData.shortDescription,
+                    }}
+                  />
                 </div>
                 <div className="text-[#2F2A1E] text-sm lg:mt-12 lg:pb-12 w-full prose max-w-none max-lg:px-6">
                   <Markdown

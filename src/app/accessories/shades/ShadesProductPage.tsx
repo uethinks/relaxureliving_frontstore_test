@@ -1,5 +1,6 @@
 "use client"
 
+import V2ProductPage from "@/modules/products/single/components/V2ProductPage"
 import { useCart } from "@lib/context/cartContext"
 import {
   StoreProduct,
@@ -10,7 +11,6 @@ import { ProductSelectionProvider } from "@modules/products/single/components/Pr
 import { V2SunshadesSelector } from "@modules/products/single/components/V2SunshadesSelector"
 import { useCallback, useEffect, useState } from "react"
 import { PergolaSize, selectedProducts } from "types/global"
-import ProductPage from "../ProductPage"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 interface ShadesPageClientProps {
@@ -192,14 +192,14 @@ const ShadesProductPage = ({
   console.log("shadesCMSData.productImages", shadesCMSData.productImages)
   return (
     <ProductSelectionProvider product={shadesProduct}>
-      <ProductPage cmsData={shadesCMSData}>
+      <V2ProductPage cmsData={shadesCMSData}>
         <V2SunshadesSelector
           shadesProduct={shadesProduct}
           shadesCMSData={shadesCMSData}
           pergolaSizes={pergolaSizes}
           pergolaSize={pergolaSize}
         />
-      </ProductPage>
+      </V2ProductPage>
     </ProductSelectionProvider>
   )
 }

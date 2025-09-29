@@ -1,5 +1,6 @@
 "use client"
 
+import V2ProductPage from "@/modules/products/single/components/V2ProductPage"
 import { useCart } from "@lib/context/cartContext"
 import {
   StoreProduct,
@@ -10,7 +11,7 @@ import {
 import { ProductSelectionProvider } from "@modules/products/single/components/ProductSelectionContext"
 import { V2HeatersSelector } from "@modules/products/single/components/V2HeatersSelector"
 import { useCallback, useEffect, useState } from "react"
-import ProductPage from "../ProductPage"
+
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 interface HeaterProductPageProps {
@@ -117,12 +118,12 @@ export const HeaterProductPage = ({
 
   return (
     <ProductSelectionProvider product={heaterProduct}>
-      <ProductPage cmsData={heaterCMSData}>
+      <V2ProductPage cmsData={heaterCMSData}>
         <V2HeatersSelector
           heaterProduct={heaterProduct}
           heaterCMSData={heaterCMSData}
         />
-      </ProductPage>
+      </V2ProductPage>
     </ProductSelectionProvider>
   )
 }

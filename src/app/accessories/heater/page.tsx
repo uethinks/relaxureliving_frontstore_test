@@ -1,17 +1,11 @@
-import { notFound } from "next/navigation"
 import { getProductByProductId } from "@lib/data/products"
+import { notFound } from "next/navigation"
 
-import {
-  getAccessoriesPage,
-  getHeater,
-  getHomePage,
-} from "@lib/cms/strapiCmsApi"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
+import { getAccessoriesPage, getHeater } from "@lib/cms/strapiCmsApi"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
-import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
-import { PergolaData } from "types/global"
 import { HeaterProductPage } from "./HeaterProductPage"
-import V2SectionRenderer from "@/components/V2SectionRenderer"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
@@ -42,7 +36,10 @@ export default async function AccessoriesPage(props: Props) {
         <div className="flex flex-col gap-4 w-full">
           <HeaterProductPage
             heaterProduct={heater.product}
-            heaterCMSData={heaterInfo.data}
+            heaterCMSData={{
+              ...heaterInfo.data,
+              category: "Relaxure Accessories",
+            }}
           />
         </div>
         <V2SectionRenderer sections={heaterInfo.data?.sections || []} />

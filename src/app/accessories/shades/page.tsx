@@ -1,9 +1,9 @@
-import { getProductByProductId } from "@lib/data/products"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
 import { getAccessoriesPage, getShades } from "@lib/cms/strapiCmsApi"
+import { getProductByProductId } from "@lib/data/products"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import ShadesProductPage from "./ShadesProductPage"
-import V2SectionRenderer from "@/components/V2SectionRenderer"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
@@ -47,7 +47,10 @@ export default async function AccessoriesPage(props: Props) {
         <div className="flex flex-col gap-4 w-full">
           <ShadesProductPage
             shadesProduct={shades.product as any}
-            shadesCMSData={shadesInfo.data as any}
+            shadesCMSData={{
+              ...(shadesInfo.data as any),
+              category: "Relaxure Accessories",
+            }}
             pergolaSizes={pergolaSizes as any}
             pergolaSize={pergolaSize as any}
           />

@@ -1,16 +1,9 @@
+import V2SectionRenderer from "@/components/V2SectionRenderer"
+import { getAccessoriesPage, getGlassdoor } from "@lib/cms/strapiCmsApi"
 import { getProductByProductId } from "@lib/data/products"
-import {
-  getAccessoriesPage,
-  getGlassdoor,
-  getHomePage,
-  getPergola,
-} from "@lib/cms/strapiCmsApi"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
-import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
-import { PergolaData } from "types/global"
 import GlassdoorProductPage from "./GlassdoorProductPage"
-import V2SectionRenderer from "@/components/V2SectionRenderer"
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
@@ -53,7 +46,10 @@ export default async function AccessoriesPage(props: Props) {
         <div className="flex flex-col gap-4 w-full">
           <GlassdoorProductPage
             glassdoorProduct={glassdoor.product as any}
-            glassdoorCMSData={glassdoorInfo.data as any}
+            glassdoorCMSData={{
+              ...(glassdoorInfo.data as any),
+              category: "Relaxure Accessories",
+            }}
             pergolaSizes={pergolaSizes as any}
             pergolaSize={pergolaSize as any}
           />
