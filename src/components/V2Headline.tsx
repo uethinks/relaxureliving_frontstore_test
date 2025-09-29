@@ -15,7 +15,7 @@ const sizeClasses = {
   sm: "text-xl lg:text-2xl",
   md: "text-2xl lg:text-3xl",
   lg: "text-3xl lg:text-4xl",
-  xl: "text-4xl lg:text-5xl",
+  xl: "text-[32px]",
 }
 
 const underlinePositions = {

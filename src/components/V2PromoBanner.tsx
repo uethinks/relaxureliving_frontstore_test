@@ -95,7 +95,7 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
           {/* title wrap */}
           <V2Headline
             title={content.title || ""}
-            className="text-white text-2xl lg:text-[32px]"
+            className="text-white text-2xl lg:text-[32px] lg:leading-tight"
           />
 
           {/* description wrap */}

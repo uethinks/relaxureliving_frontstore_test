@@ -81,7 +81,7 @@ export function V2FeatureCards({ data, isMobile = false }: FeatureCardsProps) {
               title={data.title}
               as="h1"
               size="xl"
-              className="w-full lg:max-w-[1074px] mx-auto max-lg:text-2xl"
+              className="w-full lg:max-w-[1074px] mx-auto"
               iconHidden
             />
           </header>

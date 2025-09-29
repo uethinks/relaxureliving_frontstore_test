@@ -84,11 +84,11 @@ export function V2FeatureGridSection({
             title={data.title}
             as="h1"
             size={isMobile ? "md" : "xl"}
-            className="mb-4 w-full"
+            className="w-full"
             iconHidden
           />
           {data.subtitle && (
-            <p className="text-sm lg:text-lg text-[#8c877c] max-w-2xl mx-auto">
+            <p className="text-sm lg:text-lg text-[#8c877c] mx-auto">
               {data.subtitle}
             </p>
           )}
@@ -134,7 +134,7 @@ export function V2FeatureGridSection({
             />
           </div>
         ) : (
-          <div className="flex flex-wrap justify-center gap-3 mt-10">
+          <div className="flex flex-wrap justify-center gap-3 mt-8">
             {data.items.map((item) => (
               <div
                 key={item.id}

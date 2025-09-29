@@ -112,7 +112,7 @@ export default function V2OccasionsSection({
             ))}
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-16">
             {data.items.map((item) => (
               <Card
                 key={item.id}
@@ -130,10 +130,10 @@ export default function V2OccasionsSection({
                     }}
                   />
                   <div>
-                    <h3 className="text-foreground text-2xl font-semibold mb-3">
+                    <h3 className="text-center text-foreground text-2xl font-semibold mb-3">
                       {item.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-center text-muted-foreground text-sm">
                       {item.description}
                     </p>
                   </div>
