@@ -53,7 +53,7 @@ export default async function AboutUsPage() {
               src="/img/about-us-banner.png"
               alt="about us"
               fill
-              className="object-cover"
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 680px"
             />
           </div>
