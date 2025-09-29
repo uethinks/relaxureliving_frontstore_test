@@ -16,7 +16,9 @@ import { PergolaData, BoringButImportantStuff } from "@/types/global"
 import { formatCartTotal } from "@lib/util/money"
 import Breadcrumb from "@/components/Breadcrumb"
 import { CartAccessoriesGrid } from "./CartAccessoriesGrid"
-import CartSkeleton from "../CartSkeleton/CartSkeleton" // Lazy load only non-critical components
+import CartSkeleton from "../CartSkeleton/CartSkeleton"
+import { CartPageMobile } from "./CartPageMobile"
+import { useIsMobile, useScreenSize } from "@lib/hooks/useScreenSize" // Lazy load only non-critical components
 
 
 interface FAQData {
@@ -45,10 +47,15 @@ export const CartPage = ({
   accessories: StoreProduct[]
 }): JSX.Element => { 
   const { cart, isLoading } = useCart()
+  const isMobile = useIsMobile(1024)  
 
   // Check if cart is empty
   const isCartEmpty = !cart?.items || cart.items.length === 0
  
+  // Render mobile version if on mobile device
+  if (isMobile) {
+    return <CartPageMobile accessories={accessories} />
+  } 
 
   return (
     <>
