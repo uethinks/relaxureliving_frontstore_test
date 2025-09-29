@@ -1,18 +1,17 @@
 "use client"
-import React, { useState, useEffect } from "react"
-import { StoreProduct } from "@medusajs/types"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { FreeMode, Navigation, Thumbs, Pagination } from "swiper/modules"
-import type { Swiper as SwiperType } from "swiper"
 import { Image } from "@/types/global"
+import React, { useEffect, useState } from "react"
+import type { Swiper as SwiperType } from "swiper"
+import { FreeMode, Navigation, Pagination } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/react"
 import { useProductSelection } from "../ProductSelectionContext"
 
 // 导入 Swiper 样式
 import "swiper/css"
 import "swiper/css/free-mode"
 import "swiper/css/navigation"
-import "swiper/css/thumbs"
 import "swiper/css/pagination"
+import "swiper/css/thumbs"
 
 interface Props {
   productImages: Image[]
@@ -31,7 +30,6 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
   // 使用 Context 获取状态
   const { selectedSize, selectedColor, selectedStyle } = useProductSelection()
 
-  
   // 根据选中的选项筛选图片
   const filteredImages = React.useMemo(() => {
     if (!selectedSize && !selectedColor && !selectedStyle) {
@@ -130,7 +128,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
       <div className="flex flex-col justify-center items-center relative w-full overflow-hidden">
         {/* 主图 */}
         <div className="relative w-full">
-          <div className="cursor-pointer aspect-[360/504] lg:aspect-[708/354] w-full overflow-hidden">
+          <div className="cursor-pointer aspect-[375/187] lg:aspect-[708/354] w-full overflow-hidden">
             {filteredImages.length > 0 ? (
               <img
                 src={strapiCmsUrl + filteredImages?.[currentImageIndex]?.url}
@@ -185,7 +183,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                   >
                     <div className="aspect-square overflow-hidden">
                       <img
-                        src={strapiCmsUrl + (image.url)}
+                        src={strapiCmsUrl + image.url}
                         alt=""
                         className="w-full h-full object-cover object-center"
                         loading="lazy"
@@ -288,7 +286,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4 text-white"
-                      fill="none" 
+                      fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                     >

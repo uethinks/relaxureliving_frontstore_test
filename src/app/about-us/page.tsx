@@ -46,16 +46,18 @@ export default async function AboutUsPage() {
     <>
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
-        <section className="grid grid-cols-1 lg:grid-cols-2 w-full bg-[#EFEEEB]">
-          <div className="relative aspect-[6/5] w-full h-full overflow-hidden">
-            <Image
-              unoptimized
-              src="/img/about-us-banner.png"
-              alt="about us"
-              fill
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 680px"
-            />
+        <section className="grid grid-cols-1 lg:grid-cols-2 w-full bg-[#EFEEEB] lg:h-[680px]">
+          <div className="relative w-full h-auto overflow-hidden">
+            <div className={`w-full h-full overflow-hidden relative`}>
+              <Image
+                unoptimized
+                src="/img/about-us-banner.png"
+                alt="about us"
+                width={720}
+                height={680}
+                className={`w-full h-full object-cover transition-transform duration-300 hover:scale-105`}
+              />
+            </div>
           </div>
           <div className="w-full lg:py-[72px] lg:px-[100px] px-6 mt-10 mb-[48px] lg:mt-0 lg:mb-0">
             <div className="w-full lg:w-[436px] flex-1 flex flex-col items-start">
@@ -63,7 +65,7 @@ export default async function AboutUsPage() {
                 title="Creating Spaces Where Life Happens, in Every Season"
                 className={"lg:text-[32px] lg:leading-[46px]"}
               />
-              <div className="mt-5 mb-10 lg:mt-10 lg:mb-20 w-full text-[#2F2A1E] text-sm lg:text-base">
+              <div className="mt-5 mb-10 lg:mt-10 lg:mb-20 w-full text-[#2F2A1E] text-sm lg:text-base lg:leading-[23px]">
                 <p>
                   At Relaxure, we believe great outdoor living should be
                   effortless—beautiful in design, built to last, and ready for

@@ -1,4 +1,3 @@
-import React from "react"
 import { Button } from "@/components/ui/button"
 import { MoveDownRight } from "lucide-react"
 
@@ -13,7 +12,7 @@ export default function V2SupportSection() {
   }
 
   return (
-    <>
+    <div className={"max-lg:px-6"}>
       {/* Support Section */}
       <div className={`px-8 py-5 w-full mt-5 border border-[#8C877C]`}>
         <div className="w-full">
@@ -52,7 +51,7 @@ export default function V2SupportSection() {
       <div
         className="flex w-full items-center justify-center gap-1 mt-4 text-sm cursor-pointer"
         onClick={() => {
-          (window as any).tidioChatApi.open()
+          ;(window as any).tidioChatApi.open()
         }}
       >
         {/* <MessageCircle className="h-4 w-4" /> */}
@@ -60,6 +59,6 @@ export default function V2SupportSection() {
         {/* <ChevronDown className="h-4 w-4" /> */}
         <MoveDownRight className="h-4 w-4" />
       </div>
-    </>
+    </div>
   )
 }
