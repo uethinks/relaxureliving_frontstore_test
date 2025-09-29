@@ -26,14 +26,16 @@ export const CheckoutSuccess = () => {
   }, [orderId, error]) // 只在 orderId 变化时执行
 
   return (
-    <div className="w-full 2xl:w-[1074px] bg-[#ffffff] [font-family:'Montserrat',Helvetica] flex justify-center flex-col items-center">
-      <div className="flex flex-col items-center mb-5 bg-[#ffffff] w-full relative px-5 lg:px-20">
-        {/* Header */}
-        <NavBarWrapper isFixed={false} />
+    <>
+      <div className="w-full flex flex-col items-center py-0 relative bg-background">
+        <div className="w-full relative flex flex-col justify-center items-center pt-0">
+          <NavBarWrapper isFixed={false} />
+          <div className="w-full max-w-[1074px] mx-auto px-5 lg:px-20 py-10">
+            {order && <PaymentFinish order={order} success={!error} />}
+          </div>
+        </div>
       </div>
-      {/* Footer */}
       <FooterDark />
-      {order && <PaymentFinish order={order} success={!error} />}
-    </div>
+    </>
   )
 }

@@ -156,8 +156,8 @@ const OrderDetails = ({
             </div>
 
             <div className="flex-1 w-full sm:w-auto">
-              <div className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] break-all">
-                {order.id}
+              <div className="relative w-full mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-lg tracking-[0] leading-[21.6px] break-all text-right">
+                {order.id.replace('order_', '')}
               </div>
             </div>
           </div>
@@ -277,9 +277,9 @@ export const PaymentFinish = ({
   ) : (
     <div
       ref={componentRef}
-      className="bg-[#00000080] flex justify-center items-start w-full h-full absolute top-0 left-0 px-4 lg:px-10 z-50 pt-5"
+      className="flex justify-center items-start w-full px-4 lg:px-0"
     >
-      <div className="flex flex-col w-full lg:w-[547px] items-center justify-start gap-5 p-5 relative bg-[#ffffff] rounded-[20px]">
+      <div className="flex flex-col w-full lg:w-[547px] items-center justify-start gap-5 p-5 relative bg-[#ffffff] rounded-[20px] shadow-lg">
         <div className="inline-flex flex-col items-center gap-5 relative flex-[0_0_auto]">
           <div className="relative w-[155px] h-[147px] bg-[url(/img/payment_success.gif)] bg-cover bg-[50%_50%]" />
           <PaymentMessage success={success} />
