@@ -721,7 +721,8 @@ export const sendKlaviyoContactUsForm = async (info: any) => {
                       email: info.email,
                       first_name: first_name,
                       last_name: last_name,
-                      phone_number: info.phoneNumber
+                      phone_number: info.phoneNumber,
+                      env: envSite
                   }
                 }
               }
@@ -730,7 +731,7 @@ export const sendKlaviyoContactUsForm = async (info: any) => {
               fullName: info.fullName,
               phoneNumber: info.phoneNumber,
               email: send_to_email,
-              message: info.message
+              message: info.message,              
             },
             time: new Date().toISOString()
           }
