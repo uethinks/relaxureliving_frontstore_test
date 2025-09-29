@@ -228,9 +228,11 @@ export const V2SampleKitSelector: React.FC<V2SampleKitSelectorProps> = ({
             </div>
           </div>
 
-          {/* Service Sections */}
-          <V2ServiceDescription data={freeServices} />
+            {/* Service Sections */}
+        <V2ServiceDescription/>
         </div>
+
+      
 
         {/* Add to Cart Button - Using BuyNowButton */}
         <div className="mt-6 sticky bottom-0">

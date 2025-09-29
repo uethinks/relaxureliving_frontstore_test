@@ -1,78 +1,93 @@
-import { getStrapiUrl } from "@lib/utils"
-
-interface ServiceItem {
-  id: number
+// 服务配置接口定义
+interface ServiceConfig {
   title: string
-  status: string // e.g., "Free"
-  originalPrice?: string // e.g., "+.99"
-  description: string
-  icon?: {
-    id: number
-    name: string
-    url: string
-    width: number
-    height: number
-    alternativeText?: string
-  } | null
-  secondaryIcon?: {
-    id: number
-    name: string
-    url: string
-    width: number
-    height: number
-    alternativeText?: string
-  } | null
-  secondaryText?: string
+  price: string
+  originalPrice: string
+  descriptions: {
+    icon: string
+    alt: string
+    text: string
+  }[]
 }
 
-interface V2ServiceDescriptionProps {
-  data: {
-    items?: ServiceItem[]
+// 服务配置数据
+const serviceConfigs: ServiceConfig[] = [
+  {
+    title: "Shipping",
+    price: "Free",
+    originalPrice: "$395-$750",
+    descriptions: [
+      {
+        icon: "/img/shipping.svg",
+        alt: "shipping",
+        text: "Free shipping + Insurance"
+      },
+      {
+        icon: "/img/package.svg",
+        alt: "package", 
+        text: "delivered in 4 weeks"
+      }
+    ]
+  },
+  {
+    title: "Full Insurance",
+    price: "Free",
+    originalPrice: "$295",
+    descriptions: [
+      {
+        icon: "/img/shipping.svg",
+        alt: "shipping",
+        text: "includes complimentary insurance coverage."
+      },
+      {
+        icon: "/img/package.svg",
+        alt: "package",
+        text: "Your delivery should arrive in about four weeks."
+      }
+    ]
+  },
+  {
+    title: "Warranty", 
+    price: "Free",
+    originalPrice: "$749-$1798",
+    descriptions: [
+      {
+        icon: "/img/shipping.svg",
+        alt: "shipping",
+        text: "100-Day Risk-Free Trial"
+      },
+      {
+        icon: "/img/warranty.svg",
+        alt: "warranty",
+        text: "Lifetime warranty included"
+      }
+    ]
   }
-}
+]
 
-export default function V2ServiceDescription({
-  data,
-}: V2ServiceDescriptionProps) {
-  const serviceItems = data.items || []
-
+export default function V2ServiceDescription() {
   return (
-    <div className="mt-6 space-y-4">
-      {serviceItems.map((item) => (
-        <div key={item.id}>
+    <div className="mt-6 space-y-5">
+      {serviceConfigs.map((service, index) => (
+        <div key={index} className="flex flex-col gap-5">
           <div className="flex justify-between items-center">
             <span className="text-[#000000] font-medium">
-              {item.title}:{" "}
-              <span className="text-highlight">{item.status}</span>
+              {service.title}: <span className="text-highlight">{service.price}</span>
             </span>
-            {item.originalPrice && (
-              <span className="text-[#8C877C] line-through">
-                {item.originalPrice}
-              </span>
-            )}
+            <span className="text-[#8C877C] line-through">{service.originalPrice}</span>
           </div>
           <p className="text-[#8c8c8c] text-sm">
-            {item.icon && (
-              <>
-                {item.icon?.url && <img
-                  src={getStrapiUrl(item.icon.url)}
-                  alt={item.icon.alternativeText || item.title}
-                  className="w-4 h-4 inline-block mr-2 mb-1"
-                />}
-                <span className="ml-2">{item.description}</span>
-                <br />
-              </>
-            )}
-            {item.secondaryIcon && (
-              <>
+            {service.descriptions.map((desc, descIndex) => (
+              <span key={descIndex}>
                 <img
-                  src={getStrapiUrl(item.secondaryIcon.url)}
-                  alt={item.secondaryIcon.alternativeText || item.title}
+                  src={desc.icon}
+                  alt={desc.alt}
                   className="w-4 h-4 inline-block mr-2 mb-1"
                 />
-                <span className="ml-2">{item.secondaryText}</span>
-              </>
-            )}
+                <span className="ml-2">{desc.text}</span>
+                {descIndex < service.descriptions.length - 1 && <br />}
+              </span>
+            ))}
           </p>
         </div>
       ))}

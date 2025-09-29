@@ -425,9 +425,11 @@ export const V2SunshadesSelector: React.FC<V2SunshadesSelectorProps> = ({
               </div>
             </div>
           </div>
-          {/* Service Sections */}
-          <V2ServiceDescription data={freeServices} />
+             {/* Service Sections */}
+        <V2ServiceDescription />
         </div>
+
+    
 
         {/* Add to Cart Button - Using BuyNowButton */}
         <div className="mt-6 sticky bottom-0">

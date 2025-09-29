@@ -11,6 +11,10 @@ import React, { useCallback, useEffect, useState } from "react"
 import { PergolaSize, selectedProducts } from "types/global"
 import { BuyNowButton } from "./BuyNowButton"
 import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
+import Markdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+import V2ServiceDescription from "@/components/V2ServiceDescription"
+import V2SupportSection from "@/components/V2SupportSection"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -435,8 +439,9 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
           </div>
 
           {/* Service Sections */}
-          <V2ServiceDescription data={freeServices} />
+            <V2ServiceDescription />
         </div>
+       
 
         {/* Add to Cart Button - Using BuyNowButton */}
         <div className="mt-6 sticky bottom-0">

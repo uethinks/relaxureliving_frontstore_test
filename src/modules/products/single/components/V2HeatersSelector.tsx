@@ -265,8 +265,10 @@ export const V2HeatersSelector: React.FC<V2HeatersSelectorProps> = ({
           </div>
 
           {/* Service Sections */}
-          <V2ServiceDescription data={freeServices} />
+        <V2ServiceDescription/>
         </div>
+
+        
 
         {/* Add to Cart Button - Using BuyNowButton */}
         <div className="mt-6 sticky bottom-0">

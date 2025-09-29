@@ -16,6 +16,17 @@ import { V2AccesorriesSelector } from "./AccesorriesSelector"
 import { BuyNowButton } from "./BuyNowButton"
 import { PergulaSizeSelector } from "./PergulaSizeSelector"
 import { useProductSelection } from "./ProductSelectionContext"
+import { Badge } from "@/components/ui/badge"
+import {
+  MoveDownRight,
+} from "lucide-react"
+import {
+  V2AccesorriesSelector,
+} from "./AccesorriesSelector"
+import { Button } from "@/components/ui/button"
+import V2SupportSection from "@/components/V2SupportSection"
+import { useCart } from "@lib/context/cartContext"
+import V2ServiceDescription from "@/components/V2ServiceDescription"
 import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
@@ -424,9 +435,8 @@ export const V2StandardProductSelector: React.FC<
           </div> */}
 
           {/* Service Sections */}
-          <V2ServiceSection />
+          <V2ServiceDescription />
         </div>
-
         {/* Add to Cart Button - Using BuyNowButton */}
         <div className="mt-6 sticky bottom-0">
           <BuyNowButton
