@@ -1,29 +1,10 @@
-import React from "react"
-import { FirstScreen } from "./components/FirstScreen"
+import { ProductSidebar } from "@/components/ProductSidebar"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
+import { PergolaData } from "@/types/global"
 import { StoreProduct } from "@medusajs/types"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
-import { FaqWrapper } from "@modules/home/homepage/page/sections/FaqWrapper"
-import { CustomerReviewsServer } from "./components/CustomerReviewsServer"
-import { AwardBlock } from "@modules/common/components/AwardBlock"
-import { ImageOnLeft, AccessoriesCards } from "./components/LandingPage"
-import { PergolaData, ProductInformation } from "@/types/global"
-import { ProductSchema } from "./components/ProductSchema"
-import { ProductSidebar } from "@/components/ProductSidebar"
-import V2HeroBanner from "@/components/V2HeroBanner"
-import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
-import V2HeroProductSection from "@/components/V2HeroProductSection"
-import V2PressSection from "@/components/V2PressSection"
-import { V2CraftsmanshipSection } from "@/components/V2CraftsmanshipSection"
-import { V2FeatureShowcase } from "@/components/V2FeatureShowcase"
-import { V2FeatureGridSection } from "@/components/V2FeatureGridSection"
-import { V2PromoBanner } from "@/components/V2PromoBanner"
-import V2DualOfferSection from "@/components/V2DualOfferSection"
-import V2TestimonialsSection from "@/components/V2TestimonialsSection"
-import { V2FAQSection } from "@/components/V2FAQSection"
-import { V2ContactUsSection } from "@/components/V2ContactUsSection"
-import V2OccasionsSection from "@/components/V2OccasionsSection"
-import V2FeatureCards from "@/components/V2FeatureCards"
-import V2SectionRenderer from "@/components/V2SectionRenderer"
+import React from "react"
+import { FirstScreen } from "./components/FirstScreen"
 
 interface V2ProductItemProps {
   product: StoreProduct
@@ -62,7 +43,9 @@ export const V2ProductItem = ({
           standardPergolaData={standardPergolaData}
           accessoriesCMSData={accessoriesCMSData}
         />
-        <V2SectionRenderer sections={standardPergolaData?.descriptionSections || []} />
+        <V2SectionRenderer
+          sections={standardPergolaData?.descriptionSections || []}
+        />
 
         {/* <ProductOverviewAccordion
           productOverview={pergolaData.product_overview}

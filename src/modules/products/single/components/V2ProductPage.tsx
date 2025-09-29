@@ -7,9 +7,11 @@ import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
 
 export default function V2ProductPage({
   cmsData,
+  customSections,
   children,
 }: {
   cmsData: any
+  customSections?: any
   children?: any
 }) {
   return (
@@ -21,8 +23,18 @@ export default function V2ProductPage({
               {/* Left Content */}
               <div className="w-full lg:w-[708px] flex flex-col lg:sticky lg:top-0">
                 <div className="flex flex-row justify-between w-full">
-                  <ImgContent productImages={cmsData.productImages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || []} />
+                  <ImgContent
+                    productImages={
+                      cmsData.productImages.sort(
+                        (a: any, b: any) =>
+                          new Date(b.createdAt).getTime() -
+                          new Date(a.createdAt).getTime()
+                      ) || []
+                    }
+                  />
                 </div>
+                {customSections ? <>{customSections}</> : <></>}
+
                 <div className={"lg:hidden px-6"}>
                   <V2ProductSelectorHeader
                     data={{
@@ -32,15 +44,17 @@ export default function V2ProductPage({
                     }}
                   />
                 </div>
-                <div className="text-[#2F2A1E] text-sm lg:mt-12 lg:pb-12 w-full prose max-w-none max-lg:px-6">
-                  <Markdown
-                    remarkPlugins={[remarkGfm]}
-                    // rehypePlugins={[rehypeRaw]}
-                    remarkRehypeOptions={{ passThrough: ["link"] }}
-                  >
-                    {cmsData.detailDescription}
-                  </Markdown>
-                </div>
+                {cmsData.detailDescription && (
+                  <div className="text-[#2F2A1E] text-sm lg:mt-12 lg:pb-12 w-full prose max-w-none max-lg:px-6">
+                    <Markdown
+                      remarkPlugins={[remarkGfm]}
+                      // rehypePlugins={[rehypeRaw]}
+                      remarkRehypeOptions={{ passThrough: ["link"] }}
+                    >
+                      {cmsData.detailDescription}
+                    </Markdown>
+                  </div>
+                )}
               </div>
               {/* Desktop View */}
               {children}

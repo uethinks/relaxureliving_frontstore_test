@@ -1,13 +1,12 @@
-import React, { useMemo } from "react"
-import { ImgContent } from "./ImgContent"
-import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
-import { StoreProduct } from "@medusajs/types"
-import { V2StandardProductSelector } from "./V2StandardProductSelector"
-import { PergolaData, ProductInformation } from "@/types/global"
-import { ProductSelectorMobile } from "./ProductSelectorMobile"
-import { ProductSelectionProvider } from "./ProductSelectionContext"
 import V2FeatureItems from "@/components/V2FeatureItems"
+import { PergolaData } from "@/types/global"
 import { convertSelectorData } from "@lib/util/selector"
+import { StoreProduct } from "@medusajs/types"
+import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
+import React, { useMemo } from "react"
+import { ProductSelectionProvider } from "./ProductSelectionContext"
+import V2ProductPage from "./V2ProductPage"
+import { V2StandardProductSelector } from "./V2StandardProductSelector"
 
 interface FirstScreenProps {
   product: StoreProduct
@@ -24,62 +23,43 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
   accessoriesCMSData,
   standardPergolaData,
 }) => {
-
   const selectorData = useMemo(() => {
     if (!standardPergolaData?.relatedProductIds) return {}
     return convertSelectorData(standardPergolaData.relatedProductIds)
   }, [standardPergolaData])
 
-  console.log('FirstScreen standardPergolaData',standardPergolaData)
-  
+  console.log("FirstScreen standardPergolaData", standardPergolaData)
+
   return (
     <ProductSelectionProvider product={product}>
-      <div className="flex flex-col items-center justify-center w-full">
+      <div className="bg-background flex flex-col items-start justify-center w-full">
         <NavBarWrapper isFixed={false} />
-        {/* Content View */}
-        <div className="lg:mx-auto flex flex-col  w-full relative z-10">
-          <div className="flex flex-col w-full lg:flex-row justify-between items-start">
-            <div className="flex flex-col max-w-[1074px] w-full mx-auto mt-10  gap-5">
-              <div className="flex flex-row justify-between items-start relative w-full gap-[24px]">
-                {/* Left Content */}
-                <div className="w-[708px] flex flex-col sticky top-0">
-                  <div className="flex flex-row justify-between w-full">
-                    <ImgContent
-                      productImages={standardPergolaData.productImages.sort((a, b) => (b.name) - (a.name))}
-                    />
-                  </div>
-
-                  <div className="flex flex-col w-full items-start">
-                    {standardPergolaData.productSections.map((section: any) => {
-                      const key = `${section.id}-${section.__component}`
-                      console.log(key, section)
-                      if (section.__component === "blocks.v2-feature-items") {
-                        return <V2FeatureItems key={key} data={section} />
-                      } 
-                      return null
-                    })}
-                    {/* <Advantage />
-                    <DescriptionContent pergolaData={pergolaData} /> */}
-                  </div>
-                </div>
-                {/* Desktop View */}
-                <V2StandardProductSelector
-                  product={product}
-                  selectorData={selectorData}
-                  accessories={accessories}
-                  accessoriesCMSData={accessoriesCMSData}
-                />
-              </div>
+        <V2ProductPage
+          cmsData={{
+            ...standardPergolaData,
+            category: "Relaxure Corsica",
+          }}
+          customSections={
+            <div className="flex flex-col w-full items-start">
+              {standardPergolaData.productSections.map((section: any) => {
+                const key = `${section.id}-${section.__component}`
+                console.log(key, section)
+                if (section.__component === "blocks.v2-feature-items") {
+                  return <V2FeatureItems key={key} data={section} />
+                }
+                return null
+              })}
             </div>
-          </div>
-        </div>
-        {/* Mobile View */}
-        <ProductSelectorMobile
-          product={product}
-          selectorData={selectorData}
-          accessories={accessories}
-          accessoriesCMSData={accessoriesCMSData}
-        />
+          }
+        >
+          {/* Desktop View */}
+          <V2StandardProductSelector
+            product={product}
+            selectorData={selectorData}
+            accessories={accessories}
+            accessoriesCMSData={accessoriesCMSData}
+          />
+        </V2ProductPage>
       </div>
     </ProductSelectionProvider>
   )

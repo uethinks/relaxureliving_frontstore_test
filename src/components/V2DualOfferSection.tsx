@@ -92,7 +92,7 @@ export default function V2DualOfferSection({
             {iconItems.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col max-w-[30vw] lg:max-w-[33%] lg:flex-row items-center justify-center gap-2 flex-shrink-0 flex-grow-0 basis-auto"
+                className="flex flex-col max-w-[80px] lg:max-w-[33%] lg:flex-row items-center justify-center gap-2 flex-shrink-0 flex-grow-0 basis-auto"
               >
                 {item.icon?.url && (
                   <img
