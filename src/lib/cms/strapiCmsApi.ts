@@ -746,7 +746,7 @@ export const sendKlaviyoSubscribeProfile = async (email:string) => {
   try {
       let envSite = process.env.NEXT_PUBLIC_ENV_SITE
       let isProd = envSite === 'PROD'      
-      let prefixedEmail = isProd ? email : `TEST_${email}`
+      let prefixedEmail = isProd ? email : email
       //;
       console.log("sendKlaviyoSubscribeProfile envSite", envSite, "info.email", email, "prefixedEmail",prefixedEmail)
    
