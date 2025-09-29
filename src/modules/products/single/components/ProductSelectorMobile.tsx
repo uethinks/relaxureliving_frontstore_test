@@ -13,6 +13,8 @@ import { addToCart } from "@lib/data/cart"
 import { useRouter } from "next/navigation"
 import { FaChevronLeft } from "react-icons/fa"
 import { useProductSelection } from "./ProductSelectionContext"
+import { useCart } from "@lib/context/cartContext"
+import { useCart } from "@lib/context/cartContext"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 interface ProductSelectorProps {
   product: StoreProduct
@@ -42,6 +44,8 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalOriginalPrice, setTotalOriginalPrice] = useState(0)
   const [showPopup, setShowPopup] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const { cart } = useCart()
 
   const router = useRouter()
 
@@ -134,7 +138,10 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
   )
 
   const handleBuyNow = async () => {
+    let hasCartAlready = cart != null && (cart?.items?.length ?? 0) > 0    
     try {
+      setIsLoading(true)
+
       await Promise.all([
         buyPergula(),
         buyHeater(),
@@ -142,9 +149,10 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
         buyGlassdoor(),
       ])
 
-      router.push("/checkout")
+      router.push( hasCartAlready ? "/cart" : "/checkout")
     } catch (error) {
       console.error("Error adding items to cart:", error)
+      setIsLoading(false)
     }
   }
 
@@ -401,12 +409,12 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
               accessoriesCMSData={accessoriesCMSData}
             />
           </div>
-          <BuyNowButton
-            onClick={handleBuyNow}
-            property1="primary-button-l"
-            text="Add to cart"
-            className=""
-          />
+            <BuyNowButton
+              property1="primary-button-l"
+              text={isLoading ? "Adding to Cart..." : "Add to Cart"}
+              className={`w-full ${isLoading ? 'opacity-50 cursor-not-allowed ' : ''}`}
+              onClick={isLoading ? undefined : handleBuyNow}
+            />
           <div className="w-full flex flex-row justify-center items-center gap-2.5 relative text-[#072F6C] mt-2 underline">
             <a
               href="/#sample-kit"
