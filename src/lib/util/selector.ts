@@ -1,9 +1,11 @@
 import { RelatedProductIds, Image } from "@/types/global"
+import { getStrapiUrl } from "@lib/utils"
 
 export const handleDownloadPDF = (PDF_Link: string, name: string) => {
   if (PDF_Link) {
+    console.log("PDF_Link", PDF_Link)
     const link = document.createElement("a")
-    link.href = PDF_Link
+    link.href = getStrapiUrl(PDF_Link)
     link.download = `${name || "demo"}.pdf`
     link.target = "_blank"
 
