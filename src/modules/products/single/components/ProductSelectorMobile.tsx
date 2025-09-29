@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation"
 import { FaChevronLeft } from "react-icons/fa"
 import { useProductSelection } from "./ProductSelectionContext"
 import { useCart } from "@lib/context/cartContext"
-import { useCart } from "@lib/context/cartContext"
+
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 interface ProductSelectorProps {
   product: StoreProduct
