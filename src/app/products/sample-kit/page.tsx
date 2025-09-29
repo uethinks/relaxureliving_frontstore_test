@@ -1,16 +1,11 @@
-import { notFound } from "next/navigation"
 import { getProductByProductId } from "@lib/data/products"
+import { notFound } from "next/navigation"
 
-import {
-  getAccessoriesPage,
-  getHeater,
-  getHomePage,
-  getSampleKit,
-} from "@lib/cms/strapiCmsApi"
+import V2SectionRenderer from "@/components/V2SectionRenderer"
+import { getAccessoriesPage, getSampleKit } from "@lib/cms/strapiCmsApi"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { SampleKitProductPage } from "./SampleKitProductPage"
-import V2SectionRenderer from "@/components/V2SectionRenderer"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
@@ -43,7 +38,10 @@ export default async function AccessoriesPage(props: Props) {
         <div className="flex flex-col gap-4 w-full">
           <SampleKitProductPage
             sampleKitProduct={sampleKit.product}
-            sampleKitCMSData={sampleKitInfo.data}
+            sampleKitCMSData={{
+              ...sampleKitInfo.data,
+              category: "Relaxure Sample Kit",
+            }}
           />
         </div>
         <V2SectionRenderer sections={sampleKitInfo.data?.sections || []} />

@@ -1,19 +1,17 @@
 "use client"
 
+import { useCart } from "@lib/context/cartContext"
 import {
   StoreProduct,
   StoreProductOption,
   StoreProductOptionValue,
   StoreProductVariant,
 } from "@medusajs/types"
-import { useCallback, useEffect, useState } from "react"
-import { useCart } from "@lib/context/cartContext"
 import { ProductSelectionProvider } from "@modules/products/single/components/ProductSelectionContext"
-import { ImgContent } from "@modules/products/single/components/ImgContent"
-import remarkGfm from "remark-gfm"
-import Markdown from "react-markdown"
-import { V2HeatersSelector } from "@modules/products/single/components/V2HeatersSelector"
+import V2ProductPage from "@modules/products/single/components/V2ProductPage"
 import { V2SampleKitSelector } from "@modules/products/single/components/V2SampleKitSelector"
+import { useCallback, useEffect, useState } from "react"
+
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 interface SampleKitProductPageProps {
@@ -27,7 +25,9 @@ export const SampleKitProductPage = ({
 }: SampleKitProductPageProps): JSX.Element => {
   const { addVariant } = useCart()
   const [selectedHeater, setSelectedHeater] =
-    useState<StoreProductVariant | null>(sampleKitProduct?.variants?.[0] || null)
+    useState<StoreProductVariant | null>(
+      sampleKitProduct?.variants?.[0] || null
+    )
   const [selectedHeaterQuantity, setSelectedHeaterQuantity] = useState(1)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
 
@@ -103,38 +103,13 @@ export const SampleKitProductPage = ({
 
   return (
     <ProductSelectionProvider product={sampleKitProduct}>
-      <div className="w-full max-w-[1074px] mx-auto relative">
-        <div className="lg:mx-auto flex flex-col  w-full relative z-10">
-          <div className="flex flex-col w-full lg:flex-row justify-between items-start">
-            <div className="flex flex-col max-w-[1074px] w-full mx-auto mt-10  gap-5 pb-5">
-              <div className="flex flex-row justify-between items-start relative w-full gap-[24px]">
-                {/* Left Content */}
-                <div className="w-full lg:w-[708px] flex flex-col sticky top-0">
-                  <div className="flex flex-row justify-between w-full">
-                    <ImgContent
-                      productImages={sampleKitCMSData.productImages.sort((a, b) => (b.name) - (a.name))}
-                    />
-                  </div>
-                  <div className="text-[#2F2A1E] text-sm mt-12 pb-12 w-full prose max-w-none">
-                    <Markdown
-                      remarkPlugins={[remarkGfm]}
-                      // rehypePlugins={[rehypeRaw]}
-                      remarkRehypeOptions={{ passThrough: ["link"] }}
-                    >
-                      {sampleKitCMSData.detailDescription}
-                    </Markdown>
-                  </div>
-                </div>
-                {/* Desktop View */}
-                <V2SampleKitSelector
-                  sampleKitProduct={sampleKitProduct}
-                  sampleKitCMSData={sampleKitCMSData}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <V2ProductPage cmsData={sampleKitCMSData}>
+        {/* Desktop View */}
+        <V2SampleKitSelector
+          sampleKitProduct={sampleKitProduct}
+          sampleKitCMSData={sampleKitCMSData}
+        />
+      </V2ProductPage>
     </ProductSelectionProvider>
   )
 }
