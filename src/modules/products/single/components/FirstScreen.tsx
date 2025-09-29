@@ -30,7 +30,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
     return convertSelectorData(standardPergolaData.relatedProductIds)
   }, [standardPergolaData])
 
-  console.log('selectorData1',selectorData)
+  console.log('FirstScreen standardPergolaData',standardPergolaData)
   
   return (
     <ProductSelectionProvider product={product}>
@@ -45,7 +45,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
                 <div className="w-[708px] flex flex-col sticky top-0">
                   <div className="flex flex-row justify-between w-full">
                     <ImgContent
-                      productImages={standardPergolaData.productImages}
+                      productImages={standardPergolaData.productImages.sort((a, b) => (b.name) - (a.name))}
                     />
                   </div>
 

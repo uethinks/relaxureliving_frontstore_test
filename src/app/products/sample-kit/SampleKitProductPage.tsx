@@ -112,7 +112,7 @@ export const SampleKitProductPage = ({
                 <div className="w-full lg:w-[708px] flex flex-col sticky top-0">
                   <div className="flex flex-row justify-between w-full">
                     <ImgContent
-                      productImages={sampleKitCMSData.productImages || []}
+                      productImages={sampleKitCMSData.productImages.sort((a, b) => (b.name) - (a.name))}
                     />
                   </div>
                   <div className="text-[#2F2A1E] text-sm mt-12 pb-12 w-full prose max-w-none">

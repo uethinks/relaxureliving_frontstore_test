@@ -20,7 +20,7 @@ export default function ProductPage({
               {/* Left Content */}
               <div className="w-full lg:w-[708px] flex flex-col lg:sticky lg:top-0">
                 <div className="flex flex-row justify-between w-full">
-                  <ImgContent productImages={cmsData.productImages || []} />
+                  <ImgContent productImages={cmsData.productImages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || []} />
                 </div>
                 <div className={"lg:hidden px-6"}>
                   <div className="pb-4 border-[#d9d9d9]">

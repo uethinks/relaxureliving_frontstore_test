@@ -31,6 +31,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
   // 使用 Context 获取状态
   const { selectedSize, selectedColor, selectedStyle } = useProductSelection()
 
+  
   // 根据选中的选项筛选图片
   const filteredImages = React.useMemo(() => {
     if (!selectedSize && !selectedColor && !selectedStyle) {
@@ -45,7 +46,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
 
     return (
       //productImages?.sort((a, b) => a.id - b.id).filter((image) => {
-      productImages?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).filter((image) => {
+      productImages?.filter((image) => {
         if (!image.caption) {
           return true
         }
