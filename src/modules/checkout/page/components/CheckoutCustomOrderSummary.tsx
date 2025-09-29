@@ -260,21 +260,21 @@ export const CheckoutCustomOrderSummary = ({
               <span className="text-[#000000] font-medium">
                 Shipping: <span className="text-highlight">Free</span>
               </span>
-              <span className="text-[#8C877C] line-through">+$999.99</span>
+              <span className="text-[#8C877C] line-through">$395-$750</span>
             </div>
 
             <div className="flex justify-between items-center">
               <span className="text-[#000000] font-medium">
                 Full Insurance: <span className="text-highlight">Free</span>
               </span>
-              <span className="text-[#8C877C] line-through">+$999.99</span>
+              <span className="text-[#8C877C] line-through">$295</span>
             </div>
 
             <div className="flex justify-between items-center">
               <span className="text-[#000000] font-medium">
                 Lifetime Warranty: <span className="text-highlight">Free</span>
               </span>
-              <span className="text-[#8C877C] line-through">+$999.99</span>
+              <span className="text-[#8C877C] line-through">$749-$1798</span>
             </div>
           </div>
 

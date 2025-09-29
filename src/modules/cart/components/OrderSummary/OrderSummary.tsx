@@ -6,6 +6,7 @@ import { formatCartTotal } from "@lib/util/money"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { MoveDownRight } from "lucide-react"
+import V2SupportSection from "@/components/V2SupportSection"
 
 const formatPrice = (price: number) =>
   new Intl.NumberFormat("en-US", {
@@ -19,6 +20,7 @@ export const OrderSummary = (): JSX.Element => {
 
   // Calculate monthly payment for Klarna (24 months)
   const monthlyPayment = cart?.total ? cart.total / 24 : 0
+ 
 
   return (
     <div className="flex flex-col w-full items-start">
@@ -62,21 +64,21 @@ export const OrderSummary = (): JSX.Element => {
               <span className="text-[#000000] font-medium">
                 Packing & Delivery: <span className="text-highlight">Free</span>
               </span>
-              <span className="text-[#8C877C] line-through">+$999.99</span>
+              <span className="text-[#8C877C] line-through">$395-$750</span>
             </div>
 
             <div className="flex justify-between items-center">
               <span className="text-[#000000] font-medium">
                 Full Insurance: <span className="text-highlight">Free</span>
               </span>
-              <span className="text-[#8C877C] line-through">+$999.99</span>
+              <span className="text-[#8C877C] line-through">$295</span>
             </div>
 
             <div className="flex justify-between items-center">
               <span className="text-[#000000] font-medium">
                 Warranty: <span className="text-highlight">Free</span>
               </span>
-              <span className="text-[#8C877C] line-through">+$999.99</span>
+              <span className="text-[#8C877C] line-through">$749-$1798</span>
             </div>
           </div>
 
@@ -97,8 +99,7 @@ export const OrderSummary = (): JSX.Element => {
                   Delivered in 5 Weeks
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Lorem
-                  Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
+                  Fast and reliable delivery so you can enjoy it sooner.
                 </p>
               </div>
             </div>
@@ -118,11 +119,7 @@ export const OrderSummary = (): JSX.Element => {
                   Hassle-Free Delivery
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.{" "}
-                  <span className="underline cursor-pointer text-blue-600">
-                    Shipping Policy
-                  </span>{" "}
-                  Lorem Ipsum Dolor Sit Amet, Consectetur.
+                  Peace of mind delivered free. We handle everything for a smooth setup.
                 </p>
               </div>
             </div>
@@ -142,11 +139,7 @@ export const OrderSummary = (): JSX.Element => {
                   Industry-Leading Warranty
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Lorem Ipsum Dolor Sit Amet, Adipiscing Elit.{" "}
-                  <span className="underline cursor-pointer text-blue-600">
-                    Warranty
-                  </span>{" "}
-                  Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
+                  Built to last. Protected with one of the best warranties in the industry.
                 </p>
               </div>
             </div>
@@ -190,38 +183,7 @@ export const OrderSummary = (): JSX.Element => {
           </button>
         </div>
         {/* Customer Support */}
-        <div className="px-8 py-5 w-full mt-5 border border-[#8C877C]">
-          <div className="w-full">
-            <div className="flex items-center gap-4">
-              <span className="bg-[#ffbf3c] p-1">
-                <img src="/img/expert.svg" alt="message" className="w-7 h-7" />
-              </span>
-              <div className="text-[#000000] text-base">
-                <p className="font-medium">We're Here to Help</p>
-                <p className="font-medium text-[#8C877C] text-xs">
-                  9AM to 5PM PST Mon-Fri
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-sm flex justify-between">
-            <Button variant="link" className="underline px-0 text-black">
-              <img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />
-              1-213-566-8658
-            </Button>
-            <Button variant="link" className="underline px-0 text-black">
-              <img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />
-              info@relaxureliving.com
-            </Button>
-          </div>
-        </div>
-        <div className="flex items-center justify-center self-center gap-1 mt-4 text-sm">
-          {/* <MessageCircle className="h-4 w-4" /> */}
-          <span>Chat in the Corner</span>
-          {/* <ChevronDown className="h-4 w-4" /> */}
-          <MoveDownRight className="h-4 w-4" />
-        </div>
+        <V2SupportSection />
       </div>
     </div>
   )

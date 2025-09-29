@@ -50,7 +50,7 @@ export default function V2SupportSection() {
         </div>
       </div>
       <div
-        className="flex items-center justify-center gap-1 mt-4 text-sm cursor-pointer"
+        className="flex w-full items-center justify-center gap-1 mt-4 text-sm cursor-pointer"
         onClick={() => {
           (window as any).tidioChatApi.open()
         }}
