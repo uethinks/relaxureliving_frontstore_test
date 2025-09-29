@@ -746,15 +746,19 @@ export const sendKlaviyoSubscribeProfile = async (email:string) => {
   try {
       let envSite = process.env.NEXT_PUBLIC_ENV_SITE
       let isProd = envSite === 'PROD'      
-      let prefixedEmail = isProd ? email : `[TEST]+${email}`;
+      let prefixedEmail = isProd ? email : `TEST_${email}`
+      //;
       console.log("sendKlaviyoSubscribeProfile envSite", envSite, "info.email", email, "prefixedEmail",prefixedEmail)
    
       const resp = await axios.post("/api/klaviyo/track", {        
-        apiEndPoint: "/api/profiles",
+        apiEndPoint: "/api/profile-import?additional-fields[profile]=subscriptions",
         data: {
           type: "profile",
           attributes: {
-            email: prefixedEmail
+            email: prefixedEmail,
+            properties: {
+              env: envSite
+            }
           }
         }
       })       

@@ -39,6 +39,7 @@ export async function POST(request: Request) {
     return NextResponse.json(response.data)
   } catch (error: any) {
     console.error('[Klaviyo] Error in Klaviyo track API:', error.message)
+    console.error('[Klaviyo] Error in Klaviyo track API:', error.response?.data)
     return NextResponse.json(
       { error: error.message || 'Failed to send data to Klaviyo' },
       { status: error.response?.status || 500 }
