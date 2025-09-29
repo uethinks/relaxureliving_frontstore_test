@@ -76,7 +76,7 @@ function BlogContent() {
         <V2MaskHeader title="Blog" sectionClassName={"pt-8 pb-5 lg:py-20"} />
         <section
           className={
-            "relative w-full px-6 pb-12 lg:pb-0 lg:px-0 lg:w-[1074px] flex flex-col lg:flex-row justify-between gap-10 lg:gap-6"
+            "relative w-full px-6 pb-12 lg:pb-0 lg:px-0 lg:w-[1074px] flex flex-col lg:flex-row justify-between gap-10 lg:gap-6 lg:mb-20"
           }
         >
           <div className={"w-full flex flex-col items-center"}>
