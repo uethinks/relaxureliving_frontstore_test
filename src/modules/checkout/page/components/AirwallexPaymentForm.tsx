@@ -40,6 +40,7 @@ interface AirwallexPaymentFormProps {
   deliveryInfo: CheckoutFormData
   updateCartDeliveryInfo: (deliveryInfo?: CheckoutFormData) => Promise<StoreCart | null>
   comlpeleCartAndCreateOrder: () => Promise<StoreOrder | null>
+  isMobile: boolean
 }
  
 const AirwallexPaymentForm: React.FC<AirwallexPaymentFormProps> = ({ 
@@ -48,6 +49,7 @@ const AirwallexPaymentForm: React.FC<AirwallexPaymentFormProps> = ({
     formValidation,
     deliveryInfo,
     updateCartDeliveryInfo,
+    isMobile
  }) => { 
   const router = useRouter();
   const [isPolling, setIsPolling] = useState(false);
@@ -264,7 +266,7 @@ const AirwallexPaymentForm: React.FC<AirwallexPaymentFormProps> = ({
   const containerStyle = {
     width: "100%",    
     // width: '540px',
-    padding: '48px',
+    padding: isMobile ? '0px' : '48px',
     backgroundColor: '#ffffff',    
   };
 

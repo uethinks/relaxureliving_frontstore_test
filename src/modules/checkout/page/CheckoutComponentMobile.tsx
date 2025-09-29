@@ -745,6 +745,7 @@ export const CheckoutComponentMobile = ({
                     deliveryInfo={formData}
                     updateCartDeliveryInfo={updateCartDeliveryInfo}                      
                     comlpeleCartAndCreateOrder={comlpeleCartAndCreateOrder}
+                    isMobile={true}
                 />   
                 ) : <PaymentLoadingSkeleton isFormValid={isFormValid} />}
 
