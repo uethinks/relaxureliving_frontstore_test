@@ -722,7 +722,8 @@ export const sendKlaviyoContactUsForm = async (info: any) => {
                       first_name: first_name,
                       last_name: last_name,
                       phone_number: info.phoneNumber,
-                      env: envSite
+                      env: envSite,
+                      source: "contactus" //订阅来源
                   }
                 }
               }
@@ -758,7 +759,8 @@ export const sendKlaviyoSubscribeProfile = async (email:string) => {
           attributes: {
             email: prefixedEmail,
             properties: {
-              env: envSite
+              env: envSite,
+              source: "subscribe" //订阅来源
             }
           }
         }
