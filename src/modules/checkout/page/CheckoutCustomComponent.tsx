@@ -495,16 +495,7 @@ export const CheckoutCustomComponent = ({
                   />
                 </div>
                 {errors.email && <div className="text-red-500 mt-1">{errors.email}</div>}
-                {/* Newsletter opt-in */}
-                <label className="mt-3 inline-flex items-center gap-2 text-sm text-[#6b7280]">
-                  <input
-                    type="checkbox"
-                    className="accent-primary w-4 h-4 rounded border-gray-300 checked:text-white"
-                    checked={newsletterOptIn}
-                    onChange={(e) => setNewsletterOptIn(e.target.checked)}
-                  />
-                  Email me with news and offers
-                </label>
+           
               </div>
             </div>
 
@@ -692,16 +683,7 @@ export const CheckoutCustomComponent = ({
                 {errors.phone && (
                   <div className="text-red-500 mt-1 block">{errors.phone}</div>
                 )}
-                {/* SMS opt-in */}
-                <label className="mt-3 inline-flex items-center gap-2 text-sm text-[#6b7280]">
-                  <input
-                    type="checkbox"
-                    className="accent-primary w-4 h-4 rounded border-gray-300 checked:text-white"
-                    checked={smsOptIn}
-                    onChange={(e) => setSmsOptIn(e.target.checked)}
-                  />
-                  Text me with news and offers
-                </label>
+              
               </div>
             </div>
 
