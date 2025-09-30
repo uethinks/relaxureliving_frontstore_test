@@ -412,7 +412,7 @@ export const ProductSelectorMobile: React.FC<ProductSelectorProps> = ({
             <BuyNowButton
               property1="primary-button-l"
               text={isLoading ? "Adding to Cart..." : "Add to Cart"}
-              className={`w-full ${isLoading ? 'opacity-50 cursor-not-allowed ' : ''}`}
+              className={`w-full ${isLoading ? 'opacity-100 cursor-not-allowed ' : ''}`}
               onClick={isLoading ? undefined : handleBuyNow}
             />
           <div className="w-full flex flex-row justify-center items-center gap-2.5 relative text-[#072F6C] mt-2 underline">

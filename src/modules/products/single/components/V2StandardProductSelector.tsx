@@ -432,7 +432,7 @@ export const V2StandardProductSelector: React.FC<
             property1="primary-button-l"
             text={isLoading ? "Adding to Cart..." : "Add to Cart"}
             className={`w-full ${
-              isLoading ? "opacity-50 cursor-not-allowed " : ""
+              isLoading ? "opacity-100 cursor-not-allowed " : ""
             }`}
             onClick={isLoading ? undefined : handleBuyNow}
           />
