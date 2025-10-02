@@ -34,11 +34,30 @@ export function useScreenSize(
     debounceMs = 100,
   } = options
 
-  const [width, setWidth] = useState(0)
-  const [screenSize, setScreenSize] = useState<ScreenSize>("desktop")
+  // 使用函数式初始化，避免服务器端渲染时的状态更新
+  const [width, setWidth] = useState(() => {
+    if (typeof window === "undefined") {
+      return 1024 // 服务器端默认值
+    }
+    return window.innerWidth
+  })
+  
+  const [screenSize, setScreenSize] = useState<ScreenSize>(() => {
+    if (typeof window === "undefined") {
+      return "desktop" // 服务器端默认值
+    }
+    const initialWidth = window.innerWidth
+    if (initialWidth < mobileBreakpoint) {
+      return "mobile"
+    } else if (initialWidth < tabletBreakpoint) {
+      return "tablet"
+    } else {
+      return "desktop"
+    }
+  })
 
   useEffect(() => {
-    // 服务端渲染时返回默认值
+    // 服务端渲染时直接返回，不执行任何副作用
     if (typeof window === "undefined") {
       return
     }
@@ -62,7 +81,7 @@ export function useScreenSize(
       }, debounceMs)
     }
 
-    // 初始设置
+    // 初始设置 - 只在客户端执行
     handleResize()
 
     // 监听窗口大小变化

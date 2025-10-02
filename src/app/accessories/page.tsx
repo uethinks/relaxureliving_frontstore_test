@@ -2,12 +2,20 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { AccessoriesGrid } from "@modules/products/single/components/AccesorriesSelector/AccessoriesGrid"
 import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
-import { getHomePage } from "@lib/cms/strapiCmsApi"
+import { getAccessoriesPage, getHomePage } from "@lib/cms/strapiCmsApi"
 import { PergolaData } from "types/global"
+import { Metadata } from "next"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
+
+export async function generateMetadata(): Promise<Metadata> {
+  const accessoriesPage = await getAccessoriesPage()
+  console.log("accessoriesPage", accessoriesPage)
+  return generateMetadataFromStrapi(accessoriesPage?.data?.seo || {})
+}
 
 export default async function AccessoriesPage(props: Props) {
   // 获取OurPromise数据

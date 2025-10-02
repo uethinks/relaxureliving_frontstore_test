@@ -84,13 +84,7 @@ export default function V2PressSection({
             {pair.map((testimonial, index) => (
               <V2PressItem
                 key={i + index}
-                item={{
-                  url: testimonial.image
-                    ? getStrapiUrl(testimonial.image.url)
-                    : "",
-                  title: testimonial.title,
-                  link: testimonial.link,
-                }}
+                item={testimonial}
               />
             ))}
           </div>
@@ -103,11 +97,7 @@ export default function V2PressSection({
       const singleData = testimonials.map((testimonial, key) => (
         <div key={key}>
           <V2PressItem
-            item={{
-              url: testimonial.image ? getStrapiUrl(testimonial.image.url) : "",
-              title: testimonial.title,
-              link: testimonial.link,
-            }}
+            item={testimonial}
           />
         </div>
       ))

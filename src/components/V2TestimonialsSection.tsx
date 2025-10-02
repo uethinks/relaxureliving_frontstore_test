@@ -8,6 +8,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, Star } from "lucide-react"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { CustomCarousel } from "./CustomCarousel"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface Avatar {
   id: number
@@ -265,66 +266,73 @@ function PCVersion({ data }: { data: TestimonialSectionData }) {
             <div className="relative overflow-hidden shadow-lg">
               {(() => {
                 const currentMedia = currentItem.media?.[selectedMediaIndex]
-                const mediaType = getMediaType(
-                  currentItem.media,
-                  selectedMediaIndex
+                // const mediaType = getMediaType(
+                //   currentItem.media,
+                //   selectedMediaIndex
+                // )
+                // const mediaUrl = getMediaUrl(
+                //   currentItem.media,
+                //   selectedMediaIndex
+                // )
+
+                // if (!currentMedia || !mediaUrl) {
+                //   // Fallback to placeholder
+                //   return (
+                //     <div
+                //       className="w-full bg-gray-200 flex items-center justify-center"
+                //       style={{ aspectRatio: "708/345" }}
+                //       aria-label="No media available"
+                //     >
+                //       <span className="text-gray-500">No media available</span>
+                //     </div>
+                //   )
+                // }
+
+                // if (mediaType === "video") {
+                //   return (
+                //     <video
+                //       ref={videoRef}
+                //       src={mediaUrl}
+                //       autoPlay
+                //       muted
+                //       loop
+                //       playsInline
+                //       className="w-full h-auto object-cover"
+                //       style={{ aspectRatio: "708/345" }}
+                //       aria-label={`Video showcasing ${currentItem.author}'s outdoor space`}
+                //     >
+                //       <track kind="captions" />
+                //       Your browser does not support the video tag.
+                //     </video>
+                //   )
+                // }
+
+                // if (mediaType === "image") {
+                //   return (
+                //     <Image
+                //       unoptimized
+                //       src={mediaUrl}
+                //       alt={
+                //         currentMedia.alternativeText ||
+                //         `${currentItem.author}'s outdoor space`
+                //       }
+                //       width={currentMedia.width || 500}
+                //       height={currentMedia.height || 600}
+                //       className="w-full h-auto object-cover"
+                //       style={{ aspectRatio: "708/345" }}
+                //       loading="lazy"
+                //     />
+                //   )
+                // }
+
+                return (
+                  <V2MediaRenderer
+                    media={currentMedia as any}
+                    options={{
+                      className: "w-full h-auto object-cover"
+                    }}
+                  />
                 )
-                const mediaUrl = getMediaUrl(
-                  currentItem.media,
-                  selectedMediaIndex
-                )
-
-                if (!currentMedia || !mediaUrl) {
-                  // Fallback to placeholder
-                  return (
-                    <div
-                      className="w-full bg-gray-200 flex items-center justify-center"
-                      style={{ aspectRatio: "708/345" }}
-                      aria-label="No media available"
-                    >
-                      <span className="text-gray-500">No media available</span>
-                    </div>
-                  )
-                }
-
-                if (mediaType === "video") {
-                  return (
-                    <video
-                      ref={videoRef}
-                      src={mediaUrl}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="w-full h-auto object-cover"
-                      style={{ aspectRatio: "708/345" }}
-                      aria-label={`Video showcasing ${currentItem.author}'s outdoor space`}
-                    >
-                      <track kind="captions" />
-                      Your browser does not support the video tag.
-                    </video>
-                  )
-                }
-
-                if (mediaType === "image") {
-                  return (
-                    <Image
-                      unoptimized
-                      src={mediaUrl}
-                      alt={
-                        currentMedia.alternativeText ||
-                        `${currentItem.author}'s outdoor space`
-                      }
-                      width={currentMedia.width || 500}
-                      height={currentMedia.height || 600}
-                      className="w-full h-auto object-cover"
-                      style={{ aspectRatio: "708/345" }}
-                      loading="lazy"
-                    />
-                  )
-                }
-
-                return null
               })()}
 
               {/* Progress bar - only show for video */}

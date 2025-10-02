@@ -6,10 +6,17 @@ import { getAccessoriesPage, getSampleKit } from "@lib/cms/strapiCmsApi"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { SampleKitProductPage } from "./SampleKitProductPage"
+import { Metadata } from "next"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
+
+export async function generateMetadata(): Promise<Metadata> {
+  const sampleKitData = await getSampleKit()
+  return generateMetadataFromStrapi(sampleKitData?.data?.seo || {})
+}
 
 export default async function AccessoriesPage(props: Props) {
   const accessoriesPage = await getAccessoriesPage()

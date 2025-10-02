@@ -4,10 +4,17 @@ import { getProductByProductId } from "@lib/data/products"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import ShadesProductPage from "./ShadesProductPage"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
+import { Metadata } from "next"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
+
+export async function generateMetadata(): Promise<Metadata> {
+  const shadesData = await getShades()
+  return generateMetadataFromStrapi(shadesData?.data?.seo || {})
+}
 
 export default async function AccessoriesPage(props: Props) {
   const accessoriesPage = await getAccessoriesPage()

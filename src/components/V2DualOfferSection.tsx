@@ -3,6 +3,7 @@ import { getBackgroundColor, getStrapiUrl } from "@lib/utils"
 import { CustomCarousel } from "./CustomCarousel"
 import V2Button from "./V2Button"
 import V2Headline from "./V2Headline"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface ButtonData {
   id: number
@@ -62,10 +63,6 @@ export default function V2DualOfferSection({
       className={`w-full lg:pt-20 lg:pb-16 ${getBackgroundColor(
         data.backgroundColor
       )}`}
-      // style={{
-      //   background:
-      //     "linear-gradient(90deg, rgba(239, 235, 235, 0.5) 0%, rgba(255, 255, 255, 0.50) 100%)",
-      // }}
       aria-labelledby="main-heading"
     >
       <div className="lg:max-w-[1074px] mx-auto">
@@ -89,19 +86,26 @@ export default function V2DualOfferSection({
 
         {iconItems && iconItems.length > 0 && (
           <div className="flex items-center justify-center gap-6 mb-8 lg:mb-20 max-w-[1074px] mx-auto">
-            {iconItems.map((item) => (
+            {iconItems.map((item, index) => (
               <div
-                key={item.id}
+                key={`icon-${item.id}-${index}`}
                 className="flex flex-col max-w-[80px] lg:max-w-[33%] lg:flex-row items-center justify-center gap-2 flex-shrink-0 flex-grow-0 basis-auto"
               >
                 {item.icon?.url && (
-                  <img
-                    src={getStrapiUrl(item.icon.url)}
-                    alt={item.icon.alternativeText || item.title}
-                    width={item.icon.width}
-                    height={item.icon.height}
-                    className="w-6 h-6 text-[#140e02] flex-shrink-0"
-                    aria-hidden="true"
+                  // <img
+                  //   src={getStrapiUrl(item.icon.url)}
+                  //   alt={item.icon.alternativeText || item.title}
+                  //   width={item.icon.width}
+                  //   height={item.icon.height}
+                  //   className="w-6 h-6 text-[#140e02] flex-shrink-0"
+                  //   aria-hidden="true"
+                  // />
+                  <V2MediaRenderer
+                    media={item.icon as any}
+                    options={{
+                      type: "icon",
+                      className: "w-6 h-6 text-[#140e02] flex-shrink-0"
+                    }}
                   />
                 )}
                 <span className="text-[#140e02] text-xs lg:text-base font-semibold text-center lg:text-left">
@@ -117,7 +121,7 @@ export default function V2DualOfferSection({
           <CustomCarousel
             showNav={false}
             data={cardItems.map((card, index) => (
-              <div key={card.id} className={"w-full px-6"}>
+              <div key={`mobile-card-${card.id}-${index}`} className={"w-full px-6"}>
                 {card.title && (
                   <V2Headline
                     title={card.title}
@@ -137,7 +141,7 @@ export default function V2DualOfferSection({
           <div className="grid lg:grid-cols-2 gap-16">
             {cardItems.map((card, index) => (
               <Card
-                key={card.id}
+                key={`desktop-card-${card.id}-${index}`}
                 className="bg-transparent border-none shadow-none w-[465px]"
               >
                 <CardContent className="p-0 space-y-6 min-h-[320px] flex flex-col justify-between items-start">

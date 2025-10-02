@@ -1,6 +1,7 @@
 import type { V2HeroBannerData } from "@/types/hero-banner"
 import { getStrapiUrl } from "@lib/utils"
 import { V2Button } from "./V2Button"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface V2HeroBannerProps {
   data: V2HeroBannerData
@@ -16,11 +17,13 @@ export default function V2HeroBanner({ data }: V2HeroBannerProps) {
     <section className="relative w-full overflow-hidden">
       {/* Background Image */}
       <div className="w-full">
-        <img
-          src={getStrapiUrl(backgroundImage.url) || "/placeholder.svg"}
-          alt="Outdoor living space with pergola"
-          className="w-full h-auto"
-        />
+        <V2MediaRenderer
+            media={backgroundImage as any}
+            options={{
+              // aspectRatio: "525/262",
+              className: "w-full h-auto"
+            }}
+          />
         {/* Overlay for better text readability */}
         <div className="hidden lg:block absolute inset-0 bg-black/20" />
       </div>

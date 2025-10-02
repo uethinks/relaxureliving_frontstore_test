@@ -10,6 +10,7 @@ import Markdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
 import remarkGfm from "remark-gfm"
 import { CustomCarousel } from "./CustomCarousel"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface FAQIcon {
   id: number
@@ -76,16 +77,24 @@ function FAQCard({ faq }: { faq: FAQItem }) {
         <div className="flex items-center gap-3 mb-5 lg:mb-9">
           <div className="w-[56px] h-[56px] flex-shrink-0">
             {faq.icon?.url ? (
-              <Image
-                unoptimized
-                src={getStrapiUrl(faq.icon.url)}
-                alt={
-                  faq.icon.alternativeText ||
-                  `${faq?.faq_category?.name || faq?.title} icon`
-                }
-                width={faq.icon.width}
-                height={faq.icon.height}
-                className="w-full h-full text-[#ffbf3c]"
+              // <Image
+              //   unoptimized
+              //   src={getStrapiUrl(faq.icon.url)}
+              //   alt={
+              //     faq.icon.alternativeText ||
+              //     `${faq?.faq_category?.name || faq?.title} icon`
+              //   }
+              //   width={faq.icon.width}
+              //   height={faq.icon.height}
+              //   className="w-full h-full text-[#ffbf3c]"
+              // />
+              <V2MediaRenderer
+                media={faq.icon as any}
+                options={{
+                  objectFit: "contain",
+                  type: "icon",
+                  className: "w-full h-full text-[#ffbf3c]",
+                }}
               />
             ) : (
               // Fallback icon

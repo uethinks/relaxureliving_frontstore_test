@@ -1,6 +1,9 @@
+"use client"
+
 import type { CraftsmanshipData } from "@/types/craftsmanship"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
+import { useEffect, useState } from "react"
 import { GalleryCarousel } from "./GalleryCarousel"
 import { ImageAccordion } from "./ImageAccordion"
 
@@ -13,6 +16,16 @@ export function V2CraftsmanshipSection({
   data,
   isMobile = false,
 }: CraftsmanshipSectionProps) {
+  // 添加客户端渲染状态管理，避免水合错误
+  const [isClient, setIsClient] = useState(false)
+  const [clientIsMobile, setClientIsMobile] = useState(isMobile)
+
+  useEffect(() => {
+    // 客户端水合完成后更新状态
+    setIsClient(true)
+    setClientIsMobile(isMobile)
+  }, [isMobile])
+
   return (
     <section className="w-full bg-white" aria-labelledby="craftsmanship-title">
       <div className="w-full">
@@ -44,19 +57,34 @@ export function V2CraftsmanshipSection({
         </div>
 
         {/* Feature Items */}
-        {isMobile ? (
-          /* Mobile - 屏幕宽度小于1024px */
-          <GalleryCarousel
-            items={data.items.map((item) => ({
-              media: item.media,
-              mediaUrl: item.media.url,
-              mediaAlternativeText: item.media.alternativeText || item.title,
-              description: item.description,
-            }))}
-          />
+        {!isClient ? (
+          /* 服务器端渲染和首次客户端渲染 - 使用传入的isMobile值 */
+          isMobile ? (
+            <GalleryCarousel
+              items={data.items.map((item) => ({
+                media: item.media,
+                mediaUrl: item.media.url,
+                mediaAlternativeText: item.media.alternativeText || item.title,
+                description: item.description,
+              }))}
+            />
+          ) : (
+            <ImageAccordion items={data.items} />
+          )
         ) : (
-          /* PC - 屏幕宽度大于等于1024px */
-          <ImageAccordion items={data.items} />
+          /* 客户端水合完成后 - 使用客户端状态 */
+          clientIsMobile ? (
+            <GalleryCarousel
+              items={data.items.map((item) => ({
+                media: item.media,
+                mediaUrl: item.media.url,
+                mediaAlternativeText: item.media.alternativeText || item.title,
+                description: item.description,
+              }))}
+            />
+          ) : (
+            <ImageAccordion items={data.items} />
+          )
         )}
       </div>
     </section>

@@ -9,6 +9,7 @@ import { ReactQueryProvider } from "./providers"
 // 动态生成metadata
 export async function generateMetadata(): Promise<Metadata> {
   const globalData = await getGlobalData()
+  console.log("generateMetadata globalData", globalData)
   return globalData?.data?.defaultSeo?.metadataInfo || {}
 }
 

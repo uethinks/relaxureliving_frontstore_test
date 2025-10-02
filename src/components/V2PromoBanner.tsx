@@ -2,6 +2,7 @@ import { getStrapiUrl } from "@lib/utils"
 import Image from "next/image"
 import V2Button from "./V2Button"
 import V2Headline from "./V2Headline"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface HeroData {
   __component: string
@@ -63,24 +64,36 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
       {/* Image Wrap */}
       <div className="w-full lg:relative">
         {isStatic ? (
-          <img
-            src={backgroundImage.url}
-            className="w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
+          // <img
+          //   src={backgroundImage.url}
+          //   className="w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
+          // />
+          <V2MediaRenderer
+            media={backgroundImage as any}
+            options={{
+              className: "w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
+            }}
           />
         ) : (
-          <Image
-            unoptimized
-            src={getStrapiUrl(backgroundImage.url)}
-            alt={
-              backgroundImage.alternativeText ||
-              "Relaxure pergola assembly process"
-            }
-            width={backgroundImage.width}
-            height={backgroundImage.height}
-            className="w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
-            priority
-            // sizes={generateSizes()}
-            quality={85}
+          // <Image
+          //   unoptimized
+          //   src={getStrapiUrl(backgroundImage.url)}
+          //   alt={
+          //     backgroundImage.alternativeText ||
+          //     "Relaxure pergola assembly process"
+          //   }
+          //   width={backgroundImage.width}
+          //   height={backgroundImage.height}
+          //   className="w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
+          //   priority
+          //   // sizes={generateSizes()}
+          //   quality={85}
+          // />
+          <V2MediaRenderer
+            media={backgroundImage as any}
+            options={{
+              className: "w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
+            }}
           />
         )}
       </div>

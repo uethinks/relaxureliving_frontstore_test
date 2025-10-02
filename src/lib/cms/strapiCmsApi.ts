@@ -2,6 +2,17 @@
 import axios from "axios"
 import axiosInstance from "../axiosInstance"
 
+const seoPopulate = {
+  populate: {
+    metaImage: {
+      populate: "*",
+    },
+    metaSocial: {
+      populate: ["image"],
+    }
+  },
+}
+
 const v2HeroBannerPopulate = {
   populate: {
     button: {
@@ -140,6 +151,7 @@ const accessoriesPagePopulate = {
     banner: {
       populate: "*",
     },
+    seo: seoPopulate,
   },
 }
 
@@ -198,6 +210,7 @@ const blocksAllPopulate = {
   "blocks.v2-comparison-section": v2ComparisonSectionPopulate,
 }
 
+
 // 定义 API URL
 const homePagePopulate = {
   populate: {
@@ -205,7 +218,8 @@ const homePagePopulate = {
       // asking to populate the blocks dynamic zone
       on: blocksAllPopulate,
     },
-  },
+    seo: seoPopulate,
+  }, 
 }
 
 const reviewsPopulate = {
@@ -234,6 +248,7 @@ const standardPergolaPopulate = {
     descriptionSections: {
       on: blocksAllPopulate,
     },
+    seo: seoPopulate,
   },
 }
 
@@ -242,6 +257,7 @@ const customPergolaPopulate = {
     sections: {
       on: blocksAllPopulate,
     },
+    seo: seoPopulate,
   },
 }
 
@@ -308,9 +324,7 @@ const pergolaPopulate = {
     sample_kit: {
       populate: ["product_image"],
     },
-    seo: {
-      populate: ["shareImage"],
-    },
+    seo: seoPopulate,
   },
 }
 const faqPopulate = {
@@ -333,6 +347,7 @@ const heaterPopulate = {
     sections: {
       on: blocksAllPopulate,
     },
+    seo: seoPopulate,
   },
 }
 const shadesPopulate = {
@@ -348,6 +363,7 @@ const shadesPopulate = {
     sections: {
       on: blocksAllPopulate,
     },
+    seo: seoPopulate,
   },
 }
 
@@ -360,6 +376,7 @@ const sampleKitPopulate = {
     sections: {
       on: blocksAllPopulate,
     },
+    seo: seoPopulate,
   },
 }
 
@@ -376,6 +393,7 @@ const glassdoorPopulate = {
     sections: {
       on: blocksAllPopulate,
     },
+    seo: seoPopulate,
   },
 }
 const landingPagePopulate = {
@@ -472,6 +490,20 @@ export const API_URLS = {
   getBlogs: "/api/v2-blogs",
   getPolicies: "/api/v2-policies",
   submitBecomeDealer: "/api/v2-become-dealer-submissions",
+  sitemap: "/api/strapi-5-sitemap-plugin/sitemap.xml"
+}
+
+// 获取所有项目
+export const getSitemap = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.sitemap, {
+      params: { populate: "*" },
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
 }
 
 // 获取所有项目
@@ -1049,12 +1081,63 @@ export const getBlogs = async ({
   }
 }
 
+// {
+//   "kind": "collectionType",
+//   "collectionName": "v2_blogs",
+//   "info": {
+//     "singularName": "v2-blog",
+//     "pluralName": "v2-blogs",
+//     "displayName": "V2_Blog",
+//     "description": ""
+//   },
+//   "options": {
+//     "draftAndPublish": true
+//   },
+//   "attributes": {
+//     "title": {
+//       "type": "string"
+//     },
+//     "cover": {
+//       "type": "media",
+//       "multiple": false,
+//       "required": false,
+//       "allowedTypes": [
+//         "images"
+//       ]
+//     },
+//     "content": {
+//       "type": "richtext"
+//     },
+//     "tags": {
+//       "type": "relation",
+//       "relation": "manyToMany",
+//       "target": "api::v2-tag.v2-tag",
+//       "inversedBy": "blogs"
+//     },
+//     "slug": {
+//       "type": "uid",
+//       "targetField": "title"
+//     },
+//     "seo": {
+//       "type": "component",
+//       "repeatable": false,
+//       "component": "shared.seo"
+//     }
+//   }
+// }
+
+
 // 获取博客详情
 export const getBlog = async (id: string) => {
   try {
     const response = await axiosInstance.get(`${API_URLS.getBlogs}/${id}`, {
       params: {
-        populate: "*",
+        populate: {
+          cover: {
+            populate: "*",
+          },
+          seo: seoPopulate,
+        },
       },
     })
 

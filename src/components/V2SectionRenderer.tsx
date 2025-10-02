@@ -16,7 +16,7 @@ import { V2PromoBanner } from "@/components/V2PromoBanner"
 import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
 import V2TestimonialsSection from "@/components/V2TestimonialsSection"
 import { useIsMobile } from "@/lib/hooks/useScreenSize"
-import React from "react"
+import React, { useMemo, useEffect, useState } from "react"
 import { V2PergolasComparisonTable } from "./V2ComparisonSection"
 import { V2TimelineSection } from "./V2TimelineSection"
 
@@ -60,28 +60,47 @@ export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({
   className = "flex flex-col w-full items-start justify-center",
 }) => {
   const isMobile = useIsMobile(1024)
+  
+  // 添加客户端渲染状态管理，避免水合错误
+  const [isClient, setIsClient] = useState(false)
+  const [clientIsMobile, setClientIsMobile] = useState(false) // 服务器端默认值
 
-  const renderSection = (section: Section) => {
+  useEffect(() => {
+    // 客户端水合完成后更新状态
+    setIsClient(true)
+    setClientIsMobile(isMobile)
+  }, [isMobile])
+
+  // 使用useMemo优化渲染逻辑，避免不必要的重新渲染
+  const renderedSections = useMemo(() => {
     const mergedComponents = {
       ...sectionComponents,
       ...customComponents,
     }
-    const key = `${section.id}-${section.__component}`
-    const Component =
-      mergedComponents[section.__component as keyof typeof sectionComponents]
 
-    if (!Component) {
-      console.warn(`Unknown section component: ${section.__component}`)
-      return null
-    }
+    return sections.map((section, index) => {
+      const key = `${section.id}-${section.__component}-${index}`
+      const Component =
+        mergedComponents[section.__component as keyof typeof sectionComponents]
 
-    return <Component key={key} data={section as any} isMobile={isMobile} />
-  }
+      if (!Component) {
+        console.warn(`Unknown section component: ${section.__component}`)
+        return null
+      }
+
+      // 使用客户端状态或服务器端默认值
+      const currentIsMobile = isClient ? clientIsMobile : false
+
+      return <Component key={key} data={section as any} isMobile={currentIsMobile} />
+    })
+  }, [sections, customComponents, isClient, clientIsMobile])
 
   return (
     <div className={className}>
-      {sections.map(renderSection)}
-      {showContactUs && <V2ContactUsSection isMobile={isMobile} />}
+      {renderedSections}
+      {showContactUs && (
+        <V2ContactUsSection isMobile={isClient ? clientIsMobile : false} />
+      )}
     </div>
   )
 }

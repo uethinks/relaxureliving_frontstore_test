@@ -46,6 +46,7 @@ interface Media {
 
 interface MediaRendererOptions {
   aspectRatio?: string // 默认"525/262"
+  type?: "media" | "icon"
   objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down"
   videoOptions?: {
     autoplay?: boolean
@@ -90,6 +91,7 @@ export default function MediaRenderer({
     },
     enableZoom = false,
     className = "",
+    type = "media",
   } = options
 
   // Intersection Observer for video autoplay
@@ -125,6 +127,7 @@ export default function MediaRenderer({
   }, [isInView, videoOptions.autoplay])
 
   // 检测媒体类型
+  // console.log("media", media)
   const isVideo = media?.mime.startsWith("video/")
   const isImage = media?.mime.startsWith("image/")
 
@@ -172,7 +175,7 @@ export default function MediaRenderer({
   if (isVideo) {
     return (
       <div
-        className={`w-full h-full overflow-hidden ${className}`}
+        className={`overflow-hidden ${className}`}
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
         <video
@@ -183,6 +186,7 @@ export default function MediaRenderer({
           muted={videoOptions.muted}
           loop={videoOptions.loop}
           controls={videoOptions.controls}
+          aria-label={media.alternativeText || media.name}
           playsInline
           onError={handleError}
           poster={media.previewUrl ? getStrapiUrl(media.previewUrl) : undefined}
@@ -192,18 +196,20 @@ export default function MediaRenderer({
   }
 
   if (isImage) {
+    const animationClass = type === "icon" ? "" : "transition-transform duration-300 hover:scale-105"
     return (
       <div
-        className={`w-full h-full overflow-hidden relative ${className}`}
+        className={`overflow-hidden relative ${className}`}
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
+        
         <Image
           unoptimized
           src={getStrapiUrl(media.url)}
           alt={media.alternativeText || media.name}
           width={media.width || 525}
           height={media.height || 262}
-          className={`w-full h-full object-${objectFit} transition-transform duration-300 hover:scale-105`}
+          className={`w-full h-full object-${objectFit} ${animationClass}`}
           priority={imageOptions.priority}
           sizes={imageOptions.sizes}
           onError={handleError}

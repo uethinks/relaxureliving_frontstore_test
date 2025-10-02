@@ -6,10 +6,17 @@ import { getAccessoriesPage, getHeater } from "@lib/cms/strapiCmsApi"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { HeaterProductPage } from "./HeaterProductPage"
+import { Metadata } from "next"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
+
+export async function generateMetadata(): Promise<Metadata> {
+  const heaterData = await getHeater()
+  return generateMetadataFromStrapi(heaterData?.data?.seo || {})
+}
 
 export default async function AccessoriesPage(props: Props) {
   const accessoriesPage = await getAccessoriesPage()

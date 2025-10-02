@@ -11,6 +11,7 @@ import {
 } from "@lib/cms/strapiCmsApi"
 import { StoreProduct, StoreProductResponse } from "@medusajs/types"
 import { Metadata } from "next"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 // 强制静态生成
@@ -32,7 +33,8 @@ type Props = Readonly<{
 // 动态metadata
 export async function generateMetadata(): Promise<Metadata> {
   const pergolaData = await getPergola()
-  return pergolaData?.data?.seo?.metadataInfo || {}
+  console.log("generateMetadata pergolaData", pergolaData)
+  return generateMetadataFromStrapi(pergolaData?.data?.seo || {})
 }
 
 export async function generateStaticParams() {

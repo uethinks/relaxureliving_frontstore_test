@@ -1,10 +1,6 @@
-interface IItem {
-  url: string
-  title: string
-  link: string
-}
+import V2MediaRenderer from "./V2MediaRenderer"
 
-export default function V2PressItem({ item }: { item: IItem }) {
+export default function V2PressItem({ item }: { item: any }) {
   return (
     <div
       className={
@@ -19,10 +15,13 @@ export default function V2PressItem({ item }: { item: IItem }) {
           "w-[128px] h-[128px] lg:w-40 lg:h-40 flex items-center flex-grow-0 flex-shrink-0 basis-auto overflow-hidden"
         }
       >
-        <img
-          src={item.url}
-          alt={item.title}
-          className="object-contain w-full"
+        <V2MediaRenderer
+          media={item.image as any}
+          options={{
+            // aspectRatio: "525/262",
+            objectFit: "contain",
+            className: "object-contain w-full",
+          }}
         />
       </div>
       <div className={"flex flex-col justify-between h-[107px] pr-6 lg:pr-5"}>

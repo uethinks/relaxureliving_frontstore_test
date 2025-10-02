@@ -4,9 +4,16 @@ import { getProductByProductId } from "@lib/data/products"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import GlassdoorProductPage from "./GlassdoorProductPage"
+import { Metadata } from "next"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
+
+export async function generateMetadata(): Promise<Metadata> {
+  const glassdoorData = await getGlassdoor()
+  return generateMetadataFromStrapi(glassdoorData?.data?.seo || {})
+}
 
 export default async function AccessoriesPage(props: Props) {
   const accessoriesPage = await getAccessoriesPage()

@@ -1,4 +1,5 @@
 import { getStrapiUrl } from "@lib/utils"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface FeatureItem {
   id: number
@@ -42,12 +43,21 @@ export default function FeaturesSection({
             className="basis-full lg:basis-1/6 grow flex lg:flex-col items-center lg:gap-7 gap-8"
           >
             {feature.icon && (
-              <img
-                src={getStrapiUrl(feature.icon.url)}
-                alt={feature.icon.alternativeText || feature.title}
-                width={feature.icon.width}
-                height={feature.icon.height}
-                className="w-[16vw] h-[16vw] lg:w-14 lg:h-14 object-contain flex-shrink-0 flex-grow-0 basis-auto"
+              // <img
+              //   src={getStrapiUrl(feature.icon.url)}
+              //   alt={feature.icon.alternativeText || feature.title}
+              //   width={feature.icon.width}
+              //   height={feature.icon.height}
+              //   className="w-[16vw] h-[16vw] lg:w-14 lg:h-14 object-contain flex-shrink-0 flex-grow-0 basis-auto"
+              // />
+              <V2MediaRenderer
+                media={feature.icon as any}
+                options={{
+                  // aspectRatio: "525/262",
+                  type: "icon",
+                  objectFit: "contain",
+                  className: "w-[58px] h-[56px]"
+                }}
               />
             )}
             <div
