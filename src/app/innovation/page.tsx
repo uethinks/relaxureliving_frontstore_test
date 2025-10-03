@@ -1,8 +1,17 @@
 import V2MaskHeader from "@/components/V2MaskHeader"
 import { V2PromoBanner } from "@/components/V2PromoBanner"
 import V2SectionRenderer from "@/components/V2SectionRenderer"
+import { getInnovation } from "@lib/cms/strapiCmsApi"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
+import { Metadata } from "next"
+
+export async function generateMetadata(): Promise<Metadata> {
+  const innovationData = await getInnovation()
+  console.log("innovationData", innovationData)
+  return generateMetadataFromStrapi(innovationData?.data?.seo || {})
+}
 
 export default async function InnovationPage() {
   return (
@@ -31,6 +40,8 @@ export default async function InnovationPage() {
               backgroundImage: {
                 isStatic: true,
                 url: "/img/innovation-hero1.png",
+                mime: "image/png",
+                alternativeText: "Innovation at Relaxure",
               },
             } as never
           }
@@ -161,6 +172,8 @@ export default async function InnovationPage() {
               backgroundImage: {
                 isStatic: true,
                 url: "/img/innovation-hero2.png",
+                mime: "image/png",
+                alternativeText: "Innovation at Relaxure",
               },
             } as never
           }

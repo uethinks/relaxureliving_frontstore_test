@@ -128,8 +128,8 @@ export default function MediaRenderer({
 
   // 检测媒体类型
   // console.log("media", media)
-  const isVideo = media?.mime.startsWith("video/")
-  const isImage = media?.mime.startsWith("image/")
+  const isVideo = media?.mime?.startsWith("video/")
+  const isImage = media?.mime?.startsWith("image/")
 
   // 处理错误
   const handleError = () => {

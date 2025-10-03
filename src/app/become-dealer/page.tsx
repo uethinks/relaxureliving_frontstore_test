@@ -2,6 +2,14 @@ import { V2BecomeDealerForm } from "@/components/V2BecomeDealerForm"
 import V2MaskHeader from "@/components/V2MaskHeader"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
+import { Metadata } from "next"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
+import { getBecomeDealer } from "@lib/cms/strapiCmsApi"
+
+export async function generateMetadata(): Promise<Metadata> {
+  const becomeDealerData = await getBecomeDealer()
+  return generateMetadataFromStrapi(becomeDealerData?.data?.seo || {})
+}
 
 export default async function BecomeDealer() {
   return (

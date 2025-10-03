@@ -3,6 +3,13 @@ import { getOurCollection } from "@lib/cms/strapiCmsApi"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { CollectionContent } from "./CollectionContent"
+import { Metadata } from "next"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
+
+export async function generateMetadata(): Promise<Metadata> {
+  const ourCollectionData = await getOurCollection()
+  return generateMetadataFromStrapi(ourCollectionData?.data?.seo || {})
+}
 
 export default async function OurCollectionPage() {
   const { data } = await getOurCollection()

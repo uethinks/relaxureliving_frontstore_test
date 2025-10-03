@@ -4,8 +4,10 @@ import { V2FAQSection } from "@/components/V2FAQSection"
 import V2Headline from "@/components/V2Headline"
 import V2SectionRenderer from "@/components/V2SectionRenderer"
 import { getAboutUs } from "@lib/cms/strapiCmsApi"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
+import { Metadata } from "next"
 import Image from "next/image"
 
 // import { Metadata } from "next"
@@ -29,6 +31,11 @@ import Image from "next/image"
 //     "aluminum pergola",
 //   ],
 // }
+
+export async function generateMetadata(): Promise<Metadata> {
+  const aboutUsData = await getAboutUs()
+  return generateMetadataFromStrapi(aboutUsData?.data?.seo || {})
+}
 
 export default async function AboutUsPage() {
   const { data } = await getAboutUs()

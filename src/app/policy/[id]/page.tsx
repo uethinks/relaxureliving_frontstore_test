@@ -1,68 +1,19 @@
-"use client"
-
-import V2MaskHeader from "@/components/V2MaskHeader"
 import { getPolicy } from "@lib/cms/strapiCmsApi"
-import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
-import { FooterDark } from "@modules/home/homepage/page/sections/footer"
-import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
-import Markdown from "react-markdown"
-import rehypeRaw from "rehype-raw"
-import remarkGfm from "remark-gfm"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
+import PolicyClient from "./PolicyClient"
 
-export default function PagePolicy() {
-  const [policy, setPolicy] = useState<any>()
-  const searchParams = useSearchParams()
+export async function generateMetadata({ params, searchParams }: { params: Promise<{ id: string }>, searchParams: Promise<{ id: string }> }) {
+  const { id: searchId } = await searchParams
+  const policy = await getPolicy(searchId)
+  return generateMetadataFromStrapi(policy?.data?.seo || {})
+}
 
-  useEffect(() => {
-    if (searchParams && searchParams.get("id")) {
-      getPolicy(searchParams.get("id") || "").then((res) => {
-        if (!res) {
-          return
-        }
+export default async function PagePolicy({ params, searchParams }: { params: Promise<{ id: string }>, searchParams: Promise<{ id: string }> }) {
+  const { id: searchId } = await searchParams
+  
+  // 在服务器端获取初始数据
+  const policyRes = await getPolicy(searchId)
+  const policy = policyRes?.data
 
-        setPolicy(res.data)
-      })
-    }
-  }, [searchParams])
-  return (
-    <>
-      <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
-        <NavBarWrapper />
-        {policy && (
-          <>
-            <V2MaskHeader title={policy.title}>
-              <p
-                className={
-                  "text-xl whitespace-normal prose all:unset text-center mx-auto"
-                }
-              >
-                <Markdown
-                  rehypePlugins={[rehypeRaw]}
-                  remarkPlugins={[remarkGfm]}
-                  remarkRehypeOptions={{ passThrough: ["link"] }}
-                >
-                  {policy.description}
-                </Markdown>
-              </p>
-            </V2MaskHeader>
-            <section
-              className={
-                "w-full lg:w-[1074px] max-w-none max-lg:px-6 mb-12 lg:mb-32 whitespace-normal prose text-left"
-              }
-            >
-              <Markdown
-                rehypePlugins={[rehypeRaw]}
-                remarkPlugins={[remarkGfm]}
-                remarkRehypeOptions={{ passThrough: ["link"] }}
-              >
-                {policy.content}
-              </Markdown>
-            </section>
-          </>
-        )}
-      </div>
-      <FooterDark />
-    </>
-  )
+  return <PolicyClient initialPolicy={policy} />
 }

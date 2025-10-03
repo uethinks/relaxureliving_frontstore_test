@@ -4,6 +4,13 @@ import { getDeliveryWarranty } from "@lib/cms/strapiCmsApi"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import DeliveryProcess from "./DeliveryProcess"
+import { Metadata } from "next"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
+
+export async function generateMetadata(): Promise<Metadata> {
+  const deliveryWarrantyData = await getDeliveryWarranty()
+  return generateMetadataFromStrapi(deliveryWarrantyData?.data?.seo || {})
+}
 
 export default async function DeliveryWarrantyPage() {
   const { data } = await getDeliveryWarranty()

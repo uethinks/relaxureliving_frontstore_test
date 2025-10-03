@@ -485,12 +485,34 @@ export const API_URLS = {
   getOurCollection: "/api/v2-our-collection",
   getFAQCategories: "/api/v2-faq-categories",
   getResourceLibraries: "/api/v2-resource-libraries",
+  getResourceLibraryPage: "/api/v2-resource-library-page",
   getPress: "/api/presses",
+  getPressPage: "/api/v2-press-page",
   getTags: "/api/v2-tags",
   getBlogs: "/api/v2-blogs",
+  getBlogPage: "/api/v2-blog-list-page",
   getPolicies: "/api/v2-policies",
   submitBecomeDealer: "/api/v2-become-dealer-submissions",
-  sitemap: "/api/strapi-5-sitemap-plugin/sitemap.xml"
+  sitemap: "/api/strapi-5-sitemap-plugin/sitemap.xml",
+  getInnovation: "/api/v2-innovation",
+  getBecomeDealer: "/api/v2-become-a-dealer",
+  
+}
+
+export const getInnovation = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getInnovation, {
+      params: {
+        populate: {
+          seo: seoPopulate,
+        },
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching innovation data:", error)
+    throw error
+  }
 }
 
 // 获取所有项目
@@ -510,7 +532,22 @@ export const getSitemap = async () => {
 export const getContactUs = async () => {
   try {
     const response = await axiosInstance.get(API_URLS.getContactUs, {
-      params: { populate: "*" },
+      params: { populate: {
+        seo: seoPopulate,
+      } },
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取所有项目
+export const getBecomeDealer = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getBecomeDealer, {
+      params: { populate: { seo: seoPopulate } },
     })
     return response.data
   } catch (error) {
@@ -528,6 +565,18 @@ export const getHomePage = async () => {
     return response.data
   } catch (error) {
     console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+export const getBlogPage = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getBlogPage, {
+      params: { populate: { seo: seoPopulate } },
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching blog page:", error)
     throw error
   }
 }
@@ -889,6 +938,7 @@ export const getAboutUs = async () => {
               "blocks.v2-dual-offer-section": v2DualOfferSectionPopulate,
             },
           },
+          seo: seoPopulate,
         },
       },
     })
@@ -910,6 +960,7 @@ export const getDeliveryWarranty = async () => {
               "blocks.v2-faq-section": v2FaqSectionPopulate,
             },
           },
+          seo: seoPopulate,
         },
       },
     })
@@ -935,6 +986,7 @@ export const getOurCollection = async () => {
               },
             },
           },
+          seo: seoPopulate,
         },
       },
     })
@@ -951,6 +1003,22 @@ export const getFAQCategories = async () => {
     const response = await axiosInstance.get(API_URLS.getFAQCategories, {
       params: {
         populate: "*",
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+export const getResourceLibraryPage = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getResourceLibraryPage, {
+      params: {
+        populate: {
+          seo: seoPopulate,
+        },
       },
     })
     return response.data
@@ -1019,6 +1087,24 @@ export const getPress = async ({
     }
   } catch (error) {
     console.error("Error fetching items:", error)
+    throw error
+  }
+}
+
+// 获取 press 页面数据
+export const getPressPage = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getPressPage, {
+      params: {
+        populate: {
+          seo: seoPopulate,
+        },
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    console.error("Error fetching press page data:", error)
     throw error
   }
 }
@@ -1169,7 +1255,9 @@ export const getPolicy = async (id: string) => {
   try {
     const response = await axiosInstance.get(`${API_URLS.getPolicies}/${id}`, {
       params: {
-        populate: "*",
+        populate: {
+          seo: seoPopulate,
+        },
       },
     })
 

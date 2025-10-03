@@ -1,91 +1,22 @@
-"use client"
+import { getPressPage } from "@lib/cms/strapiCmsApi"
+import { generateMetadataFromStrapi } from "@lib/util/seo"
+import { Metadata } from "next"
+import React, { Suspense } from "react"
+import PressPageClient from "./PressPageClient"
 
-import { V2ContactUsSection } from "@/components/V2ContactUsSection"
-import V2MaskHeader from "@/components/V2MaskHeader"
-import V2PressItem from "@/components/V2PressItem"
-import { getPress } from "@lib/cms/strapiCmsApi"
-import { getStrapiUrl } from "@lib/utils"
-import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
-import { FooterDark } from "@modules/home/homepage/page/sections/footer"
-import { useInfiniteQuery } from "@tanstack/react-query"
-import { useInViewport } from "ahooks"
-import React, { useEffect, useRef } from "react"
+export async function generateMetadata(): Promise<Metadata> {
+  const pressPageData = await getPressPage()
+  console.log("pressPageData", pressPageData)
+  return generateMetadataFromStrapi(pressPageData?.data?.seo || {})
+}
 
-export default function PagePress() {
-  const scrollRef = useRef<HTMLInputElement | null>(null)
-  const [inViewport] = useInViewport(scrollRef)
-
-  const { data, isFetchingNextPage, fetchNextPage, hasNextPage, isError } =
-    useInfiniteQuery({
-      queryKey: ["fetchList"],
-      queryFn: ({ pageParam = 1 }) => getPress({ current: pageParam }),
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-      initialPageParam: 1,
-    })
-
-  useEffect(() => {
-    if (inViewport && hasNextPage) {
-      fetchNextPage()
-    }
-  }, [inViewport])
-
+export default async function PagePress() {
+  // 在服务器端获取初始数据
+  const pressPageData = await getPressPage()
+  
   return (
-    <>
-      <main className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
-        <NavBarWrapper />
-        <V2MaskHeader
-          title={"Relaxure in the Press"}
-          description={
-            "   Discover articles showcasing Relaxure’s pergolas, outdoor living inspirations, and expert reviews."
-          }
-        />
-        <section className={"w-full lg:max-w-[1440px] mb-12 lg:mb-20"}>
-          <div className={"w-full"}>
-            <div
-              className={
-                "flex flex-wrap items-center gap-x-6 gap-y-5 mb-10 w-full"
-              }
-            >
-              {!isError &&
-                data &&
-                data.pages.map((page, pageNum) => (
-                  <React.Fragment key={pageNum}>
-                    {page.data.map((press: any, pressKey: number) => (
-                      <V2PressItem
-                        key={pressKey}
-                        item={{
-                          url: press.image ? getStrapiUrl(press.image.url) : "",
-                          title: press.title,
-                          link: press.link,
-                        }}
-                      />
-                    ))}
-                  </React.Fragment>
-                ))}
-            </div>
-            <div
-              className={
-                "flex items-center justify-center text-[#2F2A1E] text-xs"
-              }
-              ref={scrollRef}
-            >
-              {isFetchingNextPage || hasNextPage ? (
-                <>
-                  loading...
-                  <img src="/img/icon-loading.svg" className="w-4 h-4" />
-                </>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-        </section>
-
-        <section className={"w-full bg-[#EFEEEB80]"}>
-          <V2ContactUsSection />
-        </section>
-      </main>
-      <FooterDark />
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <PressPageClient initialPressData={pressPageData} />
+    </Suspense>
   )
 }
