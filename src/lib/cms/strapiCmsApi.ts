@@ -162,7 +162,7 @@ const v2GuideCardsPopulate = {
         items: {
           populate: {
             icon: {
-              fields: "url",
+              fields: ["*"],
             },
           },
         },

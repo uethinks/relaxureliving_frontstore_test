@@ -7,6 +7,7 @@ import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { CustomCarousel } from "./CustomCarousel"
 import V2Button from "./V2Button"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 // 添加IconData接口
 interface IconData {
@@ -83,10 +84,13 @@ function CardItem({ step }: { step: GuideStep }) {
                 <div className="w-10 h-10 flex-shrink-0 flex items-center justify-start">
                   {/* 动态渲染图标 */}
                   {item.icon ? (
-                    <img
-                      src={getStrapiUrl(item.icon.url)}
-                      alt={item.title}
-                      className="w-6 h-6 sm:w-8 sm:h-8"
+                    <V2MediaRenderer
+                      media={item.icon as any}
+                      options={{
+                        objectFit: "contain",
+                        type: "icon",
+                        className: "w-6 h-6 sm:w-8 sm:h-8"
+                      }}
                     />
                   ) : null}
                   {/* 默认图标fallback */}

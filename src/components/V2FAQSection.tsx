@@ -195,12 +195,11 @@ export function V2FAQSection({ data, isMobile = false }: FAQSectionProps) {
       {data.backgroundImage && (
         <div className="absolute inset-0 z-0">
           <picture>
-            <img
-              src={getStrapiUrl(data.backgroundImage.url) || "/placeholder.svg"}
-              alt={
-                data.backgroundImage.alternativeText || "FAQ section background"
-              }
-              className="w-full h-full object-cover"
+            <V2MediaRenderer
+              media={data.backgroundImage as any}
+              options={{
+                className: "w-full h-full object-cover"
+              }}
             />
           </picture>
         </div>

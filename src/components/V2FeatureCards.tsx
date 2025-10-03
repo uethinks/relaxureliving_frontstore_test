@@ -132,14 +132,13 @@ function FeatureCard({ item }: FeatureCardProps) {
             {/* Icon */}
             <div className="mb-4 flex gap-6 items-center">
               {iconUrl && (
-                <Image
-                  unoptimized
-                  src={getStrapiUrl(iconUrl)}
-                  alt={iconAlt}
-                  width={item.icon?.width}
-                  height={item.icon?.height}
-                  className="w-14 h-14 object-contain"
-                  loading="lazy"
+                <V2MediaRenderer 
+                  media={item.icon as any}
+                  options={{
+                    objectFit: "contain",
+                    type: "icon",
+                    className: "w-14 h-14 object-contain"
+                  }}
                 />
               )}
               {/* Title */}

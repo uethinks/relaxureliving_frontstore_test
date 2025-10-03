@@ -38,7 +38,7 @@ export function V2TimelineSection({ data }: V2TimelineSectionProps) {
         {/* Process Steps */}
         <div className="relative">
           {/* Timeline Line - Hidden on mobile, visible on larger screens */}
-          <div className="absolute top-[47px] lg:top-[72px] left-0 right-0 h-px bg-[#706C63] z-0"></div>
+          <div className="absolute top-[47px] left-0 right-0 h-px bg-[#706C63] z-0"></div>
 
           {/* Steps Grid */}
           <ScrollRow>
@@ -101,7 +101,7 @@ const ScrollRow: React.FC<ScrollRowProps> = ({ children }) => {
       {/* 可横向滚动区域 */}
       <div
         ref={scrollRef}
-        className="grid max-lg:grid-flow-col max-lg:auto-cols-[50vw] max-lg:overflow-auto lg:grid-cols-3 lg:gap-6 xl:gap-8 relative z-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="grid max-lg:grid-flow-col max-lg:auto-cols-[50vw] max-lg:overflow-auto lg:grid-cols-6 lg:gap-6 xl:gap-8 relative z-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         {children}
       </div>

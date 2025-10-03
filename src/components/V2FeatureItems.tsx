@@ -1,4 +1,5 @@
 import { getStrapiUrl } from "@lib/utils"
+import V2MediaRenderer from "./V2MediaRenderer"
 
 interface FeatureItem {
   id: number
@@ -32,12 +33,13 @@ export default function V2FeatureItems({ data }: { data: V2FeatureItemsProps }) 
             <div key={feature.id} className="flex items-start gap-4 w-full">
               <div className="flex-shrink-0">
                 {feature.icon && (
-                  <img
-                    src={getStrapiUrl(feature.icon.url)}
-                    alt={feature.icon.alternativeText || feature.title}
-                    width={feature.icon.width}
-                    height={feature.icon.height}
-                    className="w-12 h-12 sm:w-14 sm:h-14 lg:w-14 lg:h-14 object-contain"
+                  <V2MediaRenderer
+                    media={feature.icon as any}
+                    options={{
+                      objectFit: "contain",
+                      type: "icon",
+                      className: "w-12 h-12 sm:w-14 sm:h-14 lg:w-14 lg:h-14 object-contain"
+                    }}
                   />
                 )}
               </div>

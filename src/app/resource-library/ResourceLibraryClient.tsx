@@ -2,6 +2,7 @@
 
 import { V2ContactUsSection } from "@/components/V2ContactUsSection"
 import V2MaskHeader from "@/components/V2MaskHeader"
+import V2MediaRenderer from "@/components/V2MediaRenderer"
 import { getResourceLibrary } from "@lib/cms/strapiCmsApi"
 import { getStrapiUrl } from "@lib/utils"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
@@ -150,10 +151,12 @@ export default function ResourceLibraryClient() {
                             }
                             target="_blank"
                           >
-                            <img
-                              src={getStrapiUrl(resource.cover.url)}
-                              alt={resource.title}
-                              className="object-contain w-full"
+                            <V2MediaRenderer
+                              media={resource.cover}
+                              options={{
+                                objectFit: "contain",
+                                className: "object-contain w-full",
+                              }}
                             />
                           </a>
                           <p className={"font-semibold text-sm text-[#2F2A1E]"}>
@@ -190,4 +193,3 @@ export default function ResourceLibraryClient() {
     </>
   )
 }
-

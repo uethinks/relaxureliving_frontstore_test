@@ -19,7 +19,7 @@ export default function PolicyClient({ initialPolicy }: PolicyClientProps) {
         {initialPolicy && (
           <>
             <V2MaskHeader title={initialPolicy.title}>
-              <p
+              <div
                 className={
                   "text-xl whitespace-normal prose all:unset text-center mx-auto"
                 }
@@ -31,7 +31,7 @@ export default function PolicyClient({ initialPolicy }: PolicyClientProps) {
                 >
                   {initialPolicy.description}
                 </Markdown>
-              </p>
+              </div>
             </V2MaskHeader>
             <section
               className={
