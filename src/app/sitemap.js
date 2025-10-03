@@ -1,4 +1,4 @@
-import { getPergola } from "@lib/cms/strapiCmsApi"
+import { getPergola, getSitemap} from "@lib/cms/strapiCmsApi"
 
 // 定义所有可能的条款类型
 const termsTypes = [
