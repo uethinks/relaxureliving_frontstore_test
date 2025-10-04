@@ -5,6 +5,8 @@ import { FloatingSidebar, SidebarIcon } from "./FloatingSidebar"
 import { ArrowUp, Ruler, Package } from "lucide-react"
 import { StoreProduct } from "@medusajs/types"
 import { useRouter } from "next/navigation"
+import { TrackingEvent } from "@/types/tracking"
+import { trackEvent } from "@lib/util/tracking"
 
 interface ProductSidebarProps {
   product: StoreProduct
@@ -25,6 +27,7 @@ export const ProductSidebar: React.FC<ProductSidebarProps> = ({ product }) => {
       text: "Custom Size",
       onClick: () => {
         // /customize
+        trackEvent(TrackingEvent.STANDARD_ALWAYSON_TO_3D)
         router.push('/customize')
       },
     },

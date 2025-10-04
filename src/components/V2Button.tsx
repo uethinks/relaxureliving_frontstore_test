@@ -2,6 +2,8 @@
 
 import { Button, ButtonProps } from "@/components/ui/button"
 import { cn, getStrapiUrl } from "@/lib/utils"
+import { TrackingEvent } from "@/types/tracking"
+import { trackEvent } from "@lib/util/tracking"
 import { ArrowRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 import * as React from "react"
@@ -18,6 +20,7 @@ export interface ButtonData {
   link: string
   icon?: any
   iconHidden?: boolean
+  eventName?: string
 }
 
 /**
@@ -55,7 +58,7 @@ export const V2Button: React.FC<V2ButtonProps> = ({
   onClick,
   ...props
 }) => {
-  const { type, size = "Large", text, link, icon, iconHidden } = data
+  const { type, size = "Large", text, link, icon, iconHidden, eventName } = data
   const router = useRouter()
 
   // Determine if link is external
@@ -99,6 +102,12 @@ export const V2Button: React.FC<V2ButtonProps> = ({
 
   // Unified navigation handler
   const handleClick = () => {
+    if (eventName && eventName?.length > 0) {
+      trackEvent(eventName as TrackingEvent, {
+        buttonText: text,
+      })
+    }
+
     if (onClick) {
       // Custom onClick provided, use it
       onClick()

@@ -17,6 +17,8 @@ import { PergulaSizeSelector } from "./PergulaSizeSelector"
 import { useProductSelection } from "./ProductSelectionContext"
 import V2ServiceDescription from "@/components/V2ServiceDescription"
 import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
+import { trackEvent } from "@lib/util/tracking"
+import { TrackingEvent } from "@/types/tracking"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -163,6 +165,13 @@ export const V2StandardProductSelector: React.FC<
     let hasCartAlready = cart != null && (cart?.items?.length ?? 0) > 0
     setIsLoading(true)
     try {
+      trackEvent(TrackingEvent.STANDARD_TO_CART, {
+        productName: product.title,
+        productId: product.id,
+        productPrice: totalPrice,
+        productQuantity: pergolaQuantity,
+      })
+
       await Promise.all([
         buyPergula(),
         buyHeater(),

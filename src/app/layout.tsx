@@ -162,6 +162,33 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           src="//code.tidio.co/spcvp06pvbgtarykyqq2afrepjvccury.js"
           async
         ></Script>
+        <Script id="tidio-chat-api" strategy="afterInteractive">
+          {`
+            (function () {
+                function onTidioChatApiOpen() {
+                    console.log('tidioChatApi open');
+                    // gtag('event', 'online_chat');
+                    console.log('window.gtag', window.gtag)
+                    if (window.gtag) {
+                      window.gtag("event", "online_chat", { "url": window.location.href })
+                    }
+                }
+                function onTidioChatApiReady() {
+                    // Code after chat loaded
+                    console.log('tidioChatApi ready');
+                    if (window.tidioChatApi) {
+                        window.tidioChatApi.on('open', onTidioChatApiOpen);
+                    }
+                }
+                console.log('window.tidioChatApi', window.tidioChatApi);
+                if (window.tidioChatApi) {
+                    window.tidioChatApi.on('open', onTidioChatApiReady);
+                } else {
+                    document.addEventListener('tidioChat-ready', onTidioChatApiReady);
+                }
+            })();
+          `}
+        </Script>
       </body>
     </html>
   )

@@ -14,6 +14,8 @@ import { SampleKitCardMobile } from "../SampleKitCard/SampleKitCardMobile"
 import { OrderSummaryMobile } from "../OrderSummary/OrderSummaryMobile"
  import { useRouter } from 'next/navigation'
 import CartSkeletonMobile from "../CartSkeleton/CartSkeletonMobile"
+import { trackEvent } from "@lib/util/tracking"
+import { TrackingEvent } from "@/types/tracking"
 
 
 interface CartPageMobileProps {
@@ -73,7 +75,12 @@ export const CartPageMobile: React.FC<CartPageMobileProps> = ({
                 <div className="max-w-md mx-auto">
                   
                     <button
-                        onClick={() => router.push("/checkout")}
+                        onClick={() => {
+                          trackEvent(TrackingEvent.CHECK_OUT, {
+                            cartTotal: formatCartTotal(cart),
+                          })
+                          router.push("/checkout")
+                        }}
                         className="w-full bg-primary hover:bg-primary-light text-black text-2xl font-bold py-4 px-4 transition-colors duration-200 h-[64px]"
                     >
                         Check Out - {formatCartTotal(cart)}

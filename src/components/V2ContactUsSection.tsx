@@ -10,11 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { TrackingEvent } from "@/types/tracking"
 import {
   getContactUs,
   sendKlaviyoContactUsForm,
   submitContactForm,
 } from "@lib/cms/strapiCmsApi"
+import { trackEvent } from "@lib/util/tracking"
 import { getBackgroundColor } from "@lib/utils"
 import { useQuery } from "@tanstack/react-query"
 import { ArrowRight, Mail, MessageCircle, Phone, Sun, User } from "lucide-react"
@@ -211,11 +213,18 @@ export const V2ContactUsSection = (props: {
     if (!validateForm()) {
       return
     }
-    if (typeof window !== "undefined") {
-      window.gtag("event", "conversion", {
-        send_to: "AW-17039829404/w72TCLXX2sAaEJzTnL0_",
-      })
-    }
+    trackEvent(TrackingEvent.CONTACT_US, {
+      fullName: formData.fullName,
+      email: formData.email,
+      phoneNumber: formData.phoneNumber,
+      inquiryType: formData.inquiryType,
+      message: formData.message,
+    })
+    // if (typeof window !== "undefined") {
+    //   window.gtag("event", "conversion", {
+    //     send_to: "AW-17039829404/w72TCLXX2sAaEJzTnL0_",
+    //   })
+    // }
     setIsSubmitting(true)
     setSubmitStatus(null)
 

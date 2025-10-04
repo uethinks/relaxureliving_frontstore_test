@@ -7,6 +7,8 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { MoveDownRight } from "lucide-react"
 import V2SupportSection from "@/components/V2SupportSection"
+import { trackEvent } from "@lib/util/tracking"
+import { TrackingEvent } from "@/types/tracking"
 
 const formatPrice = (price: number) =>
   new Intl.NumberFormat("en-US", {
@@ -176,7 +178,12 @@ export const OrderSummary = (): JSX.Element => {
 
           {/* Checkout Button */}
           <button
-            onClick={() => router.push("/checkout")}
+            onClick={() => {
+              trackEvent(TrackingEvent.CHECK_OUT, {
+                cartTotal: formatCartTotal(cart),
+              })
+              router.push("/checkout")
+            }}
             className="w-full bg-primary hover:bg-primary-light text-black text-2xl font-bold py-4 px-4 transition-colors duration-200 h-[64px]"
           >
             Check Out - {formatCartTotal(cart)}

@@ -10,6 +10,8 @@ import { IMG_BY_STYLE, PergolaFeatures, VALUE_BY_COLORS } from "./PergolaFeature
 import { Button } from "@/components/ui/button"
 import { DownloadIcon, FileDownIcon } from "lucide-react"
 import { handleDownloadPDF } from "@lib/util/selector"
+import { trackEvent } from "@lib/util/tracking"
+import { TrackingEvent } from "@/types/tracking"
 
 interface Props {
   className: string
@@ -112,7 +114,10 @@ export const PergulaSizeSelector = React.memo(
           <Button
             variant="outline"
             className="w-full border-2 border-primary text-[#140E02] font-semibold bg-transparent"
-            onClick={() => window.open('/customize', '_blank', 'noopener,noreferrer')}
+            onClick={() => {
+              trackEvent(TrackingEvent.STANDARD_TO_3D)
+              window.open('/customize', '_blank', 'noopener,noreferrer')
+            }}
           >
             I Want A Custom Size
           </Button>
