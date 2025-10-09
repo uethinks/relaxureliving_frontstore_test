@@ -205,7 +205,7 @@ export const V2AccesorriesSelector = ({
     ).length
 
     const longSideCount = selectedSides.filter(
-      (side) => side === "top" || side === "back"
+      (side) => side === "front" || side === "back"
     ).length
 
     // Create new variants array
@@ -316,7 +316,7 @@ export const V2AccesorriesSelector = ({
     ).length
 
     const longSideCount = selectedSides.filter(
-      (side) => side === "top" || side === "back"
+      (side) => side === "front" || side === "back"
     ).length
 
     // Create new variants array
@@ -377,7 +377,7 @@ export const V2AccesorriesSelector = ({
             (item) => item.productVarant?.length === pergolaSize.length
           )
         ) {
-          heaterSides.push("top", "back")
+          heaterSides.push("front", "back")
         }
       }
     }
@@ -407,9 +407,9 @@ export const V2AccesorriesSelector = ({
           if (shortSideVariant.quantity >= 2) shadesSides.push("right")
         }
 
-        // Add long sides (top/back)
+        // Add long sides (front/back)
         if (longSideVariant && longSideVariant.quantity) {
-          if (longSideVariant.quantity >= 1) shadesSides.push("top")
+          if (longSideVariant.quantity >= 1) shadesSides.push("front")
           if (longSideVariant.quantity >= 2) shadesSides.push("back")
         }
       }
@@ -434,7 +434,7 @@ export const V2AccesorriesSelector = ({
             (item) => item.productVarant?.length === pergolaSize.length
           )
         ) {
-          glassdoorSides.push("top", "back")
+          glassdoorSides.push("front", "back")
         }
       }
     }

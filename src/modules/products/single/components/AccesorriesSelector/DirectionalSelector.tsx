@@ -41,11 +41,11 @@ export const DirectionalSelector: React.FC<Props> = ({
           </button>
 
           <div className="flex flex-col justify-between gap-2 w-[50%]">
-            {/* Top side (long) */}
+            {/* Front side (long) */}
             <button
-              onClick={() => onSideSelect(accessoryType, "top")}
+              onClick={() => onSideSelect(accessoryType, "front")}
               className={`w-full h-[60px] border transition-all flex flex-col items-center justify-center ${
-                selectedSides.includes("top")
+                selectedSides.includes("front")
                   ? "border-primary bg-primary-light"
                   : "border-white"
               }`}
