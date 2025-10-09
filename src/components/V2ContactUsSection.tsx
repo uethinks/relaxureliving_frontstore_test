@@ -79,14 +79,21 @@ export const V2ContactUsSection = (props: {
     null
   )
   const [errors, setErrors] = useState<FormErrors>({})
+  const [inquiryTypes, setInquiryTypes] = useState<string[]>([])
 
   // Update form when data loads
   useEffect(() => {
     if (data?.InquiryTypes && data.InquiryTypes.length > 0) {
-      setFormData((prev) => ({
-        ...prev,
-        inquiryType: data.InquiryTypes[0],
-      }))
+      try {
+        const inquiryTypes = JSON.parse(data.InquiryTypes)
+        setFormData((prev) => ({
+          ...prev,
+          inquiryType: data.InquiryTypes[0],
+        }))
+        setInquiryTypes(inquiryTypes || [])
+      } catch (error) {
+        console.error("Error fetching inquiry types:", error)
+      }
     }
   }, [data])
 
@@ -494,7 +501,7 @@ export const V2ContactUsSection = (props: {
                       <SelectValue className="pb-0" />
                     </SelectTrigger>
                     <SelectContent className="bg-white border-[#d9d9d9]">
-                      {data?.InquiryTypes?.map((type: string) => (
+                      {inquiryTypes?.map((type: string) => (
                         <SelectItem
                           key={type}
                           value={type}

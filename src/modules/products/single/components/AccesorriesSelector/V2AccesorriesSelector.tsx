@@ -3,13 +3,10 @@ import { useState, useEffect } from "react"
 import {
   StoreProduct,
   StoreProductOptionValue,
-  StoreProductVariant,
 } from "@medusajs/types"
 // Using simple button elements instead of Button component to avoid import issues
 import {
-  PergolaData,
   PergolaSize,
-  selectedProductVariant,
   selectedProducts,
 } from "types/global"
 import { DirectionalSelector } from "./DirectionalSelector"
@@ -208,7 +205,7 @@ export const V2AccesorriesSelector = ({
     ).length
 
     const longSideCount = selectedSides.filter(
-      (side) => side === "top" || side === "bottom"
+      (side) => side === "top" || side === "back"
     ).length
 
     // Create new variants array
@@ -319,7 +316,7 @@ export const V2AccesorriesSelector = ({
     ).length
 
     const longSideCount = selectedSides.filter(
-      (side) => side === "top" || side === "bottom"
+      (side) => side === "top" || side === "back"
     ).length
 
     // Create new variants array
@@ -380,7 +377,7 @@ export const V2AccesorriesSelector = ({
             (item) => item.productVarant?.length === pergolaSize.length
           )
         ) {
-          heaterSides.push("top", "bottom")
+          heaterSides.push("top", "back")
         }
       }
     }
@@ -410,10 +407,10 @@ export const V2AccesorriesSelector = ({
           if (shortSideVariant.quantity >= 2) shadesSides.push("right")
         }
 
-        // Add long sides (top/bottom)
+        // Add long sides (top/back)
         if (longSideVariant && longSideVariant.quantity) {
           if (longSideVariant.quantity >= 1) shadesSides.push("top")
-          if (longSideVariant.quantity >= 2) shadesSides.push("bottom")
+          if (longSideVariant.quantity >= 2) shadesSides.push("back")
         }
       }
     }
@@ -437,7 +434,7 @@ export const V2AccesorriesSelector = ({
             (item) => item.productVarant?.length === pergolaSize.length
           )
         ) {
-          glassdoorSides.push("top", "bottom")
+          glassdoorSides.push("top", "back")
         }
       }
     }

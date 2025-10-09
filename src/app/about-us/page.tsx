@@ -148,7 +148,7 @@ export default async function AboutUsPage() {
             "blocks.v2-feature-cards": V2FAQSection,
           }}
         />
-        <V2ContactUsSection />
+        {/* <V2ContactUsSection /> */}
       </div>
       <FooterDark />
     </>
