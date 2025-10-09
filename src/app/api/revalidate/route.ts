@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
     revalidatePath("/")     
     revalidatePath("/products/custom")
     revalidatePath("/products/pergola")
+    revalidatePath("/products/sample-kit")
     revalidatePath("/about-us")
     revalidatePath("/accessories")
     revalidatePath("/terms/warranty")
