@@ -88,7 +88,7 @@ export const V2ContactUsSection = (props: {
         const inquiryTypes = JSON.parse(data.InquiryTypes)
         setFormData((prev) => ({
           ...prev,
-          inquiryType: data.InquiryTypes[0],
+          inquiryType: inquiryTypes[0],
         }))
         setInquiryTypes(inquiryTypes || [])
       } catch (error) {
