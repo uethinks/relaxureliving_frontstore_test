@@ -47,12 +47,15 @@ interface V2HeroProductSectionProps {
   description: string
   button: ButtonData
   image: ImageData
+  sectionPriority?: "high" | "normal"
 }
 
 export default function V2HeroProductSection({
   data,
+  sectionPriority = "high",
 }: {
   data: V2HeroProductSectionProps
+  sectionPriority?: "high" | "normal"
 }) {
   const { title, description, button, image } = data
 
@@ -64,11 +67,9 @@ export default function V2HeroProductSection({
           <V2MediaRenderer
             media={image as any}
             options={{
-              // aspectRatio: "525/262",
+              type: image.id <= 2 ? "hero" : "media",
               imageOptions: {
-                priority: image.id <= 2,
-                sizes:
-                  "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+                priority: sectionPriority === "high",
               },
             }}
           />

@@ -44,17 +44,14 @@ interface HeroData {
 
 interface HeroSectionProps {
   data: HeroData
+  sectionPriority?: "high" | "normal"
 }
 
-export function V2PromoBanner({ data }: HeroSectionProps) {
+export function V2PromoBanner({ data, sectionPriority = "normal" }: HeroSectionProps) {
   const { content, backgroundImage } = data
   const { isStatic = false } = backgroundImage
   const { isReverse = false } = content
-
-  const generateSizes = () => {
-    return "(max-width: 640px) 500px, (max-width: 1024px) 750px, 1000px"
-  }
-
+  
   return (
     <section
       className="relative w-full flex flex-col lg:flex-row lg:items-center"
@@ -64,35 +61,25 @@ export function V2PromoBanner({ data }: HeroSectionProps) {
       {/* Image Wrap */}
       <div className="w-full lg:relative">
         {isStatic ? (
-          // <img
-          //   src={backgroundImage.url}
-          //   className="w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
-          // />
           <V2MediaRenderer
             media={backgroundImage as any}
             options={{
-              className: "w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
+              type: "media",
+              className: "w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain",
+              imageOptions: {
+                priority: sectionPriority === "high",
+              }
             }}
           />
         ) : (
-          // <Image
-          //   unoptimized
-          //   src={getStrapiUrl(backgroundImage.url)}
-          //   alt={
-          //     backgroundImage.alternativeText ||
-          //     "Relaxure pergola assembly process"
-          //   }
-          //   width={backgroundImage.width}
-          //   height={backgroundImage.height}
-          //   className="w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
-          //   priority
-          //   // sizes={generateSizes()}
-          //   quality={85}
-          // />
           <V2MediaRenderer
             media={backgroundImage as any}
             options={{
-              className: "w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain"
+              type: "media",
+              className: "w-full h-[53.33vw] lg:h-auto object-cover object-center lg:object-contain",
+              imageOptions: {
+                priority: sectionPriority === "high",
+              }
             }}
           />
         )}

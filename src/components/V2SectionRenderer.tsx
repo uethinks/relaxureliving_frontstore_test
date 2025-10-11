@@ -31,6 +31,7 @@ interface V2SectionRendererProps {
   sections: Section[]
   showContactUs?: boolean
   className?: string
+  maxHighPrioritySections?: number // 高优先级section的最大数量，默认为3
 }
 
 // Component mapping for different section types
@@ -58,6 +59,7 @@ export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({
   sections = [],
   showContactUs = true,
   className = "flex flex-col w-full items-start justify-center",
+  maxHighPrioritySections = 3,
 }) => {
   const isMobile = useIsMobile(1024)
   
@@ -90,8 +92,24 @@ export const V2SectionRenderer: React.FC<V2SectionRendererProps> = ({
 
       // 使用客户端状态或服务器端默认值
       const currentIsMobile = isClient ? clientIsMobile : false
+      
+      // 计算section优先级：index越小优先级越高，前maxHighPrioritySections个为高优先级
+      const sectionPriority = index < maxHighPrioritySections ? 'high' : 'normal'
+      
+      // 调试信息：在开发环境中输出优先级信息
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`Section ${index} (${section.__component}): priority = ${sectionPriority}`)
+      }
 
-      return <Component key={key} data={section as any} isMobile={currentIsMobile} />
+      return (
+        <div 
+          key={key} 
+          className="w-full"
+          style={{ minHeight: sectionPriority === 'high' ? '200px' : '100px' }} // 预设最小高度，减少CLS
+        >
+          <Component data={section as any} isMobile={currentIsMobile} sectionPriority={sectionPriority} />
+        </div>
+      )
     })
   }, [sections, customComponents, isClient, clientIsMobile])
 

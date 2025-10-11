@@ -5,9 +5,10 @@ import V2MediaRenderer from "./V2MediaRenderer"
 
 interface V2HeroBannerProps {
   data: V2HeroBannerData
+  sectionPriority?: "high" | "normal"
 }
 
-export default function V2HeroBanner({ data }: V2HeroBannerProps) {
+export default function V2HeroBanner({ data, sectionPriority = "high" }: V2HeroBannerProps) {
   const { title, description, button, backgroundImage } = data
 
   console.log("data: ", data)
@@ -20,8 +21,11 @@ export default function V2HeroBanner({ data }: V2HeroBannerProps) {
         <V2MediaRenderer
             media={backgroundImage as any}
             options={{
-              // aspectRatio: "525/262",
-              className: "w-full h-auto"
+              type: "hero",
+              className: "w-full h-auto",
+              imageOptions: {
+                priority: sectionPriority === "high",
+              }
             }}
           />
         {/* Overlay for better text readability */}

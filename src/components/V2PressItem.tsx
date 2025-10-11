@@ -1,6 +1,6 @@
 import V2MediaRenderer from "./V2MediaRenderer"
 
-export default function V2PressItem({ item }: { item: any }) {
+export default function V2PressItem({ item, priority }: { item: any, priority: boolean }) {
   return (
     <div
       className={
@@ -21,6 +21,9 @@ export default function V2PressItem({ item }: { item: any }) {
             // aspectRatio: "525/262",
             objectFit: "contain",
             className: "object-contain w-full",
+            imageOptions: {
+              priority
+            }
           }}
         />
       </div>

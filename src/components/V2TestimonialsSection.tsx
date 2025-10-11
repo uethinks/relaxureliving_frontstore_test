@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { getStrapiUrl } from "@lib/utils"
 import { ArrowRight, ChevronLeft, ChevronRight, Star } from "lucide-react"
-import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { CustomCarousel } from "./CustomCarousel"
 import V2MediaRenderer from "./V2MediaRenderer"
@@ -70,7 +69,7 @@ const getMediaUrl = (media?: TestimonialItem["media"], index: number = 0) => {
   if (!media || !media[index]) return null
   return getStrapiUrl(media[index].url)
 }
-function PCVersion({ data }: { data: TestimonialSectionData }) {
+function PCVersion({ data, priority }: { data: TestimonialSectionData, priority?: boolean }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [selectedMediaIndex, setSelectedMediaIndex] = useState(0)
   const [videoProgress, setVideoProgress] = useState(0)
@@ -233,17 +232,14 @@ function PCVersion({ data }: { data: TestimonialSectionData }) {
               >
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex items-start gap-3 sm:gap-4">
-                    <Image
-                      unoptimized
-                      src={getStrapiUrl(item.avatar.url)}
-                      alt={
-                        item.avatar.alternativeText ||
-                        `${item.author} profile picture`
-                      }
-                      width={48}
-                      height={48}
-                      className="rounded-full flex-shrink-0 sm:w-[60px] sm:h-[60px]"
-                      loading="lazy"
+                    <V2MediaRenderer
+                      media={item.avatar as any}
+                      options={{
+                        className: "rounded-full flex-shrink-0 w-[48px] h-[48px] sm:w-[60px] sm:h-[60px]",
+                        imageOptions: {
+                          priority: priority
+                        }
+                      }}
                     />
                     <div className="min-w-0 flex-1">
                       <blockquote className="text-gray-900 text-base sm:text-lg font-medium mb-2 leading-relaxed">
@@ -266,65 +262,6 @@ function PCVersion({ data }: { data: TestimonialSectionData }) {
             <div className="relative overflow-hidden shadow-lg">
               {(() => {
                 const currentMedia = currentItem.media?.[selectedMediaIndex]
-                // const mediaType = getMediaType(
-                //   currentItem.media,
-                //   selectedMediaIndex
-                // )
-                // const mediaUrl = getMediaUrl(
-                //   currentItem.media,
-                //   selectedMediaIndex
-                // )
-
-                // if (!currentMedia || !mediaUrl) {
-                //   // Fallback to placeholder
-                //   return (
-                //     <div
-                //       className="w-full bg-gray-200 flex items-center justify-center"
-                //       style={{ aspectRatio: "708/345" }}
-                //       aria-label="No media available"
-                //     >
-                //       <span className="text-gray-500">No media available</span>
-                //     </div>
-                //   )
-                // }
-
-                // if (mediaType === "video") {
-                //   return (
-                //     <video
-                //       ref={videoRef}
-                //       src={mediaUrl}
-                //       autoPlay
-                //       muted
-                //       loop
-                //       playsInline
-                //       className="w-full h-auto object-cover"
-                //       style={{ aspectRatio: "708/345" }}
-                //       aria-label={`Video showcasing ${currentItem.author}'s outdoor space`}
-                //     >
-                //       <track kind="captions" />
-                //       Your browser does not support the video tag.
-                //     </video>
-                //   )
-                // }
-
-                // if (mediaType === "image") {
-                //   return (
-                //     <Image
-                //       unoptimized
-                //       src={mediaUrl}
-                //       alt={
-                //         currentMedia.alternativeText ||
-                //         `${currentItem.author}'s outdoor space`
-                //       }
-                //       width={currentMedia.width || 500}
-                //       height={currentMedia.height || 600}
-                //       className="w-full h-auto object-cover"
-                //       style={{ aspectRatio: "708/345" }}
-                //       loading="lazy"
-                //     />
-                //   )
-                // }
-
                 return (
                   <V2MediaRenderer
                     media={currentMedia as any}
@@ -435,7 +372,7 @@ function PCVersion({ data }: { data: TestimonialSectionData }) {
   )
 }
 
-function MobileVersion({ data }: { data: TestimonialSectionData }) {
+function MobileVersion({ data, priority }: { data: TestimonialSectionData, priority?: boolean }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [selectedMediaIndex, setSelectedMediaIndex] = useState(0)
   const [videoProgress, setVideoProgress] = useState(0)
@@ -502,17 +439,14 @@ function MobileVersion({ data }: { data: TestimonialSectionData }) {
             >
               <div className="flex flex-col items-start gap-2">
                 <div className={"flex items-center gap-2"}>
-                  <Image
-                    unoptimized
-                    src={getStrapiUrl(item.avatar.url)}
-                    alt={
-                      item.avatar.alternativeText ||
-                      `${item.author} profile picture`
-                    }
-                    width={42}
-                    height={42}
-                    className="rounded-full flex-grow-0 flex-shrink-0 basis-auto w-[42px] h-[42px]"
-                    loading="lazy"
+                  <V2MediaRenderer
+                    media={item.avatar as any}
+                    options={{
+                      className: "rounded-full flex-grow-0 flex-shrink-0 basis-auto w-[42px] h-[42px]",
+                      imageOptions: {
+                        priority: priority
+                      }
+                    }}
                   />
                   <div className="w-full">
                     <blockquote className="text-[#140E02] text-xl font-semibold leading-7">
@@ -550,44 +484,15 @@ function MobileVersion({ data }: { data: TestimonialSectionData }) {
                   )
                 }
 
-                if (mediaType === "video") {
-                  return (
-                    <video
-                      ref={videoRef}
-                      src={mediaUrl}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="w-full h-auto object-cover"
-                      style={{ aspectRatio: "708/345" }}
-                      aria-label={`Video showcasing ${currentItem.author}'s outdoor space`}
-                    >
-                      <track kind="captions" />
-                      Your browser does not support the video tag.
-                    </video>
-                  )
-                }
-
-                if (mediaType === "image") {
-                  return (
-                    <Image
-                      unoptimized
-                      src={mediaUrl}
-                      alt={
-                        currentMedia.alternativeText ||
-                        `${currentItem.author}'s outdoor space`
+                return <V2MediaRenderer
+                    media={currentMedia as any}
+                    options={{
+                      className: "w-full h-auto object-cover",
+                      imageOptions: {
+                        priority: priority
                       }
-                      width={currentMedia.width || 500}
-                      height={currentMedia.height || 600}
-                      className="w-full h-auto object-cover"
-                      style={{ aspectRatio: "708/345" }}
-                      loading="lazy"
-                    />
-                  )
-                }
-
-                return null
+                    }}
+                  />
               })()}
 
               {/* Progress bar - only show for video */}

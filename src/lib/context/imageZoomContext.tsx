@@ -133,15 +133,20 @@ export const ImageGalleryProvider = ({ children }: ImageGalleryProviderProps) =>
             )}
 
             {/* 当前图片 */}
-            <Image
-              unoptimized
-              src={getStrapiUrl(images[currentIndex]?.url || '')}
-              alt={images[currentIndex]?.alternativeText || images[currentIndex]?.name || ''}
-              width={images[currentIndex]?.width || 1920}
-              height={images[currentIndex]?.height || 1080}
-              className="max-w-[60vw] h-auto object-contain bg-white"
-              priority
-            />
+            {images[currentIndex]?.url && (() => {
+              const imageUrl = getStrapiUrl(images[currentIndex].url)
+              return imageUrl ? (
+                <Image
+                  unoptimized
+                  src={imageUrl}
+                  alt={images[currentIndex]?.alternativeText || images[currentIndex]?.name || ''}
+                  width={images[currentIndex]?.width || 1920}
+                  height={images[currentIndex]?.height || 1080}
+                  className="max-w-[60vw] h-auto object-contain bg-white"
+                  priority
+                />
+              ) : null
+            })()}
 
             {/* 图片计数器 */}
             {images.length > 1 && (
@@ -153,26 +158,29 @@ export const ImageGalleryProvider = ({ children }: ImageGalleryProviderProps) =>
             {/* 缩略图导航 */}
             {images.length > 1 && images.length <= 10 && (
               <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToImage(index)}
-                    className={`w-12 h-12 rounded overflow-hidden border-2 transition-all duration-200 ${
-                      index === currentIndex 
-                        ? 'border-white' 
-                        : 'border-transparent hover:border-gray-400'
-                    }`}
-                  >
-                    <Image
-                      unoptimized
-                      src={getStrapiUrl(image.url)}
-                      alt={image.alternativeText || image.name}
-                      width={48}
-                      height={48}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
+                {images.map((image, index) => {
+                  const imageUrl = getStrapiUrl(image.url)
+                  return imageUrl ? (
+                    <button
+                      key={index}
+                      onClick={() => goToImage(index)}
+                      className={`w-12 h-12 rounded overflow-hidden border-2 transition-all duration-200 ${
+                        index === currentIndex 
+                          ? 'border-white' 
+                          : 'border-transparent hover:border-gray-400'
+                      }`}
+                    >
+                      <Image
+                        unoptimized
+                        src={imageUrl}
+                        alt={image.alternativeText || image.name}
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ) : null
+                })}
               </div>
             )}
           </div>

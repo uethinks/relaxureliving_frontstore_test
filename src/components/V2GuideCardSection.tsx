@@ -54,9 +54,10 @@ interface PergolaGuideData {
 interface PergolaGuideProps {
   data: PergolaGuideData
   isMobile?: boolean
+  priority?: boolean
 }
 
-function CardItem({ step }: { step: GuideStep }) {
+function CardItem({ step, priority }: { step: GuideStep, priority?: boolean }) {
   return (
     <Card
       key={step.id}
@@ -89,7 +90,10 @@ function CardItem({ step }: { step: GuideStep }) {
                       options={{
                         objectFit: "contain",
                         type: "icon",
-                        className: "w-6 h-6 sm:w-8 sm:h-8"
+                        className: "w-6 h-6 sm:w-8 sm:h-8",
+                        imageOptions: {
+                          priority
+                        }
                       }}
                     />
                   ) : null}
@@ -122,6 +126,7 @@ function CardItem({ step }: { step: GuideStep }) {
 export default function PergolaGuide({
   data,
   isMobile = false,
+  priority = false,
 }: PergolaGuideProps) {
   console.log("PergolaGuide data", data)
   const [carouselData, setCarouselData] = useState<React.ReactNode[]>([])
@@ -169,7 +174,7 @@ export default function PergolaGuide({
           {isMobile ? (
             <CustomCarousel data={carouselData} showNav={false} />
           ) : (
-            data.items.map((step) => <CardItem key={step.id} step={step} />)
+            data.items.map((step) => <CardItem key={step.id} step={step} priority={priority} />)
           )}
         </div>
 

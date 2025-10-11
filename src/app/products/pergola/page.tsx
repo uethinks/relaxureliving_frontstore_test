@@ -12,10 +12,14 @@ import {
 import { StoreProduct, StoreProductResponse } from "@medusajs/types"
 import { Metadata } from "next"
 import { generateMetadataFromStrapi } from "@lib/util/seo"
+import PerformanceMonitor from "@/components/PerformanceMonitor"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 // 强制静态生成
 export const dynamic = "force-static"
+
+// ISR 缓存策略 - 1小时重新验证
+export const revalidate = 3600
 
 type ProductInformation = {
   id: number
@@ -34,7 +38,17 @@ type Props = Readonly<{
 export async function generateMetadata(): Promise<Metadata> {
   const pergolaData = await getPergola()
   console.log("generateMetadata pergolaData", pergolaData)
-  return generateMetadataFromStrapi(pergolaData?.data?.seo || {})
+  
+  const baseMetadata = generateMetadataFromStrapi(pergolaData?.data?.seo || {})
+  
+  // 添加性能优化的 meta 标签
+  return {
+    ...baseMetadata,
+    other: {
+      'format-detection': 'telephone=no',
+      'theme-color': '#F6AF1F',
+    },
+  }
 }
 
 export async function generateStaticParams() {
@@ -65,9 +79,9 @@ export default async function ProductPage({ params }: Props) {
   try {
     const { pergola } = await params
     // 1. 并行获取基础数据
-    const [pergolaResponse, region, heaterResponse, shadesResponse, glassDoorResponse, standardPergolaResponse] =
+    const [region, heaterResponse, shadesResponse, glassDoorResponse, standardPergolaResponse] =
       await Promise.all([
-        getPergola(),
+        // getPergola(),
         getRegion(defaultCountryCode),
         getHeater(),
         getShades(),
@@ -76,7 +90,6 @@ export default async function ProductPage({ params }: Props) {
       ])
     
     // Extract data from responses
-    const pergolaData = pergolaResponse.data
     const heaterCMData = heaterResponse.data
     const shadesCMData = shadesResponse.data
     const glassDoorCMData = glassDoorResponse.data
@@ -159,14 +172,28 @@ export default async function ProductPage({ params }: Props) {
 
     // 5. 渲染页面
     return (
-      <V2ProductItem
-        product={mainProductData}
-        accessories={accessoriesData}
-        pergolaData={pergolaData}
-        standardPergolaData={standardPergolaData}
-        accessoriesCMSData={accessoriesCMSData}
-        // currentProductInfo={currentProductInfo}
-      />
+      <>
+        {/* 性能监控 */}
+        {/* <PerformanceMonitor /> */}
+        
+        {/* 预加载关键资源 */}
+        {standardPergolaData?.productImages?.[0]?.url && (
+          <link
+            rel="preload"
+            as="image"
+            href={standardPergolaData.productImages[0].url}
+            fetchPriority="high"
+          />
+        )}
+        
+        <V2ProductItem
+          product={mainProductData}
+          accessories={accessoriesData}
+          standardPergolaData={standardPergolaData}
+          accessoriesCMSData={accessoriesCMSData}
+          // currentProductInfo={currentProductInfo}
+        />
+      </>
     )
   } catch (error) {
     console.error("Error rendering product page:", error)

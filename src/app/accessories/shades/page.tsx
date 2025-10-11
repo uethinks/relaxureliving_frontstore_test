@@ -17,22 +17,31 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AccessoriesPage(props: Props) {
-  const accessoriesPage = await getAccessoriesPage()
+  // 并行获取所有数据，显著改善FCP
+  const [accessoriesPage, shadesInfo] = await Promise.all([
+    getAccessoriesPage(),
+    getShades()
+  ])
+  
   console.log("accessoriesPage", accessoriesPage?.data)
-  const pergola = await getProductByProductId({
-    productId: accessoriesPage?.data?.pergolaId,
-    queryParams: {
-      fields: `*variants.calculated_price`,
-    },
-  })
-  const shades = await getProductByProductId({
-    productId: accessoriesPage?.data?.shadeId,
-    queryParams: {
-      fields: `*variants.calculated_price`,
-    },
-  })
+  
+  // 并行获取产品数据
+  const [pergola, shades] = await Promise.all([
+    getProductByProductId({
+      productId: accessoriesPage?.data?.pergolaId,
+      queryParams: {
+        fields: `*variants.calculated_price`,
+      },
+    }),
+    getProductByProductId({
+      productId: accessoriesPage?.data?.shadeId,
+      queryParams: {
+        fields: `*variants.calculated_price`,
+      },
+    })
+  ])
 
-  const shadesInfo = await getShades()
+  // 合并shades数据
   shadesInfo.data.product = shades.product
 
   // 获取pergola的尺寸选项
@@ -49,6 +58,12 @@ export default async function AccessoriesPage(props: Props) {
 
   return (
     <>
+      {/* 预加载关键资源，改善LCP */}
+      <link 
+        rel="preload" 
+        href={shadesInfo.data?.productImages?.[0]?.url ? `${process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL}${shadesInfo.data.productImages[0].url}` : ''} 
+        as="image" 
+      />
       <div className="bg-background flex flex-col items-start justify-center w-full">
         <NavBarWrapper isFixed={false} />
         <div className="flex flex-col gap-4 w-full">

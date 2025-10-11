@@ -24,13 +24,7 @@ export default function V2ProductPage({
               <div className="w-full lg:w-[708px] flex flex-col lg:sticky lg:top-0">
                 <div className="flex flex-row justify-between w-full">
                   <ImgContent
-                    productImages={
-                      cmsData.productImages.sort(
-                        (a: any, b: any) =>
-                          new Date(b.createdAt).getTime() -
-                          new Date(a.createdAt).getTime()
-                      ) || []
-                    }
+                    productImages={cmsData.productImages || []}
                   />
                 </div>
                 {customSections ? <>{customSections}</> : <></>}

@@ -316,7 +316,8 @@ export function generateMetadataFromStrapi(
   const result = convertStrapiSEOToMetadata(seoData, options)
   console.log("result", result)
   if (result.errors && result.errors.length > 0) {
-    console.error("SEO conversion errors:", result.errors)
+    // console.error("SEO conversion errors:", result.errors)
+    console.warn("SEO conversion errors:", result.errors)
   }
 
   if (result.warnings && result.warnings.length > 0) {

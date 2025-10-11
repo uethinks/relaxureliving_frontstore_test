@@ -57,6 +57,7 @@ interface V2OccasionsSectionData {
   title: string
   subtitle: string
   items: FeatureItem[]
+  sectionPriority?: "high" | "normal"
 }
 
 interface V2OccasionsSectionProps {
@@ -101,7 +102,10 @@ export default function V2OccasionsSection({
                   media={item.media}
                   options={{
                     aspectRatio: "525/262",
-                    className: "mb-5"
+                    className: "mb-5",
+                    imageOptions: {
+                      priority: data.sectionPriority === "high",
+                    }
                   }}
                 />
                 <h3 className="text-base font-semibold mb-[10px] text-[#2F2A1E] text-center">

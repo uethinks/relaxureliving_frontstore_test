@@ -46,7 +46,7 @@ interface Media {
 
 interface MediaRendererOptions {
   aspectRatio?: string // 默认"525/262"
-  type?: "media" | "icon"
+  type?: "media" | "icon" | "hero" // 新增hero类型用于标识关键区域
   objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down"
   videoOptions?: {
     autoplay?: boolean
@@ -115,14 +115,51 @@ export default function MediaRenderer({
     }
   }, [])
 
+  // 组件卸载时清理视频
+  useEffect(() => {
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.pause()
+        videoRef.current.currentTime = 0
+      }
+    }
+  }, [])
+
   // 控制视频播放/暂停
   useEffect(() => {
     if (!videoRef.current) return
 
+    const video = videoRef.current
+
     if (isInView && videoOptions.autoplay) {
-      videoRef.current.play().catch(console.error)
+      // 确保视频已经加载完成再播放
+      if (video.readyState >= 2) { // HAVE_CURRENT_DATA
+        video.play().catch((error) => {
+          // 忽略 AbortError，这是正常的播放中断
+          if (error.name !== 'AbortError') {
+            console.error('Video play error:', error)
+          }
+        })
+      } else {
+        // 如果视频还没加载完成，等待 loadeddata 事件
+        const handleLoadedData = () => {
+          video.play().catch((error) => {
+            if (error.name !== 'AbortError') {
+              console.error('Video play error:', error)
+            }
+          })
+        }
+        video.addEventListener('loadeddata', handleLoadedData, { once: true })
+        
+        return () => {
+          video.removeEventListener('loadeddata', handleLoadedData)
+        }
+      }
     } else {
-      videoRef.current.pause()
+      // 只有在视频正在播放时才暂停
+      if (!video.paused) {
+        video.pause()
+      }
     }
   }, [isInView, videoOptions.autoplay])
 
@@ -173,23 +210,27 @@ export default function MediaRenderer({
   }
 
   if (isVideo) {
+    // 优化视频加载策略：基于section优先级或hero类型决定是否自动播放
+    const shouldAutoplay = videoOptions.autoplay && isInView
+    
     return (
       <div
         className={`overflow-hidden ${className}`}
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
         <video
-          autoPlay={videoOptions.autoplay}
+          autoPlay={shouldAutoplay}
           ref={videoRef}
-          src={getStrapiUrl(media.url)}
+          src={getStrapiUrl(media.url) || undefined}
           className={`w-full h-full object-${objectFit} transition-transform duration-300 hover:scale-105`}
           muted={videoOptions.muted}
           loop={videoOptions.loop}
           controls={videoOptions.controls}
           aria-label={media.alternativeText || media.name}
           playsInline
+          // preload={sectionPriority === "high" ? "metadata" : "none"}
           onError={handleError}
-          poster={media.previewUrl ? getStrapiUrl(media.previewUrl) : undefined}
+          poster={media.previewUrl ? (getStrapiUrl(media.previewUrl) || undefined) : undefined}
         />
       </div>
     )
@@ -197,26 +238,49 @@ export default function MediaRenderer({
 
   if (isImage) {
     const animationClass = type === "icon" ? "" : "transition-transform duration-300 hover:scale-105"
+    
+    // 智能优先级设置：基于section优先级、hero类型或手动设置
+    const isHighPriority = imageOptions.priority
+    // 调试信息：在开发环境中输出优先级信息
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`MediaRenderer: sectionPriority=${imageOptions.priority}, type=${type}, imageOptions.priority=${imageOptions.priority}, isHighPriority=${isHighPriority}`)
+    }
+    
+    // 优化sizes属性，提供更精确的响应式配置
+    const optimizedSizes = imageOptions.sizes || 
+      (imageOptions.priority
+        ? "(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+        : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw")
+    
+    const imageUrl = getStrapiUrl(media.url)
+    
     return (
       <div
         className={`overflow-hidden relative ${className}`}
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
-        
-        <Image
-          unoptimized
-          src={getStrapiUrl(media.url)}
-          alt={media.alternativeText || media.name}
-          width={media.width || 525}
-          height={media.height || 262}
-          className={`w-full h-full object-${objectFit} ${animationClass}`}
-          priority={imageOptions.priority}
-          sizes={imageOptions.sizes}
-          onError={handleError}
-        />
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={media.alternativeText || media.name || "媒体内容"}
+            width={media.width || 525}
+            height={media.height || 262}
+            className={`w-full h-full object-${objectFit} ${animationClass}`}
+            priority={isHighPriority}
+            sizes={optimizedSizes}
+            quality={isHighPriority ? 90 : 85}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+            onError={handleError}
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+            <span className="text-gray-500 text-sm">图片加载失败</span>
+          </div>
+        )}
 
         {/* 放大按钮 */}
-        {enableZoom && (
+        {enableZoom && imageUrl && (
           <button
             onClick={handleZoomClick}
             className="absolute bottom-2 right-0 p-2 w-8 h-8 hover:bg-opacity-70 rounded-full flex items-center justify-center transition-all duration-200 z-10"

@@ -11,7 +11,6 @@ import { V2StandardProductSelector } from "./V2StandardProductSelector"
 interface FirstScreenProps {
   product: StoreProduct
   accessories: StoreProduct[]
-  pergolaData: PergolaData
   accessoriesCMSData: any
   standardPergolaData?: any
 }
@@ -19,7 +18,6 @@ interface FirstScreenProps {
 export const FirstScreen: React.FC<FirstScreenProps> = ({
   product,
   accessories,
-  pergolaData,
   accessoriesCMSData,
   standardPergolaData,
 }) => {

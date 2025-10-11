@@ -1,6 +1,7 @@
 "use client"
-import { Image } from "@/types/global"
-import React, { useEffect, useState } from "react"
+import { Image as ImageType } from "@/types/global"
+import React, { useEffect, useState, useRef, useCallback } from "react"
+import Image from "next/image"
 import type { Swiper as SwiperType } from "swiper"
 import { FreeMode, Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -14,8 +15,19 @@ import "swiper/css/pagination"
 import "swiper/css/thumbs"
 
 interface Props {
-  productImages: Image[]
+  productImages: ImageType[]
 }
+
+// 精确的图片尺寸常量
+const MAIN_IMAGE_DIMENSIONS = {
+  mobile: { width: 375, height: 187 },
+  desktop: { width: 708, height: 354 }
+} as const
+
+const THUMBNAIL_DIMENSIONS = { width: 100, height: 100 } as const
+
+// 固定的浅灰色占位符 - 确保服务端和客户端一致性
+const FIXED_BLUR_DATA_URL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzA4IiBoZWlnaHQ9IjM1NCIgdmlld0JveD0iMCAwIDcwOCAzNTQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI3MDgiIGhlaWdodD0iMzU0IiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPgo="
 
 export const ImgContent = ({ productImages }: Props): JSX.Element => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
@@ -23,12 +35,65 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [windowWidth, setWindowWidth] = useState<number>(0)
+  const [loadedThumbnails, setLoadedThumbnails] = useState<Set<number>>(new Set())
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
   const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
 
+  // Intersection Observer refs for lazy loading
+  const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([])
+
   // 使用 Context 获取状态
   const { selectedSize, selectedColor, selectedStyle } = useProductSelection()
+
+  // Intersection Observer hook for lazy loading
+  const useIntersectionObserver = useCallback((ref: React.RefObject<HTMLElement>, callback: () => void) => {
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            callback()
+            observer.disconnect()
+          }
+        },
+        { threshold: 0.1 }
+      )
+
+      if (ref.current) {
+        observer.observe(ref.current)
+      }
+
+      return () => observer.disconnect()
+    }, [ref, callback])
+  }, [])
+
+  // 图片优化工具函数 - 优化版本，改善LCP
+  const getOptimizedImageProps = useCallback((image: ImageType, isMain: boolean = false) => {
+    const baseUrl = strapiCmsUrl + image.url
+    
+    // 使用响应式尺寸，改善LCP
+    const dimensions = isMain 
+      ? MAIN_IMAGE_DIMENSIONS.desktop
+      : THUMBNAIL_DIMENSIONS
+    
+    return {
+      src: baseUrl,
+      alt: (image as any).alternativeText || image.caption || "产品图片",
+      width: dimensions.width,
+      height: dimensions.height,
+      priority: isMain, // 主图优先加载
+      placeholder: "blur" as const,
+      blurDataURL: FIXED_BLUR_DATA_URL,
+      quality: isMain ? 95 : 75, // 提高主图质量
+      sizes: isMain 
+        ? "(max-width: 768px) 100vw, (max-width: 1200px) 708px, 708px"
+        : "(max-width: 768px) 25vw, (max-width: 1200px) 16vw, 12vw",
+      loading: isMain ? "eager" as const : "lazy" as const, // 主图立即加载
+      onError: (error: any) => {
+        console.warn(`Image load error for ${baseUrl}:`, error)
+      }
+    }
+  }, [strapiCmsUrl])
 
   // 根据选中的选项筛选图片
   const filteredImages = React.useMemo(() => {
@@ -66,6 +131,8 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
       }) || []
     )
   }, [productImages, selectedSize, selectedColor, selectedStyle])
+
+  console.log('filteredImages', filteredImages)
 
   // 当筛选后的图片变化时，重置当前图片索引
   useEffect(() => {
@@ -123,16 +190,41 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
   }
 
   const isMobile = windowWidth < 1024
+
+  // 性能监控 - 仅在客户端执行
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('performance' in window)) return
+    
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        if (entry.entryType === 'largest-contentful-paint') {
+          console.log('LCP detected:', entry.startTime, 'ms')
+        }
+        if (entry.entryType === 'layout-shift' && !(entry as any).hadRecentInput) {
+          console.log('CLS detected:', (entry as any).value)
+        }
+      }
+    })
+    observer.observe({ entryTypes: ['largest-contentful-paint', 'layout-shift'] })
+    
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
       <div className="flex flex-col justify-center items-center relative w-full overflow-hidden">
         {/* 主图 */}
         <div className="relative w-full">
-          <div className="cursor-pointer aspect-[375/187] lg:aspect-[708/354] w-full overflow-hidden">
+          <div 
+            className="cursor-pointer w-full overflow-hidden"
+            style={{ 
+              aspectRatio: isMobile ? '375/187' : '708/354',
+              minHeight: isMobile ? '187px' : '354px'
+            }}
+          >
             {filteredImages.length > 0 ? (
-              <img
-                src={strapiCmsUrl + filteredImages?.[currentImageIndex]?.url}
-                alt=""
+              <Image
+                {...getOptimizedImageProps(filteredImages[currentImageIndex], true)}
                 className="w-full h-full object-cover object-center"
                 onClick={handleImageClick}
               />
@@ -154,8 +246,8 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
         {filteredImages.length > 0 && (
           <div
             className={`flex py-5 justify-center items-center w-full
-          overflow-hidden backdrop-blur-[3.3px] 
-          backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(3.3px)_brightness(100%)]`}
+          overflow-hidden`}
+            style={{ height: '150px' }} // 稳定缩略图容器高度
           >
             <div className="relative w-full">
               <Swiper
@@ -175,22 +267,54 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                   setCurrentImageIndex(swiper.realIndex)
                 }}
               >
-                {filteredImages?.map((image, index) => (
-                  <SwiperSlide
-                    key={index}
-                    className="cursor-pointer"
-                    onClick={() => setCurrentImageIndex(index)}
-                  >
-                    <div className="aspect-square overflow-hidden">
-                      <img
-                        src={strapiCmsUrl + image.url}
-                        alt=""
-                        className="w-full h-full object-cover object-center"
-                        loading="lazy"
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
+                {filteredImages?.map((image, index) => {
+                  const thumbnailRef = useRef<HTMLDivElement>(null)
+                  
+                  // 为每个缩略图设置延迟加载
+                  useIntersectionObserver(thumbnailRef, () => {
+                    if (!loadedThumbnails.has(index)) {
+                      setLoadedThumbnails(prev => new Set([...Array.from(prev), index]))
+                    }
+                  })
+
+                  return (
+                    <SwiperSlide
+                      key={index}
+                      className="cursor-pointer"
+                      onClick={() => setCurrentImageIndex(index)}
+                    >
+                    <div 
+                      className="overflow-hidden relative"
+                      style={{ 
+                        aspectRatio: '1/1',
+                        // width: '100px',
+                        // height: '100px',
+                        minWidth: '100px',
+                        minHeight: '100px'
+                      }}
+                      ref={thumbnailRef}
+                    >
+                        {/* 占位符 */}
+                        {!loadedThumbnails.has(index) && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-6 h-6 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+                          </div>
+                        )}
+                        
+                        {/* 实际图片 - 只在进入视口时加载 */}
+                        {loadedThumbnails.has(index) && (
+                          <Image
+                            {...getOptimizedImageProps(image, false)}
+                            className="w-full h-full object-cover object-center transition-opacity duration-300 opacity-100"
+                            onError={() => {
+                              console.warn(`Failed to load thumbnail ${index}`)
+                            }}
+                          />
+                        )}
+                      </div>
+                    </SwiperSlide>
+                  )
+                })}
               </Swiper>
 
               {/* 自定义导航按钮 */}
@@ -266,11 +390,10 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                     key={index}
                     className="!flex items-center justify-center h-full"
                   >
-                    <img
-                      src={strapiCmsUrl + image?.url || ""}
-                      alt=""
+                    <Image
+                      {...getOptimizedImageProps(image, false)}
                       className="max-w-full max-h-full w-auto h-auto object-contain"
-                      loading="lazy"
+                      priority={index === currentImageIndex}
                     />
                   </SwiperSlide>
                 ))}

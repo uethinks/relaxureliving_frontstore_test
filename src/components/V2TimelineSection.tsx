@@ -20,9 +20,10 @@ interface TimelineData {
 
 interface V2TimelineSectionProps {
   data: TimelineData
+  priority?: boolean
 }
 
-export function V2TimelineSection({ data }: V2TimelineSectionProps) {
+export function V2TimelineSection({ data, priority }: V2TimelineSectionProps) {
   return (
     <div
       className={`w-full pt-8 pb-12 lg:py-[72px] ${getBackgroundColor(

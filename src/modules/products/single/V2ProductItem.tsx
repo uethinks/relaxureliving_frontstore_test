@@ -9,7 +9,6 @@ import { FirstScreen } from "./components/FirstScreen"
 interface V2ProductItemProps {
   product: StoreProduct
   accessories: StoreProduct[]
-  pergolaData: PergolaData
   // currentProductInfo: ProductInformation
   accessoriesCMSData: any
   standardPergolaData: any
@@ -18,7 +17,6 @@ interface V2ProductItemProps {
 export const V2ProductItem = ({
   product,
   accessories,
-  pergolaData,
   // currentProductInfo,
   accessoriesCMSData,
   standardPergolaData,
@@ -39,7 +37,6 @@ export const V2ProductItem = ({
           product={product}
           accessories={accessories}
           // currentProductInfo={currentProductInfo}
-          pergolaData={pergolaData}
           standardPergolaData={standardPergolaData}
           accessoriesCMSData={accessoriesCMSData}
         />

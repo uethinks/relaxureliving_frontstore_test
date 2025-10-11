@@ -9,7 +9,7 @@ import {
 } from "@medusajs/types"
 import { ProductSelectionProvider } from "@modules/products/single/components/ProductSelectionContext"
 import { V2SunshadesSelector } from "@modules/products/single/components/V2SunshadesSelector"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, useMemo } from "react"
 import { PergolaSize, selectedProducts } from "types/global"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
@@ -34,8 +34,7 @@ const ShadesProductPage = ({
     useState<StoreProductOptionValue | null>(null)
   const [selectedSides, setSelectedSides] = useState<string[]>([])
   const [selectedSize, setSelectedSize] = useState<string[]>([])
-  const [selectedShades, setSelectedShades] = useState<selectedProducts>([])
-  const [totalPrice, setTotalPrice] = useState<number>(0)
+  // 移除不再需要的状态变量，使用useMemo替代
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [shortSideLength, setShortSideLength] = useState<string>("")
   const [longSideLength, setLongSideLength] = useState<string>("")
@@ -120,31 +119,27 @@ const ShadesProductPage = ({
     )
   }
 
-  // 更新选中的shades和价格
-  useEffect(() => {
+  // 优化：使用useMemo减少不必要的重新计算
+  const selectedShades = useMemo(() => {
     const variants = getVariant()
-    setSelectedShades(
-      variants?.map((variant) => ({
-        productVarant: variant,
-        quantity:
-          selectedSize?.filter((size) =>
-            size.includes(variant?.length?.toString() ?? "")
-          ).length ?? 0,
-      })) || []
-    )
-  }, [selectedSize, selectedColor])
+    return variants?.map((variant) => ({
+      productVarant: variant,
+      quantity:
+        selectedSize?.filter((size) =>
+          size.includes(variant?.length?.toString() ?? "")
+        ).length ?? 0,
+    })) || []
+  }, [getVariant, selectedSize])
 
-  // 计算价格
-  useEffect(() => {
-    setTotalPrice(
-      selectedShades.reduce((acc, shade) => {
-        return (
-          acc +
-          (shade.productVarant?.calculated_price?.calculated_amount ?? 0) *
-            shade.quantity
-        )
-      }, 0)
-    )
+  // 优化：使用useMemo计算价格，减少重新渲染
+  const totalPrice = useMemo(() => {
+    return selectedShades.reduce((acc, shade) => {
+      return (
+        acc +
+        (shade.productVarant?.calculated_price?.calculated_amount ?? 0) *
+          shade.quantity
+      )
+    }, 0)
   }, [selectedShades])
 
   // 处理颜色选择
@@ -177,12 +172,27 @@ const ShadesProductPage = ({
     }
   }
 
-  // 如果没有产品数据，显示加载或错误状态
+  // 如果没有产品数据，显示骨架屏，减少CLS
   if (!shadesProduct) {
     return (
       <div className="w-full max-w-[1074px] mx-auto relative">
-        <div className="flex items-center justify-center h-64">
-          <p className="text-gray-500">Loading shades product...</p>
+        <div className="flex flex-col lg:flex-row justify-between items-start">
+          <div className="w-full lg:w-[708px] flex flex-col gap-5">
+            {/* 图片骨架屏 */}
+            <div className="w-full h-[354px] bg-gray-200 animate-pulse rounded-lg"></div>
+            {/* 产品信息骨架屏 */}
+            <div className="space-y-4">
+              <div className="h-6 bg-gray-200 animate-pulse rounded w-3/4"></div>
+              <div className="h-4 bg-gray-200 animate-pulse rounded w-1/2"></div>
+              <div className="h-8 bg-gray-200 animate-pulse rounded w-1/3"></div>
+            </div>
+          </div>
+          {/* 选择器骨架屏 */}
+          <div className="w-full lg:w-[300px] space-y-4">
+            <div className="h-12 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-12 bg-gray-200 animate-pulse rounded"></div>
+            <div className="h-12 bg-gray-200 animate-pulse rounded"></div>
+          </div>
         </div>
       </div>
     )

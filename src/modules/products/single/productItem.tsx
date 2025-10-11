@@ -43,7 +43,6 @@ export const ProductItem = ({
           product={product}
           accessories={accessories}
           // currentProductInfo={currentProductInfo}
-          pergolaData={pergolaData}
           accessoriesCMSData={accessoriesCMSData}
         />
         {/* product overview section */}

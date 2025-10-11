@@ -19,7 +19,10 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   staticPageGenerationTimeout: 180,
-  experimental: {},
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['swiper', '@radix-ui/react-accordion', '@radix-ui/react-select'],
+  },
    
   images: {
     remotePatterns: [
@@ -60,6 +63,14 @@ const nextConfig = {
         hostname: "assets.relaxureliving.com",
       }
     ],
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 31536000, // 1年缓存
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    loader: 'default',
+    unoptimized: false,
   },
   env: {
     AIRWALLEX_ENV: process.env.NEXT_PUBLIC_AIRWALLEX_ENV || "demo",

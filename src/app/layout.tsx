@@ -79,6 +79,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="preload" as="font" href="/fonts/Jost-VariableFont_wght.ttf" type="font/ttf" />
         <link
           href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet"
@@ -158,10 +159,48 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             </ImageGalleryProvider>
           </CartProvider>
         </ReactQueryProvider>
+        {/* Tidio 聊天组件 - 延迟加载 */}
         <Script
-          src="//code.tidio.co/spcvp06pvbgtarykyqq2afrepjvccury.js"
-          async
-        ></Script>
+          id="tidio-chat-loader"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              // 延迟加载 Tidio 聊天组件
+              function loadTidioChat() {
+                const script = document.createElement('script');
+                script.src = '//code.tidio.co/spcvp06pvbgtarykyqq2afrepjvccury.js';
+                script.async = true;
+                document.body.appendChild(script);
+              }
+              
+              // 在用户交互后加载聊天组件
+              let tidioLoaded = false;
+              function loadTidioOnInteraction() {
+                if (!tidioLoaded) {
+                  tidioLoaded = true;
+                  loadTidioChat();
+                  // 移除事件监听器
+                  document.removeEventListener('click', loadTidioOnInteraction);
+                  document.removeEventListener('scroll', loadTidioOnInteraction);
+                  document.removeEventListener('touchstart', loadTidioOnInteraction);
+                }
+              }
+              
+              // 添加事件监听器
+              document.addEventListener('click', loadTidioOnInteraction);
+              document.addEventListener('scroll', loadTidioOnInteraction);
+              document.addEventListener('touchstart', loadTidioOnInteraction);
+              
+              // 5秒后自动加载（如果用户还没有交互）
+              setTimeout(() => {
+                if (!tidioLoaded) {
+                  loadTidioChat();
+                  tidioLoaded = true;
+                }
+              }, 5000);
+            `
+          }}
+        />
         <Script id="tidio-chat-api" strategy="afterInteractive">
           {`
             (function () {

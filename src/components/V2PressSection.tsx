@@ -58,6 +58,7 @@ interface V2PressSectionProps {
     __component?: string
     id?: number
     items: TestimonialItem[]
+    sectionPriority?: "high" | "normal"
   }
   isMobile?: boolean
 }
@@ -85,6 +86,7 @@ export default function V2PressSection({
               <V2PressItem
                 key={i + index}
                 item={testimonial}
+                priority={data?.sectionPriority === "high"}
               />
             ))}
           </div>
@@ -98,6 +100,7 @@ export default function V2PressSection({
         <div key={key}>
           <V2PressItem
             item={testimonial}
+            priority={data?.sectionPriority === "high"}
           />
         </div>
       ))

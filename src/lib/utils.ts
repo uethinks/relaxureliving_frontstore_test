@@ -7,7 +7,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function getStrapiUrl(path: string) {
+export function getStrapiUrl(path: string | undefined | null) {
+  if (!path) {
+    return null
+  }
   if (path.startsWith("/img")) {
     return path
   }

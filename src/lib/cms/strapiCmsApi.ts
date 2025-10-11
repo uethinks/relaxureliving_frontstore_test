@@ -451,9 +451,7 @@ const globalPopulate = {
 
 const termsPopulate = {
   populate: {
-    seo: {
-      populate: ["shareImage"],
-    },
+    seo: seoPopulate,
   },
 }
 export const API_URLS = {

@@ -8,11 +8,13 @@ import { GalleryCarousel } from "./GalleryCarousel"
 interface RainResistanceBlockProps {
   data: RainResistanceBlock
   isMobile?: boolean
+  priority?: boolean
 }
 
 export function V2FeatureShowcase({
   data,
   isMobile = false,
+  priority = false,
 }: RainResistanceBlockProps) {
   console.log("V2FeatureShowcase data", data)
   return (
