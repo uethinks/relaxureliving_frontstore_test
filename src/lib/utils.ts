@@ -20,6 +20,13 @@ export function getStrapiUrl(path: string | undefined | null) {
   if(path.startsWith("http")) {
     return path
   }
+  //自定义的之前上传的 /uploads/craftsmanship3_86368d690c.png
+  //if path starts with /uploads then remove it and concat with assetsStrapiBaseURL
+  if (path.startsWith("/uploads")) {
+    const newPath = path.replace("/uploads", "")
+    console.log("getStrapiUrl path starts with /uploads", newPath)
+    return `${assetsStrapiBaseURL}${newPath}`
+  }
   console.log("getStrapiUrl path", path)  
   return `${assetsStrapiBaseURL}${path}`  
 }
