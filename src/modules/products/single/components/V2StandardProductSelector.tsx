@@ -320,7 +320,7 @@ export const V2StandardProductSelector: React.FC<
 
         <div className={"max-lg:px-6"}>
           {/* Sale Banner */}
-          {isClient && (
+          {/* {isClient && (
             <div className="mt-1 p-4 border border-highlight bg-white">
               <p className="text-black text-base font-medium text-center">
                 End Of Season Clearance Sale:
@@ -333,7 +333,7 @@ export const V2StandardProductSelector: React.FC<
                 03:21:16:57
               </p>
             </div>
-          )}
+          )} */}
 
           {/* Price Section */}
           <div className="mt-4">
