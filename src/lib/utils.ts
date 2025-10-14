@@ -14,7 +14,7 @@ export function getStrapiUrl(path: string | undefined | null) {
     return null
   }
   if (path.startsWith("/img")) {
-    console.log("getStrapiUrl path start with img",  path)
+    // console.log("getStrapiUrl path start with img",  path)
     return path
   }
   if(path.startsWith("http")) {
@@ -24,10 +24,10 @@ export function getStrapiUrl(path: string | undefined | null) {
   //if path starts with /uploads then remove it and concat with assetsStrapiBaseURL
   if (path.startsWith("/uploads")) {
     const newPath = path.replace("/uploads", "")
-    console.log("getStrapiUrl path starts with /uploads", newPath)
+    // console.log("getStrapiUrl path starts with /uploads", newPath)
     return `${assetsStrapiBaseURL}${newPath}`
   }
-  console.log("getStrapiUrl path", path)  
+  // console.log("getStrapiUrl path", path)  
   return `${assetsStrapiBaseURL}${path}`  
 }
 

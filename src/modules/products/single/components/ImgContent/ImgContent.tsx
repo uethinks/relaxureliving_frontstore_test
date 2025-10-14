@@ -13,6 +13,7 @@ import "swiper/css/free-mode"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 import "swiper/css/thumbs"
+import { getStrapiUrl } from "@lib/utils"
 
 interface Props {
   productImages: ImageType[]
@@ -38,7 +39,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
   const [loadedThumbnails, setLoadedThumbnails] = useState<Set<number>>(new Set())
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
-  const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+  const strapiCmsAssetUrl = process.env.NEXT_PUBLIC_STRAPI_ASSETS_BASE_URL
 
   // Intersection Observer refs for lazy loading
   const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -69,7 +70,8 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
 
   // 图片优化工具函数 - 优化版本，改善LCP
   const getOptimizedImageProps = useCallback((image: ImageType, isMain: boolean = false) => {
-    const baseUrl = strapiCmsUrl + image.url
+    const baseUrl = getStrapiUrl(image.url)
+    console.log("getOptimizedImageProps baseUrl", baseUrl)
     
     // 使用响应式尺寸，改善LCP
     const dimensions = isMain 
@@ -93,7 +95,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
         console.warn(`Image load error for ${baseUrl}:`, error)
       }
     }
-  }, [strapiCmsUrl])
+  }, [strapiCmsAssetUrl])
 
   // 根据选中的选项筛选图片
   const filteredImages = React.useMemo(() => {

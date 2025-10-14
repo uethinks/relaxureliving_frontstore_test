@@ -1,6 +1,7 @@
 import { StoreProduct } from "@medusajs/types"
 import { PergolaData, ProductInformation } from "@/types/global"
 import Script from "next/script"
+import { getStrapiUrl } from "@lib/utils"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 interface ProductSchemaProps {
@@ -22,10 +23,9 @@ export const ProductSchema = ({
   const sizes = sizeOption?.values?.map((v) => v.value) || []
   const colors = colorOption?.values?.map((v) => v.value) || []
   const styles = styleOption?.values?.map((v) => v.value) || []
-
-  const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+ 
   const productImages = pergolaData.product_images.map(
-    (image) => `${strapiCmsUrl}${image.url}`
+    (image) => `${getStrapiUrl(image.url) ?? image.url}`
   )
 
   const schemaData = {

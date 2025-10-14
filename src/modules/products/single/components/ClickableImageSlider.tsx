@@ -6,6 +6,7 @@ import { Navigation, Pagination } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
+import { getStrapiUrl } from "@lib/utils"
 
 interface ClickableImageSliderProps {
   images: { url: string }[]
@@ -16,8 +17,7 @@ export const ClickableImageSlider: React.FC<ClickableImageSliderProps> = ({
   images,
   className = "",
 }): JSX.Element => {
-  const [isOpen, setIsOpen] = useState(false)
-  const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+  const [isOpen, setIsOpen] = useState(false) 
 
   if (!images || images.length === 0) {
     return <></>
@@ -28,7 +28,7 @@ export const ClickableImageSlider: React.FC<ClickableImageSliderProps> = ({
       {/* 显示第一张图片 */}
       <div className={`relative ${className}`}>
         <img
-          src={strapiCmsUrl + images[0].url}
+          src={getStrapiUrl(images[0].url) ?? images[0].url}
           alt=""
           className="w-full h-full object-cover rounded-[20px] cursor-pointer"
           onClick={() => setIsOpen(true)}
@@ -78,7 +78,7 @@ export const ClickableImageSlider: React.FC<ClickableImageSliderProps> = ({
                 >
                   <div className="w-full h-full flex items-center justify-center">
                     <img
-                      src={strapiCmsUrl + image.url}
+                      src={getStrapiUrl(image.url) ?? image.url}
                       alt={`Image ${index + 1}`}
                       className="max-w-full max-h-full object-contain"
                       style={{ maxHeight: "80vh" }}

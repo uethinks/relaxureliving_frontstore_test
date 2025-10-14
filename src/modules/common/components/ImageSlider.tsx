@@ -7,6 +7,7 @@ import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 import "swiper/css/zoom"
+import { getStrapiUrl } from "@lib/utils"
 
 interface ImageSliderProps {
   images: { url: string }[]
@@ -19,7 +20,7 @@ export const ImageSlider = ({
 }: ImageSliderProps): JSX.Element => {
   const [isMobile, setIsMobile] = useState(false)
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
-  const strapiCmsUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+  
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
@@ -33,7 +34,7 @@ export const ImageSlider = ({
   useEffect(() => {
     images.forEach((image, index) => {
       const img = new Image()
-      img.src = strapiCmsUrl + image.url
+      img.src = getStrapiUrl(image.url) ?? image.url
       img.onload = () => {
         setLoadedImages((prev) => new Set([...Array.from(prev), index]))
       }
@@ -75,7 +76,7 @@ export const ImageSlider = ({
             )}
             <div className="swiper-zoom-container h-full flex items-center justify-center">
               <img
-                src={strapiCmsUrl + image.url}
+                src={getStrapiUrl(image.url) ?? image.url}
                 alt=""
                 className={`w-full h-full !object-cover rounded-[20px] transition-opacity duration-300 ${
                   loadedImages.has(index) ? "opacity-100" : "opacity-0"
