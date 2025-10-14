@@ -101,7 +101,7 @@ export default async function AboutUsPage() {
                     type: "Secondary",
                     size: "Medium",
                     text: "Design Yours Today",
-                    link: "#",
+                    link: "https://test2.relaxureliving.com/customize",
                     icon: null,
                   } as any
                 }
