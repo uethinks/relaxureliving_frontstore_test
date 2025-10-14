@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react"
 import Image from "next/image"
 import { ImageReviewModal } from "./ImageReviewModal"
 import { Image as ImageType } from "../../../../types/global"
+import { getStrapiUrl } from "@lib/utils"
 
 export interface ReviewType {
   id: number
@@ -37,8 +38,7 @@ const StarRating = ({ rating }: { rating: number }) => {
     </div>
   )
 }
-
-const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+ 
 
 export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
   productId,
@@ -233,7 +233,7 @@ export const CustomerReviewsClient: React.FC<CustomerReviewsProps> = ({
             >
               {review.image[0]?.formats?.small?.url && (
                 <img
-                  src={`${strapiUrl}${review.image[0].formats.small.url}`}
+                  src={`${getStrapiUrl(review.image[0].formats.small.url)}`}
                   alt="Customer review photo"
                   className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                 />
@@ -353,8 +353,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             onClick={() => handleImageClick(0)}
           >
             {review.image[0]?.formats?.small?.url && (
-              <img
-                src={`${strapiUrl}${review.image[0].formats.small.url}`}
+              <img                
+                src={`${getStrapiUrl(review.image[0].formats.small.url)}`}
                 alt="Review photo"
                 className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
               />
@@ -372,7 +372,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
                 >
                   {image.formats?.small?.url && (
                     <img
-                      src={`${strapiUrl}${image.formats.small.url}`}
+                      src={`${getStrapiUrl(image.formats.small.url)}`}
                       alt="Review photo thumbnail"
                       className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-110 group-hover:scale-105"
                     />

@@ -1,7 +1,9 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
+const assetsStrapiBaseURL = process.env.NEXT_PUBLIC_STRAPI_ASSETS_BASE_URL
+console.log("assetsStrapiBaseURL", assetsStrapiBaseURL)
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -12,9 +14,14 @@ export function getStrapiUrl(path: string | undefined | null) {
     return null
   }
   if (path.startsWith("/img")) {
+    console.log("getStrapiUrl path start with img",  path)
     return path
   }
-  return `${strapiUrl}${path}`
+  if(path.startsWith("http")) {
+    return path
+  }
+  console.log("getStrapiUrl path", path)  
+  return `${assetsStrapiBaseURL}${path}`  
 }
 
 export const formatPrice = (price: number) =>
