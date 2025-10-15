@@ -85,7 +85,8 @@ export const OrderSummaryMobile = (): JSX.Element => {
           <div className="flex flex-col gap-3 mb-10 px-2">
             <div className="flex items-start gap-2">
               <div className="flex-shrink-0 w-5 h-5">
-                <Image                   
+                <Image     
+                  unoptimized              
                   src="/img/package.svg"
                   alt="Package icon"
                   width={20}

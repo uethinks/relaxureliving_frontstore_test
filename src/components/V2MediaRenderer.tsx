@@ -288,7 +288,7 @@ export default function MediaRenderer({
             className="absolute bottom-2 right-0 p-2 w-8 h-8 hover:bg-opacity-70 rounded-full flex items-center justify-center transition-all duration-200 z-10"
             aria-label="放大图片"
           >
-            <Image src="/img/zoom-in.png" alt="放大" width={16} height={16} />
+            <Image unoptimized src="/img/zoom-in.png" alt="放大" width={16} height={16} />
           </button>
         )}
       </div>
