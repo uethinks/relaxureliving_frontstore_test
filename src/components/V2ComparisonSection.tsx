@@ -331,7 +331,7 @@ export const V2PergolasComparisonTable = ({
   data: ComparisonData
 }) => {
   console.log("data", data)
-  data = MOCK_DATA
+  // data = MOCK_DATA
 
   // 动态提取所有唯一分类并排序
   const categories = Array.from(
