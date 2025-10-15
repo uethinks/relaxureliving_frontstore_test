@@ -28,7 +28,7 @@ const MAIN_IMAGE_DIMENSIONS = {
 const THUMBNAIL_DIMENSIONS = { width: 100, height: 100 } as const
 
 // 固定的浅灰色占位符 - 确保服务端和客户端一致性
-const FIXED_BLUR_DATA_URL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzA4IiBoZWlnaHQ9IjM1NCIgdmlld0JveD0iMCAwIDcwOCAzNTQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI3MDgiIGhlaWdodD0iMzU0IiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPgo="
+export const FIXED_BLUR_DATA_URL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzA4IiBoZWlnaHQ9IjM1NCIgdmlld0JveD0iMCAwIDcwOCAzNTQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI3MDgiIGhlaWdodD0iMzU0IiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPgo="
 
 export const ImgContent = ({ productImages }: Props): JSX.Element => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
