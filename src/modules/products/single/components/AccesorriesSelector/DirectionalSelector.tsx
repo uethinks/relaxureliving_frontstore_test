@@ -36,7 +36,7 @@ export const DirectionalSelector: React.FC<Props> = ({
           >
             <div className="text-base font-semibold">Left</div>
             <div className="text-base font-semibold text-[#69727A]">
-              {pergolaSize.width}"
+              {pergolaSize.width}′
             </div>
           </button>
 
@@ -52,7 +52,7 @@ export const DirectionalSelector: React.FC<Props> = ({
             >
               <div className="text-base font-semibold">Front</div>
               <div className="text-base font-semibold text-[#69727A]">
-                {pergolaSize.length}"
+                {pergolaSize.length}′
               </div>
             </button>
 
@@ -67,7 +67,7 @@ export const DirectionalSelector: React.FC<Props> = ({
             >
               <div className="text-base font-semibold">Back</div>
               <div className="text-base font-semibold text-[#69727A]">
-                {pergolaSize.length}"
+                {pergolaSize.length}′
               </div>
             </button>
           </div>
@@ -83,7 +83,7 @@ export const DirectionalSelector: React.FC<Props> = ({
           >
             <div className="text-base font-semibold">Right</div>
             <div className="text-base font-semibold text-[#69727A]">
-              {pergolaSize.width}"
+              {pergolaSize.width}′
             </div>
           </button>
         </div>
