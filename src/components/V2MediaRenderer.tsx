@@ -260,7 +260,8 @@ export default function MediaRenderer({
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
         {imageUrl ? (
-          <Image
+          <Image        
+            unoptimized    
             src={imageUrl}
             alt={media.alternativeText || media.name || "媒体内容"}
             width={media.width || 525}
