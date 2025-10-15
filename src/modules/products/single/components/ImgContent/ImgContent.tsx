@@ -309,6 +309,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                           <Image
                             unoptimized
                             {...getOptimizedImageProps(image, false)}
+                            src={getStrapiUrl(image.formats.small.url) ?? image.formats.small.url}
                             className="w-full h-full object-cover object-center transition-opacity duration-300 opacity-100"
                             onError={() => {
                               console.warn(`Failed to load thumbnail ${index}`)
