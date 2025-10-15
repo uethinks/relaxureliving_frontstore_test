@@ -22,13 +22,13 @@ axiosInstance.interceptors.response.use(
     // 处理响应错误
     if (error.response) {
       // 服务器返回的错误
-      console.error('Error response:', error.response.status, error.response.data);
+      console.error('axiosInstance medusa - Error response:', error.response.status, error.response.data);
     } else if (error.request) {
       // 请求没有收到响应
-      console.error('Error request:', error.request);
+      console.error('axiosInstance medusa Error request:', error.request);
     } else {
       // 其他错误
-      console.error('Error message:', error.message);
+      console.error('axiosInstance medusa Error message:', error.message);
     }
     return Promise.reject(error instanceof Error ? error : new Error(error));
   }
