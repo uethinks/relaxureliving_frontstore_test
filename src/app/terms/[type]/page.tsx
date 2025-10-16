@@ -62,10 +62,6 @@ export async function generateStaticParams() {
   }
 }
 
-// 添加动态配置
-export const dynamic = "force-dynamic"
-// export const revalidate = 3600 // 每小时重新验证一次
-
 export async function generateMetadata({
   params,
 }: {
