@@ -7,6 +7,11 @@ import DeliveryProcess from "./DeliveryProcess"
 import { Metadata } from "next"
 import { generateMetadataFromStrapi } from "@lib/util/seo"
 
+export const dynamic = "force-static"
+
+// ISR 缓存策略 - 1小时重新验证
+export const revalidate = 3600
+
 export async function generateMetadata(): Promise<Metadata> {
   const deliveryWarrantyData = await getDeliveryWarranty()
   return generateMetadataFromStrapi(deliveryWarrantyData?.data?.seo || {})

@@ -6,6 +6,11 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import ShadesProductPage from "./ShadesProductPage"
 import { generateMetadataFromStrapi } from "@lib/util/seo"
 import { Metadata } from "next"
+// 强制静态生成
+export const dynamic = "force-static"
+
+// ISR 缓存策略 - 1小时重新验证
+export const revalidate = 3600
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>

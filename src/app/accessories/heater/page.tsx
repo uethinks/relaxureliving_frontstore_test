@@ -9,6 +9,12 @@ import { HeaterProductPage } from "./HeaterProductPage"
 import { Metadata } from "next"
 import { generateMetadataFromStrapi } from "@lib/util/seo"
 
+// 强制静态生成
+export const dynamic = "force-static"
+
+// ISR 缓存策略 - 1小时重新验证
+export const revalidate = 3600
+
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>

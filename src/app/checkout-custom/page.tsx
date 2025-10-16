@@ -7,7 +7,10 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import CheckoutCustomPage from "./CheckoutCustomPage"
 import { Suspense, useEffect, useState } from "react"
+export const dynamic = "force-static"
 
+// ISR 缓存策略 - 1小时重新验证
+export const revalidate = 3600
 export default async function Checkout({
   
 }: {

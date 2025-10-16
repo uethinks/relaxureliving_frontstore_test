@@ -4,6 +4,13 @@ import { Metadata } from "next"
 import { Suspense } from "react"
 import BlogPageClient from "./BlogPageClient"
 
+
+// 强制静态生成
+export const dynamic = "force-static"
+
+
+// ISR 缓存策略 - 1小时重新验证
+export const revalidate = 3600
 export async function generateMetadata(): Promise<Metadata> {
   const blogPageData = await getBlogPage()
   // 使用第一篇博客的SEO数据作为页面元数据，或者可以创建专门的博客页面SEO配置

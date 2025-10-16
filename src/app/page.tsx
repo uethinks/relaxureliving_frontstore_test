@@ -3,9 +3,10 @@ import { Metadata } from "next"
 import { getHomePage } from "@lib/cms/strapiCmsApi"
 import { generateMetadataFromStrapi } from "@lib/util/seo"
 
-// 配置静态生成
 export const dynamic = "force-static"
-// export const revalidate = 3600 // 每小时重新验证一次
+
+// ISR 缓存策略 - 1小时重新验证
+export const revalidate = 3600
 
 // 首页动态metadata
 export async function generateMetadata(): Promise<Metadata> {

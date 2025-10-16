@@ -6,6 +6,13 @@ import { Metadata } from "next"
 import { generateMetadataFromStrapi } from "@lib/util/seo"
 import { getBecomeDealer } from "@lib/cms/strapiCmsApi"
 
+// 强制静态生成
+export const dynamic = "force-static"
+
+
+// ISR 缓存策略 - 1小时重新验证
+export const revalidate = 3600
+
 export async function generateMetadata(): Promise<Metadata> {
   const becomeDealerData = await getBecomeDealer()
   return generateMetadataFromStrapi(becomeDealerData?.data?.seo || {})

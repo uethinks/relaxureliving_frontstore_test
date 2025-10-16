@@ -10,6 +10,11 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { Metadata } from "next"
 import Image from "next/image"
 
+// 强制静态生成
+export const dynamic = "force-static"
+
+// ISR 缓存策略 - 1小时重新验证
+export const revalidate = 3600
 // import { Metadata } from "next"
 
 // 生成动态 metadata
