@@ -21,7 +21,7 @@ export default function V2ProductPage({
           <div className="flex flex-col max-w-[1074px] w-full mx-auto lg:mt-10 gap-5 pb-5">
             <div className="flex flex-row justify-between items-start relative w-full lg:gap-6 max-lg:flex-wrap">
               {/* Left Content */}
-              <div className="w-full lg:w-[708px] flex flex-col lg:sticky lg:top-0">
+              <div className="w-full lg:w-[708px] flex flex-col lg:sticky lg:top-0 z-10">
                 <div className="flex flex-row justify-between w-full">
                   <ImgContent
                     productImages={cmsData.productImages || []}
