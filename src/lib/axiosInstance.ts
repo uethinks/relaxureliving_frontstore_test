@@ -42,7 +42,7 @@ axiosInstance.interceptors.response.use(
     // 处理响应错误
     if (error.response) {
       // 服务器返回的错误
-      console.error('axiosInstance strapicms - Error response:', error.response.status, error.response.data);
+      console.error('axiosInstance strapicms - Error response:', error.response.status, error.response.data, 'for URL:', error.response.config?.baseURL + error.response.config?.url);
     } else if (error.request) {
       // 请求没有收到响应
       console.error('axiosInstance strapicms - Error request:', error.request);
