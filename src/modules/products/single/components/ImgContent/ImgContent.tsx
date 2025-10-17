@@ -7,6 +7,7 @@ import { FreeMode, Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { useProductSelection } from "../ProductSelectionContext"
 
+
 // 导入 Swiper 样式
 import "swiper/css"
 import "swiper/css/free-mode"
@@ -14,6 +15,7 @@ import "swiper/css/navigation"
 import "swiper/css/pagination"
 import "swiper/css/thumbs"
 import { getStrapiUrl } from "@lib/utils"
+import { useImageGallery } from "@lib/context/imageZoomContext"
 
 interface Props {
   productImages: ImageType[]
@@ -40,12 +42,16 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
   const THUMBNAILS_PER_PAGE = 6
   const MOBILE_THUMBNAILS_PER_PAGE = 4
   const strapiCmsAssetUrl = process.env.NEXT_PUBLIC_STRAPI_ASSETS_BASE_URL
-
-  // Intersection Observer refs for lazy loading
-  const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([])
+  
+  const { openImageGallery } = useImageGallery()
 
   // 使用 Context 获取状态
   const { selectedSize, selectedColor, selectedStyle } = useProductSelection()
+
+  // 处理放大功能
+  const handleZoomClick = () => {
+    openImageGallery(productImages as any[], currentImageIndex)
+  }
 
   // Intersection Observer hook for lazy loading
   const useIntersectionObserver = useCallback((ref: React.RefObject<HTMLElement>, callback: () => void) => {
@@ -90,7 +96,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
       sizes: isMain 
         ? "(max-width: 768px) 100vw, (max-width: 1200px) 708px, 708px"
         : "(max-width: 768px) 25vw, (max-width: 1200px) 16vw, 12vw",
-      loading: isMain ? "eager" as const : "lazy" as const, // 主图立即加载
+      // loading: isMain ? "eager" as const : "lazy" as const, // 主图立即加载
       onError: (error: any) => {
         console.warn(`Image load error for ${baseUrl}:`, error)
       }
@@ -229,7 +235,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                 unoptimized
                 {...getOptimizedImageProps(filteredImages[currentImageIndex], true)}
                 className="w-full h-full object-cover object-center"
-                onClick={handleImageClick}
+                onClick={handleZoomClick}
               />
             ) : (
               <div className="w-full h-full bg-gray-200 flex items-center justify-center">
