@@ -2,11 +2,11 @@ import { getBlog, getBlogs, getTags } from "@lib/cms/strapiCmsApi"
 import { generateMetadataFromStrapi } from "@lib/util/seo"
 import BlogDetailClient from "./BlogDetailClient"
 
-// 强制静态生成
-export const dynamic = "force-static"
+// // 强制静态生成
+// export const dynamic = "force-static"
 
-// ISR 缓存策略 - 1小时重新验证
-export const revalidate = 3600
+// // ISR 缓存策略 - 1小时重新验证
+// export const revalidate = 3600
 export async function generateMetadata({ params, searchParams }: { params: Promise<{ id: string }>, searchParams: Promise<{ id: string }> }) {
   const { id: searchId } = await searchParams
   const blog = await getBlog(searchId)
