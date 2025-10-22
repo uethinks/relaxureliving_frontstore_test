@@ -24,8 +24,8 @@ export const convertSelectorData = (
 
   // 遍历 relatedProductIds 的所有属性
   Object.entries(relatedProductIds).forEach(([key, value]) => {
-    console.log("key", key)
-    console.log("value", value)
+    // console.log("key", key)
+    // console.log("value", value)
     // 匹配 sizeDescription_10x10 格式
     const descMatch = key.match(/sizeDescription_(\d+)x(\d+)/)
     if (descMatch) {

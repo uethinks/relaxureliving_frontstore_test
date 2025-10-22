@@ -271,6 +271,7 @@ const GlassDoorItem = ({
 
 export const GlassDoorCard = (): JSX.Element | null => {
   const { cart, removeVariant, updateVariantInfo } = useCart()
+  console.log('cart: ', cart)
   const { quantities, setQuantities, isUpdating, handleQuantityChange } =
     useQuantityUpdate(cart, updateVariantInfo)
   const {
@@ -281,7 +282,7 @@ export const GlassDoorCard = (): JSX.Element | null => {
   } = useDeleteHandler(removeVariant)
 
   let glassDoorInCart = cart?.items?.filter(
-    (item) => item.product_handle === "frameless-glass-door"
+    (item) => item.product_handle?.includes("frameless-sliding-glass-door")
   )
   const [glassDoor, setGlassDoor] = useState<StoreCartLineItem[] | null>(
     glassDoorInCart ?? null
@@ -301,7 +302,7 @@ export const GlassDoorCard = (): JSX.Element | null => {
 
   useEffect(() => {
     glassDoorInCart = cart?.items?.filter(
-      (item) => item.product_handle === "frameless-glass-door"
+      (item) => item.product_handle?.includes("frameless-sliding-glass-door")
     )
     setGlassDoor(glassDoorInCart ?? [])
   }, [cart])

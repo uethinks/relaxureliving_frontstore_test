@@ -244,7 +244,7 @@ export default function MediaRenderer({
     const isHighPriority = imageOptions.priority
     // 调试信息：在开发环境中输出优先级信息
     if (process.env.NODE_ENV === 'development') {
-      console.log(`MediaRenderer: sectionPriority=${imageOptions.priority}, type=${type}, imageOptions.priority=${imageOptions.priority}, isHighPriority=${isHighPriority}`)
+      // console.log(`MediaRenderer: sectionPriority=${imageOptions.priority}, type=${type}, imageOptions.priority=${imageOptions.priority}, isHighPriority=${isHighPriority}`)
     }
     
     // 优化sizes属性，提供更精确的响应式配置

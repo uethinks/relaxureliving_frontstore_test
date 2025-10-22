@@ -31,6 +31,7 @@ interface Props {
     selectedProducts: selectedProducts
   }) => void
   accessories: StoreProduct[]
+  selectedSize?: StoreProductOptionValue
   selectedColor?: StoreProductOptionValue
   selectedHeaterVariant: selectedProducts
   selectedShadesVariant: selectedProducts
@@ -40,44 +41,17 @@ interface Props {
   accessoriesCMSData: any
 }
 
-type accessoriesIcons = {
-  name: string
-  title: string
-  image: string
-  selected: boolean
-}
-
 export const V2AccesorriesSelector = ({
   onAccessoryChange,
   accessories,
   selectedColor,
+  selectedSize,
   selectedHeaterVariant,
   selectedShadesVariant,
   selectedGlassdoorVariant,
   pergolaSize,
   selectorData,
-  accessoriesCMSData,
 }: Props): React.JSX.Element => {
-  const [accessoriesIcons, setAccessoriesIcons] = useState<accessoriesIcons[]>([
-    {
-      name: ACCESSORY_NAMES.HEATING,
-      title: "Heater",
-      image: "/img/heating.svg",
-      selected: false,
-    },
-    {
-      name: ACCESSORY_NAMES.SHADES,
-      title: "Shade Screen",
-      image: "/img/shades.svg",
-      selected: false,
-    },
-    {
-      name: ACCESSORY_NAMES.GLASS_DOOR,
-      title: "Frameless Sliding Glass Door",
-      image: "/img/glass-door.svg",
-      selected: false,
-    },
-  ])
 
   // Side selection state for each accessory
   const [selectedHeaterSides, setSelectedHeaterSides] = useState<string[]>([])
@@ -197,7 +171,6 @@ export const V2AccesorriesSelector = ({
     )
 
     if (!shadesProduct) return
-    console.log("shadesProduct", shadesProduct.variants)
 
     // Calculate quantities for each side type
     const shortSideCount = selectedSides.filter(
@@ -314,19 +287,23 @@ export const V2AccesorriesSelector = ({
     const shortSideCount = selectedSides.filter(
       (side) => side === "left" || side === "right"
     ).length
-
+    
     const longSideCount = selectedSides.filter(
       (side) => side === "front" || side === "back"
     ).length
-
+    
     // Create new variants array
     const newVariants: selectedProducts = []
-
+    
     // Add short side variants (width)
+    
     if (shortSideCount > 0) {
       const shortSideVariant = glassdoorProduct.variants?.find(
         (variant) => variant.length === pergolaSize.width
       )
+      console.log('shortSideCount', shortSideCount)
+    console.log('pergolaSize.width', pergolaSize.width)
+      console.log('shortSideVariant', shortSideVariant)
       if (shortSideVariant) {
         newVariants.push({
           productVarant: shortSideVariant,
@@ -336,10 +313,14 @@ export const V2AccesorriesSelector = ({
     }
 
     // Add long side variants (length)
+    
     if (longSideCount > 0) {
       const longSideVariant = glassdoorProduct.variants?.find(
         (variant) => variant.length === pergolaSize.length
       )
+      console.log('longSideCount', longSideCount)
+    console.log('pergolaSize.length', pergolaSize.length)
+      console.log('longSideVariant', longSideVariant)
       if (longSideVariant) {
         newVariants.push({
           productVarant: longSideVariant,
@@ -419,9 +400,13 @@ export const V2AccesorriesSelector = ({
     // Initialize glassdoor sides
     const glassdoorSides: string[] = []
     if (getGlassdoorQuantity() > 0) {
+      console.log('pergolaSize.width === pergolaSize.length', pergolaSize.width === pergolaSize.length)
       if (pergolaSize.width === pergolaSize.length) {
         glassdoorSides.push("left")
       } else {
+        console.log('selectedGlassdoorVariant', selectedGlassdoorVariant)
+        console.log('pergolaSize.width', pergolaSize.width)
+        console.log('pergolaSize.length', pergolaSize.length)
         if (
           selectedGlassdoorVariant?.find(
             (item) => item.productVarant?.length === pergolaSize.width
@@ -446,60 +431,14 @@ export const V2AccesorriesSelector = ({
     initializeSides()
   }, [])
 
+  useEffect(() => {
+    setSelectedGlassdoorSides([])
+    setSelectedHeaterSides([])
+    setSelectedShadesSides([])
+  }, [selectedSize, selectedColor])
+
   return (
     <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
-      {/* <h3 className="relative self-stretch h-6 mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#343a40] text-16 tracking-[0] leading-6 whitespace-nowrap">
-        Add accessories to your pergola
-      </h3> */}
-
-      {/* <div className="flex flex-col w-full items-start gap-5 relative flex-[0_0_auto]">
-        <div className="flex w-full items-center gap-[22px] relative flex-[0_0_auto]">
-          {accessoriesIcons.map((accessory) => (
-            <button
-              key={accessory.name}
-              className={`flex flex-col w-1/3 h-[76px] items-center justify-center gap-2.5 px-0 py-0 relative rounded-[20px] cursor-pointer ${
-                (accessory.name.toLowerCase().includes("heating") && getHeaterQuantity() > 0) ||
-                (accessory.name.toLowerCase().includes("shades") && getShadesQuantity() > 0) ||
-                (accessory.name.toLowerCase().includes("glass") && getGlassdoorQuantity() > 0)
-                  ? "bg-[#F6AF1F33]"
-                  : "bg-[#ffffff]"
-              }`}
-              onClick={() => {
-                // Handle accessory click - could open a simplified selection modal or inline editor
-                console.log(`Clicked ${accessory.name}`)
-              }}
-              aria-pressed={accessory.selected}
-            >
-              {((accessory.name.toLowerCase().includes("heating") && getHeaterQuantity() > 0) ||
-                (accessory.name.toLowerCase().includes("shades") && getShadesQuantity() > 0) ||
-                (accessory.name.toLowerCase().includes("glass") && getGlassdoorQuantity() > 0)) && (
-                <div className="absolute -top-3 -right-3 w-8 h-8 p-1 rounded-full bg-[#f3f3f3]">
-                  <div className="w-full h-full flex items-center justify-center bg-[#F6AF1F33] rounded-full">
-                    <span className="text-[#69727a] text-base">
-                      {accessory.name.toLowerCase().includes("heating")
-                        ? getHeaterQuantity()
-                        : accessory.name.toLowerCase().includes("shades")
-                        ? getShadesQuantity()
-                        : getGlassdoorQuantity()}
-                    </span>
-                  </div>
-                </div>
-              )}
-              <img
-                className="relative w-6 h-6 mt-[-10.00px]"
-                alt={accessory.name}
-                src={accessory.image}
-              />
-
-              <div className="flex h-[22px] items-start justify-center relative self-stretch w-full mb-[-10.00px]">
-                <h3 className="relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-[#69727a] text-16 tracking-[0] leading-[21.6px]">
-                  {accessory.name}
-                </h3>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div> */}
 
       {/* Add-ons Section */}
       <div className="mb-4 space-y-4 w-full">

@@ -77,7 +77,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
   // 图片优化工具函数 - 优化版本，改善LCP
   const getOptimizedImageProps = useCallback((image: ImageType, isMain: boolean = false) => {
     const baseUrl = getStrapiUrl(image.url)
-    console.log("getOptimizedImageProps baseUrl", baseUrl)
+    // console.log("getOptimizedImageProps baseUrl", baseUrl)
     
     // 使用响应式尺寸，改善LCP
     const dimensions = isMain 
@@ -140,7 +140,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
     )
   }, [productImages, selectedSize, selectedColor, selectedStyle])
 
-  console.log('filteredImages', filteredImages)
+  // console.log('filteredImages', filteredImages)
 
   // 当筛选后的图片变化时，重置当前图片索引
   useEffect(() => {

@@ -339,7 +339,7 @@ export const HeaterCardMobile = (): JSX.Element | null => {
       return null
     }
     const heaterItems = cart.items.filter(
-      (item) => item.product_handle === "heaters"
+      (item) => item.product_handle?.includes("heater")
     )
     return heaterItems.length > 0 ? heaterItems : null
   }, [cart?.items])

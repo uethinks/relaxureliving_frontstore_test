@@ -115,6 +115,7 @@ export const V2StandardProductSelector: React.FC<
     )
     setSelectedAccessoriesShades([])
     setSelectedAccessoriesGlassdoor([])
+    setSelectedAccessoriesHeater([])
   }, [selectedSize, selectedColor, selectedStyle, product, pergolaQuantity])
 
   useEffect(() => {
@@ -412,6 +413,7 @@ export const V2StandardProductSelector: React.FC<
               pergolaSize={pergolaSize}
               selectorData={selectorData}
               selectedColor={selectedColor}
+              selectedSize={selectedSize}
               onAccessoryChange={handleAccessoryToggle}
               accessories={accessories}
               selectedHeaterVariant={selectedAccessoriesHeater}
