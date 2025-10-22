@@ -177,7 +177,7 @@ export const CheckoutOrderSummaryMobile = ({
           <div className="flex flex-col gap-0.5 mb-1 py-2 text-[14px] font-semibold">
             <div className="flex justify-between items-center">
               <span className="text-[#000000]">
-                Subtotal: <span>{cart?.items?.length ?? "-"} items</span>
+                Subtotal: <span>{ cart?.items?.reduce((sum, item) => sum + (item.quantity || 0), 0) ?? "-"} items</span>
               </span>
               <span className="text-[#111827]">+{formatPrice(cart?.original_total ?? 0)}</span>
             </div>

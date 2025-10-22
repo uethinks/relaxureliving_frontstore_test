@@ -153,7 +153,7 @@ export const ProductCard = (): JSX.Element | null => {
     return null
   }
 
-  console.log("item.variant?.options", pergola[0])
+  console.log("Cart ProductCart - first item", pergola[0])
   return (
     <>
       {pergola.map((item) => (

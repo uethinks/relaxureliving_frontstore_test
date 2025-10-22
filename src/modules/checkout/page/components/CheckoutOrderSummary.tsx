@@ -96,7 +96,7 @@ export const CheckoutOrderSummary = ({
       setIsApplyingPromotion(false)
     }
   }
-
+ 
   return (
     <div className="flex flex-col w-full items-start">
       {/* Main Order Summary */}
@@ -244,7 +244,7 @@ export const CheckoutOrderSummary = ({
           <div className="flex flex-col gap-1 mb-2 py-4 text-[14px] font-semibold">
             <div className="flex justify-between items-center">
               <span className="text-[#000000] ">
-                Subtotal: <span>{cart?.items?.length ?? "-"} items</span>
+                Subtotal: <span>{ cart?.items?.reduce((sum, item) => sum + (item.quantity || 0), 0) ?? "-"} items</span>
               </span>
               <span className="text-[#111827]">+{formatPrice(cart?.original_total ?? 0)}</span>
             </div>
