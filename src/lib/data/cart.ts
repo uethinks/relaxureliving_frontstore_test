@@ -162,6 +162,69 @@ export async function addToCart({
     .catch(medusaError)
 }
 
+/**
+ * Batch add multiple items to cart - optimized to only revalidate cache once
+ * @param items - Array of items to add with variantId and quantity
+ * @param countryCode - Country code for the cart region
+ * @returns The updated cart
+ */
+export async function addToCartBatch({
+  items,
+  countryCode,
+}: {
+  items: Array<{ variantId: string; quantity: number }>
+  countryCode: string
+}) {
+  if (!items || items.length === 0) {
+    throw new Error("No items provided for batch add to cart")
+  }
+
+  const cart = await getOrSetCart(countryCode)
+
+  if (!cart) {
+    throw new Error("Error retrieving or creating cart")
+  }
+
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+
+  // Add all items in parallel without revalidating cache
+  const addPromises = items.map((item) =>
+    sdk.store.cart
+      .createLineItem(
+        cart.id,
+        {
+          variant_id: item.variantId,
+          quantity: item.quantity,
+        },
+        {},
+        headers
+      )
+      .catch((error) => {
+        console.error(`Failed to add item ${item.variantId}:`, error)
+        throw error
+      })
+  )
+
+  try {
+    // Wait for all items to be added
+    const results = await Promise.all(addPromises)
+    
+    // Only revalidate cache once after all items are added
+    const cartCacheTag = await getCacheTag("carts")
+    revalidateTag(cartCacheTag)
+
+    const fulfillmentCacheTag = await getCacheTag("fulfillment")
+    revalidateTag(fulfillmentCacheTag)
+
+    // Return the last cart response (they should all be the same cart)
+    return results[results.length - 1].cart
+  } catch (error) {
+    throw medusaError(error)
+  }
+}
+
 export async function updateLineItem({
   lineId,
   quantity,
