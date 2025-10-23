@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge"
 import V2SupportSection from "@/components/V2SupportSection"
 import { useCart } from "@lib/context/cartContext"
-import { addToCart } from "@lib/data/cart"
+import { addToCartBatch } from "@lib/data/cart"
 import {
   StoreProduct,
   StoreProductOptionValue,
@@ -173,125 +173,64 @@ export const V2StandardProductSelector: React.FC<
         productQuantity: pergolaQuantity,
       })
 
-      await Promise.all([
-        buyPergula(),
-        buyHeater(),
-        buyShades(),
-        buyGlassdoor(),
-      ])
+      // Collect all items to add and merge duplicates
+      const itemsMap = new Map<string, number>()
+
+      console.log("handleBuyNow selectedVariant:", selectedVariant)
+      console.log("handleBuyNow selectedAccessoriesHeater:", selectedAccessoriesHeater)
+      console.log("handleBuyNow selectedAccessoriesShades:", selectedAccessoriesShades)
+      console.log("handleBuyNow selectedAccessoriesGlassdoor:", selectedAccessoriesGlassdoor)
+
+      // Add pergola
+      if (selectedVariant?.id) {
+        itemsMap.set(selectedVariant.id, pergolaQuantity)
+      }
+
+      // Add heaters - merge quantities if same variant
+      selectedAccessoriesHeater
+        .filter((item) => item.productVarant && item.quantity)
+        .forEach((item) => {
+          const variantId = item.productVarant!.id
+          const currentQty = itemsMap.get(variantId) || 0
+          itemsMap.set(variantId, currentQty + item.quantity)
+        })
+
+      // Add shades - merge quantities if same variant
+      selectedAccessoriesShades
+        .filter((item) => item.productVarant && item.quantity)
+        .forEach((item) => {
+          const variantId = item.productVarant!.id
+          const currentQty = itemsMap.get(variantId) || 0
+          itemsMap.set(variantId, currentQty + item.quantity)
+        })
+
+      // Add glass doors - merge quantities if same variant
+      selectedAccessoriesGlassdoor
+        .filter((item) => item.productVarant && item.quantity)
+        .forEach((item) => {
+          const variantId = item.productVarant!.id
+          const currentQty = itemsMap.get(variantId) || 0
+          itemsMap.set(variantId, currentQty + item.quantity)
+        })
+
+      // Convert map to array
+      const itemsToAdd = Array.from(itemsMap.entries()).map(([variantId, quantity]) => ({
+        variantId,
+        quantity,
+      }))
+
+      // Batch add all items with single cache revalidation
+      if (itemsToAdd.length > 0) {
+        await addToCartBatch({
+          items: itemsToAdd,
+          countryCode: defaultCountryCode,
+        })
+      }
+
       router.push(hasCartAlready ? "/cart" : "/checkout")
-      // setIsLoading(false)
     } catch (error) {
       console.error("handleBuyNow Error adding items to cart:", error)
       setIsLoading(false)
-    }
-  }
-
-  const buyPergula = async () => {
-    if (!selectedVariant?.id) {
-      return null
-    }
-
-    try {
-      const result = await addToCart({
-        variantId: selectedVariant.id,
-        quantity: pergolaQuantity,
-        countryCode: defaultCountryCode,
-      })
-      return result
-    } catch (error) {
-      console.error("Error adding pergola to cart:", error)
-      throw error
-    }
-  }
-
-  const buyHeater = async () => {
-    if (selectedAccessoriesHeater.length === 0) {
-      return null
-    }
-
-    const addToCartPromises = selectedAccessoriesHeater
-      .filter((item) => item.productVarant && item.quantity)
-      .map(async (item) => {
-        try {
-          const result = await addToCart({
-            variantId: item?.productVarant?.id ?? "",
-            quantity: item.quantity,
-            countryCode: defaultCountryCode,
-          })
-          return result
-        } catch (error) {
-          console.error("Error adding heater to cart:", error)
-          throw error
-        }
-      })
-
-    try {
-      const results = await Promise.all(addToCartPromises)
-      return results
-    } catch (error) {
-      console.error("Error adding heaters to cart:", error)
-      throw error
-    }
-  }
-
-  const buyShades = async () => {
-    if (selectedAccessoriesShades.length === 0) {
-      return null
-    }
-
-    const addToCartPromises = selectedAccessoriesShades
-      .filter((item) => item.productVarant && item.quantity)
-      .map(async (item) => {
-        try {
-          const result = await addToCart({
-            variantId: item?.productVarant?.id ?? "",
-            quantity: item.quantity,
-            countryCode: defaultCountryCode,
-          })
-          return result
-        } catch (error) {
-          console.error("Error adding item to cart:", error)
-          throw error
-        }
-      })
-
-    try {
-      const results = await Promise.all(addToCartPromises)
-      return results
-    } catch (error) {
-      console.error("Error adding shades to cart:", error)
-      throw error
-    }
-  }
-
-  const buyGlassdoor = async () => {
-    if (selectedAccessoriesGlassdoor.length === 0) {
-      return null
-    }
-
-    const addToCartPromises = selectedAccessoriesGlassdoor
-      .filter((item) => item.productVarant && item.quantity)
-      .map(async (item) => {
-        try {
-          const result = await addToCart({
-            variantId: item?.productVarant?.id ?? "",
-            quantity: item.quantity,
-            countryCode: defaultCountryCode,
-          })
-          return result
-        } catch (error) {
-          console.error("Error adding glassdoor to cart:", error)
-          throw error
-        }
-      })
-
-    try {
-      const results = await Promise.all(addToCartPromises)
-      return results
-    } catch (error) {
-      console.error("Error adding glassdoors to cart:", error)
-      throw error
     }
   }
 
