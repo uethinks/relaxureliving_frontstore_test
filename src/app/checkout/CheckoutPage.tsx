@@ -27,8 +27,9 @@ export default function CheckoutPage({
     }
   }, [width])
 
-  // Show loading skeleton until both cart and screen size are ready
-  if (isLoading || !isScreenReady) {
+  // Show loading skeleton only during initial load (avoid unmounting on cart refresh)
+  const isInitialLoading = isLoading && !cart
+  if (isInitialLoading || !isScreenReady) {
     return <CheckoutSkeleton />
   }
 
