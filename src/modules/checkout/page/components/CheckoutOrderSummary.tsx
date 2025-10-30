@@ -181,15 +181,20 @@ export const CheckoutOrderSummary = ({
                 type="text"
                 value={promotionCode}
                 onChange={(e) => setPromotionCode(e.target.value)}
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
+                    e.preventDefault()
                     applyPromotionCode()
                   }
                 }}
               />
             </div>
             <button
-              onClick={applyPromotionCode}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault()
+                applyPromotionCode()
+              }}
               disabled={isApplyingPromotion || !promotionCode.trim()}
               className="h-11 px-2 bg-primary font-semibold text-[14px] 
                         hover:bg-[#d19300]"

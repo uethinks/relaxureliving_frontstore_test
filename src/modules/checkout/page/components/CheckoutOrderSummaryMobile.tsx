@@ -136,15 +136,20 @@ export const CheckoutOrderSummaryMobile = ({
                 type="text"
                 value={promotionCode}
                 onChange={(e) => setPromotionCode(e.target.value)}
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
+                    e.preventDefault()
                     handleApplyPromotion()
                   }
                 }}
               />
             </div>
             <button
-              onClick={handleApplyPromotion}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault()
+                handleApplyPromotion()
+              }}
               disabled={isApplyingPromotion || !promotionCode.trim()}
               className="h-11 px-2 bg-primary font-semibold text-[14px] 
                         hover:bg-[#d19300]"
