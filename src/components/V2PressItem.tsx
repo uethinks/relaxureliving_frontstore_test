@@ -35,6 +35,7 @@ export default function V2PressItem({ item, priority }: { item: any, priority: b
         </p>
         <a
           href={item.link}
+          target="_blank"
           className={"underline text-[#FFBF3C] text-xs font-semibold"}
         >
           Read more

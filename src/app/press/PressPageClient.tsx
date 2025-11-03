@@ -58,9 +58,9 @@ export default function PressPageClient({ initialPressData }: PressPageClientPro
                       <V2PressItem
                         key={pressKey}
                         item={{
-                          url: press.image ? getStrapiUrl(press.image.url) : "",
                           title: press.title,
                           link: press.link,
+                          image: press.image,
                         }}
                       />
                     ))}
