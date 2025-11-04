@@ -736,34 +736,7 @@ export const CheckoutComponentMobile = ({
             </div>
         </div>
 
-
-      {/* Footer Links - Mobile Layout */}
-      <div className="flex flex-col items-center justify-center gap-2 mt-6 pt-4 border-t border-gray-200">
-        <div className="flex flex-wrap items-center justify-center gap-4 text-center">
-          <Link href="/terms/warranty">
-            <div className="underline text-[#2a261b] text-[11px] font-semibold tracking-[-0.28px] leading-5 whitespace-nowrap">
-              Warranty
-            </div>
-          </Link>
-          <Link href="/terms/refund-policy">
-            <div className="underline text-[#2a261b] text-[11px] font-semibold tracking-[-0.28px] leading-5 whitespace-nowrap">
-              Refund policy
-            </div>
-          </Link>
-        </div>
-        <div className="flex flex-wrap items-center justify-center gap-4 text-center">
-          <Link href="/terms/terms-of-service">
-            <div className="underline text-[#2a261b] text-[11px] font-semibold tracking-[-0.28px] leading-5 whitespace-nowrap">
-              Terms of service
-            </div>
-          </Link>
-          <Link href="/terms/privacy-policy">
-            <div className="underline text-[#2a261b] text-[11px] font-semibold tracking-[-0.28px] leading-5 whitespace-nowrap">
-              Privacy policy
-            </div>
-          </Link>
-        </div>
-      </div>
+ 
     </div>
   )
 }

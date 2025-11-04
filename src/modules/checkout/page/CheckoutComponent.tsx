@@ -724,38 +724,7 @@ export const CheckoutComponent = ({
                 All transactions are secure and encrypted
               </p>
             </div> */}
-            {/* Footer Links */}
-              <div className="flex flex-wrap items-center justify-center gap-[34px] relative self-stretch w-full flex-[0_0_auto]">
-              <Link href="/terms/warranty">
-                <div
-                  className={`underline relative w-fit  text-[#2a261b] text-[12px] font-semibold text-center tracking-[-0.28px] leading-6 whitespace-nowrap`}
-                >
-                  Warranty
-                </div>
-              </Link>
-              <Link href="/terms/refund-policy">
-                <div
-                  className={`underline relative w-fit  text-[#2a261b] text-[12px] font-semibold text-center tracking-[-0.28px] leading-6 whitespace-nowrap`}
-                >
-                  Refund policy
-                </div>
-              </Link>
-              <Link href="/terms/terms-of-service">
-                <div
-                  className={`underline relative w-fit  text-[#2a261b] text-[12px] font-semibold text-center tracking-[-0.28px] leading-6 whitespace-nowrap`}
-                >
-                  Terms of service
-                </div>
-              </Link>
-              <Link href="/terms/privacy-policy">
-                <div
-                  className={`underline relative w-fit  text-[#2a261b] text-[12px] font-semibold text-center tracking-[-0.28px] leading-6 whitespace-nowrap`}
-
-                >
-                  Privacy policy
-                </div>
-              </Link>
-            </div>
+          
           </div>
       
     
