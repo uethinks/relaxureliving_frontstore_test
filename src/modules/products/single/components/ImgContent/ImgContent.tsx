@@ -86,7 +86,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
     
     return {
       src: baseUrl,
-      alt: (image as any).alternativeText || image.caption || "产品图片",
+      alt: (image as any).alternativeText || image.caption || "Image Content",
       width: dimensions.width,
       height: dimensions.height,
       priority: isMain, // 主图优先加载
