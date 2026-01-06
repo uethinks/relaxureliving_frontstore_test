@@ -7,7 +7,7 @@ export async function GET() {
   const robotsTxt = isProduction
     ? `User-agent: *
 Allow: /
-Sitemap: https://www.relaxureliving.com/sitemap.xml`
+Sitemap: https://relaxureliving.com/sitemap.xml`
     : `User-agent: *
 Disallow: /`;
 
