@@ -10,6 +10,8 @@ import React, { useCallback, useEffect, useState } from "react"
 import { PergolaSize, selectedProducts } from "types/global"
 import { BuyNowButton } from "./BuyNowButton"
 import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
+import { trackEvent } from "@lib/util/tracking"
+import { TrackingEvent } from "@/types/tracking"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -244,6 +246,7 @@ export const V2SunshadesSelector: React.FC<V2SunshadesSelectorProps> = ({
           })
         }
       }
+      trackEvent(TrackingEvent.ACCESSORIES_ADDTOCART)
       window.location.href = "/cart"
     } catch (error) {
       console.error("Failed to add to cart:", error)

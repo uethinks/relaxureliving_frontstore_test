@@ -13,6 +13,8 @@ import { FileDownIcon } from "lucide-react"
 import React, { useCallback, useEffect, useState } from "react"
 import { BuyNowButton } from "./BuyNowButton"
 import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
+import { trackEvent } from "@lib/util/tracking"
+import { TrackingEvent } from "@/types/tracking"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -103,6 +105,7 @@ export const V2SampleKitSelector: React.FC<V2SampleKitSelectorProps> = ({
           countryCode: defaultCountryCode,
         })
       }
+      trackEvent(TrackingEvent.ACCESSORIES_ADDTOCART)
       window.location.href = "/cart"
     } catch (error) {
       console.error("Failed to add to cart:", error)

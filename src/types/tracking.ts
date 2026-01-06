@@ -13,7 +13,9 @@ export enum TrackingEvent {
   STANDARD_ALWAYSON_TO_3D = 'standard_alwayson_to_3D',
   CUSTOM_TO_3D = 'custom_to_3D',
   CUSTOM_2ND_TO_3D = 'custom_2nd_to_3D',
-  CHECK_OUT = 'check_out'
+  CHECK_OUT = 'check_out',
+  STANDARD_ADDTOCART = 'standard_addtocart',
+  ACCESSORIES_ADDTOCART = 'accessories_addtocart',
 }
 
 // 事件参数接口

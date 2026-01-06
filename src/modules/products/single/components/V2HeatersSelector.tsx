@@ -14,6 +14,8 @@ import React, { useCallback, useEffect, useState } from "react"
 
 import { BuyNowButton } from "./BuyNowButton"
 import V2ProductSelectorHeader from "./V2ProductSelectorHeader"
+import { TrackingEvent } from "@/types/tracking"
+import { trackEvent } from "@lib/util/tracking"
 
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -112,6 +114,7 @@ export const V2HeatersSelector: React.FC<V2HeatersSelectorProps> = ({
           countryCode: defaultCountryCode,
         })
       }
+      trackEvent(TrackingEvent.ACCESSORIES_ADDTOCART)
       window.location.href = "/cart"
     } catch (error) {
       console.error("Failed to add to cart:", error)

@@ -166,7 +166,7 @@ export const V2StandardProductSelector: React.FC<
     let hasCartAlready = cart != null && (cart?.items?.length ?? 0) > 0
     setIsLoading(true)
     try {
-      trackEvent(TrackingEvent.STANDARD_TO_CART, {
+      trackEvent(TrackingEvent.STANDARD_ADDTOCART, {
         productName: product.title,
         productId: product.id,
         productPrice: totalPrice,
@@ -226,7 +226,6 @@ export const V2StandardProductSelector: React.FC<
           countryCode: defaultCountryCode,
         })
       }
-
       router.push(hasCartAlready ? "/cart" : "/checkout")
     } catch (error) {
       console.error("handleBuyNow Error adding items to cart:", error)
