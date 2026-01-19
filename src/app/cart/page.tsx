@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     "relaxure",
     "aluminum pergola",
   ],
+  robots: "noindex, nofollow",
 }
 
 type Props = Readonly<{
