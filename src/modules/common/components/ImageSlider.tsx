@@ -8,6 +8,8 @@ import "swiper/css/navigation"
 import "swiper/css/pagination"
 import "swiper/css/zoom"
 import { getStrapiUrl } from "@lib/utils"
+import NextImage from "next/image"
+import { FIXED_BLUR_DATA_URL } from "@modules/products/single/components/ImgContent/ImgContent"
 
 interface ImageSliderProps {
   images: { url: string }[]
@@ -75,9 +77,13 @@ export const ImageSlider = ({
               </div>
             )}
             <div className="swiper-zoom-container h-full flex items-center justify-center">
-              <img
-                src={getStrapiUrl(image.url) ?? image.url}
-                alt=""
+              <NextImage
+                src={getStrapiUrl(image.url) || ""}
+                width={isMobile ? 360 : 466}
+                height={isMobile ? 300 : 546}
+                placeholder="blur"
+                blurDataURL={FIXED_BLUR_DATA_URL}
+                alt="Image Slider"
                 className={`w-full h-full !object-cover rounded-[20px] transition-opacity duration-300 ${
                   loadedImages.has(index) ? "opacity-100" : "opacity-0"
                 }`}

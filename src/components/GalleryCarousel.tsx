@@ -6,6 +6,9 @@ import { CustomCarousel } from "./CustomCarousel"
 import V2Button, { ButtonData } from "./V2Button"
 import V2Headline from "./V2Headline"
 import V2MediaRenderer from "./V2MediaRenderer"
+import Image from "next/image"
+import { FIXED_BLUR_DATA_URL } from "@modules/products/single/components/ImgContent/ImgContent"
+
 
 interface GalleryItem {
   media?: any
@@ -78,10 +81,14 @@ export function GalleryCarousel({
                       }}
                     />
                   ) : (
-                    <img
+                    <Image
                       className="w-full object-cover"
-                      src={getStrapiUrl(item.mediaUrl)}
-                      alt={item.mediaAlternativeText || item.title}
+                      width={360}
+                      height={300}
+                      src={getStrapiUrl(item.mediaUrl) || ""}
+                      alt={item.mediaAlternativeText || item.title || ""}
+                      placeholder="blur"
+                      blurDataURL={FIXED_BLUR_DATA_URL}
                     />
                   )}
                 </div>

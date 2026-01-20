@@ -10,6 +10,9 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { Component } from "../../../../components/Component"
+import Image from "next/image"
+import { FIXED_BLUR_DATA_URL } from "@modules/products/single/components/ImgContent/ImgContent"
+import { useQuery } from "@tanstack/react-query"
 
 // 菜单数据类型定义
 interface SubMenuItem {
@@ -77,7 +80,6 @@ export const NavBarWrapper = ({
   isHomePage?: boolean
 }): React.JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [menuData, setMenuData] = useState<MenuData | null>(null)
   const [openSubmenu, setOpenSubmenu] = useState<number | null>(null)
   const { cart } = useCart()
   const router = useRouter()
@@ -85,21 +87,25 @@ export const NavBarWrapper = ({
   const hasItemsInCart = cart?.items && cart.items.length > 0
   const isMobile = useIsMobile(1024)
 
-  // 从API获取菜单数据
-  useEffect(() => {
-    const fetchMenuData = async () => {
-      try {
-        const data = await getMenu()
-        setMenuData(data)
-      } catch (error) {
-        console.error("Failed to fetch menu data:", error)
-      }
-    }
-    fetchMenuData()
-  }, [])
+  // 使用 React Query 获取菜单数据，配置缓存策略
+  const {
+    data: menuData,
+    isLoading: isMenuLoading,
+    isError: isMenuError,
+  } = useQuery<MenuData>({
+    queryKey: ["menu"],
+    queryFn: getMenu,
+    staleTime: 1000 * 60 * 30, // 30分钟内数据视为新鲜，不会重新获取
+    gcTime: 1000 * 60 * 60, // 1小时后才从缓存中清除（原 cacheTime）
+    refetchOnWindowFocus: false, // 窗口聚焦时不重新获取
+    refetchOnMount: false, // 组件挂载时不重新获取（使用缓存）
+    refetchOnReconnect: false, // 网络重连时不重新获取
+    retry: 2, // 失败时重试2次
+    retryDelay: 1000, // 重试延迟1秒
+  })
 
   useEffect(() => {
-    if (menuData && isMobile) {
+    if (menuData?.data?.menu_item && menuData.data.menu_item.length > 0 && isMobile) {
       setOpenSubmenu(menuData.data.menu_item[0].id)
     }
   }, [isMobile, menuData])
@@ -351,16 +357,14 @@ export const NavBarWrapper = ({
                             key={iconText.id}
                             className={"flex items-center gap-2 mb-[10px]"}
                           >
-                            <img
-                              className={
-                                "w-10 h-10 flex-grow-0 flex-shrink-0 basis-auto"
-                              }
-                              src={
-                                iconText?.icon?.url
-                                  ? getStrapiUrl(iconText?.icon?.url)
-                                  : ""
-                              }
-                              alt={iconText.name}
+                            <Image
+                              className="w-10 h-10 flex-grow-0 flex-shrink-0 basis-auto"
+                              src={getStrapiUrl(iconText?.icon?.url) || ""}
+                              alt={iconText.name || ""}
+                              width={40}
+                              height={40}
+                              placeholder="blur"
+                              blurDataURL={FIXED_BLUR_DATA_URL}
                             />
                             <div
                               className={
@@ -387,14 +391,15 @@ export const NavBarWrapper = ({
                         {subItem.description}
                       </div>
                       <div className={"mt-[10px]"}>
-                        <img
+                        <Image
                           className="w-full h-[43.5vw] object-cover"
-                          src={
-                            subItem?.banner?.url
-                              ? getStrapiUrl(subItem?.banner?.url)
-                              : ""
-                          }
-                          alt={subItem?.name}
+                          src={getStrapiUrl(subItem?.banner?.url) || ""}
+                          alt={subItem?.name || ""}
+                          width={600}
+                          height={350}
+                          placeholder="blur"
+                          blurDataURL={FIXED_BLUR_DATA_URL}
+                          style={{ cursor: "pointer" }}
                           onClick={() => {
                             if (!subItem || !subItem?.url) {
                               return
@@ -450,14 +455,14 @@ export const NavBarWrapper = ({
                     {subItem.name}
                     <MoveRight className="w-4 h-4 text-[#140E02]" />
                   </div>
-                  <img
+                  <Image
                     className="w-full h-[11vw] border-b-[1px] border-b-[#8C877C] object-cover"
-                    src={
-                      subItem?.banner?.url
-                        ? getStrapiUrl(subItem?.banner?.url)
-                        : ""
-                    }
-                    alt={subItem?.name}
+                    src={getStrapiUrl(subItem?.banner?.url) || ""}
+                    alt={subItem?.name || ""}
+                    width={800}
+                    height={200}
+                    placeholder="blur"
+                    blurDataURL={FIXED_BLUR_DATA_URL}
                   />
                 </div>
               ))}
@@ -509,14 +514,15 @@ export const NavBarWrapper = ({
                               key={iconText.id}
                               className={"flex items-center gap-x-3"}
                             >
-                              <img
-                                className={"w-10 h-10"}
-                                src={
-                                  iconText?.icon?.url
-                                    ? getStrapiUrl(iconText?.icon?.url)
-                                    : ""
-                                }
+                              <Image
+                                className="w-10 h-10"
+                                src={getStrapiUrl(iconText?.icon?.url) || ""}
                                 alt={iconText.name}
+                                width={40}
+                                height={40}
+                                unoptimized
+                                placeholder="blur"
+                                blurDataURL={FIXED_BLUR_DATA_URL}
                               />
                               <div className={"text-xs text-[#2F2A1E]"}>
                                 {iconText.name}
@@ -537,14 +543,14 @@ export const NavBarWrapper = ({
                   </div>
 
                   <div className="w-[159px] ml-6 flex-grow-0 flex-shrink-0 basis-auto">
-                    <img
+                    <Image
                       className="w-full h-[144px] cursor-pointer"
-                      src={
-                        subItem?.banner?.url
-                          ? getStrapiUrl(subItem?.banner?.url)
-                          : ""
-                      }
-                      alt={subItem?.name}
+                      src={getStrapiUrl(subItem?.banner?.url) || ""}
+                      alt={subItem?.name || ""}
+                      width={159}
+                      height={144}
+                      placeholder="blur"
+                      blurDataURL={FIXED_BLUR_DATA_URL}
                       onClick={() => {
                         if (!subItem || !subItem?.url) {
                           return
@@ -587,13 +593,13 @@ export const NavBarWrapper = ({
                         {subItem.name}
                       </div>
 
-                      <img
+                      <Image
                         className="w-full h-[114px] ml-6 cursor-pointer"
-                        src={
-                          subItem?.banner?.url
-                            ? getStrapiUrl(subItem?.banner?.url)
-                            : ""
-                        }
+                        src={getStrapiUrl(subItem?.banner?.url) || ""}
+                        width={159}
+                        height={114}
+                        placeholder="blur"
+                        blurDataURL={FIXED_BLUR_DATA_URL}
                         alt={subItem?.name}
                         onClick={() => {
                           if (!subItem || !subItem?.url) {
@@ -714,10 +720,12 @@ export const NavBarWrapper = ({
               className="flex items-center gap-2"
               aria-label="Relaxure Homepage"
             >
-              <img
+              <Image
                 className="w-[160]"
                 src="/img/logo.svg"
                 alt="Relaxure Living Logo"
+                width={160}
+                height={60}
               />
             </Link>
 
@@ -756,7 +764,7 @@ export const NavBarWrapper = ({
                   >
                     <div className="flex items-center gap-2">
                       <div className="relative">
-                        <img
+                        <Image
                           className="w-6 h-6"
                           src={
                             hasItemsInCart
@@ -764,6 +772,10 @@ export const NavBarWrapper = ({
                               : "/img/v2-icon-cart.svg"
                           }
                           alt="Shopping cart"
+                          width={24}
+                          height={24}
+                          placeholder="blur"
+                          blurDataURL={FIXED_BLUR_DATA_URL}
                         />
                         {hasItemsInCart && (
                           <span
@@ -778,13 +790,6 @@ export const NavBarWrapper = ({
                       </div>
                     </div>
                   </a>
-                  {/* <a href="">
-                    <img
-                      className="w-6 h-6"
-                      src={"/img/v2-icon-user.svg"}
-                      alt="Member login"
-                    />
-                  </a> */}
                 </div>
               </div>
             </div>
@@ -815,10 +820,14 @@ export const NavBarWrapper = ({
                 className="flex items-center justify-center w-full"
                 aria-label="Relaxure Homepage"
               >
-                <img
+                <Image
                   className="w-[100px]"
                   src="/img/logo.svg"
                   alt="Relaxure Living Logo"
+                  width={100}
+                  height={38}
+                  placeholder="blur"
+                  blurDataURL={FIXED_BLUR_DATA_URL}
                 />
               </Link>
 
@@ -832,7 +841,7 @@ export const NavBarWrapper = ({
                 >
                   <div className="flex items-center gap-2">
                     <div className="relative">
-                      <img
+                      <Image
                         className="w-6 h-6"
                         src={
                           hasItemsInCart
@@ -840,6 +849,10 @@ export const NavBarWrapper = ({
                             : "/img/v2-icon-cart.svg"
                         }
                         alt="Shopping cart"
+                        width={24}
+                        height={24}
+                        placeholder="blur"
+                        blurDataURL={FIXED_BLUR_DATA_URL}
                       />
                       {hasItemsInCart && (
                         <span

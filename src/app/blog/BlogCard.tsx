@@ -7,6 +7,7 @@ import Markdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
 import remarkGfm from "remark-gfm"
 import { IconCalendar } from "./svg"
+import V2MediaRenderer from "@/components/V2MediaRenderer"
 
 interface IProps {
   blog: any
@@ -26,9 +27,12 @@ export default function BlogCard({ blog, showLink = true }: IProps) {
           router.push(`/blog/${blog.slug}?id=${blog.documentId}`)
         }}
       >
-        <img
-          src={blog.cover ? getStrapiUrl(blog.cover.url) : ""}
-          className="object-contain w-full h-full"
+        <V2MediaRenderer
+          media={blog.cover}
+          options={{
+            objectFit: "contain",
+            className: "object-contain w-full",
+          }}
         />
       </div>
       <div className={"flex flex-wrap gap-4 mb-[10px]"}>

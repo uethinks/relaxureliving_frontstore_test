@@ -62,24 +62,6 @@ export const CartPage = ({
       <div className="w-full flex flex-col items-center py-0 relative bg-background ">
         <div className=" w-full relative flex flex-col justify-center items-center pt-0">
           <NavBarWrapper isFixed={false} />
-          {/* {!isCartEmpty ? (
-            <div className="inline-flex items-center justify-start gap-2.5 w-full">
-              <img
-                className="relative w-[30px] h-[30px]"
-                alt="Frame"
-                src="/img/cart.png"
-                loading="lazy"
-              />
-              <div
-                className={`w-fit mt-[-1.00px] font-heading-2 font-[number:var(--heading-2-font-weight)] 
-                  text-[#343a40] text-[24px] lg:text-[36px] leading-[var(--heading-2-line-height)] 
-                  whitespace-nowrap relative tracking-[var(--heading-2-letter-spacing)] 
-                  [font-style:var(--heading-2-font-style)]`}
-              >
-                Shopping Cart
-              </div>
-            </div>
-          ) : null} */}
           {/* <Breadcrumb steps={["Cart", "Information", "Payment"]} current={0} /> */}
           {isLoading ? (
             <CartSkeleton />

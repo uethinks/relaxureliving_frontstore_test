@@ -4,6 +4,10 @@ import { CustomCarousel } from "./CustomCarousel"
 import V2Button from "./V2Button"
 import V2Headline from "./V2Headline"
 import V2MediaRenderer from "./V2MediaRenderer"
+import Image from "next/image"
+import { FIXED_BLUR_DATA_URL } from "@modules/products/single/components/ImgContent/ImgContent"
+
+
 
 interface MediaFormat {
   ext: string
@@ -118,9 +122,13 @@ export function V2FeatureGridSection({
                         }}
                       />
                     ) : (
-                      <img
-                        src={getStrapiUrl(item.image.url)}
-                        alt={item.image.alternativeText || item.title}
+                      <Image
+                        width={360}
+                        height={300}
+                        src={getStrapiUrl(item.image.url) || ""}
+                        alt={item.image.alternativeText || item.title || ""}
+                        placeholder="blur"
+                        blurDataURL={FIXED_BLUR_DATA_URL}
                         className="w-full object-cover"
                       />
                     )}

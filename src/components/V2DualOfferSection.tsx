@@ -92,14 +92,6 @@ export default function V2DualOfferSection({
                 className="flex flex-col max-w-[80px] lg:max-w-[33%] lg:flex-row items-center justify-center gap-2 flex-shrink-0 flex-grow-0 basis-auto"
               >
                 {item.icon?.url && (
-                  // <img
-                  //   src={getStrapiUrl(item.icon.url)}
-                  //   alt={item.icon.alternativeText || item.title}
-                  //   width={item.icon.width}
-                  //   height={item.icon.height}
-                  //   className="w-6 h-6 text-[#140e02] flex-shrink-0"
-                  //   aria-hidden="true"
-                  // />
                   <V2MediaRenderer
                     media={item.icon as any}
                     options={{

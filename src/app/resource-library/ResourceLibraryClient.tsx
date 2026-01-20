@@ -11,6 +11,8 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import { useInViewport } from "ahooks"
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
+import Image from "next/image"
+import { FIXED_BLUR_DATA_URL } from "@modules/products/single/components/ImgContent/ImgContent"
 
 function buildUrl(category?: string) {
   const query = new URLSearchParams()
@@ -176,7 +178,7 @@ export default function ResourceLibraryClient() {
                 {isFetchingNextPage || hasNextPage ? (
                   <>
                     loading...
-                    <img src="/img/icon-loading.svg" className="w-4 h-4" />
+                    <Image src="/img/icon-loading.svg" className="w-4 h-4" width={16} height={16} alt="loading" placeholder="blur" blurDataURL={FIXED_BLUR_DATA_URL} />
                   </>
                 ) : (
                   ""

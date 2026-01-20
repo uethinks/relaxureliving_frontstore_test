@@ -1,5 +1,7 @@
 "use client"
 import React from "react"
+import Image from "next/image"
+import { FIXED_BLUR_DATA_URL } from "@modules/products/single/components/ImgContent/ImgContent"
 
 interface GoodMemoryProps {
   goodMemory: {
@@ -62,10 +64,14 @@ const GoodMemory: React.FC<{ goodMemory: GoodMemoryProps["goodMemory"] }> = ({
         </div>
         {/* 右侧图片及毛玻璃卡片 */}
         <div className="flex-1 flex items-center justify-center relative w-full max-w-xl min-w-[320px]">
-          <img
+          <Image
             src={strapiBaseUrl + goodMemory.image.url}
             alt={goodMemory.image.name}
             className="rounded-2xl w-full object-cover max-h-[420px] min-h-[320px]"
+            width={600}
+            height={420}
+            placeholder="blur"
+            blurDataURL={FIXED_BLUR_DATA_URL}
           />
         </div>
       </div>

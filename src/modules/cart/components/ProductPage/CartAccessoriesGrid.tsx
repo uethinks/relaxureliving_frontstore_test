@@ -9,6 +9,11 @@ import {
   getHeater,
 } from "@lib/cms/strapiCmsApi"
 
+import Image from "next/image"
+import { FIXED_BLUR_DATA_URL } from "@modules/products/single/components/ImgContent/ImgContent"
+
+
+
 export const CartAccessoriesGrid = () => {
   const [accessories, setAccessories] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -132,9 +137,13 @@ export const CartAccessoriesGrid = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="p-2 relative bg-white rounded-[20px] overflow-hidden border border-[#E9E9E9] transition-colors">
           <div className="aspect-square overflow-hidden rounded-[20px]">
-            <img
-              src={`${baseUrl}${accessories.heaterInfo.productImages?.[0]?.url}`}
-              alt={accessories.heaterInfo.name}
+            <Image
+              src={`${baseUrl}${accessories.heaterInfo.productImages?.[0]?.url}` || ""}
+              alt={accessories.heaterInfo.name || ""}
+              width={360}
+              height={300}
+              placeholder="blur"
+              blurDataURL={FIXED_BLUR_DATA_URL}
               className="w-full h-full object-cover"
             />
           </div>
@@ -179,10 +188,14 @@ export const CartAccessoriesGrid = () => {
 
         <div className="p-2 relative bg-white rounded-[20px] overflow-hidden border border-[#E9E9E9] transition-colors">
           <div className="aspect-square overflow-hidden rounded-[20px]">
-            <img
+            <Image
               src={`${baseUrl}${accessories.shadesInfo.product_images?.[0]?.url}`}
               alt={accessories.shadesInfo.name}
               className="w-full h-full object-cover"
+              width={360}
+              height={300}
+              placeholder="blur"
+              blurDataURL={FIXED_BLUR_DATA_URL}
             />
           </div>
           <div className="bg-[#F6AF1F] rounded-[10px] px-4 py-2 w-fit mt-4">
@@ -227,8 +240,12 @@ export const CartAccessoriesGrid = () => {
 
         <div className="p-2 relative bg-white rounded-[20px] overflow-hidden border border-[#E9E9E9] transition-colors">
           <div className="aspect-square overflow-hidden rounded-[20px]">
-            <img
-              src={`${baseUrl}${accessories.glassdoorInfo.product_images?.[0]?.url}`}
+            <Image
+              src={`${baseUrl}${accessories.glassdoorInfo.product_images?.[0]?.url}` || ""}
+              width={360}
+              height={300}
+              placeholder="blur"
+              blurDataURL={FIXED_BLUR_DATA_URL}
               alt={accessories.glassdoorInfo.name}
               className="w-full h-full object-cover"
             />

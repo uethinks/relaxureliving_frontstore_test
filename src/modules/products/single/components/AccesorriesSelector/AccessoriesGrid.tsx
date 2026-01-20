@@ -10,6 +10,8 @@ import V2HeroBanner from "@/components/V2HeroBanner"
 import V2Button from "@/components/V2Button"
 import { formatPrice, getBackgroundColor } from "@lib/utils"
 import { Badge } from "@/components/ui/badge"
+import Image from "next/image"
+import { FIXED_BLUR_DATA_URL } from "../ImgContent/ImgContent"
 
 const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL
@@ -27,10 +29,14 @@ const AccessoriesGridItem = ({ infoData }: { infoData: any }) => {
       <div className="flex flex-col gap-4 mb-5">
         <Link href={`/accessories/${infoData.slug}`}>
           <div className="overflow-hidden cursor-pointer">
-            <img
+            <Image
               src={`${baseUrl}${infoData.listImage?.url}`}
               alt={infoData.name}
               className="w-full h-auto"
+              width={600}
+              height={400}
+              placeholder="blur"
+              blurDataURL={FIXED_BLUR_DATA_URL}
             />
           </div>
         </Link>

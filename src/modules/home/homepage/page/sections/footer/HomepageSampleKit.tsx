@@ -5,6 +5,8 @@ import { ConfirmDialog } from "../../../../../../components/ConfirmDialog"
 import { getProductByHandle } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { HttpTypes } from "@medusajs/types"
+import Image from "next/image"
+import { FIXED_BLUR_DATA_URL } from "@modules/products/single/components/ImgContent/ImgContent"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
 export const HomepageSampleKit = (): JSX.Element => {
@@ -64,10 +66,14 @@ export const HomepageSampleKit = (): JSX.Element => {
       className="flex flex-col justify-center w-full items-center gap-5 mt-[68px] mb-[100px] lg:px-[260px]"
     >
       <div className="flex justify-center items-center gap-5 relative self-stretch w-full flex-[0_0_auto]">
-        <img
+        <Image
           className="relative max-w-[360px] mt-[-10.00px] rounded-[30px] border-[5px] border-[#ffffff]"
           alt="Rectangle"
-          src={sampleKitProduct?.images?.[0]?.url ?? undefined}
+          src={sampleKitProduct?.images?.[0]?.url ?? ""}
+          width={360}
+          height={360}
+          placeholder="blur"
+          blurDataURL={FIXED_BLUR_DATA_URL}
         />
 
         <div className="flex flex-col justify-center items-center gap-5 relative self-stretch w-full flex-[0_0_auto]">

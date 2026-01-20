@@ -1,3 +1,6 @@
+import Image from "next/image"
+import { FIXED_BLUR_DATA_URL } from "@modules/products/single/components/ImgContent/ImgContent"
+
 // 服务配置接口定义
 interface ServiceConfig {
   title: string
@@ -79,8 +82,12 @@ export default function V2ServiceDescription() {
           <p className="text-[#8c8c8c] text-sm">
             {service.descriptions.map((desc, descIndex) => (
               <span key={descIndex}>
-                <img
-                  src={desc.icon}
+                <Image
+                  src={desc.icon || ""}
+                  width={16}
+                  height={16}
+                  placeholder="blur"
+                  blurDataURL={FIXED_BLUR_DATA_URL}
                   alt={desc.alt}
                   className="w-4 h-4 inline-block mr-2 mb-1"
                 />

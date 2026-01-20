@@ -13,6 +13,7 @@ import rehypeRaw from "rehype-raw"
 import remarkGfm from "remark-gfm"
 import BlogCard from "../BlogCard"
 import { IconNext, IconPrev } from "../svg"
+import V2MediaRenderer from "@/components/V2MediaRenderer"
 
 interface BlogDetailClientProps {
   initialBlog: any
@@ -133,10 +134,12 @@ export default function BlogDetailClient({
               <>
                 {blog?.cover && (
                   <div className={"w-full mb-5 lg:w-[708px] lg:mb-10"}>
-                    <img
-                      src={getStrapiUrl(blog?.cover?.url)}
-                      alt="blog?.title"
-                      className="object-contain w-full"
+                    <V2MediaRenderer
+                      media={blog.cover}
+                      options={{
+                        objectFit: "contain",
+                        className: "object-contain w-full",
+                      }}
                     />
                   </div>
                 )}
