@@ -774,8 +774,6 @@ export const NavBarWrapper = ({
                           alt="Shopping cart"
                           width={24}
                           height={24}
-                          placeholder="blur"
-                          blurDataURL={FIXED_BLUR_DATA_URL}
                         />
                         {hasItemsInCart && (
                           <span
@@ -849,8 +847,6 @@ export const NavBarWrapper = ({
                         alt="Shopping cart"
                         width={24}
                         height={24}
-                        placeholder="blur"
-                        blurDataURL={FIXED_BLUR_DATA_URL}
                       />
                       {hasItemsInCart && (
                         <span
