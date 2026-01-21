@@ -826,8 +826,6 @@ export const NavBarWrapper = ({
                   alt="Relaxure Living Logo"
                   width={100}
                   height={38}
-                  placeholder="blur"
-                  blurDataURL={FIXED_BLUR_DATA_URL}
                 />
               </Link>
 
