@@ -103,7 +103,7 @@ export const HeaterProductPage = ({
           countryCode: defaultCountryCode, // 可以根据需要调整
         })
         window.location.href = "/cart"
-        console.log("Heater added to cart successfully!")
+        // console.log("Heater added to cart successfully!")
       } catch (error) {
         console.error("Failed to add heater to cart:", error)
         // 这里可以添加错误提示
@@ -112,9 +112,6 @@ export const HeaterProductPage = ({
       }
     }
   }
-
-  console.log("heaterCMSData", heaterCMSData)
-  console.log("heaterProduct", heaterProduct)
 
   return (
     <ProductSelectionProvider product={heaterProduct}>

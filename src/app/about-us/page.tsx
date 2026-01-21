@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AboutUsPage() {
   const { data } = await getAboutUs()
-  console.log("AboutUs - data", data)
+  // console.log("AboutUs - data", data)
 
   if (!data) {
     return (

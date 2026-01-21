@@ -11,7 +11,6 @@ import { VercelSpeedInsights } from "@lib/speed-insights"
 // 动态生成metadata
 export async function generateMetadata(): Promise<Metadata> {
   const globalData = await getGlobalData()
-  console.log("generateMetadata globalData", globalData)
   return globalData?.data?.defaultSeo?.metadataInfo || {}
 }
 
@@ -208,21 +207,21 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           {`
             (function () {
                 function onTidioChatApiOpen() {
-                    console.log('tidioChatApi open');
+                    // console.log('tidioChatApi open');
                     // gtag('event', 'online_chat');
-                    console.log('window.gtag', window.gtag)
+                    // console.log('window.gtag', window.gtag)
                     if (window.gtag) {
                       window.gtag("event", "online_chat", { "url": window.location.href })
                     }
                 }
                 function onTidioChatApiReady() {
                     // Code after chat loaded
-                    console.log('tidioChatApi ready');
+                    // console.log('tidioChatApi ready');
                     if (window.tidioChatApi) {
                         window.tidioChatApi.on('open', onTidioChatApiOpen);
                     }
                 }
-                console.log('window.tidioChatApi', window.tidioChatApi);
+                // console.log('window.tidioChatApi', window.tidioChatApi);
                 if (window.tidioChatApi) {
                     window.tidioChatApi.on('open', onTidioChatApiReady);
                 } else {

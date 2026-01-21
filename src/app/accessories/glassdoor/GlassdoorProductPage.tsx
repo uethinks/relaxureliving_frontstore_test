@@ -87,8 +87,8 @@ const GlassdoorProductPage = ({
     )
   }
 
-  console.log("glassdoorProduct: ", glassdoorProduct)
-  console.log("glassdoorCMSData: ", glassdoorCMSData)
+  // console.log("glassdoorProduct: ", glassdoorProduct)
+  // console.log("glassdoorCMSData: ", glassdoorCMSData)
 
   return (
     <ProductSelectionProvider product={glassdoorProduct}>

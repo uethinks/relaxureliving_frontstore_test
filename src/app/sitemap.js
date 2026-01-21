@@ -16,7 +16,7 @@ export default async function sitemap() {
   // 获取所有 pergola 数据
   const pergolaData = await getPergola()
   const stiemapData = await getSitemap()
-  console.log('sitemapData', stiemapData)
+  // console.log('sitemapData', stiemapData)
 
   // 生成产品页面 URL
   const productUrls = pergolaData.data.productInformations.map((product) => ({

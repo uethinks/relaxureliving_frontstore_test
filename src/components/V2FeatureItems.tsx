@@ -22,7 +22,6 @@ interface V2FeatureItemsProps {
 }
 
 export default function V2FeatureItems({ data }: { data: V2FeatureItemsProps }) {
-  console.log("data", data)
   const features = data.items || []
 
   return (

@@ -115,7 +115,6 @@ export default function MediaRenderer({
     type = "media",
   } = options
 
-  console.log("media", media)
 
   // Intersection Observer for video autoplay
   useEffect(() => {
@@ -187,7 +186,6 @@ export default function MediaRenderer({
   }, [isInView, videoOptions.autoplay])
 
   // 检测媒体类型
-  // console.log("media", media)
   const isVideo = media?.mime?.startsWith("video/")
   const isImage = media?.mime?.startsWith("image/")
 

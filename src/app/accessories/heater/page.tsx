@@ -26,7 +26,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AccessoriesPage(props: Props) {
   const accessoriesPage = await getAccessoriesPage()
-  console.log("accessoriesPage", accessoriesPage?.data)
 
   const heater = await getProductByProductId({
     productId: accessoriesPage?.data?.heaterId,

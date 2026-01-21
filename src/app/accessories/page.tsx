@@ -19,7 +19,7 @@ export const revalidate = 3600
 
 export async function generateMetadata(): Promise<Metadata> {
   const accessoriesPage = await getAccessoriesPage()
-  console.log("accessoriesPage", accessoriesPage)
+  // console.log("accessoriesPage", accessoriesPage)
   return generateMetadataFromStrapi(accessoriesPage?.data?.seo || {})
 }
 

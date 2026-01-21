@@ -67,7 +67,6 @@ const ShadesProductPage = ({
 
   // 初始化pergola尺寸长度
   useEffect(() => {
-    console.log("Initial pergolaSize:", pergolaSize)
     setShortSideLength(pergolaSize.width.toString() + '"')
     setLongSideLength(pergolaSize.length.toString() + '"')
   }, [pergolaSize])
@@ -78,16 +77,13 @@ const ShadesProductPage = ({
       // 移除所有非数字和x的字符，然后按x分割
       const cleanSize = selectedPergolaSize.replace(/[^\dx]/gi, "")
       const parts = cleanSize.split("x")
-      console.log("Clean size:", cleanSize, "Parts:", parts)
 
       if (parts.length === 2) {
         const width = parseInt(parts[0])
         const length = parseInt(parts[1])
-        console.log("Parsed width:", width, "length:", length)
         if (width && length) {
           const shortSide = Math.min(width, length)
           const longSide = Math.max(width, length)
-          console.log("Setting shortSide:", shortSide, "longSide:", longSide)
           setShortSideLength(shortSide.toString() + '"')
           setLongSideLength(longSide.toString() + '"')
         }
@@ -198,8 +194,6 @@ const ShadesProductPage = ({
     )
   }
 
-  // console.log("shadesCMSData: ", shadesCMSData)
-  console.log("shadesCMSData.productImages", shadesCMSData.productImages)
   return (
     <ProductSelectionProvider product={shadesProduct}>
       <V2ProductPage cmsData={shadesCMSData}>

@@ -11,9 +11,6 @@ interface V2HeroBannerProps {
 export default function V2HeroBanner({ data, sectionPriority = "high" }: V2HeroBannerProps) {
   const { title, description, button, backgroundImage } = data
 
-  console.log("data: ", data)
-  console.log("backgroundImage: ", backgroundImage)
-
   return (
     <section className="relative w-full overflow-hidden">
       {/* Background Image */}

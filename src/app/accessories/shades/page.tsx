@@ -28,8 +28,6 @@ export default async function AccessoriesPage(props: Props) {
     getShades()
   ])
   
-  console.log("accessoriesPage", accessoriesPage?.data)
-  
   // 并行获取产品数据
   const [pergola, shades] = await Promise.all([
     getProductByProductId({
