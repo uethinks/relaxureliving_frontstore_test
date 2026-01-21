@@ -23,6 +23,18 @@ const nextConfig = {
     optimizeCss: true,
     optimizePackageImports: ['swiper', '@radix-ui/react-accordion', '@radix-ui/react-select'],
   },
+  rewrites: async () => {
+    return [
+      {
+        source: "/api/data/:match*",
+        destination: "/_vercel/insights/:match*",
+      },
+      {
+        source: "/api/performance/:match*",
+        destination: "/_vercel/speed-insights/:match*",
+      },
+    ];
+  },
    
   images: {
     remotePatterns: [

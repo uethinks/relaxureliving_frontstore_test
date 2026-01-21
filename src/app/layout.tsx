@@ -5,8 +5,8 @@ import "../styles/globals.css"
 import Script from "next/script"
 import { getGlobalData, getFaqData } from "@lib/cms/strapiCmsApi"
 import { ReactQueryProvider } from "./providers"
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import { VercelAnalytics } from "@lib/analytics"
+import { VercelSpeedInsights } from "@lib/speed-insights"
 
 // 动态生成metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -231,8 +231,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             })();
           `}
         </Script>
-        <Analytics />
-        <SpeedInsights />
+        <VercelAnalytics />
+        <VercelSpeedInsights />
       </body>
     </html>
   )
