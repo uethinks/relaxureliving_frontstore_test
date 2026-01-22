@@ -187,27 +187,39 @@ export const NavBarWrapper = ({
                   }
                   setOpenSubmenu(openSubmenu === item.id ? null : item.id)
                 }}
+                aria-label={item.name || "Menu item"}
+                aria-expanded={openSubmenu === item.id}
+                aria-haspopup="true"
+                role="menuitem"
               >
                 {item.name}
               </button>
               {openSubmenu === item.id ? (
-                <Minus
-                  className={"w-6 h-6 text-[#8C877C]"}
+                <button
+                  className={"w-6 h-6 text-[#8C877C] flex items-center justify-center"}
                   onClick={() => {
                     setOpenSubmenu(null)
                   }}
-                />
+                  aria-label={`Collapse ${item.name} submenu`}
+                  type="button"
+                >
+                  <Minus className={"w-6 h-6"} />
+                </button>
               ) : (
-                <Plus
-                  className={"w-6 h-6 text-[#8C877C]"}
+                <button
+                  className={"w-6 h-6 text-[#8C877C] flex items-center justify-center"}
                   onClick={() => {
                     setOpenSubmenu(openSubmenu === item.id ? null : item.id)
                   }}
-                />
+                  aria-label={`Expand ${item.name} submenu`}
+                  type="button"
+                >
+                  <Plus className={"w-6 h-6"} />
+                </button>
               )}
             </div>
             {openSubmenu === item.id && (
-              <div className={"mb-5"}>
+              <div className={"mb-5"} role="menu">
                 {item.sub_menu_item.map((subItem) => (
                   <a
                     key={subItem.id}
@@ -217,10 +229,12 @@ export const NavBarWrapper = ({
                       setIsMenuOpen(false)
                     }}
                     className="flex items-center justify-between py-5 border-b-[1px] border-b-[#8C877C] font-semibold text-xl text-[#140E02]"
+                    role="menuitem"
+                    aria-label={subItem.name || "Submenu item"}
                   >
                     {subItem.name}
 
-                    <MoveRight className="w-4 h-4 text-[#140E02]" />
+                    <MoveRight className="w-4 h-4 text-[#140E02]" aria-hidden="true" />
                   </a>
                 ))}
               </div>
@@ -242,6 +256,10 @@ export const NavBarWrapper = ({
               className={`
                 flex items-center gap-1 px-2.5 py-2.5 h-[75px] relative text-base tracking-[0] leading-6 hover:text-white-600 transition-colors hover:underline  font-semibold
               `}
+              aria-label={item.name || "Menu item"}
+              aria-haspopup="true"
+              aria-expanded="false"
+              role="menuitem"
             >
               {item.name}
               {/* <svg
@@ -260,7 +278,11 @@ export const NavBarWrapper = ({
             </button>
 
             {/* 桌面端下拉菜单 */}
-            <div className="fixed top-20 bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50 -translate-x-6">
+            <div 
+              className="fixed top-20 bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50 -translate-x-6"
+              role="menu"
+              aria-label={`${item.name} submenu`}
+            >
               <div className="px-10 py-4">
                 {item.sub_menu_item.map((subItem) => (
                   <div
@@ -276,6 +298,8 @@ export const NavBarWrapper = ({
                       )
                     }}
                     className="block py-6 text-base text-[#2F2A1E] transition-colors font-semibold hover:underline cursor-pointer"
+                    role="menuitem"
+                    aria-label={subItem.name || "Submenu item"}
                   >
                     {subItem.name}
                   </div>
@@ -307,32 +331,44 @@ export const NavBarWrapper = ({
                   return
                 }
               }}
+              aria-label={item.name || "Menu item"}
+              aria-expanded={openSubmenu === item.id}
+              aria-haspopup="true"
+              role="menuitem"
             >
               {item.name}
             </button>
             {openSubmenu === item.id ? (
-              <Minus
-                className={"w-6 h-6 text-[#8C877C]"}
+              <button
+                className={"w-6 h-6 text-[#8C877C] flex items-center justify-center"}
                 onClick={() => {
                   setOpenSubmenu(null)
                 }}
-              />
+                aria-label={`Collapse ${item.name} submenu`}
+                type="button"
+              >
+                <Minus className={"w-6 h-6"} aria-hidden="true" />
+              </button>
             ) : (
-              <Plus
-                className={"w-6 h-6 text-[#8C877C]"}
+              <button
+                className={"w-6 h-6 text-[#8C877C] flex items-center justify-center"}
                 onClick={() => {
                   setOpenSubmenu(openSubmenu === item.id ? null : item.id)
                 }}
-              />
+                aria-label={`Expand ${item.name} submenu`}
+                type="button"
+              >
+                <Plus className={"w-6 h-6"} aria-hidden="true" />
+              </button>
             )}
           </div>
           {openSubmenu === item.id && (
-            <div className={"mb-5"}>
+            <div className={"mb-5"} role="menu">
               {item.custom_sub_menu_item.map((subItem) => (
                 <div key={subItem.id}>
-                  <div
+                  <button
                     className={
-                      "flex items-center justify-between text-[#140E02] text-xl mb-[10px]"
+                      "flex items-center justify-between text-[#140E02] text-xl mb-[10px] w-full text-left"
                     }
                     onClick={() => {
                       if (!subItem || !subItem?.url) {
@@ -344,10 +380,12 @@ export const NavBarWrapper = ({
                           : `/${subItem?.url}`
                       )
                     }}
+                    aria-label={subItem.name || "Submenu item"}
+                    role="menuitem"
                   >
                     {subItem.name}
-                    <MoveRight className="w-4 h-4 text-[#140E02]" />
-                  </div>
+                    <MoveRight className="w-4 h-4 text-[#140E02]" aria-hidden="true" />
+                  </button>
                   <div className={"mb-5 grid grid-cols-2 gap-2"}>
                     <div className="flex flex-col">
                       {subItem?.iconText &&
@@ -392,16 +430,7 @@ export const NavBarWrapper = ({
                         {subItem.description}
                       </div>
                       <div className={"mt-[10px]"}>
-                        <Image
-                          unoptimized
-                          className="w-full h-[43.5vw] object-cover"
-                          src={getStrapiUrl(subItem?.banner?.url) || ""}
-                          alt={subItem?.name || ""}
-                          width={600}
-                          height={350}
-                          placeholder="blur"
-                          blurDataURL={FIXED_BLUR_DATA_URL}
-                          style={{ cursor: "pointer" }}
+                        <button
                           onClick={() => {
                             if (!subItem || !subItem?.url) {
                               return
@@ -412,7 +441,21 @@ export const NavBarWrapper = ({
                                 : `/${subItem?.url}`
                             )
                           }}
-                        />
+                          aria-label={`View ${subItem?.name || "product"}`}
+                          className="w-full"
+                          type="button"
+                        >
+                          <Image
+                            unoptimized
+                            className="w-full h-[43.5vw] object-cover"
+                            src={getStrapiUrl(subItem?.banner?.url) || ""}
+                            alt={subItem?.name || ""}
+                            width={600}
+                            height={350}
+                            placeholder="blur"
+                            blurDataURL={FIXED_BLUR_DATA_URL}
+                          />
+                        </button>
 
                         {subItem.showLinkBtn && (
                           <V2Button
@@ -436,37 +479,41 @@ export const NavBarWrapper = ({
                 </div>
               ))}
               {item.sub_banner_menu_item.map((subItem) => (
-                <div
-                  key={subItem.id}
-                  onClick={() => {
-                    if (!subItem || !subItem?.url) {
-                      return
-                    }
-                    router.push(
-                      subItem?.url.startsWith("/")
-                        ? subItem?.url
-                        : `/${subItem?.url}`
-                    )
-                  }}
-                >
-                  <div
-                    className={
-                      "flex items-center justify-between text-[#140E02] text-xl mb-[10px]"
-                    }
+                <div key={subItem.id}>
+                  <button
+                    onClick={() => {
+                      if (!subItem || !subItem?.url) {
+                        return
+                      }
+                      router.push(
+                        subItem?.url.startsWith("/")
+                          ? subItem?.url
+                          : `/${subItem?.url}`
+                      )
+                    }}
+                    className="w-full text-left"
+                    aria-label={subItem.name || "Submenu item"}
+                    role="menuitem"
                   >
-                    {subItem.name}
-                    <MoveRight className="w-4 h-4 text-[#140E02]" />
-                  </div>
-                  <Image
-                    unoptimized
-                    className="w-full h-[11vw] border-b-[1px] border-b-[#8C877C] object-cover"
-                    src={getStrapiUrl(subItem?.banner?.url) || ""}
-                    alt={subItem?.name || ""}
-                    width={800}
-                    height={200}
-                    placeholder="blur"
-                    blurDataURL={FIXED_BLUR_DATA_URL}
-                  />
+                    <div
+                      className={
+                        "flex items-center justify-between text-[#140E02] text-xl mb-[10px]"
+                      }
+                    >
+                      {subItem.name}
+                      <MoveRight className="w-4 h-4 text-[#140E02]" aria-hidden="true" />
+                    </div>
+                    <Image
+                      unoptimized
+                      className="w-full h-[11vw] border-b-[1px] border-b-[#8C877C] object-cover"
+                      src={getStrapiUrl(subItem?.banner?.url) || ""}
+                      alt={subItem?.name || ""}
+                      width={800}
+                      height={200}
+                      placeholder="blur"
+                      blurDataURL={FIXED_BLUR_DATA_URL}
+                    />
+                  </button>
                 </div>
               ))}
             </div>
@@ -486,12 +533,20 @@ export const NavBarWrapper = ({
                 return
               }
             }}
+            aria-label={item.name || "Menu item"}
+            aria-haspopup="true"
+            aria-expanded="false"
+            role="menuitem"
           >
             {item.name}
           </button>
 
           {/* 桌面端下拉菜单 */}
-          <div className="fixed left-0 top-20 max-h-[600px] py-10 w-screen bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          <div 
+            className="fixed left-0 top-20 max-h-[600px] py-10 w-screen bg-[#EFEEEB] invisible group-hover:opacity-100 group-hover:visible transition-all z-50"
+            role="menu"
+            aria-label={`${item.name} submenu`}
+          >
             <div
               className={
                 "w-full max-w-[1074px] flex justify-center items-center gap-y-10 m-auto flex-wrap"
@@ -521,10 +576,9 @@ export const NavBarWrapper = ({
                                 unoptimized
                                 className="w-10 h-10"
                                 src={getStrapiUrl(iconText?.icon?.url) || ""}
-                                alt={iconText.name}
+                                alt={iconText.name || ""}
                                 width={40}
                                 height={40}
-                                unoptimized
                                 placeholder="blur"
                                 blurDataURL={FIXED_BLUR_DATA_URL}
                               />
@@ -547,15 +601,7 @@ export const NavBarWrapper = ({
                   </div>
 
                   <div className="w-[159px] ml-6 flex-grow-0 flex-shrink-0 basis-auto">
-                    <Image
-                      unoptimized
-                      className="w-full h-[144px] cursor-pointer"
-                      src={getStrapiUrl(subItem?.banner?.url) || ""}
-                      alt={subItem?.name || ""}
-                      width={159}
-                      height={144}
-                      placeholder="blur"
-                      blurDataURL={FIXED_BLUR_DATA_URL}
+                    <button
                       onClick={() => {
                         if (!subItem || !subItem?.url) {
                           return
@@ -566,7 +612,21 @@ export const NavBarWrapper = ({
                             : `/${subItem?.url}`
                         )
                       }}
-                    />
+                      aria-label={`View ${subItem?.name || "product"}`}
+                      className="w-full"
+                      type="button"
+                    >
+                      <Image
+                        unoptimized
+                        className="w-full h-[144px]"
+                        src={getStrapiUrl(subItem?.banner?.url) || ""}
+                        alt={subItem?.name || ""}
+                        width={159}
+                        height={144}
+                        placeholder="blur"
+                        blurDataURL={FIXED_BLUR_DATA_URL}
+                      />
+                    </button>
 
                     {subItem.showLinkBtn && (
                       <V2Button
@@ -598,15 +658,7 @@ export const NavBarWrapper = ({
                         {subItem.name}
                       </div>
 
-                      <Image
-                        unoptimized
-                        className="w-full h-[114px] ml-6 cursor-pointer"
-                        src={getStrapiUrl(subItem?.banner?.url) || ""}
-                        width={159}
-                        height={114}
-                        placeholder="blur"
-                        blurDataURL={FIXED_BLUR_DATA_URL}
-                        alt={subItem?.name}
+                      <button
                         onClick={() => {
                           if (!subItem || !subItem?.url) {
                             return
@@ -617,7 +669,21 @@ export const NavBarWrapper = ({
                               : `/${subItem?.url}`
                           )
                         }}
-                      />
+                        aria-label={`View ${subItem?.name || "product"}`}
+                        className="w-full ml-6"
+                        type="button"
+                      >
+                        <Image
+                          unoptimized
+                          className="w-full h-[114px]"
+                          src={getStrapiUrl(subItem?.banner?.url) || ""}
+                          width={159}
+                          height={114}
+                          placeholder="blur"
+                          blurDataURL={FIXED_BLUR_DATA_URL}
+                          alt={subItem?.name || ""}
+                        />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -728,7 +794,7 @@ export const NavBarWrapper = ({
             >
               <Image
                 unoptimized
-                className="w-[160]"
+                className="w-[160px]"
                 src="/img/logo.svg"
                 alt="Relaxure Living Logo"
                 width={160}
@@ -828,7 +894,7 @@ export const NavBarWrapper = ({
               >
                 <Image
                   unoptimized
-                  className="w-[100px]"
+                  className="w-[100px] h-auto"
                   src="/img/logo.svg"
                   alt="Relaxure Living Logo"
                   width={100}
