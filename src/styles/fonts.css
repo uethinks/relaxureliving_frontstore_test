@@ -25,20 +25,20 @@
   font-display: swap;
 }
 
-/* styles/globals.css */
+/* Jost 字体已通过 next/font/local 在 layout.tsx 中优化加载 */
+/* 以下 @font-face 定义保留作为降级方案，但实际使用 next/font 的优化版本 */
 
 @font-face {
   font-family: 'Jost';
-  src: url('/fonts/jost/Jost-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900; /* 设置字体的权重范围 */
+  src: url('/fonts/Jost/Jost-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
   font-display: swap;
 }
 
-/* 如果你想支持斜体，也可以增加类似的规则 */
 @font-face {
   font-family: 'Jost Italic';
-  src: url('/fonts/jost/Jost-Italic-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900; /* 同样设置斜体的权重范围 */
+  src: url('/fonts/Jost/Jost-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
   font-style: italic;
   font-display: swap;
 }

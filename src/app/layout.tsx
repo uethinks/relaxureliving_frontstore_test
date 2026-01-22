@@ -7,6 +7,7 @@ import { getGlobalData, getFaqData } from "@lib/cms/strapiCmsApi"
 import { ReactQueryProvider } from "./providers"
 import { VercelAnalytics } from "@lib/analytics"
 import { VercelSpeedInsights } from "@lib/speed-insights"
+import localFont from "next/font/local"
 
 // 动态生成metadata
 export async function generateMetadata(): Promise<Metadata> {
@@ -72,19 +73,34 @@ async function getFaqSchema() {
     mainEntity: mainEntity,
   }
 }
+
+// 优化字体加载：使用 next/font/local 加载本地字体文件
+const jost = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Jost/Jost-VariableFont_wght.ttf",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Jost/Jost-Italic-VariableFont_wght.ttf",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
+  variable: "--font-jost",
+  display: "swap",
+  preload: true,
+  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif"],
+})
+
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const organizationSchema = await getOrganizationSchema()
   const faqSchema = await getFaqSchema()
   return (
-    <html lang="en" data-mode="light" suppressHydrationWarning>
+    <html lang="en" data-mode="light" suppressHydrationWarning className={jost.variable}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link rel="preload" as="font" href="/fonts/Jost-VariableFont_wght.ttf" type="font/ttf" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet"
-        />
+        {/* 字体已通过 next/font/local 优化加载，无需 Google Fonts */}
         {/* Google tag (gtag.js)>*/}
         <Script
           async
