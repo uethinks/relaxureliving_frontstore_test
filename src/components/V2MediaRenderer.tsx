@@ -232,7 +232,9 @@ export default function MediaRenderer({
 
   if (isVideo) {
     // 优化视频加载策略：基于section优先级或hero类型决定是否自动播放
-    const shouldAutoplay = videoOptions.autoplay && isInView
+    // shouldAutoplay 在移动端 直接为true
+    // const isMobile = typeof window !== "undefined" && /Mobi|Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)
+    // const shouldAutoplay = videoOptions.autoplay && isInView
     
     return (
       <div
@@ -240,11 +242,11 @@ export default function MediaRenderer({
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
         <video
-          autoPlay={shouldAutoplay}
+          autoPlay={true}
           ref={videoRef}
           src={getStrapiUrl(media.url) || undefined}
           className={`w-full h-full object-${objectFit} transition-transform duration-300 hover:scale-105`}
-          muted={videoOptions.muted}
+          muted={true}
           loop={videoOptions.loop}
           controls={videoOptions.controls}
           aria-label={media.alternativeText || media.name}
