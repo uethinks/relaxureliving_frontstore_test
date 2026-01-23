@@ -27,11 +27,11 @@ const nextConfig = {
     return [
       {
         source: "/api/data/:match*",
-        destination: "https://relaxureliving-frontstore-test.vercel.app/_vercel/insights/:match*",
+        destination: "https://test2.relaxureliving.com/_vercel/insights/:match*",
       },
       {
         source: "/api/performance/:match*",
-        destination: "https://relaxureliving-frontstore-test.vercel.app/_vercel/speed-insights/:match*",
+        destination: "https://test2.relaxureliving.com/_vercel/speed-insights/:match*",
       },
     ];
   },
