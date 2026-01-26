@@ -344,10 +344,14 @@ export default function MediaRenderer({
             height={imageHeight}
             className={`w-full h-full object-${objectFit} ${animationClass}`}
             priority={isHighPriority}
-            // sizes={optimizedSizes}
+            sizes="
+              (max-width: 640px) 100vw,  // 对于小屏幕，使用100%视口宽度
+              (max-width: 1200px) 100vw,  // 对于中等屏幕，使用50%视口宽度
+              2048px                    // 对于大屏幕，使用固定的1200px宽度
+            "
             quality={isHighPriority ? 90 : 85}
-            // placeholder="blur"
-            // blurDataURL={FIXED_BLUR_DATA_URL}
+            placeholder="blur"
+            blurDataURL={FIXED_BLUR_DATA_URL}
             onError={handleError}
           />
         ) : (
