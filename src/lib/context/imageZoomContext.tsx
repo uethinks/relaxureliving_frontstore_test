@@ -183,7 +183,7 @@ const ImageGalleryModal = memo<ImageGalleryModalProps>(({
                   className="!flex items-center justify-center h-full"
                 >
                   <Image
-                    unoptimized
+                    
                     src={imageUrl}
                     alt={image?.alternativeText || image?.name || ''}
                     width={image?.width || 1920}

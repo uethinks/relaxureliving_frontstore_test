@@ -49,7 +49,7 @@ export default async function ContactUsPage() {
               }
             >
               <Image
-                unoptimized
+                
                 src={"/img/icon-contact.svg"}
                 alt={"contact us"}
                 width={40}
@@ -68,7 +68,7 @@ export default async function ContactUsPage() {
             <div className={"flex items-center justify-center gap-4 text-xs"}>
               <p className={"flex items-center justify-center gap-1"}>
                 <Image
-                  unoptimized
+                  
                   src={"/img/icon-contact-phone.svg"}
                   alt={"contact us phone"}
                   width={16}
@@ -79,7 +79,7 @@ export default async function ContactUsPage() {
               </p>
               <p className={"flex items-center justify-center gap-1"}>
                 <Image
-                  unoptimized
+                  
                   src={"/img/icon-contact-email.svg"}
                   alt={"contact us email"}
                   width={16}

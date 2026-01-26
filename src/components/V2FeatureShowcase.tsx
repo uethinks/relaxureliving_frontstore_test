@@ -16,7 +16,7 @@ export function V2FeatureShowcase({
   isMobile = false,
   priority = false,
 }: RainResistanceBlockProps) {
-  console.log("V2FeatureShowcase data", data)
+  // console.log("V2FeatureShowcase data", data)
   return (
     <div className={`w-full ${getBackgroundColor(data.backgroundColor)}`}>
       {/* Section Body */}

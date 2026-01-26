@@ -337,7 +337,7 @@ export default function MediaRenderer({
       >
         {fallbackUrl ? (
           <Image
-            // unoptimized
+            // 
             src={fallbackUrl}
             alt={media.alternativeText || media.name || "image content"}
             width={imageWidth}
@@ -364,7 +364,7 @@ export default function MediaRenderer({
             aria-label="放大图片"
           >
             <Image
-              unoptimized
+              
               src="/img/zoom-in.png"
               alt="放大"
               width={16}

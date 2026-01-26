@@ -78,7 +78,7 @@ function FAQCard({ faq }: { faq: FAQItem }) {
           <div className="w-[56px] h-[56px] flex-shrink-0">
             {faq.icon?.url ? (
               // <Image
-              //   unoptimized
+              //   
               //   src={getStrapiUrl(faq.icon.url)}
               //   alt={
               //     faq.icon.alternativeText ||

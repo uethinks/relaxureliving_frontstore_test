@@ -62,7 +62,7 @@ export default async function AboutUsPage() {
           <div className="relative w-full h-auto overflow-hidden">
             <div className={`w-full h-full overflow-hidden relative`}>
               <Image
-                unoptimized
+                
                 src="/img/about-us-banner.png"
                 alt="about us"
                 width={720}
