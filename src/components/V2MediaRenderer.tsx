@@ -346,7 +346,7 @@ export default function MediaRenderer({
             priority={isHighPriority}
             // sizes={optimizedSizes}
             quality={isHighPriority ? 90 : 85}
-            placeholder="blur"
+            // placeholder="blur"
             // blurDataURL={FIXED_BLUR_DATA_URL}
             onError={handleError}
           />
