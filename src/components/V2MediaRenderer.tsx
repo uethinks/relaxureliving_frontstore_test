@@ -126,7 +126,7 @@ export default function MediaRenderer({
         setIsInView(entry.isIntersecting)
       },
       {
-        threshold: 0.5, // 当50%的视频可见时触发
+        threshold: 0.1, // 当50%的视频可见时触发
       }
     )
 
@@ -225,16 +225,14 @@ export default function MediaRenderer({
         className={`flex items-center justify-center ${className}`}
         style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
       >
-        <span className="text-muted-foreground text-sm">媒体加载失败</span>
+        <span className="text-muted-foreground text-sm">media loading failed</span>
       </div>
     )
   }
 
   if (isVideo) {
     // 优化视频加载策略：基于section优先级或hero类型决定是否自动播放
-    // shouldAutoplay 在移动端 直接为true
-    // const isMobile = typeof window !== "undefined" && /Mobi|Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)
-    // const shouldAutoplay = videoOptions.autoplay && isInView
+    const shouldAutoplay = videoOptions.autoplay && isInView
     
     return (
       <div
@@ -342,7 +340,7 @@ export default function MediaRenderer({
               ))}
               <img
                 src={fallbackUrl}
-                alt={media.alternativeText || media.name || "媒体内容"}
+                alt={media.alternativeText || media.name || "image content"}
                 width={imageWidth}
                 height={imageHeight}
                 className={`w-full h-full object-${objectFit} ${animationClass}`}
@@ -354,23 +352,23 @@ export default function MediaRenderer({
           ) : (
             // 如果没有 formats，使用 Next.js Image 组件（保持原有功能）
             <Image        
-              unoptimized    
+              // unoptimized    
               src={fallbackUrl}
-              alt={media.alternativeText || media.name || "媒体内容"}
+              alt={media.alternativeText || media.name || "image content"}
               width={imageWidth}
               height={imageHeight}
               className={`w-full h-full object-${objectFit} ${animationClass}`}
               priority={isHighPriority}
-              sizes={optimizedSizes}
+              // sizes={optimizedSizes}
               quality={isHighPriority ? 90 : 85}
               placeholder="blur"
-              blurDataURL={FIXED_BLUR_DATA_URL}
+              // blurDataURL={FIXED_BLUR_DATA_URL}
               onError={handleError}
             />
           )
         ) : (
           <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            <span className="text-gray-500 text-sm">图片加载失败</span>
+            <span className="text-gray-500 text-sm">image content</span>
           </div>
         )}
 
@@ -394,7 +392,7 @@ export default function MediaRenderer({
       className={`flex items-center justify-center ${className}`}
       style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
     >
-      <span className="text-muted-foreground text-sm">不支持的媒体类型</span>
+      <span className="text-muted-foreground text-sm">unsupported media type</span>
     </div>
   )
 }
