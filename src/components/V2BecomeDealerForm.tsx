@@ -214,9 +214,9 @@ export const V2BecomeDealerForm = (): React.JSX.Element => {
       className="lg:max-w-[1074px] w-full lg:py-16 lg:px-0 px-6 pt-8 pb-12 mx-auto"
     >
       <div className="text-center mb-12">
-        <h1 className="text-2xl lg:text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
+        <h2 className="text-2xl lg:text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
           Become a Dealer
-        </h1>
+        </h2>
         <p className="text-[#8c877c] text-sm lg:text-base mx-auto">
           Fill in the information below and one of our representatives will be
           in touch shortly.

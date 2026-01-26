@@ -617,12 +617,11 @@ export const NavBarWrapper = ({
                       type="button"
                     >
                       <Image
-                        
                         className="w-full h-[144px]"
                         src={getStrapiUrl(subItem?.banner?.url) || ""}
                         alt={subItem?.name || ""}
-                        width={159}
-                        height={144}
+                        width={500}
+                        height={200}
                         placeholder="blur"
                         blurDataURL={FIXED_BLUR_DATA_URL}
                       />
@@ -677,8 +676,8 @@ export const NavBarWrapper = ({
                           
                           className="w-full h-[114px]"
                           src={getStrapiUrl(subItem?.banner?.url) || ""}
-                          width={159}
-                          height={114}
+                          width={500}
+                          height={200}
                           placeholder="blur"
                           blurDataURL={FIXED_BLUR_DATA_URL}
                           alt={subItem?.name || ""}

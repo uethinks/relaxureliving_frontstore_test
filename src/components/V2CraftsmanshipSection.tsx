@@ -34,12 +34,12 @@ export function V2CraftsmanshipSection({
           {/* Hero Content */}
           <div className="text-center mt-8 lg:mt-16 mb-3 lg:mb-5">
             {/* Hero title */}
-            <h1
+            <h2
               id="craftsmanship-title"
               className="text-2xl lg:text-h2 font-bold text-black mb-2.5 lg:mb-6 leading-tight"
             >
               {data.title}
-            </h1>
+            </h2>
             {/* Hero description */}
             <div className="w-full lg:max-w-[1074px] lg:mx-auto text-[#8C877C] text-sm lg:text-lg mb-2.5 lg:mb-0">
               <Markdown remarkPlugins={[remarkGfm]}>
@@ -50,9 +50,9 @@ export function V2CraftsmanshipSection({
 
           {/* Hero Subtitle */}
           <div className="text-center mb-0 lg:mb-12">
-            <h2 className="text-base lg:text-2xl font-bold text-black">
+            <h3 className="text-base lg:text-2xl font-bold text-black">
               {data.subtitle}
-            </h2>
+            </h3>
           </div>
         </div>
 

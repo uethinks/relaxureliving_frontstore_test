@@ -81,12 +81,12 @@ export default function V2OccasionsSection({
       <div className="max-w-[1074px] w-full mx-auto">
         {/* Header Section */}
         <header className="text-center mb-0 py-8 px-6 lg:px-0 lg:pt-[70px] lg:pb-[60px]">
-          <h1
+          <h2
             id="features-heading"
             className="text-foreground text-2xl lg:text-h2 font-bold mb-2.5 lg:mb-6 leading-tight"
           >
             {data.title}
-          </h1>
+          </h2>
           <p className="text-muted-foreground w-full lg:text-lg mx-auto leading-relaxed text-sm lg:max-w-none">
             {data.subtitle}
           </p>

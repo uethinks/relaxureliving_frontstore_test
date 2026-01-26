@@ -273,10 +273,10 @@ export const V2ContactUsSection = (props: {
     >
       <div id="contact" className="max-w-[1074px] w-full mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-2xl lg:text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
+          <h2 className="text-2xl lg:text-[32px] font-semibold text-[#140e02] mb-5 leading-tight">
             {props?.title ||
               "Got something specific in mind, send us a message"}
-          </h1>
+          </h2>
           <p className="text-[#8c877c] text-sm lg:text-base mx-auto">
             {props?.description ||
               "If you fill out the contact form below, one of our representatives will reach back out to you in a timely manner."}

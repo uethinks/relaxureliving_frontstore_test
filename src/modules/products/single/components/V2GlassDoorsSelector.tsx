@@ -299,6 +299,7 @@ export const V2GlassDoorsSelector: React.FC<V2GlassDoorsSelectorProps> = ({
               category: glassdoorCMSData.category,
               name: glassdoorCMSData?.name,
               description: glassdoorCMSData.shortDescription,
+              isHeading: true
             }}
           />
         </div>

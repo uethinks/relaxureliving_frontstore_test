@@ -79,7 +79,6 @@ export function V2FeatureCards({ data, isMobile = false }: FeatureCardsProps) {
           <header className="text-center">
             <V2Headline
               title={data.title}
-              as="h1"
               size="xl"
               className="w-full lg:max-w-[1074px] mx-auto"
               iconHidden

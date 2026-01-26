@@ -330,7 +330,6 @@ export const V2PergolasComparisonTable = ({
 }: {
   data: ComparisonData
 }) => {
-  console.log("data", data)
   // data = MOCK_DATA
 
   // 动态提取所有唯一分类并排序
@@ -372,9 +371,9 @@ export const V2PergolasComparisonTable = ({
   return (
     <div className={`w-full ${getBackgroundColor(data.backgroundColor)}`}>
       <div className="w-full max-lg:px-6 lg:max-w-[1074px] pb-12 pg-8 lg:pb-24 lg:pt-16 mx-auto">
-        <h1 className="text-3xl font-bold text-center text-[#000000] mb-8 capitalize">
+        <h2 className="text-3xl font-bold text-center text-[#000000] mb-8 capitalize">
           {data.title}
-        </h1>
+        </h2>
 
         <div className="overflow-x-auto">
           <table className="w-full border-collapse bg-[#ffffff] shadow-lg" style={{ minWidth: '1200px' }}>

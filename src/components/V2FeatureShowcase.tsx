@@ -25,12 +25,12 @@ export function V2FeatureShowcase({
           {/* Hero Content */}
           <div className="text-center">
             {/* Hero title */}
-            <h1
+            <h2
               id="craftsmanship-title"
               className="w-full lg:max-w-[1074px] lg:mx-auto text-2xl lg:text-h2 font-bold text-black leading-tight"
             >
               {data.title}
-            </h1>
+            </h2>
             {/* Hero description */}
             <div className="w-full lg:max-w-[1074px] lg:mx-auto text-[#8C877C] text-sm lg:text-lg mt-[10px] lg:mt-5">
               <Markdown remarkPlugins={[remarkGfm]}>

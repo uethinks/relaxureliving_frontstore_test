@@ -291,6 +291,7 @@ export const V2SunshadesSelector: React.FC<V2SunshadesSelectorProps> = ({
               category: shadesCMSData.category,
               name: shadesCMSData?.name,
               description: shadesCMSData.shortDescription,
+              isHeading: true
             }}
           />
         </div>

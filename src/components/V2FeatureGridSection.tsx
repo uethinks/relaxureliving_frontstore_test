@@ -86,7 +86,6 @@ export function V2FeatureGridSection({
         <header className="text-center">
           <V2Headline
             title={data.title}
-            as="h1"
             size={isMobile ? "md" : "xl"}
             className="w-full"
             iconHidden
@@ -189,7 +188,7 @@ function FeatureCard({ item }: FeatureCardProps) {
         {/* Feature Content */}
         <div className="flex flex-col items-center">
           <div className="h-24 mb-6">
-            <p className="text-2xl font-semibold text-center">{item.title}</p>
+            <h3 className="text-2xl font-semibold text-center">{item.title}</h3>
             <p className="text-[#8c877c] text-sm mt-2 text-center text-pretty">
               {item.description}
             </p>

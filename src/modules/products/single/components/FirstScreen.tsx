@@ -27,16 +27,17 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
   }, [standardPergolaData])
 
   console.log("FirstScreen standardPergolaData", standardPergolaData)
+  const cmsData = {
+    ...standardPergolaData,
+    category: "Relaxure Corsica",
+  }
 
   return (
     <ProductSelectionProvider product={product}>
       <div className="bg-background flex flex-col items-start justify-center w-full">
         <NavBarWrapper isFixed={false} />
         <V2ProductPage
-          cmsData={{
-            ...standardPergolaData,
-            category: "Relaxure Corsica",
-          }}
+          cmsData={cmsData}
           customSections={
             <div className="flex flex-col w-full items-start">
               {standardPergolaData.productSections.map((section: any) => {
@@ -56,6 +57,7 @@ export const FirstScreen: React.FC<FirstScreenProps> = ({
             selectorData={selectorData}
             accessories={accessories}
             accessoriesCMSData={accessoriesCMSData}
+            cmsData={cmsData}
           />
         </V2ProductPage>
       </div>

@@ -27,11 +27,12 @@ interface V2StandardProductSelectorProps {
   accessories: StoreProduct[]
   selectorData: any
   accessoriesCMSData: any
+  cmsData: any
 }
 
 export const V2StandardProductSelector: React.FC<
   V2StandardProductSelectorProps
-> = ({ product, accessories, selectorData, accessoriesCMSData }) => {
+> = ({ product, accessories, selectorData, accessoriesCMSData, cmsData }) => {
   const { cart } = useCart()
   const [selectedVariant, setSelectedVariant] = useState<StoreProductVariant>()
   const [pergolaSize, setPergolaSize] = useState<PergolaSize>({
@@ -251,28 +252,14 @@ export const V2StandardProductSelector: React.FC<
         <div className={"max-lg:hidden"}>
           <V2ProductSelectorHeader
             data={{
-              category: "Relaxure Corsica",
-              name: "Relaxure Pergola Kit",
+              category: cmsData.category,
+              name: cmsData.name,
+              isHeading: true,
             }}
           />
         </div>
 
         <div className={"max-lg:px-6"}>
-          {/* Sale Banner */}
-          {/* {isClient && (
-            <div className="mt-1 p-4 border border-highlight bg-white">
-              <p className="text-black text-base font-medium text-center">
-                End Of Season Clearance Sale:
-              </p>
-              <p className="text-black text-2xl font-semibold text-center">
-                Up To $
-                {Math.round((totalOriginalPrice - totalPrice) / 100) * 100} OFF!
-              </p>
-              <p className="text-highlight text-xl font-semibold text-center">
-                03:21:16:57
-              </p>
-            </div>
-          )} */}
 
           {/* Price Section */}
           <div className="mt-4">

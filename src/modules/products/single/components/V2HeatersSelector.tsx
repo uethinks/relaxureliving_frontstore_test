@@ -154,6 +154,7 @@ export const V2HeatersSelector: React.FC<V2HeatersSelectorProps> = ({
               category: heaterCMSData.category,
               name: heaterCMSData?.name,
               description: heaterCMSData.shortDescription,
+              isHeading: true
             }}
           />
         </div>

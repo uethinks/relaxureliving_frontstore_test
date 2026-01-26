@@ -118,6 +118,7 @@ export default function V2DualOfferSection({
                   <V2Headline
                     title={card.title}
                     className={"w-full text-2xl mb-5"}
+                    as="h3"
                   />
                 )}
                 <div className="text-[#2F2A1E] text-sm max-w-prose mb-10">
@@ -140,7 +141,7 @@ export default function V2DualOfferSection({
                   <div className="flex flex-col gap-10">
                     {card.title && (
                       <div className={"min-h-[92px]"}>
-                        <V2Headline title={card.title} />
+                        <V2Headline title={card.title} as="h3" />
                       </div>
                     )}
 

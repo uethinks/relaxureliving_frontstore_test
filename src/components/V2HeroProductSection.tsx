@@ -78,7 +78,7 @@ export default function V2HeroProductSection({
         {/* Right side - Content */}
         <div className="space-y-8 flex flex-col justify-center items-start w-full px-6 pt-5 pb-[50px] lg:p-0">
           <header className="space-y-4">
-            <V2Headline title={title} as="h1" size="md" />
+            <V2Headline title={title} as="h2" size="md" />
           </header>
           <p className="text-base text-[#2f2a1e] max-w-lg whitespace-pre-line">
             {description}

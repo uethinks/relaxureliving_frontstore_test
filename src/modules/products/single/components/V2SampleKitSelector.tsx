@@ -138,6 +138,7 @@ export const V2SampleKitSelector: React.FC<V2SampleKitSelectorProps> = ({
               category: sampleKitCMSData.category,
               name: sampleKitCMSData?.name,
               description: sampleKitCMSData.shortDescription,
+              isHeading: true
             }}
           />
         </div>

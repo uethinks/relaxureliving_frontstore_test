@@ -26,7 +26,7 @@ const underlinePositions = {
 
 export default function V2Headline({
   title,
-  as: Component = "h1",
+  as: Component = "h2",
   size = "md",
   iconHidden = false,
   className,
