@@ -65,12 +65,12 @@ function CardItem({ step, priority }: { step: GuideStep, priority?: boolean }) {
     >
       <CardContent className="px-6 py-5 sm:p-8">
         <div className="mb-5">
-          <h3 className="text-sm font-medium text-[#2F2A1E] tracking-wide">
+          <p className="text-sm font-medium text-[#2F2A1E] tracking-wide">
             {step.topic}
-          </h3>
-          <h2 className="text-base font-bold text-[#140E02] text-balance">
+          </p>
+          <h3 className="text-base font-bold text-[#140E02] text-balance">
             {step.title}
-          </h2>
+          </h3>
         </div>
 
         <div className="space-y-2">
@@ -161,9 +161,9 @@ export default function PergolaGuide({
       <div className="w-full lg:max-w-[1074px] mx-auto">
         {/* Header */}
         <div className="text-center max-lg:px-6 max-lg:pt-8">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2f2a1e] mb-4 sm:mb-6 text-balance">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2f2a1e] mb-4 sm:mb-6 text-balance">
             {data.title}
-          </h1>
+          </h2>
           <p className="text-[#8c877c] text-base sm:text-lg leading-relaxed max-w-4xl mx-auto text-pretty">
             {data.subtitle}
           </p>

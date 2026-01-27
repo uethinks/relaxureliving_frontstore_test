@@ -160,7 +160,7 @@ export default function BlogDetailClient({
                     </div>
                   )}
                   <div className="mb-5 lg:mb-10">
-                    <V2Headline title={blog.title} />
+                    <V2Headline title={blog.title} as="h1" />
                   </div>
 
                   <div className="text-[#000] prose max-lg:text-sm text-xl whitespace-normal">

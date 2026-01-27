@@ -76,6 +76,7 @@ export default async function AboutUsPage() {
               <V2Headline
                 title="Creating Spaces Where Life Happens, in Every Season"
                 className={"lg:text-[32px] lg:leading-[46px]"}
+                as="h1"
               />
               <div className="mt-5 mb-10 lg:mt-10 lg:mb-20 w-full text-[#2F2A1E] text-sm lg:text-base lg:leading-[23px]">
                 <p>

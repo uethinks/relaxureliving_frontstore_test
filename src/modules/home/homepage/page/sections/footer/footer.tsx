@@ -21,9 +21,9 @@ function NavigationLinks({
 }) {
   return (
     <div>
-      <h3 className="text-sm lg:text-base lg:leading-5 text-[#fff] font-semibold mb-5">
+      <h2 className="text-sm lg:text-base lg:leading-5 text-[#fff] font-semibold mb-5">
         {title}
-      </h3>
+      </h2>
       <div className="ml-3">
         {links.map((link) => (
           <Link

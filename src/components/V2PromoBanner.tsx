@@ -40,6 +40,7 @@ interface HeroData {
     url: string
     isStatic?: boolean
   }
+  useH1: boolean
 }
 
 interface HeroSectionProps {
@@ -48,10 +49,11 @@ interface HeroSectionProps {
 }
 
 export function V2PromoBanner({ data, sectionPriority = "normal" }: HeroSectionProps) {
-  const { content, backgroundImage } = data
+  const { content, backgroundImage, useH1 = false } = data
   const { isStatic = false } = backgroundImage
   const { isReverse = false } = content
   
+  console.log('V2PromoBanner useH1', useH1)
   return (
     <section
       className="relative w-full flex flex-col lg:flex-row lg:items-center"
@@ -96,6 +98,7 @@ export function V2PromoBanner({ data, sectionPriority = "normal" }: HeroSectionP
           <V2Headline
             title={content.title || ""}
             className="text-white text-2xl lg:text-[32px] lg:leading-tight"
+            as={useH1 ? "h1" : "h2"}
           />
 
           {/* description wrap */}

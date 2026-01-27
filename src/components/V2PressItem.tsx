@@ -1,6 +1,6 @@
 import V2MediaRenderer from "./V2MediaRenderer"
 
-export default function V2PressItem({ item, priority }: { item: any, priority: boolean }) {
+export default function V2PressItem({ item, priority = false }: { item: any, priority?: boolean }) {
   return (
     <div
       className={
@@ -28,11 +28,11 @@ export default function V2PressItem({ item, priority }: { item: any, priority: b
         />
       </div>
       <div className={"flex flex-col justify-between h-[107px] pr-6 lg:pr-5"}>
-        <p className={"text-[#2F2A1E] text-base font-semibold line-clamp-3"}>
+        <h3 className={"text-[#2F2A1E] text-base font-semibold line-clamp-3"}>
           <span className={"text-[#FFBF3C]"}>"</span>
           {item.title}
           <span className={"text-[#FFBF3C]"}>"</span>
-        </p>
+        </h3>
         <a
           href={item.link}
           target="_blank"

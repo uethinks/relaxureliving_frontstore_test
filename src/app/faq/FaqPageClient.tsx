@@ -139,11 +139,11 @@ export function FaqPageClient({ initialFaqData }: FaqPageClientProps) {
                         aria-hidden="true"
                       />
                     )}
-                    <span
+                    <h2
                       className={`break-words whitespace-normal relative z-1 font-bold text-[${categoryId === category.slug ? "#140E02" : "#8C877C"}]`}
                     >
                       {category.name}
-                    </span>
+                    </h2>
                   </li>
                 ))}
             </ul>

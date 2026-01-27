@@ -48,7 +48,7 @@ export default function BlogCard({ blog, showLink = true }: IProps) {
             </div>
           ))}
       </div>
-      <div
+      <h2
         className={
           "line-clamp-2 text-[#140E02] text-2xl font-bold mb-[10px] cursor-pointer"
         }
@@ -57,7 +57,7 @@ export default function BlogCard({ blog, showLink = true }: IProps) {
         }}
       >
         {blog.title}
-      </div>
+      </h2>
       {blog.createdAt && (
         <div className={"flex items-center text-base text-[#2F2A1E] mb-5"}>
           <IconCalendar />

@@ -110,7 +110,7 @@ export default function ResourceLibraryClient() {
               }
             >
               {categories.map((category, categoryKey) => (
-                <div
+                <h2
                   key={categoryKey}
                   className={`flex-shrink-0 flex-grow-0 basis-auto cursor-pointer font-semibold text-base lg:text-2xl ${
                     categoryKey >= 0 && categoryKey === categoryId
@@ -122,7 +122,7 @@ export default function ResourceLibraryClient() {
                   }}
                 >
                   {category.name}
-                </div>
+                </h2>
               ))}
             </div>
             <div className={"w-full"}>
@@ -161,9 +161,9 @@ export default function ResourceLibraryClient() {
                               }}
                             />
                           </a>
-                          <p className={"font-semibold text-sm text-[#2F2A1E]"}>
+                          <h3 className={"font-semibold text-sm text-[#2F2A1E]"}>
                             {resource.title}
-                          </p>
+                          </h3>
                         </div>
                       ))}
                     </React.Fragment>
