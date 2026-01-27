@@ -89,7 +89,7 @@ export const OrderSummary = (): JSX.Element => {
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-5 h-5">
                 <Image                
-                     
+                  unoptimized   
                   src="/img/package.svg"
                   alt="Package icon"
                   width={20}
@@ -110,7 +110,7 @@ export const OrderSummary = (): JSX.Element => {
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-5 h-5">
                 <Image
-                  
+                  unoptimized
                   src="/img/shipping.svg"
                   alt="Shipping icon"
                   width={20}
@@ -131,7 +131,7 @@ export const OrderSummary = (): JSX.Element => {
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-5 h-5">
                 <Image
-                  
+                  unoptimized
                   src="/img/warranty.svg"
                   alt="Warranty icon"
                   width={20}

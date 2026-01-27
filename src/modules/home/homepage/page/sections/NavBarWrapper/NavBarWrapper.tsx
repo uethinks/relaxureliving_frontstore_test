@@ -396,7 +396,7 @@ export const NavBarWrapper = ({
                             className={"flex items-center gap-2 mb-[10px]"}
                           >
                             <Image
-                              
+                              unoptimized
                               className="w-10 h-10 flex-grow-0 flex-shrink-0 basis-auto"
                               src={getStrapiUrl(iconText?.icon?.url) || iconText?.icon?.url || ""}
                               alt={iconText.name || ""}
@@ -446,7 +446,7 @@ export const NavBarWrapper = ({
                           type="button"
                         >
                           <Image
-                            
+                            unoptimized
                             className="w-full h-[43.5vw] object-cover"
                             src={getStrapiUrl(subItem?.banner?.url) || ""}
                             alt={subItem?.name || ""}
@@ -504,7 +504,7 @@ export const NavBarWrapper = ({
                       <MoveRight className="w-4 h-4 text-[#140E02]" aria-hidden="true" />
                     </div>
                     <Image
-                      
+                      unoptimized
                       className="w-full h-[11vw] border-b-[1px] border-b-[#8C877C] object-cover"
                       src={getStrapiUrl(subItem?.banner?.url) || ""}
                       alt={subItem?.name || ""}
@@ -573,7 +573,7 @@ export const NavBarWrapper = ({
                               className={"flex items-center gap-x-3"}
                             >
                               <Image
-                                
+                                unoptimized
                                 className="w-10 h-10"
                                 src={getStrapiUrl(iconText?.icon?.url) || ""}
                                 alt={iconText.name || ""}
@@ -617,6 +617,7 @@ export const NavBarWrapper = ({
                       type="button"
                     >
                       <Image
+                        unoptimized
                         className="w-full h-[144px]"
                         src={getStrapiUrl(subItem?.banner?.url) || ""}
                         alt={subItem?.name || ""}
@@ -673,7 +674,7 @@ export const NavBarWrapper = ({
                         type="button"
                       >
                         <Image
-                          
+                          unoptimized
                           className="w-full h-[114px]"
                           src={getStrapiUrl(subItem?.banner?.url) || ""}
                           width={500}
@@ -792,7 +793,7 @@ export const NavBarWrapper = ({
               aria-label="Relaxure Homepage"
             >
               <Image
-                
+                unoptimized
                 className="w-[160px]"
                 src="/img/logo.svg"
                 alt="Relaxure Living Logo"
@@ -837,7 +838,7 @@ export const NavBarWrapper = ({
                     <div className="flex items-center gap-2">
                       <div className="relative">
                         <Image
-                          
+                          unoptimized
                           className="w-6 h-6"
                           src={
                             hasItemsInCart
@@ -892,7 +893,7 @@ export const NavBarWrapper = ({
                 aria-label="Relaxure Homepage"
               >
                 <Image
-                  
+                  unoptimized
                   className="w-[100px] h-auto"
                   src="/img/logo.svg"
                   alt="Relaxure Living Logo"
@@ -912,7 +913,7 @@ export const NavBarWrapper = ({
                   <div className="flex items-center gap-2">
                     <div className="relative">
                       <Image
-                        
+                        unoptimized
                         className="w-6 h-6"
                         src={
                           hasItemsInCart

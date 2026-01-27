@@ -37,7 +37,6 @@ const nextConfig = {
   },
    
   images: {
-    domains: ["assets.relaxureliving.com"],
     remotePatterns: [
       {
         protocol: "http",

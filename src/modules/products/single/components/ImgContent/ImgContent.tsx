@@ -232,7 +232,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
           >
             {filteredImages.length > 0 ? (
               <Image
-                
+                unoptimized
                 {...getOptimizedImageProps(filteredImages[currentImageIndex], true)}
                 className="w-full h-full object-cover object-center"
                 onClick={handleZoomClick}
@@ -313,7 +313,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                         {/* 实际图片 - 只在进入视口时加载 */}
                         {loadedThumbnails.has(index) && (
                           <Image
-                            
+                            unoptimized
                             {...getOptimizedImageProps(image, false)}
                             src={getStrapiUrl(image.formats.small.url) ?? image.formats.small.url}
                             className="w-full h-full object-cover object-center transition-opacity duration-300 opacity-100"
@@ -402,7 +402,7 @@ export const ImgContent = ({ productImages }: Props): JSX.Element => {
                     className="!flex items-center justify-center h-full"
                   >
                     <Image
-                      
+                      unoptimized
                       {...getOptimizedImageProps(image, false)}
                       className="max-w-full max-h-full w-auto h-auto object-contain"
                       priority={index === currentImageIndex}

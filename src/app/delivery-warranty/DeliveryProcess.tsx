@@ -89,7 +89,7 @@ export default function DeliveryProcess() {
               </div>
 
               <Image
-                
+                unoptimized
                 src={`/img/icon-${item.icon}.svg`}
                 alt={item.title}
                 width={56}
@@ -147,7 +147,7 @@ export default function DeliveryProcess() {
                   </div>
 
                   <Image
-                    
+                    unoptimized
                     src={`/img/icon-${item?.icon}.svg`}
                     alt={item?.title}
                     width={56}
@@ -198,7 +198,7 @@ export default function DeliveryProcess() {
             </div>
 
             <Image
-              
+              unoptimized
               src={`/img/icon-${item.icon}.svg`}
               alt={item.title}
               width={56}

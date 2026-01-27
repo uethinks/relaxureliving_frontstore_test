@@ -47,7 +47,7 @@ export function ImageAccordion({ items }: ImageAccordionProps) {
                 </span>
               </div>
               <Image
-                
+                unoptimized
                 src={
                   getStrapiUrl(item.media.url)
                 }
