@@ -163,15 +163,24 @@ export default function BlogDetailClient({
                     <V2Headline title={blog.title} as="h1" />
                   </div>
 
-                  <div className="text-[#000] prose max-lg:text-sm text-xl whitespace-normal">
-                    <Markdown
-                      rehypePlugins={[rehypeRaw]}
-                      remarkPlugins={[remarkGfm]}
-                      remarkRehypeOptions={{ passThrough: ["link"] }}
-                    >
-                      {blog.content}
-                    </Markdown>
-                  </div>
+                  {blog.content && !blog.content2 && (
+                    <div className="text-[#000] prose max-lg:text-sm text-xl whitespace-normal mb-6">
+                      <Markdown
+                        rehypePlugins={[rehypeRaw]}
+                        remarkPlugins={[remarkGfm]}
+                        remarkRehypeOptions={{ passThrough: ["link"] }}
+                      >
+                        {blog.content}
+                      </Markdown>
+                    </div>
+                  )}
+
+                  {blog.content2 && (
+                    <div 
+                      className="text-[#000] prose prose-lg max-w-none max-lg:text-sm text-xl whitespace-normal ck-content"
+                      dangerouslySetInnerHTML={{ __html: blog.content2 }}
+                    />
+                  )}
                   <div
                     className={"w-full mt-3 flex items-center justify-between"}
                   >
