@@ -182,8 +182,11 @@ export const V2BecomeDealerForm = (): React.JSX.Element => {
     setSubmitStatus(null)
 
     try {
-      await submitBecomeDealer(formData)
+      console.log("V2BecomeDealerForm send kayvioi formData:", formData)
       await sendKlaviyoBecomeDealer(formData)
+      console.log("V2BecomeDealerForm send cms")
+      await submitBecomeDealer(formData)
+      
       setSubmitStatus("success")
       setFormData({
         fullName: "",
