@@ -1286,3 +1286,68 @@ export const submitBecomeDealer = async (formData: any) => {
     throw error
   }
 }
+
+export const sendKlaviyoBecomeDealer = async (info: any) => {
+  try {
+    let envSite = process.env.NEXT_PUBLIC_ENV_SITE
+    let isProd = envSite === 'PROD'
+    let event = isProd ? "BecomeDealer" : `BecomeDealer-Test`
+    let send_to_email = isProd ? "support@relaxureliving.com" : info.email;
+    const [first_name, last_name] = info.fullName.split(' ');
+    console.log("sendKlaviyoBecomeDealer envSite", envSite, "event", event, "sendto", send_to_email)
+
+    const resp = await axios.post("/api/klaviyo/track", {
+      apiEndPoint: "/api/events",
+      data: {
+        type: "event",
+        attributes: {
+          metric: {
+            data: {
+              type: "metric",
+              attributes: {
+                name: event
+              }
+            }
+          },
+          profile: {
+            data: {
+              type: "profile",
+              attributes: {
+                email: info.email,
+                first_name: first_name,
+                last_name: last_name,
+                phone_number: info.phoneNumber,
+                properties: {
+                  email: info.email,
+                  first_name: first_name,
+                  last_name: last_name,
+                  phone_number: info.phoneNumber,
+                  env: envSite,
+                  source: "becomedealer"
+                }
+              }
+            }
+          },
+          properties: {
+            fullName: info.fullName,
+            phoneNumber: info.phoneNumber,
+            email: send_to_email,
+            companyName: info.companyName,
+            businessAddress: info.businessAddress,
+            streetAddress: info.streetAddress,
+            city: info.city,
+            stateProvinceRegion: info.stateProvinceRegion,
+            zipPostalCode: info.zipPostalCode,
+            country: info.country,
+            source: info.source,
+            intention: info.intention,
+          },
+          time: new Date().toISOString()
+        }
+      }
+    })
+    console.log(`Klaviyo envSite: ${envSite} event sent become dealer successfully `, info, "resp", resp.data);
+  } catch (error) {
+    console.error("Failed to send Klaviyo event:", error)
+  }
+}

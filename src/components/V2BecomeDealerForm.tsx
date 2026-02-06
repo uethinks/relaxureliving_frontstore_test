@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { submitBecomeDealer } from "@lib/cms/strapiCmsApi"
+import { submitBecomeDealer, sendKlaviyoBecomeDealer } from "@lib/cms/strapiCmsApi"
 import {
   House,
   LocateFixed,
@@ -183,6 +183,7 @@ export const V2BecomeDealerForm = (): React.JSX.Element => {
 
     try {
       await submitBecomeDealer(formData)
+      await sendKlaviyoBecomeDealer(formData)
       setSubmitStatus("success")
       setFormData({
         fullName: "",
