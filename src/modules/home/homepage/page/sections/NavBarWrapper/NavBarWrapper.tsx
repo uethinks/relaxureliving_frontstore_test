@@ -191,12 +191,13 @@ export const NavBarWrapper = ({
                 aria-expanded={openSubmenu === item.id}
                 aria-haspopup="true"
                 role="menuitem"
+                className="min-h-[44px] min-w-[44px] flex items-center py-2"
               >
                 {item.name}
               </button>
               {openSubmenu === item.id ? (
                 <button
-                  className={"w-6 h-6 text-[#8C877C] flex items-center justify-center"}
+                  className={"min-w-[44px] min-h-[44px] text-[#8C877C] flex items-center justify-center p-2 translate-x-[10px]"}
                   onClick={() => {
                     setOpenSubmenu(null)
                   }}
@@ -207,7 +208,7 @@ export const NavBarWrapper = ({
                 </button>
               ) : (
                 <button
-                  className={"w-6 h-6 text-[#8C877C] flex items-center justify-center"}
+                  className={"min-w-[44px] min-h-[44px] text-[#8C877C] flex items-center justify-center p-2 translate-x-[10px]"}
                   onClick={() => {
                     setOpenSubmenu(openSubmenu === item.id ? null : item.id)
                   }}
@@ -228,7 +229,7 @@ export const NavBarWrapper = ({
                       handleMenuItemClick(e, subItem.url, subItem.anchor)
                       setIsMenuOpen(false)
                     }}
-                    className="flex items-center justify-between py-5 border-b-[1px] border-b-[#8C877C] font-semibold text-xl text-[#140E02]"
+                    className="flex items-center justify-between py-5 border-b-[1px] border-b-[#8C877C] font-semibold text-xl text-[#140E02] min-h-[44px]"
                     role="menuitem"
                     aria-label={subItem.name || "Submenu item"}
                   >
@@ -335,12 +336,13 @@ export const NavBarWrapper = ({
               aria-expanded={openSubmenu === item.id}
               aria-haspopup="true"
               role="menuitem"
+              className="min-h-[44px] min-w-[44px] flex items-center py-2"
             >
               {item.name}
             </button>
             {openSubmenu === item.id ? (
               <button
-                className={"w-6 h-6 text-[#8C877C] flex items-center justify-center"}
+                className={"min-w-[44px] min-h-[44px] text-[#8C877C] flex items-center justify-center p-2 translate-x-[10px]"}
                 onClick={() => {
                   setOpenSubmenu(null)
                 }}
@@ -351,7 +353,7 @@ export const NavBarWrapper = ({
               </button>
             ) : (
               <button
-                className={"w-6 h-6 text-[#8C877C] flex items-center justify-center"}
+                className={"min-w-[44px] min-h-[44px] text-[#8C877C] flex items-center justify-center p-2 translate-x-[10px]"}
                 onClick={() => {
                   setOpenSubmenu(openSubmenu === item.id ? null : item.id)
                 }}
@@ -368,7 +370,7 @@ export const NavBarWrapper = ({
                 <div key={subItem.id}>
                   <button
                     className={
-                      "flex items-center justify-between text-[#140E02] text-xl mb-[10px] w-full text-left"
+                      "flex items-center justify-between text-[#140E02] text-xl mb-[10px] w-full text-left min-h-[44px] py-2"
                     }
                     onClick={() => {
                       if (!subItem || !subItem?.url) {
@@ -442,7 +444,7 @@ export const NavBarWrapper = ({
                             )
                           }}
                           aria-label={`View ${subItem?.name || "product"}`}
-                          className="w-full"
+                          className="w-full min-h-[44px]"
                           type="button"
                         >
                           <Image
@@ -491,7 +493,7 @@ export const NavBarWrapper = ({
                           : `/${subItem?.url}`
                       )
                     }}
-                    className="w-full text-left"
+                    className="w-full text-left min-h-[44px] py-2"
                     aria-label={subItem.name || "Submenu item"}
                     role="menuitem"
                   >
@@ -702,7 +704,7 @@ export const NavBarWrapper = ({
               handleMenuItemClick(e, item.url, item.anchor)
               setIsMenuOpen(false)
             }}
-            className="w-full text-start py-2 [font-family:'Montserrat',Helvetica] font-medium  text-[#343a40] text-base hover:text-gray-600"
+            className="w-full text-start py-2 [font-family:'Montserrat',Helvetica] font-medium  text-[#343a40] text-base hover:text-gray-600 min-h-[44px] flex items-center"
           >
             {item.name}
           </a>
@@ -878,12 +880,21 @@ export const NavBarWrapper = ({
             <div className="w-full h-[60px] flex items-center justify-between bg-[#140E02] px-6">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-white flex-grow-0 flex-shrink-0 basis-auto "
+                className="text-white flex-grow-0 flex-shrink-0 basis-auto"
                 aria-label={
                   isMenuOpen ? "Close mobile menu" : "Open mobile menu"
                 }
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-menu"
+                style={{
+                  minWidth: 44,
+                  minHeight: 44,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 0,
+                  transform: "translateX(-10px)",
+                }}
               >
                 {isMenuOpen ? <X /> : <Menu />}
               </button>
@@ -902,16 +913,16 @@ export const NavBarWrapper = ({
                 />
               </Link>
 
-              <div className="flex items-center justify-center px-0 py-2.5 relative">
+              <div className="flex items-center justify-center relative">
                 <a
                   href="/cart"
-                  className="flex-grow-0 flex-shrink-0 basis-auto relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-base tracking-[0] leading-6 text-white"
+                  className="flex-grow-0 min-w-[44px] min-h-[44px] flex-shrink-0 basis-auto relative mt-[-1.00px] [font-family:'Montserrat',Helvetica] font-medium text-base tracking-[0] leading-6 text-white flex items-center justify-center"
                   aria-label={`Shopping cart with ${
                     hasItemsInCart ? cart?.items?.length || 1 : 0
                   } items`}
                 >
-                  <div className="flex items-center gap-2">
-                    <div className="relative">
+                  <div className="flex items-center justify-center gap-2 w-full h-full">
+                    <div className="relative flex items-center justify-center w-full h-full">
                       <Image
                         unoptimized
                         className="w-6 h-6"
@@ -957,14 +968,14 @@ export const NavBarWrapper = ({
                   ))}
 
                   <li role="none" className={"w-full mt-10"}>
-                    <a
-                      href="/#contact"
-                      onClick={(e) => {
-                        setIsMenuOpen(false)
-                      }}
-                      className="w-full flex justify-center"
-                      role="menuitem"
-                    >
+            <a
+              href="/#contact"
+              onClick={(e) => {
+                setIsMenuOpen(false)
+              }}
+              className="w-full flex justify-center min-h-[44px] items-center"
+              role="menuitem"
+            >
                       <Component text="Contact Us" />
                     </a>
                   </li>
