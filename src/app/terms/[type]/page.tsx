@@ -1,4 +1,3 @@
-import React from "react"
 import { getAllTerms } from "@lib/cms/strapiCmsApi"
 import AgreeButton from "./components/AgreeButton"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"

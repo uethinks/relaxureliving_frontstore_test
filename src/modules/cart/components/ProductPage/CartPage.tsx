@@ -1,8 +1,7 @@
 "use client"
-import React, { useEffect, useState, lazy } from "react"
+import dynamic from "next/dynamic"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
-import { getHomePage } from "@lib/cms/strapiCmsApi"
 import { OrderSummary } from "../OrderSummary/OrderSummary"
 import { ProductCard } from "../ProductCard/ProductCard"
 import { HeaterCard } from "../HeaterCard/HeaterCard"
@@ -12,33 +11,15 @@ import { SampleKitCard } from "../SampleKitCard/SampleKitCard"
 import { useCart } from "@lib/context/cartContext"
 import { StoreProduct } from "@medusajs/types"
 import { EmptyCart } from "../EmptyCart/EmptyCart"
-import { PergolaData, BoringButImportantStuff } from "@/types/global"
 import { formatCartTotal } from "@lib/util/money"
-import Breadcrumb from "@/components/Breadcrumb"
-import { CartAccessoriesGrid } from "./CartAccessoriesGrid"
 import CartSkeleton from "../CartSkeleton/CartSkeleton"
-import { CartPageMobile } from "./CartPageMobile"
-import { useIsMobile, useScreenSize } from "@lib/hooks/useScreenSize" // Lazy load only non-critical components
+import { useIsMobile } from "@lib/hooks/useScreenSize"
 
-
-interface FAQData {
-  id: number
-  Title: string
-  Subtitle: string
-  homepageFAQ: FAQCategory[]
-}
-
-interface FAQCategory {
-  id: number
-  Title: string
-  question_and_answer: FAQAnswer[]
-}
-
-interface FAQAnswer {
-  id: number
-  question: string
-  Answer: string
-}
+// 移动端组件使用动态导入，只在需要时加载
+const CartPageMobile = dynamic(() => import("./CartPageMobile").then(mod => ({ default: mod.CartPageMobile })), {
+  loading: () => <CartSkeleton />,
+  ssr: false, // 移动端检测在客户端进行
+})
 
 //购物车左边的产品列表页面
 export const CartPage = ({
@@ -62,7 +43,6 @@ export const CartPage = ({
       <div className="w-full flex flex-col items-center py-0 relative bg-background ">
         <div className=" w-full relative flex flex-col justify-center items-center pt-0">
           <NavBarWrapper isFixed={false} />
-          {/* <Breadcrumb steps={["Cart", "Information", "Payment"]} current={0} /> */}
           {isLoading ? (
             <CartSkeleton />
           ) : isCartEmpty ? (
@@ -97,14 +77,6 @@ export const CartPage = ({
         </div>
     
       </div>
-      {/* <OurPromise
-        pergolaData={
-          {
-            boringButImportantStuff: ourPromise,
-          } as PergolaData
-        }
-      />
-      {faq && <FaqWrapper faq={faq} />} */}
       <FooterDark />
     </>
   )

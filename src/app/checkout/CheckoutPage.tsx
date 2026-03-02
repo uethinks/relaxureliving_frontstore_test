@@ -1,12 +1,18 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+import { useEffect, useState } from "react"
 import { useCart } from "@lib/context/cartContext"
 import CheckoutSkeleton from "@modules/cart/components/CartSkeleton/CheckoutSkeleton"
 import { EmptyCart } from "@modules/cart/components/EmptyCart/EmptyCart"
 import { CheckoutComponent } from "@modules/checkout/page/CheckoutComponent"
 import { CheckoutOrderSummary } from "@modules/checkout/page/components/CheckoutOrderSummary"
-import CheckoutPageMobile from "./CheckoutPageMobile"
 import { useScreenSize } from "@lib/hooks/useScreenSize"
+
+// 移动端组件使用动态导入，只在需要时加载
+const CheckoutPageMobile = dynamic(() => import("./CheckoutPageMobile"), {
+  loading: () => <CheckoutSkeleton />,
+  ssr: false, // 移动端检测在客户端进行
+})
  
 export default function CheckoutPage({
   

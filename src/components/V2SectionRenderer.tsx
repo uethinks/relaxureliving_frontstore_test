@@ -1,24 +1,58 @@
 "use client"
 
-import { V2ContactUsSection } from "@/components/V2ContactUsSection"
-import { V2CraftsmanshipSection } from "@/components/V2CraftsmanshipSection"
-import V2DualOfferSection from "@/components/V2DualOfferSection"
-import { V2FAQSection } from "@/components/V2FAQSection"
-import V2FeatureCards from "@/components/V2FeatureCards"
-import { V2FeatureGridSection } from "@/components/V2FeatureGridSection"
-import { V2FeatureShowcase } from "@/components/V2FeatureShowcase"
-import V2GuideCardsSection from "@/components/V2GuideCardSection"
-import V2HeroBanner from "@/components/V2HeroBanner"
-import V2HeroProductSection from "@/components/V2HeroProductSection"
-import V2OccasionsSection from "@/components/V2OccasionsSection"
-import V2PressSection from "@/components/V2PressSection"
-import { V2PromoBanner } from "@/components/V2PromoBanner"
-import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
-import V2TestimonialsSection from "@/components/V2TestimonialsSection"
+import dynamic from "next/dynamic"
 import { useIsMobile } from "@/lib/hooks/useScreenSize"
 import React, { useMemo, useEffect, useState } from "react"
-import { V2PergolasComparisonTable } from "./V2ComparisonSection"
-import { V2TimelineSection } from "./V2TimelineSection"
+
+// 高优先级组件 - 首屏关键组件，保持静态导入以确保快速加载
+import { V2ContactUsSection } from "@/components/V2ContactUsSection"
+import V2HeroBanner from "@/components/V2HeroBanner"
+import V2HeroProductSection from "@/components/V2HeroProductSection"
+import V2ServiceSnapshots from "@/components/V2ServiceSnapshots"
+
+// 中优先级组件 - 首屏可能显示，但可以延迟加载
+import { V2CraftsmanshipSection } from "@/components/V2CraftsmanshipSection"
+import { V2FeatureGridSection } from "@/components/V2FeatureGridSection"
+import { V2FeatureShowcase } from "@/components/V2FeatureShowcase"
+import V2OccasionsSection from "@/components/V2OccasionsSection"
+import { V2PromoBanner } from "@/components/V2PromoBanner"
+import V2PressSection from "@/components/V2PressSection"
+
+// 非关键组件 - 使用动态导入进行代码分割，按需加载
+const V2DualOfferSection = dynamic(() => import("@/components/V2DualOfferSection"), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-100" />,
+  ssr: true,
+})
+
+const V2FAQSection = dynamic(() => import("@/components/V2FAQSection").then(mod => ({ default: mod.V2FAQSection })), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-100" />,
+  ssr: true,
+})
+
+const V2FeatureCards = dynamic(() => import("@/components/V2FeatureCards"), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-100" />,
+  ssr: true,
+})
+
+const V2GuideCardsSection = dynamic(() => import("@/components/V2GuideCardSection"), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-100" />,
+  ssr: true,
+})
+
+const V2TestimonialsSection = dynamic(() => import("@/components/V2TestimonialsSection"), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-100" />,
+  ssr: true,
+})
+
+const V2TimelineSection = dynamic(() => import("./V2TimelineSection").then(mod => ({ default: mod.V2TimelineSection })), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-100" />,
+  ssr: true,
+})
+
+const V2PergolasComparisonTable = dynamic(() => import("./V2ComparisonSection").then(mod => ({ default: mod.V2PergolasComparisonTable })), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-100" />,
+  ssr: true,
+})
 
 interface Section {
   id: string | number

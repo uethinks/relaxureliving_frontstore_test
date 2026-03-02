@@ -7,25 +7,6 @@ import { FooterDark } from "./sections/footer"
 export const dynamic = "force-static"
 // export const revalidate = 3600 // 每小时重新验证一次
 
-interface FAQData {
-  id: number
-  Title: string
-  Subtitle: string
-  homepageFAQ: FAQCategory[]
-}
-
-interface FAQCategory {
-  id: number
-  Title: string
-  question_and_answer: FAQAnswer[]
-}
-
-interface FAQAnswer {
-  id: number
-  question: string
-  Answer: string
-}
-
 // 主页面组件
 export default async function Homepage() {
   const { data } = await getHomePage()
