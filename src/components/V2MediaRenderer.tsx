@@ -88,6 +88,9 @@ const RESPONSIVE_IMAGE_CONFIG = {
   },
 } as const
 
+const DEFAULT_IMAGE_ASPECT_RATIO = 525 / 262
+const DEFAULT_VIDEO_ASPECT_RATIO = 16 / 9
+
 export default function MediaRenderer({
   media,
   options = {},
@@ -188,6 +191,8 @@ export default function MediaRenderer({
   // 检测媒体类型
   const isVideo = media?.mime?.startsWith("video/")
   const isImage = media?.mime?.startsWith("image/")
+  const mediaAspectRatio =
+    media?.width && media?.height ? media.width / media.height : undefined
 
   // 处理错误
   const handleError = () => {
@@ -201,6 +206,10 @@ export default function MediaRenderer({
         .map(Number)
         .reduce((a, b) => a / b)
     : undefined
+  const stableAspectRatio =
+    aspectRatioValue ??
+    mediaAspectRatio ??
+    (isVideo ? DEFAULT_VIDEO_ASPECT_RATIO : DEFAULT_IMAGE_ASPECT_RATIO)
 
   // 处理放大功能
   const handleZoomClick = () => {
@@ -212,7 +221,7 @@ export default function MediaRenderer({
     return (
       <div
         className={`flex items-center justify-center ${className}`}
-        style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
+        style={{ aspectRatio: stableAspectRatio }}
       >
         <FileX size={30} color="#8C877C" />
       </div>
@@ -223,7 +232,7 @@ export default function MediaRenderer({
     return (
       <div
         className={`flex items-center justify-center ${className}`}
-        style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
+        style={{ aspectRatio: stableAspectRatio }}
       >
         <span className="text-muted-foreground text-sm">媒体加载失败</span>
       </div>
@@ -239,12 +248,14 @@ export default function MediaRenderer({
     return (
       <div
         className={`overflow-hidden ${className}`}
-        style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
+        style={{ aspectRatio: stableAspectRatio }}
       >
         <video
           autoPlay={true}
           ref={videoRef}
           src={getStrapiUrl(media.url) || undefined}
+          width={media.width || 16}
+          height={media.height || 9}
           className={`w-full h-full object-${objectFit} transition-transform duration-300 hover:scale-105`}
           muted={true}
           loop={videoOptions.loop}
@@ -326,7 +337,7 @@ export default function MediaRenderer({
     return (
       <div
         className={`overflow-hidden relative ${className}`}
-        style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
+        style={{ aspectRatio: stableAspectRatio }}
       >
         {fallbackUrl ? (
           sources.length > 0 ? (
@@ -392,7 +403,7 @@ export default function MediaRenderer({
   return (
     <div
       className={`flex items-center justify-center ${className}`}
-      style={aspectRatioValue ? { aspectRatio: aspectRatioValue } : {}}
+      style={{ aspectRatio: stableAspectRatio }}
     >
       <span className="text-muted-foreground text-sm">不支持的媒体类型</span>
     </div>

@@ -119,6 +119,8 @@ function PaymentMethods() {
           key={method.alt}
           src={method.src}
           alt={method.alt}
+          width={41}
+          height={25}
           className="lg:w-[41px] lg:h-[25px] bg-white rounded"
         />
       ))}
@@ -182,6 +184,8 @@ export const FooterDark = ({
             className="w-[103px] lg:w-[160px] mb-[52px] lg:mb-[60px]"
             src="/img/logo.svg"
             alt=""
+            width={160}
+            height={41}
           />
           <h3 className="mb-[10px] text-sm lg:text-base font-semibold">
             Subscribe To Our Emails
