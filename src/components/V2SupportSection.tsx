@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import { MoveDownRight } from "lucide-react"
 
 export default function V2SupportSection() {
@@ -30,22 +29,20 @@ export default function V2SupportSection() {
         </div>
 
         <div className="text-xs flex justify-between">
-          <Button
-            variant="link"
-            className="underline px-0 text-black gap-1 text-xs"
-            onClick={() => window.open(`tel:${data.phoneNumber}`, "_blank")}
+          <a
+            href={`tel:${data.phoneNumber}`}
+            className="inline-flex items-center underline px-0 text-black gap-1 text-xs"
           >
             <img src="/img/telephone.svg" alt="phone" className="w-4 h-4" />
             {data.phoneNumber}
-          </Button>
-          <Button
-            variant="link"
-            className="underline px-0 text-black gap-1 text-xs"
-            onClick={() => window.open(`mailto:${data.email}`, "_blank")}
+          </a>
+          <a
+            href={`mailto:${data.email}`}
+            className="inline-flex items-center underline px-0 text-black gap-1 text-xs"
           >
             <img src="/img/mailbox.svg" alt="phone" className="w-4 h-4" />
             {data.email}
-          </Button>
+          </a>
         </div>
       </div>
       <div

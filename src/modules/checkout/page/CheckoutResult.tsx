@@ -116,23 +116,23 @@ export const CheckoutResult = () => {
 
             {/* Action buttons */}
             <div className="flex flex-col gap-4 w-full">
-              <button
-                onClick={() => window.location.href = '/checkout'}
+              <a
+                href="/checkout"
                 className="all-[unset] box-border w-full flex items-center gap-2 shadow-shadow-relaxure-button px-6 py-3 rounded-[10px] justify-center relative bg-[#F6AF1F] hover:bg-[#fdce6f] self-stretch flex-[0_0_auto]"
               >
                 <div className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-black relative font-medium whitespace-nowrap leading-6">
                   Try Again
                 </div>
-              </button>
+              </a>
               
-              <button
-                onClick={() => window.location.href = '/'}
+              <a
+                href="/"
                 className="all-[unset] box-border w-full flex items-center gap-2 px-6 py-3 rounded-[10px] justify-center relative bg-[#ffffff] border-2 border-[#F6AF1F] hover:bg-[#f5f5f5] self-stretch flex-[0_0_auto]"
               >
                 <div className="all-[unset] box-border [font-family:'Montserrat',Helvetica] w-fit tracking-[0] text-base text-[#F6AF1F] relative font-medium whitespace-nowrap leading-6">
                   Back to Home
                 </div>
-              </button>
+              </a>
             </div>
           </div>
         </div>

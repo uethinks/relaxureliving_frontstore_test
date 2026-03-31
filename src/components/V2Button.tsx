@@ -5,7 +5,7 @@ import { cn, getStrapiUrl } from "@/lib/utils"
 import { TrackingEvent } from "@/types/tracking"
 import { trackEvent } from "@lib/util/tracking"
 import { ArrowRight } from "lucide-react"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import * as React from "react"
 
 /**
@@ -59,7 +59,6 @@ export const V2Button: React.FC<V2ButtonProps> = ({
   ...props
 }) => {
   const { type, size = "Large", text, link, icon, iconHidden, eventName } = data
-  const router = useRouter()
 
   // Determine if link is external
   const isExternalLink = link?.startsWith("http") || link?.startsWith("//")
@@ -90,7 +89,7 @@ export const V2Button: React.FC<V2ButtonProps> = ({
       )
     }
 
-    const iconUrl = icon?.url ? getStrapiUrl(icon?.url) : "/img/right-arrow.svg"
+    const iconUrl = icon?.url ? getStrapiUrl(icon?.url) || "/img/right-arrow.svg" : "/img/right-arrow.svg"
     return (
       <img
         src={iconUrl}
@@ -100,13 +99,17 @@ export const V2Button: React.FC<V2ButtonProps> = ({
     )
   }
 
-  // Unified navigation handler
-  const handleClick = () => {
+  const handleTracking = () => {
     if (eventName && eventName?.length > 0) {
       trackEvent(eventName as TrackingEvent, {
         buttonText: text,
       })
     }
+  }
+
+  // Unified click handler for interactive button mode
+  const handleClick = () => {
+    handleTracking()
 
     if (onClick) {
       // Custom onClick provided, use it
@@ -118,14 +121,6 @@ export const V2Button: React.FC<V2ButtonProps> = ({
       return
     }
 
-    // Handle navigation automatically
-    if (isExternalLink) {
-      // External link - open in new tab with security attributes
-      window.open(link, "_blank", "noopener,noreferrer")
-    } else {
-      // Internal link - use Next.js router
-      router.push(link)
-    }
   }
 
   let sizeClass = "text-xl h-12 px-16"
@@ -155,7 +150,29 @@ export const V2Button: React.FC<V2ButtonProps> = ({
     ...props,
   }
 
-  // Render as button with unified navigation
+  // Render semantic links for SEO when this is pure navigation.
+  if (link && !onClick) {
+    if (isExternalLink) {
+      return (
+        <Button {...buttonProps} asChild>
+          <a href={link} target="_blank" rel="noopener noreferrer" onClick={handleTracking}>
+            <span>{text}</span>
+            {renderIcon()}
+          </a>
+        </Button>
+      )
+    }
+
+    return (
+      <Button {...buttonProps} asChild>
+        <Link href={link} onClick={handleTracking}>
+          <span>{text}</span>
+          {renderIcon()}
+        </Link>
+      </Button>
+    )
+  }
+
   return (
     <Button {...buttonProps} onClick={handleClick}>
       <span>{text}</span>
