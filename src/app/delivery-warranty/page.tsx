@@ -5,7 +5,10 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import DeliveryProcess from "./DeliveryProcess"
 import { Metadata } from "next"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 
 export const dynamic = "force-static"
 
@@ -19,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function DeliveryWarrantyPage() {
   const { data } = await getDeliveryWarranty()
+  const structuredDataScript = getStrapiStructuredDataScript(data?.seo)
   console.log("DeliveryWarranty - data", data)
 
   if (!data) {
@@ -30,6 +34,12 @@ export default async function DeliveryWarrantyPage() {
   }
   return (
     <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
         <V2MaskHeader

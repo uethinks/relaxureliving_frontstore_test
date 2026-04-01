@@ -2,7 +2,10 @@ import V2MaskHeader from "@/components/V2MaskHeader"
 import { V2PromoBanner } from "@/components/V2PromoBanner"
 import V2SectionRenderer from "@/components/V2SectionRenderer"
 import { getInnovation } from "@lib/cms/strapiCmsApi"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { Metadata } from "next"
@@ -17,8 +20,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function InnovationPage() {
+  const innovationData = await getInnovation()
+  const structuredDataScript = getStrapiStructuredDataScript(
+    innovationData?.data?.seo
+  )
   return (
     <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
         <V2MaskHeader

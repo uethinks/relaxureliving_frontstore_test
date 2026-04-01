@@ -1,5 +1,8 @@
 import { getBlogPage, getBlogs, getTags } from "@lib/cms/strapiCmsApi"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import { Metadata } from "next"
 import { Suspense } from "react"
 import BlogPageClient from "./BlogPageClient"
@@ -20,10 +23,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function PageBlog() {
   // 在服务器端获取初始数据
-  const [blogRes, tagsRes] = await Promise.all([
+  const [blogPageData, blogRes, tagsRes] = await Promise.all([
+    getBlogPage(),
     getBlogs({ current: 1 }),
     getTags(),
   ])
+  const structuredDataScript = getStrapiStructuredDataScript(
+    blogPageData?.data?.seo
+  )
 
   const initialBlogs = blogRes?.data || []
   const initialTags = tagsRes?.data || []
@@ -32,14 +39,22 @@ export default async function PageBlog() {
   const initialCurrentTags = undefined
 
   return (
-    <Suspense>
-      <BlogPageClient
-        initialBlogs={initialBlogs}
-        initialTags={initialTags}
-        initialTotal={initialTotal}
-        initialPage={initialPage}
-        initialCurrentTags={initialCurrentTags}
-      />
-    </Suspense>
+    <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
+      <Suspense>
+        <BlogPageClient
+          initialBlogs={initialBlogs}
+          initialTags={initialTags}
+          initialTotal={initialTotal}
+          initialPage={initialPage}
+          initialCurrentTags={initialCurrentTags}
+        />
+      </Suspense>
+    </>
   )
 }

@@ -334,6 +334,13 @@ const faqPopulate = {
     },
   },
 }
+
+const faqPopulateV2 = {
+  populate: {
+    seo: seoPopulate,
+  },
+}
+
 const heaterPopulate = {
   populate: {
     productInformations: "*",
@@ -476,6 +483,7 @@ export const API_URLS = {
   getMenu: "/api/menu",
   getAccessoriesPage: "/api/accessories-page",
   getFaqData: "/api/faq-page",
+  getFaqDataV2: "/api/v2-faq",
   getGlobalData: "/api/global",
   getContactUs: "/api/v2-contact-us",
   getAboutUs: "/api/about",
@@ -909,6 +917,18 @@ export const getFaqData = async () => {
     return response.data
   } catch (error) {
     console.error("Error fetching faq data:", error, API_URLS.getFaqData)
+    throw error
+  }
+}
+
+export const getFaqDataV2 = async () => {
+  try {
+    const response = await axiosInstance.get(API_URLS.getFaqDataV2, {
+      params: faqPopulateV2,
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching faq data:", error, API_URLS.getFaqDataV2)
     throw error
   }
 }

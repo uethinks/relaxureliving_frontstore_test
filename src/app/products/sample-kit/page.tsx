@@ -7,7 +7,10 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { SampleKitProductPage } from "./SampleKitProductPage"
 import { Metadata } from "next"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 export const dynamic = "force-static"
 
 // ISR 缓存策略 - 1小时重新验证
@@ -35,6 +38,9 @@ export default async function AccessoriesPage(props: Props) {
 
   const sampleKitInfo = await getSampleKit()
   sampleKitInfo.data.product = sampleKit.product
+  const structuredDataScript = getStrapiStructuredDataScript(
+    sampleKitInfo?.data?.seo
+  )
   console.log("sampleKitInfo", sampleKitInfo)
 
   if (!sampleKitInfo.data || !sampleKit.product) {
@@ -43,6 +49,12 @@ export default async function AccessoriesPage(props: Props) {
 
   return (
     <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
       <div className="bg-background flex flex-col items-center justify-center w-full">
         <NavBarWrapper isFixed={false} />
         <div className="flex flex-col gap-4 w-full">

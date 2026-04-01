@@ -1,5 +1,8 @@
 import { getResourceLibraryPage } from "@lib/cms/strapiCmsApi"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import { Metadata } from "next"
 import React, { Suspense } from "react"
 import ResourceLibraryClient from "./ResourceLibraryClient"
@@ -13,9 +16,19 @@ export async function generateMetadata(): Promise<Metadata> {
   return generateMetadataFromStrapi(resourceLibraryData?.data?.seo || {})
 }
 
-export default function ResourceLibraryPage() {
+export default async function ResourceLibraryPage() {
+  const resourceLibraryData = await getResourceLibraryPage()
+  const structuredDataScript = getStrapiStructuredDataScript(
+    resourceLibraryData?.data?.seo
+  )
   return (
     <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
       <Suspense>
         <ResourceLibraryClient />
       </Suspense>

@@ -5,7 +5,10 @@ import { OurPromise } from "@modules/home/homepage/page/sections/OurPromise"
 import { getAccessoriesPage, getHomePage } from "@lib/cms/strapiCmsApi"
 import { PergolaData } from "types/global"
 import { Metadata } from "next"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
@@ -24,11 +27,21 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AccessoriesPage(props: Props) {
+  const accessoriesPage = await getAccessoriesPage()
+  const structuredDataScript = getStrapiStructuredDataScript(
+    accessoriesPage?.data?.seo
+  )
   // 获取OurPromise数据
   // const { data } = await getHomePage()
 
   return (
     <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
       <div className="bg-[#ffffff] flex flex-col items-center justify-center w-full">
         <NavBarWrapper isFixed={false} />
         <div className="content-container">

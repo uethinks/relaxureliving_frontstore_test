@@ -162,11 +162,22 @@ export function convertStructuredData(
   if (!seoData.structuredData) return undefined
 
   try {
-    return JSON.stringify(seoData.structuredData)
+    return JSON.stringify(seoData.structuredData).replace(/</g, "\\u003c")
   } catch (error) {
     console.warn("Failed to stringify structured data:", error)
     return undefined
   }
+}
+
+/**
+ * 生成页面 <script type="application/ld+json"> 所需内容
+ * Next.js 官方建议 JSON-LD 使用原生 script 标签输出。
+ */
+export function getStrapiStructuredDataScript(
+  seoData: StrapiSEOData | null | undefined
+): string | undefined {
+  if (!seoData) return undefined
+  return convertStructuredData(seoData)
 }
 
 /**
@@ -265,18 +276,12 @@ export function convertStrapiSEOToMetadata(
     const basicMeta = convertBasicMeta(seoData, options)
     const openGraph = convertOpenGraph(seoData, options)
     const twitterCards = convertTwitterCards(seoData, options)
-    const structuredData = convertStructuredData(seoData, options)
 
     // 合并所有元数据
     const metadata: Metadata = {
       ...basicMeta,
       ...openGraph,
       ...twitterCards,
-      ...(structuredData && {
-        other: {
-          "application/ld+json": structuredData,
-        },
-      }),
     }
     console.log("metadata", metadata)
 
@@ -307,7 +312,7 @@ export function convertStrapiSEOToMetadata(
 export function generateMetadataFromStrapi(
   seoData: StrapiSEOData,
   options: SEOConverterOptions = {
-    baseUrl: process.env.NEXT_PUBLIC_SITE_URL,
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     siteName: "Relaxure Living",
     twitterHandle: "@relaxureliving",
     facebookAppId: "your-facebook-app-id",

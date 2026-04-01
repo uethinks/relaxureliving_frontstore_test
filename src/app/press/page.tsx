@@ -1,5 +1,8 @@
 import { getPressPage } from "@lib/cms/strapiCmsApi"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import { Metadata } from "next"
 import React, { Suspense } from "react"
 import PressPageClient from "./PressPageClient"
@@ -16,10 +19,21 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function PagePress() {
   // 在服务器端获取初始数据
   const pressPageData = await getPressPage()
+  const structuredDataScript = getStrapiStructuredDataScript(
+    pressPageData?.data?.seo
+  )
   
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PressPageClient initialPressData={pressPageData} />
-    </Suspense>
+    <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
+      <Suspense fallback={<div>Loading...</div>}>
+        <PressPageClient initialPressData={pressPageData} />
+      </Suspense>
+    </>
   )
 }

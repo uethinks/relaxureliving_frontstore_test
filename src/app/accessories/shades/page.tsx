@@ -4,7 +4,10 @@ import { getProductByProductId } from "@lib/data/products"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import ShadesProductPage from "./ShadesProductPage"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import { Metadata } from "next"
 // 强制静态生成
 export const dynamic = "force-static"
@@ -27,6 +30,7 @@ export default async function AccessoriesPage(props: Props) {
     getAccessoriesPage(),
     getShades()
   ])
+  const structuredDataScript = getStrapiStructuredDataScript(shadesInfo?.data?.seo)
   
   // 并行获取产品数据
   const [pergola, shades] = await Promise.all([
@@ -61,6 +65,12 @@ export default async function AccessoriesPage(props: Props) {
 
   return (
     <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
       {/* 预加载关键资源，改善LCP */}
       <link 
         rel="preload" 

@@ -4,7 +4,10 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import Image from "next/image"
 import { Metadata } from "next"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import { getContactUs } from "@lib/cms/strapiCmsApi"
 
 export const dynamic = "force-static"
@@ -18,8 +21,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactUsPage() {
+  const contactUsData = await getContactUs()
+  const structuredDataScript = getStrapiStructuredDataScript(
+    contactUsData?.data?.seo
+  )
   return (
     <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
       <div className="w-full flex flex-col items-center py-0 relative bg-[#F7F7F5]">
         <NavBarWrapper />
         <V2MaskHeader

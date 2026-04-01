@@ -4,7 +4,10 @@ import { V2FAQSection } from "@/components/V2FAQSection"
 import V2Headline from "@/components/V2Headline"
 import V2SectionRenderer from "@/components/V2SectionRenderer"
 import { getAboutUs } from "@lib/cms/strapiCmsApi"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import { Metadata } from "next"
@@ -44,6 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AboutUsPage() {
   const { data } = await getAboutUs()
+  const structuredDataScript = getStrapiStructuredDataScript(data?.seo)
   // console.log("AboutUs - data", data)
 
   if (!data) {
@@ -56,6 +60,12 @@ export default async function AboutUsPage() {
 
   return (
     <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
       <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
         <NavBarWrapper />
         <section className="grid grid-cols-1 lg:grid-cols-2 w-full bg-[#EFEEEB] lg:h-[680px]">

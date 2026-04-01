@@ -6,7 +6,10 @@ import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrappe
 import { FooterDark } from "@modules/home/homepage/page/sections/footer"
 import V2SectionRenderer from "@/components/V2SectionRenderer"
 import { Metadata } from "next"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 
 // 强制静态生成
 export const dynamic = "force-static"
@@ -27,12 +30,19 @@ export default async function ProductCustomPage() {
   try {
     // 1. 并行获取基础数据
     const { data: pergolaData } = await getCustomPergola()
+    const structuredDataScript = getStrapiStructuredDataScript(pergolaData?.seo)
 
     console.log("ProductCustomPage - pergolaData", pergolaData)
 
     // 5. 渲染页面
     return (
       <>
+        {structuredDataScript && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+          />
+        )}
         <div className="w-full flex flex-col items-center py-0 relative bg-[#ffffff]">
           <NavBarWrapper isHomePage={true} />
           <V2SectionRenderer sections={pergolaData.sections || []} />

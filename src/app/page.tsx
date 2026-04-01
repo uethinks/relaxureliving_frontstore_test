@@ -1,7 +1,10 @@
 import { Homepage as Homepage } from "@modules/home/homepage/page"
 import { Metadata } from "next"
 import { getHomePage } from "@lib/cms/strapiCmsApi"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 
 export const dynamic = "force-static"
 
@@ -14,4 +17,19 @@ export async function generateMetadata(): Promise<Metadata> {
   return generateMetadataFromStrapi(homeData?.data?.seo || {})
 }
 
-export default Homepage
+export default async function HomePage() {
+  const homeData = await getHomePage()
+  const structuredDataScript = getStrapiStructuredDataScript(homeData?.data?.seo)
+
+  return (
+    <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
+      <Homepage />
+    </>
+  )
+}

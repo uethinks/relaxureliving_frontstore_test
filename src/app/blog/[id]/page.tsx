@@ -1,5 +1,8 @@
 import { getBlog, getBlogs, getTags } from "@lib/cms/strapiCmsApi"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import BlogDetailClient from "./BlogDetailClient"
 
 // // 强制静态生成
@@ -32,6 +35,7 @@ export default async function BlogDetail({ params, searchParams }: { params: Pro
   ])
 
   const blog = blogRes?.data
+  const structuredDataScript = getStrapiStructuredDataScript(blog?.seo)
   const recentBlogs = recentBlogsRes?.data || []
   const tags = tagsRes?.data || []
 
@@ -75,12 +79,20 @@ export default async function BlogDetail({ params, searchParams }: { params: Pro
   }
 
   return (
-    <BlogDetailClient
-      initialBlog={blog}
-      initialRecentBlogs={recentBlogs}
-      initialTags={tags}
-      initialPrevId={prevId}
-      initialNextId={nextId}
-    />
+    <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
+      <BlogDetailClient
+        initialBlog={blog}
+        initialRecentBlogs={recentBlogs}
+        initialTags={tags}
+        initialPrevId={prevId}
+        initialNextId={nextId}
+      />
+    </>
   )
 }

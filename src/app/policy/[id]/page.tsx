@@ -1,5 +1,8 @@
 import { getPolicy } from "@lib/cms/strapiCmsApi"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import PolicyClient from "./PolicyClient"
 
 // ISR 缓存策略 - 1小时重新验证
@@ -32,6 +35,17 @@ export default async function PagePolicy({ params, searchParams }: { params: Pro
   // 在服务器端获取初始数据
   const policyRes = await getPolicy(id)
   const policy = policyRes?.data
+  const structuredDataScript = getStrapiStructuredDataScript(policy?.seo)
 
-  return <PolicyClient initialPolicy={policy} />
+  return (
+    <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
+      <PolicyClient initialPolicy={policy} />
+    </>
+  )
 }

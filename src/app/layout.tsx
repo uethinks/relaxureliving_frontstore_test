@@ -145,13 +145,13 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             __html: JSON.stringify(organizationSchema),
           }}
         />
-        <script
+        {/* <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(faqSchema),
           }}
           suppressHydrationWarning
-        ></script>
+        ></script> */}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>

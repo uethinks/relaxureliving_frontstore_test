@@ -11,7 +11,10 @@ import {
 } from "@lib/cms/strapiCmsApi"
 import { StoreProduct, StoreProductResponse } from "@medusajs/types"
 import { Metadata } from "next"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 import PerformanceMonitor from "@/components/PerformanceMonitor"
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
 
@@ -79,9 +82,14 @@ export default async function ProductPage({ params }: Props) {
   try {
     const { pergola } = await params
     // 1. 并行获取基础数据
-    const [region, heaterResponse, shadesResponse, glassDoorResponse, standardPergolaResponse] =
+    const [
+      region,
+      heaterResponse,
+      shadesResponse,
+      glassDoorResponse,
+      standardPergolaResponse,
+    ] =
       await Promise.all([
-        // getPergola(),
         getRegion(defaultCountryCode),
         getHeater(),
         getShades(),
@@ -94,6 +102,10 @@ export default async function ProductPage({ params }: Props) {
     const shadesCMData = shadesResponse.data
     const glassDoorCMData = glassDoorResponse.data
     const standardPergolaData = standardPergolaResponse.data
+    const structuredDataScript = getStrapiStructuredDataScript(
+      standardPergolaResponse?.data?.seo
+    )
+    console.log("structuredDataScript", structuredDataScript)
     
     // Validate region
     if (!region) {
@@ -183,6 +195,13 @@ export default async function ProductPage({ params }: Props) {
             as="image"
             href={standardPergolaData.productImages[0].url}
             fetchPriority="high"
+          />
+        )}
+
+        {structuredDataScript && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: structuredDataScript }}
           />
         )}
         

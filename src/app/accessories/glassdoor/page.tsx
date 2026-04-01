@@ -5,7 +5,10 @@ import { FooterDark } from "@modules/home/homepage/page/sections/footer/footer"
 import { NavBarWrapper } from "@modules/home/homepage/page/sections/NavBarWrapper"
 import GlassdoorProductPage from "./GlassdoorProductPage"
 import { Metadata } from "next"
-import { generateMetadataFromStrapi } from "@lib/util/seo"
+import {
+  generateMetadataFromStrapi,
+  getStrapiStructuredDataScript,
+} from "@lib/util/seo"
 type Props = Readonly<{
   params: Promise<{ pergola: string }>
 }>
@@ -39,6 +42,9 @@ export default async function AccessoriesPage(props: Props) {
 
   const glassdoorInfo = await getGlassdoor()
   glassdoorInfo.data.product = glassdoor.product
+  const structuredDataScript = getStrapiStructuredDataScript(
+    glassdoorInfo?.data?.seo
+  )
 
   // 获取pergola的尺寸选项
   const pergolaSizeOption = pergola.product.options?.find(
@@ -54,6 +60,12 @@ export default async function AccessoriesPage(props: Props) {
 
   return (
     <>
+      {structuredDataScript && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataScript }}
+        />
+      )}
       <div className="bg-background flex flex-col items-start justify-center w-full">
         <NavBarWrapper isFixed={false} />
         <div className="flex flex-col gap-4 w-full">
