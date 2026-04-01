@@ -513,15 +513,18 @@ export const getInnovation = async () => {
   }
 }
 
-// 获取所有项目
-export const getSitemap = async () => {
+/** Raw XML from Strapi sitemap plugin (`/api/.../sitemap.xml`). */
+export const getSitemap = async (): Promise<string> => {
   try {
-    const response = await axiosInstance.get(API_URLS.sitemap, {
-      params: { populate: "*" },
+    const response = await axiosInstance.get<string>(API_URLS.sitemap, {
+      responseType: "text",
+      headers: {
+        Accept: "application/xml, text/xml, */*",
+      },
     })
     return response.data
   } catch (error) {
-    console.error("Error fetching items:", error)
+    console.error("Error fetching sitemap XML:", error)
     throw error
   }
 }
