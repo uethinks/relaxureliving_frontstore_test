@@ -4,7 +4,7 @@ import axios from 'axios';
 // 创建 Axios 实例
 const axiosInstance = axios.create({
   baseURL: process.env.MEDUSA_BACKEND_URL,
-  timeout: 10000, // 请求超时时间
+  timeout: 30000, // 请求超时时间
   headers: {
     'Content-Type': 'application/json',
     'x-publishable-api-key': process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,

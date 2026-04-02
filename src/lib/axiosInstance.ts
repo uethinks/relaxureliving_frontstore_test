@@ -5,7 +5,7 @@ const qs = require('qs');
 // 创建 Axios 实例
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_STRAPI_API_BASE_URL,
-  timeout: 10000, // 请求超时时间
+  timeout: 30000, // 请求超时时间
   headers: {
     'Content-Type': 'application/json',
   },
