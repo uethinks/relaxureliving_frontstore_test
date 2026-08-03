@@ -25,7 +25,7 @@ const processList = [
     icon: "approve",
   },
   {
-    title: "Built with Care (3–5 Weeks)",
+    title: "Built with Care 7 Weeks",
     description:
       "Your pergola is crafted in our factory with rigorous quality checks, ensuring every piece meets the highest standards before it leaves.",
     icon: "build",

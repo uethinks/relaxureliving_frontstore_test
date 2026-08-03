@@ -28,7 +28,7 @@ const serviceConfigs: ServiceConfig[] = [
       {
         icon: "/img/package.svg",
         alt: "package", 
-        text: "delivered in 4 weeks"
+        text: "delivered in 7 weeks"
       }
     ]
   },
@@ -45,7 +45,7 @@ const serviceConfigs: ServiceConfig[] = [
       {
         icon: "/img/package.svg",
         alt: "package",
-        text: "Your delivery should arrive in about four weeks."
+        text: "Your delivery should arrive in about 7 weeks."
       }
     ]
   },

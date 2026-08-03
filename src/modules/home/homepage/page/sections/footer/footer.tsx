@@ -72,7 +72,7 @@ function FeaturesSection() {
   const features = [
     {
       icon: IconPackage,
-      title: "Delivered in 5 Weeks",
+      title: "Delivered in 7 Weeks",
       description: "Fast and reliable delivery so you can enjoy it sooner.",
       iconStyle: "rounded" as const,
     },
