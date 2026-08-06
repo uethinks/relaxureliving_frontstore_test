@@ -7,6 +7,7 @@ import {
   setShippingMethod,
   initiatePaymentSession,
   addPromotionCode,
+  calTotalTax,
 } from "@lib/data/cart"
 // Airwallex SDK is now used in AirwallexPaymentForm component
 import { listCartShippingMethods } from "@lib/data/fulfillment"
@@ -14,6 +15,7 @@ import Link from "next/link"
 //import { OceanPaymentForm } from "./components/OceanPaymentForm"
 import AirwallexPaymentForm, { PaymentIntentBody } from "./components/AirwallexPaymentForm"
 import { PaymentLoadingSkeleton } from "./components/PaymentLoadingSkeleton"
+import { useCart } from "@lib/context/cartContext"
 
  
 const defaultCountryCode = process.env.NEXT_PUBLIC_DEFAULT_COUNTRY_CODE || "us"
@@ -112,6 +114,7 @@ export const CheckoutComponent = ({
   cart: StoreCart | null
 }): JSX.Element => {   
  
+  const { getCart } = useCart()
  
   const [promotionCode, setPromotionCode] = useState("")  
   const [appliedPromotions, setAppliedPromotions] = useState<string[]>([])
@@ -196,6 +199,8 @@ export const CheckoutComponent = ({
     if (isValid) {
       console.log("表单验证通过，开始初始化支付会话 isInitializingPayment", isInitializingPayment, "formData", formData)
       await updateCartDeliveryInfo(formData)
+      await calTotalTax({ cartId: cart?.id ?? "" })
+      const cartData = await getCart()
       console.log("updateCartDeliveryInfo done - 初始化 payment")
       if (!isInitializingPayment) {
         initializePaymentSession()
@@ -448,8 +453,6 @@ export const CheckoutComponent = ({
     }
     return null
   }
- 
-
    
 
   const comlpeleCartAndCreateOrder = async (): Promise<StoreOrder | null> => {

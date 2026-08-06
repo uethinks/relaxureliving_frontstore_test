@@ -561,3 +561,64 @@ export async function clearCartCookie() {
   revalidateTag(cartCacheTag)
   removeCartId()
 }
+
+export async function getTaxRate({
+  address,
+  city,
+  province,
+  postal_code,
+}: {
+  address: string
+  city: string
+  province: string
+  postal_code: string
+}) {
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+
+  // const next = {
+  //   ...(await getCacheOptions("orders")),
+  // }
+
+  return sdk.client
+    .fetch(`/store/tax`, {
+      method: "GET",
+      query: {
+        address,
+        city,
+        province,
+        postal_code,
+      },
+      headers,
+      // next,
+      cache: "force-cache",
+    })
+    .then((res) => {
+      console.log(res,'====================== sdk client')
+      return res
+    })
+    .catch((err) => medusaError(err))
+}
+
+export async function calTotalTax({ cartId, }: { cartId: string }) {
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+  // const next = {
+  //   ...(await getCacheOptions("carts")),
+  // }
+
+  return sdk.client
+    .fetch(`/store/carts/${cartId}/taxes`, {
+      method: "POST",
+      headers,
+      // next,
+      // cache: "force-cache",
+      cache:"no-store"
+    })
+    .then(async (res) => {
+      return res
+    })
+    .catch((err) => medusaError(err))
+}
