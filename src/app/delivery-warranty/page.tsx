@@ -87,7 +87,7 @@ export default async function DeliveryWarrantyPage() {
                           {
                             title: "Finish Protection",
                             description:
-                              "Our AAMA 2605 coastal-grade powder coating comes with a 10-Year Warranty, protecting against peeling, cracking, fading, and corrosion —even in coastal environments.",
+                              "Our AAMA 2604 coastal-grade powder coating comes with a 10-Year Warranty, protecting against peeling, cracking, fading, and corrosion —even in coastal environments.",
                           },
                         ].map((item, itemKey) => (
                           <li key={itemKey}>

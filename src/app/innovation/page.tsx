@@ -155,7 +155,7 @@ export default async function InnovationPage() {
                           </>,
                           <>
                             <span className={"font-semibold"}>Durability:</span>
-                            6063-T6 aluminum with AAMA 2605 finishes, reducing
+                            6063-T6 aluminum with AAMA 2604 finishes, reducing
                             upkeep and worry.
                             <br />
                             <br />
